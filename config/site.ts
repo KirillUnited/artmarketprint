@@ -1,28 +1,32 @@
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
-  name: "Next.js + HeroUI",
-  description: "Make beautiful websites regardless of your design experience.",
+  name: "Профессиональная печать на любых материалах в Минске",
+  description: "Качественная УФ-печать, DTF-печать, гравировка и шелкография для ваших проектов",
   navItems: [
     {
-      label: "Home",
+      label: "Главная",
       href: "/",
     },
     {
-      label: "Docs",
-      href: "/docs",
+      label: "Услуги",
+      href: "/",
     },
     {
-      label: "Pricing",
-      href: "/pricing",
+      label: "Каталог/Цены",
+      href: "/",
     },
     {
-      label: "Blog",
-      href: "/blog",
+      label: "Проекты",
+      href: "/",
     },
     {
-      label: "About",
-      href: "/about",
+      label: "Отзывы",
+      href: "/",
+    },
+    {
+      label: "Контакты",
+      href: "/",
     },
   ],
   navMenuItems: [
@@ -59,11 +63,4 @@ export const siteConfig = {
       href: "/logout",
     },
   ],
-  links: {
-    github: "https://github.com/heroui-inc/heroui",
-    twitter: "https://twitter.com/hero_ui",
-    docs: "https://heroui.com",
-    discord: "https://discord.gg/9b6yyZKmH4",
-    sponsor: "https://patreon.com/jrgarciadev",
-  },
 };
