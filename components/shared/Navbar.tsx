@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-export const Navbar = () => {
+export default function Navbar() {
 	return (
 		<div className="bg-background-color-primary border-solid border-[#f1f4fa] border pr-16 pl-16 flex flex-col gap-0 items-center justify-center shrink-0 h-[72px] relative">
 			<div className="flex flex-row items-center justify-between self-stretch shrink-0 relative">

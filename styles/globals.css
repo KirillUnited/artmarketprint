@@ -4,5 +4,17 @@
 
 :root {
     --background: #fff;
+    --background-primary: linear-gradient(
+        97deg,
+        rgba(37, 99, 235, 1) 0%,
+        rgba(178, 118, 255, 1) 100%
+      );
     --foreground: #2B2A28;
+}
+
+@layer components {
+    .bg-brand-gradient {
+        background: var(--background-primary);
+        -webkit-text-fill-color: transparent;
+    }
 }

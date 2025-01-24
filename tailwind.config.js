@@ -8,13 +8,20 @@ module.exports = {
     "./node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}"
   ],
   theme: {
+    container: {
+      center: true,
+      padding: "1rem",
+    },
     extend: {
       fontFamily: {
         sans: ["var(--font-sans)"],
         mono: ["var(--font-mono)"],
       },
       colors: {
-        background: "var(--background)",
+        background: {
+          DEFAULT: "var(--background)",
+          primary: "var(--background-primary)",
+        },
         foreground: "var(--foreground)"
       }
     },

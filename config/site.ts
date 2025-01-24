@@ -1,8 +1,8 @@
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
-  name: "Профессиональная печать на любых материалах в Минске",
-  description: "Качественная УФ-печать, DTF-печать, гравировка и шелкография для ваших проектов",
+  name: "Профессиональная печать на любых материалах в Минске",
+  description: "Качественная УФ-печать, DTF-печать, гравировка и шелкография для ваших проектов",
   navItems: [
     {
       label: "Главная",
@@ -11,6 +11,24 @@ export const siteConfig = {
     {
       label: "Услуги",
       href: "/",
+      menuItems: [
+        {
+          label: "УФ-печать",
+          href: "/",
+        },
+        {
+          label: "DTF-печать",
+          href: "/",
+        },
+        {
+          label: "Гравировка",
+          href: "/",
+        },
+        {
+          label: "Шелкография",
+          href: "/",
+        },
+      ]
     },
     {
       label: "Каталог/Цены",
