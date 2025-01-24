@@ -1,61 +1,38 @@
-import {
-  Navbar as HeroUINavbar,
-  NavbarContent,
-  NavbarMenu,
-  NavbarBrand,
-  NavbarItem,
-} from "@heroui/navbar";
-import { Kbd } from "@heroui/kbd";
-import { Input } from "@heroui/input";
-import NextLink from "next/link";
-
-import { ThemeSwitch } from "@/components/theme-switch";
-import { SearchIcon, Logo } from "@/components/icons";
+import Image from 'next/image';
 
 export const Navbar = () => {
-  const searchInput = (
-    <Input
-      aria-label="Search"
-      classNames={{
-        inputWrapper: "bg-default-100",
-        input: "text-sm",
-      }}
-      endContent={
-        <Kbd className="hidden lg:inline-block" keys={["command"]}>
-          K
-        </Kbd>
-      }
-      labelPlacement="outside"
-      placeholder="Search..."
-      startContent={
-        <SearchIcon className="text-base text-default-400 pointer-events-none flex-shrink-0" />
-      }
-      type="search"
-    />
-  );
-
-  return (
-    <HeroUINavbar maxWidth="xl" position="sticky">
-      <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
-        <NavbarBrand as="li" className="gap-3 max-w-fit">
-          <NextLink className="flex justify-start items-center gap-1" href="/">
-            <Logo />
-            <p className="font-bold text-inherit">ACME</p>
-          </NextLink>
-        </NavbarBrand>
-      </NavbarContent>
-
-      <NavbarContent
-        className="hidden sm:flex basis-1/5 sm:basis-full"
-        justify="end"
-      >
-        <NavbarItem className="hidden sm:flex gap-2">
-          <ThemeSwitch />
-        </NavbarItem>
-        <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>
-      </NavbarContent>
-
-      <NavbarMenu>{searchInput}</NavbarMenu>
-    </HeroUINavbar>
-  );
+	return (
+		<div className="bg-background-color-primary border-solid border-[#f1f4fa] border pr-16 pl-16 flex flex-col gap-0 items-center justify-center shrink-0 h-[72px] relative">
+			<div className="flex flex-row items-center justify-between self-stretch shrink-0 relative">
+				<div className="shrink-0 w-[184px] h-10 static">
+					<div className="text-left font-['Montserrat-Black',_sans-serif] text-base leading-normal font-black absolute left-[51px] top-2">ArtMarketPrint</div>
+					<Image alt={'ArtMarketPrint'} className="flex flex-row gap-0 items-center justify-center w-[35px] h-10 absolute left-0 top-0" height={40} src="/images/logo.png"  width={40}/>
+				</div>
+				<div className="flex flex-row gap-8 items-center justify-end shrink-0 relative">
+					<div className="flex flex-row gap-1 items-center justify-center shrink-0 relative">
+						<div className="text-[#2b2a28] text-left font-['Montserrat-SemiBold',_sans-serif] text-base leading-normal font-semibold relative">Услуги</div>
+					</div>
+					<div className="flex flex-row gap-1 items-center justify-center shrink-0 relative">
+						<div className="text-[#2b2a28] text-left font-['Montserrat-SemiBold',_sans-serif] text-base leading-normal font-semibold relative">Каталог/Цены</div>
+					</div>
+					<div className="bg-[#ffffff] flex flex-row gap-1 items-center justify-center shrink-0 relative">
+						<div className="text-[#3265ed] text-left font-['Montserrat-Bold',_sans-serif] text-base leading-normal font-bold relative">Проекты</div>
+					</div>
+					<div className="flex flex-row gap-1 items-center justify-center shrink-0 relative">
+						<div className="text-[#2b2a28] text-left font-['Montserrat-SemiBold',_sans-serif] text-base leading-normal font-semibold relative">Отзывы</div>
+					</div>
+					<div className="flex flex-row gap-1 items-center justify-center shrink-0 relative">
+						<div className="text-[#2b2a28] text-left font-['Montserrat-SemiBold',_sans-serif] text-base leading-normal font-semibold relative">Контакты</div>
+					</div>
+				</div>
+				<div className="flex flex-row gap-8 items-center justify-center shrink-0 relative">
+					<div className="flex flex-row gap-4 items-center justify-center shrink-0 relative">
+						<div className="bg-[#2563eb] rounded-lg pt-1 pr-4 pb-1 pl-4 flex flex-row gap-2 items-center justify-start shrink-0 relative">
+							<div className="text-text-alternate text-left font-['Roboto-SemiBold',_sans-serif] text-base leading-normal font-semibold relative">+375 (29) 999-99-99</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	);
 };
