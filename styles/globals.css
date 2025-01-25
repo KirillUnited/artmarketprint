@@ -10,6 +10,11 @@
         theme('colors.secondary') 100%
       );
     --foreground: #2B2A28;
+    --grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 @layer utilities {

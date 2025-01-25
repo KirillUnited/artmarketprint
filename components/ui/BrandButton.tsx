@@ -3,12 +3,14 @@ import { Button } from '@heroui/button'
 import clsx from 'clsx'
 import React from 'react'
 
-export default function BrandButton({ state, children }: BrandButtonProps) {
+export default function BrandButton({ state, className, onPress, children }: BrandButtonProps) {
     return (
-        <Button size='lg' radius='sm' color={state !== null ? state : undefined} variant={'shadow'}
+        <Button onPress={onPress} size='lg' radius='sm' color={state !== null ? state : undefined} variant={'shadow'}
             className={clsx(
                 { 'bg-brand-gradient font-semibold': state === 'primary' },
-                { 'brand-gradient-border bg-brand-gradient text-fill-transparent': state === 'secondary' },)}
+                { 'brand-gradient-border bg-brand-gradient text-fill-transparent': state === 'secondary' },
+                className
+            )}
         >{children}</Button>
     )
 }
