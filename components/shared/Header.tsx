@@ -59,7 +59,7 @@ export default function Header() {
                     {
                         siteConfig?.navItems?.map((navItem, index) => (
                             <NavbarItem key={index} isActive={index === 0}>
-                                <Link aria-current="page" href={navItem.href} className="text-base leading-normal font-semibold hover:underline hover:text-primary hover:opacity-100 transition" color={"foreground"}>
+                                <Link aria-current="page" href={navItem.href} className="text-base leading-normal font-semibold hover:underline hover:text-primary transition" color={"foreground"}>
                                     {navItem.label}
                                 </Link>
                             </NavbarItem>

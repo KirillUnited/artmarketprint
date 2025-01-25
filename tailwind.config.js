@@ -35,10 +35,10 @@ module.exports = {
     function ({ addUtilities }) {
       addUtilities({
         '.brand-gradient-border': {
-          borderWidth: '2px',
+          border: '2px solid transparent',
           borderImage: 'var(--background-primary) round',
           borderImageSlice: '1',
-        },
+        }
       });
     },
   ],
