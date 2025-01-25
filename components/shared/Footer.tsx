@@ -1,5 +1,6 @@
 import React from 'react'
 import BrandLogo from '../ui/BrandLogo'
+import { Facebook, Instagram, Twitter } from 'lucide-react'
 
 export default function Footer() {
     return (
@@ -54,30 +55,6 @@ export default function Footer() {
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div
-                            className="flex flex-row gap-3 items-start justify-start shrink-0 relative"
-                        >
-                            <img
-                                className="shrink-0 w-6 h-6 relative overflow-visible"
-                                src="icon-facebook0.svg"
-                            />
-                            <img
-                                className="shrink-0 w-6 h-6 relative overflow-visible"
-                                src="icon-instagram0.svg"
-                            />
-                            <img
-                                className="shrink-0 w-6 h-6 relative overflow-visible"
-                                src="icon-x0.svg"
-                            />
-                            <img
-                                className="shrink-0 w-6 h-6 relative overflow-visible"
-                                src="icon-linked-in0.svg"
-                            />
-                            <img
-                                className="shrink-0 w-6 h-6 relative overflow-visible"
-                                src="icon-youtube0.svg"
-                            />
                         </div>
                     </div>
                 </div>
