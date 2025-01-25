@@ -59,7 +59,7 @@ export default function Header() {
                     {
                         siteConfig?.navItems?.map((navItem, index) => (
                             <NavbarItem key={index} isActive={index === 0}>
-                                <Link aria-current="page" href={navItem.href} className="text-base leading-normal font-semibold" color={"foreground"}>
+                                <Link aria-current="page" href={navItem.href} className="text-base leading-normal font-semibold hover:underline hover:text-primary hover:opacity-100 transition" color={"foreground"}>
                                     {navItem.label}
                                 </Link>
                             </NavbarItem>
@@ -68,17 +68,23 @@ export default function Header() {
                 </NavbarContent>
                 <div className="flex flex-row gap-8 items-center shrink-0">
                     <SearchIcon />
-                    <Button as={Link} href="tel:+375 (29) 999-99-99" variant="solid" color="primary" className="leading-normal font-semibold">
+                    <Button as={Link} href="tel:+375 (29) 999-99-99" variant="solid" color="primary" className="leading-normal font-semibold hidden lg:flex">
                         <PhoneIcon />
-                        <span className='hidden md:block'>+375 (29) 999-99-99</span>
+                        <span>+375 (29) 999-99-99</span>
                     </Button>
+                    <Link
+                        className="lg:hidden text-primary"
+                        href="tel:+375 (29) 999-99-99"
+                    >
+                        <PhoneIcon />
+                    </Link>
                     <NavbarMenuToggle
                         aria-label={isMenuOpen ? "Close menu" : "Open menu"}
                         className="xl:hidden h-6"
                     />
                 </div>
             </div>
-            <NavbarMenu>
+            <NavbarMenu className='items-center'>
                 {siteConfig?.navItems.map((navItem, index) => (
                     <NavbarMenuItem key={`${navItem}-${index}`}>
                         <Link

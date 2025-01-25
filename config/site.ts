@@ -10,7 +10,7 @@ export const siteConfig = {
     },
     {
       label: "Услуги",
-      href: "/",
+      href: "/#services",
       menuItems: [
         {
           label: "УФ-печать",
@@ -32,19 +32,19 @@ export const siteConfig = {
     },
     {
       label: "Каталог/Цены",
-      href: "/",
+      href: "/#catalog",
     },
     {
       label: "Проекты",
-      href: "/",
+      href: "/#projects",
     },
     {
       label: "Отзывы",
-      href: "/",
+      href: "/#testimonials",
     },
     {
       label: "Контакты",
-      href: "/",
+      href: "/#contacts",
     },
   ],
   navMenuItems: [
