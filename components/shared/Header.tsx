@@ -48,7 +48,7 @@ export default function Header() {
     return (
         <Navbar shouldHideOnScroll classNames={
             {
-                base: 'bg-background border-solid border-gray-100 border-b',
+                base: 'border-solid border-gray-100 border-b',
                 wrapper: 'max-w-full p-0 items-center',
             }}>
             <div className='container flex flex-row items-center justify-between gap-4'>

@@ -1,4 +1,4 @@
-import {heroui} from "@heroui/theme"
+import { heroui } from "@heroui/theme"
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -23,9 +23,23 @@ module.exports = {
           primary: "var(--background-primary)",
         },
         foreground: "var(--foreground)"
-      }
+      },
+      backgroundImage: {
+        "brand-gradient": "var(--background-primary)"
+      },
     },
   },
   darkMode: "class",
-  plugins: [heroui()],
+  plugins: [
+    heroui(),
+    function ({ addUtilities }) {
+      addUtilities({
+        '.brand-gradient-border': {
+          borderWidth: '2px',
+          borderImage: 'var(--background-primary) round',
+          borderImageSlice: '1',
+        },
+      });
+    },
+  ],
 }
