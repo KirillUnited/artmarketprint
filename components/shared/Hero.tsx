@@ -8,7 +8,7 @@ export default function Hero() {
 		<section className="section relative overflow-hidden">
 			<div className="container">
 				<div className="py-10 md:py-20 flex flex-row items-center">
-					<div className="bg-[rgba(255,255,255,0.50)] backdrop-blur-md rounded-lg py-10 md:py-16 pr-4 md:pr-7 flex flex-col gap-8 md:gap-16 z-10 max-w-full">
+					<div className="bg-[rgba(255,255,255,0.50)] backdrop-blur-md rounded-lg py-10 md:py-16 pr-4 md:pr-7 flex flex-col gap-8 md:gap-16 z-10 max-w-full md:max-w-4xl">
 						<div className="flex flex-col gap-4 md:gap-6">
 							<span className="text-primary/70 text-base leading-normal font-medium">
 								Делаем Вашу жизнь приятнее
