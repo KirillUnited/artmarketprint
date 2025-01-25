@@ -20,7 +20,6 @@ export default function BrandCard({ title, price, description, image, href }: Br
                     <p className="text-sm md:text-base text-foreground/90 leading-normal font-light line-clamp-3">{description}</p>
                 </div>
                 <div className="flex flex-wrap gap-4 md:gap-6 items-center justify-center border-t-1 border-foreground/20 pt-6 overflow-hidden">
-                    {/* <BrandButton state='primary' className='flex-1 basis-32'>ЗАКАЗАТЬ</BrandButton> */}
                     <BrandModalOffer />
                     <Button as={Link} color="primary" variant="light" href={href} className="flex flex-row gap-2 items-center font-semibold text-base px-2 h-auto self-center">
                         <span>Подробнее</span>

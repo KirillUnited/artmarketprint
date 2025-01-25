@@ -3,7 +3,7 @@ import { Button } from '@heroui/button'
 import clsx from 'clsx'
 import React from 'react'
 
-export default function BrandButton({ state, className, onPress, children }: BrandButtonProps) {
+export default function BrandButton({ state, className, onPress, children, ...props }: BrandButtonProps) {
     return (
         <Button onPress={onPress} size='lg' radius='sm' color={state !== null ? state : undefined} variant={'shadow'}
             className={clsx(
@@ -11,6 +11,7 @@ export default function BrandButton({ state, className, onPress, children }: Bra
                 { 'brand-gradient-border bg-brand-gradient text-fill-transparent': state === 'secondary' },
                 className
             )}
+            {...props}
         >{children}</Button>
     )
 }

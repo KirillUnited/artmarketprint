@@ -2,6 +2,8 @@ import Image from 'next/image';
 import HeroImage from '../../public/images/hero.png';
 import { Button } from '@heroui/button';
 import BrandButton from '@/components/ui/BrandButton';
+import BrandModalOffer from '../ui/BrandModalOffer';
+import Link from 'next/link';
 
 export default function Hero() {
 	return (
@@ -24,8 +26,10 @@ export default function Hero() {
 							</p>
 						</div>
 						<div className="flex flex-col md:flex-row gap-2 md:gap-4">
-							<BrandButton state='primary'>УЗНАТЬ ЦЕНЫ</BrandButton>
-							<Button color='secondary'size='lg' radius='sm' variant='ghost' className='bg-brand-gradient text-fill-transparent font-semibold'>КОНСУЛЬТАЦИЯ</Button>
+							<BrandButton as={Link} href={'/#catalog'} state='primary'>УЗНАТЬ ЦЕНЫ</BrandButton>
+							{/* <BrandModalOffer /> */}
+
+							<Button color='secondary' size='lg' radius='sm' variant='ghost' className='bg-brand-gradient text-fill-transparent font-semibold'>КОНСУЛЬТАЦИЯ</Button>
 						</div>
 					</div>
 

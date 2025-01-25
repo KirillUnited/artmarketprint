@@ -10,7 +10,7 @@ export default function BrandModalOffer() {
 
     return (
         <>
-            <BrandButton state='primary' className='flex-1 basis-40' onPress={onOpen}>ЗАКАЗАТЬ</BrandButton>
+            <BrandButton state='primary' className='flex-1 basis-52' onPress={onOpen}>ЗАКАЗАТЬ</BrandButton>
             <Modal backdrop="blur" isOpen={isOpen} placement="top-center" onOpenChange={onOpenChange}>
                 <ModalContent>
                     {(onClose) => (
