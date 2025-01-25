@@ -1,4 +1,5 @@
 export type SiteConfig = typeof siteConfig;
+import { PurchaseIcon, QualityIcon, SpeedIcon } from "@/components/icons";
 
 export const siteConfig = {
   name: "Профессиональная печать на любых материалах в Минске",
@@ -81,4 +82,21 @@ export const siteConfig = {
       href: "/logout",
     },
   ],
+  benefitItems: [
+    {
+      icon: PurchaseIcon,
+      title: "Цена",
+      description: "Мы предлагаем качественные услуги по доступным ценам",
+    },
+    {
+      icon: QualityIcon,
+      title: "Гарантия качества",
+      description: "Наша команда использует передовые технологии и материалы"
+    },
+    {
+      icon: SpeedIcon,
+      title: "Оперативность",
+      description: "Мы стремимся выполнять заказы в кратчайшие сроки, не жертвуя качеством",
+    }
+  ]
 };

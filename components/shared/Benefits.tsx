@@ -1,46 +1,28 @@
+import { siteConfig } from "@/config/site";
+
 export const Benefits = () => {
 	return (
-		<div className="bg-[#f1f4fa] pr-16 pl-16 flex flex-col gap-20 items-center justify-start shrink-0 relative overflow-hidden">
-			<div className="flex flex-row gap-8 items-start justify-center self-stretch shrink-0 relative">
-				<div
-					className="rounded-lg flex flex-col gap-2.5 items-start justify-start flex-1 max-w-md relative overflow-hidden"
-				>
-					<div className="pt-8 pb-8 flex flex-row gap-8 items-start justify-start self-stretch shrink-0 relative">
-						<div className="flex flex-col gap-2 items-start justify-start shrink-0 w-[241.44px] relative">
-							<div className="text-[#2b2a28] text-left font-['Montserrat-Bold',_sans-serif] text-2xl leading-[120%] font-bold relative self-stretch">Цена</div>
-							<div className="text-[#2b2a28] text-left font-['Montserrat-Light',_sans-serif] text-sm leading-normal font-light relative self-stretch h-[36.99px]">
-								Мы предлагаем качественные услуги по доступным ценам
+		<section className="bg-primary-50 flex flex-col">
+			<div className="container">
+				<div className="flex flex-wrap gap-4 md:gap-8 py-7 justify-between">
+					{
+						siteConfig?.benefitItems?.map(({ icon, title, description }: any, index) => (
+							<div
+								className="flex flex-col md:flex-row gap-4 md:gap-8 flex-1 max-w-sm py-4 md:py-8 basis-60"
+								key={index}
+							>
+								<div className="shrink-0 text-primary">{icon({ fill: "currentColor"})}</div>
+								<div className="flex flex-col gap-2">
+									<h2 className="text-base md:text-2xl leading-[120%] font-bold">{title}</h2>
+									<p className="text-foreground/70 text-sm leading-normal font-light">
+										{description}
+									</p>
+								</div>
 							</div>
-						</div>
-					</div>
+						))
+					}
 				</div>
-				<div
-					className="rounded-lg flex flex-col gap-2.5 items-start justify-start flex-1 max-w-md relative overflow-hidden"
-
-				>
-					<div className="pt-8 pb-8 flex flex-row gap-8 items-start justify-start self-stretch shrink-0 relative overflow-hidden">
-						<div className="flex flex-col gap-2 items-start justify-start shrink-0 w-[245px] relative">
-							<div className="text-[#2b2a28] text-left font-['Montserrat-Bold',_sans-serif] text-2xl leading-[120%] font-bold relative self-stretch">Гарантия качества</div>
-							<div className="text-[#2b2a28] text-left font-['Montserrat-Light',_sans-serif] text-sm leading-normal font-light relative self-stretch">
-								Наша команда использует передовые технологии и материалы
-							</div>
-						</div>
-					</div>
-				</div>
-				<div
-					className="rounded-lg flex flex-col gap-2.5 items-start justify-start flex-1 max-w-md relative overflow-hidden"
-
-				>
-					<div className="pt-8 pb-8 flex flex-row gap-8 items-start justify-start self-stretch shrink-0 relative">
-						<div className="flex flex-col gap-2 items-start justify-start shrink-0 w-[242px] relative">
-							<div className="text-[#2b2a28] text-left font-['Montserrat-Bold',_sans-serif] text-2xl leading-[120%] font-bold relative self-stretch">Оперативность</div>
-							<div className="text-[#2b2a28] text-left font-['Montserrat-Light',_sans-serif] text-sm leading-normal font-light relative self-stretch">
-								Мы стремимся выполнять заказы в кратчайшие сроки, не жертвуя качеством
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+			</div>	
+		</section>
 	);
 };
