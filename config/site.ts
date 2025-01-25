@@ -1,69 +1,130 @@
 export type SiteConfig = typeof siteConfig;
+import { PurchaseIcon, QualityIcon, SpeedIcon } from '@/components/icons';
 
 export const siteConfig = {
-  name: "Next.js + HeroUI",
-  description: "Make beautiful websites regardless of your design experience.",
+  name: 'Профессиональная печать на любых материалах в Минске',
+  description: 'Качественная УФ-печать, DTF-печать, гравировка и шелкография для ваших проектов',
   navItems: [
     {
-      label: "Home",
-      href: "/",
+      label: 'Главная',
+      href: '/',
     },
     {
-      label: "Docs",
-      href: "/docs",
+      label: 'Услуги',
+      href: '/#services',
+      menuItems: [
+        {
+          label: 'УФ-печать',
+          href: '/',
+        },
+        {
+          label: 'DTF-печать',
+          href: '/',
+        },
+        {
+          label: 'Гравировка',
+          href: '/',
+        },
+        {
+          label: 'Шелкография',
+          href: '/',
+        },
+      ]
     },
     {
-      label: "Pricing",
-      href: "/pricing",
+      label: 'Каталог/Цены',
+      href: '/#catalog',
     },
     {
-      label: "Blog",
-      href: "/blog",
+      label: 'Проекты',
+      href: '/#projects',
     },
     {
-      label: "About",
-      href: "/about",
+      label: 'Отзывы',
+      href: '/#testimonials',
+    },
+    {
+      label: 'Контакты',
+      href: '/#contacts',
     },
   ],
   navMenuItems: [
     {
-      label: "Profile",
-      href: "/profile",
+      label: 'Profile',
+      href: '/profile',
     },
     {
-      label: "Dashboard",
-      href: "/dashboard",
+      label: 'Dashboard',
+      href: '/dashboard',
     },
     {
-      label: "Projects",
-      href: "/projects",
+      label: 'Projects',
+      href: '/projects',
     },
     {
-      label: "Team",
-      href: "/team",
+      label: 'Team',
+      href: '/team',
     },
     {
-      label: "Calendar",
-      href: "/calendar",
+      label: 'Calendar',
+      href: '/calendar',
     },
     {
-      label: "Settings",
-      href: "/settings",
+      label: 'Settings',
+      href: '/settings',
     },
     {
-      label: "Help & Feedback",
-      href: "/help-feedback",
+      label: 'Help & Feedback',
+      href: '/help-feedback',
     },
     {
-      label: "Logout",
-      href: "/logout",
+      label: 'Logout',
+      href: '/logout',
     },
   ],
-  links: {
-    github: "https://github.com/heroui-inc/heroui",
-    twitter: "https://twitter.com/hero_ui",
-    docs: "https://heroui.com",
-    discord: "https://discord.gg/9b6yyZKmH4",
-    sponsor: "https://patreon.com/jrgarciadev",
-  },
+  benefitItems: [
+    {
+      icon: PurchaseIcon,
+      title: 'Цена',
+      description: 'Мы предлагаем качественные услуги по доступным ценам',
+    },
+    {
+      icon: QualityIcon,
+      title: 'Гарантия качества',
+      description: 'Наша команда использует передовые технологии и материалы'
+    },
+    {
+      icon: SpeedIcon,
+      title: 'Оперативность',
+      description: 'Мы стремимся выполнять заказы в кратчайшие сроки, не жертвуя качеством',
+    }
+  ],
+  catalogSection: {
+    title: 'Каталог',
+    description: 'Мы предлагаем печатные услуги на различных материалах, что позволяет вам реализовать самые разнообразные проекты',
+    href: '/catalog',
+    items: [
+      {
+        title: 'Печать на одежде',
+        price: 'от 10 BYN',
+        description: 'Идеально для текстиля и сложных дизайнов.',
+        image: '/images/catalog-1.jpeg',
+        href: '/'
+      },
+      {
+        title: 'Печать на кружках',
+        price: 'от 7 руб.',
+        description: 'Долговечность и яркость изображений гарантированы.',
+        image: '/images/catalog-2.jpg',
+        href: '/'
+      },
+      {
+        title: 'Печать на шопперах',
+        price: 'от 9 руб.',
+        description: 'Идеально для текстиля и сложных дизайнов.',
+        image: '/images/catalog-3.jpg',
+        href: '/'
+      },
+    ]
+  }
 };
