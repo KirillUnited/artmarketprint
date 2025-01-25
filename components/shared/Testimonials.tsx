@@ -22,7 +22,7 @@ export const Testimonials = () => {
 										Менеджер, Компания XYZ
 									</div>
 								</div>
-								<div className="border-solid border-text-primary border-t border-r-[0] border-b-[0] border-l-[0] shrink-0 w-[61px] h-0 relative"></div>
+								<div className="border-solid border-text-primary border-t border-r-[0] border-b-[0] border-l-[0] shrink-0 w-[61px] h-0 relative" />
 								<img className="shrink-0 w-[120px] h-12 relative overflow-visible" src="logo-2-color-dark0.svg" />
 							</div>
 						</div>
@@ -47,15 +47,15 @@ export const Testimonials = () => {
 										Position, Company name
 									</div>
 								</div>
-								<div className="border-solid border-text-primary border-t border-r-[0] border-b-[0] border-l-[0] shrink-0 w-[61px] h-0 relative"></div>
+								<div className="border-solid border-text-primary border-t border-r-[0] border-b-[0] border-l-[0] shrink-0 w-[61px] h-0 relative" />
 								<img className="shrink-0 w-[140px] h-14 relative overflow-visible" src="logo-2-color-dark1.svg" />
 							</div>
 						</div>
 					</div>
 				</div>
 				<div className="p-2.5 flex flex-row gap-[9px] items-start justify-center self-stretch shrink-0 relative">
-					<div className="bg-text-primary rounded-[50%] shrink-0 w-2 h-2 relative"></div>
-					<div className="bg-color-neutral-neutral-lighter rounded-[50%] shrink-0 w-2 h-2 relative"></div>
+					<div className="bg-text-primary rounded-[50%] shrink-0 w-2 h-2 relative" />
+					<div className="bg-color-neutral-neutral-lighter rounded-[50%] shrink-0 w-2 h-2 relative" />
 				</div>
 			</div>
 		</div>

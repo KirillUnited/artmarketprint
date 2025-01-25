@@ -1,6 +1,6 @@
 import React from 'react'
+
 import BrandLogo from '../ui/BrandLogo'
-import { Facebook, Instagram, Twitter } from 'lucide-react'
 
 export default function Footer() {
     return (
@@ -66,7 +66,7 @@ export default function Footer() {
             >
                 <div
                     className="bg-[#eeeeee] border-solid border-[#eeeeee] border self-stretch shrink-0 h-px relative"
-                ></div>
+                 />
                 <div
                     className="flex flex-row items-start justify-between self-stretch shrink-0 relative"
                 >

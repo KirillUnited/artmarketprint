@@ -1,9 +1,10 @@
 'use client';
-import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from "@heroui/modal";
-import BrandButton from "./BrandButton";
-import { Input } from "@heroui/input";
-import { Button } from "@heroui/button";
-import { Form } from "@heroui/form";
+import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from '@heroui/modal';
+import { Input } from '@heroui/input';
+import { Button } from '@heroui/button';
+import { Form } from '@heroui/form';
+
+import BrandButton from './BrandButton';
 
 
 export default function BrandModalOffer() {
@@ -11,7 +12,7 @@ export default function BrandModalOffer() {
 
     return (
         <>
-            <BrandButton state='primary' className='flex-1 basis-52' onPress={onOpen}>ЗАКАЗАТЬ</BrandButton>
+            <BrandButton className='flex-1 basis-52' state='primary' onPress={onOpen}>ЗАКАЗАТЬ</BrandButton>
             <Modal backdrop="blur" isOpen={isOpen} placement="top-center" onOpenChange={onOpenChange}>
                 <ModalContent>
                     {(onClose) => (
@@ -37,9 +38,9 @@ export default function BrandModalOffer() {
                                     />
                                 </ModalBody>
                                 <ModalFooter className="w-full">
-                                    <Button color='secondary' size='lg' radius='sm' variant='ghost' className='bg-brand-gradient text-fill-transparent font-semibold' onPress={onClose}>ОТМЕНА</Button>
+                                    <Button className='bg-brand-gradient text-fill-transparent font-semibold' color='secondary' radius='sm' size='lg' variant='ghost' onPress={onClose}>ОТМЕНА</Button>
 
-                                    <BrandButton type="submit" state='primary' className='flex-1 basis-32'>ЗАКАЗАТЬ</BrandButton>
+                                    <BrandButton className='flex-1 basis-32' state='primary' type="submit">ЗАКАЗАТЬ</BrandButton>
                                 </ModalFooter>
 
                             </Form>

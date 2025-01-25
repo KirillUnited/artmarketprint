@@ -1,6 +1,8 @@
 import Image from 'next/image'
 import React from 'react'
+
 import LogoIcon from '../../public/images/logo.png';
+
 import { LogoIconProps } from '@/types';
 
 export default function BrandLogo({ alt, width = 40, height = 40 }: LogoIconProps): JSX.Element {

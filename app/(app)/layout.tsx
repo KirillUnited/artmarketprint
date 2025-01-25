@@ -1,14 +1,14 @@
-import "@/styles/globals.css";
-import { Metadata, Viewport } from "next";
-import clsx from "clsx";
-import React from "react";
+import '@/styles/globals.css';
+import { Metadata, Viewport } from 'next';
+import clsx from 'clsx';
+import React from 'react';
 
-import { Providers } from "./providers";
+import { Providers } from './providers';
 
-import { siteConfig } from "@/config/site";
-import { fontSans } from "@/config/fonts";
-import Header from "@/components/shared/Header";
-import Footer from "@/components/shared/Footer";
+import { siteConfig } from '@/config/site';
+import { fontSans } from '@/config/fonts';
+import Header from '@/components/shared/Header';
+import Footer from '@/components/shared/Footer';
 
 export const metadata: Metadata = {
   title: {
@@ -17,14 +17,14 @@ export const metadata: Metadata = {
   },
   description: siteConfig.description,
   icons: {
-    icon: "/favicon.ico",
+    icon: '/favicon.ico',
   },
 };
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "white" },
-    { media: "(prefers-color-scheme: dark)", color: "black" },
+    { media: '(prefers-color-scheme: light)', color: 'white' },
+    { media: '(prefers-color-scheme: dark)', color: 'black' },
   ],
 };
 

@@ -1,5 +1,5 @@
-import { ButtonProps } from "@heroui/button";
-import { SVGProps } from "react";
+import { ButtonProps } from '@heroui/button';
+import { SVGProps } from 'react';
 
 export type IconSvgProps = SVGProps<SVGSVGElement> & {
   size?: number;
@@ -12,7 +12,7 @@ export interface LogoIconProps extends React.AllHTMLAttributes<HTMLDivElement> {
 }
 
 export interface BrandButtonProps extends ButtonProps {
-  state?: "default" | "primary" | "secondary" | "success" | "warning" | "danger" | undefined | null;
+  state?: 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | undefined | null;
   children: React.ReactNode;
 };
 

@@ -1,128 +1,128 @@
 export type SiteConfig = typeof siteConfig;
-import { PurchaseIcon, QualityIcon, SpeedIcon } from "@/components/icons";
+import { PurchaseIcon, QualityIcon, SpeedIcon } from '@/components/icons';
 
 export const siteConfig = {
-  name: "Профессиональная печать на любых материалах в Минске",
-  description: "Качественная УФ-печать, DTF-печать, гравировка и шелкография для ваших проектов",
+  name: 'Профессиональная печать на любых материалах в Минске',
+  description: 'Качественная УФ-печать, DTF-печать, гравировка и шелкография для ваших проектов',
   navItems: [
     {
-      label: "Главная",
-      href: "/",
+      label: 'Главная',
+      href: '/',
     },
     {
-      label: "Услуги",
-      href: "/#services",
+      label: 'Услуги',
+      href: '/#services',
       menuItems: [
         {
-          label: "УФ-печать",
-          href: "/",
+          label: 'УФ-печать',
+          href: '/',
         },
         {
-          label: "DTF-печать",
-          href: "/",
+          label: 'DTF-печать',
+          href: '/',
         },
         {
-          label: "Гравировка",
-          href: "/",
+          label: 'Гравировка',
+          href: '/',
         },
         {
-          label: "Шелкография",
-          href: "/",
+          label: 'Шелкография',
+          href: '/',
         },
       ]
     },
     {
-      label: "Каталог/Цены",
-      href: "/#catalog",
+      label: 'Каталог/Цены',
+      href: '/#catalog',
     },
     {
-      label: "Проекты",
-      href: "/#projects",
+      label: 'Проекты',
+      href: '/#projects',
     },
     {
-      label: "Отзывы",
-      href: "/#testimonials",
+      label: 'Отзывы',
+      href: '/#testimonials',
     },
     {
-      label: "Контакты",
-      href: "/#contacts",
+      label: 'Контакты',
+      href: '/#contacts',
     },
   ],
   navMenuItems: [
     {
-      label: "Profile",
-      href: "/profile",
+      label: 'Profile',
+      href: '/profile',
     },
     {
-      label: "Dashboard",
-      href: "/dashboard",
+      label: 'Dashboard',
+      href: '/dashboard',
     },
     {
-      label: "Projects",
-      href: "/projects",
+      label: 'Projects',
+      href: '/projects',
     },
     {
-      label: "Team",
-      href: "/team",
+      label: 'Team',
+      href: '/team',
     },
     {
-      label: "Calendar",
-      href: "/calendar",
+      label: 'Calendar',
+      href: '/calendar',
     },
     {
-      label: "Settings",
-      href: "/settings",
+      label: 'Settings',
+      href: '/settings',
     },
     {
-      label: "Help & Feedback",
-      href: "/help-feedback",
+      label: 'Help & Feedback',
+      href: '/help-feedback',
     },
     {
-      label: "Logout",
-      href: "/logout",
+      label: 'Logout',
+      href: '/logout',
     },
   ],
   benefitItems: [
     {
       icon: PurchaseIcon,
-      title: "Цена",
-      description: "Мы предлагаем качественные услуги по доступным ценам",
+      title: 'Цена',
+      description: 'Мы предлагаем качественные услуги по доступным ценам',
     },
     {
       icon: QualityIcon,
-      title: "Гарантия качества",
-      description: "Наша команда использует передовые технологии и материалы"
+      title: 'Гарантия качества',
+      description: 'Наша команда использует передовые технологии и материалы'
     },
     {
       icon: SpeedIcon,
-      title: "Оперативность",
-      description: "Мы стремимся выполнять заказы в кратчайшие сроки, не жертвуя качеством",
+      title: 'Оперативность',
+      description: 'Мы стремимся выполнять заказы в кратчайшие сроки, не жертвуя качеством',
     }
   ],
   catalogSection: {
-    title: "Каталог",
-    description: "Мы предлагаем печатные услуги на различных материалах, что позволяет вам реализовать самые разнообразные проекты",
-    href: "/catalog",
+    title: 'Каталог',
+    description: 'Мы предлагаем печатные услуги на различных материалах, что позволяет вам реализовать самые разнообразные проекты',
+    href: '/catalog',
     items: [
       {
-        title: "Печать на одежде",
-        price: "от 10 BYN",
-        description: "Идеально для текстиля и сложных дизайнов.",
-        image: "/images/catalog-1.jpeg",
+        title: 'Печать на одежде',
+        price: 'от 10 BYN',
+        description: 'Идеально для текстиля и сложных дизайнов.',
+        image: '/images/catalog-1.jpeg',
         href: '/'
       },
       {
-        title: "Печать на кружках",
-        price: "от 7 руб.",
-        description: "Долговечность и яркость изображений гарантированы.",
-        image: "/images/catalog-2.jpg",
+        title: 'Печать на кружках',
+        price: 'от 7 руб.',
+        description: 'Долговечность и яркость изображений гарантированы.',
+        image: '/images/catalog-2.jpg',
         href: '/'
       },
       {
-        title: "Печать на шопперах",
-        price: "от 9 руб.",
-        description: "Идеально для текстиля и сложных дизайнов.",
-        image: "/images/catalog-3.jpg",
+        title: 'Печать на шопперах',
+        price: 'от 9 руб.',
+        description: 'Идеально для текстиля и сложных дизайнов.',
+        image: '/images/catalog-3.jpg',
         href: '/'
       },
     ]

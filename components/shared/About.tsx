@@ -1,15 +1,18 @@
 import Image from 'next/image';
-import AboutImage from '../../public/images/about.jpg';
 import { Button } from '@heroui/button';
-import BrandButton from '@/components/ui/BrandButton';
 import Link from 'next/link';
+
+import AboutImage from '../../public/images/about.jpg';
+
+import BrandButton from '@/components/ui/BrandButton';
+
 
 export default function About() {
 	return (
 		<section className="section relative overflow-hidden bg-gray-50">
 			<div className="container">
 				<div className="py-10 md:py-20 grid md:grid-cols-2 items-center gap-x-20 gap-y-4">
-					<Image alt={'ArtMarketPrint'} className="h-full object-cover flex-1 w-full" height={635} src={AboutImage} placeholder="blur" width={640} quality={100} />
+					<Image alt={'ArtMarketPrint'} className="h-full object-cover flex-1 w-full" height={635} placeholder="blur" quality={100} src={AboutImage} width={640} />
 
 					<div className="flex flex-col gap-8 md:gap-16 py-10 md:py-20">
 						<div className="flex flex-col gap-4 md:gap-6">
@@ -28,7 +31,7 @@ export default function About() {
 						<div className="flex flex-col md:flex-row gap-2 md:gap-4">
 							<BrandButton as={Link} href={'/#catalog'} state='primary'>УЗНАТЬ ЦЕНЫ</BrandButton>
 
-							<Button color='secondary' size='lg' radius='sm' variant='ghost' className='bg-brand-gradient text-fill-transparent font-semibold'>КОНСУЛЬТАЦИЯ</Button>
+							<Button className='bg-brand-gradient text-fill-transparent font-semibold' color='secondary' radius='sm' size='lg' variant='ghost'>КОНСУЛЬТАЦИЯ</Button>
 						</div>
 					</div>
 
