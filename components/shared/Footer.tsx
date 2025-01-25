@@ -50,7 +50,7 @@ export default function Footer() {
                                     <div
                                         className="text-[#eeeeee] text-left font-text-small-link-font-family text-text-small-link-font-size leading-text-small-link-line-height font-text-small-link-font-weight relative self-stretch"
                                     >
-                                        info@relume.io
+                                        info@artmarketprint.com
                                     </div>
                                 </div>
                             </div>

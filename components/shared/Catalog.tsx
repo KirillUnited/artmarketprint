@@ -28,10 +28,10 @@ export const Catalog = () => {
 					<div className="grid grid-cols-[var(--grid-template-columns)] gap-8">
 						{
 							siteConfig?.catalogSection?.items.map((props: BrandCardProps, index) => (
-								<BrandCard key={index} {...props}/>
+								<BrandCard key={index} {...props} />
 							))
 						}
-						<Button as={Link} color="primary" variant="light" href={siteConfig.catalogSection.href} className=" flex-row gap-2 items-center font-semibold text-base md:text-xl px-2 h-auto md:hidden flex">
+						<Button color='secondary' size='lg' radius='sm' variant='ghost' className='bg-brand-gradient text-fill-transparent font-semibold md:hidden flex'>
 							<span>Смотреть ещё</span>
 							<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 								<path d="M9.70697 16.9496L15.414 11.2426L9.70697 5.53564L8.29297 6.94964L12.586 11.2426L8.29297 15.5356L9.70697 16.9496Z" fill="currentColor" />
