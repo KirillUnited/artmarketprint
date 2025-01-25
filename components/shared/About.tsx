@@ -6,10 +6,10 @@ import Link from 'next/link';
 
 export default function About() {
 	return (
-		<section className="section relative overflow-hidden">
+		<section className="section relative overflow-hidden bg-gray-50">
 			<div className="container">
 				<div className="py-10 md:py-20 grid md:grid-cols-2 items-center gap-x-20 gap-y-4">
-					<Image alt={'ArtMarketPrint'} className="h-full object-cover flex-1" height={635} src={AboutImage} placeholder="blur" width={640} />
+					<Image alt={'ArtMarketPrint'} className="h-full object-cover flex-1 w-full" height={635} src={AboutImage} placeholder="blur" width={640} quality={100} />
 
 					<div className="flex flex-col gap-8 md:gap-16 py-10 md:py-20">
 						<div className="flex flex-col gap-4 md:gap-6">
