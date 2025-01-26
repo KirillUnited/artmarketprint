@@ -26,10 +26,7 @@ export const Services = () => {
                     >
                         Смотреть ещё
                     </div>
-                    <img
-                        className="shrink-0 w-6 h-6 relative overflow-visible"
-                        src="icon-chevron-right0.svg"
-                    />
+                    
                 </div>
             </div>
             <div
@@ -44,10 +41,7 @@ export const Services = () => {
                         <div
                             className="flex flex-col gap-0 items-center justify-end self-stretch shrink-0 h-[210px] relative"
                         >
-                            <img
-                                className="self-stretch flex-1 relative"
-                                src="placeholder-image0.png"
-                            />
+                            
                         </div>
                         <div
                             className="bg-[rgba(255,255,255,0.50)] rounded-lg p-6 flex flex-col gap-9 items-start justify-center self-stretch shrink-0 relative overflow-hidden"
@@ -98,10 +92,7 @@ export const Services = () => {
                                     >
                                         Подробнее
                                     </div>
-                                    <img
-                                        className="shrink-0 w-6 h-6 relative overflow-visible"
-                                        src="icon-chevron-right1.svg"
-                                    />
+                                    
                                 </div>
                             </div>
                         </div>
@@ -113,10 +104,7 @@ export const Services = () => {
                         <div
                             className="flex flex-col gap-0 items-center justify-end self-stretch shrink-0 h-[210px] relative"
                         >
-                            <img
-                                className="self-stretch flex-1 relative"
-                                src="placeholder-image1.png"
-                            />
+                            
                         </div>
                         <div
                             className="bg-[rgba(255,255,255,0.50)] rounded-lg p-6 flex flex-col items-start justify-between self-stretch flex-1 relative overflow-hidden"
@@ -167,10 +155,7 @@ export const Services = () => {
                                     >
                                         Подробнее
                                     </div>
-                                    <img
-                                        className="shrink-0 w-6 h-6 relative overflow-visible"
-                                        src="icon-chevron-right2.svg"
-                                    />
+                                    
                                 </div>
                             </div>
                         </div>
@@ -182,11 +167,7 @@ export const Services = () => {
                         <div
                             className="flex flex-col gap-0 items-center justify-end self-stretch shrink-0 h-[210px] relative"
                         >
-                            <img
-                                className="self-stretch flex-1 relative"
-
-                                src="placeholder-image2.png"
-                            />
+                           
                         </div>
                         <div
                             className="bg-[rgba(255,255,255,0.50)] rounded-lg p-6 flex flex-col items-start justify-between self-stretch flex-1 relative overflow-hidden"
@@ -238,10 +219,7 @@ export const Services = () => {
                                     >
                                         Подробнее
                                     </div>
-                                    <img
-                                        className="shrink-0 w-6 h-6 relative overflow-visible"
-                                        src="icon-chevron-right3.svg"
-                                    />
+                                   
                                 </div>
                             </div>
                         </div>
@@ -252,10 +230,7 @@ export const Services = () => {
                         <div
                             className="flex flex-col gap-0 items-center justify-end shrink-0 w-[416px] h-[466px] absolute left-0 top-0"
                         >
-                            <img
-                                className="self-stretch shrink-0 h-[466px] relative"
-                                src="placeholder-image3.png"
-                            />
+                            
                         </div>
                         <div
                             className="p-6 flex flex-col gap-6 items-start justify-start self-stretch shrink-0 relative overflow-hidden"
@@ -289,10 +264,7 @@ export const Services = () => {
                                     >
                                         Подробнее
                                     </div>
-                                    <img
-                                        className="shrink-0 w-6 h-6 relative overflow-visible"
-                                        src="icon-chevron-right4.svg"
-                                    />
+                                    
                                 </div>
                             </div>
                         </div>
@@ -303,10 +275,7 @@ export const Services = () => {
                         <div
                             className="flex flex-col gap-0 items-center justify-end self-stretch shrink-0 h-[294px] relative"
                         >
-                            <img
-                                className="self-stretch flex-1 relative"
-                                src="placeholder-image4.png"
-                            />
+                            
                         </div>
                         <div
                             className="bg-[rgba(255,255,255,0.50)] rounded-lg p-6 flex flex-col gap-6 items-start justify-start self-stretch shrink-0 relative overflow-hidden"
@@ -343,10 +312,7 @@ export const Services = () => {
                         <div
                             className="flex flex-col gap-0 items-center justify-end self-stretch shrink-0 h-[210px] relative"
                         >
-                            <img
-                                className="self-stretch flex-1 relative"
-                                src="placeholder-image5.png"
-                            />
+                            
                         </div>
                         <div
                             className="bg-[rgba(255,255,255,0.50)] rounded-lg p-6 flex flex-col gap-9 items-start justify-center self-stretch shrink-0 relative overflow-hidden"
@@ -395,24 +361,15 @@ export const Services = () => {
                                     >
                                         Подробнее
                                     </div>
-                                    <img
-                                        className="shrink-0 w-6 h-6 relative overflow-visible"
-                                        src="icon-chevron-right5.svg"
-                                    />
+                                   
                                 </div>
                             </div>
                         </div>
-                        <img
-                            className="shrink-0 w-6 h-6 absolute left-[266px] top-[357.97px] overflow-visible"
-                            src="clarity-cursor-hand-line0.svg"
-                        />
+                       
                     </div>
                 </div>
             </div>
-            <img
-                className="shrink-0 w-6 h-6 absolute left-[386px] top-[630.97px] overflow-visible"
-                src="clarity-cursor-hand-line1.svg"
-            />
+           
         </div>
 
     );
