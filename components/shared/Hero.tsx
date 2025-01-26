@@ -49,7 +49,7 @@ export default function Hero() {
 								}}
 								initial={{
 									opacity: 0,
-									translate: '0 100%'
+									translate: '100% 0'
 								}}
 								transition={{duration: 2.5, ease: 'easeInOut'}}
 								viewport={{once: true,amount: 0}}

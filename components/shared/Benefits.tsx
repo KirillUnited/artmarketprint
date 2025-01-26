@@ -2,7 +2,7 @@ import { siteConfig } from '@/config/site';
 
 export const Benefits = () => {
 	return (
-		<section className="bg-primary-50 flex flex-col">
+		<section className="bg-[#F1F4FA] flex flex-col">
 			<div className="container">
 				<div className="flex flex-wrap gap-4 md:gap-8 py-7 justify-between">
 					{

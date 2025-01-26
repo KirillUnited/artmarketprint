@@ -13,7 +13,7 @@ export default function BrandModalOffer() {
     return (
         <>
             <BrandButton className='flex-1 basis-52' state='primary' onPress={onOpen}>ЗАКАЗАТЬ</BrandButton>
-            <Modal backdrop="blur" isOpen={isOpen} placement="top-center" onOpenChange={onOpenChange}>
+            <Modal backdrop="blur" isOpen={isOpen} placement="top-center" onOpenChange={onOpenChange} className='bg-[#F1F4FA]'>
                 <ModalContent>
                     {(onClose) => (
                         <>
