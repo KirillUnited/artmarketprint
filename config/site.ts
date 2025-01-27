@@ -131,7 +131,7 @@ export const siteConfig = {
     href: '/services',
     items: [
       {
-        title: 'Dtf - печать',
+        title: 'DTF - печать',
         price: '1 погонный метр от 30 руб.',
         description: 'Идеально для текстиля и сложных дизайнов.',
         image: '/images/service-1.jpg',
