@@ -9,8 +9,8 @@ import { BrandCardProps } from '@/types';
 
 export default function BrandCard({ title, price, description, image, href }: BrandCardProps) {
     return (
-        <div className="overflow-hidden rounded-md shadow-small hover:shadow-large transition-all flex flex-col">
-            <Image alt={title} className="object-cover w-full aspect-video max-h-48" height={180} src={`${image}`} width={270} />
+        <div className="overflow-hidden rounded-md shadow-small hover:shadow-large transition-all flex flex-col group">
+            <Image alt={title} className="object-cover w-full aspect-video max-h-48 group-hover:scale-110 transition-all duration-400" height={180} src={`${image}`} width={270} />
             <div className="p-4 md:p-6 bg-background flex flex-col flex-1 gap-4">
                 <div className="flex flex-col gap-4 grow">
                     <h3 className='text-xl md:text-2xl leading-[120%] font-bold'>
