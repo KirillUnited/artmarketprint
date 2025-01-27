@@ -8,7 +8,7 @@ import { BrandCardProps } from '@/types';
 
 export const Services = () => {
 	return (
-		<section className="relative" id="catalog">
+		<section className="relative" id="services">
 			<div className="py-10 md:py-20 flex flex-col gap-10">
 				<div className="container">
 					<div className="flex flex-wrap items-end justify-between gap-4">
