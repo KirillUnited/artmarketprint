@@ -1,6 +1,5 @@
 export type SiteConfig = typeof siteConfig;
 import { PurchaseIcon, QualityIcon, SpeedIcon } from '@/components/icons';
-import { title } from 'process';
 
 export const siteConfig = {
   name: 'Профессиональная печать на любых материалах в Минске',
@@ -133,21 +132,21 @@ export const siteConfig = {
       {
         title: 'DTF - печать',
         price: '1 погонный метр от 30 руб.',
-        description: 'Идеально для текстиля и сложных дизайнов.',
-        image: '/images/service-1.jpg',
+        description: 'Идеально для текстиля и сложных дизайнов',
+        image: '/images/service-2.jpg',
         href: '/'
       },
       {
         title: 'Шелкографная печать ',
         price: 'от 1 р.',
-        description: 'Долговечность и яркость изображений гарантированы.',
-        image: '/images/service-2.jpg',
+        description: 'Долговечность и яркость изображений гарантированы',
+        image: '/images/service-1.jpg',
         href: '/'
       },
       {
-        title: 'UF - печать',
+        title: 'UV - печать',
         price: 'от 6 р.',
-        description: 'Идеально для текстиля и сложных дизайнов.',
+        description: 'Технология обеспечивает точную передачу мелких деталей и яркость цветов',
         image: '/images/service-3.jpg',
         href: '/'
       }
@@ -161,21 +160,21 @@ export const siteConfig = {
       {
         title: 'Печать на одежде',
         price: 'от 10 BYN',
-        description: 'Идеально для текстиля и сложных дизайнов.',
+        description: 'Идеально для текстиля и сложных дизайнов',
         image: '/images/catalog-1.jpeg',
         href: '/'
       },
       {
         title: 'Печать на кружках',
         price: 'от 7 руб.',
-        description: 'Долговечность и яркость изображений гарантированы.',
+        description: 'Долговечность и яркость изображений гарантированы',
         image: '/images/catalog-2.jpg',
         href: '/'
       },
       {
         title: 'Печать на шопперах',
         price: 'от 9 руб.',
-        description: 'Идеально для текстиля и сложных дизайнов.',
+        description: 'Наша услуга печати на шопперах предлагает уникальную возможность персонализировать ваши сумки по своему вкусу',
         image: '/images/catalog-3.jpg',
         href: '/'
       },
