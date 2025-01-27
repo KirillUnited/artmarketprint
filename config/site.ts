@@ -8,8 +8,8 @@ export const siteConfig = {
   contacts: [
     {
       title: 'Телефон',
-      text: '+375 (33) 679-12-22',
-      href: 'tel:+375336791222',
+      text: '+375 (29) 7520204',
+      href: 'tel:+375297520204',
     },
     {
       title: 'Почта',
