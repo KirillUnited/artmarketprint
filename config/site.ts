@@ -1,5 +1,6 @@
 export type SiteConfig = typeof siteConfig;
 import { PurchaseIcon, QualityIcon, SpeedIcon } from '@/components/icons';
+import { title } from 'process';
 
 export const siteConfig = {
   name: 'Профессиональная печать на любых материалах в Минске',
@@ -24,9 +25,26 @@ export const siteConfig = {
       text: 'Пн-Пт: 9:00 - 18:00',
     },
     {
-      title: 'Социальные сети',
+      title: '@artmarketprint_by',
       href: 'https://www.instagram.com/artmarketprint.by/',
       icon: 'instagram',
+      items: [
+        {
+          href: 'https://www.instagram.com/artmarketprint_by/',
+          thumbnail: '/images/social-1.jpg',
+          title: 'ArtMarketPrint'
+        },
+        {
+          href: 'https://www.instagram.com/artmarketprint_by/',
+          thumbnail: '/images/social-2.jpg',
+          title: 'ArtMarketPrint'
+        },
+        {
+          href: 'https://www.instagram.com/artmarketprint_by/',
+          thumbnail: '/images/social-3.jpg',
+          title: 'ArtMarketPrint'
+        },
+      ]
     }
   ],
   navItems: [
