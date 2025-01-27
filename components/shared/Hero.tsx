@@ -26,7 +26,7 @@ export default function Hero() {
 						}}
 						transition={{duration: 1, ease: 'easeInOut'}}
 						viewport={{once: true,amount: 0}}
-						className="bg-[rgba(255,255,255,0.50)] backdrop-blur-md rounded-lg py-10 md:py-16 pr-4 md:pr-7 flex flex-col gap-8 md:gap-16 z-10 max-w-full md:max-w-4xl">
+						className="bg-[rgba(255,255,255,0.50)] backdrop-blur-md rounded-lg py-10 md:py-16 pr-4 md:pr-7 flex flex-col gap-8 md:gap-16 z-10 max-w-full md:max-w-4xl overflow-hidden">
 						<div className="flex flex-col gap-4 md:gap-6">
 							<motion.span
 								whileInView={{
