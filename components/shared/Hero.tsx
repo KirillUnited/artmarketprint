@@ -54,7 +54,7 @@ export default function Hero() {
 								transition={{duration: 2.5, ease: 'easeInOut'}}
 								viewport={{once: true,amount: 0}}
 								className="text-4xl md:text-6xl leading-none font-medium hyphens-auto break-words">
-								Профессиональная печать на
+								<span className="hidden md:inline">Профессиональная</span> <span className='hidden md:inline'>печать</span> <span className='md:hidden'>Печать</span> на
 								<span className="font-extrabold"> любых материалах </span>
 								в
 								<span className="font-extrabold bg-brand-gradient text-fill-transparent"> Минске</span>
