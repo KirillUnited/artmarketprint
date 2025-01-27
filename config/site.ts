@@ -1,9 +1,35 @@
 export type SiteConfig = typeof siteConfig;
 import { PurchaseIcon, QualityIcon, SpeedIcon } from '@/components/icons';
+import { title } from 'process';
 
 export const siteConfig = {
   name: 'Профессиональная печать на любых материалах в Минске',
   description: 'Качественная УФ-печать, DTF-печать, гравировка и шелкография для ваших проектов',
+  contacts: [
+    {
+      title: 'Телефон',
+      text: '+375 (33) 679-12-22',
+      href: 'tel:+375336791222',
+    },
+    {
+      title: 'Почта',
+      text: 'info@artmarketprint.by',
+      href: 'mailto:info@artmarketprint.by',
+    },
+    {
+      title: 'Адрес',
+      text: 'Минск, ул. Ольшевского, 16Б, корп. 2',
+    },
+    {
+      title: 'Время работы',
+      text: 'Пн-Пт: 9:00 - 18:00',
+    },
+    {
+      title: 'Социальные сети',
+      href: 'https://www.instagram.com/artmarketprint.by/',
+      icon: 'instagram',
+    }
+  ],
   navItems: [
     {
       label: 'Главная',
@@ -99,6 +125,34 @@ export const siteConfig = {
       description: 'Мы стремимся выполнять заказы в кратчайшие сроки, не жертвуя качеством',
     }
   ],
+  serviceSection: {
+    title: 'Услуги',
+    description: 'Услуги наших специалистов гарантируют качество и кратчайшие сроки работы',
+    href: '/services',
+    items: [
+      {
+        title: 'Dtf - печать',
+        price: '1 погонный метр от 30 руб.',
+        description: 'Идеально для текстиля и сложных дизайнов.',
+        image: '/images/service-1.jpg',
+        href: '/'
+      },
+      {
+        title: 'Шелкографная печать ',
+        price: 'от 1 р.',
+        description: 'Долговечность и яркость изображений гарантированы.',
+        image: '/images/service-2.jpg',
+        href: '/'
+      },
+      {
+        title: 'UF - печать',
+        price: 'от 6 р.',
+        description: 'Идеально для текстиля и сложных дизайнов.',
+        image: '/images/service-3.jpg',
+        href: '/'
+      }
+    ]
+  },
   catalogSection: {
     title: 'Каталог',
     description: 'Мы предлагаем печатные услуги на различных материалах, что позволяет вам реализовать самые разнообразные проекты',

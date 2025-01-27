@@ -1,6 +1,8 @@
 import React from 'react'
 
 import BrandLogo from '../ui/BrandLogo'
+import { siteConfig } from '@/config/site'
+import Link from 'next/link'
 
 export default function Footer() {
     return (
@@ -14,7 +16,7 @@ export default function Footer() {
                     <div
                         className="flex flex-col gap-8"
                     >
-                        <div className='self-start'><BrandLogo alt="ArtMarketPrint"/></div>
+                        <div className='self-start'><BrandLogo alt="ArtMarketPrint" /></div>
                         <div
                             className="flex flex-col gap-6"
                         >
@@ -24,12 +26,12 @@ export default function Footer() {
                                 <div
                                     className="text-[#eeeeee] text-text-small-semi-bold-font-size leading-text-small-semi-bold-line-height font-text-small-semi-bold-font-weight relative self-stretch"
                                 >
-                                    Address:
+                                    Адрес:
                                 </div>
                                 <div
                                     className="text-[#eeeeee] text-left font-text-small-normal-font-family text-text-small-normal-font-size leading-text-small-normal-line-height font-text-small-normal-font-weight relative self-stretch"
                                 >
-                                    Level 1, 12 Sample St, Sydney NSW 2000
+                                    {siteConfig?.contacts?.[2]?.text}
                                 </div>
                             </div>
                             <div
@@ -38,22 +40,34 @@ export default function Footer() {
                                 <div
                                     className="text-[#eeeeee] text-left font-text-small-semi-bold-font-family text-text-small-semi-bold-font-size leading-text-small-semi-bold-line-height font-text-small-semi-bold-font-weight relative self-stretch"
                                 >
-                                    Contact:
+                                    Контакты:
                                 </div>
                                 <div
                                     className="flex flex-col gap-0 items-start justify-start self-stretch shrink-0 relative"
                                 >
-                                    <div
+                                    <Link href={siteConfig?.contacts?.[0]?.href || '#'}
                                         className="text-[#eeeeee] text-left font-text-small-link-font-family text-text-small-link-font-size leading-text-small-link-line-height font-text-small-link-font-weight relative self-stretch"
                                     >
-                                        1800 123 4567
-                                    </div>
-                                    <div
+                                        {siteConfig?.contacts?.[0]?.text}
+                                    </Link>
+                                    <Link href={siteConfig?.contacts?.[1]?.href || '#'}
                                         className="text-[#eeeeee] text-left font-text-small-link-font-family text-text-small-link-font-size leading-text-small-link-line-height font-text-small-link-font-weight relative self-stretch"
                                     >
-                                        info@artmarketprint.com
-                                    </div>
+                                        {siteConfig?.contacts?.[1]?.text}
+                                    </Link>
                                 </div>
+                            </div>
+
+                            <div
+                                className="text-[#eeeeee] text-left font-text-small-semi-bold-font-family text-text-small-semi-bold-font-size leading-text-small-semi-bold-line-height font-text-small-semi-bold-font-weight relative self-stretch"
+                            >
+                                Время работы:
+                                
+                            <div
+                                className="flex flex-col gap-0 items-start justify-start self-stretch shrink-0 relative text-[#eeeeee]"
+                            >
+                                {siteConfig?.contacts?.[3]?.text}
+                            </div>
                             </div>
                         </div>
                     </div>
@@ -61,22 +75,22 @@ export default function Footer() {
             </div>
 
             <div className="container">
-            <div
-                className="flex flex-col gap-8 items-start justify-start self-stretch shrink-0 relative"
-            >
                 <div
-                    className="bg-[#eeeeee] border-solid border-[#eeeeee] border self-stretch shrink-0 h-px relative"
-                 />
-                <div
-                    className="flex flex-row items-start justify-between self-stretch shrink-0 relative"
+                    className="flex flex-col gap-8 items-start justify-start self-stretch shrink-0 relative"
                 >
                     <div
-                        className="text-[#eeeeee] text-left font-text-small-normal-font-family text-text-small-normal-font-size leading-text-small-normal-line-height font-text-small-normal-font-weight relative"
+                        className="bg-[#eeeeee] border-solid border-[#eeeeee] border self-stretch shrink-0 h-px relative"
+                    />
+                    <div
+                        className="flex flex-row items-start justify-between self-stretch shrink-0 relative"
                     >
-                        © 2025. Все права защищены.
+                        <div
+                            className="text-[#eeeeee] text-left font-text-small-normal-font-family text-text-small-normal-font-size leading-text-small-normal-line-height font-text-small-normal-font-weight relative"
+                        >
+                            © {new Date().getFullYear()}. Все права защищены.
+                        </div>
                     </div>
-                </div>
-            </div>А
+                </div>А
             </div>
         </footer>
 
