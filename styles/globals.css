@@ -11,6 +11,12 @@
       );
     --foreground: #2B2A28;
     --grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    --product-gradient: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.75) 20.000000298023224%,
+        rgba(255, 255, 255, 1) 50%
+      );
 }
 
 html {
