@@ -1,0 +1,91 @@
+import { siteConfig } from '@/config/site'
+import Link from 'next/link'
+import React from 'react'
+import Socials from './Socials'
+import BrandForm from '../ui/BrandForm'
+
+export default function Contacts() {
+    return (
+        <section id='contacts' className='bg-[#F1F4FA]'>
+            <div className="py-10 md:py-20 flex flex-col gap-10">
+                <div className="container">
+                    <div className="flex flex-wrap items-end justify-between gap-4">
+                        <div className="flex flex-col gap-4 max-w-[652px]">
+                            <h2 className="text-4xl md:text-5xl leading-[120%] font-bold">Наши контакты</h2>
+                            <p className="text-base md:text-lg leading-normal font-normal text-foreground/70">
+                                Мы всегда готовы помочь вам! Если у вас есть вопросы, предложения или хотите связаться с нами, используйте любой удобный способ:
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div className="container">
+                    <div className="flex flex-wrap gap-10 justify-between">
+                        <div
+                            className="flex flex-col gap-6 col-md-2"
+                        >
+                            <div
+                                className="flex flex-col gap-1"
+                            >
+                                <div
+                                    className=" text-text-small-semi-bold-font-size leading-text-small-semi-bold-line-height font-text-small-semi-bold-font-weight relative self-stretch"
+                                >
+                                    Адрес:
+                                </div>
+                                <div
+                                    className="font-bold text-left font-text-small-normal-font-family text-text-small-normal-font-size leading-text-small-normal-line-height font-text-small-normal-font-weight relative self-stretch"
+                                >
+                                    {siteConfig?.contacts?.[2]?.text}
+                                </div>
+                            </div>
+                            <div
+                                className="flex flex-col gap-1 items-start justify-start self-stretch shrink-0 relative"
+                            >
+                                <div
+                                    className=" text-left font-text-small-semi-bold-font-family text-text-small-semi-bold-font-size leading-text-small-semi-bold-line-height font-text-small-semi-bold-font-weight relative self-stretch"
+                                >
+                                    Контакты:
+                                </div>
+                                <div
+                                    className="flex flex-col gap-0 items-start justify-start self-stretch shrink-0 relative"
+                                >
+                                    <Link href={`tel:${siteConfig?.contacts?.[0]?.href}` || '#'}
+                                        className="font-bold text-left font-text-small-link-font-family text-text-small-link-font-size leading-text-small-link-line-height font-text-small-link-font-weight relative self-stretch"
+                                    >
+                                        {siteConfig?.contacts?.[0]?.text}
+                                    </Link>
+                                    <Link href={siteConfig?.contacts?.[1]?.href || '#'}
+                                        className="font-bold text-left font-text-small-link-font-family text-text-small-link-font-size leading-text-small-link-line-height font-text-small-link-font-weight relative self-stretch"
+                                    >
+                                        {siteConfig?.contacts?.[1]?.text}
+                                    </Link>
+                                </div>
+                            </div>
+
+                            <div
+                                className=" text-left font-text-small-semi-bold-font-family text-text-small-semi-bold-font-size leading-text-small-semi-bold-line-height font-text-small-semi-bold-font-weight relative self-stretch"
+                            >
+                                Время работы:
+
+                                <div
+                                    className="font-bold flex flex-col gap-0 items-start justify-start self-stretch shrink-0 relative "
+                                >
+                                    {siteConfig?.contacts?.[3]?.text}
+                                </div>
+                            </div>
+                            <Socials />
+
+                            <p>Ждем вас в любое удобное время!</p>
+                        </div>
+                        <BrandForm className='w-full lg:w-1/2'/>
+                    </div>
+
+
+                </div>
+                <div className='flex justify-center'>
+                    <div className='w-full' style={{ position: 'relative', overflow: 'hidden' }}><a href="https://yandex.by/navi/org/art_market_print/100202069960/?utm_medium=mapframe&utm_source=maps" style={{ color: '#eee', fontSize: 12, position: 'absolute', top: 0 }}>Арт Маркет Принт</a><a href="https://yandex.by/navi/157/minsk/category/printing_services/184107124/?utm_medium=mapframe&utm_source=maps" style={{ color: '#eee', fontSize: 12, position: 'absolute', top: 14 }}>Полиграфические услуги в Минске</a><a href="https://yandex.by/navi/157/minsk/category/printing_on_t_shirts/179539030136/?utm_medium=mapframe&utm_source=maps" style={{ color: '#eee', fontSize: 12, position: 'absolute', top: 28 }}>Печать на ткани в Минске</a><iframe src="https://yandex.by/map-widget/v1/org/art_market_print/100202069960/?ll=27.508390%2C53.918763&z=17" width={'100%'} height={400} frameBorder={1} allowFullScreen style={{ position: 'relative' }} /></div>
+                </div>
+            </div>
+
+        </section>
+    )
+}

@@ -5,6 +5,7 @@ import { FAQ } from '@/components/shared/FAQ';
 import { Catalog } from '@/components/shared/Catalog';
 import SocialWidget from '@/components/shared/SocialWidget';
 import { Services } from '@/components/shared/Services';
+import Contacts from '@/components/shared/Contacts';
 
 export default function Home() {
 	return (
@@ -16,6 +17,7 @@ export default function Home() {
 			{/* <Projects /> */}
 			<About />
 			<FAQ />
+			<Contacts />
 			<SocialWidget />
 			{/* <Testimonials /> */}
 		</>
