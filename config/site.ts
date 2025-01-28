@@ -1,6 +1,5 @@
 export type SiteConfig = typeof siteConfig;
 import { PurchaseIcon, QualityIcon, SpeedIcon } from '@/components/icons';
-import { title } from 'process';
 
 export const siteConfig = {
   name: 'Профессиональная печать на любых материалах в Минске',
