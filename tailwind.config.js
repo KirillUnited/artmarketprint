@@ -25,7 +25,8 @@ module.exports = {
         foreground: "var(--foreground)"
       },
       backgroundImage: {
-        "brand-gradient": "var(--background-primary)"
+        "brand-gradient": "var(--background-primary)",
+        "product-gradient": "var(--product-gradient)",
       },
     },
   },

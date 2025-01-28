@@ -22,4 +22,5 @@ export interface BrandCardProps extends React.AllHTMLAttributes<HTMLDivElement> 
   description?: string;
   image?: string;
   href?: string;
+  variant?: string;
 }
