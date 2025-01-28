@@ -8,6 +8,7 @@ import { PhoneIcon, SearchIcon } from '../icons';
 import BrandLogo from '../ui/BrandLogo';
 
 import { siteConfig } from '@/config/site';
+import Socials from './Socials';
 
 // const HeaderDropdown = () => {
 //     return (
@@ -86,7 +87,7 @@ export default function Header() {
                     />
                 </div>
             </div>
-            <NavbarMenu className='items-center'>
+            <NavbarMenu className='items-center gap-4 py-6'>
                 {siteConfig?.navItems.map((navItem, index) => (
                     <NavbarMenuItem key={`${navItem}-${index}`}>
                         <Link
@@ -101,6 +102,12 @@ export default function Header() {
                         </Link>
                     </NavbarMenuItem>
                 ))}
+                <div className="flex flex-col items-center gap-4 mt-6">
+                    <Link href={`tel:${siteConfig?.contacts?.[0]?.href}`} target='_blank' className='text-lg bg-brand-gradient text-fill-transparent font-bold'>
+                        {siteConfig?.contacts?.[0]?.href}
+                    </Link>
+                    <Socials />
+                </div>
             </NavbarMenu>
         </Navbar>
     );
