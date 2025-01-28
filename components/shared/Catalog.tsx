@@ -29,8 +29,8 @@ export const Catalog = () => {
 				<div className="container">
 					<div className="grid grid-cols-[var(--grid-template-columns)] gap-8">
 						{
-							siteConfig?.catalogSection?.items.map((props: BrandCardProps, index) => (
-								<BrandCard key={index} {...props} />
+							siteConfig?.catalogSection?.items.map(({title, variant, price, description, image, href}: BrandCardProps, index) => (
+								<BrandCard key={index} title={title} price={price} description={description} image={image} href={href} variant={variant}/>
 							))
 						}
 						<Button className='bg-brand-gradient text-fill-transparent font-semibold md:hidden flex' color='secondary' radius='sm' size='lg' variant='ghost'>
