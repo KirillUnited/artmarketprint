@@ -71,7 +71,7 @@ export default function Header() {
                 </NavbarContent>
                 <div className="flex flex-row gap-8 items-center shrink-0">
                     <SearchIcon />
-                    <Button as={Link} className="leading-normal font-semibold hidden lg:flex" color="primary" href={siteConfig?.contacts?.[0].href} variant="solid">
+                    <Button as={Link} className="leading-normal font-semibold hidden lg:flex" color="primary" href={`tel:${siteConfig?.contacts?.[0].href}`} variant="solid">
                         <PhoneIcon />
                         <span>{siteConfig?.contacts?.[0].text}</span>
                     </Button>
