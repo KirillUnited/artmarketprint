@@ -3,6 +3,7 @@ import React from 'react'
 import BrandLogo from '../ui/BrandLogo'
 import { siteConfig } from '@/config/site'
 import Link from 'next/link'
+import Socials from './Socials'
 
 export default function Footer() {
     return (
@@ -11,7 +12,7 @@ export default function Footer() {
         >
             <div className="container">
                 <div
-                    className="flex flex-row gap-16 items-start justify-start self-stretch shrink-0 relative py-10 md:py-20"
+                    className="flex flex-row flex-wrap gap-16 items-start justify-between py-10 md:py-20"
                 >
                     <div
                         className="flex flex-col gap-8"
@@ -62,14 +63,29 @@ export default function Footer() {
                                 className="text-[#eeeeee] text-left font-text-small-semi-bold-font-family text-text-small-semi-bold-font-size leading-text-small-semi-bold-line-height font-text-small-semi-bold-font-weight relative self-stretch"
                             >
                                 Время работы:
-                                
-                            <div
-                                className="flex flex-col gap-0 items-start justify-start self-stretch shrink-0 relative text-[#eeeeee]"
-                            >
-                                {siteConfig?.contacts?.[3]?.text}
-                            </div>
+
+                                <div
+                                    className="flex flex-col gap-0 items-start justify-start self-stretch shrink-0 relative text-[#eeeeee]"
+                                >
+                                    {siteConfig?.contacts?.[3]?.text}
+                                </div>
                             </div>
                         </div>
+                    </div>
+                    <div className="flex flex-col gap-8 divide-divider divide-y divide-background">
+                        <Socials />
+
+                        <ul className="flex flex-col gap-1 pt-8">
+                            {
+                                siteConfig?.navItems?.map((link) => (
+                                    <li key={link.href}>
+                                        <Link href={link.href} className="text-[#eeeeee] text-left font-text-small-link-font-family text-text-small-link-font-size leading-text-small-link-line-height font-text-small-link-font-weight relative self-stretch hover:text-primary transition">
+                                            {link.label}
+                                        </Link>
+                                    </li>
+                                ))
+                            }
+                        </ul>
                     </div>
                 </div>
             </div>

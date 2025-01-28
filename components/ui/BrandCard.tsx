@@ -16,7 +16,7 @@ export default function BrandCard({ title, variant, price, description, image, h
                     "absolute inset-0": variant === 'service',
                 }
             )}>
-                <Image alt={title} className={clsx(
+                <Image alt={title} quality={100} className={clsx(
                     "object-cover w-full group-hover:scale-110 transition-all duration-400",
                     {
                         "h-full": variant === 'service',
