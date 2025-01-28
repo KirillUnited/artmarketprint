@@ -46,7 +46,7 @@ export default function Footer() {
                                 <div
                                     className="flex flex-col gap-0 items-start justify-start self-stretch shrink-0 relative"
                                 >
-                                    <Link href={siteConfig?.contacts?.[0]?.href || '#'}
+                                    <Link href={`tel:${siteConfig?.contacts?.[0]?.href}` || '#'}
                                         className="text-[#eeeeee] text-left font-text-small-link-font-family text-text-small-link-font-size leading-text-small-link-line-height font-text-small-link-font-weight relative self-stretch"
                                     >
                                         {siteConfig?.contacts?.[0]?.text}
