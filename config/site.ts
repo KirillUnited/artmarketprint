@@ -77,14 +77,14 @@ export const siteConfig = {
       label: 'Каталог/Цены',
       href: '/#catalog',
     },
-    {
-      label: 'Проекты',
-      href: '/#projects',
-    },
-    {
-      label: 'Отзывы',
-      href: '/#testimonials',
-    },
+    // {
+    //   label: 'Проекты',
+    //   href: '/#projects',
+    // },
+    // {
+    //   label: 'Отзывы',
+    //   href: '/#testimonials',
+    // },
     {
       label: 'Контакты',
       href: '/#contacts',
