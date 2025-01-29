@@ -5,10 +5,11 @@ import SocialCard from '../ui/SocialCard'
 
 export default function SocialWidget() {
     return (
-        <section className='bg-[#F1F4FA]'>
+        <section>
             <div className='container'>
                 <div className='py-10 md:py-20 flex flex-col gap-10'>
-                    <h2 className='text-2xl text-center font-bold '>
+                    <h2 className='text-2xl text-center font-bold flex flex-col gap-2'>
+                        <span>Подпишитесь на нас</span>
                         <Link href={'https://www.instagram.com/artmarketprint_by/'} target='_blank' className='bg-brand-gradient text-fill-transparent'>
                             {siteConfig?.contacts?.[4]?.title}
                         </Link>

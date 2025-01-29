@@ -166,15 +166,27 @@ export const siteConfig = {
         price: '1 погонный метр от 30 руб.',
         description: 'Идеально для текстиля и сложных дизайнов',
         image: '/images/service-2.jpg',
-        href: '/'
+        href: '/services/DTF-pechat',
+        slug: 'DTF-pechat',
+        seo: {
+          title: 'DTF - печать',
+          description: 'Идеально для текстиля и сложных дизайнов',
+          keywords: ''
+        }
       },
       {
-        title: 'Шелкографная печать ',
+        title: 'Шелкографная печать',
         variant: 'service',
         price: 'от 1 р.',
         description: 'Долговечность и яркость изображений гарантированы',
         image: '/images/service-1.jpg',
-        href: '/'
+        href: '/services/shelkografnaja-pechat',
+        slug: 'shelkografnaja-pechat',
+        seo: {
+          title: 'Шелкографная печать',
+          description: 'Долговечность и яркость изображений гарантированы',
+          keywords: ''
+        }
       },
       {
         title: 'UV - печать',
@@ -182,7 +194,13 @@ export const siteConfig = {
         price: 'от 6 р.',
         description: 'Технология обеспечивает точную передачу мелких деталей и яркость цветов',
         image: '/images/service-3.jpg',
-        href: '/'
+        href: '/services/UV-pechat',
+        slug: 'UV-pechat',
+        seo: {
+          title: 'UV - печать',
+          description: 'Технология обеспечивает точную передачу мелких деталей и яркость цветов',
+          keywords: ''
+        }
       }
     ]
   },
