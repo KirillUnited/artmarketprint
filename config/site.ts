@@ -7,8 +7,22 @@ export const siteConfig = {
   contacts: [
     {
       title: 'Телефон',
-      text: '+375 (29) 752-02-04',
-      href: '+375297520204',
+      name: 'phone',
+      text: 'Мы работаем по всей Беларуси',
+      list: [
+        {
+          label: '+375 (29) 752-02-04',
+          href: '+375297520204',
+        },
+        {
+          label: '+375 (33) 352-46-63',
+          href: '+375333524663',
+        },
+        {
+          label: '+375 (33) 679-12-22',
+          href: '+375336791222',
+        },
+      ],
     },
     {
       title: 'Почта',
@@ -77,14 +91,14 @@ export const siteConfig = {
       label: 'Каталог/Цены',
       href: '/#catalog',
     },
-    {
-      label: 'Проекты',
-      href: '/#projects',
-    },
-    {
-      label: 'Отзывы',
-      href: '/#testimonials',
-    },
+    // {
+    //   label: 'Проекты',
+    //   href: '/#projects',
+    // },
+    // {
+    //   label: 'Отзывы',
+    //   href: '/#testimonials',
+    // },
     {
       label: 'Контакты',
       href: '/#contacts',

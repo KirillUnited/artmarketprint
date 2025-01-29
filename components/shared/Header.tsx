@@ -71,13 +71,14 @@ export default function Header() {
                 </NavbarContent>
                 <div className="flex flex-row gap-8 items-center shrink-0">
                     <SearchIcon />
-                    <Button as={Link} className="leading-normal font-semibold hidden lg:flex" color="primary" href={`tel:${siteConfig?.contacts?.[0].href}`} variant="solid">
+                    <Button as={Link} className="leading-normal font-semibold hidden lg:flex" color="primary" href={`tel:${siteConfig?.contacts?.[0].list?.[0]?.href}`} variant="solid">
                         <PhoneIcon />
-                        <span>{siteConfig?.contacts?.[0].text}</span>
+                        {/* <span>{siteConfig?.contacts?.[0].text?.[0]}</span> */}
+                        <span>Позвонить</span>
                     </Button>
                     <Link
                         className="lg:hidden text-primary"
-                        href={siteConfig?.contacts?.[0].href}
+                        href={`tel:${siteConfig?.contacts?.[0].list?.[0]?.href}`}
                     >
                         <PhoneIcon />
                     </Link>
@@ -103,8 +104,19 @@ export default function Header() {
                     </NavbarMenuItem>
                 ))}
                 <div className="flex flex-col items-center gap-4 mt-6">
+                {
+                        siteConfig?.contacts?.[0]?.list?.map((item) => (
+                            <Link key={item.href} href={`tel:${item.href}` || '#'}
+                                className="font-bold text-left flex items-center gap-2"
+                            >
+                                <PhoneIcon size={20} />
+                                {item.label}
+                            </Link>
+                        ))
+                    }
+                    
                     <Link href={`tel:${siteConfig?.contacts?.[0]?.href}`} target='_blank' className='text-lg bg-brand-gradient text-fill-transparent font-bold'>
-                        {siteConfig?.contacts?.[0]?.href}
+                        {siteConfig?.contacts?.[0]?.href?.[1]}
                     </Link>
                     <Socials />
                 </div>

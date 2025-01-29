@@ -3,6 +3,8 @@ import Link from 'next/link'
 import React from 'react'
 import Socials from './Socials'
 import BrandForm from '../ui/BrandForm'
+import { MailIcon, MapIcon, PhoneIcon, TimerIcon } from 'lucide-react'
+import ContactsList from './ContactsList'
 
 export default function Contacts() {
     return (
@@ -20,60 +22,9 @@ export default function Contacts() {
                 </div>
                 <div className="container">
                     <div className="flex flex-wrap gap-10 justify-between">
-                        <div
-                            className="flex flex-col gap-6 col-md-2"
-                        >
-                            <div
-                                className="flex flex-col gap-1"
-                            >
-                                <div
-                                    className=" text-text-small-semi-bold-font-size leading-text-small-semi-bold-line-height font-text-small-semi-bold-font-weight relative self-stretch"
-                                >
-                                    Адрес:
-                                </div>
-                                <div
-                                    className="font-bold text-left font-text-small-normal-font-family text-text-small-normal-font-size leading-text-small-normal-line-height font-text-small-normal-font-weight relative self-stretch"
-                                >
-                                    {siteConfig?.contacts?.[2]?.text}
-                                </div>
-                            </div>
-                            <div
-                                className="flex flex-col gap-1 items-start justify-start self-stretch shrink-0 relative"
-                            >
-                                <div
-                                    className=" text-left font-text-small-semi-bold-font-family text-text-small-semi-bold-font-size leading-text-small-semi-bold-line-height font-text-small-semi-bold-font-weight relative self-stretch"
-                                >
-                                    Контакты:
-                                </div>
-                                <div
-                                    className="flex flex-col gap-0 items-start justify-start self-stretch shrink-0 relative"
-                                >
-                                    <Link href={`tel:${siteConfig?.contacts?.[0]?.href}` || '#'}
-                                        className="font-bold text-left font-text-small-link-font-family text-text-small-link-font-size leading-text-small-link-line-height font-text-small-link-font-weight relative self-stretch"
-                                    >
-                                        {siteConfig?.contacts?.[0]?.text}
-                                    </Link>
-                                    <Link href={siteConfig?.contacts?.[1]?.href || '#'}
-                                        className="font-bold text-left font-text-small-link-font-family text-text-small-link-font-size leading-text-small-link-line-height font-text-small-link-font-weight relative self-stretch"
-                                    >
-                                        {siteConfig?.contacts?.[1]?.text}
-                                    </Link>
-                                </div>
-                            </div>
-
-                            <div
-                                className=" text-left font-text-small-semi-bold-font-family text-text-small-semi-bold-font-size leading-text-small-semi-bold-line-height font-text-small-semi-bold-font-weight relative self-stretch"
-                            >
-                                Время работы:
-
-                                <div
-                                    className="font-bold flex flex-col gap-0 items-start justify-start self-stretch shrink-0 relative "
-                                >
-                                    {siteConfig?.contacts?.[3]?.text}
-                                </div>
-                            </div>
+                        <div className='flex flex-col gap-10'>
+                            <ContactsList className='' />
                             <Socials />
-
                             <p>Ждем вас в любое удобное время!</p>
                         </div>
                         <BrandForm className='w-full lg:w-1/2'/>

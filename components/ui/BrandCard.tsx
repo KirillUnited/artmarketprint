@@ -35,7 +35,7 @@ export default function BrandCard({ title, variant, price, description, image, h
                     <h3 className='text-xl md:text-2xl leading-[120%] font-bold'>
                         {title}
                         <br />
-                        <span className='text-primary font-light underline'>{price}</span>
+                        <span className='text-primary font-bold text-2xl'>{price}</span>
                     </h3>
                     <p className="text-sm md:text-base text-foreground/90 leading-normal font-light line-clamp-3">{description}</p>
                 </div>
