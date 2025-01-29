@@ -4,6 +4,8 @@ import BrandLogo from '../ui/BrandLogo'
 import { siteConfig } from '@/config/site'
 import Link from 'next/link'
 import Socials from './Socials'
+import { MailIcon, MapIcon, Phone } from 'lucide-react'
+import ContactsList from './ContactsList'
 
 export default function Footer() {
     return (
@@ -18,59 +20,7 @@ export default function Footer() {
                         className="flex flex-col gap-8"
                     >
                         <div className='self-start'><BrandLogo alt="ArtMarketPrint" /></div>
-                        <div
-                            className="flex flex-col gap-6"
-                        >
-                            <div
-                                className="flex flex-col gap-1"
-                            >
-                                <div
-                                    className="text-[#eeeeee] text-text-small-semi-bold-font-size leading-text-small-semi-bold-line-height font-text-small-semi-bold-font-weight relative self-stretch"
-                                >
-                                    Адрес:
-                                </div>
-                                <div
-                                    className="text-[#eeeeee] text-left font-text-small-normal-font-family text-text-small-normal-font-size leading-text-small-normal-line-height font-text-small-normal-font-weight relative self-stretch"
-                                >
-                                    {siteConfig?.contacts?.[2]?.text}
-                                </div>
-                            </div>
-                            <div
-                                className="flex flex-col gap-1 items-start justify-start self-stretch shrink-0 relative"
-                            >
-                                <div
-                                    className="text-[#eeeeee] text-left font-text-small-semi-bold-font-family text-text-small-semi-bold-font-size leading-text-small-semi-bold-line-height font-text-small-semi-bold-font-weight relative self-stretch"
-                                >
-                                    Контакты:
-                                </div>
-                                <div
-                                    className="flex flex-col gap-0 items-start justify-start self-stretch shrink-0 relative"
-                                >
-                                    <Link href={`tel:${siteConfig?.contacts?.[0]?.href}` || '#'}
-                                        className="text-[#eeeeee] text-left font-text-small-link-font-family text-text-small-link-font-size leading-text-small-link-line-height font-text-small-link-font-weight relative self-stretch"
-                                    >
-                                        {siteConfig?.contacts?.[0]?.text}
-                                    </Link>
-                                    <Link href={siteConfig?.contacts?.[1]?.href || '#'}
-                                        className="text-[#eeeeee] text-left font-text-small-link-font-family text-text-small-link-font-size leading-text-small-link-line-height font-text-small-link-font-weight relative self-stretch"
-                                    >
-                                        {siteConfig?.contacts?.[1]?.text}
-                                    </Link>
-                                </div>
-                            </div>
-
-                            <div
-                                className="text-[#eeeeee] text-left font-text-small-semi-bold-font-family text-text-small-semi-bold-font-size leading-text-small-semi-bold-line-height font-text-small-semi-bold-font-weight relative self-stretch"
-                            >
-                                Время работы:
-
-                                <div
-                                    className="flex flex-col gap-0 items-start justify-start self-stretch shrink-0 relative text-[#eeeeee]"
-                                >
-                                    {siteConfig?.contacts?.[3]?.text}
-                                </div>
-                            </div>
-                        </div>
+                        <ContactsList className='text-[#eeeeee]' />
                     </div>
                     <div className="flex flex-col gap-8 divide-y divide-background">
                         <Socials />
