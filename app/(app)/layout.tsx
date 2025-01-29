@@ -19,6 +19,11 @@ export const metadata: Metadata = {
   icons: {
     icon: '/favicon.ico',
   },
+  openGraph: {
+    title: `${siteConfig.name || ''}`,
+    description: `${siteConfig.description}`,
+    images: '/apple-touch-icon.png'
+}
 };
 
 export const viewport: Viewport = {
@@ -34,7 +39,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html suppressHydrationWarning lang="en">
+    <html suppressHydrationWarning lang="ru">
       <head />
       <body
         className={clsx(
@@ -43,7 +48,7 @@ export default function RootLayout({
         )}
       >
         <Providers themeProps={{ attribute: 'class', defaultTheme: 'dark' }}>
-          <div className="flex flex-col">
+          <div className="min-h-screen flex flex-col">
             <Header />
             <main className="flex-grow">
               {children}
