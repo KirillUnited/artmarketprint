@@ -11,19 +11,31 @@ import Header from '@/components/shared/Header';
 import Footer from '@/components/shared/Footer';
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://artmarketprint.by'),
   title: {
-    default: siteConfig.name,
-    template: `%s - ${siteConfig.name}`,
+    default: `${siteConfig.name} - ArtMarketPrint`,
+    template: `%s | ${siteConfig.name} - ArtMarketPrint`,
   },
   description: siteConfig.description,
+  keywords: siteConfig.seo.keywords,
   icons: {
     icon: '/favicon.ico',
   },
   openGraph: {
     title: `${siteConfig.name || ''}`,
     description: `${siteConfig.description}`,
-    images: '/apple-touch-icon.png'
-}
+    images: ['/apple-touch-icon.png'],
+    type: 'website',
+    locale: 'ru',
+    siteName: 'artmarketprint',
+		url: 'https://artmarketprint.by',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `${siteConfig.name || ''}`,
+    description: `${siteConfig.description}`,
+    images: ['/apple-touch-icon.png'],
+  },
 };
 
 export const viewport: Viewport = {

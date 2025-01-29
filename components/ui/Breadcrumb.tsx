@@ -8,7 +8,7 @@ export default function BaseBreadcrumb() {
     const params = useParams();
     const { slug: paramsSlug } = params;
     const data = siteConfig?.serviceSection?.items.find(({ slug }) => slug === paramsSlug);
-    const { title = '', description = '', keywords = '' } = data?.seo || {};
+    const { title = '' } = data || {};
 
     return (
         <Breadcrumbs>
