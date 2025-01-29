@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Image as HeroImage } from "@heroui/image";
 import { siteConfig } from "@/config/site";
 import BaseBreadcrumb from "@/components/ui/Breadcrumb";
+import BrandButton from "@/components/ui/BrandButton";
 
 type Props = {
     slug: string
@@ -45,7 +46,7 @@ export default async function ServicePage({ params }: { params: Promise<Props> }
                     width={1920}
                     height={1080}
                 />
-                <div className="container max-w-2xl relative z-10">
+                <div className="container flex flex-col gap-10 max-w-2xl relative z-10">
                     <div className="text-center">
                         <h1 className="text-4xl font-extrabold text-background sm:text-5xl">
                             {title}
@@ -54,6 +55,8 @@ export default async function ServicePage({ params }: { params: Promise<Props> }
                             {description}
                         </p>
                     </div>
+
+                    <BrandButton state="primary" className={'self-center'}>ЗАКАЗАТЬ</BrandButton>
                 </div>
             </section>
             <section className="py-16">

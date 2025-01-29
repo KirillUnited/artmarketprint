@@ -8,14 +8,14 @@ import SocialWidget from "@/components/shared/SocialWidget";
 import BaseBreadcrumb from "@/components/ui/Breadcrumb";
 import BrandButton from "@/components/ui/BrandButton";
 
-export default function ServicesPage() {
+export default function CatalogPage() {
     return (
         <>
             <section className="py-12 md:py-24 relative after:absolute after:inset-0 after:bg-gradient-to-t after:from-black after:to-transparent">
                 <Image
                     priority
-                    src="/images/service-2.jpg"
-                    alt="УФ-печать"
+                    src="/images/catalog-1.jpeg"
+                    alt={siteConfig.catalogSection.title}
                     className="absolute inset-0 object-cover w-full h-full"
                     width={1920}
                     height={1080}
@@ -23,10 +23,10 @@ export default function ServicesPage() {
                 <div className="container flex flex-col gap-8 max-w-2xl relative z-10">
                     <div className="text-center">
                         <h1 className="text-4xl font-extrabold text-background sm:text-5xl">
-                            {siteConfig.serviceSection.title}
+                            {siteConfig.catalogSection.title}
                         </h1>
                         <p className="mt-4 text-xl text-white">
-                            {siteConfig.serviceSection.description}
+                            {siteConfig.catalogSection.description}
                         </p>
 
                     </div>
@@ -39,7 +39,7 @@ export default function ServicesPage() {
                     <BaseBreadcrumb />
                     <div className="grid grid-cols-[var(--grid-template-columns)] gap-8 mt-4">
                         {
-                            siteConfig?.serviceSection?.items.map((props: BrandCardProps, index) => (
+                            siteConfig?.catalogSection?.items.map((props: BrandCardProps, index) => (
                                 <BrandCard key={index} {...props} />
                             ))
                         }

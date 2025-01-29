@@ -26,7 +26,7 @@ export default function Home() {
 				strategy="lazyOnload"
 				async
 			/>
-			<div className="elfsight-app-7f56de0f-7490-4845-801c-cf32d1a5aeb1" data-elfsight-app-lazy></div>
+			<div className="elfsight-app-7f56de0f-7490-4845-801c-cf32d1a5aeb1" data-elfsight-app-lazy/>
 		</>
 	);
 }
