@@ -38,7 +38,7 @@ export default function BrandForm({ className }: { className?: string }): JSX.El
                     className='bg-background'
                 />
             </div>
-            <div className="w-full">
+            <div className="w-full flex flex-wrap">
 
                 <BrandButton className='flex-1 basis-32' state='primary' type="submit">ЗАКАЗАТЬ</BrandButton>
             </div>
