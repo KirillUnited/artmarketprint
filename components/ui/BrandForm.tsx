@@ -18,6 +18,7 @@ export default function BrandForm({ className }: { className?: string }): JSX.El
                     placeholder="Напишите Ваше имя"
                     variant="bordered"
                     radius='sm'
+                    className='bg-background'
                 />
                 <Input
                     isRequired
@@ -27,12 +28,14 @@ export default function BrandForm({ className }: { className?: string }): JSX.El
                     type="tel"
                     variant="bordered"
                     radius='sm'
+                    className='bg-background'
                 />
                 <Textarea
                     label="Комментарий"
                     placeholder="Введите Ваш комментарий"
                     variant="bordered"
                     radius='sm'
+                    className='bg-background'
                 />
             </div>
             <div className="w-full">

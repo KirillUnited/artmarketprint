@@ -72,7 +72,7 @@ export default function Footer() {
                             </div>
                         </div>
                     </div>
-                    <div className="flex flex-col gap-8 divide-divider divide-y divide-background">
+                    <div className="flex flex-col gap-8 divide-y divide-background">
                         <Socials />
 
                         <ul className="flex flex-col gap-1 pt-8">
