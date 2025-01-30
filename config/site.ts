@@ -76,25 +76,36 @@ export const siteConfig = {
       menuItems: [
         {
           label: 'УФ-печать',
-          href: '/',
+          href: '/services/UV-pechat',
+          description: 'Технология обеспечивает точную передачу мелких деталей и яркость цветов'
         },
         {
           label: 'DTF-печать',
-          href: '/',
+          href: '/services/DTF-pechat',
+          description: 'Идеально для текстиля и сложных дизайнов'
         },
         {
           label: 'Гравировка',
           href: '/',
+          description: 'Идеально для текстиля и сложных дизайнов'
         },
         {
           label: 'Шелкография',
-          href: '/',
+          href: '/services/shelkografnaja-pechat',
+          description: 'Долговечность и яркость изображений гарантированы'
         },
       ]
     },
     {
-      label: 'Каталог/Цены',
+      label: 'Каталог',
       href: '/#catalog',
+      menuItems: [
+        {
+          label: 'Печать на одежде',
+          href: '/catalog/pechat-na-odezhde',
+          description: 'Создайте уникальный стиль с печатью на одежде! Яркие и стойкие принты на футболках, толстовках, худи, кепках и другой одежде. DTF, шелкография и термоперенос – выберите свой метод печати!'
+        }
+      ]
     },
     // {
     //   label: 'Проекты',
