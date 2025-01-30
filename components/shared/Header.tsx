@@ -10,7 +10,7 @@ import BrandLogo from '../ui/BrandLogo';
 import { siteConfig } from '@/config/site';
 import Socials from './Socials';
 import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@heroui/dropdown';
-import { ChevronDownIcon } from 'lucide-react';
+import { Calendar1Icon, CalendarIcon, ChevronDownIcon } from 'lucide-react';
 
 type HeaderDropdownMenuProps = {
 	triggerLabel: string,
@@ -108,34 +108,64 @@ export default function Header() {
 							<ViberIcon />
 						</Link>
 					</div>
-					<Button className="leading-normal font-semibold hidden lg:flex" color="primary" href={`tel:${siteConfig?.contacts?.[0].list?.[0]?.href}`} variant="solid">
-						<PhoneIcon />
-						<span>{siteConfig?.contacts?.[0].text?.[0]}</span>
+					<Dropdown
+						classNames={{
+							content: 'rounded-md',
+						}}>
+						<DropdownTrigger>
+							<Button className="p-0 bg-transparent data-[hover=true]:bg-transparent hidden lg:flex text-primary gap-1 hover:underline hover:text-primary transition" variant="light" radius='sm'
+								endContent={<ChevronDownIcon size={20} className="text-primary" />}>
+								<PhoneIcon />
+								<span className='text-foreground'>{siteConfig?.contacts?.[0]?.list?.[0]?.label}</span>
+							</Button>
+						</DropdownTrigger>
+						<DropdownMenu aria-label="Link Actions"
+							itemClasses={{
+								base: "gap-4 rounded-md data-[hover=true]:bg-transparent",
+								title: "font-semibold",
+							}}
+						><>
+								{
+									siteConfig?.contacts?.[0]?.list?.map((item, index) => (
+										<DropdownItem key={index}>
+											<Link href={`tel:${item.href}`}>
+												<span>{item.label}</span>
+											</Link>
+										</DropdownItem>
+									))
+								}
+							</>
+						</DropdownMenu>
+					</Dropdown>
+					<Button className="leading-normal font-semibold hidden lg:flex" color="primary" variant="solid" radius='sm'>
+						<CalendarIcon size={18} />
 						<span>ЗАКАЗАТЬ ЗВОНОК</span>
 					</Button>
-					<Link className="lg:hidden text-primary" href={`tel:${siteConfig?.contacts?.[0].list?.[0]?.href}`}>
-						<PhoneIcon />
-					</Link>
 					<NavbarMenuToggle aria-label={isMenuOpen ? 'Close menu' : 'Open menu'} className="xl:hidden h-6" />
 				</div>
 			</div>
-			<NavbarMenu className="gap-4 px-4 py-6">
-				{siteConfig?.navItems.map((navItem, index) => (
-					<NavbarMenuItem key={`${navItem}-${index}`}>
-						<Link className="w-full" color="foreground" href={navItem.href} size="lg" >
-							{navItem.label}
-						</Link>
-					</NavbarMenuItem>
-				))}
-				<div className="flex flex-col gap-4 mt-6">
+			<NavbarMenu className="gap-6 px-4 py-6">
+				<div className="flex flex-col gap-4">
+					{siteConfig?.navItems.map((navItem, index) => (
+						<NavbarMenuItem key={`${navItem}-${index}`}>
+							<Link className="w-full" color="foreground" href={navItem.href} size="lg" >
+								{navItem.label}
+							</Link>
+						</NavbarMenuItem>
+					))}
+				</div>
+				<Button className="leading-normal font-semibold" color="primary" variant="solid" radius='sm'>
+					<span>ЗАКАЗАТЬ ЗВОНОК</span>
+				</Button>
+				<div className="flex flex-col gap-4">
 					{siteConfig?.contacts?.[0]?.list?.map((item) => (
 						<Link key={item.href} href={`tel:${item.href}` || '#'} className="font-bold text-left flex items-center gap-2">
 							<PhoneIcon size={20} />
 							{item.label}
 						</Link>
 					))}
-					<Socials />
 				</div>
+				<Socials />
 			</NavbarMenu>
 		</Navbar>
 	);
