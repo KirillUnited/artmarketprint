@@ -1,49 +1,64 @@
 'use client';
 import React from 'react';
-import {Button} from '@heroui/button';
-import {Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenu, NavbarMenuItem, NavbarMenuToggle} from '@heroui/navbar';
-import {Link} from '@heroui/link';
+import { Button } from '@heroui/button';
+import { Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenu, NavbarMenuItem, NavbarMenuToggle } from '@heroui/navbar';
+import { Link } from '@heroui/link';
 
-import {PhoneIcon, SearchIcon} from '../icons';
+import { PhoneIcon, SearchIcon } from '../icons';
 import BrandLogo from '../ui/BrandLogo';
 
-import {siteConfig} from '@/config/site';
+import { siteConfig } from '@/config/site';
 import Socials from './Socials';
+import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@heroui/dropdown';
+import { ChevronDownIcon } from 'lucide-react';
 
-// const HeaderDropdown = () => {
-//     return (
-//         <Dropdown>
-//           <NavbarItem>
-//             <DropdownTrigger>
-//               <Button
-//                 disableRipple
-//                 className="p-0 bg-transparent data-[hover=true]:bg-transparent"
-//                 endContent={icons.chevron}
-//                 radius="sm"
-//                 variant="light"
-//               >
-//                 Features
-//               </Button>
-//             </DropdownTrigger>
-//           </NavbarItem>
-//           <DropdownMenu
-//             aria-label="ACME features"
-//             className="w-[340px]"
-//             itemClasses={{
-//               base: "gap-4",
-//             }}
-//           >
-//             <DropdownItem
-//               key="autoscaling"
-//               description="ACME scales apps to meet user demand, automagically, based on load."
-//               startContent={icons.scale}
-//             >
-//               Autoscaling
-//             </DropdownItem>
-//           </DropdownMenu>
-//         </Dropdown>
-//     )
-// }
+type HeaderDropdownMenuProps = {
+	triggerLabel: string,
+	items: { label: string, href?: string, description?: string }[]
+}
+
+const HeaderDropdownMenu = ({ triggerLabel, items }: HeaderDropdownMenuProps) => {
+	return (
+		<Dropdown
+			classNames={{
+				content: 'rounded-md',
+			}}>
+			<NavbarItem>
+				<DropdownTrigger>
+					<Button
+						disableRipple
+						className="p-0 bg-transparent data-[hover=true]:bg-transparent text-base leading-normal font-semibold hover:underline hover:text-primary transition"
+						endContent={<ChevronDownIcon className="text-primary" />}
+						radius="sm"
+						variant="light"
+					>
+						{triggerLabel}
+					</Button>
+				</DropdownTrigger>
+			</NavbarItem>
+			<DropdownMenu
+				aria-label="Услуги"
+				className="w-[340px]"
+				itemClasses={{
+					base: "gap-4 rounded-md data-[hover=true]:bg-brand-gradient data-[hover=true]:text-fill-transparent",
+					title: "font-semibold",
+				}}
+			>
+				{
+					items.map((item) => (
+						<DropdownItem
+							key={item.label}
+							href={item.href}
+							description={item.description}
+						>
+							{item.label}
+						</DropdownItem>
+					))
+				}
+			</DropdownMenu>
+		</Dropdown>
+	)
+}
 
 export default function Header() {
 	const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -64,13 +79,20 @@ export default function Header() {
 					<BrandLogo alt={'ArtMarketPrint'} />
 				</NavbarBrand>
 				<NavbarContent className="hidden xl:flex gap-8" justify="center">
-					{siteConfig?.navItems?.map((navItem, index) => (
-						<NavbarItem key={index} isActive={index === 0}>
-							<Link aria-current="page" className="text-base leading-normal font-semibold hover:underline hover:text-primary transition" color={'foreground'} href={navItem.href}>
-								{navItem.label}
-							</Link>
-						</NavbarItem>
-					))}
+					{siteConfig?.navItems?.map((navItem, index) => {
+						return (
+							navItem?.menuItems ?
+								(
+									<HeaderDropdownMenu key={index + 1} triggerLabel={navItem.label} items={navItem.menuItems} />
+								) : (
+									<NavbarItem key={navItem.label} isActive={index === 0}>
+										<Link aria-current="page" className="text-base leading-normal font-semibold hover:underline hover:text-primary transition" color={'foreground'} href={navItem.href}>
+											{navItem.label}
+										</Link>
+									</NavbarItem>
+								)
+						)
+					})}
 				</NavbarContent>
 				<div className="flex flex-row gap-8 items-center shrink-0">
 					<SearchIcon />

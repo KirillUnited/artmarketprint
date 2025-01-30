@@ -76,19 +76,23 @@ export const siteConfig = {
       menuItems: [
         {
           label: 'УФ-печать',
-          href: '/',
+          href: '/services/UV-pechat',
+          description: 'Технология обеспечивает точную передачу мелких деталей и яркость цветов'
         },
         {
           label: 'DTF-печать',
-          href: '/',
+          href: '/services/DTF-pechat',
+          description: 'Идеально для текстиля и сложных дизайнов'
         },
         {
           label: 'Гравировка',
           href: '/',
+          description: 'Идеально для текстиля и сложных дизайнов'
         },
         {
           label: 'Шелкография',
-          href: '/',
+          href: '/services/shelkografnaja-pechat',
+          description: 'Долговечность и яркость изображений гарантированы'
         },
       ]
     },
