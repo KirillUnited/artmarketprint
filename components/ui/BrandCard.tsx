@@ -2,15 +2,15 @@
 
 import React from 'react';
 import Image from 'next/image';
-import {Button} from '@heroui/button';
+import { Button } from '@heroui/button';
 import Link from 'next/link';
 import clsx from 'clsx';
 
 import BrandModalOffer from './BrandModalOffer';
 
-import {BrandCardProps} from '@/types';
+import { BrandCardProps } from '@/types';
 
-export const BrandCardLink = ({href}) => (
+export const BrandCardLink = ({ href }: { href: string }) => (
 	<Button as={Link} className="flex flex-row gap-2 items-center font-semibold text-base px-2 h-auto self-center" color="primary" href={href} variant="light">
 		<span>Подробнее</span>
 		<svg fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
@@ -18,7 +18,7 @@ export const BrandCardLink = ({href}) => (
 		</svg>
 	</Button>
 );
-export const BrandCardFooter = ({variant, href}) => (
+export const BrandCardFooter = ({ variant, href }: { variant: string; href: string }) => (
 	<>
 		{variant === 'service' && (
 			<div className="flex flex-row gap-2 items-center">
@@ -34,7 +34,7 @@ export const BrandCardFooter = ({variant, href}) => (
 	</>
 );
 
-export default function BrandCard({title, variant, price, description, image, href}: BrandCardProps) {
+export default function BrandCard({ title, variant, price, description, image, href }: BrandCardProps) {
 	return (
 		<div className="min-h-[260px] md:min-h-[460px] overflow-hidden rounded-md shadow-small hover:shadow-large transition-all flex flex-col group relative">
 			<Link
@@ -69,7 +69,7 @@ export default function BrandCard({title, variant, price, description, image, hr
 					</h3>
 					<p className="text-sm md:text-base text-foreground/90 leading-normal font-light line-clamp-3">{description}</p>
 				</Link>
-				<BrandCardFooter variant={variant} href={href} />
+				<BrandCardFooter variant={variant || ''} href={href || ''} />
 			</div>
 		</div>
 	);
