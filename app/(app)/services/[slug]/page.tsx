@@ -1,4 +1,4 @@
-import BrandForm from "@/components/ui/BrandForm";
+import OrderForm from "@/components/ui/OrderForm";
 import Image from "next/image";
 import { Image as HeroImage } from "@heroui/image";
 import { siteConfig } from "@/config/site";
@@ -129,7 +129,7 @@ export default async function ServicePage({ params }: { params: Promise<Props> }
                     </div>
 
                     <div className="w-full max-w-2xl self-center">
-                        <BrandForm />
+                        <OrderForm />
                     </div>
                 </div>
             </section>

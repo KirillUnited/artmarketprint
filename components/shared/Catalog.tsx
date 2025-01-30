@@ -33,7 +33,7 @@ export const Catalog = () => {
 								<BrandCard key={index} title={title} price={price} description={description} image={image} href={href} variant={variant}/>
 							))
 						}
-						<Button className='bg-brand-gradient text-fill-transparent font-semibold md:hidden flex' color='secondary' radius='sm' size='lg' variant='ghost'>
+						<Button as={Link} href={siteConfig.catalogSection.href} className='bg-brand-gradient text-fill-transparent font-semibold md:hidden flex' color='secondary' radius='sm' size='lg' variant='ghost'>
 							<span>Смотреть ещё</span>
 							<svg fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
 								<path d="M9.70697 16.9496L15.414 11.2426L9.70697 5.53564L8.29297 6.94964L12.586 11.2426L8.29297 15.5356L9.70697 16.9496Z" fill="currentColor" />

@@ -1,11 +1,12 @@
 import React from 'react'
+import Link from 'next/link'
 
 import BrandLogo from '../ui/BrandLogo'
-import { siteConfig } from '@/config/site'
-import Link from 'next/link'
-import Socials from './Socials'
-import { MailIcon, MapIcon, Phone } from 'lucide-react'
-import ContactsList from './ContactsList'
+
+import Socials from './Socials';
+import ContactsList from './ContactsList';
+
+import { siteConfig } from '@/config/site';
 
 export default function Footer() {
     return (

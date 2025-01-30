@@ -1,4 +1,4 @@
-import BrandForm from '@/components/ui/BrandForm';
+import OrderForm from '@/components/ui/OrderForm';
 import Image from 'next/image';
 import {Image as HeroImage} from '@heroui/image';
 import {siteConfig} from '@/config/site';
@@ -128,7 +128,7 @@ export default async function ProductPage({params}: {params: Promise<Props>}) {
 			<section className={'py-10 md:py-20 bg-[#F1F4FA]'}>
 				<div className="container flex flex-col">
 					<div className="w-full max-w-2xl self-center bg-background shadow-lg p-6 rounded-medium">
-						<BrandForm className={'items-center'} />
+						<OrderForm className={'items-center'} />
 					</div>
 				</div>
 			</section>
