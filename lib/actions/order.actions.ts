@@ -5,7 +5,7 @@ const telegramBotToken = '7986078877:AAEPLbAVZeslEVFv_aG8BP0spNu2zG2Y48k';
 const chatId = '-1002402462338';
 const BASE_URL = `https://api.telegram.org/bot${telegramBotToken}/sendMessage`;
 
-export async function sendOrder(data: FormData) {
+export async function sendOrder(data: FormData): Promise<any> {
 	const name = data.get('user_name') as string;
 	const phone = data.get('user_phone') as string;
 	const comment = data.get('user_comment') as string;
