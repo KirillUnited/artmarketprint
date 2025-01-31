@@ -14,7 +14,7 @@ export interface LogoIconProps extends React.AllHTMLAttributes<HTMLDivElement> {
 export interface BrandButtonProps extends ButtonProps {
   state?: 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | undefined | null;
   children: React.ReactNode;
-};
+}
 
 export interface BrandCardProps extends React.AllHTMLAttributes<HTMLDivElement> {
   title: string;
