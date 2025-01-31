@@ -93,6 +93,6 @@ export const ServiceDetails = ({name, description, image, price, advantages}: Se
 			</div>
 		</div>
 
-		<Image alt={name} className="h-full object-cover flex-1 w-full" height={635} src={'/images/about.jpg'} width={640} />
+		<Image alt={name} className="h-full object-cover flex-1 w-full" height={635} src={`/images/${image}`} width={640} />
 	</div>
 );
