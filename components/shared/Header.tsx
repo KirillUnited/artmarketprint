@@ -122,13 +122,13 @@ export default function Header() {
 						<DropdownMenu aria-label="Link Actions"
 							itemClasses={{
 								base: "gap-4 rounded-md data-[hover=true]:bg-transparent",
-								title: "font-semibold",
+								title: "text-center",
 							}}
 						><>
 								{
 									siteConfig?.contacts?.[0]?.list?.map((item, index) => (
-										<DropdownItem key={index}>
-											<Link href={`tel:${item.href}`}>
+										<DropdownItem key={index} className="py-0">
+											<Link href={`tel:${item.href}`} className="text-sm hover:text-primary" color={'foreground'}>
 												<span>{item.label}</span>
 											</Link>
 										</DropdownItem>
