@@ -33,6 +33,15 @@ export interface ServiceDetailsProps {
   price?: string
 }
 
+export interface CategoryDetailsProps {
+  name: string,
+  description?: string,
+  image?: string,
+  advantages?: string[],
+  price?: string
+}
+
 export interface CatalogDataProps {
   services: ServiceDetailsProps[];
+  categories: CategoryDetailsProps[];
 }

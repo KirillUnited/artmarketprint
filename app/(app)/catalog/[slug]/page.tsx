@@ -59,7 +59,7 @@ export default async function CategoryPage({params}: {params: Promise<Props>}) {
 			<section>
 				<div className="container">
 					<div className="my-6">
-						<BaseBreadcrumb/>
+						<BaseBreadcrumb section='catalog'/>
 					</div>
 				</div>
 			</section>
