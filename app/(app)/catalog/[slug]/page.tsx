@@ -7,7 +7,7 @@ import {BrandCardProps} from '@/types';
 import BrandCard from '@/components/ui/BrandCard';
 import BrandButton from '@/components/ui/BrandButton';
 import {ServiceDetails} from "@/components/shared/Services";
-import {getCatalogData, getServicesData} from "@/lib/actions/services.actions";
+import {getCatalogData} from "@/lib/actions/services.actions";
 
 type Props = {
 	slug: string;

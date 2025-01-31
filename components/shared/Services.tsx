@@ -4,7 +4,7 @@ import {Button} from '@heroui/button';
 import BrandCard from '../ui/BrandCard';
 
 import {siteConfig} from '@/config/site';
-import {BrandCardProps, ServiceProps} from '@/types';
+import {BrandCardProps, ServiceDetailsProps} from '@/types';
 import BrandButton from '@/components/ui/BrandButton';
 import Image from 'next/image';
 
@@ -58,7 +58,7 @@ export const Services = () => {
 	);
 };
 
-export const ServiceDetails = ({name, description, image, price, advantages}: ServiceProps) => (
+export const ServiceDetails = ({name, description, image, price, advantages}: ServiceDetailsProps) => (
 	<div className="grid md:grid-cols-2 items-center gap-x-10 gap-y-4">
 		<div className="flex flex-col gap-8 md:gap-16">
 			<div className="flex flex-col gap-4 md:gap-6">

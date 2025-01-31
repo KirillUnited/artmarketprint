@@ -26,6 +26,7 @@ export interface BrandCardProps extends React.AllHTMLAttributes<HTMLDivElement> 
 }
 
 export interface ServiceDetailsProps {
+  slug?: string,
   name: string,
   description?: string,
   image?: string,
@@ -34,6 +35,7 @@ export interface ServiceDetailsProps {
 }
 
 export interface CategoryDetailsProps {
+  slug?: string,
   name: string,
   description?: string,
   image?: string,
