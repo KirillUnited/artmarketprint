@@ -31,7 +31,7 @@ export default function About() {
 						<div className="flex flex-col md:flex-row gap-2 md:gap-4">
 							<BrandButton as={Link} href={'/#catalog'} state='primary'>УЗНАТЬ ЦЕНЫ</BrandButton>
 
-							<Button className='bg-brand-gradient text-fill-transparent font-semibold' color='secondary' radius='sm' size='lg' variant='ghost'>КОНСУЛЬТАЦИЯ</Button>
+							<Button as={Link} href={'/#contacts'} className='bg-brand-gradient text-fill-transparent font-semibold' color='secondary' radius='sm' size='lg' variant='ghost'>КОНСУЛЬТАЦИЯ</Button>
 						</div>
 					</div>
 

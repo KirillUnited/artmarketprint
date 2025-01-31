@@ -67,7 +67,7 @@ export default function Hero() {
 							<BrandButton as={Link} href={'/#catalog'} state='primary'>УЗНАТЬ ЦЕНЫ</BrandButton>
 							{/* <BrandModalOffer /> */}
 
-							<Button className='bg-brand-gradient text-fill-transparent font-semibold' color='secondary' radius='sm' size='lg' variant='ghost'>КОНСУЛЬТАЦИЯ</Button>
+							<Button as={Link} href={'/#contacts'} className='bg-brand-gradient text-fill-transparent font-semibold' color='secondary' radius='sm' size='lg' variant='ghost'>КОНСУЛЬТАЦИЯ</Button>
 						</div>
 					</motion.div>
 
