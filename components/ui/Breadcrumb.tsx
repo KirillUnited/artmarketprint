@@ -7,7 +7,7 @@ import { siteConfig } from '@/config/site';
 export default function BaseBreadcrumb({section}: {section: string}): JSX.Element {
     const params = useParams();
     const { slug: paramsSlug } = params;
-    const page = section === 'catalog' ? siteConfig?.catalogSection : siteConfig?.serviceSection;
+    const page: any = section === 'catalog' ? siteConfig?.catalogSection : siteConfig?.serviceSection;
     const data = page?.items.find((item) => item.slug === paramsSlug);
     const { title = '' } = data || {};
 
