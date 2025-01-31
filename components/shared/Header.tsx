@@ -73,7 +73,7 @@ export default function Header() {
 						<CalendarIcon size={18} />
 						<span>ЗАКАЗАТЬ ЗВОНОК</span>
 					</Button> */}
-					<HeroModalOffer />
+					<div className='hidden lg:block'><HeroModalOffer/></div>
 					<NavbarMenuToggle aria-label={isMenuOpen ? 'Close menu' : 'Open menu'} className="xl:hidden h-6" />
 				</div>
 			</div>
@@ -87,9 +87,10 @@ export default function Header() {
 						</NavbarMenuItem>
 					))}
 				</div>
-				<Button className="leading-normal font-semibold" color="primary" variant="solid" radius='sm'>
-					<span>ЗАКАЗАТЬ ЗВОНОК</span>
-				</Button>
+				{/*<Button className="leading-normal font-semibold" color="primary" variant="solid" radius='sm'>*/}
+				{/*	<span>ЗАКАЗАТЬ ЗВОНОК</span>*/}
+				{/*</Button>*/}
+				<HeroModalOffer />
 				<div className="flex flex-col gap-4">
 					{siteConfig?.contacts?.[0]?.list?.map((item) => (
 						<Link key={item.href} href={`tel:${item.href}` || '#'} className="font-bold text-left flex items-center gap-2">

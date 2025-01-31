@@ -1,3 +1,5 @@
+// noinspection TypeScriptValidateTypes
+
 import { Button } from '@heroui/button'
 import clsx from 'clsx'
 import React from 'react'

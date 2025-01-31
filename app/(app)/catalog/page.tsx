@@ -32,7 +32,7 @@ export default function CatalogPage() {
 
                     </div>
 
-                    <BrandButton as={Link} href="/#categoryList" state="primary" className={'self-center'}>ПОДРОБНЕЕ</BrandButton>
+                    {/*<BrandButton as={Link} href="/#categoryList" state="primary" className={'self-center'}>ПОДРОБНЕЕ</BrandButton>*/}
                 </div>
             </section>
             <section id="categoryList" className="py-16">

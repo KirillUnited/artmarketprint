@@ -85,10 +85,10 @@ export const ServiceDetails = ({name, description, image, price, advantages}: Se
 					</div>
 				)}
 			</div>
-			<div className="flex flex-col md:flex-row gap-2 md:gap-4">
+			<div className="flex flex-wrap gap-2 md:gap-4">
 				<BrandModalOffer />
 
-				<Button as={Link} href={'/#contacts'} className="bg-brand-gradient text-fill-transparent font-semibold" color="secondary" radius="sm" size="lg" variant="ghost">
+				<Button as={Link} href={'/#contacts'} className="bg-brand-gradient text-fill-transparent font-semibold flex-1 basis-36" color="secondary" radius="sm" size="lg" variant="ghost">
 					КОНСУЛЬТАЦИЯ
 				</Button>
 			</div>

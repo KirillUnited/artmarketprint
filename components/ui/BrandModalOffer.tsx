@@ -58,7 +58,7 @@ export function HeroModalOffer() {
 
     return (
         <>
-            <Button className="leading-normal font-semibold hidden lg:flex" color="primary" variant="solid" radius='sm' onPress={onOpen}>
+            <Button className="leading-normal font-semibold" color="primary" variant="solid" radius='sm' onPress={onOpen}>
                 <CalendarIcon size={18} />
                 <span>ЗАКАЗАТЬ ЗВОНОК</span>
             </Button>

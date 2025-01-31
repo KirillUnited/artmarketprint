@@ -32,7 +32,7 @@ export default function ServicesPage() {
 
                     </div>
 
-                    <BrandButton as={Link} href="/#serviceList" state="primary" className={'self-center'}>ЗАКАЗАТЬ</BrandButton>
+                    {/*<BrandButton as={Link} href="/#serviceList" state="primary" className={'self-center'}>ЗАКАЗАТЬ</BrandButton>*/}
                 </div>
             </section>
             <section id="serviceList" className="py-16">
