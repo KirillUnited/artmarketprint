@@ -11,7 +11,7 @@ export default function ContactsList({className}: React.AllHTMLAttributes<HTMLDi
 				<h5 className="font-bold">Адрес:</h5>
 				<p className="break-words flex items-center gap-2">
 					<MapIcon className="text-primary" size={20} />
-					{siteConfig?.contacts?.[2]?.text}
+					<Link href={'https://yandex.by/navi/-/CHeQRZz4'} target="_blank" className="hover:text-primary transition">{siteConfig?.contacts?.[2]?.text}</Link>
 				</p>
 			</div>
 			<div className="flex flex-col gap-1">
@@ -19,7 +19,7 @@ export default function ContactsList({className}: React.AllHTMLAttributes<HTMLDi
 				<ul className="flex flex-col">
 					{siteConfig?.contacts?.[0]?.list?.map((item) => (
 						<li key={item.label} className="self-start">
-							<Link key={item.href} className="break-words text-left flex items-center gap-2" href={`tel:${item.href}` || '#'}>
+							<Link key={item.href} className="break-words text-left flex items-center gap-2 hover:text-primary transition" href={`tel:${item.href}` || '#'}>
 								<PhoneIcon className="text-primary" size={20} />
 								{item.label}
 							</Link>
@@ -27,7 +27,7 @@ export default function ContactsList({className}: React.AllHTMLAttributes<HTMLDi
 					))}
 
 					<li className="self-start">
-						<Link className="break-words text-left flex items-center gap-2" href={`${siteConfig?.contacts?.[1]?.href}` || '#'}>
+						<Link className="break-words text-left flex items-center gap-2 hover:text-primary transition" href={`${siteConfig?.contacts?.[1]?.href}` || '#'}>
 							<MailIcon className="text-primary" size={20} />
 							{siteConfig?.contacts?.[1]?.text}
 						</Link>

@@ -24,3 +24,15 @@ export interface BrandCardProps extends React.AllHTMLAttributes<HTMLDivElement> 
   href?: string;
   variant?: string;
 }
+
+export interface ServiceDetailsProps {
+  name: string,
+  description?: string,
+  image?: string,
+  advantages?: string[],
+  price?: string
+}
+
+export interface CatalogDataProps {
+  services: ServiceDetailsProps[];
+}

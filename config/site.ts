@@ -76,12 +76,12 @@ export const siteConfig = {
       menuItems: [
         {
           label: 'УФ-печать',
-          href: '/services/UV-pechat',
+          href: '/services/uf-pechat',
           description: 'Технология обеспечивает точную передачу мелких деталей и яркость цветов'
         },
         {
           label: 'DTF-печать',
-          href: '/services/DTF-pechat',
+          href: '/services/dtf-pechat',
           description: 'Идеально для текстиля и сложных дизайнов'
         },
         {
@@ -91,7 +91,7 @@ export const siteConfig = {
         },
         {
           label: 'Шелкография',
-          href: '/services/shelkografnaja-pechat',
+          href: '/services/shelkografiya',
           description: 'Долговечность и яркость изображений гарантированы'
         },
       ]
@@ -103,7 +103,17 @@ export const siteConfig = {
         {
           label: 'Печать на одежде',
           href: '/catalog/pechat-na-odezhde',
-          description: 'Создайте уникальный стиль с печатью на одежде! Яркие и стойкие принты на футболках, толстовках, худи, кепках и другой одежде. DTF, шелкография и термоперенос – выберите свой метод печати!'
+          description: 'Идеально для текстиля и сложных дизайнов!'
+        },
+        {
+          label: 'Печать на кружках',
+          href: '/catalog/pechat-na-kruzhkakh',
+          description: 'Долговечность и яркость изображений гарантированы!'
+        },
+        {
+          label: 'Печать на шопперах',
+          href: '/catalog/pechat-na-shopperakh',
+          description: 'Наша услуга печати на шопперах предлагает уникальную возможность персонализировать ваши сумки по своему вкусу!'
         }
       ]
     },
@@ -182,8 +192,8 @@ export const siteConfig = {
         price: '1 погонный метр от 30 руб.',
         description: 'Идеально для текстиля и сложных дизайнов',
         image: '/images/service-2.jpg',
-        href: '/services/DTF-pechat',
-        slug: 'DTF-pechat',
+        href: '/services/dtf-pechat',
+        slug: 'dtf-pechat',
         seo: {
           title: 'DTF-печать на текстиле – Яркие принты без ограничений',
           description: 'DTF-печать на футболках, толстовках, кепках и другой одежде. Яркие цвета, высокая стойкость к стирке и детальная прорисовка изображений. Печатаем любые тиражи – от 1 штуки!',
@@ -196,8 +206,8 @@ export const siteConfig = {
         price: 'от 1 р.',
         description: 'Долговечность и яркость изображений гарантированы',
         image: '/images/service-1.jpg',
-        href: '/services/shelkografnaja-pechat',
-        slug: 'shelkografnaja-pechat',
+        href: '/services/shelkografiya',
+        slug: 'shelkografiya',
         seo: {
           title: 'Шелкография – Классическая печать для бизнеса и рекламы',
           description: 'Шелкография на текстиле, бумаге, пластике и металле. Идеальный вариант для нанесения логотипов, рекламной продукции и корпоративного мерча. Надежные краски, долговечность и четкость линий!',
@@ -210,8 +220,8 @@ export const siteConfig = {
         price: 'от 6 р.',
         description: 'Технология обеспечивает точную передачу мелких деталей и яркость цветов',
         image: '/images/service-3.jpg',
-        href: '/services/UV-pechat',
-        slug: 'UV-pechat',
+        href: '/services/uf-pechat',
+        slug: 'uf-pechat',
         seo: {
           title: 'УФ-печать на любых поверхностях – Яркие и стойкие изображения',
           description: 'Профессиональная УФ-печать на стекле, пластике, металле, дереве и других поверхностях. Высокая стойкость к внешним воздействиям, насыщенные цвета и точность деталей. Закажите печать у экспертов!',
@@ -245,8 +255,8 @@ export const siteConfig = {
         price: 'от 7 руб.',
         description: 'Долговечность и яркость изображений гарантированы',
         image: '/images/catalog-2.jpg',
-        href: '/catalog/pechat-2',
-        slug: 'pechat-2',
+        href: '/catalog/pechat-na-kruzhkakh',
+        slug: 'pechat-na-kruzhkakh',
         seo: {
           title: 'Печать на кружках – Персональные и корпоративные кружки на заказ"',
           description: 'Эксклюзивные кружки с печатью для подарков и бизнеса! Яркие принты, стойкость к мытью, индивидуальные дизайны. Идеальный вариант для брендирования и сувенирной продукции',
@@ -259,8 +269,8 @@ export const siteConfig = {
         price: 'от 9 руб.',
         description: 'Наша услуга печати на шопперах предлагает уникальную возможность персонализировать ваши сумки по своему вкусу',
         image: '/images/catalog-3.jpg',
-        href: '/catalog/pechat-3',
-        slug: 'pechat-3',
+        href: '/catalog/pechat-na-shopperakh',
+        slug: 'pechat-na-shopperakh',
         seo: {
           title: 'Печать на шопперах – Экосумки с вашим дизайном',
           description: 'Закажите печать на шопперах – стильные экосумки с логотипом, рисунками или надписями. Долговечные материалы, экологичный тренд, отличное решение для бизнеса и подарков.',
