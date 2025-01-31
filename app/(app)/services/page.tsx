@@ -7,6 +7,7 @@ import Contacts from "@/components/shared/Contacts";
 import SocialWidget from "@/components/shared/SocialWidget";
 import BaseBreadcrumb from "@/components/ui/Breadcrumb";
 import BrandButton from "@/components/ui/BrandButton";
+import Link from "next/link";
 
 export default function ServicesPage() {
     return (
@@ -31,10 +32,10 @@ export default function ServicesPage() {
 
                     </div>
 
-                    <BrandButton state="primary" className={'self-center'}>ЗАКАЗАТЬ</BrandButton>
+                    <BrandButton as={Link} href="/#serviceList" state="primary" className={'self-center'}>ЗАКАЗАТЬ</BrandButton>
                 </div>
             </section>
-            <section className="py-16">
+            <section id="serviceList" className="py-16">
                 <div className="container">
                     <BaseBreadcrumb section='services'/>
                     <div className="grid grid-cols-[var(--grid-template-columns)] gap-8 mt-4">

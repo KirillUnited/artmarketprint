@@ -8,6 +8,7 @@ import BrandCard from '@/components/ui/BrandCard';
 import BrandButton from '@/components/ui/BrandButton';
 import {ServiceDetails} from "@/components/shared/Services";
 import {getCatalogData} from "@/lib/actions/services.actions";
+import Link from 'next/link';
 
 type Props = {
 	slug: string;
@@ -51,8 +52,8 @@ export default async function CategoryPage({params}: {params: Promise<Props>}) {
 						<h1 className="text-4xl font-extrabold text-background sm:text-6xl">{title}</h1>
 						<p className="mt-4 text-xl text-white">{description}</p>
 					</div>
-					<BrandButton state="primary" className={'self-center'}>
-						ЗАКАЗАТЬ
+					<BrandButton as={Link} href='#categoryDetails' state="primary" className={'self-center'}>
+						УЗНАТЬ
 					</BrandButton>
 				</div>
 			</section>
@@ -63,7 +64,7 @@ export default async function CategoryPage({params}: {params: Promise<Props>}) {
 					</div>
 				</div>
 			</section>
-			<section className="section relative overflow-hidden pb-10 md:pb-20 pt-3 md:pt-6">
+			<section id='categoryDetails' className="section relative overflow-hidden pb-10 md:pb-20 pt-3 md:pt-6">
 				<div className="container">
 					<ServiceDetails {...categoryDetails} />
 				</div>

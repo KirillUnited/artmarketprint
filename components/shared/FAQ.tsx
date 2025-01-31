@@ -1,6 +1,7 @@
 'use client';
 import {Accordion, AccordionItem} from '@heroui/accordion';
 import {Button} from '@heroui/button';
+import Link from 'next/link';
 
 export const FAQ = () => {
 	return (
@@ -43,7 +44,7 @@ export const FAQFooter = () => (
 			<h3 className="text-2xl md:text-3xl leading-[120%] font-bold">Остались вопросы?</h3>
 			<p className="text-base md:text-lg leading-normal font-normal text-foreground/70 text-balance">Не стесняйтесь обращаться к нам за дополнительной информацией.</p>
 		</div>
-		<Button className="bg-brand-gradient text-fill-transparent font-semibold" color="secondary" radius="sm" size="lg" variant="ghost">
+		<Button as={Link} href={'/#contacts'} className="bg-brand-gradient text-fill-transparent font-semibold" color="secondary" radius="sm" size="lg" variant="ghost">
 			КОНСУЛЬТАЦИЯ
 		</Button>
 	</div>

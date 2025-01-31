@@ -11,6 +11,7 @@ import { siteConfig } from '@/config/site';
 import Socials from './Socials';
 import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@heroui/dropdown';
 import { CalendarIcon, ChevronDownIcon } from 'lucide-react';
+import { HeroModalOffer } from '../ui/BrandModalOffer';
 
 type HeaderDropdownMenuProps = {
 	triggerLabel: string,
@@ -65,13 +66,14 @@ export default function Header() {
 							<ViberIcon />
 						</Link>
 					</div>
-					
+
 					<PhoneListDropdown />
-					
+					{/* 					
 					<Button className="leading-normal font-semibold hidden lg:flex" color="primary" variant="solid" radius='sm'>
 						<CalendarIcon size={18} />
 						<span>ЗАКАЗАТЬ ЗВОНОК</span>
-					</Button>
+					</Button> */}
+					<HeroModalOffer />
 					<NavbarMenuToggle aria-label={isMenuOpen ? 'Close menu' : 'Open menu'} className="xl:hidden h-6" />
 				</div>
 			</div>
@@ -145,34 +147,34 @@ const HeaderDropdownMenu = ({ triggerLabel, items }: HeaderDropdownMenuProps) =>
 	)
 }
 
-export const PhoneListDropdown = ()=> (
+export const PhoneListDropdown = () => (
 	<Dropdown
 		classNames={{
 			content: 'rounded-md',
 		}}>
 		<DropdownTrigger>
 			<Button className="min-w-fit p-0 bg-transparent data-[hover=true]:bg-transparent hidden lg:flex text-primary gap-1 hover:underline hover:text-primary transition" endContent={<ChevronDownIcon className="text-primary" size={20} />} radius='sm'
-					variant="light">
+				variant="light">
 				<PhoneIcon />
 				<span className='text-foreground hidden 2xl:inline'>{siteConfig?.contacts?.[0]?.list?.[0]?.label}</span>
 			</Button>
 		</DropdownTrigger>
 		<DropdownMenu aria-label="Link Actions"
-					  itemClasses={{
-						  base: "gap-4 rounded-md data-[hover=true]:bg-transparent",
-						  title: "text-center",
-					  }}
+			itemClasses={{
+				base: "gap-4 rounded-md data-[hover=true]:bg-transparent",
+				title: "text-center",
+			}}
 		><>
-			{
-				siteConfig?.contacts?.[0]?.list?.map((item, index) => (
-					<DropdownItem key={index} className="py-0" textValue={item.label}>
-						<Link className="text-sm hover:text-primary" color={'foreground'} href={`tel:${item.href}`}>
-							<span>{item.label}</span>
-						</Link>
-					</DropdownItem>
-				))
-			}
-		</>
+				{
+					siteConfig?.contacts?.[0]?.list?.map((item, index) => (
+						<DropdownItem key={index} className="py-0" textValue={item.label}>
+							<Link className="text-sm hover:text-primary" color={'foreground'} href={`tel:${item.href}`}>
+								<span>{item.label}</span>
+							</Link>
+						</DropdownItem>
+					))
+				}
+			</>
 		</DropdownMenu>
 	</Dropdown>
 )

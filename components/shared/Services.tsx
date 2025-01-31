@@ -7,6 +7,7 @@ import {siteConfig} from '@/config/site';
 import {BrandCardProps, ServiceDetailsProps} from '@/types';
 import BrandButton from '@/components/ui/BrandButton';
 import Image from 'next/image';
+import BrandModalOffer from '../ui/BrandModalOffer';
 
 export const Services = () => {
 	return (
@@ -85,9 +86,9 @@ export const ServiceDetails = ({name, description, image, price, advantages}: Se
 				)}
 			</div>
 			<div className="flex flex-col md:flex-row gap-2 md:gap-4">
-				<BrandButton state="primary">ЗАКАЗАТЬ</BrandButton>
+				<BrandModalOffer />
 
-				<Button className="bg-brand-gradient text-fill-transparent font-semibold" color="secondary" radius="sm" size="lg" variant="ghost">
+				<Button as={Link} href={'/#contacts'} className="bg-brand-gradient text-fill-transparent font-semibold" color="secondary" radius="sm" size="lg" variant="ghost">
 					КОНСУЛЬТАЦИЯ
 				</Button>
 			</div>
