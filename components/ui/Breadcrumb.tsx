@@ -8,7 +8,7 @@ export default function BaseBreadcrumb({section}: {section: string}): JSX.Elemen
     const params = useParams();
     const { slug: paramsSlug } = params;
     const page: any = section === 'catalog' ? siteConfig?.catalogSection : siteConfig?.serviceSection;
-    const data = page?.items.find((item) => item.slug === paramsSlug);
+    const data = page?.items.find((item: any) => item.slug === paramsSlug);
     const { title = '' } = data || {};
 
     return (
