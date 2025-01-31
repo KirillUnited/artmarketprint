@@ -36,7 +36,7 @@ export default function CatalogPage() {
             </section>
             <section className="py-16">
                 <div className="container">
-                    <BaseBreadcrumb />
+                    <BaseBreadcrumb section='catalog' />
                     <div className="grid grid-cols-[var(--grid-template-columns)] gap-8 mt-4">
                         {
                             siteConfig?.catalogSection?.items.map((props: BrandCardProps, index) => (

@@ -36,7 +36,7 @@ export default function ServicesPage() {
             </section>
             <section className="py-16">
                 <div className="container">
-                    <BaseBreadcrumb />
+                    <BaseBreadcrumb section='services'/>
                     <div className="grid grid-cols-[var(--grid-template-columns)] gap-8 mt-4">
                         {
                             siteConfig?.serviceSection?.items.map((props: BrandCardProps, index) => (

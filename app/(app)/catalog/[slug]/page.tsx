@@ -1,15 +1,13 @@
-import BrandForm from '@/components/ui/BrandForm';
+import OrderForm from '@/components/ui/OrderForm';
 import Image from 'next/image';
 import {Image as HeroImage} from '@heroui/image';
 import {siteConfig} from '@/config/site';
 import BaseBreadcrumb from '@/components/ui/Breadcrumb';
-import {Button} from '@heroui/button';
-import Link from 'next/link';
 import {BrandCardProps} from '@/types';
 import BrandCard from '@/components/ui/BrandCard';
-import AboutImage from '@/public/images/about.jpg';
 import BrandButton from '@/components/ui/BrandButton';
-import PriceTable from "@/components/shared/PriceTable";
+import {ServiceDetails} from "@/components/shared/Services";
+import {getCatalogData} from "@/lib/actions/services.actions";
 
 type Props = {
 	slug: string;
@@ -36,8 +34,10 @@ export async function generateMetadata({params}: {params: Promise<Props>}) {
 	};
 }
 
-export default async function ProductPage({params}: {params: Promise<Props>}) {
+export default async function CategoryPage({params}: {params: Promise<Props>}) {
 	const {slug: paramsSlug} = await params;
+	const catalogData = await getCatalogData();
+	const categoryDetails = catalogData.categories.filter((c) => c.slug === paramsSlug)[0];
 
 	const data = siteConfig.catalogSection.items.find(({slug}) => slug === paramsSlug);
 	const {title = '', description = '', image = ''} = data || {};
@@ -56,64 +56,32 @@ export default async function ProductPage({params}: {params: Promise<Props>}) {
 					</BrandButton>
 				</div>
 			</section>
-			<section className="section relative overflow-hidden py-10 md:py-20 ">
+			<section>
 				<div className="container">
-					<div className="mb-4">
-						<BaseBreadcrumb />
-					</div>
-					<div className="grid md:grid-cols-2 items-center gap-x-10 gap-y-4">
-						<Image alt={'ArtMarketPrint'} className="h-full object-cover flex-1 w-full" height={635} src={'/images/about.jpg'} width={640} />
-
-						<div className="flex flex-col gap-8 md:gap-16 py-5 md:py-10">
-							<div className="flex flex-col gap-4 md:gap-6">
-								<span className="text-gray-600">О услуге</span>
-								<h2 className="text-2xl md:text-3xl font-bold hyphens-auto break-words">УФ-печать</h2>
-								<p className="text-foreground/70 text-base md:text-lg leading-normal font-light">
-									Это современная технология, которая позволяет наносить изображения на различные материалы, такие как пластик, стекло, металл, дерево и другие. Благодаря
-									использованию ультрафиолетовых ламп, краска мгновенно затвердевает, что обеспечивает высокое качество и долговечность изображения.
-								</p>
-								<div className="flex flex-col gap-4">
-									<h2 className="text-2xl md:text-3xl font-bold text-gray-900">Преимущества</h2>
-									<ul className="space-y-2 text-gray-600">
-										<li>
-											<span className="text-primary font-bold">✔</span> Высокое качество печати
-										</li>
-										<li>
-											<span className="text-primary font-bold">✔</span> Возможность печати на различных материалах
-										</li>
-										<li>
-											<span className="text-primary font-bold">✔</span> Быстрое затвердевание краски
-										</li>
-										<li>
-											<span className="text-primary font-bold">✔</span> Устойчивость к внешним воздействиям
-										</li>
-									</ul>
-								</div>
-							</div>
-							<div className="flex flex-col md:flex-row gap-2 md:gap-4">
-								<BrandButton state="primary">ЗАКАЗАТЬ</BrandButton>
-
-								<Button className="bg-brand-gradient text-fill-transparent font-semibold" color="secondary" radius="sm" size="lg" variant="ghost">
-									КОНСУЛЬТАЦИЯ
-								</Button>
-							</div>
-						</div>
+					<div className="my-6">
+						<BaseBreadcrumb section='catalog'/>
 					</div>
 				</div>
 			</section>
+			<section className="section relative overflow-hidden pb-10 md:pb-20 pt-3 md:pt-6">
+				<div className="container">
+					<ServiceDetails {...categoryDetails} />
+				</div>
+			</section>
+			{/*// TODO add price table*/}
+			{/*<section className="py-10 md:py-20 bg-[#F1F4FA]">*/}
+			{/*	<div className="container">*/}
+			{/*		<div className="flex flex-col gap-10">*/}
+			{/*			<h2 className="text-2xl md:text-3xl font-bold text-gray-900 text-center">Цены</h2>*/}
+			{/*			<PriceTable />*/}
+
+			{/*			<BrandButton state="primary" className={'self-center'}>*/}
+			{/*				ЗАКАЗАТЬ*/}
+			{/*			</BrandButton>*/}
+			{/*		</div>*/}
+			{/*	</div>*/}
+			{/*</section>*/}
 			<section className="py-10 md:py-20 bg-[#F1F4FA]">
-				<div className="container">
-					<div className="flex flex-col gap-10">
-						<h2 className="text-2xl md:text-3xl font-bold text-gray-900 text-center">Цены</h2>
-						<PriceTable />
-
-						<BrandButton state="primary" className={'self-center'}>
-							ЗАКАЗАТЬ
-						</BrandButton>
-					</div>
-				</div>
-			</section>
-			<section className="py-10 md:py-20">
 				<div className="container">
 					<div className="flex flex-col gap-10">
 						<h2 className="text-2xl md:text-3xl font-bold text-gray-900 text-center">Примеры работ</h2>
@@ -128,7 +96,7 @@ export default async function ProductPage({params}: {params: Promise<Props>}) {
 			<section className={'py-10 md:py-20 bg-[#F1F4FA]'}>
 				<div className="container flex flex-col">
 					<div className="w-full max-w-2xl self-center bg-background shadow-lg p-6 rounded-medium">
-						<BrandForm className={'items-center'} />
+						<OrderForm className={'items-center'} />
 					</div>
 				</div>
 			</section>

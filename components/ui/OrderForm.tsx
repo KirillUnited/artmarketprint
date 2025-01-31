@@ -4,7 +4,7 @@ import React from 'react'
 import BrandButton from './BrandButton'
 import clsx from 'clsx'
 
-export default function BrandForm({ className }: { className?: string }): JSX.Element {
+export default function OrderForm({ className }: { className?: string }): JSX.Element {
     return (
         <Form validationBehavior="native" className={clsx('gap-6', className)}>
             <h3 className="text-2xl md:text-3xl leading-[120%] font-bold">
