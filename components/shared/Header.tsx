@@ -25,7 +25,7 @@ export default function Header() {
 		<Navbar
 			shouldHideOnScroll
 			classNames={{
-				base: 'border-solid border-gray-100 border-b',
+				base: 'shadow-medium',
 				wrapper: 'max-w-full p-0 items-center',
 			}}
 			isMenuOpen={isMenuOpen}

@@ -11,7 +11,7 @@ export default function Contacts() {
 					<div className="flex flex-wrap items-end justify-between gap-4">
 						<div className="flex flex-col gap-4 max-w-[652px]">
 							<h2 className="text-4xl md:text-5xl leading-[120%] font-bold">Наши контакты</h2>
-							<p className="text-base md:text-lg leading-normal font-normal text-foreground/70">
+							<p className="text-base text-balance md:text-lg leading-normal font-normal text-foreground/70">
 								Мы всегда готовы помочь вам! Если у вас есть вопросы, предложения или хотите связаться с нами, используйте любой удобный способ:
 							</p>
 						</div>
