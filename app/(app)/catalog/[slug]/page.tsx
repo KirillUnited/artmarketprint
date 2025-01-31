@@ -4,12 +4,10 @@ import {Image as HeroImage} from '@heroui/image';
 import {siteConfig} from '@/config/site';
 import BaseBreadcrumb from '@/components/ui/Breadcrumb';
 import {Button} from '@heroui/button';
-import Link from 'next/link';
 import {BrandCardProps} from '@/types';
 import BrandCard from '@/components/ui/BrandCard';
-import AboutImage from '@/public/images/about.jpg';
 import BrandButton from '@/components/ui/BrandButton';
-import PriceTable from "@/components/shared/PriceTable";
+import PriceTable from '@/components/shared/PriceTable';
 
 type Props = {
 	slug: string;
@@ -62,18 +60,16 @@ export default async function ProductPage({params}: {params: Promise<Props>}) {
 						<BaseBreadcrumb />
 					</div>
 					<div className="grid md:grid-cols-2 items-center gap-x-10 gap-y-4">
-						<Image alt={'ArtMarketPrint'} className="h-full object-cover flex-1 w-full" height={635} src={'/images/about.jpg'} width={640} />
-
 						<div className="flex flex-col gap-8 md:gap-16 py-5 md:py-10">
 							<div className="flex flex-col gap-4 md:gap-6">
 								<span className="text-gray-600">О услуге</span>
-								<h2 className="text-2xl md:text-3xl font-bold hyphens-auto break-words">УФ-печать</h2>
-								<p className="text-foreground/70 text-base md:text-lg leading-normal font-light">
+								<h2 className="text-3xl md:text-4xl font-bold hyphens-auto break-words">УФ-печать</h2>
+								<p className="text-foreground/70 text-balance leading-normal font-light">
 									Это современная технология, которая позволяет наносить изображения на различные материалы, такие как пластик, стекло, металл, дерево и другие. Благодаря
 									использованию ультрафиолетовых ламп, краска мгновенно затвердевает, что обеспечивает высокое качество и долговечность изображения.
 								</p>
 								<div className="flex flex-col gap-4">
-									<h2 className="text-2xl md:text-3xl font-bold text-gray-900">Преимущества</h2>
+									<h3 className="text-xl md:text-2xl font-bold text-gray-900">Преимущества</h3>
 									<ul className="space-y-2 text-gray-600">
 										<li>
 											<span className="text-primary font-bold">✔</span> Высокое качество печати
@@ -98,22 +94,24 @@ export default async function ProductPage({params}: {params: Promise<Props>}) {
 								</Button>
 							</div>
 						</div>
-					</div>
-				</div>
-			</section>
-			<section className="py-10 md:py-20 bg-[#F1F4FA]">
-				<div className="container">
-					<div className="flex flex-col gap-10">
-						<h2 className="text-2xl md:text-3xl font-bold text-gray-900 text-center">Цены</h2>
-						<PriceTable />
 
-						<BrandButton state="primary" className={'self-center'}>
-							ЗАКАЗАТЬ
-						</BrandButton>
+						<Image alt={'ArtMarketPrint'} className="h-full object-cover flex-1 w-full" height={635} src={'/images/about.jpg'} width={640} />
 					</div>
 				</div>
 			</section>
-			<section className="py-10 md:py-20">
+			{/*<section className="py-10 md:py-20 bg-[#F1F4FA]">*/}
+			{/*	<div className="container">*/}
+			{/*		<div className="flex flex-col gap-10">*/}
+			{/*			<h2 className="text-2xl md:text-3xl font-bold text-gray-900 text-center">Цены</h2>*/}
+			{/*			<PriceTable />*/}
+
+			{/*			<BrandButton state="primary" className={'self-center'}>*/}
+			{/*				ЗАКАЗАТЬ*/}
+			{/*			</BrandButton>*/}
+			{/*		</div>*/}
+			{/*	</div>*/}
+			{/*</section>*/}
+			<section className="py-10 md:py-20 bg-[#F1F4FA]">
 				<div className="container">
 					<div className="flex flex-col gap-10">
 						<h2 className="text-2xl md:text-3xl font-bold text-gray-900 text-center">Примеры работ</h2>
