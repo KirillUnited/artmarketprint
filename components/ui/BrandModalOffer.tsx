@@ -4,24 +4,50 @@ import { Input } from '@heroui/input';
 import { Button } from '@heroui/button';
 import { Form } from '@heroui/form';
 
-import { useActionState } from 'react';
-
 import BrandButton from './BrandButton';
 import { CalendarIcon } from 'lucide-react';
 import { sendOrder } from "@/lib/actions/order.actions";
+import { useState } from 'react';
+import { Alert } from '@heroui/alert';
 
 export const ModalOfferForm = ({ onClose }: { onClose: () => void }) => {
-	const [message, formAction, isPending] = useActionState(sendOrder, null);
+	const [isPending, setIsPending] = useState(false);
+	const [showAlert, setShowAlert] = useState(false);
+	async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+		event.preventDefault();
+
+		const formData = new FormData(event.currentTarget);
+		event.currentTarget.reset();
+
+		try {
+			const result = await sendOrder(formData);
+			if (result.ok) {
+				setIsPending(false);
+				setShowAlert(true);
+				// onClose();
+			}
+		} catch (error) {
+			console.log(error)
+		}
+	}
 
 	return (
-		<Form action={formAction} validationBehavior="native">
-
-			{message && (
-				<div role='alert' className='alert alert-success'>
-					<span>{message}</span>
-				</div>
-			)}
+		<Form
+			// action={sendOrder}
+			onSubmit={handleSubmit}
+			validationBehavior="native">
 			<ModalBody className="w-full">
+				{
+					true &&
+					<Alert
+						color='success'
+						onClose={() => setShowAlert(false)}
+						className="w-full text-white/80"
+						variant='solid'
+						title="Заявка отправлена"
+						description="Спасибо за заявку! Мы свяжемся с Вами в ближайшее время."
+					/>
+				}
 				<Input
 					isRequired
 					id="user_name"
