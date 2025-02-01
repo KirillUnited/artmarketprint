@@ -18,6 +18,8 @@ export const ModalOfferForm = ({ onClose }: { onClose: () => void }) => {
 
 		const formData = new FormData(event.currentTarget);
 		event.currentTarget.reset();
+		
+		setIsPending(true);
 
 		try {
 			const result = await sendOrder(formData);
@@ -38,7 +40,7 @@ export const ModalOfferForm = ({ onClose }: { onClose: () => void }) => {
 			validationBehavior="native">
 			<ModalBody className="w-full">
 				{
-					true &&
+					showAlert &&
 					<Alert
 						color='success'
 						onClose={() => setShowAlert(false)}
