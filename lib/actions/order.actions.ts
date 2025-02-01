@@ -11,7 +11,7 @@ export async function sendOrder(data: FormData): Promise<any> {
 	const comment = data.get('user_comment') as string;
 	const message = `Новый заказ: Имя: ${name} - Телефон: ${phone} - Комментарий: ${comment}`;
 
-	axios
+	await axios
 		.post(BASE_URL, {
 			chat_id: chatId,
 			text: message,
