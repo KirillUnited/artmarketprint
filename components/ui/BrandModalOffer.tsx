@@ -18,7 +18,7 @@ export const ModalOfferForm = ({ onClose }: { onClose: () => void }) => {
 
 		const formData = new FormData(event.currentTarget);
 		event.currentTarget.reset();
-		
+
 		setIsPending(true);
 
 		try {
@@ -26,7 +26,9 @@ export const ModalOfferForm = ({ onClose }: { onClose: () => void }) => {
 			if (result.ok) {
 				setIsPending(false);
 				setShowAlert(true);
-				// onClose();
+				setTimeout(() => {
+					onClose();
+				}, 3000);
 			}
 		} catch (error) {
 			console.log(error)
@@ -38,9 +40,10 @@ export const ModalOfferForm = ({ onClose }: { onClose: () => void }) => {
 			// action={sendOrder}
 			onSubmit={handleSubmit}
 			validationBehavior="native">
-			<ModalBody className="w-full">
-				{
-					showAlert &&
+
+			{
+				showAlert &&
+				<ModalBody className='py-6'>
 					<Alert
 						color='success'
 						onClose={() => setShowAlert(false)}
@@ -49,63 +52,68 @@ export const ModalOfferForm = ({ onClose }: { onClose: () => void }) => {
 						title="Заявка отправлена"
 						description="Спасибо за заявку! Мы свяжемся с Вами в ближайшее время."
 					/>
-				}
-				<Input
-					isRequired
-					id="user_name"
-					name="user_name"
-					errorMessage="Пожалуйста, введите Ваше имя"
-					label="Имя"
-					placeholder="Напишите Ваше имя"
-					variant="bordered"
-					color='primary'
-				/>
-				<Input
-					id="user_phone"
-					name="user_phone"
-					isRequired
-					errorMessage="Пожалуйста, введите действительный номер телефона"
-					label="Телефон"
-					placeholder="Введите Ваш телефон"
-					type="tel"
-					variant="bordered"
-					color='primary'
-				/>
-			</ModalBody>
-			<ModalFooter className="w-full">
-				<Button className="bg-brand-gradient text-fill-transparent font-semibold" color="secondary" radius="sm" size="lg" variant="ghost" onPress={onClose}>
-					ОТМЕНА
-				</Button>
-				<BrandButton
-					className="flex-1 basis-32"
-					disabled={isPending}
-					isLoading={isPending}
-					spinner={
-						<svg
-							className="animate-spin h-5 w-5 text-current"
-							fill="none"
-							viewBox="0 0 24 24"
-							xmlns="http://www.w3.org/2000/svg"
-						>
-							<circle
-								className="opacity-25"
-								cx="12"
-								cy="12"
-								r="10"
-								stroke="currentColor"
-								strokeWidth="4"
-							/>
-							<path
-								className="opacity-75"
-								d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-								fill="currentColor"
-							/>
-						</svg>
-					} state="primary"
-					type="submit">
-					ОТПРАВИТЬ
-				</BrandButton>
-			</ModalFooter>
+				</ModalBody>
+			}
+			{
+				!showAlert && <>
+					<ModalBody className="w-full">
+						<Input
+							isRequired
+							id="user_name"
+							name="user_name"
+							errorMessage="Пожалуйста, введите Ваше имя"
+							label="Имя"
+							placeholder="Напишите Ваше имя"
+							variant="bordered"
+							color='primary'
+						/>
+						<Input
+							id="user_phone"
+							name="user_phone"
+							isRequired
+							errorMessage="Пожалуйста, введите действительный номер телефона"
+							label="Телефон"
+							placeholder="Введите Ваш телефон"
+							type="tel"
+							variant="bordered"
+							color='primary'
+						/>
+					</ModalBody>
+					<ModalFooter className="w-full">
+						<Button className="bg-brand-gradient text-fill-transparent font-semibold" color="secondary" radius="sm" size="lg" variant="ghost" onPress={onClose}>
+							ОТМЕНА
+						</Button>
+						<BrandButton
+							className="flex-1 basis-32"
+							disabled={isPending}
+							isLoading={isPending}
+							spinner={
+								<svg
+									className="animate-spin h-5 w-5 text-current"
+									fill="none"
+									viewBox="0 0 24 24"
+									xmlns="http://www.w3.org/2000/svg"
+								>
+									<circle
+										className="opacity-25"
+										cx="12"
+										cy="12"
+										r="10"
+										stroke="currentColor"
+										strokeWidth="4"
+									/>
+									<path
+										className="opacity-75"
+										d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+										fill="currentColor"
+									/>
+								</svg>
+							} state="primary"
+							type="submit">
+							ОТПРАВИТЬ
+						</BrandButton>
+					</ModalFooter>
+				</>}
 		</Form>
 	);
 };
