@@ -9,6 +9,7 @@ import imageUrlBuilder from "@sanity/image-url";
 import {client} from "@/sanity/client";
 import type {SanityDocument} from "next-sanity";
 import {SanityImageSource} from "@sanity/image-url/lib/types/types";
+import {getSanityDocuments} from "@/lib/getSanityData";
 
 
 const CATEGORIES_QUERY = `*[
@@ -23,7 +24,7 @@ const options = { next: { revalidate: 30 } };
 const builder = imageUrlBuilder(client);
 
 export default async function CatalogPage() {
-    const categories = await client.fetch<SanityDocument[]>(CATEGORIES_QUERY, {}, options);
+    const categories = await getSanityDocuments(CATEGORIES_QUERY);
     const urlFor = (source: SanityImageSource) => {
         return builder.image(source).url();
     }

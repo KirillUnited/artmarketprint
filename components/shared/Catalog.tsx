@@ -5,8 +5,26 @@ import BrandCard from '../ui/BrandCard';
 
 import { siteConfig } from '@/config/site';
 import { BrandCardProps } from '@/types';
+import {getSanityDocuments} from "@/lib/getSanityData";
+import imageUrlBuilder from "@sanity/image-url";
+import {client} from "@/sanity/client";
+import {SanityImageSource} from "@sanity/image-url/lib/types/types";
 
-export const Catalog = () => {
+const CATEGORIES_QUERY = `*[
+  _type == "category"
+  && defined(slug.current)
+]|order(publishedAt desc)[0...12]{title,
+    description,
+    image, 
+    price,
+    "currentSlug": slug.current}`;
+
+export const Catalog = async() => {
+	const categories = await getSanityDocuments(CATEGORIES_QUERY);
+	const builder = imageUrlBuilder(client);
+	const urlFor = (source: SanityImageSource) => {
+		return builder.image(source).url();
+	}
 	return (
 		<section className="relative" id="catalog">
 			<div className="py-10 md:py-20 flex flex-col gap-10">
@@ -29,8 +47,8 @@ export const Catalog = () => {
 				<div className="container">
 					<div className="grid grid-cols-[var(--grid-template-columns)] gap-8">
 						{
-							siteConfig?.catalogSection?.items.map(({title, variant, price, description, image, href}: BrandCardProps, index) => (
-								<BrandCard key={index} title={title} price={price} description={description} image={image} href={href} variant={variant}/>
+							categories.map((category) => (
+								<BrandCard key={category.title} title={category.title} price={category.price} description={category.description} image={urlFor(category.image)} href={`/catalog/${category.currentSlug}`} variant='product'/>
 							))
 						}
 						<Button as={Link} href={siteConfig.catalogSection.href} className='bg-brand-gradient text-fill-transparent font-semibold md:hidden flex' color='secondary' radius='sm' size='lg' variant='ghost'>

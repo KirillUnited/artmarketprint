@@ -11,6 +11,7 @@ import { type SanityDocument } from "next-sanity";
 import { client } from "@/sanity/client";
 import { SanityImageSource } from "@sanity/image-url/lib/types/types";
 import imageUrlBuilder from "@sanity/image-url";
+import {getSanityDocuments} from "@/lib/getSanityData";
 
 const SERVICES_QUERY = `*[
   _type == "service"
@@ -20,11 +21,10 @@ const SERVICES_QUERY = `*[
     image, 
     price,
     "currentSlug": slug.current}`;
-const options = { next: { revalidate: 30 } };
 const builder = imageUrlBuilder(client);
 
 export default async function ServicesPage() {
-    const services = await client.fetch<SanityDocument[]>(SERVICES_QUERY, {}, options);
+    const services = await getSanityDocuments(SERVICES_QUERY);
     const urlFor = (source: SanityImageSource) => {
         return builder.image(source).url();
     }
