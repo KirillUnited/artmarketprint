@@ -94,14 +94,14 @@ export default async function CategoryPage({params}: {params: Promise<Props>}) {
 					</div>
 				</div>
 			</section>
-			<section className={'py-10 md:py-20 bg-[#F1F4FA]'}>
+			<section className={'py-10 md:py-20'}>
 				<div className="container flex flex-col">
-					<div className="w-full max-w-2xl self-center bg-background shadow-lg p-6 rounded-medium">
+					<div className="w-full max-w-2xl self-center bg-background shadow-lg py-6 px-4 md:px-6 rounded-medium">
 						<OrderForm className={'items-center'} />
 					</div>
 				</div>
 			</section>
-			<section className="relative" id="catalog">
+			<section className="relative bg-[#F1F4FA]" id="catalog">
 				<div className="py-10 md:py-20 flex flex-col gap-10">
 					<div className="container">
 						<h2 className="text-2xl md:text-3xl leading-[120%] font-bold text-center">Похожие услуги</h2>
