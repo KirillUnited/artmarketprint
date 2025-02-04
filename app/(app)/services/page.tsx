@@ -6,10 +6,20 @@ import { FAQ } from "@/components/shared/FAQ";
 import Contacts from "@/components/shared/Contacts";
 import SocialWidget from "@/components/shared/SocialWidget";
 import BaseBreadcrumb from "@/components/ui/Breadcrumb";
-import BrandButton from "@/components/ui/BrandButton";
-import Link from "next/link";
 
-export default function ServicesPage() {
+import { type SanityDocument } from "next-sanity";
+
+import { client } from "@/sanity/client";
+
+const POSTS_QUERY = `*[
+  _type == "service"
+  && defined(slug.current)
+]|order(publishedAt desc)[0...12]{_id, title, slug, publishedAt}`;
+const options = { next: { revalidate: 30 } };
+
+export default async function ServicesPage() {
+    const posts = await client.fetch<SanityDocument[]>(POSTS_QUERY, {}, options);
+
     return (
         <>
             <section className="py-12 md:py-24 relative after:absolute after:inset-0 after:bg-gradient-to-t after:from-black after:to-transparent">
@@ -37,14 +47,21 @@ export default function ServicesPage() {
             </section>
             <section id="serviceList" className="py-16">
                 <div className="container">
-                    <BaseBreadcrumb section='services'/>
-                    <div className="grid grid-cols-[var(--grid-template-columns)] gap-8 mt-4">
-                        {
+                    <BaseBreadcrumb section='services' />
+                    <ul className="grid grid-cols-[var(--grid-template-columns)] gap-8 mt-4">
+                        {/* {
                             siteConfig?.serviceSection?.items.map((props: BrandCardProps, index) => (
                                 <BrandCard key={index} {...props} />
                             ))
+                        } */}
+                        {
+                            posts.map((post) => (
+                                <li key={post._id}>
+                                    <BrandCard title={post.title} variant="service" price="" description="" image="" href={`/services/${post.slug.current}`} />
+                                </li>
+                            ))
                         }
-                    </div>
+                    </ul>
                 </div>
             </section>
             <FAQ />
