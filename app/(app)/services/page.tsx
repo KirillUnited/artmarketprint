@@ -30,46 +30,38 @@ export default async function ServicesPage() {
     }
 
     return (
-        <>
-            <section className="py-12 md:py-24 relative after:absolute after:inset-0 after:bg-gradient-to-t after:from-black after:to-transparent">
-                <Image
-                    priority
-                    src="/images/service-2.jpg"
-                    alt="УФ-печать"
-                    className="absolute inset-0 object-cover w-full h-full"
-                    width={1920}
-                    height={1080}
-                />
-                <div className="container flex flex-col gap-8 max-w-2xl relative z-10">
-                    <div className="text-center">
-                        <h1 className="text-4xl font-extrabold text-background sm:text-5xl">
-                            {siteConfig.serviceSection.title}
-                        </h1>
-                        <p className="mt-4 text-xl text-white">
-                            {siteConfig.serviceSection.description}
-                        </p>
-
-                    </div>
-                </div>
-            </section>
-            <section id="serviceList" className="py-16">
-                <div className="container">
-                    <BaseBreadcrumb section='services' />
-                    <ul className="grid grid-cols-[var(--grid-template-columns)] gap-8 mt-4">
-                        {
-                            services.map((service) => (
-                                console.log(service),
-                                <li key={service.title}>
-                                    <BrandCard title={service.title} variant="service" price={service.price} description={service.description} image={urlFor(service.image)} href={`/services/${service.currentSlug}`} />
-                                </li>
-                            ))
-                        }
-                    </ul>
-                </div>
-            </section>
-            <FAQ />
-            <Contacts />
-            <SocialWidget />
-        </>
-    );
+		<>
+			<section className="py-12 md:py-24 relative after:absolute after:inset-0 after:bg-gradient-to-t after:from-black after:to-transparent">
+				<Image priority alt={`${siteConfig?.seo?.title}`} className="absolute inset-0 object-cover w-full h-full" height={1080} src="/images/service-2.jpg" width={1920} />
+				<div className="container flex flex-col gap-8 max-w-2xl relative z-10">
+					<div className="text-center">
+						<h1 className="text-4xl font-extrabold text-background sm:text-5xl">{siteConfig.serviceSection.title}</h1>
+						<p className="mt-4 text-xl text-white">{siteConfig.serviceSection.description}</p>
+					</div>
+				</div>
+			</section>
+			<section id="serviceList" className="py-16">
+				<div className="container">
+					<BaseBreadcrumb section="services" />
+					<ul className="grid grid-cols-[var(--grid-template-columns)] gap-8 mt-4">
+						{services.map((service) => (
+							<li key={service.title}>
+								<BrandCard
+									description={service.description}
+									href={`/services/${service.currentSlug}`}
+									image={urlFor(service.image)}
+									price={service.price}
+									title={service.title}
+									variant="service"
+								/>
+							</li>
+						))}
+					</ul>
+				</div>
+			</section>
+			<FAQ />
+			<Contacts />
+			<SocialWidget />
+		</>
+	);
 }
