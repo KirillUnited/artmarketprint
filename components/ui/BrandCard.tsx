@@ -43,17 +43,18 @@ export default function BrandCard({ title, variant, price, description, image, h
 				})}
 				href={`${href}`}
 			>
-				<Image
-					alt={title}
-					className={clsx('object-cover w-full group-hover:scale-110 transition-all duration-400', {
-						'h-full': variant === 'service',
-						'aspect-video max-h-48': variant === 'product',
-					})}
-					height={180}
-					quality={100}
-					src={`${image}`}
-					width={270}
-				/>
+				{
+					image && <Image
+						alt={title}
+						className={clsx('object-cover w-full group-hover:scale-110 transition-all duration-400', {
+							'h-full': variant === 'service',
+							'aspect-video max-h-48': variant === 'product',
+						})}
+						height={180}
+						quality={100}
+						src={`${image}`}
+						width={270}
+					/>}
 			</Link>
 			<div
 				className={clsx('p-4 md:p-6 flex flex-col gap-4', {
