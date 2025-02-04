@@ -8,8 +8,19 @@ import {BrandCardProps, ServiceDetailsProps} from '@/types';
 import BrandButton from '@/components/ui/BrandButton';
 import Image from 'next/image';
 import BrandModalOffer from '../ui/BrandModalOffer';
+import {client} from '@/sanity/client';
+import type {SanityDocument} from 'next-sanity';
+import {getSanityDocuments} from '@/lib/getSanityData';
+import {SanityImageSource} from "@sanity/image-url/lib/types/types";
+import imageUrlBuilder from "@sanity/image-url";
 
-export const Services = () => {
+export const Services = async () => {
+	const services = await getSanityDocuments();
+	const builder = imageUrlBuilder(client);
+	const urlFor = (source: SanityImageSource) => {
+		return builder.image(source).url();
+	}
+
 	return (
 		<section className="relative" id="services">
 			<div className="py-10 md:py-20 flex flex-col gap-10">
@@ -35,8 +46,16 @@ export const Services = () => {
 				</div>
 				<div className="container">
 					<div className="grid grid-cols-[var(--grid-template-columns)] gap-8">
-						{siteConfig?.serviceSection?.items.map((props: BrandCardProps, index) => (
-							<BrandCard key={index} {...props} />
+						{services.map((service) => (
+							<BrandCard
+								key={service.title}
+								description={service.description}
+								href={`/services/${service.currentSlug}`}
+								image={urlFor(service.image)}
+								price={service.price}
+								title={service.title}
+								variant="service"
+							/>
 						))}
 						<Button
 							as={Link}
@@ -63,8 +82,10 @@ export const ServiceDetails = ({name, description, image, price, advantages}: Se
 	<div className="grid md:grid-cols-2 items-center gap-x-10 gap-y-4">
 		<div className="flex flex-col gap-8 md:gap-16">
 			<div className="flex flex-col gap-4 md:gap-6">
-				<div className="flex flex-col gap-2"><span className="text-gray-600">О услуге</span>
-					<h2 className="text-3xl md:text-4xl font-bold hyphens-auto break-words">{name}</h2></div>
+				<div className="flex flex-col gap-2">
+					<span className="text-gray-600">О услуге</span>
+					<h2 className="text-3xl md:text-4xl font-bold hyphens-auto break-words">{name}</h2>
+				</div>
 				{description && <p className="text-foreground/70 text-balance leading-normal font-light">{description}</p>}
 				{advantages && advantages.length > 0 && (
 					<div className="flex flex-col gap-4">
