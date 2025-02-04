@@ -1,9 +1,8 @@
 'use server';
 import axios from 'axios';
-import { resolve } from 'path';
 
-const telegramBotToken = '7986078877:AAEPLbAVZeslEVFv_aG8BP0spNu2zG2Y48k';
-const chatId = '-1002402462338';
+const telegramBotToken = process.env.TELEGRAM_BOT_TOKEN;
+const chatId = process.env.TELEGRAM_CHAT_ID;
 const BASE_URL = `https://api.telegram.org/bot${telegramBotToken}/sendMessage`;
 
 export async function sendOrder(formData: FormData): Promise<any> {
@@ -20,7 +19,6 @@ export async function sendOrder(formData: FormData): Promise<any> {
 		.then((response) => {
 			console.log('Message sent to Telegram:', response.data);
 			return response.data;
-			resolve(response.data);
 		})
 		.catch((error) => {
 			console.error('Error sending message to Telegram:', error);
