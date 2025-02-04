@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { siteConfig } from "@/config/site";
 import BrandCard from "@/components/ui/BrandCard";
-import { BrandCardProps } from "@/types";
 import { FAQ } from "@/components/shared/FAQ";
 import Contacts from "@/components/shared/Contacts";
 import SocialWidget from "@/components/shared/SocialWidget";
@@ -10,15 +9,25 @@ import BaseBreadcrumb from "@/components/ui/Breadcrumb";
 import { type SanityDocument } from "next-sanity";
 
 import { client } from "@/sanity/client";
+import { SanityImageSource } from "@sanity/image-url/lib/types/types";
+import imageUrlBuilder from "@sanity/image-url";
 
-const POSTS_QUERY = `*[
+const SERVICES_QUERY = `*[
   _type == "service"
   && defined(slug.current)
-]|order(publishedAt desc)[0...12]{_id, title, slug, publishedAt}`;
+]|order(publishedAt desc)[0...12]{title,
+    description,
+    image, 
+    price,
+    "currentSlug": slug.current}`;
 const options = { next: { revalidate: 30 } };
+const builder = imageUrlBuilder(client);
 
 export default async function ServicesPage() {
-    const posts = await client.fetch<SanityDocument[]>(POSTS_QUERY, {}, options);
+    const services = await client.fetch<SanityDocument[]>(SERVICES_QUERY, {}, options);
+    const urlFor = (source: SanityImageSource) => {
+        return builder.image(source).url();
+    }
 
     return (
         <>
@@ -41,23 +50,17 @@ export default async function ServicesPage() {
                         </p>
 
                     </div>
-
-                    {/*<BrandButton as={Link} href="/#serviceList" state="primary" className={'self-center'}>ЗАКАЗАТЬ</BrandButton>*/}
                 </div>
             </section>
             <section id="serviceList" className="py-16">
                 <div className="container">
                     <BaseBreadcrumb section='services' />
                     <ul className="grid grid-cols-[var(--grid-template-columns)] gap-8 mt-4">
-                        {/* {
-                            siteConfig?.serviceSection?.items.map((props: BrandCardProps, index) => (
-                                <BrandCard key={index} {...props} />
-                            ))
-                        } */}
                         {
-                            posts.map((post) => (
-                                <li key={post._id}>
-                                    <BrandCard title={post.title} variant="service" price="" description="" image="" href={`/services/${post.slug.current}`} />
+                            services.map((service) => (
+                                console.log(service),
+                                <li key={service.title}>
+                                    <BrandCard title={service.title} variant="service" price={service.price} description={service.description} image={urlFor(service.image)} href={`/services/${service.currentSlug}`} />
                                 </li>
                             ))
                         }
