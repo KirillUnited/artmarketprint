@@ -1,15 +1,34 @@
 import Image from "next/image";
 import { siteConfig } from "@/config/site";
 import BrandCard from "@/components/ui/BrandCard";
-import { BrandCardProps } from "@/types";
 import { FAQ } from "@/components/shared/FAQ";
 import Contacts from "@/components/shared/Contacts";
 import SocialWidget from "@/components/shared/SocialWidget";
 import BaseBreadcrumb from "@/components/ui/Breadcrumb";
-import BrandButton from "@/components/ui/BrandButton";
-import Link from "next/link";
+import imageUrlBuilder from "@sanity/image-url";
+import {client} from "@/sanity/client";
+import type {SanityDocument} from "next-sanity";
+import {SanityImageSource} from "@sanity/image-url/lib/types/types";
+import {getSanityDocuments} from "@/lib/getSanityData";
 
-export default function CatalogPage() {
+
+const CATEGORIES_QUERY = `*[
+  _type == "category"
+  && defined(slug.current)
+]|order(publishedAt desc)[0...12]{title,
+    description,
+    image, 
+    price,
+    "currentSlug": slug.current}`;
+const options = { next: { revalidate: 30 } };
+const builder = imageUrlBuilder(client);
+
+export default async function CatalogPage() {
+    const categories = await getSanityDocuments(CATEGORIES_QUERY);
+    const urlFor = (source: SanityImageSource) => {
+        return builder.image(source).url();
+    }
+    
     return (
         <>
             <section className="py-12 md:py-24 relative after:absolute after:inset-0 after:bg-gradient-to-t after:from-black after:to-transparent">
@@ -38,13 +57,15 @@ export default function CatalogPage() {
             <section id="categoryList" className="py-16">
                 <div className="container">
                     <BaseBreadcrumb section='catalog' />
-                    <div className="grid grid-cols-[var(--grid-template-columns)] gap-8 mt-4">
+                    <ul className="grid grid-cols-[var(--grid-template-columns)] gap-8 mt-4">
                         {
-                            siteConfig?.catalogSection?.items.map((props: BrandCardProps, index) => (
-                                <BrandCard key={index} {...props} />
+                            categories.map((category) => (
+                                <li key={category.title}>
+                                    <BrandCard description={category.description} href={`/catalog/${category.currentSlug}`} image={urlFor(category.image)} price={category.price} title={category.title} variant="product" />
+                                </li>
                             ))
                         }
-                    </div>
+                    </ul>
                 </div>
             </section>
             <FAQ />
