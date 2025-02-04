@@ -72,7 +72,7 @@ export default async function ServicePage({ params }: { params: Promise<Props> }
                     </div>
                 </div>
             </section>
-            <section id="serviceDetails" className="section relative overflow-hidden pb-10 md:pb-20 pt-3 md:pt-6">
+            <section id="serviceDetails" className="section abc relative overflow-hidden pb-10 md:pb-20 pt-3 md:pt-6">
                 <div className="container">
                     <ServiceDetails {...serviceDetails} />
                 </div>
