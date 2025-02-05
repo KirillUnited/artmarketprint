@@ -1,17 +1,15 @@
-import Image from "next/image";
-import { siteConfig } from "@/config/site";
-import BrandCard from "@/components/ui/BrandCard";
-import { FAQ } from "@/components/shared/FAQ";
-import Contacts from "@/components/shared/Contacts";
-import SocialWidget from "@/components/shared/SocialWidget";
-import BaseBreadcrumb from "@/components/ui/Breadcrumb";
+import Image from 'next/image';
+import { SanityImageSource } from '@sanity/image-url/lib/types/types';
+import imageUrlBuilder from '@sanity/image-url';
 
-import { type SanityDocument } from "next-sanity";
-
-import { client } from "@/sanity/client";
-import { SanityImageSource } from "@sanity/image-url/lib/types/types";
-import imageUrlBuilder from "@sanity/image-url";
-import {getSanityDocuments} from "@/lib/getData";
+import { siteConfig } from '@/config/site';
+import BrandCard from '@/components/ui/BrandCard';
+import { FAQ } from '@/components/shared/FAQ';
+import Contacts from '@/components/shared/Contacts';
+import BaseBreadcrumb from '@/components/ui/Breadcrumb';
+import { client } from '@/sanity/client';
+import {getSanityDocuments} from '@/lib/getData';
+import {InstagramFeedSection} from '@/components/shared/InstagramFeed';
 
 const SERVICES_QUERY = `*[
   _type == "service"
@@ -40,7 +38,7 @@ export default async function ServicesPage() {
 					</div>
 				</div>
 			</section>
-			<section id="serviceList" className="py-16">
+			<section className="py-16" id="serviceList">
 				<div className="container">
 					<BaseBreadcrumb section="services" />
 					<ul className="grid grid-cols-[var(--grid-template-columns)] gap-8 mt-4">
@@ -61,7 +59,7 @@ export default async function ServicesPage() {
 			</section>
 			<FAQ />
 			<Contacts />
-			<SocialWidget />
+			<InstagramFeedSection/>
 		</>
 	);
 }
