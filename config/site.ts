@@ -182,7 +182,7 @@ export const siteConfig = {
     }
   ],
   serviceSection: {
-    title: 'Услуги',
+    title: 'Наши услуги',
     description: 'Услуги наших специалистов гарантируют качество и кратчайшие сроки работы',
     href: '/services',
     items: [
@@ -231,7 +231,7 @@ export const siteConfig = {
     ]
   },
   catalogSection: {
-    title: 'Каталог',
+    title: 'Каталог по категориям',
     description: 'Мы предлагаем печатные услуги на различных материалах, что позволяет вам реализовать самые разнообразные проекты',
     href: '/catalog',
     items: [
