@@ -36,7 +36,7 @@ export const BrandCardFooter = ({ variant, href }: { variant: string; href: stri
 
 export default function BrandCard({ title, variant, price, description, image, href }: BrandCardProps) {
 	return (
-		<div className="min-h-[260px] md:min-h-[460px] overflow-hidden rounded-md shadow-small hover:shadow-large transition-all flex flex-col group relative">
+		<div className="min-h-[260px] h-full md:min-h-[460px] overflow-hidden rounded-md shadow-small hover:shadow-large transition-all flex flex-col group relative">
 			<Link
 				className={clsx('overflow-hidden', {
 					'absolute inset-0': variant === 'service',

@@ -51,7 +51,7 @@ const options = { next: { revalidate: 30 } };
 
 export default async function CategoryPage({ params }: { params: Promise<Props> }) {
 	const category = await client.fetch<SanityDocument>(CATEGORY_QUERY, await params, options);
-	const categoryImageUrl = category.image
+	const categoryImageUrl = await category.image
 		? urlFor(category.image)?.width(550).height(310).url()
 		: null;
 
@@ -83,7 +83,7 @@ export default async function CategoryPage({ params }: { params: Promise<Props> 
 			<section id='categoryDetails' className="section relative overflow-hidden pb-10 md:pb-20 pt-3 md:pt-6">
 				<div className="container">
 					<ServiceDetails name={category.title} image={getUrlFor(category.image)} price={category.price} advantages={category.advantages}>
-						{Array.isArray(category.body) && <PortableText value={category.body} />}
+						{Array.isArray(category.body) && <PortableText value={category.body} onMissingComponent={false} />}
 					</ServiceDetails>
 				</div>
 			</section>

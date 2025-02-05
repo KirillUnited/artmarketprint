@@ -90,7 +90,7 @@ export default async function ServicePage({ params }: { params: Promise<Props> }
             <section id="serviceDetails" className="section abc relative overflow-hidden pb-10 md:pb-20 pt-3 md:pt-6">
                 <div className="container">
                     <ServiceDetails name={service.title} image={getUrlFor(service.image)} price={service.price} advantages={service.advantages}>
-                        {Array.isArray(service.body) && <PortableText value={service.body} />}
+                        {Array.isArray(service.body) && <PortableText value={service.body} onMissingComponent={false}/>}
                     </ServiceDetails>
                 </div>
             </section>
