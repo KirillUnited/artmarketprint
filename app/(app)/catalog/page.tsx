@@ -1,15 +1,15 @@
-import Image from "next/image";
-import { siteConfig } from "@/config/site";
-import BrandCard from "@/components/ui/BrandCard";
-import { FAQ } from "@/components/shared/FAQ";
-import Contacts from "@/components/shared/Contacts";
-import SocialWidget from "@/components/shared/SocialWidget";
-import BaseBreadcrumb from "@/components/ui/Breadcrumb";
-import imageUrlBuilder from "@sanity/image-url";
-import {client} from "@/sanity/client";
-import type {SanityDocument} from "next-sanity";
-import {SanityImageSource} from "@sanity/image-url/lib/types/types";
-import {getSanityDocuments} from "@/lib/getData";
+import Image from 'next/image';
+import imageUrlBuilder from '@sanity/image-url';
+import {SanityImageSource} from '@sanity/image-url/lib/types/types';
+
+import { siteConfig } from '@/config/site';
+import BrandCard from '@/components/ui/BrandCard';
+import { FAQ } from '@/components/shared/FAQ';
+import Contacts from '@/components/shared/Contacts';
+import BaseBreadcrumb from '@/components/ui/Breadcrumb';
+import {client} from '@/sanity/client';
+import {getSanityDocuments} from '@/lib/getData';
+import {InstagramFeedSection} from '@/components/shared/InstagramFeed';
 
 
 const CATEGORIES_QUERY = `*[
@@ -20,7 +20,6 @@ const CATEGORIES_QUERY = `*[
     image, 
     price,
     "currentSlug": slug.current}`;
-const options = { next: { revalidate: 30 } };
 const builder = imageUrlBuilder(client);
 
 export default async function CatalogPage() {
@@ -34,11 +33,11 @@ export default async function CatalogPage() {
             <section className="py-12 md:py-24 relative after:absolute after:inset-0 after:bg-gradient-to-t after:from-black after:to-transparent">
                 <Image
                     priority
-                    src="/images/catalog-1.jpeg"
                     alt={siteConfig.catalogSection.title}
                     className="absolute inset-0 object-cover w-full h-full"
-                    width={1920}
                     height={1080}
+                    src="/images/catalog-1.jpeg"
+                    width={1920}
                 />
                 <div className="container flex flex-col gap-8 max-w-2xl relative z-10">
                     <div className="text-center">
@@ -54,7 +53,7 @@ export default async function CatalogPage() {
                     {/*<BrandButton as={Link} href="/#categoryList" state="primary" className={'self-center'}>ПОДРОБНЕЕ</BrandButton>*/}
                 </div>
             </section>
-            <section id="categoryList" className="py-16">
+            <section className="py-16" id="categoryList">
                 <div className="container">
                     <BaseBreadcrumb section='catalog' />
                     <ul className="grid grid-cols-[var(--grid-template-columns)] gap-8 mt-4">
@@ -70,7 +69,7 @@ export default async function CatalogPage() {
             </section>
             <FAQ />
             <Contacts />
-            <SocialWidget />
+            <InstagramFeedSection/>
         </>
     );
 }
