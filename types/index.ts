@@ -48,3 +48,7 @@ export interface CatalogDataProps {
   services: ServiceDetailsProps[];
   categories: CategoryDetailsProps[];
 }
+
+export interface SectionProps extends React.AllHTMLAttributes<HTMLElement> {
+containerFluid?: boolean;
+}
