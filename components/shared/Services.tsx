@@ -1,17 +1,17 @@
 import Link from 'next/link';
-import {Button} from '@heroui/button';
+import { Button } from '@heroui/button';
 
 import BrandCard from '../ui/BrandCard';
 
-import {siteConfig} from '@/config/site';
-import {BrandCardProps, ServiceDetailsProps} from '@/types';
+import { siteConfig } from '@/config/site';
+import { BrandCardProps, ServiceDetailsProps } from '@/types';
 import BrandButton from '@/components/ui/BrandButton';
 import Image from 'next/image';
 import BrandModalOffer from '../ui/BrandModalOffer';
-import {client} from '@/sanity/client';
-import type {SanityDocument} from 'next-sanity';
-import {getSanityDocuments} from '@/lib/getSanityData';
-import {SanityImageSource} from "@sanity/image-url/lib/types/types";
+import { client } from '@/sanity/client';
+import type { SanityDocument } from 'next-sanity';
+import { getSanityDocuments } from '@/lib/getData';
+import { SanityImageSource } from "@sanity/image-url/lib/types/types";
 import imageUrlBuilder from "@sanity/image-url";
 
 export const Services = async () => {
@@ -78,8 +78,8 @@ export const Services = async () => {
 	);
 };
 
-export const ServiceDetails = ({name, description, image, price, advantages}: ServiceDetailsProps) => (
-	<div className="grid md:grid-cols-2 items-center gap-x-10 gap-y-4">
+export const ServiceDetails = ({ name, description, image, price, advantages, children }: ServiceDetailsProps) => (
+	<div className="grid md:grid-cols-2 items-center gap-x-10 gap-y-8">
 		<div className="flex flex-col gap-8 md:gap-16">
 			<div className="flex flex-col gap-4 md:gap-6">
 				<div className="flex flex-col gap-2">
@@ -99,6 +99,7 @@ export const ServiceDetails = ({name, description, image, price, advantages}: Se
 						</ul>
 					</div>
 				)}
+				{children}
 				{price && (
 					<div className="flex flex-col gap-4">
 						<h3 className="text-xl md:text-2xl font-bold text-gray-900">Цены</h3>
@@ -115,6 +116,8 @@ export const ServiceDetails = ({name, description, image, price, advantages}: Se
 			</div>
 		</div>
 
-		<Image alt={name} className="h-full object-cover flex-1 w-full" height={635} src={`/images/${image}`} width={640} />
+		{image && (
+			<Image alt={name} className="h-full object-cover flex-1 w-full aspect-square" height={635} src={`${image}`} width={640} />
+		)}
 	</div>
 );

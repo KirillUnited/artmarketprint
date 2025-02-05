@@ -5,7 +5,7 @@ import BrandCard from '../ui/BrandCard';
 
 import { siteConfig } from '@/config/site';
 import { BrandCardProps } from '@/types';
-import {getSanityDocuments} from "@/lib/getSanityData";
+import {getSanityDocuments} from "@/lib/getData";
 import imageUrlBuilder from "@sanity/image-url";
 import {client} from "@/sanity/client";
 import {SanityImageSource} from "@sanity/image-url/lib/types/types";
