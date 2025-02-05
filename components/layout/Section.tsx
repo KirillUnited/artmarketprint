@@ -3,7 +3,7 @@ import clsx from 'clsx';
 
 import {SectionProps} from '@/types';
 
-export default function Section({className, containerFluid, props, children}: SectionProps) {
+export default function Section({className, containerFluid, children, ...props }: SectionProps) {
     return (
 		<section className={clsx(className)} {...props}>
 			<div
