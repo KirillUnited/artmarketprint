@@ -27,7 +27,7 @@ export const Services = async () => {
 				<div className="container">
 					<div className="flex flex-wrap items-end justify-between gap-4">
 						<div className="flex flex-col gap-4 max-w-[652px]">
-							<h2 className="text-4xl md:text-5xl leading-[120%] font-bold">{siteConfig.serviceSection.title}</h2>
+							<h2 className="text-4xl md:text-5xl leading-[120%] font-bold">Популярные услуги</h2>
 							<p className="text-base md:text-lg leading-normal font-normal text-foreground/70">{siteConfig.serviceSection.description}</p>
 						</div>
 						<Button

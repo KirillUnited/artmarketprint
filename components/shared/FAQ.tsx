@@ -2,30 +2,29 @@
 import {Accordion, AccordionItem} from '@heroui/accordion';
 import {Button} from '@heroui/button';
 import Link from 'next/link';
+import Section from "@/components/layout/Section";
+import {SectionProps} from "@/types";
+import clsx from "clsx";
 
-export const FAQ = () => {
+export const FAQ = ({className}: SectionProps) => {
 	return (
-		<section>
-			<div className="container">
-				<div className="py-10 md:py-20 flex flex-col gap-10">
-					<div className="grid md:grid-cols-2 gap-x-20 gap-y-10">
-						<div className="flex flex-col gap-4">
-							<h2 className="text-4xl md:text-5xl leading-[120%] font-bold">Часто задаваемые вопросы</h2>
-							<p className="text-base md:text-lg leading-normal font-normal text-foreground/70 text-balance">
-								Здесь вы найдете ответы на самые распространенные вопросы о наших услугах и процессе работы
-							</p>
-						</div>
-					</div>
-					<FAQList/>
-					<FAQFooter />
+		<Section className={clsx(className)}>
+			<div className="grid md:grid-cols-2 gap-x-20 gap-y-10">
+				<div className="flex flex-col gap-4">
+					<h2 className="text-4xl md:text-5xl leading-[120%] font-bold">Часто задаваемые вопросы</h2>
+					<p className="text-base md:text-lg leading-normal font-normal text-foreground/70 text-balance">
+						Здесь вы найдете ответы на самые распространенные вопросы о наших услугах и процессе работы
+					</p>
 				</div>
 			</div>
-		</section>
+			<FAQList />
+			<FAQFooter />
+		</Section>
 	);
 };
 
 export const FAQList = () => (
-	<Accordion className="gap-4" itemClasses={{base:'rounded-md'}} variant="splitted">
+	<Accordion className="gap-4" itemClasses={{base: 'rounded-md'}} variant="splitted">
 		<AccordionItem key="1" aria-label="Accordion 1" className="bg-background shadow-small" classNames={{heading: 'font-bold'}} title="Как сделать заказ?">
 			Чтобы сделать заказ, вам нужно выбрать нужную услугу на нашем сайте. После этого заполните форму заказа, указав все необходимые детали. Мы свяжемся с вами для подтверждения и уточнения
 			деталей.

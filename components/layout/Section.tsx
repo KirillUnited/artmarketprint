@@ -3,9 +3,9 @@ import clsx from 'clsx';
 
 import {SectionProps} from '@/types';
 
-export default function Section({className, containerFluid, children}: SectionProps) {
+export default function Section({className, containerFluid, props, children}: SectionProps) {
     return (
-		<section className={clsx(className)}>
+		<section className={clsx(className)} {...props}>
 			<div
 				className={clsx('container', {
 					['max-w-full px-0']: containerFluid,
@@ -16,3 +16,19 @@ export default function Section({className, containerFluid, children}: SectionPr
 		</section>
 	);
 }
+
+export const SectionHeading = ({ children }: SectionProps) => (
+	<div className="flex flex-col gap-4 max-w-[652px]">
+		{children}
+	</div>
+);
+
+export const SectionTitle = ({ children }: SectionProps) => (
+	<h2 className="text-4xl md:text-5xl leading-[120%] font-bold">{children}</h2>
+);
+
+export const SectionDescription = ({children}: SectionProps) => (
+	<p className="text-base md:text-lg leading-normal font-normal text-foreground/70">
+		{children}
+	</p>
+);

@@ -18,9 +18,9 @@ export default function Home() {
 			<Catalog />
 			{/* <Projects /> */}
 			<About />
-			<FAQ />
-			<Contacts />
 			<InstagramFeedSection/>
+			<FAQ className="bg-[#F1F4FA]" />
+			<Contacts id='contacts' className="bg-background" />
 			{/* <Testimonials /> */}
 			<Script
 				async

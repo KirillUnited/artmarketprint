@@ -1,11 +1,17 @@
 import React from 'react';
-import Socials from './Socials';
+import clsx from 'clsx';
+
 import OrderForm from '../ui/OrderForm';
+
+import Socials from './Socials';
 import ContactsList from './ContactsList';
 
-export default function Contacts() {
+import {SectionProps} from '@/types';
+
+
+export default function Contacts({className, ...props}: SectionProps) {
 	return (
-		<section id="contacts" className="bg-[#F1F4FA]">
+		<section className={clsx('bg-[#F1F4FA]', className)} {...props}>
 			<div className="py-10 md:py-20 flex flex-col gap-10">
 				<div className="container">
 					<div className="flex flex-wrap items-end justify-between gap-4">
@@ -47,12 +53,12 @@ export const MapFrame = () => (
 			Печать на ткани в Минске
 		</a>
 		<iframe
-			src="https://yandex.by/map-widget/v1/org/art_market_print/100202069960/?ll=27.508390%2C53.918763&z=17"
-			width={'100%'}
-			height={400}
-			title="ArtMarketPrint"
 			allowFullScreen
+			height={400}
+			src="https://yandex.by/map-widget/v1/org/art_market_print/100202069960/?ll=27.508390%2C53.918763&z=17"
 			style={{position: 'relative'}}
+			title="ArtMarketPrint"
+			width={'100%'}
 		/>
 	</div>
 );
