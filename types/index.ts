@@ -32,6 +32,7 @@ export interface ServiceDetailsProps {
   image?: string,
   advantages?: string[],
   price?: string
+  children?: React.ReactNode
 }
 
 export interface CategoryDetailsProps {

@@ -11,7 +11,7 @@ import { type SanityDocument } from "next-sanity";
 import { client } from "@/sanity/client";
 import { SanityImageSource } from "@sanity/image-url/lib/types/types";
 import imageUrlBuilder from "@sanity/image-url";
-import {getSanityDocuments} from "@/lib/getSanityData";
+import {getSanityDocuments} from "@/lib/getData";
 
 const SERVICES_QUERY = `*[
   _type == "service"
