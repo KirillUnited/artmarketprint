@@ -44,7 +44,7 @@ export default function Header() {
 									<HeaderDropdownMenu key={navItem.label} items={navItem.menuItems} triggerLabel={navItem.label} />
 								) : (
 									<NavbarItem key={navItem.label} isActive={index === 0}>
-										<Link aria-current="page" className="text-base leading-normal font-semibold hover:underline hover:text-primary transition" color={'foreground'} href={navItem.href}>
+										<Link aria-current="page" size="sm" className="leading-normal font-semibold hover:underline hover:text-primary transition" color={'foreground'} href={navItem.href}>
 											{navItem.label}
 										</Link>
 									</NavbarItem>
@@ -115,10 +115,11 @@ const HeaderDropdownMenu = ({ triggerLabel, items }: HeaderDropdownMenuProps) =>
 				<DropdownTrigger>
 					<Button
 						disableRipple
-						className="p-0 bg-transparent data-[hover=true]:bg-transparent text-base leading-normal font-semibold hover:underline hover:text-primary transition gap-1"
+						className="p-0 bg-transparent data-[hover=true]:bg-transparent leading-normal font-semibold hover:underline hover:text-primary transition gap-1"
 						endContent={<ChevronDownIcon size={20} className="text-primary" />}
 						radius="sm"
 						variant="light"
+						size="md"
 					>
 						{triggerLabel}
 					</Button>

@@ -20,7 +20,7 @@ export default function Home() {
 			<About />
 			<InstagramFeedSection/>
 			<FAQ className="bg-[#F1F4FA]" />
-			<Contacts id='contacts' className="bg-background" />
+			<Contacts className="bg-background" id='contacts' />
 			{/* <Testimonials /> */}
 			<Script
 				async
