@@ -1,18 +1,17 @@
 import Link from 'next/link';
 import { Button } from '@heroui/button';
+import Image from 'next/image';
+import { SanityImageSource } from '@sanity/image-url/lib/types/types';
+import imageUrlBuilder from '@sanity/image-url';
 
 import BrandCard from '../ui/BrandCard';
+import BrandModalOffer from '../ui/BrandModalOffer';
 
 import { siteConfig } from '@/config/site';
-import { BrandCardProps, ServiceDetailsProps } from '@/types';
-import BrandButton from '@/components/ui/BrandButton';
-import Image from 'next/image';
-import BrandModalOffer from '../ui/BrandModalOffer';
+import { ServiceDetailsProps } from '@/types';
 import { client } from '@/sanity/client';
-import type { SanityDocument } from 'next-sanity';
 import { getSanityDocuments } from '@/lib/getData';
-import { SanityImageSource } from "@sanity/image-url/lib/types/types";
-import imageUrlBuilder from "@sanity/image-url";
+
 
 export const Services = async () => {
 	const services = await getSanityDocuments();
@@ -99,7 +98,9 @@ export const ServiceDetails = ({ name, description, image, price, advantages, ch
 						</ul>
 					</div>
 				)}
-				{children}
+				<article className="prose">
+					{children}
+				</article>
 				{price && (
 					<div className="flex flex-col gap-4">
 						<h3 className="text-xl md:text-2xl font-bold text-gray-900">Цены</h3>
@@ -110,7 +111,7 @@ export const ServiceDetails = ({ name, description, image, price, advantages, ch
 			<div className="flex flex-wrap gap-2 md:gap-4">
 				<BrandModalOffer />
 
-				<Button as={Link} href={'/#contacts'} className="bg-brand-gradient text-fill-transparent font-semibold flex-1 basis-36" color="secondary" radius="sm" size="lg" variant="ghost">
+				<Button as={Link} className="bg-brand-gradient text-fill-transparent font-semibold flex-1 basis-36" color="secondary" href={'/#contacts'} radius="sm" size="lg" variant="ghost">
 					КОНСУЛЬТАЦИЯ
 				</Button>
 			</div>
