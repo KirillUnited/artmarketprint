@@ -5,38 +5,51 @@ import Link from 'next/link';
 import AboutImage from '../../public/images/about.jpg';
 
 import BrandButton from '@/components/ui/BrandButton';
-
+import Section, {SectionDescription, SectionHeading, SectionSubtitle, SectionTitle} from '@/components/layout/Section';
+import {ArrowUpRightIcon} from "lucide-react";
 
 export default function About() {
 	return (
-		<section className="section relative overflow-hidden bg-gray-50">
-			<div className="container">
-				<div className="py-10 md:py-20 grid md:grid-cols-2 items-center gap-x-20 gap-y-4">
-					<Image alt={'ArtMarketPrint'} className="h-full object-cover flex-1 w-full" height={635} placeholder="blur" quality={100} src={AboutImage} width={640} />
+		<Section className="section relative overflow-hidden bg-gray-50">
+			<div className="grid md:grid-cols-2 items-center gap-x-20 gap-y-4">
+				<Image alt={'ArtMarketPrint'} className="max-h-max h-full object-cover flex-1 w-full rounded-small" height={640}
+					   placeholder="blur" quality={100} src={AboutImage} width={640}/>
+				<div className="flex flex-col gap-8 md:gap-16">
+					<SectionHeading className="max-w-full">
+						<SectionSubtitle>
+							- О нас -
+						</SectionSubtitle>
+						<SectionTitle>
+							<span
+								className="font-extrabold bg-brand-gradient text-fill-transparent">Art Market Print</span>
+							<br/>
+							Печать в Минске
+						</SectionTitle>
+						<SectionDescription>
+							Наши услуги обеспечивают высокое качество печати и гравировки, что позволяет вам выделяться
+							на фоне конкурентов. Мы используем современные технологии, чтобы гарантировать долговечность
+							и яркость ваших изделий.
+						</SectionDescription>
+					</SectionHeading>
+					<div className="flex flex-col md:flex-row gap-2 md:gap-4">
+						<BrandButton as={Link} href={'/services'} state='primary'>УСЛУГИ</BrandButton>
 
-					<div className="flex flex-col gap-8 md:gap-16 py-10 md:py-20">
-						<div className="flex flex-col gap-4 md:gap-6">
-							<span className="text-lg font-semibold">
-								О нас
-							</span>
-							<h2 className="text-4xl md:text-6xl font-medium hyphens-auto break-words">
-								<span className="font-extrabold bg-brand-gradient text-fill-transparent">Art Market Print</span>
-								<br />
-								Печать в Минске
-							</h2>
-							<p className="text-foreground/70 text-base md:text-lg leading-normal font-light">
-								Наши услуги обеспечивают высокое качество печати и гравировки, что позволяет вам выделяться на фоне конкурентов. Мы используем современные технологии, чтобы гарантировать долговечность и яркость ваших изделий.
-							</p>
-						</div>
-						<div className="flex flex-col md:flex-row gap-2 md:gap-4">
-							<BrandButton as={Link} href={'/#catalog'} state='primary'>УЗНАТЬ ЦЕНЫ</BrandButton>
-
-							<Button as={Link} href={'/#contacts'} className='bg-brand-gradient text-fill-transparent font-semibold' color='secondary' radius='sm' size='lg' variant='ghost'>КОНСУЛЬТАЦИЯ</Button>
-						</div>
+						<Button
+							as={Link}
+							className="bg-brand-gradient text-fill-transparent font-semibold"
+							color="secondary"
+							href={'/catalog'}
+							radius="sm"
+							size="lg"
+							target="_blank"
+							variant="bordered"
+						>
+							<span className="leading-none">КАТАЛОГ</span>
+							<ArrowUpRightIcon className="text-secondary" size={18} />
+						</Button>
 					</div>
-
 				</div>
 			</div>
-		</section>
+		</Section>
 	);
 }

@@ -19,8 +19,8 @@ export default function Section({className, containerFluid, innerClassname, chil
 	);
 }
 
-export const SectionHeading = ({ children }: SectionProps) => (
-	<div className="flex flex-col gap-4 max-w-[652px]">
+export const SectionHeading = ({ className, children }: SectionProps) => (
+	<div className={clsx('flex flex-col gap-4 max-w-[652px]', className)}>
 		{children}
 	</div>
 );
