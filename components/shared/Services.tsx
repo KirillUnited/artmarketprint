@@ -118,7 +118,7 @@ export const ServiceDetails = ({ name, description, image, price, advantages, ch
 		</div>
 
 		{image && (
-			<Image alt={name} className="h-full object-cover flex-1 w-full aspect-square" height={635} src={`${image}`} width={640} />
+			<Image alt={name} className="h-full object-cover flex-1 w-full aspect-square max-h-max" height={640} src={`${image}`} width={640} />
 		)}
 	</div>
 );
