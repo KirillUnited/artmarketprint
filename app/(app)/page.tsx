@@ -22,12 +22,12 @@ export default function Home() {
 			<FAQ className="bg-[#F1F4FA]" />
 			<Contacts className="bg-background" id='contacts' />
 			{/* <Testimonials /> */}
-			<Script
-				async
-				src="https://static.elfsight.com/platform/platform.js"
-				strategy="lazyOnload"
-			/>
-			<div data-elfsight-app-lazy className="elfsight-app-7f56de0f-7490-4845-801c-cf32d1a5aeb1"/>
+			{/*<Script*/}
+			{/*	async*/}
+			{/*	src="https://static.elfsight.com/platform/platform.js"*/}
+			{/*	strategy="lazyOnload"*/}
+			{/*/>*/}
+			{/*<div data-elfsight-app-lazy className="elfsight-app-7f56de0f-7490-4845-801c-cf32d1a5aeb1"/>*/}
 		</>
 	);
 }
