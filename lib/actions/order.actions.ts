@@ -18,6 +18,7 @@ export async function sendOrder(formData: FormData): Promise<any> {
 		})
 		.then((response) => {
 			console.log('Message sent to Telegram:', response.data);
+
 			return response.data;
 		})
 		.catch((error) => {
