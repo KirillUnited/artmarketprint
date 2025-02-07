@@ -3,13 +3,9 @@ import { Button } from '@heroui/button';
 import { ArrowUpRightIcon } from 'lucide-react';
 import { SanityDocument } from 'next-sanity';
 
-import BrandCard from '../ui/BrandCard';
-
-import { siteConfig } from '@/config/site';
 import { getSanityDocuments } from '@/lib/getData';
-import Section, { SectionDescription, SectionHeading, SectionSubtitle, SectionTitle } from '@/components/layout/Section';
-import { getUrlFor } from '@/lib/getUrlFor';
-import { Card, CardFooter, CardHeader } from '@heroui/card';
+import Section, { SectionButton, SectionDescription, SectionHeading, SectionSubtitle, SectionTitle } from '@/components/layout/Section';
+import { Card, CardFooter } from '@heroui/card';
 import { Image } from '@heroui/image';
 
 const PROJECTS_QUERY = `*[_type == "completedProjects"]{
@@ -18,6 +14,7 @@ const PROJECTS_QUERY = `*[_type == "completedProjects"]{
   description,
   projects[]{
     title,
+    "currentSlug": slug.current,
     shortDescription,
     "imageUrl": image.asset->url,
     altText,
@@ -28,34 +25,23 @@ const PROJECTS_QUERY = `*[_type == "completedProjects"]{
   }
 }`;
 
-export const ProjectsHeading = ({title, subtitle, description}: {title?: string; subtitle?: string; description?: string}) => (
+export const ProjectsHeading = ({ title, subtitle, description }: { title?: string; subtitle?: string; description?: string }) => (
 	<div className="flex flex-wrap items-end justify-between gap-4">
 		<SectionHeading>
 			<SectionSubtitle>- {subtitle} -</SectionSubtitle>
 			<SectionTitle>{title}</SectionTitle>
 			<SectionDescription>{description}</SectionDescription>
 		</SectionHeading>
-		<Button
-			as={Link}
-			className="bg-brand-gradient text-fill-transparent font-semibold border-1 hidden lg:flex"
-			color="secondary"
-			href={'/'}
-			radius="sm"
-			size="md"
-			target="_blank"
-			variant="bordered"
-		>
-			<span className="leading-none">Все проекты</span>
-			<ArrowUpRightIcon className="text-secondary" size={18} />
-		</Button>
+
+		<SectionButton label="Все проекты" href={'/'} className='hidden lg:flex' />
 	</div>
 );
 
 export const ProjectList = ({ projectList }: { projectList: SanityDocument[] }) => (
-	<ul className="grid grid-cols-[var(--grid-template-columns)] gap-8">
+	<ul className="flex flex-col md:grid bento-grid-template [--row-height:320px] gap-8">
 		{projectList.map((project: SanityDocument) => (
 			<li key={project.title}>
-				<Card radius='sm' isFooterBlurred as={Link} className="h-[300px] group" href={`/`}>
+				<Card radius='sm' isFooterBlurred as={Link} className="h-full group" href={`/`}>
 					<Image
 						isZoomed
 						removeWrapper
@@ -66,7 +52,17 @@ export const ProjectList = ({ projectList }: { projectList: SanityDocument[] }) 
 					/>
 					<CardFooter className="absolute bg-black/40 bottom-0 z-10 border-t-1 border-default-600 dark:border-default-100 transform translate-y-full group-hover:translate-y-0 transition-all duration-600">
 						<div className="flex flex-col gap-4">
-							<span className='text-tiny text-white/80 bg-primary rounded-small px-1 self-start leading-normal'>{project.tags[0].title}</span>
+							{
+								project?.tags?.length > 0 && (
+									<ul className='flex flex-wrap gap-2'>
+										{
+											project.tags.map(({ _id, title }: { _id: string; title: string }) => (
+												<span key={_id} className='text-tiny text-white/80 bg-primary rounded-small px-1 self-start leading-normal'>{title}</span>
+											))
+										}
+									</ul>
+								)
+							}
 							<div className="flex flex-col gap-2">
 								<h4 className="text-lg font-semibold text-white/80 line-clamp-2 leading-tight">{project.title}</h4>
 								<p className="text-xs text-white/80 line-clamp-2">{project.shortDescription}</p>
@@ -88,21 +84,11 @@ export const Projects = async () => {
 
 	return (
 		<Section className="relative" id="projects">
-			<ProjectsHeading title={title} subtitle={subtitle} description={description} />
+			<ProjectsHeading title={'Наши проекты'} subtitle={subtitle} description={'Портфолио выполненных работ'} />
+
 			{projects && <ProjectList projectList={projects} />}
-			<Button
-				as={Link}
-				className="bg-brand-gradient text-fill-transparent font-semibold border-1 lg:hidden flex"
-				color="secondary"
-				href={'/'}
-				radius="sm"
-				size="md"
-				target="_blank"
-				variant="bordered"
-			>
-				<span className="leading-none">Все проекты</span>
-				<ArrowUpRightIcon className="text-secondary" size={18} />
-			</Button>
+
+			<SectionButton label="Все проекты" href={'/'} className='lg:hidden flex' />
 		</Section>
 	);
 };
