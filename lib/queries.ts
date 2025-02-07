@@ -2,7 +2,7 @@ export const PROJECTS_QUERY = `*[_type == "completedProjects"]{
     title,
     subtitle,
     description,
-    projects[]{
+    projects[][0...$limit]{
       title,
       "currentSlug": slug.current,
       shortDescription,
