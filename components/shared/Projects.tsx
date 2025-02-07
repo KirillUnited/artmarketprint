@@ -23,7 +23,7 @@ export const ProjectsHeading = ({ title, subtitle, description }: { title?: stri
 );
 
 export const ProjectCard = ({ project }: { project: SanityDocument }) => (
-	<Card radius='sm' isFooterBlurred as={Link} className="h-full group" href={`/`}>
+	<Card radius='sm' isFooterBlurred as={Link} className="h-full group" href={`/projects/${project.currentSlug}`}>
 		<Image
 			removeWrapper
 			alt={project.altText}

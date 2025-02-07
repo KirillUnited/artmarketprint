@@ -27,4 +27,18 @@ export const PROJECTS_BY_SERVICE_QUERY = `*[_type == "completedProjects"] {
         title
       }
     }
-  }`
+  }`;
+export const PROJECT_QUERY = `*[_type == "completedProjects"] {
+    projects[slug.current == $slug]{
+      title,
+      "currentSlug": slug.current,
+      shortDescription,
+      description,
+      "imageUrl": image.asset->url,
+      altText,
+      tags[]->{
+        _id,
+        title
+      }
+    }
+  }`;

@@ -1,0 +1,90 @@
+import Image from "next/image";
+import BaseBreadcrumb from "@/components/ui/Breadcrumb";
+import BrandButton from "@/components/ui/BrandButton";
+import { ServiceDetails } from "@/components/shared/Services";
+import Link from "next/link";
+import { PortableText } from "next-sanity";
+import { getSanityDocuments } from "@/lib/getData";
+import { PROJECT_QUERY } from "@/lib/queries";
+import Section from "@/components/layout/Section";
+import { notFound } from "next/navigation";
+
+type Props = {
+    slug: string
+}
+
+export const PROJECT_SLUGS_QUERY = `*[_type == "completedProjects"].projects[].slug.current`;
+export async function generateStaticParams() {
+    const slugs = await getSanityDocuments(PROJECT_SLUGS_QUERY);
+
+    return slugs.map((slug) => ({ slug }));
+}
+
+export async function generateMetadata({ params }: { params: Promise<Props> }) {
+    const data = await getSanityDocuments(PROJECT_QUERY, await params);
+    const { title = '', shortDescription = '', keywords = '' } = data?.[0]?.projects[0] || {};
+
+    return {
+        title: `${title || ''}`,
+        description: `${shortDescription}`,
+        keywords: `${keywords}`,
+        openGraph: {
+            title: `${title || ''}`,
+            description: `${shortDescription}`,
+            images: '/apple-touch-icon.png'
+        }
+    }
+}
+
+
+export default async function ProjectPage({ params }: { params: Promise<Props> }) {
+    const data = await getSanityDocuments(PROJECT_QUERY, await params);
+    const project = data?.[0]?.projects[0] || {};
+
+    if (!data || data.length === 0) {
+		console.warn("Нет данных о проекте");
+		return <p className="text-center text-gray-500 mt-10">Нет данных о проекте</p>
+	}
+
+    return (
+        <>
+            <section
+                className="py-12 md:py-24 relative after:absolute after:inset-0 after:bg-gradient-to-t after:from-black after:to-transparent">
+                {project.imageUrl && (
+                    <Image
+                        priority
+                        src={`${project.imageUrl}`}
+                        alt={project.title}
+                        className="absolute inset-0 object-cover w-full h-full"
+                        width={1920}
+                        height={1080}
+                    />
+                )}
+                <div className="container flex flex-col gap-10 max-w-2xl relative z-10">
+                    <div className="text-center">
+                        <h1 className="text-4xl font-extrabold text-background sm:text-5xl">
+                            {project.title}
+                        </h1>
+                        <p className="mt-4 text-xl text-white">
+                            {project.shortDescription}
+                        </p>
+                    </div>
+
+                    <BrandButton as={Link} href={'#serviceDetails'} state="primary" className={'self-center'}>УЗНАТЬ</BrandButton>
+                </div>
+            </section>
+            <section>
+                <div className="container">
+                    <div className="mt-10 mb-6">
+                        <BaseBreadcrumb section='services' />
+                    </div>
+                </div>
+            </section>
+            <Section id="serviceDetails" innerClassname='pt-6 md:pt-6'>
+                <ServiceDetails name={project.title} image={project.imageUrl}>
+                    {Array.isArray(project.description) && <PortableText value={project.description} onMissingComponent={false} />}
+                </ServiceDetails>
+            </Section>
+        </>
+    );
+}
