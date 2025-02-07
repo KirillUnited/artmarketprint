@@ -11,7 +11,7 @@ import {ArrowUpRightIcon} from "lucide-react";
 export default function About() {
 	return (
 		<Section className="section relative overflow-hidden bg-gray-50">
-			<div className="grid md:grid-cols-2 items-center gap-x-20 gap-y-4">
+			<div className="grid md:grid-cols-2 items-center gap-8">
 				<Image alt={'ArtMarketPrint'} className="max-h-max h-full object-cover flex-1 w-full rounded-small" height={640}
 					   placeholder="blur" quality={100} src={AboutImage} width={640}/>
 				<div className="flex flex-col gap-8 md:gap-16">

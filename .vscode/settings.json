@@ -3,6 +3,8 @@
   "conventionalCommits.scopes": [
     "mobile",
     "BrandCard",
-    "desktop"
+    "desktop",
+    "ContactUs",
+    "Projects"
   ]
 }

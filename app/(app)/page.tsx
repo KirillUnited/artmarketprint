@@ -6,8 +6,9 @@ import About from '@/components/shared/About';
 import { FAQ } from '@/components/shared/FAQ';
 import { Catalog } from '@/components/shared/Catalog';
 import { Services } from '@/components/shared/Services';
-import Contacts from '@/components/shared/Contacts';
+import ContactUs, { MapFrame } from '@/components/shared/ContactUs';
 import {InstagramFeedSection} from '@/components/shared/InstagramFeed';
+import {Projects} from '@/components/shared/Projects';
 
 export default function Home() {
 	return (
@@ -16,11 +17,12 @@ export default function Home() {
 			<Benefits />
 			<Services />
 			<Catalog />
-			{/* <Projects /> */}
 			<About />
-			<InstagramFeedSection/>
+			<Projects />
+			<InstagramFeedSection id='instagram'/>
 			<FAQ className="bg-[#F1F4FA]" />
-			<Contacts className="bg-background" id='contacts' />
+			<ContactUs className="bg-background" id='contacts' />
+			<MapFrame />
 			{/* <Testimonials /> */}
 			{/*<Script*/}
 			{/*	async*/}

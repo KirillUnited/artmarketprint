@@ -23,6 +23,17 @@ html {
     scroll-behavior: smooth;
 }
 
+@layer components {
+    .bento-grid-template {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, var(--row-height, 300px));
+
+        & > :nth-child(1) {
+            grid-row: span 2;
+        }
+    }
+}
+
 @layer utilities {
     .text-fill-transparent {
         background-clip: text;
