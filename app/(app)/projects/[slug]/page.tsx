@@ -3,21 +3,27 @@ import BaseBreadcrumb from "@/components/ui/Breadcrumb";
 import BrandButton from "@/components/ui/BrandButton";
 import { ServiceDetails } from "@/components/shared/Services";
 import Link from "next/link";
-import { PortableText } from "next-sanity";
+import { PortableText, SanityDocument } from "next-sanity";
 import { getSanityDocuments } from "@/lib/getData";
-import { PROJECT_QUERY } from "@/lib/queries";
+import { PROJECT_QUERY, PROJECT_SLUGS_QUERY } from "@/lib/queries";
 import Section from "@/components/layout/Section";
-import { notFound } from "next/navigation";
 
 type Props = {
     slug: string
 }
 
-export const PROJECT_SLUGS_QUERY = `*[_type == "completedProjects"].projects[].slug.current`;
 export async function generateStaticParams() {
-    const slugs = await getSanityDocuments(PROJECT_SLUGS_QUERY);
+    const projects = await getSanityDocuments(PROJECT_SLUGS_QUERY);
 
-    return slugs.map((slug) => ({ slug }));
+    return projects.map((document) => {
+        return {
+            projects: document.projects.map((project: SanityDocument) => {
+                return {
+                    slug: project.slug.current,
+                };
+            }),
+        };
+    });
 }
 
 export async function generateMetadata({ params }: { params: Promise<Props> }) {
@@ -36,15 +42,15 @@ export async function generateMetadata({ params }: { params: Promise<Props> }) {
     }
 }
 
-
 export default async function ProjectPage({ params }: { params: Promise<Props> }) {
     const data = await getSanityDocuments(PROJECT_QUERY, await params);
     const project = data?.[0]?.projects[0] || {};
 
     if (!data || data.length === 0) {
-		console.warn("Нет данных о проекте");
-		return <p className="text-center text-gray-500 mt-10">Нет данных о проекте</p>
-	}
+        console.warn("Нет данных о проекте");
+
+        return <p className="text-center text-gray-500 mt-10">Нет данных о проекте</p>
+    }
 
     return (
         <>

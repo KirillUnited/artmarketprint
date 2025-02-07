@@ -42,3 +42,8 @@ export const PROJECT_QUERY = `*[_type == "completedProjects"] {
       }
     }
   }`;
+export const PROJECT_SLUGS_QUERY: string = `*[_type == "completedProjects"] {
+    projects[] {
+      "slug": slug.current
+    }
+  }`;
