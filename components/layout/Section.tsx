@@ -6,7 +6,7 @@ import { Button } from '@heroui/button';
 import { ArrowUpRightIcon } from 'lucide-react';
 import Link from 'next/link';
 
-export default function Section({ className, containerFluid, innerClassname, children, ...props }: SectionProps) {
+export default function Section({ className, containerFluid, innerClassname: innerClassName, children, ...props }: SectionProps) {
 	return (
 		<section className={clsx(className)} {...props}>
 			<div
@@ -14,7 +14,7 @@ export default function Section({ className, containerFluid, innerClassname, chi
 					['max-w-full px-0']: containerFluid,
 				})}
 			>
-				<SectionInner className={innerClassname}>
+				<SectionInner className={innerClassName}>
 					{children}
 				</SectionInner>
 			</div>

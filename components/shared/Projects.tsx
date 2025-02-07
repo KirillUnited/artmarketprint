@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { Button } from '@heroui/button';
-import { ArrowUpRightIcon } from 'lucide-react';
 import { SanityDocument } from 'next-sanity';
 
 import { getSanityDocuments } from '@/lib/getData';
@@ -9,23 +8,7 @@ import { Card, CardFooter } from '@heroui/card';
 import { Image } from '@heroui/image';
 import clsx from 'clsx';
 import { Suspense } from 'react';
-
-const PROJECTS_QUERY = `*[_type == "completedProjects"]{
-  title,
-  subtitle,
-  description,
-  projects[][0...3]{
-    title,
-    "currentSlug": slug.current,
-    shortDescription,
-    "imageUrl": image.asset->url,
-    altText,
-    tags[]->{
-      _id,
-      title
-    }
-  }
-}`;
+import { PROJECTS_QUERY } from '@/lib/queries';
 
 export const ProjectsHeading = ({ title, subtitle, description }: { title?: string; subtitle?: string; description?: string }) => (
 	<div className="flex flex-wrap items-end justify-between gap-4">
@@ -40,16 +23,15 @@ export const ProjectsHeading = ({ title, subtitle, description }: { title?: stri
 );
 
 export const ProjectCard = ({ project }: { project: SanityDocument }) => (
-	<Card radius='sm' isFooterBlurred as={Link} className="h-full group" href={`/`}>
+	<Card radius='sm' isFooterBlurred as={Link} className="h-full group" href={`/projects/${project.currentSlug}`}>
 		<Image
-			isZoomed
 			removeWrapper
 			alt={project.altText}
 			className="z-0 w-full h-full object-cover"
 			src={project.imageUrl}
 			radius='sm'
 		/>
-		<CardFooter className="absolute bg-black/40 bottom-0 z-10 border-t-1 border-default-600 dark:border-default-100 transform translate-y-full group-hover:translate-y-0 transition-all duration-600">
+		<CardFooter className="absolute bg-black/40 bottom-0 w-full z-10 border-t-1 border-default-600 dark:border-default-100 transform translate-y-full group-hover:translate-y-0 transition-all duration-500">
 			<div className="flex flex-col gap-4">
 				{
 					project?.tags?.length > 0 && (
@@ -106,7 +88,7 @@ export const ProjectList = (
 };
 
 export const Projects = async () => {
-	const data = await getSanityDocuments(PROJECTS_QUERY);
+	const data = await getSanityDocuments(PROJECTS_QUERY, { limit: 3 });
 	const { title = '', subtitle = '', description = '', projects = [] } = data?.[0] || {};
 
 	if (!data || data.length === 0) {

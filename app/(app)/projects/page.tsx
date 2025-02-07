@@ -9,7 +9,7 @@ import Section from '@/components/layout/Section';
 import BaseBreadcrumb from '@/components/ui/Breadcrumb';
 
 export default async function ProjectsPage() {
-	const data = await getSanityDocuments(PROJECTS_QUERY);
+	const data = await getSanityDocuments(PROJECTS_QUERY, { limit: 12 });
 	const { title = '', subtitle = '', description = '', projects = [] } = data?.[0] || {};
 
 	return (
