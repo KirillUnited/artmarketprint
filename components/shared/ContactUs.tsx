@@ -1,0 +1,70 @@
+import React from 'react';
+import clsx from 'clsx';
+
+import OrderForm from '../ui/OrderForm';
+
+import Socials from './Socials';
+import ContactsList from './ContactsList';
+
+import { SectionProps } from '@/types';
+import Section, { SectionDescription, SectionHeading, SectionSubtitle, SectionTitle } from '@/components/layout/Section';
+import { Card } from '@heroui/card';
+
+export default function ContactUs({ className, ...props }: SectionProps) {
+	return (
+		<Section className={clsx('bg-[#F1F4FA]', className)} {...props}>
+			<div className="grid md:grid-cols-2 items-start gap-x-20 gap-y-10">
+				<div className='flex flex-col gap-10'>
+					<ContactUsHeading
+						title="Мы всегда рады вам помочь!"
+						subtitle="Свяжитесь с нами"
+						description="Если у вас есть вопросы, предложения или хотите связаться с нами, используйте любой удобный способ:"
+					/>
+					<div className="flex flex-wrap gap-10 justify-between">
+						<div className="flex flex-col gap-6">
+							<ContactsList className="" />
+							<Socials />
+							<p>Ждем вас в любое удобное время!</p>
+						</div>
+					</div>
+				</div>
+
+				<Card radius='sm' shadow='sm' className='p-4 bg-background sticky top-16'>
+					<OrderForm className="w-full" />
+				</Card>
+			</div>
+		</Section>
+	);
+}
+
+export const ContactUsHeading = ({ title, subtitle, description }: { title?: string; subtitle?: string; description?: string }) => (
+	<div className="flex flex-wrap items-end justify-between gap-4">
+		<SectionHeading>
+			<SectionSubtitle>- {subtitle} -</SectionSubtitle>
+			<SectionTitle>{title}</SectionTitle>
+			<SectionDescription>{description}</SectionDescription>
+		</SectionHeading>
+	</div>
+);
+
+export const MapFrame = () => (
+	<div className="w-full" style={{ position: 'relative', overflow: 'hidden' }}>
+		<a href="https://yandex.by/navi/org/art_market_print/100202069960/?utm_medium=mapframe&utm_source=maps" style={{ color: '#eee', fontSize: 12, position: 'absolute', top: 0 }}>
+			Арт Маркет Принт
+		</a>
+		<a href="https://yandex.by/navi/157/minsk/category/printing_services/184107124/?utm_medium=mapframe&utm_source=maps" style={{ color: '#eee', fontSize: 12, position: 'absolute', top: 14 }}>
+			Полиграфические услуги в Минске
+		</a>
+		<a href="https://yandex.by/navi/157/minsk/category/printing_on_t_shirts/179539030136/?utm_medium=mapframe&utm_source=maps" style={{ color: '#eee', fontSize: 12, position: 'absolute', top: 28 }}>
+			Печать на ткани в Минске
+		</a>
+		<iframe
+			allowFullScreen
+			height={400}
+			src="https://yandex.by/map-widget/v1/org/art_market_print/100202069960/?ll=27.508390%2C53.918763&z=17"
+			style={{ position: 'relative' }}
+			title="ArtMarketPrint"
+			width={'100%'}
+		/>
+	</div>
+);

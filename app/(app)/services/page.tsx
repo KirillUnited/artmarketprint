@@ -5,7 +5,7 @@ import imageUrlBuilder from '@sanity/image-url';
 import { siteConfig } from '@/config/site';
 import BrandCard from '@/components/ui/BrandCard';
 import { FAQ } from '@/components/shared/FAQ';
-import Contacts from '@/components/shared/Contacts';
+import ContactUs from '@/components/shared/ContactUs';
 import BaseBreadcrumb from '@/components/ui/Breadcrumb';
 import { client } from '@/sanity/client';
 import {getSanityDocuments} from '@/lib/getData';
@@ -58,7 +58,7 @@ export default async function ServicesPage() {
 				</div>
 			</section>
 			<FAQ />
-			<Contacts />
+			<ContactUs />
 			<InstagramFeedSection/>
 		</>
 	);
