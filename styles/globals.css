@@ -10,7 +10,7 @@
         theme('colors.secondary') 100%
       );
     --foreground: #2B2A28;
-    --grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    --grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
     --product-gradient: linear-gradient(
         180deg,
         rgba(255, 255, 255, 0) 0%,

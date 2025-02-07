@@ -13,7 +13,7 @@ import { client } from '@/sanity/client';
 import { SanityImageSource } from '@sanity/image-url/lib/types/types';
 import imageUrlBuilder from "@sanity/image-url";
 import { PortableText, SanityDocument } from 'next-sanity';
-import { getUrlFor } from '@/lib/getUrlFor';
+import { getUrlFor } from '@/lib/utils';
 
 type Props = {
 	slug: string;

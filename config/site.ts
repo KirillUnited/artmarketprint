@@ -86,7 +86,7 @@ export const siteConfig = {
         },
         {
           label: 'Гравировка',
-          href: '/',
+          href: '/services/gravirovka',
           description: 'Идеально для текстиля и сложных дизайнов'
         },
         {
@@ -117,10 +117,10 @@ export const siteConfig = {
         // }
       ]
     },
-    // {
-    //   label: 'Проекты',
-    //   href: '/#projects',
-    // },
+    {
+      label: 'Проекты',
+      href: '/#projects',
+    },
     // {
     //   label: 'Отзывы',
     //   href: '/#testimonials',
