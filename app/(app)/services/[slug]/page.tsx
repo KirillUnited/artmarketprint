@@ -1,6 +1,5 @@
 import OrderForm from "@/components/ui/OrderForm";
 import Image from "next/image";
-import { Image as HeroImage } from "@heroui/image";
 import { siteConfig } from "@/config/site";
 import BaseBreadcrumb from "@/components/ui/Breadcrumb";
 import BrandButton from "@/components/ui/BrandButton";
@@ -10,8 +9,11 @@ import { client } from "@/sanity/client";
 import { SanityImageSource } from "@sanity/image-url/lib/types/types";
 import imageUrlBuilder from "@sanity/image-url";
 import { PortableText, SanityDocument } from "next-sanity";
-import ProductionStepList from "@/components/shared/ProductionStepList";
 import { getUrlFor } from "@/lib/utils";
+import { ProjectList, ProjectsHeading } from "@/components/shared/Projects";
+import { getSanityDocuments } from "@/lib/getData";
+import { PROJECTS_BY_SERVICE_QUERY, PROJECTS_QUERY } from "@/lib/queries";
+import Section, { SectionButton } from "@/components/layout/Section";
 
 type Props = {
     slug: string
@@ -53,6 +55,9 @@ export default async function ServicePage({ params }: { params: Promise<Props> }
         ? urlFor(service.image)?.width(550).height(310).url()
         : null;
 
+    const filteredProjects = await client.fetch<SanityDocument>(PROJECTS_BY_SERVICE_QUERY, await params, options);
+    const { projects = [] } = filteredProjects?.[0] || {};
+
     return (
         <>
             <section
@@ -90,32 +95,20 @@ export default async function ServicePage({ params }: { params: Promise<Props> }
             <section id="serviceDetails" className="section abc relative overflow-hidden pb-10 md:pb-20 pt-3 md:pt-6">
                 <div className="container">
                     <ServiceDetails name={service.title} image={getUrlFor(service.image)} price={service.price} advantages={service.advantages}>
-                        {Array.isArray(service.body) && <PortableText value={service.body} onMissingComponent={false}/>}
+                        {Array.isArray(service.body) && <PortableText value={service.body} onMissingComponent={false} />}
                     </ServiceDetails>
                 </div>
             </section>
-            <section className="py-10 md:py-20 bg-[#F9F9F9]">
-                <div className="container flex flex-col gap-16">
-                    {/*TODO: Create tech process component*/}
-                    <ProductionStepList />
+            <Section className="bg-[#F9F9F9]">
+                <ProjectsHeading title='Примеры работ' subtitle={'галерея'} description={'Портфолио выполненных работ'} />
 
-                    <div className="flex flex-col gap-4">
-                        <h2 className="text-2xl md:text-3xl font-bold text-gray-900">Примеры работ</h2>
-                        <div className=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                            <HeroImage loading="lazy" isZoomed src="/images/social-1.jpg" alt="Пример работы"
-                                width={'100%'} height={300} className="w-full" />
-                            <HeroImage loading="lazy" isZoomed src="/images/social-3.jpg" alt="Пример работы"
-                                width={'100%'} height={300} className="w-full" />
-                            <HeroImage loading="lazy" isZoomed src="/images/social-2.jpg" alt="Пример работы"
-                                width={'100%'} height={300} className="w-full" />
-                        </div>
-                    </div>
+                <ProjectList projectList={projects} />
 
-                    <div className="w-full max-w-2xl self-center">
-                        <OrderForm />
-                    </div>
-                </div>
-            </section>
+                <SectionButton label="Все проекты" href={'/projects'} className='lg:hidden flex' />
+            </Section >
+            <Section>
+                <OrderForm />
+            </Section>
         </>
     );
 }

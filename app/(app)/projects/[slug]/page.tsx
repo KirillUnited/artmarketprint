@@ -38,7 +38,7 @@ export async function generateMetadata({ params }: { params: Promise<Props> }) {
     }
 }
 
-const SERVICE_QUERY = `*[_type == "service" && slug.current == $slug][0]`;
+const SERVICE_QUERY = `*[_type == "completedProjects" && slug.current == $slug][0]`;
 const { projectId, dataset } = client.config();
 const urlFor = (source: SanityImageSource) =>
     projectId && dataset
@@ -47,10 +47,10 @@ const urlFor = (source: SanityImageSource) =>
 
 const options = { next: { revalidate: 30 } };
 
-export default async function ServicePage({ params }: { params: Promise<Props> }) {
-    const service = await client.fetch<SanityDocument>(SERVICE_QUERY, await params, options);
-    const serviceImageUrl = service.image
-        ? urlFor(service.image)?.width(550).height(310).url()
+export default async function ProjectPage({ params }: { params: Promise<Props> }) {
+    const project = await client.fetch<SanityDocument>(SERVICE_QUERY, await params, options);
+    const serviceImageUrl = project.image
+        ? urlFor(project.image)?.width(550).height(310).url()
         : null;
 
     return (
@@ -61,7 +61,7 @@ export default async function ServicePage({ params }: { params: Promise<Props> }
                     <Image
                         priority
                         src={`${serviceImageUrl}`}
-                        alt={service.title}
+                        alt={project.title}
                         className="absolute inset-0 object-cover w-full h-full"
                         width={1920}
                         height={1080}
@@ -70,14 +70,14 @@ export default async function ServicePage({ params }: { params: Promise<Props> }
                 <div className="container flex flex-col gap-10 max-w-2xl relative z-10">
                     <div className="text-center">
                         <h1 className="text-4xl font-extrabold text-background sm:text-5xl">
-                            {service.title}
+                            {project.title}
                         </h1>
                         <p className="mt-4 text-xl text-white">
-                            {service.description}
+                            {project.description}
                         </p>
                     </div>
 
-                    <BrandButton as={Link} href={'#serviceDetails'} state="primary" className={'self-center'}>УЗНАТЬ</BrandButton>
+                    <BrandButton as={Link} href={'#projectDetails'} state="primary" className={'self-center'}>УЗНАТЬ</BrandButton>
                 </div>
             </section>
             <section>
@@ -87,32 +87,19 @@ export default async function ServicePage({ params }: { params: Promise<Props> }
                     </div>
                 </div>
             </section>
-            <section id="serviceDetails" className="section abc relative overflow-hidden pb-10 md:pb-20 pt-3 md:pt-6">
+            <section id="projectDetails" className="section relative overflow-hidden pb-10 md:pb-20 pt-3 md:pt-6">
                 <div className="container">
-                    <ServiceDetails name={service.title} image={getUrlFor(service.image)} price={service.price} advantages={service.advantages}>
-                        {Array.isArray(service.body) && <PortableText value={service.body} onMissingComponent={false}/>}
+                    <ServiceDetails name={project.title} image={getUrlFor(project.image)} price={project.price} advantages={project.advantages}>
+                        {Array.isArray(project.body) && <PortableText value={project.body} onMissingComponent={false}/>}
                     </ServiceDetails>
                 </div>
             </section>
             <section className="py-10 md:py-20 bg-[#F9F9F9]">
                 <div className="container flex flex-col gap-16">
-                    {/*TODO: Create tech process component*/}
-                    <ProductionStepList />
 
                     <div className="flex flex-col gap-4">
                         <h2 className="text-2xl md:text-3xl font-bold text-gray-900">Примеры работ</h2>
-                        <div className=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                            <HeroImage loading="lazy" isZoomed src="/images/social-1.jpg" alt="Пример работы"
-                                width={'100%'} height={300} className="w-full" />
-                            <HeroImage loading="lazy" isZoomed src="/images/social-3.jpg" alt="Пример работы"
-                                width={'100%'} height={300} className="w-full" />
-                            <HeroImage loading="lazy" isZoomed src="/images/social-2.jpg" alt="Пример работы"
-                                width={'100%'} height={300} className="w-full" />
-                        </div>
-                    </div>
-
-                    <div className="w-full max-w-2xl self-center">
-                        <OrderForm />
+                        
                     </div>
                 </div>
             </section>

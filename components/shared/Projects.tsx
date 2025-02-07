@@ -8,6 +8,7 @@ import Section, { SectionButton, SectionDescription, SectionHeading, SectionSubt
 import { Card, CardFooter } from '@heroui/card';
 import { Image } from '@heroui/image';
 import clsx from 'clsx';
+import { Suspense } from 'react';
 
 const PROJECTS_QUERY = `*[_type == "completedProjects"]{
   title,
@@ -114,12 +115,14 @@ export const Projects = async () => {
 	}
 
 	return (
-		<Section className="relative" id="projects">
-			<ProjectsHeading title={'Наши проекты'} subtitle={subtitle} description={'Портфолио выполненных работ'} />
+		<Suspense fallback={<p className="text-center text-gray-500">Загрузка проектов...</p>}>
+			<Section className="relative" id="projects">
+				<ProjectsHeading title={'Наши проекты'} subtitle={subtitle} description={'Портфолио выполненных работ'} />
 
-			{projects && <ProjectList projectList={projects} />}
+				{projects && <ProjectList projectList={projects} />}
 
-			<SectionButton label="Все проекты" href={'/projects'} className='lg:hidden flex' />
-		</Section>
+				<SectionButton label="Все проекты" href={'/projects'} className='lg:hidden flex' />
+			</Section>
+		</Suspense>
 	);
 };

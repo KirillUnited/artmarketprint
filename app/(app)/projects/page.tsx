@@ -6,7 +6,6 @@ import { getSanityDocuments } from '@/lib/getData';
 import { ProjectList } from '@/components/shared/Projects';
 import { PROJECTS_QUERY } from '@/lib/queries';
 import Section from '@/components/layout/Section';
-import { BreadcrumbItem, Breadcrumbs } from '@heroui/breadcrumbs';
 import BaseBreadcrumb from '@/components/ui/Breadcrumb';
 
 export default async function ProjectsPage() {

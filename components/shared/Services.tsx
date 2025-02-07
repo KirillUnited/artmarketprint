@@ -82,7 +82,7 @@ export const Services = async () => {
 };
 
 export const ServiceDetails = ({name, description, image, price, advantages, children}: ServiceDetailsProps) => (
-	<div className="grid md:grid-cols-2 items-center gap-x-10 gap-y-8">
+	<div className="grid md:grid-cols-2 items-center gap-8">
 		<div className="flex flex-col gap-8 md:gap-16">
 			<div className="flex flex-col gap-4 md:gap-6">
 				<div className="flex flex-col gap-2">
