@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { Button } from '@heroui/button';
-import { ArrowUpRightIcon } from 'lucide-react';
 import { SanityDocument } from 'next-sanity';
 
 import { getSanityDocuments } from '@/lib/getData';
@@ -42,14 +41,13 @@ export const ProjectsHeading = ({ title, subtitle, description }: { title?: stri
 export const ProjectCard = ({ project }: { project: SanityDocument }) => (
 	<Card radius='sm' isFooterBlurred as={Link} className="h-full group" href={`/`}>
 		<Image
-			isZoomed
 			removeWrapper
 			alt={project.altText}
 			className="z-0 w-full h-full object-cover"
 			src={project.imageUrl}
 			radius='sm'
 		/>
-		<CardFooter className="absolute bg-black/40 bottom-0 z-10 border-t-1 border-default-600 dark:border-default-100 transform translate-y-full group-hover:translate-y-0 transition-all duration-600">
+		<CardFooter className="absolute bg-black/40 bottom-0 w-full z-10 border-t-1 border-default-600 dark:border-default-100 transform translate-y-full group-hover:translate-y-0 transition-all duration-500">
 			<div className="flex flex-col gap-4">
 				{
 					project?.tags?.length > 0 && (
