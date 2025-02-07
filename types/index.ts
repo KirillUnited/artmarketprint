@@ -50,6 +50,6 @@ export interface CatalogDataProps {
 }
 
 export interface SectionProps extends React.AllHTMLAttributes<HTMLElement> {
-containerFluid?: boolean;
-innerClassname?: string;
+  containerFluid?: boolean;
+  innerClassname?: string;
 }

@@ -8,13 +8,13 @@ import BrandCard from '../ui/BrandCard';
 import {siteConfig} from '@/config/site';
 import {getSanityDocuments} from '@/lib/getData';
 import Section, {SectionDescription, SectionHeading, SectionSubtitle, SectionTitle} from '@/components/layout/Section';
-import {getUrlFor} from '@/lib/getUrlFor';
+import {getUrlFor} from '@/lib/utils';
 
 
 const CATEGORIES_QUERY = `*[
   _type == "category"
   && defined(slug.current)
-]|order(publishedAt desc)[0...12]{title,
+]|order(publishedAt desc)[0...4]{title,
     description,
     image, 
     price,

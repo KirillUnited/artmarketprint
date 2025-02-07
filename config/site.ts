@@ -117,10 +117,10 @@ export const siteConfig = {
         // }
       ]
     },
-    // {
-    //   label: 'Проекты',
-    //   href: '/#projects',
-    // },
+    {
+      label: 'Проекты',
+      href: '/#projects',
+    },
     // {
     //   label: 'Отзывы',
     //   href: '/#testimonials',
