@@ -9,8 +9,6 @@ import ContactUs from '@/components/shared/ContactUs';
 import BaseBreadcrumb from '@/components/ui/Breadcrumb';
 import {client} from '@/sanity/client';
 import {getSanityDocuments} from '@/lib/getData';
-import {InstagramFeedSection} from '@/components/shared/InstagramFeed';
-
 
 const CATEGORIES_QUERY = `*[
   _type == "category"
@@ -69,7 +67,6 @@ export default async function CatalogPage() {
             </section>
             <FAQ />
             <ContactUs />
-            <InstagramFeedSection/>
         </>
     );
 }

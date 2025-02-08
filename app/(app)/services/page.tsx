@@ -9,7 +9,6 @@ import ContactUs from '@/components/shared/ContactUs';
 import BaseBreadcrumb from '@/components/ui/Breadcrumb';
 import { client } from '@/sanity/client';
 import {getSanityDocuments} from '@/lib/getData';
-import {InstagramFeedSection} from '@/components/shared/InstagramFeed';
 
 const SERVICES_QUERY = `*[
   _type == "service"
@@ -59,7 +58,6 @@ export default async function ServicesPage() {
 			</section>
 			<FAQ />
 			<ContactUs />
-			<InstagramFeedSection/>
 		</>
 	);
 }
