@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import Script from 'next/script';
 
-import Section, {SectionDescription, SectionHeading, SectionTitle} from '@/components/layout/Section';
+import Section, {SectionDescription, SectionHeading, SectionSubtitle, SectionTitle} from '@/components/layout/Section';
 import {SectionProps} from '@/types';
 
 export default function InstagramFeed({className}: React.HTMLAttributes<HTMLDivElement>) {
@@ -23,8 +23,11 @@ export const InstagramFeedSection = ({className}: SectionProps) => {
         <Section className={clsx(className)} containerFluid={true}>
             <div className="container flex flex-col items-center text-center">
                 <SectionHeading>
+                    <SectionSubtitle>
+                        - мы в instagram -
+                    </SectionSubtitle>
                     <SectionTitle>
-                        @Instagram
+                        @artmarketprint_by
                     </SectionTitle>
                     <SectionDescription>
                         Ознакомьтесь с нашими примерами работ и услуг.

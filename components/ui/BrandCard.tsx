@@ -11,7 +11,7 @@ import BrandModalOffer from './BrandModalOffer';
 import { BrandCardProps } from '@/types';
 
 export const BrandCardLink = ({ href }: { href: string }) => (
-	<Button as={Link} className="flex flex-row gap-2 items-center font-semibold text-base px-2 h-auto self-center" color="primary" href={href} variant="light">
+	<Button as={Link} className="flex flex-row gap-2 items-center font-semibold text-base px-0 h-auto self-center" color="primary" href={href} variant="light">
 		<span>Подробнее</span>
 		<svg fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
 			<path d="M9.70697 16.9496L15.414 11.2426L9.70697 5.53564L8.29297 6.94964L12.586 11.2426L8.29297 15.5356L9.70697 16.9496Z" fill="currentColor" />

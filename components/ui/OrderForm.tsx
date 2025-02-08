@@ -36,9 +36,12 @@ export default function OrderForm({ className }: { className?: string }): JSX.El
             onSubmit={handleSubmit}
             className={clsx('gap-6', className)}
             validationBehavior="native">
-            <h3 className="text-2xl md:text-3xl leading-[120%] font-bold">
-                Оставить заявку
-            </h3>
+            <div className='flex flex-col gap-2'>
+                <h3 className="text-2xl md:text-3xl leading-[120%] font-bold">
+                    Оставить заявку
+                </h3>
+                <p>Оставьте заявку и мы свяжемся с Вами в ближайшее время</p>
+            </div>
             <div className="w-full flex flex-col gap-4">
                 {
                     showAlert && <Alert

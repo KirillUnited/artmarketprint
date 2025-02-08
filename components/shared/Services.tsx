@@ -11,81 +11,86 @@ import { siteConfig } from '@/config/site';
 import { ServiceDetailsProps } from '@/types';
 import { client } from '@/sanity/client';
 import { getSanityDocuments } from '@/lib/getData';
-
+import Section, {SectionDescription, SectionHeading, SectionSubtitle, SectionTitle} from "@/components/layout/Section";
+import {ArrowUpRightIcon} from "lucide-react";
 
 export const Services = async () => {
 	const services = await getSanityDocuments();
 	const builder = imageUrlBuilder(client);
 	const urlFor = (source: SanityImageSource) => {
 		return builder.image(source).url();
-	}
+	};
 
 	return (
-		<section className="relative" id="services">
-			<div className="py-10 md:py-20 flex flex-col gap-10">
-				<div className="container">
-					<div className="flex flex-wrap items-end justify-between gap-4">
-						<div className="flex flex-col gap-4 max-w-[652px]">
-							<h2 className="text-4xl md:text-5xl leading-[120%] font-bold">Популярные услуги</h2>
-							<p className="text-base md:text-lg leading-normal font-normal text-foreground/70">{siteConfig.serviceSection.description}</p>
-						</div>
-						<Button
-							as={Link}
-							className=" flex-row gap-2 items-center font-semibold text-base md:text-xl px-2 h-auto hidden md:flex"
-							color="primary"
-							href={siteConfig.serviceSection.href}
-							variant="light"
-						>
-							<span>Смотреть ещё</span>
-							<svg fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-								<path d="M9.70697 16.9496L15.414 11.2426L9.70697 5.53564L8.29297 6.94964L12.586 11.2426L8.29297 15.5356L9.70697 16.9496Z" fill="currentColor" />
-							</svg>
-						</Button>
-					</div>
-				</div>
-				<div className="container">
-					<div className="grid grid-cols-[var(--grid-template-columns)] gap-8">
-						{services.map((service) => (
-							<BrandCard
-								key={service.title}
-								description={service.description}
-								href={`/services/${service.currentSlug}`}
-								image={urlFor(service.image)}
-								price={service.price}
-								title={service.title}
-								variant="service"
-							/>
-						))}
-						<Button
-							as={Link}
-							className="bg-brand-gradient text-fill-transparent font-semibold md:hidden flex"
-							color="secondary"
-							href={siteConfig.serviceSection.href}
-							radius="sm"
-							size="lg"
-							variant="ghost"
-						>
-							<span>Смотреть ещё</span>
-							<svg fill="currentColor" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-								<path d="M9.70697 16.9496L15.414 11.2426L9.70697 5.53564L8.29297 6.94964L12.586 11.2426L8.29297 15.5356L9.70697 16.9496Z" fill="currentColor" />
-							</svg>
-						</Button>
-					</div>
-				</div>
+		<Section className="relative" id="services">
+			<div className="flex flex-wrap items-end justify-between gap-4">
+				<SectionHeading>
+					<SectionSubtitle>
+						- наши услуги печати -
+					</SectionSubtitle>
+					<SectionTitle>
+						Популярные услуги
+					</SectionTitle>
+					<SectionDescription>
+						{siteConfig.serviceSection.description}
+					</SectionDescription>
+				</SectionHeading>
+				<Button
+					as={Link}
+					className="bg-brand-gradient text-fill-transparent font-semibold border-1 hidden lg:flex"
+					color="secondary"
+					href={siteConfig.serviceSection.href}
+					radius="sm"
+					size="md"
+					target="_blank"
+					variant="bordered"
+				>
+					<span className="leading-none">Все услуги</span>
+					<ArrowUpRightIcon className="text-secondary" size={18} />
+				</Button>
 			</div>
-		</section>
+
+			<div className="grid grid-cols-[var(--grid-template-columns)] gap-8">
+				{services.map((service) => (
+					<BrandCard
+						key={service.title}
+						description={service.description}
+						href={`/services/${service.currentSlug}`}
+						image={urlFor(service.image)}
+						price={service.price}
+						title={service.title}
+						variant="service"
+					/>
+				))}
+			</div>
+
+			<Button
+				as={Link}
+				className="bg-brand-gradient text-fill-transparent font-semibold border-1 lg:hidden flex"
+				color="secondary"
+				href={siteConfig.serviceSection.href}
+				radius="sm"
+				size="md"
+				target="_blank"
+				variant="bordered"
+			>
+				<span className="leading-none">Все услуги</span>
+				<ArrowUpRightIcon className="text-secondary" size={18} />
+			</Button>
+		</Section>
 	);
 };
 
-export const ServiceDetails = ({ name, description, image, price, advantages, children }: ServiceDetailsProps) => (
-	<div className="grid md:grid-cols-2 items-center gap-x-10 gap-y-8">
+export const ServiceDetails = ({name, description, image, price, advantages, children}: ServiceDetailsProps) => (
+	<div className="grid md:grid-cols-2 items-center gap-8">
 		<div className="flex flex-col gap-8 md:gap-16">
 			<div className="flex flex-col gap-4 md:gap-6">
 				<div className="flex flex-col gap-2">
 					<span className="text-gray-600">О услуге</span>
 					<h2 className="text-3xl md:text-4xl font-bold hyphens-auto break-words">{name}</h2>
 				</div>
-				{description && <p className="text-foreground/70 text-balance leading-normal font-light">{description}</p>}
+				{description &&
+					<p className="text-foreground/70 text-balance leading-normal font-light">{description}</p>}
 				{advantages && advantages.length > 0 && (
 					<div className="flex flex-col gap-4">
 						<h3 className="text-xl md:text-2xl font-bold text-gray-900">Преимущества</h3>
@@ -98,9 +103,7 @@ export const ServiceDetails = ({ name, description, image, price, advantages, ch
 						</ul>
 					</div>
 				)}
-				<article className="prose">
-					{children}
-				</article>
+				<article className="prose">{children}</article>
 				{price && (
 					<div className="flex flex-col gap-4">
 						<h3 className="text-xl md:text-2xl font-bold text-gray-900">Цены</h3>
@@ -109,16 +112,16 @@ export const ServiceDetails = ({ name, description, image, price, advantages, ch
 				)}
 			</div>
 			<div className="flex flex-wrap gap-2 md:gap-4">
-				<BrandModalOffer />
+				<BrandModalOffer/>
 
-				<Button as={Link} className="bg-brand-gradient text-fill-transparent font-semibold flex-1 basis-36" color="secondary" href={'/#contacts'} radius="sm" size="lg" variant="ghost">
+				<Button as={Link} className="bg-brand-gradient text-fill-transparent font-semibold flex-1 basis-36"
+						color="secondary" href={'/#contacts'} radius="sm" size="lg" variant="ghost">
 					КОНСУЛЬТАЦИЯ
 				</Button>
 			</div>
 		</div>
 
-		{image && (
-			<Image alt={name} className="h-full object-cover flex-1 w-full aspect-square max-h-max" height={640} src={`${image}`} width={640} />
-		)}
+		{image && <Image alt={name} className="h-full object-cover flex-1 w-full aspect-square max-h-max" height={640}
+						 src={`${image}`} width={640}/>}
 	</div>
 );
