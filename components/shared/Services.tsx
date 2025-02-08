@@ -82,8 +82,8 @@ export const Services = async () => {
 };
 
 export const ServiceDetails = ({ name, description, image, price, advantages, children }: ServiceDetailsProps) => (
-	<div className="grid md:grid-cols-2 items-center gap-8">
-		{image && <Image alt={name} className="h-full object-cover flex-1 w-full aspect-square max-h-max" height={640}
+	<div className="grid md:grid-cols-2 items-center gap-12">
+		{image && <Image alt={name} className="h-full object-cover w-full aspect-video" height={640}
 			src={`${image}`} width={640} />}
 		<div className="flex flex-col gap-8 md:gap-16">
 			<div className="flex flex-col gap-4 md:gap-6">
