@@ -10,7 +10,7 @@ import BrandLogo from '../ui/BrandLogo';
 import { siteConfig } from '@/config/site';
 import Socials from './Socials';
 import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@heroui/dropdown';
-import { CalendarIcon, ChevronDownIcon } from 'lucide-react';
+import { ChevronDownIcon } from 'lucide-react';
 import { HeroModalOffer } from '../ui/BrandModalOffer';
 
 type HeaderDropdownMenuProps = {
