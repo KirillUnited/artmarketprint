@@ -10,7 +10,7 @@ export const FAQ = ({ className }: SectionProps) => {
 	return (
 		<Section className={clsx(className)}>
 			<SectionHeading className='max-w-[760px] self-center text-center'>
-				<SectionSubtitle>- остались вопросы? -</SectionSubtitle>
+				<SectionSubtitle>- Вопрос / ответ -</SectionSubtitle>
 				<SectionTitle>Часто задаваемые вопросы</SectionTitle>
 				<SectionDescription>
 					Здесь вы найдете ответы на самые распространенные вопросы о наших услугах и процессе работы

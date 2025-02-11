@@ -3,6 +3,7 @@ import Script from 'next/script';
 
 import Section, {SectionDescription, SectionHeading, SectionSubtitle, SectionTitle} from '@/components/layout/Section';
 import {SectionProps} from '@/types';
+import Link from 'next/link';
 
 export default function InstagramFeed({className}: React.HTMLAttributes<HTMLDivElement>) {
      return (
@@ -27,14 +28,14 @@ export const InstagramFeedSection = ({className}: SectionProps) => {
                         - мы в instagram -
                     </SectionSubtitle>
                     <SectionTitle>
-                        @artmarketprint_by
+                       <Link className='bg-brand-gradient text-fill-transparent truncate' href={'https://www.instagram.com/artmarketprint_by/'} target='_blank'> @artmarketprint_by</Link>
                     </SectionTitle>
                     <SectionDescription>
                         Ознакомьтесь с нашими примерами работ и услуг.
                     </SectionDescription>
                 </SectionHeading>
             </div>
-            <InstagramFeed/>
+            {/* <InstagramFeed/> */}
         </Section>
     )
 }
