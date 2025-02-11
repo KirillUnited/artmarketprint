@@ -22,6 +22,18 @@ export const ProjectsHeading = ({ title, subtitle, description }: { title?: stri
 	</div>
 );
 
+export const ProjectTagList = ({ tags }: { tags: { _id: string; title: string }[] }) => {
+	return (
+		<ul className='flex flex-wrap gap-2'>
+			{
+				tags?.map(({ _id, title }: { _id: string; title: string }) => (
+					<span key={_id} className='text-tiny text-white/80 bg-primary rounded-small px-1 self-start leading-normal'>{title}</span>
+				))
+			}
+		</ul>
+	)
+};
+
 export const ProjectCard = ({ project }: { project: SanityDocument }) => (
 	<Card radius='sm' isFooterBlurred as={Link} className="h-full group" href={`/projects/${project.currentSlug}`}>
 		<Image
@@ -31,22 +43,16 @@ export const ProjectCard = ({ project }: { project: SanityDocument }) => (
 			src={project.imageUrl}
 			radius='sm'
 		/>
-		<CardFooter className="absolute bg-black/40 bottom-0 w-full z-10 border-t-1 border-default-600 dark:border-default-100 transform translate-y-full group-hover:translate-y-0 transition-all duration-500">
-			<div className="flex flex-col gap-4">
+		<CardFooter className="absolute bg-black/40 bottom-0 w-full z-10 max-h-0 overflow-hidden group-hover:max-h-full transition-all duration-700 p-0">
+			<div className="flex flex-col gap-4 p-3">
 				{
 					project?.tags?.length > 0 && (
-						<ul className='flex flex-wrap gap-2'>
-							{
-								project.tags.map(({ _id, title }: { _id: string; title: string }) => (
-									<span key={_id} className='text-tiny text-white/80 bg-primary rounded-small px-1 self-start leading-normal'>{title}</span>
-								))
-							}
-						</ul>
+						<ProjectTagList tags={project.tags} />
 					)
 				}
 				<div className="flex flex-col gap-2">
 					<h4 className="text-lg font-semibold text-white/80 line-clamp-2 leading-tight">{project.title}</h4>
-					<p className="text-xs text-white/80 line-clamp-2">{project.shortDescription}</p>
+					<p className="text-xs text-white/80">{project.shortDescription}</p>
 				</div>
 				<Button radius="sm" size="sm" color='secondary'>
 					Подробнее
