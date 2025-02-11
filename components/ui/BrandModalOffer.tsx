@@ -1,6 +1,9 @@
 'use client';
 import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from '@heroui/modal';
 import { Input } from '@heroui/input';
+import InputMask from "react-input-mask";
+
+import MaskedInput from "react-input-mask-next";
 import { Button } from '@heroui/button';
 import { Form } from '@heroui/form';
 
@@ -13,6 +16,11 @@ import { Alert } from '@heroui/alert';
 export const ModalOfferForm = ({ onClose }: { onClose: () => void }) => {
 	const [isPending, setIsPending] = useState(false);
 	const [showAlert, setShowAlert] = useState(false);
+	const [phone, setPhone] = useState<string>("");
+
+	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+		setPhone(e.target.value);
+	};
 	async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
 		event.preventDefault();
 
@@ -67,6 +75,21 @@ export const ModalOfferForm = ({ onClose }: { onClose: () => void }) => {
 							variant="bordered"
 							color='primary'
 						/>
+						<MaskedInput
+							mask="+375 (99) 999-99-99"
+							value={phone}
+							onChange={handleChange}
+						>
+							{(inputProps) => (
+								<Input
+									{...inputProps}
+									label="Телефон"
+									placeholder="+7 (___) ___-__-__"
+									variant="bordered"
+									className="w-full"
+								/>
+							)}
+						</MaskedInput>
 						<Input
 							id="user_phone"
 							name="user_phone"
