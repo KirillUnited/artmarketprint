@@ -1,13 +1,48 @@
+import 'react-international-phone/style.css';
 import { Input } from '@heroui/input';
-import React, { forwardRef, useState } from 'react'
-import ReactInputMask from 'react-input-mask';
+import React, { useState } from 'react'
+import {
+    PhoneInput,
+    defaultCountries,
+    FlagImage,
+    parseCountry,
+    usePhoneInput,
+} from 'react-international-phone';
 
-export const PhoneInput = forwardRef((props, ref)=> {
-    const [phone, setPhone] = useState<string>(""); 
+export const BasePhoneInput = () => {
+    const [phone, setPhone] = useState<string>('');
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setPhone(e.target.value);
     };
-    return (
-        <Input {...props} placeholder="+375 (99) 999-99-99" pattern='\+375 \([0-9]{2}\) [0-9]{3}-[0-9]{2}-[0-9]{2}' onChange={handleChange} value={phone} />
-    )
-})
+    // const { inputValue, handlePhoneValueChange, inputRef, country, setCountry } =
+    //     usePhoneInput({
+    //         defaultCountry: 'by',
+    //         value,
+    //         countries: defaultCountries,
+    //         onChange: (data) => {
+    //             onChange(data.phone);
+    //         },
+    //     });
+
+	return (
+		<Input
+			id="user_phone"
+			name="user_phone"
+			isRequired
+			errorMessage="Пожалуйста, введите действительный номер телефона"
+			label="Телефон"
+			placeholder="+375 (99) 999-99-99"
+			type="tel"
+			variant="bordered"
+			color='primary'
+			inputMode="tel"
+		>
+            <PhoneInput
+                inputProps={{ required: true, id: 'user_phone', name: 'user_phone', onChange: handleChange }}
+                defaultCountry="by"
+                value={phone}
+                inputClassName='w-full'
+            />
+            </Input>
+	)
+};

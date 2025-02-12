@@ -3,29 +3,32 @@ import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure
 import { Input } from '@heroui/input';
 import { Button } from '@heroui/button';
 import { Form } from '@heroui/form';
-
-import BrandButton from './BrandButton';
 import { CalendarIcon } from 'lucide-react';
-import { sendOrder } from "@/lib/actions/order.actions";
 import { useState } from 'react';
 import { Alert } from '@heroui/alert';
-import {PhoneInput} from './PhoneInput';
+
+import BrandButton from './BrandButton';
+
+import { sendOrder } from '@/lib/actions/order.actions';
+import 'react-international-phone/style.css';
 
 export const ModalOfferForm = ({ onClose }: { onClose: () => void }) => {
 	const [isPending, setIsPending] = useState(false);
 	const [showAlert, setShowAlert] = useState(false);
-
-
+	const phoneRegex = /^\+375[-\s]?\(?\d{2}\)?[-\s]?\d{3}[-\s]?\d{2}[-\s]?\d{2}$/;
+	
 	async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
 		event.preventDefault();
 
 		const formData = new FormData(event.currentTarget);
+
 		event.currentTarget.reset();
 
 		setIsPending(true);
 
 		try {
 			const result = await sendOrder(formData);
+
 			if (result.ok) {
 				setIsPending(false);
 				setShowAlert(true);
@@ -41,46 +44,40 @@ export const ModalOfferForm = ({ onClose }: { onClose: () => void }) => {
 	return (
 		<Form
 			// action={sendOrder}
+			validationBehavior="native"
 			onSubmit={handleSubmit}
-			validationBehavior="native">
-
-			{
-				showAlert &&
-				<ModalBody className='py-6'>
+		>
+			{showAlert && (
+				<ModalBody className="py-6">
 					<Alert
-						color='success'
-						onClose={() => setShowAlert(false)}
 						className="w-full text-white/80"
-						variant='solid'
-						title="Заявка отправлена"
+						color="success"
 						description="Спасибо за заявку! Мы свяжемся с Вами в ближайшее время."
+						title="Заявка отправлена"
+						variant="solid"
+						onClose={() => setShowAlert(false)}
 					/>
 				</ModalBody>
-			}
-			{
-				!showAlert && <>
+			)}
+			{!showAlert && (
+				<>
 					<ModalBody className="w-full">
+						<Input isRequired color="primary" errorMessage="Пожалуйста, введите Ваше имя" id="user_name" label="Имя" name="user_name" placeholder="Напишите Ваше имя" variant="bordered" />
 						<Input
 							isRequired
-							id="user_name"
-							name="user_name"
-							errorMessage="Пожалуйста, введите Ваше имя"
-							label="Имя"
-							placeholder="Напишите Ваше имя"
-							variant="bordered"
-							color='primary'
-						/>
-						<Input
+							color="primary"
+							errorMessage="Пожалуйста, введите корректный номер в формате +375 (XX) XXX-XX-XX"
 							id="user_phone"
-							name="user_phone"
-							isRequired
-							errorMessage="Пожалуйста, введите действительный номер телефона"
+							inputMode="tel"
 							label="Телефон"
-							placeholder="Введите Ваш телефон"
-							type="tel"
+							name="user_phone"
+							placeholder="+375 (99) 999-99-99"
+							validate={(value) => {
+								if (!value.match(phoneRegex)) return 'Пожалуйста, введите корректный номер в формате +375 XX XXX-XX-XX';
+							}}
 							variant="bordered"
-							color='primary'
 						/>
+						{/*<BasePhoneInput />*/}
 					</ModalBody>
 					<ModalFooter className="w-full">
 						<Button className="bg-brand-gradient text-fill-transparent font-semibold" color="secondary" radius="sm" size="lg" variant="ghost" onPress={onClose}>
@@ -91,32 +88,23 @@ export const ModalOfferForm = ({ onClose }: { onClose: () => void }) => {
 							disabled={isPending}
 							isLoading={isPending}
 							spinner={
-								<svg
-									className="animate-spin h-5 w-5 text-current"
-									fill="none"
-									viewBox="0 0 24 24"
-									xmlns="http://www.w3.org/2000/svg"
-								>
-									<circle
-										className="opacity-25"
-										cx="12"
-										cy="12"
-										r="10"
-										stroke="currentColor"
-										strokeWidth="4"
-									/>
+								<svg className="animate-spin h-5 w-5 text-current" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+									<circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
 									<path
 										className="opacity-75"
 										d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
 										fill="currentColor"
 									/>
 								</svg>
-							} state="primary"
-							type="submit">
+							}
+							state="primary"
+							type="submit"
+						>
 							ОТПРАВИТЬ
 						</BrandButton>
 					</ModalFooter>
-				</>}
+				</>
+			)}
 		</Form>
 	);
 };
@@ -129,7 +117,7 @@ export default function BrandModalOffer() {
 			<BrandButton className="flex-1 basis-52" state="primary" onPress={onOpen}>
 				ЗАКАЗАТЬ
 			</BrandButton>
-			<Modal backdrop="blur" isOpen={isOpen} placement="top-center" onOpenChange={onOpenChange} className="bg-background">
+			<Modal backdrop="blur" className="bg-background" isOpen={isOpen} placement="top-center" onOpenChange={onOpenChange}>
 				<ModalContent>
 					{(onClose) => (
 						<>
@@ -148,11 +136,11 @@ export function HeroModalOffer() {
 
 	return (
 		<>
-			<Button className="leading-normal font-semibold" color="primary" variant="solid" radius='sm' onPress={onOpen}>
+			<Button className="leading-normal font-semibold" color="primary" radius='sm' variant="solid" onPress={onOpen}>
 				<CalendarIcon size={18} />
 				<span>ЗАКАЗАТЬ ЗВОНОК</span>
 			</Button>
-			<Modal backdrop="blur" isOpen={isOpen} placement="top-center" onOpenChange={onOpenChange} className='bg-background'>
+			<Modal backdrop="blur" className='bg-background' isOpen={isOpen} placement="top-center" onOpenChange={onOpenChange}>
 				<ModalContent>
 					{(onClose) => (
 						<>
