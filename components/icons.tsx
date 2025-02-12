@@ -210,7 +210,7 @@ export const QualityIcon = ({ fill = 'currentColor', size, height, width, ...pro
 )
 
 export const SpeedIcon = ({ fill = 'currentColor', size, height, width, ...props }: IconSvgProps) => (
-  <svg fill="none" height="34" viewBox="0 0 41 34" width="41" xmlns="http://www.w3.org/2000/svg">
+  <svg fill="none" height="34" viewBox="0 0 41 34" width="44" xmlns="http://www.w3.org/2000/svg">
     <path d="M25.9972 15.0845C25.9972 15.0845 22.921 23.2091 21.46 24.6274C20.7547 25.294 19.7977 25.6734 18.7962 25.6835C17.7946 25.6936 16.8291 25.3337 16.1087 24.6815C15.3882 24.0294 14.9707 23.1376 14.9467 22.1991C14.9226 21.2606 15.2938 20.351 15.98 19.6672C17.441 18.2479 25.9972 15.0845 25.9972 15.0845Z" stroke={fill} strokeLinejoin="round" strokeWidth="2" />
     <path d="M34.1428 33C36.0025 31.261 37.4773 29.1948 38.4824 26.9201C39.4876 24.6453 40.0033 22.2069 40 19.7448C40 9.3923 31.0457 1 20 1C8.95428 1 0 9.3923 0 19.7448C0 24.921 2.23809 29.6072 5.85714 33M20 1.89261V5.46304M34.1381 8.26762L31.1781 10.5143M37.64 22.6306L33.9286 21.8272M2.35905 22.6306L6.07143 21.8272M5.8619 8.26762L8.8219 10.5143" stroke={fill} strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
   </svg>
