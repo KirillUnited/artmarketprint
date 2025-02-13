@@ -9,27 +9,27 @@ import { getJsonFileData } from "../utils";
 // const AUTH = Buffer.from("resu100capixml:67919f4F4f4f6a376d80919dEQli_f35a812").toString("base64");
 const DATA_FILE_PATH = '_data/products.json';
 
-export async function getXmlData(url: string) {
-  try {
-    const response = await fetch(url, {
-      headers: {
-        'Authorization': 'Basic ' + btoa('resu100capixml:67919f4F4f4f6a376d80919dEQli_f35a812')
-      },
-      cache: "no-store"
-    });
+// export async function getXmlData(url: string) {
+//   try {
+//     const response = await fetch(url, {
+//       headers: {
+//         'Authorization': 'Basic ' + btoa('resu100capixml:67919f4F4f4f6a376d80919dEQli_f35a812')
+//       },
+//       cache: "no-store"
+//     });
 
-    if (!response.ok) throw new Error(`Ошибка запроса: ${response.status}`);
+//     if (!response.ok) throw new Error(`Ошибка запроса: ${response.status}`);
 
-    const xmlText = await response.text();
-    const jsonData = await parseStringPromise(xmlText);
+//     const xmlText = await response.text();
+//     const jsonData = await parseStringPromise(xmlText);
 
-    return jsonData;
-  } catch (error) {
-    console.error("Ошибка при загрузке XML:", error);
+//     return jsonData;
+//   } catch (error) {
+//     console.error("Ошибка при загрузке XML:", error);
 
-    return null;
-  }
-}
+//     return null;
+//   }
+// }
 
 // export async function fetchXMLStream() {
 //   const response = await fetch(PRODUCT_DESCRIPTION_URL, {
