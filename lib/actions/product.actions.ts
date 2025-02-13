@@ -2,10 +2,12 @@
 
 import { parseStringPromise } from "xml2js";
 import { XMLParser } from "fast-xml-parser";
+import { getJsonFileData } from "../utils";
 
 const PRODUCT_DESCRIPTION_URL = 'https://art24.by/capi_v100_xmls/products_description_xml_cdata001.xml';
 const MINSKSTOCKS_URL = 'https://art24.by/capi_v100_xmls/minskstocks.xml';
 const AUTH = Buffer.from("resu100capixml:67919f4F4f4f6a376d80919dEQli_f35a812").toString("base64");
+const DATA_FILE_PATH = '_data/products.json';
 
 export async function getXmlData(url: string) {
   try {
@@ -81,13 +83,13 @@ export async function fetchXMLStream() {
 }
 
 export async function getProductsByLimit(limit: number) {
-  const data = await fetchXMLStream();
+  const {data} = await getJsonFileData(DATA_FILE_PATH) ?? {};
 
   if (!data) {
     return [];
   }
 
-  const products = data.data.item.map((product: any) => product);
+  const products = data.item?.map((product: any) => product);
 
   return products.slice(0, limit);
 }

@@ -12,7 +12,7 @@ export default function ProductList() {
 
   useEffect(() => {
     handleLoadXML();
-  }, [jsonData]);
+  }, []);
 
   const handleLoadXML = async () => {
     setLoading(true);
@@ -31,7 +31,7 @@ export default function ProductList() {
   return (
     <>
       {loading && <Spinner className="mx-auto" />}
-      {jsonData.length > 0 && (
+      {jsonData.length > 0 ? (
         <div className="grid grid-cols-[var(--grid-template-columns)] gap-8">
           {
             jsonData.map((item: any, index) => (
@@ -40,14 +40,17 @@ export default function ProductList() {
                 title={item.product.__cdata}
                 description={item.general_description.__cdata}
                 image={item.images_urls}
-                href={item.url}
+                href={`/catalog`}
                 price={item.price}
                 variant="product"
               />
             ))
           }
         </div>
-      )}
+      ) : (
+        <p className="text-center mt-8 text-gray-500">Нет товаров</p>
+      )
+    }
 
     </>
   );
@@ -60,7 +63,7 @@ export const ProductSectionHeading = ({ title, subtitle, description }: { title?
       <SectionDescription>{description}</SectionDescription>
     </SectionHeading>
 
-    <SectionButton label="Все товары" href={'/'} className='hidden lg:flex' />
+    <SectionButton label="Все товары" href={'/catalog'} className='hidden lg:flex' />
   </div>
 );
 
@@ -75,7 +78,7 @@ export const ProductSection = () => {
 
       <ProductList />
 
-      <SectionButton label="Все товары" href={'/'} className='lg:hidden flex' />
+      <SectionButton label="Все товары" href={'/catalog'} className='lg:hidden flex' />
     </Section>
   );
 };
