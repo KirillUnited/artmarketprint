@@ -51,7 +51,7 @@ export async function fetchXMLStream() {
   });
 
   let xmlText = "";
-  let limit = 10 * 1024 * 1024; // Увеличиваем лимит данных (10МБ)
+  let limit = 5 * 1024 * 1024; // Увеличиваем лимит данных (10МБ)
 
   while (true) {
     const { value, done } = await reader.read();
@@ -74,6 +74,9 @@ export async function fetchXMLStream() {
 
   // Парсим XML в JSON
   const jsonData = parser.parse(xmlText);
+
+  // await saveJsonToFile("_data/products.json", jsonData);
+
   return jsonData;
 }
 
