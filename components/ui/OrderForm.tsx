@@ -2,24 +2,31 @@
 import { Form } from '@heroui/form'
 import { Input, Textarea } from '@heroui/input'
 import React, { useState } from 'react'
-import BrandButton from './BrandButton'
 import clsx from 'clsx'
-import { sendOrder } from "@/lib/actions/order.actions";
 import { Alert } from '@heroui/alert';
+
+import BrandButton from './BrandButton'
+
+import { sendOrder } from '@/lib/actions/order.actions';
+
 
 export default function OrderForm({ className }: { className?: string }): JSX.Element {
     const [isPending, setIsPending] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
+    const phoneRegex = /^\+375[-\s]?\(?\d{2}\)?[-\s]?\d{3}[-\s]?\d{2}[-\s]?\d{2}$/;
+
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
         const formData = new FormData(event.currentTarget);
+
         event.currentTarget.reset();
 
         setIsPending(true);
 
         try {
             const result = await sendOrder(formData);
+
             if (result.ok) {
                 setIsPending(false);
                 setShowAlert(true);
@@ -31,11 +38,12 @@ export default function OrderForm({ className }: { className?: string }): JSX.El
             console.log(error)
         }
     }
+
     return (
         <Form
-            onSubmit={handleSubmit}
             className={clsx('gap-6', className)}
-            validationBehavior="native">
+            validationBehavior="native"
+            onSubmit={handleSubmit}>
             <div className='flex flex-col gap-2'>
                 <h3 className="text-2xl md:text-3xl leading-[120%] font-bold">
                     Оставить заявку
@@ -45,41 +53,44 @@ export default function OrderForm({ className }: { className?: string }): JSX.El
             <div className="w-full flex flex-col gap-4">
                 {
                     showAlert && <Alert
-                        color='success'
-                        onClose={() => setShowAlert(false)}
                         className="w-full text-white/80"
-                        variant='solid'
-                        title="Заявка отправлена"
+                        color='success'
                         description="Спасибо за заявку! Мы свяжемся с Вами в ближайшее время."
+                        title="Заявка отправлена"
+                        variant='solid'
+                        onClose={() => setShowAlert(false)}
                     />}
                 <Input
                     isRequired
-                    id='user_name'
-                    name='user_name'
                     color="primary"
                     errorMessage="Пожалуйста, введите Ваше имя"
+                    id='user_name'
                     label="Имя"
+                    name='user_name'
                     placeholder="Напишите Ваше имя"
                     radius='sm'
                     variant="bordered"
                 />
                 <Input
                     isRequired
-                    id='user_phone'
-                    name='user_phone'
                     color="primary"
                     errorMessage="Пожалуйста, введите действительный номер телефона"
+                    id='user_phone'
                     label="Телефон"
-                    placeholder="Введите Ваш телефон"
+                    name='user_phone'
+                    placeholder="+375 (99) 999-99-99"
                     radius='sm'
                     type="tel"
+                    validate={(value) => {
+                        if (!value.match(phoneRegex)) return 'Пожалуйста, введите корректный номер в формате +375 XX XXX-XX-XX';
+                    }}
                     variant="bordered"
                 />
                 <Textarea
-                    id='comment'
-                    name='user_comment'
                     color="primary"
+                    id='comment'
                     label="Комментарий"
+                    name='user_comment'
                     placeholder="Введите Ваш комментарий"
                     radius='sm'
                     variant="bordered"
@@ -87,7 +98,7 @@ export default function OrderForm({ className }: { className?: string }): JSX.El
             </div>
             <div className="w-full flex flex-wrap">
 
-                <BrandButton isLoading={isPending} isDisabled={isPending} className='flex-1 basis-32' state='primary' type="submit">ОТПРАВИТЬ</BrandButton>
+                <BrandButton className='flex-1 basis-32' isDisabled={isPending} isLoading={isPending} state='primary' type="submit">ОТПРАВИТЬ</BrandButton>
             </div>
 
         </Form>
