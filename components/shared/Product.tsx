@@ -11,10 +11,10 @@ export default function ProductList() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    handleLoadXML();
+    handleLoadData();
   }, []);
 
-  const handleLoadXML = async () => {
+  const handleLoadData = async () => {
     setLoading(true);
     try {
       const data = await getProductsByLimit(4);
