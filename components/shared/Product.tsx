@@ -1,8 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { fetchXML } from "@/lib/actions/product.actions";
-import { XMLParser } from "fast-xml-parser";
+import { getProductsByLimit } from "@/lib/actions/product.actions";
 import BrandCard from "@/components/ui/BrandCard";
 import Section, { SectionButton, SectionDescription, SectionHeading, SectionSubtitle, SectionTitle } from "@/components/layout/Section";
 import { Spinner } from "@heroui/spinner";
@@ -18,19 +17,9 @@ export default function ProductList() {
   const handleLoadXML = async () => {
     setLoading(true);
     try {
-      const data = await fetchXML();
-      const parser = new XMLParser({
-        ignoreAttributes: false,
-        attributeNamePrefix: "@_",
-        trimValues: true,
-        cdataPropName: "__cdata", // Сохраняем CDATA отдельно
-        allowBooleanAttributes: true,
-        processEntities: true, // Автоматически заменяет HTML-сущности (&lt; &gt;) 
-      })
+      const data = await getProductsByLimit(4);
 
-      const json = parser.parse(data);
-      setJsonData(json.data.item);
-      console.log(json.data.item);
+      setJsonData(data);
     } catch (error) {
       console.error("Ошибка при загрузке XML:", error);
     } finally {
@@ -40,16 +29,8 @@ export default function ProductList() {
 
   return (
     <>
-      {/* <Button
-        onPress={handleLoadXML}
-        disabled={loading}
-        isLoading={loading}
-      >
-        {loading ? "Загрузка..." : "Загрузить JSON потоками"}
-      </Button> */}
-
-      {loading && <Spinner className="mx-auto"/>}
-      {jsonData.length > 0 && (
+      {loading && <Spinner className="mx-auto" />}
+      {jsonData.length > 0 ? (
         <div className="grid grid-cols-[var(--grid-template-columns)] gap-8">
           {
             jsonData.map((item: any, index) => (
@@ -57,16 +38,19 @@ export default function ProductList() {
                 key={index}
                 title={item.product.__cdata}
                 description={item.general_description.__cdata}
-                image={item.images_urls}
-                href={item.url}
-                price={item.price}
+                image={item.images_urls.split(",")[0]}
+                imageFit="contain"
+                href={`/catalog`}
+                price={`${item.price} BYN`}
                 variant="product"
               />
             ))
           }
         </div>
-      )}
-
+      ) : (
+        <p className="text-center mt-8 text-gray-500">Нет товаров</p>
+      )
+    }
     </>
   );
 }
@@ -78,7 +62,7 @@ export const ProductSectionHeading = ({ title, subtitle, description }: { title?
       <SectionDescription>{description}</SectionDescription>
     </SectionHeading>
 
-    <SectionButton label="Все товары" href={'/'} className='hidden lg:flex' />
+    <SectionButton label="Все товары" href={'/catalog'} className='hidden lg:flex' />
   </div>
 );
 
@@ -86,14 +70,14 @@ export const ProductSection = () => {
   return (
     <Section className="relative" id="products" innerClassname="md:pt-0">
       <ProductSectionHeading
-        title={'Наши товары'}
-        subtitle={'Популярные товары'}
+        title={'Популярные товары'}
+        subtitle={'Каталог'}
         description={'Ознакомьтесь с нашими популярными товарами'}
       />
 
       <ProductList />
 
-      <SectionButton label="Все товары" href={'/'} className='lg:hidden flex' />
+      <SectionButton label="Все товары" href={'/catalog'} className='lg:hidden flex' />
     </Section>
   );
 };

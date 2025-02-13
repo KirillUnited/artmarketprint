@@ -87,19 +87,6 @@ export default async function CategoryPage({ params }: { params: Promise<Props> 
 					</ServiceDetails>
 				</div>
 			</section>
-			{/*// TODO add price table*/}
-			{/*<section className="py-10 md:py-20 bg-[#F1F4FA]">*/}
-			{/*	<div className="container">*/}
-			{/*		<div className="flex flex-col gap-10">*/}
-			{/*			<h2 className="text-2xl md:text-3xl font-bold text-gray-900 text-center">Цены</h2>*/}
-			{/*			<PriceTable />*/}
-
-			{/*			<BrandButton state="primary" className={'self-center'}>*/}
-			{/*				ЗАКАЗАТЬ*/}
-			{/*			</BrandButton>*/}
-			{/*		</div>*/}
-			{/*	</div>*/}
-			{/*</section>*/}
 			<section className="py-10 md:py-20 bg-[#F1F4FA]">
 				<div className="container">
 					<div className="flex flex-col gap-10">

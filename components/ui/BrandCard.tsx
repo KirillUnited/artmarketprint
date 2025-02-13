@@ -34,7 +34,7 @@ export const BrandCardFooter = ({ variant, href }: { variant: string; href: stri
 	</>
 );
 
-export default function BrandCard({ title, variant, price, description, image, href }: BrandCardProps) {
+export default function BrandCard({ title, variant, price, description, image, href, imageFit="cover" }: BrandCardProps) {
 	return (
 		<div className="min-h-[260px] h-full md:min-h-[460px] overflow-hidden rounded-md shadow-small hover:shadow-large transition-all flex flex-col group relative">
 			<Link
@@ -46,12 +46,13 @@ export default function BrandCard({ title, variant, price, description, image, h
 				{
 					image && <Image
 						alt={title}
-						className={clsx('object-cover w-full group-hover:scale-110 transition-all duration-400', {
+						className={clsx('w-full group-hover:scale-110 transition-all duration-400', {
+							'object-cover': imageFit === 'cover',
+							'object-contain': imageFit === 'contain',
 							'h-full': variant === 'service',
 							'aspect-video max-h-48': variant === 'product',
 						})}
 						height={180}
-						quality={100}
 						src={`${image}`}
 						width={270}
 					/>}
