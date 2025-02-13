@@ -40,6 +40,7 @@ export default function ProductList() {
                 title={item.product.__cdata}
                 description={item.general_description.__cdata}
                 image={item.images_urls}
+                imageFit="contain"
                 href={`/catalog`}
                 price={item.price}
                 variant="product"
@@ -71,8 +72,8 @@ export const ProductSection = () => {
   return (
     <Section className="relative" id="products" innerClassname="md:pt-0">
       <ProductSectionHeading
-        title={'Наши товары'}
-        subtitle={'Популярные товары'}
+        title={'Популярные товары'}
+        subtitle={'Каталог'}
         description={'Ознакомьтесь с нашими популярными товарами'}
       />
 

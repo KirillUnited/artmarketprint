@@ -23,6 +23,7 @@ export interface BrandCardProps extends React.AllHTMLAttributes<HTMLDivElement> 
   image?: string;
   href?: string;
   variant?: string;
+  imageFit?: "cover" | "contain";
 }
 
 export interface ServiceDetailsProps {
