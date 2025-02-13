@@ -1,8 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { fetchXML } from "@/lib/actions/product.actions";
-import { XMLParser } from "fast-xml-parser";
+import { getProductsByLimit } from "@/lib/actions/product.actions";
 import BrandCard from "@/components/ui/BrandCard";
 import Section, { SectionButton, SectionDescription, SectionHeading, SectionSubtitle, SectionTitle } from "@/components/layout/Section";
 import { Spinner } from "@heroui/spinner";
@@ -13,24 +12,15 @@ export default function ProductList() {
 
   useEffect(() => {
     handleLoadXML();
-  }, []);
+  }, [jsonData]);
 
   const handleLoadXML = async () => {
     setLoading(true);
     try {
-      const data = await fetchXML();
-      const parser = new XMLParser({
-        ignoreAttributes: false,
-        attributeNamePrefix: "@_",
-        trimValues: true,
-        cdataPropName: "__cdata", // Сохраняем CDATA отдельно
-        allowBooleanAttributes: true,
-        processEntities: true, // Автоматически заменяет HTML-сущности (&lt; &gt;) 
-      })
+      const data = await getProductsByLimit(4);
 
-      const json = parser.parse(data);
-      setJsonData(json.data.item);
-      console.log(json.data.item);
+      console.log(data);
+      setJsonData(data);
     } catch (error) {
       console.error("Ошибка при загрузке XML:", error);
     } finally {
@@ -40,15 +30,7 @@ export default function ProductList() {
 
   return (
     <>
-      {/* <Button
-        onPress={handleLoadXML}
-        disabled={loading}
-        isLoading={loading}
-      >
-        {loading ? "Загрузка..." : "Загрузить JSON потоками"}
-      </Button> */}
-
-      {loading && <Spinner className="mx-auto"/>}
+      {loading && <Spinner className="mx-auto" />}
       {jsonData.length > 0 && (
         <div className="grid grid-cols-[var(--grid-template-columns)] gap-8">
           {

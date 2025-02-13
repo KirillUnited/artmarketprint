@@ -51,7 +51,6 @@ export default function BrandCard({ title, variant, price, description, image, h
 							'aspect-video max-h-48': variant === 'product',
 						})}
 						height={180}
-						quality={100}
 						src={`${image}`}
 						width={270}
 					/>}
