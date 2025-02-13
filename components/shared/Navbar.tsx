@@ -17,14 +17,11 @@ import {PhoneListDropdown} from '@/components/ui/PhoneListDropdown';
 
 type HeaderDropdownMenuProps = {
 	triggerLabel: string;
-	items: {label: string; href?: string; description?: string}[];
+	items: {title: string; url?: string; description?: string;
+		services?: any;}[];
 };
 
-interface NavbarProps {
-	navigation?: HTMLCollectionOf<HTMLAnchorElement | HTMLAreaElement>;
-}
-
-export default function Navbar({navigation}: NavbarProps) {
+export default function Navbar({navigation}: any) {
 	const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
 	return (
@@ -43,7 +40,7 @@ export default function Navbar({navigation}: NavbarProps) {
 					<BrandLogo alt={'ArtMarketPrint'} />
 				</NavbarBrand>
 				<NavbarContent className="hidden xl:flex gap-8" justify="center">
-					{navigation?.map((navItem, index) => {
+					{navigation?.map((navItem: any) => {
 						return navItem?.submenu ? (
 							<NavbarDropdownMenu key={navItem.title} items={navItem.submenu} triggerLabel={navItem.title} />
 						) : (
@@ -131,12 +128,12 @@ const NavbarDropdownMenu = ({triggerLabel, items}: HeaderDropdownMenuProps) => {
 					title: 'font-semibold truncate max-w-full',
 				}}
 			>
-				<DropdownItem key={items[0].title} href={items[0].url} classNames={{
+				<DropdownItem key={items[0].title} classNames={{
 					title: 'font-light'
-				}}>
+				}} href={items[0].url}>
 					{items[0].title}
 				</DropdownItem>
-				{items[0].services.map((item) => (
+				{items[0]?.services?.map((item: any) => (
 					<DropdownItem
 						key={item.title}
 						description={item.description}
