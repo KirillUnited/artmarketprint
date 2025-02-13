@@ -3,6 +3,7 @@
 import { parseStringPromise } from "xml2js";
 import { XMLParser } from "fast-xml-parser";
 import { getJsonFileData } from "../utils";
+import path from "path";
 
 // const PRODUCT_DESCRIPTION_URL = 'https://art24.by/capi_v100_xmls/products_description_xml_cdata001.xml';
 // const MINSKSTOCKS_URL = 'https://art24.by/capi_v100_xmls/minskstocks.xml';
@@ -83,7 +84,7 @@ import { getJsonFileData } from "../utils";
 // }
 
 export async function getProductsByLimit(limit: number) {
-  const DATA_FILE_PATH = '_data/products.json';
+  const DATA_FILE_PATH = path.join(process.cwd(), '_data/products.json');
   const {data} = await getJsonFileData(DATA_FILE_PATH) ?? {};
 
   if (!data) {

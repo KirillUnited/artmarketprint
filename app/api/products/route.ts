@@ -6,6 +6,7 @@ export async function GET() {
     const products = await getProductsByLimit(4);
     return NextResponse.json(products);
   } catch (error) {
+    console.error("Ошибка загрузки товаров /api/products:", error);
     return NextResponse.json({ error: "Ошибка загрузки товаров" }, { status: 500 });
   }
 }
