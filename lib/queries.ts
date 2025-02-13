@@ -28,6 +28,19 @@ export const PROJECTS_BY_SERVICE_QUERY = `*[_type == "completedProjects"] {
       }
     }
   }`;
+export const PROJECTS_BY_CATEGORY_QUERY = `*[_type == "completedProjects"] {
+    projects[references(*[_type == "category" && slug.current == $slug]._id)]{
+      title,
+      "currentSlug": slug.current,
+      shortDescription,
+      "imageUrl": image.asset->url,
+      altText,
+      tags[]->{
+        _id,
+        title
+      }
+    }
+  }`;
 export const PROJECT_QUERY = `*[_type == "completedProjects"] {
     projects[slug.current == $slug]{
       title,
