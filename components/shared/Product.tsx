@@ -19,7 +19,6 @@ export default function ProductList() {
     try {
       const data = await getProductsByLimit(4);
 
-      console.log(data);
       setJsonData(data);
     } catch (error) {
       console.error("Ошибка при загрузке XML:", error);
@@ -39,10 +38,10 @@ export default function ProductList() {
                 key={index}
                 title={item.product.__cdata}
                 description={item.general_description.__cdata}
-                image={item.images_urls}
+                image={item.images_urls.split(",")[0]}
                 imageFit="contain"
                 href={`/catalog`}
-                price={item.price}
+                price={`${item.price} BYN`}
                 variant="product"
               />
             ))
@@ -52,7 +51,6 @@ export default function ProductList() {
         <p className="text-center mt-8 text-gray-500">Нет товаров</p>
       )
     }
-
     </>
   );
 }
