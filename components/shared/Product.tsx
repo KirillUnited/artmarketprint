@@ -7,7 +7,7 @@ import Section, { SectionButton, SectionDescription, SectionHeading, SectionSubt
 import { Spinner } from "@heroui/spinner";
 import { getProductsByLimit } from "@/lib/actions/product.actions";
 
-export default function ProductList({jsonData}: any) {
+export default function ProductList({ jsonData }: any) {
   // const [jsonData, setJsonData] = useState<any[]>([]);
   // const [loading, setLoading] = useState(false);
 
@@ -69,7 +69,12 @@ export const ProductSectionHeading = ({ title, subtitle, description }: { title?
 );
 
 export const ProductSection = async () => {
-const data = await getProductsByLimit(4);
+  const data = await getProductsByLimit(4);
+
+  if (!data || data.length === 0) {
+		console.warn("Нет данных о продуктах");
+		return null;
+	}
 
   return (
     <Section className="relative" id="products" innerClassname="md:pt-0">
