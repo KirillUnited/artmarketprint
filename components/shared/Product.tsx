@@ -17,7 +17,8 @@ export default function ProductList() {
   const handleLoadData = async () => {
     setLoading(true);
     try {
-      const data = await getProductsByLimit(4);
+      const res = await fetch('/api/products');
+      const data = await res.json();
 
       setJsonData(data);
     } catch (error) {
@@ -50,7 +51,7 @@ export default function ProductList() {
       ) : (
         <p className="text-center mt-8 text-gray-500">Нет товаров</p>
       )
-    }
+      }
     </>
   );
 }
