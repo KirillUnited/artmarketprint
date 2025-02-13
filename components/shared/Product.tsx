@@ -76,7 +76,7 @@ const data = await getProductsByLimit(4);
       <ProductSectionHeading
         title={'Популярные товары'}
         subtitle={'Каталог'}
-        description={'Ознакомьтесь с нашими популярными товарами'}
+        description={'Мы предлагаем широкий выбор продукции для нанесения печати: одежда, аксессуары, сувениры и многое другое'}
       />
 
       <ProductList jsonData={data} />
