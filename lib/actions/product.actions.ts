@@ -7,7 +7,7 @@ import { getJsonFileData } from "../utils";
 // const PRODUCT_DESCRIPTION_URL = 'https://art24.by/capi_v100_xmls/products_description_xml_cdata001.xml';
 // const MINSKSTOCKS_URL = 'https://art24.by/capi_v100_xmls/minskstocks.xml';
 // const AUTH = Buffer.from("resu100capixml:67919f4F4f4f6a376d80919dEQli_f35a812").toString("base64");
-const DATA_FILE_PATH = '_data/products.json';
+// const DATA_FILE_PATH = '_data/products.json';
 
 // export async function getXmlData(url: string) {
 //   try {
@@ -83,6 +83,7 @@ const DATA_FILE_PATH = '_data/products.json';
 // }
 
 export async function getProductsByLimit(limit: number) {
+  const DATA_FILE_PATH = '_data/products.json';
   const {data} = await getJsonFileData(DATA_FILE_PATH) ?? {};
 
   if (!data) {

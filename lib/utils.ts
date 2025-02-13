@@ -25,7 +25,7 @@ export async function saveJsonToFile(filename: string, data: any) {
 export async function getJsonFileData(filename: string): Promise<any> {
   try {
     const filePath = path.join(process.cwd(), filename);
-    const fileContent = await fs.readFile("_data/products.json", 'utf-8');
+    const fileContent = await fs.readFile(filePath, 'utf-8');
 
     return JSON.parse(fileContent);
   } catch (error) {
