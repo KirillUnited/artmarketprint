@@ -1,10 +1,11 @@
-import {Dropdown, DropdownItem, DropdownMenu, DropdownTrigger} from "@heroui/dropdown";
-import {Button} from "@heroui/button";
-import {ChevronDownIcon} from "lucide-react";
-import {PhoneIcon} from "@/components/icons";
-import {siteConfig} from "@/config/site";
-import {Link} from "@heroui/link";
-import React from "react";
+import {Dropdown, DropdownItem, DropdownMenu, DropdownTrigger} from '@heroui/dropdown';
+import {Button} from '@heroui/button';
+import {ChevronDownIcon} from 'lucide-react';
+import {Link} from '@heroui/link';
+import React from 'react';
+
+import {PhoneIcon} from '@/components/icons';
+import {siteConfig} from '@/config/site';
 
 
 export const PhoneListDropdown = () => (
@@ -21,8 +22,8 @@ export const PhoneListDropdown = () => (
         </DropdownTrigger>
         <DropdownMenu aria-label="Link Actions"
                       itemClasses={{
-                          base: "gap-4 rounded-md data-[hover=true]:bg-transparent",
-                          title: "text-center",
+                          base: 'gap-4 rounded-md data-[hover=true]:bg-transparent',
+                          title: 'text-center',
                       }}
         ><>
             {

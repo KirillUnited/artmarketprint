@@ -1,26 +1,30 @@
 'use client';
 import React from 'react';
-import { Button } from '@heroui/button';
-import { Navbar as BaseNavbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenu, NavbarMenuItem, NavbarMenuToggle } from '@heroui/navbar';
-import { Link } from '@heroui/link';
-import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@heroui/dropdown';
-import { ChevronDownIcon } from 'lucide-react';
+import {Button} from '@heroui/button';
+import {Navbar as BaseNavbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenu, NavbarMenuItem, NavbarMenuToggle} from '@heroui/navbar';
+import {Link} from '@heroui/link';
+import {Dropdown, DropdownItem, DropdownMenu, DropdownTrigger} from '@heroui/dropdown';
+import {ChevronDownIcon} from 'lucide-react';
 
-import { PhoneIcon, SearchIcon, TelegramIcon, ViberIcon } from '../icons';
+import {PhoneIcon, SearchIcon, TelegramIcon, ViberIcon} from '../icons';
 import BrandLogo from '../ui/BrandLogo';
-import { HeroModalOffer } from '../ui/BrandModalOffer';
+import {HeroModalOffer} from '../ui/BrandModalOffer';
 
 import Socials from './Socials';
 
-import { siteConfig } from '@/config/site';
+import {siteConfig} from '@/config/site';
 import {PhoneListDropdown} from '@/components/ui/PhoneListDropdown';
 
 type HeaderDropdownMenuProps = {
-	triggerLabel: string,
-	items: { label: string, href?: string, description?: string }[]
+	triggerLabel: string;
+	items: {label: string; href?: string; description?: string}[];
+};
+
+interface NavbarProps {
+	navigation?: HTMLCollectionOf<HTMLAnchorElement | HTMLAreaElement>;
 }
 
-export default function Navbar() {
+export default function Navbar({navigation}: NavbarProps) {
 	const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
 	return (
@@ -39,19 +43,16 @@ export default function Navbar() {
 					<BrandLogo alt={'ArtMarketPrint'} />
 				</NavbarBrand>
 				<NavbarContent className="hidden xl:flex gap-8" justify="center">
-					{siteConfig?.navItems?.map((navItem, index) => {
-						return (
-							navItem?.menuItems ?
-								(
-									<NavbarDropdownMenu key={navItem.label} items={navItem.menuItems} triggerLabel={navItem.label} />
-								) : (
-									<NavbarItem key={navItem.label} isActive={index === 0}>
-										<Link aria-current="page" className="leading-normal font-semibold hover:underline hover:text-primary transition" color={'foreground'} href={navItem.href} size="sm">
-											{navItem.label}
-										</Link>
-									</NavbarItem>
-								)
-						)
+					{navigation?.map((navItem, index) => {
+						return navItem?.submenu ? (
+							<NavbarDropdownMenu key={navItem.title} items={navItem.submenu} triggerLabel={navItem.title} />
+						) : (
+							<NavbarItem key={navItem.title}>
+								<Link aria-current="page" className="leading-normal font-semibold hover:underline hover:text-primary transition" color={'foreground'} href={navItem.url} size="sm">
+									{navItem.title}
+								</Link>
+							</NavbarItem>
+						);
 					})}
 				</NavbarContent>
 				<div className="flex flex-row gap-8 items-center shrink-0">
@@ -70,12 +71,9 @@ export default function Navbar() {
 					</div>
 
 					<PhoneListDropdown />
-					{/*
-					<Button className="leading-normal font-semibold hidden lg:flex" color="primary" variant="solid" radius='sm'>
-						<CalendarIcon size={18} />
-						<span>ЗАКАЗАТЬ ЗВОНОК</span>
-					</Button> */}
-					<div className='hidden lg:block'><HeroModalOffer/></div>
+					<div className="hidden lg:block">
+						<HeroModalOffer />
+					</div>
 					<NavbarMenuToggle aria-label={isMenuOpen ? 'Close menu' : 'Open menu'} className="xl:hidden h-6" />
 				</div>
 			</div>
@@ -83,15 +81,12 @@ export default function Navbar() {
 				<div className="flex flex-col gap-4">
 					{siteConfig?.navItems.map((navItem, index) => (
 						<NavbarMenuItem key={`${navItem}-${index}`}>
-							<Link className="w-full" color="foreground" href={navItem.href} size="lg" >
+							<Link className="w-full" color="foreground" href={navItem.href} size="lg">
 								{navItem.label}
 							</Link>
 						</NavbarMenuItem>
 					))}
 				</div>
-				{/*<Button className="leading-normal font-semibold" color="primary" variant="solid" radius='sm'>*/}
-				{/*	<span>ЗАКАЗАТЬ ЗВОНОК</span>*/}
-				{/*</Button>*/}
 				<HeroModalOffer />
 				<div className="flex flex-col gap-4">
 					{siteConfig?.contacts?.[0]?.list?.map((item) => (
@@ -105,14 +100,15 @@ export default function Navbar() {
 			</NavbarMenu>
 		</BaseNavbar>
 	);
-};
+}
 
-const NavbarDropdownMenu = ({ triggerLabel, items }: HeaderDropdownMenuProps) => {
+const NavbarDropdownMenu = ({triggerLabel, items}: HeaderDropdownMenuProps) => {
 	return (
 		<Dropdown
 			classNames={{
 				content: 'rounded-md',
-			}}>
+			}}
+		>
 			<NavbarItem>
 				<DropdownTrigger>
 					<Button
@@ -129,24 +125,27 @@ const NavbarDropdownMenu = ({ triggerLabel, items }: HeaderDropdownMenuProps) =>
 			</NavbarItem>
 			<DropdownMenu
 				aria-label="Услуги"
-				className="w-[340px]"
+				className="w-[320px]"
 				itemClasses={{
 					base: 'gap-4 rounded-md data-[hover=true]:bg-brand-gradient data-[hover=true]:text-fill-transparent',
-					title: 'font-semibold',
+					title: 'font-semibold truncate max-w-full',
 				}}
 			>
-				{
-					items.map((item) => (
-						<DropdownItem
-							key={item.label}
-							description={item.description}
-							href={item.href}
-						>
-							{item.label}
-						</DropdownItem>
-					))
-				}
+				<DropdownItem key={items[0].title} href={items[0].url} classNames={{
+					title: 'font-light'
+				}}>
+					{items[0].title}
+				</DropdownItem>
+				{items[0].services.map((item) => (
+					<DropdownItem
+						key={item.title}
+						description={item.description}
+						href={`${items[0].url}/${item.url}`}
+					>
+						{item.title}
+					</DropdownItem>
+				))}
 			</DropdownMenu>
 		</Dropdown>
-	)
-}
+	);
+};
