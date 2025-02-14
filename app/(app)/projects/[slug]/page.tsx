@@ -66,12 +66,12 @@ export default async function ProjectPage({ params }: { params: Promise<Props> }
                         height={1080}
                     />
                 )}
-                <div className="container flex flex-col gap-10 max-w-2xl relative z-10">
+                <div className="container flex flex-col gap-10 max-w-4xl relative z-10">
                     <div className="text-center">
-                        <h1 className="text-4xl font-extrabold text-background sm:text-5xl">
+                        <h1 className="text-4xl font-extrabold text-background sm:text-5xl text-balance">
                             {project.title}
                         </h1>
-                        <p className="mt-4 text-xl text-white">
+                        <p className="mt-4 text-xl text-white line-clamp-3">
                             {project.shortDescription}
                         </p>
                     </div>

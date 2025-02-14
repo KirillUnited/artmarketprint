@@ -11,8 +11,8 @@ import { siteConfig } from '@/config/site';
 import { ServiceDetailsProps } from '@/types';
 import { client } from '@/sanity/client';
 import { getSanityDocuments } from '@/lib/getData';
-import Section, {SectionDescription, SectionHeading, SectionSubtitle, SectionTitle} from "@/components/layout/Section";
-import {ArrowUpRightIcon} from "lucide-react";
+import Section, { SectionDescription, SectionHeading, SectionSubtitle, SectionTitle } from "@/components/layout/Section";
+import { ArrowUpRightIcon } from "lucide-react";
 
 export const Services = async () => {
 	const services = await getSanityDocuments();
@@ -81,8 +81,10 @@ export const Services = async () => {
 	);
 };
 
-export const ServiceDetails = ({name, description, image, price, advantages, children}: ServiceDetailsProps) => (
-	<div className="grid md:grid-cols-2 items-center gap-8">
+export const ServiceDetails = ({ name, description, image, price, advantages, children }: ServiceDetailsProps) => (
+	<div className="grid md:grid-cols-2 items-center gap-12">
+		{image && <Image alt={name} className="h-full object-cover w-full aspect-video" height={640}
+			src={`${image}`} width={640} />}
 		<div className="flex flex-col gap-8 md:gap-16">
 			<div className="flex flex-col gap-4 md:gap-6">
 				<div className="flex flex-col gap-2">
@@ -112,16 +114,14 @@ export const ServiceDetails = ({name, description, image, price, advantages, chi
 				)}
 			</div>
 			<div className="flex flex-wrap gap-2 md:gap-4">
-				<BrandModalOffer/>
+				<BrandModalOffer />
 
 				<Button as={Link} className="bg-brand-gradient text-fill-transparent font-semibold flex-1 basis-36"
-						color="secondary" href={'/#contacts'} radius="sm" size="lg" variant="ghost">
+					color="secondary" href={'/#contacts'} radius="sm" size="lg" variant="ghost">
 					КОНСУЛЬТАЦИЯ
 				</Button>
 			</div>
 		</div>
 
-		{image && <Image alt={name} className="h-full object-cover flex-1 w-full aspect-square max-h-max" height={640}
-						 src={`${image}`} width={640}/>}
 	</div>
 );

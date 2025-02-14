@@ -14,6 +14,9 @@ import { SanityImageSource } from '@sanity/image-url/lib/types/types';
 import imageUrlBuilder from "@sanity/image-url";
 import { PortableText, SanityDocument } from 'next-sanity';
 import { getUrlFor } from '@/lib/utils';
+import Section, {SectionButton} from "@/components/layout/Section";
+import {ProjectList, ProjectsHeading} from "@/components/shared/Projects";
+import {PROJECTS_BY_CATEGORY_QUERY, PROJECTS_BY_SERVICE_QUERY} from "@/lib/queries";
 
 type Props = {
 	slug: string;
@@ -55,6 +58,9 @@ export default async function CategoryPage({ params }: { params: Promise<Props> 
 		? urlFor(category.image)?.width(550).height(310).url()
 		: null;
 
+	const filteredProjects = await client.fetch<SanityDocument>(PROJECTS_BY_CATEGORY_QUERY, await params, options);
+	const { projects = [] } = filteredProjects?.[0] || {};
+
 	return (
 		<>
 			<section className="py-12 md:py-24 relative after:absolute after:inset-0 after:bg-gradient-to-t after:from-black after:to-transparent">
@@ -87,52 +93,31 @@ export default async function CategoryPage({ params }: { params: Promise<Props> 
 					</ServiceDetails>
 				</div>
 			</section>
-			{/*// TODO add price table*/}
-			{/*<section className="py-10 md:py-20 bg-[#F1F4FA]">*/}
-			{/*	<div className="container">*/}
-			{/*		<div className="flex flex-col gap-10">*/}
-			{/*			<h2 className="text-2xl md:text-3xl font-bold text-gray-900 text-center">Цены</h2>*/}
-			{/*			<PriceTable />*/}
 
-			{/*			<BrandButton state="primary" className={'self-center'}>*/}
-			{/*				ЗАКАЗАТЬ*/}
-			{/*			</BrandButton>*/}
+			<Section className="bg-[#F9F9F9]">
+				<ProjectsHeading title='Примеры работ' subtitle={'галерея'} description={'Портфолио выполненных работ'} />
+
+				<ProjectList projectList={projects} />
+
+				<SectionButton label="Все проекты" href={'/projects'} className='lg:hidden flex' />
+			</Section >
+			<Section>
+				<OrderForm />
+			</Section>
+			{/*<section className="relative bg-[#F1F4FA]" id="catalog">*/}
+			{/*	<div className="py-10 md:py-20 flex flex-col gap-10">*/}
+			{/*		<div className="container">*/}
+			{/*			<h2 className="text-2xl md:text-3xl leading-[120%] font-bold text-center">Похожие услуги</h2>*/}
+			{/*		</div>*/}
+			{/*		<div className="container">*/}
+			{/*			<div className="grid grid-cols-[var(--grid-template-columns)] gap-8">*/}
+			{/*				{siteConfig?.catalogSection?.items.map(({ title, variant, price, description, image, href }: BrandCardProps, index) => (*/}
+			{/*					<BrandCard key={index} title={title} price={price} description={description} image={image} href={href} variant={variant} />*/}
+			{/*				))}*/}
+			{/*			</div>*/}
 			{/*		</div>*/}
 			{/*	</div>*/}
 			{/*</section>*/}
-			<section className="py-10 md:py-20 bg-[#F1F4FA]">
-				<div className="container">
-					<div className="flex flex-col gap-10">
-						<h2 className="text-2xl md:text-3xl font-bold text-gray-900 text-center">Примеры работ</h2>
-						<div className=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-							<HeroImage loading="lazy" isZoomed src="/images/social-1.jpg" alt="Пример работы" width={'100%'} height={300} className="w-full" />
-							<HeroImage loading="lazy" isZoomed src="/images/social-3.jpg" alt="Пример работы" width={'100%'} height={300} className="w-full" />
-							<HeroImage loading="lazy" isZoomed src="/images/social-2.jpg" alt="Пример работы" width={'100%'} height={300} className="w-full" />
-						</div>
-					</div>
-				</div>
-			</section>
-			<section className={'py-10 md:py-20'}>
-				<div className="container flex flex-col">
-					<div className="w-full max-w-2xl self-center bg-background shadow-lg py-6 px-4 md:px-6 rounded-medium">
-						<OrderForm className={'items-center'} />
-					</div>
-				</div>
-			</section>
-			<section className="relative bg-[#F1F4FA]" id="catalog">
-				<div className="py-10 md:py-20 flex flex-col gap-10">
-					<div className="container">
-						<h2 className="text-2xl md:text-3xl leading-[120%] font-bold text-center">Похожие услуги</h2>
-					</div>
-					<div className="container">
-						<div className="grid grid-cols-[var(--grid-template-columns)] gap-8">
-							{siteConfig?.catalogSection?.items.map(({ title, variant, price, description, image, href }: BrandCardProps, index) => (
-								<BrandCard key={index} title={title} price={price} description={description} image={image} href={href} variant={variant} />
-							))}
-						</div>
-					</div>
-				</div>
-			</section>
 		</>
 	);
 }

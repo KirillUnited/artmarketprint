@@ -46,8 +46,13 @@ export const ProjectCard = ({ project }: { project: SanityDocument }) => (
 		<CardFooter className="absolute bg-black/40 bottom-0 w-full z-10 max-h-0 overflow-hidden group-hover:max-h-full transition-all duration-700 p-0">
 			<div className="flex flex-col gap-4 p-3">
 				{
-					project?.tags?.length > 0 && (
-						<ProjectTagList tags={project.tags} />
+					project?.service_tags?.length > 0 && (
+						<ProjectTagList tags={project.service_tags} />
+					)
+				}
+				{
+					project?.category_tags?.length > 0 && (
+						<ProjectTagList tags={project.category_tags} />
 					)
 				}
 				<div className="flex flex-col gap-2">
@@ -96,7 +101,7 @@ export const ProjectList = (
 export const Projects = async () => {
 	const data = await getSanityDocuments(PROJECTS_QUERY, { limit: 3 });
 	const { title = '', subtitle = '', description = '', projects = [] } = data?.[0] || {};
-
+	console.log(projects)
 	if (!data || data.length === 0) {
 		console.warn("Нет данных о проектах");
 		return null;

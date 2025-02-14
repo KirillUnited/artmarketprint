@@ -8,7 +8,11 @@ export const PROJECTS_QUERY = `*[_type == "completedProjects"]{
       shortDescription,
       "imageUrl": image.asset->url,
       altText,
-      tags[]->{
+      category_tags[]->{
+        _id,
+        title
+      },
+      service_tags[]->{
         _id,
         title
       }
@@ -22,10 +26,23 @@ export const PROJECTS_BY_SERVICE_QUERY = `*[_type == "completedProjects"] {
       shortDescription,
       "imageUrl": image.asset->url,
       altText,
-      tags[]->{
+      service_tags[]->{
         _id,
         title
       }
+    }
+  }`;
+export const PROJECTS_BY_CATEGORY_QUERY = `*[_type == "completedProjects"] {
+    projects[references(*[_type == "category" && slug.current == $slug]._id)]{
+      title,
+      "currentSlug": slug.current,
+      shortDescription,
+      "imageUrl": image.asset->url,
+      altText,
+      category_tags[]->{
+        _id,
+        title
+      },
     }
   }`;
 export const PROJECT_QUERY = `*[_type == "completedProjects"] {
@@ -47,3 +64,21 @@ export const PROJECT_SLUGS_QUERY: string = `*[_type == "completedProjects"] {
       "slug": slug.current
     }
   }`;
+
+export const NAVIGATION_QUERY = `*[_type == "navigation"] {
+  _id,
+  title,
+  links[]{
+	title,
+	"url": slug.current,
+	submenu[]{
+	  title,
+	  "url": slug.current,
+	  services[]->{
+		title,
+        description,
+		"url": slug.current
+	  }
+	}
+  }
+}`;

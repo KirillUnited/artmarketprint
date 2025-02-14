@@ -9,6 +9,7 @@ import { Services } from '@/components/shared/Services';
 import ContactUs, { MapFrame } from '@/components/shared/ContactUs';
 import {InstagramFeedSection} from '@/components/shared/InstagramFeed';
 import {Projects} from '@/components/shared/Projects';
+import { ProductSection } from '@/components/shared/Product';
 
 export default function Home() {
 	return (
@@ -17,6 +18,7 @@ export default function Home() {
 			<Benefits />
 			<Services />
 			<Catalog />
+			<ProductSection />
 			<About />
 			<Projects />
 			<InstagramFeedSection id='instagram'/>
