@@ -1,27 +1,28 @@
 'use client';
 import React from 'react';
-import {Button} from '@heroui/button';
-import {Navbar as BaseNavbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenu, NavbarMenuItem, NavbarMenuToggle} from '@heroui/navbar';
-import {Link} from '@heroui/link';
-import {Dropdown, DropdownItem, DropdownMenu, DropdownTrigger} from '@heroui/dropdown';
-import {ChevronDownIcon} from 'lucide-react';
+import { Button } from '@heroui/button';
+import { Navbar as BaseNavbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenu, NavbarMenuItem, NavbarMenuToggle } from '@heroui/navbar';
+import { Link } from '@heroui/link';
+import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@heroui/dropdown';
+import { ChevronDownIcon } from 'lucide-react';
 
-import {PhoneIcon, SearchIcon, TelegramIcon, ViberIcon} from '../icons';
+import { SearchIcon, TelegramIcon, ViberIcon } from '../icons';
 import BrandLogo from '../ui/BrandLogo';
-import {HeroModalOffer} from '../ui/BrandModalOffer';
+import { HeroModalOffer } from '../ui/BrandModalOffer';
 
-import Socials from './Socials';
-
-import {siteConfig} from '@/config/site';
-import {PhoneListDropdown} from '@/components/ui/PhoneListDropdown';
+import { siteConfig } from '@/config/site';
+import { PhoneListDropdown } from '@/components/ui/PhoneListDropdown';
+import Drawer from '../ui/Drawer';
 
 type HeaderDropdownMenuProps = {
 	triggerLabel: string;
-	items: {title: string; url?: string; description?: string;
-		services?: any;}[];
+	items: {
+		title: string; url?: string; description?: string;
+		services?: any;
+	}[];
 };
 
-export default function Navbar({navigation}: any) {
+export default function Navbar({ navigation }: any) {
 	const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
 	return (
@@ -71,35 +72,14 @@ export default function Navbar({navigation}: any) {
 					<div className="hidden lg:block">
 						<HeroModalOffer />
 					</div>
-					<NavbarMenuToggle aria-label={isMenuOpen ? 'Close menu' : 'Open menu'} className="xl:hidden h-6" />
+					<Drawer navigation={navigation} className="xl:hidden h-6 w-auto min-w-min"/>
 				</div>
 			</div>
-			<NavbarMenu className="gap-6 px-4 py-6">
-				<div className="flex flex-col gap-4">
-					{siteConfig?.navItems.map((navItem, index) => (
-						<NavbarMenuItem key={`${navItem}-${index}`}>
-							<Link className="w-full" color="foreground" href={navItem.href} size="lg">
-								{navItem.label}
-							</Link>
-						</NavbarMenuItem>
-					))}
-				</div>
-				<HeroModalOffer />
-				<div className="flex flex-col gap-4">
-					{siteConfig?.contacts?.[0]?.list?.map((item) => (
-						<Link key={item.href} className="font-bold text-left flex items-center gap-2" href={`tel:${item.href}` || '#'}>
-							<PhoneIcon size={20} />
-							{item.label}
-						</Link>
-					))}
-				</div>
-				<Socials />
-			</NavbarMenu>
 		</BaseNavbar>
 	);
 }
 
-const NavbarDropdownMenu = ({triggerLabel, items}: HeaderDropdownMenuProps) => {
+const NavbarDropdownMenu = ({ triggerLabel, items }: HeaderDropdownMenuProps) => {
 	return (
 		<Dropdown
 			classNames={{

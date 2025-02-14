@@ -8,7 +8,11 @@ export const PROJECTS_QUERY = `*[_type == "completedProjects"]{
       shortDescription,
       "imageUrl": image.asset->url,
       altText,
-      tags[]->{
+      category_tags[]->{
+        _id,
+        title
+      },
+      service_tags[]->{
         _id,
         title
       }
@@ -22,7 +26,7 @@ export const PROJECTS_BY_SERVICE_QUERY = `*[_type == "completedProjects"] {
       shortDescription,
       "imageUrl": image.asset->url,
       altText,
-      tags[]->{
+      service_tags[]->{
         _id,
         title
       }
@@ -35,10 +39,10 @@ export const PROJECTS_BY_CATEGORY_QUERY = `*[_type == "completedProjects"] {
       shortDescription,
       "imageUrl": image.asset->url,
       altText,
-      tags[]->{
+      category_tags[]->{
         _id,
         title
-      }
+      },
     }
   }`;
 export const PROJECT_QUERY = `*[_type == "completedProjects"] {
