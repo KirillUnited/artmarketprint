@@ -84,7 +84,7 @@ export const ModalOfferForm = ({ onClose }: { onClose: () => void }) => {
 							ОТМЕНА
 						</Button>
 						<BrandButton
-							className="flex-1 basis-32"
+							className="flex-1 basis-32 uppercase"
 							disabled={isPending}
 							isLoading={isPending}
 							spinner={
@@ -100,7 +100,7 @@ export const ModalOfferForm = ({ onClose }: { onClose: () => void }) => {
 							state="primary"
 							type="submit"
 						>
-							ОТПРАВИТЬ
+							{isPending ? 'Отправка...' : 'ОТПРАВИТЬ'}
 						</BrandButton>
 					</ModalFooter>
 				</>
