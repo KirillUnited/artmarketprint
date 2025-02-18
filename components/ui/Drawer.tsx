@@ -20,6 +20,7 @@ export default function Drawer({ navigation, className, children }: { navigation
 
             <BaseDrawer
                 backdrop='blur'
+                size='xs'
                 radius='sm'
                 isOpen={isOpen}
                 motionProps={{
