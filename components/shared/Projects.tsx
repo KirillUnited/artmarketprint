@@ -44,7 +44,7 @@ export const ProjectCard = ({ project }: { project: SanityDocument }) => (
 			radius='sm'
 		/>
 		<CardFooter className="absolute bg-black/40 bottom-0 w-full z-10 max-h-0 overflow-hidden group-hover:max-h-full transition-all duration-700 p-0">
-			<div className="flex flex-col gap-4 p-3">
+			<div className="flex flex-col gap-4 p-3 w-full">
 				{
 					project?.service_tags?.length > 0 && (
 						<ProjectTagList tags={project.service_tags} />
