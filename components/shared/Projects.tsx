@@ -101,7 +101,7 @@ export const ProjectList = (
 export const Projects = async () => {
 	const data = await getSanityDocuments(PROJECTS_QUERY, { limit: 3 });
 	const { title = '', subtitle = '', description = '', projects = [] } = data?.[0] || {};
-	console.log(projects)
+	
 	if (!data || data.length === 0) {
 		console.warn("Нет данных о проектах");
 		return null;
