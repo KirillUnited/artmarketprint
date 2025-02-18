@@ -104,7 +104,7 @@ export default async function ServicePage({ params }: { params: Promise<Props> }
 
                 <SectionButton label="Все проекты" href={'/projects'} className='lg:hidden flex' />
             </Section >
-            <Section>
+            <Section id="contacts">
                 <OrderForm />
             </Section>
         </>

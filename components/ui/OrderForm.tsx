@@ -41,6 +41,7 @@ export default function OrderForm({ className }: { className?: string }): JSX.El
 
     return (
         <Form
+            id='orderForm'
             className={clsx('gap-6', className)}
             validationBehavior="native"
             onSubmit={handleSubmit}>
