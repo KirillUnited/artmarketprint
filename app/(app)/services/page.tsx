@@ -8,7 +8,9 @@ import { FAQ } from '@/components/shared/FAQ';
 import ContactUs from '@/components/shared/ContactUs';
 import BaseBreadcrumb from '@/components/ui/Breadcrumb';
 import { client } from '@/sanity/client';
-import {getSanityDocuments} from '@/lib/getData';
+import { getSanityDocuments } from '@/lib/getData';
+import { NAVIGATION_QUERY } from '@/lib/queries';
+import Section from '@/components/layout/Section';
 
 const SERVICES_QUERY = `*[
   _type == "service"
@@ -21,12 +23,13 @@ const SERVICES_QUERY = `*[
 const builder = imageUrlBuilder(client);
 
 export default async function ServicesPage() {
-    const services = await getSanityDocuments(SERVICES_QUERY);
-    const urlFor = (source: SanityImageSource) => {
-        return builder.image(source).url();
-    }
+	const services = await getSanityDocuments(SERVICES_QUERY);
+	const breadcrumbs = (await client.fetch(NAVIGATION_QUERY))[0].links;
+	const urlFor = (source: SanityImageSource) => {
+		return builder.image(source).url();
+	}
 
-    return (
+	return (
 		<>
 			<section className="py-12 md:py-24 relative after:absolute after:inset-0 after:bg-gradient-to-t after:from-black after:to-transparent">
 				<Image priority alt={`${siteConfig?.seo?.title}`} className="absolute inset-0 object-cover w-full h-full" height={1080} src="/images/service-2.jpg" width={1920} />
@@ -37,25 +40,29 @@ export default async function ServicesPage() {
 					</div>
 				</div>
 			</section>
-			<section className="py-16" id="serviceList">
+			<section>
 				<div className="container">
-					<BaseBreadcrumb section="services" />
-					<ul className="grid grid-cols-[var(--grid-template-columns)] gap-8 mt-4">
-						{services.map((service) => (
-							<li key={service.title}>
-								<BrandCard
-									description={service.description}
-									href={`/services/${service.currentSlug}`}
-									image={urlFor(service.image)}
-									price={service.price}
-									title={service.title}
-									variant="service"
-								/>
-							</li>
-						))}
-					</ul>
+					<div className="mt-10 mb-6">
+						<BaseBreadcrumb items={breadcrumbs} section="services" />
+					</div>
 				</div>
 			</section>
+			<Section innerClassname='pt-6 md:pt-6' id="serviceList">
+				<ul className="grid grid-cols-[var(--grid-template-columns)] gap-8">
+					{services.map((service) => (
+						<li key={service.title}>
+							<BrandCard
+								description={service.description}
+								href={`/services/${service.currentSlug}`}
+								image={urlFor(service.image)}
+								price={service.price}
+								title={service.title}
+								variant="service"
+							/>
+						</li>
+					))}
+				</ul>
+			</Section>
 			<FAQ />
 			<ContactUs />
 		</>

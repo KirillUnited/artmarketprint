@@ -27,7 +27,7 @@ export const ProjectTagList = ({ tags }: { tags: { _id: string; title: string }[
 		<ul className='flex flex-wrap gap-2'>
 			{
 				tags?.map(({ _id, title }: { _id: string; title: string }) => (
-					<span key={_id} className='text-tiny text-white/80 bg-primary rounded-small px-1 self-start leading-normal'>{title}</span>
+					<li key={_id} className='text-tiny text-white/80 bg-primary rounded-small px-1 self-start leading-normal'>{title}</li>
 				))
 			}
 		</ul>
@@ -101,7 +101,7 @@ export const ProjectList = (
 export const Projects = async () => {
 	const data = await getSanityDocuments(PROJECTS_QUERY, { limit: 3 });
 	const { title = '', subtitle = '', description = '', projects = [] } = data?.[0] || {};
-	console.log(projects)
+
 	if (!data || data.length === 0) {
 		console.warn("Нет данных о проектах");
 		return null;
