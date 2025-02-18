@@ -59,7 +59,7 @@ export const ProjectCard = ({ project }: { project: SanityDocument }) => (
 					<h4 className="text-lg font-semibold text-white/80 line-clamp-2 leading-tight">{project.title}</h4>
 					<p className="text-xs text-white/80">{project.shortDescription}</p>
 				</div>
-				<Button radius="sm" size="sm" color='secondary'>
+				<Button as={'div'} radius="sm" size="sm" color='secondary'>
 					Подробнее
 				</Button>
 			</div>
