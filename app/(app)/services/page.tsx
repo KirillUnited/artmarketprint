@@ -9,17 +9,9 @@ import ContactUs from '@/components/shared/ContactUs';
 import BaseBreadcrumb from '@/components/ui/Breadcrumb';
 import { client } from '@/sanity/client';
 import { getSanityDocuments } from '@/lib/getData';
-import { NAVIGATION_QUERY } from '@/lib/queries';
+import { NAVIGATION_QUERY, SERVICES_QUERY } from '@/sanity/lib/queries';
 import Section from '@/components/layout/Section';
 
-const SERVICES_QUERY = `*[
-  _type == "service"
-  && defined(slug.current)
-]|order(publishedAt desc)[0...12]{title,
-    description,
-    image, 
-    price,
-    "currentSlug": slug.current}`;
 const builder = imageUrlBuilder(client);
 
 export default async function ServicesPage() {

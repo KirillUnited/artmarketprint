@@ -8,7 +8,7 @@ import { Card, CardFooter } from '@heroui/card';
 import { Image } from '@heroui/image';
 import clsx from 'clsx';
 import { Suspense } from 'react';
-import { PROJECTS_QUERY } from '@/lib/queries';
+import { PROJECTS_QUERY } from '@/sanity/lib/queries';
 
 export const ProjectsHeading = ({ title, subtitle, description }: { title?: string; subtitle?: string; description?: string }) => (
 	<div className="flex flex-wrap items-end justify-between gap-4">
@@ -59,7 +59,7 @@ export const ProjectCard = ({ project }: { project: SanityDocument }) => (
 					<h4 className="text-lg font-semibold text-white/80 line-clamp-2 leading-tight">{project.title}</h4>
 					<p className="text-xs text-white/80">{project.shortDescription}</p>
 				</div>
-				<Button radius="sm" size="sm" color='secondary'>
+				<Button as={'div'} radius="sm" size="sm" color='secondary'>
 					Подробнее
 				</Button>
 			</div>

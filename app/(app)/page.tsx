@@ -1,6 +1,6 @@
 import Script from 'next/script';
 
-import Hero from '@/components/shared/Hero';
+import { HeroCarousel } from '@/components/shared/hero/HeroCarousel';
 import { Benefits } from '@/components/shared/Benefits';
 import About from '@/components/shared/About';
 import { FAQ } from '@/components/shared/FAQ';
@@ -9,12 +9,12 @@ import { Services } from '@/components/shared/Services';
 import ContactUs, { MapFrame } from '@/components/shared/ContactUs';
 import {InstagramFeedSection} from '@/components/shared/InstagramFeed';
 import {Projects} from '@/components/shared/Projects';
-import { ProductSection } from '@/components/shared/Product';
+import { ProductSection } from '@/components/shared/product/ProductSection';
 
 export default function Home() {
 	return (
 		<>
-			<Hero />
+			<HeroCarousel />
 			<Benefits />
 			<Services />
 			<Catalog />

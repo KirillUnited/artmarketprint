@@ -16,7 +16,7 @@ import { PortableText, SanityDocument } from 'next-sanity';
 import { getUrlFor } from '@/lib/utils';
 import Section, { SectionButton } from "@/components/layout/Section";
 import { ProjectList, ProjectsHeading } from "@/components/shared/Projects";
-import { NAVIGATION_QUERY, PROJECTS_BY_CATEGORY_QUERY, PROJECTS_BY_SERVICE_QUERY } from "@/lib/queries";
+import { NAVIGATION_QUERY, PROJECTS_BY_CATEGORY_QUERY, PROJECTS_BY_SERVICE_QUERY } from "@/sanity/lib/queries";
 
 type Props = {
 	slug: string;
@@ -98,11 +98,11 @@ export default async function CategoryPage({ params }: { params: Promise<Props> 
 			<Section className="bg-[#F9F9F9]">
 				<ProjectsHeading title='Примеры работ' subtitle={'галерея'} description={'Портфолио выполненных работ'} />
 
-				<ProjectList projectList={projects} />
+				<ProjectList projectList={projects} bentoGrid={false} />
 
 				<SectionButton label="Все проекты" href={'/projects'} className='lg:hidden flex' />
 			</Section >
-			<Section>
+			<Section id='contacts'>
 				<OrderForm />
 			</Section>
 			{/*<section className="relative bg-[#F1F4FA]" id="catalog">*/}
