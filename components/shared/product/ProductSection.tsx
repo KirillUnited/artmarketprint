@@ -1,6 +1,6 @@
 import Section, { SectionButton, SectionDescription, SectionHeading, SectionSubtitle, SectionTitle } from "@/components/layout/Section";
 import { getProductsByLimit } from "@/lib/actions/product.actions";
-import ProductList from "./Product";
+import ProductList from "./ProductList";
 
 export const ProductSectionHeading = ({ title, subtitle, description }: { title?: string; subtitle?: string; description?: string }) => (
     <div className="flex flex-wrap items-end justify-between gap-4">
