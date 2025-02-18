@@ -5,8 +5,10 @@ import { ServiceDetails } from "@/components/shared/Services";
 import Link from "next/link";
 import { PortableText, SanityDocument } from "next-sanity";
 import { getSanityDocuments } from "@/lib/getData";
-import { PROJECT_QUERY, PROJECT_SLUGS_QUERY } from "@/lib/queries";
+import { NAVIGATION_QUERY, PROJECT_QUERY, PROJECT_SLUGS_QUERY } from "@/lib/queries";
 import Section from "@/components/layout/Section";
+import { ProjectTagList } from "@/components/shared/Projects";
+import { client } from "@/sanity/client";
 
 type Props = {
     slug: string
@@ -44,6 +46,7 @@ export async function generateMetadata({ params }: { params: Promise<Props> }) {
 
 export default async function ProjectPage({ params }: { params: Promise<Props> }) {
     const data = await getSanityDocuments(PROJECT_QUERY, await params);
+    const breadcrumbs = (await client.fetch(NAVIGATION_QUERY))[0].links;
     const project = data?.[0]?.projects[0] || {};
 
     if (!data || data.length === 0) {
@@ -82,11 +85,29 @@ export default async function ProjectPage({ params }: { params: Promise<Props> }
             <section>
                 <div className="container">
                     <div className="mt-10 mb-6">
-                        <BaseBreadcrumb section='services' />
+                        <BaseBreadcrumb items={breadcrumbs} section='services' />
                     </div>
                 </div>
             </section>
             <Section id="serviceDetails" innerClassname='pt-6 md:pt-6'>
+                <div className="flex flex-wrap gap-4 max-w-xl">
+                    <div className="flex flex-wrap gap-2">
+                        <p className="text-sm font-semibold">Услуги:</p>
+                        {
+                            project?.service_tags?.length > 0 && (
+                                <ProjectTagList tags={project.service_tags} />
+                            )
+                        }
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                        <p className="text-sm font-semibold">Категории:</p>
+                        {
+                            project?.category_tags?.length > 0 && (
+                                <ProjectTagList tags={project.category_tags} />
+                            )
+                        }
+                    </div>
+                </div>
                 <ServiceDetails name={project.title} image={project.imageUrl}>
                     {Array.isArray(project.description) && <PortableText value={project.description} onMissingComponent={false} />}
                 </ServiceDetails>
