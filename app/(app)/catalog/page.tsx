@@ -9,17 +9,9 @@ import ContactUs from '@/components/shared/ContactUs';
 import BaseBreadcrumb from '@/components/ui/Breadcrumb';
 import { client } from '@/sanity/client';
 import { getSanityDocuments } from '@/lib/getData';
-import { NAVIGATION_QUERY } from '@/lib/queries';
+import { CATEGORIES_QUERY, NAVIGATION_QUERY } from '@/sanity/lib/queries';
 import Section from '@/components/layout/Section';
 
-const CATEGORIES_QUERY = `*[
-  _type == "category"
-  && defined(slug.current)
-]|order(publishedAt desc)[0...12]{title,
-    description,
-    image, 
-    price,
-    "currentSlug": slug.current}`;
 const builder = imageUrlBuilder(client);
 
 export default async function CatalogPage() {

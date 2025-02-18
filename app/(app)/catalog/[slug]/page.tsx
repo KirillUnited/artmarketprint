@@ -16,7 +16,7 @@ import { PortableText, SanityDocument } from 'next-sanity';
 import { getUrlFor } from '@/lib/utils';
 import Section, { SectionButton } from "@/components/layout/Section";
 import { ProjectList, ProjectsHeading } from "@/components/shared/Projects";
-import { NAVIGATION_QUERY, PROJECTS_BY_CATEGORY_QUERY, PROJECTS_BY_SERVICE_QUERY } from "@/lib/queries";
+import { NAVIGATION_QUERY, PROJECTS_BY_CATEGORY_QUERY, PROJECTS_BY_SERVICE_QUERY } from "@/sanity/lib/queries";
 
 type Props = {
 	slug: string;

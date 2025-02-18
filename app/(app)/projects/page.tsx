@@ -4,7 +4,7 @@ import { siteConfig } from '@/config/site';
 import ContactUs from '@/components/shared/ContactUs';
 import { getSanityDocuments } from '@/lib/getData';
 import { ProjectList } from '@/components/shared/Projects';
-import { NAVIGATION_QUERY, PROJECTS_QUERY } from '@/lib/queries';
+import { NAVIGATION_QUERY, PROJECTS_QUERY } from '@/sanity/lib/queries';
 import Section from '@/components/layout/Section';
 import BaseBreadcrumb from '@/components/ui/Breadcrumb';
 

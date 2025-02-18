@@ -5,7 +5,7 @@ import { ServiceDetails } from "@/components/shared/Services";
 import Link from "next/link";
 import { PortableText, SanityDocument } from "next-sanity";
 import { getSanityDocuments } from "@/lib/getData";
-import { NAVIGATION_QUERY, PROJECT_QUERY, PROJECT_SLUGS_QUERY } from "@/lib/queries";
+import { NAVIGATION_QUERY, PROJECT_QUERY, PROJECT_SLUGS_QUERY } from "@/sanity/lib/queries";
 import Section from "@/components/layout/Section";
 import { ProjectTagList } from "@/components/shared/Projects";
 import { client } from "@/sanity/client";
@@ -91,7 +91,7 @@ export default async function ProjectPage({ params }: { params: Promise<Props> }
             </section>
             <Section id="serviceDetails" innerClassname='pt-6 md:pt-6'>
                 <div className="flex flex-wrap gap-4 max-w-xl">
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-wrap items-center gap-2">
                         <p className="text-sm font-semibold">Услуги:</p>
                         {
                             project?.service_tags?.length > 0 && (
@@ -99,7 +99,7 @@ export default async function ProjectPage({ params }: { params: Promise<Props> }
                             )
                         }
                     </div>
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-wrap items-center gap-2">
                         <p className="text-sm font-semibold">Категории:</p>
                         {
                             project?.category_tags?.length > 0 && (

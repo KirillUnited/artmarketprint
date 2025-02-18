@@ -11,7 +11,7 @@ import imageUrlBuilder from "@sanity/image-url";
 import { PortableText, SanityDocument } from "next-sanity";
 import { getUrlFor } from "@/lib/utils";
 import { ProjectList, ProjectsHeading } from "@/components/shared/Projects";
-import { NAVIGATION_QUERY, PROJECTS_BY_SERVICE_QUERY, PROJECTS_QUERY } from "@/lib/queries";
+import { NAVIGATION_QUERY, PROJECTS_BY_SERVICE_QUERY, PROJECTS_QUERY } from "@/sanity/lib/queries";
 import Section, { SectionButton } from "@/components/layout/Section";
 
 type Props = {
