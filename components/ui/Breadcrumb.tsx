@@ -1,25 +1,58 @@
 'use client';
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { BreadcrumbItem, Breadcrumbs } from "@heroui/breadcrumbs";
-import { useParams } from 'next/navigation';
+import { useParams, usePathname } from 'next/navigation';
 import { siteConfig } from '@/config/site';
+import { HomeIcon } from 'lucide-react';
+import clsx from 'clsx';
 
-export default function BaseBreadcrumb({section}: {section: string}): JSX.Element {
-    const params = useParams();
-    const { slug: paramsSlug } = params;
-    const page: any = section === 'catalog' ? siteConfig?.catalogSection : siteConfig?.serviceSection;
-    const data = page?.items.find((item: any) => item.slug === paramsSlug);
-    const { title = '' } = data || {};
+export default function BaseBreadcrumb({ items, section }: { items: any, section: string }): JSX.Element {
+	const pathname = usePathname();
+	const pathSegments = pathname.split('/').filter(Boolean);
+	const [navigation, setNavigation] = useState<any>({});
 
-    return (
+	useEffect(() => {
+		async function fetchNavigation() {
+			const navMap: any = {};
+			items?.forEach((nav: any) => {
+				const navUrl = nav.url.split('/').filter(Boolean)[0];
+
+				navMap[navUrl] = nav.title;
+
+				if (nav.submenu) {
+					nav.submenu[0].services.forEach((sub: any) => {
+						navMap[sub.url] = sub.title;
+					});
+				}
+			});
+			setNavigation(navMap);
+		}
+		fetchNavigation();
+	}, []);
+
+	return (
 		<Breadcrumbs>
-			<BreadcrumbItem href="/" className="font-semibold">
-				Главная
+			<BreadcrumbItem href="/" className="font-semibold text-primary">
+				<HomeIcon size={18} />
 			</BreadcrumbItem>
-			<BreadcrumbItem href={`/${section}`} className="font-semibold" isDisabled={!title}>
-				Каталог
-			</BreadcrumbItem>
-			{title && <BreadcrumbItem href={`/${section}/${paramsSlug}`} isDisabled={true}>{title}</BreadcrumbItem>}
+			{
+				pathSegments.length > 0 && pathSegments.map((segment: any, index: number) => {
+					const href = '/' + pathSegments.slice(0, index + 1).join('/');
+					const isLast = index === pathSegments.length - 1;
+					const title = navigation[`${pathSegments[index]}`] || decodeURIComponent(pathSegments[index]);
+					return (
+						<BreadcrumbItem key={href} href={`${href}`} className={clsx(
+							"font-semibold",
+							{
+								['font-light']: isLast
+							}
+						)} isDisabled={isLast}>
+							{title}
+						</BreadcrumbItem>
+					)
+				}
+				)
+			}
 		</Breadcrumbs>
 	);
 }

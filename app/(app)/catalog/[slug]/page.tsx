@@ -14,9 +14,9 @@ import { SanityImageSource } from '@sanity/image-url/lib/types/types';
 import imageUrlBuilder from "@sanity/image-url";
 import { PortableText, SanityDocument } from 'next-sanity';
 import { getUrlFor } from '@/lib/utils';
-import Section, {SectionButton} from "@/components/layout/Section";
-import {ProjectList, ProjectsHeading} from "@/components/shared/Projects";
-import {PROJECTS_BY_CATEGORY_QUERY, PROJECTS_BY_SERVICE_QUERY} from "@/lib/queries";
+import Section, { SectionButton } from "@/components/layout/Section";
+import { ProjectList, ProjectsHeading } from "@/components/shared/Projects";
+import { NAVIGATION_QUERY, PROJECTS_BY_CATEGORY_QUERY, PROJECTS_BY_SERVICE_QUERY } from "@/lib/queries";
 
 type Props = {
 	slug: string;
@@ -59,6 +59,7 @@ export default async function CategoryPage({ params }: { params: Promise<Props> 
 		: null;
 
 	const filteredProjects = await client.fetch<SanityDocument>(PROJECTS_BY_CATEGORY_QUERY, await params, options);
+	const breadcrumbs = (await client.fetch<SanityDocument>(NAVIGATION_QUERY))[0].links;
 	const { projects = [] } = filteredProjects?.[0] || {};
 
 	return (
@@ -81,8 +82,8 @@ export default async function CategoryPage({ params }: { params: Promise<Props> 
 			</section>
 			<section>
 				<div className="container">
-					<div className="my-6">
-						<BaseBreadcrumb section='catalog' />
+					<div className="mt-10 my-6">
+						<BaseBreadcrumb items={breadcrumbs} section='catalog' />
 					</div>
 				</div>
 			</section>

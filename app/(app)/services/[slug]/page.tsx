@@ -11,8 +11,7 @@ import imageUrlBuilder from "@sanity/image-url";
 import { PortableText, SanityDocument } from "next-sanity";
 import { getUrlFor } from "@/lib/utils";
 import { ProjectList, ProjectsHeading } from "@/components/shared/Projects";
-import { getSanityDocuments } from "@/lib/getData";
-import { PROJECTS_BY_SERVICE_QUERY, PROJECTS_QUERY } from "@/lib/queries";
+import { NAVIGATION_QUERY, PROJECTS_BY_SERVICE_QUERY, PROJECTS_QUERY } from "@/lib/queries";
 import Section, { SectionButton } from "@/components/layout/Section";
 
 type Props = {
@@ -51,6 +50,7 @@ const options = { next: { revalidate: 30 } };
 
 export default async function ServicePage({ params }: { params: Promise<Props> }) {
     const service = await client.fetch<SanityDocument>(SERVICE_QUERY, await params, options);
+    const breadcrumbs = (await client.fetch(NAVIGATION_QUERY))[0].links;
     const serviceImageUrl = service.image
         ? urlFor(service.image)?.width(550).height(310).url()
         : null;
@@ -87,18 +87,16 @@ export default async function ServicePage({ params }: { params: Promise<Props> }
             </section>
             <section>
                 <div className="container">
-                    <div className="my-6">
-                        <BaseBreadcrumb section='services' />
+                    <div className="mt-10 mb-6">
+                        <BaseBreadcrumb items={breadcrumbs} section="services" />
                     </div>
                 </div>
             </section>
-            <section id="serviceDetails" className="section abc relative overflow-hidden pb-10 md:pb-20 pt-3 md:pt-6">
-                <div className="container">
-                    <ServiceDetails name={service.title} image={getUrlFor(service.image)} price={service.price} advantages={service.advantages}>
-                        {Array.isArray(service.body) && <PortableText value={service.body} onMissingComponent={false} />}
-                    </ServiceDetails>
-                </div>
-            </section>
+            <Section id="serviceDetails" innerClassname='pt-6 md:pt-6'>
+                <ServiceDetails name={service.title} image={getUrlFor(service.image)} price={service.price} advantages={service.advantages}>
+                    {Array.isArray(service.body) && <PortableText value={service.body} onMissingComponent={false} />}
+                </ServiceDetails>
+            </Section>
             <Section className="bg-[#F9F9F9]">
                 <ProjectsHeading title='Примеры работ' subtitle={'галерея'} description={'Портфолио выполненных работ'} />
 
