@@ -1,4 +1,4 @@
-import { getSanityDocuments } from '@/lib/getData';
+import { getSanityDocuments } from '@/lib/fetch-sanity-data';
 import { HERO_QUERY } from '@/sanity/lib/queries';
 import { HeroCarousel } from './HeroCarousel';
 

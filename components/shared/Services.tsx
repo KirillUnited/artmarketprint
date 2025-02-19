@@ -10,7 +10,7 @@ import BrandModalOffer from '../ui/BrandModalOffer';
 import { siteConfig } from '@/config/site';
 import { ServiceDetailsProps } from '@/types';
 import { client } from '@/sanity/client';
-import { getSanityDocuments } from '@/lib/getData';
+import { getSanityDocuments } from '@/lib/fetch-sanity-data';
 import Section, { SectionDescription, SectionHeading, SectionSubtitle, SectionTitle } from "@/components/layout/Section";
 import { ArrowUpRightIcon } from "lucide-react";
 

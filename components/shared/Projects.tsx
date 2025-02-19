@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { Button } from '@heroui/button';
 import { SanityDocument } from 'next-sanity';
 
-import { getSanityDocuments } from '@/lib/getData';
+import { getSanityDocuments } from '@/lib/fetch-sanity-data';
 import Section, { SectionButton, SectionDescription, SectionHeading, SectionSubtitle, SectionTitle } from '@/components/layout/Section';
 import { Card, CardFooter } from '@heroui/card';
 import { Image } from '@heroui/image';
