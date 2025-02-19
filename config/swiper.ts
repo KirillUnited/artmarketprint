@@ -1,5 +1,6 @@
 export const heroSwiperParams = {
-    spaceBetween: 20,
+    autoHeight: true,
+    spaceBetween: 10,
     slidesPerView: 1,
     loop: true,
     autoplay: {

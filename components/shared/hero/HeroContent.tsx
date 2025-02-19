@@ -7,7 +7,14 @@ import { motion } from 'framer-motion';
 import { ArrowUpRightIcon } from 'lucide-react';
 
 import BrandButton from '@/components/ui/BrandButton';
-import { PortableText } from 'next-sanity';
+import { PortableText, PortableTextComponents } from 'next-sanity';
+
+const components: PortableTextComponents = {
+    marks: {
+        em: ({ children }) => <span className="font-extrabold bg-brand-gradient text-fill-transparent">{children}</span>,
+        strong: ({ children }) => <span className="font-extrabold">{children}</span>,
+    },
+}
 
 export default function HeroContent({ title, description, subtitle }: { title?: any, description?: string, subtitle?: string }) {
     return (
@@ -46,7 +53,7 @@ export default function HeroContent({ title, description, subtitle }: { title?: 
                 >
                     {/* <span className="hidden md:inline">Профессиональная</span> <span className="hidden md:inline">печать</span> <span className="md:hidden">Печать</span> на
                         <span className="font-extrabold"> любых материалах </span>в<span className="font-extrabold bg-brand-gradient text-fill-transparent"> Минске</span> */}
-                    <PortableText value={title} />
+                    <PortableText value={title} components={components} />
                 </motion.div>
                 {
                     description &&
