@@ -8,7 +8,7 @@ import { FAQ } from '@/components/shared/FAQ';
 import ContactUs from '@/components/shared/ContactUs';
 import BaseBreadcrumb from '@/components/ui/Breadcrumb';
 import { client } from '@/sanity/client';
-import { getSanityDocuments } from '@/lib/getData';
+import { getSanityDocuments } from '@/lib/fetch-sanity-data';
 import { NAVIGATION_QUERY, SERVICES_QUERY } from '@/sanity/lib/queries';
 import Section from '@/components/layout/Section';
 

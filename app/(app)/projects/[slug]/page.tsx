@@ -4,7 +4,7 @@ import BrandButton from "@/components/ui/BrandButton";
 import { ServiceDetails } from "@/components/shared/Services";
 import Link from "next/link";
 import { PortableText, SanityDocument } from "next-sanity";
-import { getSanityDocuments } from "@/lib/getData";
+import { getSanityDocuments } from "@/lib/fetch-sanity-data";
 import { NAVIGATION_QUERY, PROJECT_QUERY, PROJECT_SLUGS_QUERY } from "@/sanity/lib/queries";
 import Section from "@/components/layout/Section";
 import { ProjectTagList } from "@/components/shared/Projects";

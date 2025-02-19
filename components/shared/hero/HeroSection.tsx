@@ -1,19 +1,58 @@
 import Image from 'next/image';
-
-import HeroImage from '../../../public/images/hero.png';
 import HeroContent from './HeroContent';
+import clsx from 'clsx';
 
-export default function HeroSection() {
+import { motion } from 'framer-motion';
+
+export default function HeroSection(props: any) {
+	const { title, subtitle, description, orientation, imageUrl } = props || {};
+
+	if (!title) return null;
+
 	return (
 		<section className="section relative overflow-hidden">
 			<div className="container">
-				<div className="py-10 md:py-20 flex flex-row items-center">
-					<HeroContent />
-					<Image priority alt={'ArtMarketPrint'} className="w-2/3 h-full absolute right-0 top-0 object-cover" height={750} placeholder="blur" quality={85} src={HeroImage} width={930} />
+				<div className={clsx("py-10 md:py-20 flex flex-row items-center",
+					{
+						['flex-row-reverse']: orientation === 'textRight',
+						['justify-center']: orientation === 'textCenter',
+					}
+				)}>
+					<motion.div
+						className={clsx("bg-[rgba(255,255,255,0.50)] backdrop-blur-md rounded-lg py-10 md:py-16 pr-4 md:pr-7 flex flex-col gap-8 md:gap-16 z-10 max-w-full md:max-w-4xl overflow-hidden",
+							{
+								['text-right items-end pr-0 md:pr-0 pl-4 md:pl-7']: orientation === 'textRight',
+								['text-center items-center pl-4 md:pl-7']: orientation === 'textCenter',
+							}
+						)}
+						initial={{
+							opacity: 0,
+							translate: '-100%',
+						}}
+						transition={{ duration: 1, ease: 'easeInOut' }}
+						viewport={{ once: true, amount: 0 }}
+						whileInView={{
+							opacity: 1,
+							translate: '0',
+						}}
+					>
+						<HeroContent title={title} description={description} subtitle={subtitle} />
+					</motion.div>
+					{imageUrl && <Image
+						alt={'ArtMarketPrint'}
+						className={clsx("w-2/3 h-full absolute right-0 top-0 object-cover",
+							{
+								['left-0']: orientation === 'textRight',
+								['w-full']: orientation === 'textCenter',
+							}
+						)}
+						height={750}
+						quality={85}
+						src={imageUrl}
+						width={930}
+					/>}
 				</div>
 			</div>
 		</section>
 	);
 }
-
-
