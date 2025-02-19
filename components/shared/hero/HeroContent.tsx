@@ -7,8 +7,9 @@ import { motion } from 'framer-motion';
 import { ArrowUpRightIcon } from 'lucide-react';
 
 import BrandButton from '@/components/ui/BrandButton';
+import { PortableText } from 'next-sanity';
 
-export default function HeroContent() {
+export default function HeroContent({ title, description, subtitle }: { title?: any, description?: string, subtitle?: string }) {
     return (
         <>
             <motion.div
@@ -38,7 +39,7 @@ export default function HeroContent() {
                             translate: '0',
                         }}
                     >
-                        - Делаем Вашу жизнь приятнее -
+                        - {subtitle} -
                     </motion.span>
                     <motion.h1
                         className="text-4xl md:text-5xl lg:text-6xl leading-none font-medium break-words text-balance"
@@ -55,14 +56,14 @@ export default function HeroContent() {
                     >
                         <span className="hidden md:inline">Профессиональная</span> <span className="hidden md:inline">печать</span> <span className="md:hidden">Печать</span> на
                         <span className="font-extrabold"> любых материалах </span>в<span className="font-extrabold bg-brand-gradient text-fill-transparent"> Минске</span>
+                        {/* <PortableText value={title} /> */}
                     </motion.h1>
-                    <p className="text-foreground/70 text-base md:text-lg leading-normal font-medium">Качественная УФ-печать, DTF-печать, гравировка и шелкография для ваших проектов</p>
+                    <p className="text-foreground/70 text-base md:text-lg leading-normal font-medium">{description}</p>
                 </div>
                 <div className="flex flex-col md:flex-row gap-2 md:gap-4">
                     <BrandButton as={Link} href={'/#services'} state="primary">
                         УЗНАТЬ ЦЕНЫ
                     </BrandButton>
-                    {/* <BrandModalOffer /> */}
 
                     <Button
                         as={Link}

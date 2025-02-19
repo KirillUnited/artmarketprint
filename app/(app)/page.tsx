@@ -1,6 +1,3 @@
-import Script from 'next/script';
-
-import { HeroCarousel } from '@/components/shared/hero/HeroCarousel';
 import { Benefits } from '@/components/shared/Benefits';
 import About from '@/components/shared/About';
 import { FAQ } from '@/components/shared/FAQ';
@@ -10,11 +7,12 @@ import ContactUs, { MapFrame } from '@/components/shared/ContactUs';
 import {InstagramFeedSection} from '@/components/shared/InstagramFeed';
 import {Projects} from '@/components/shared/Projects';
 import { ProductSection } from '@/components/shared/product/ProductSection';
+import { Hero } from '@/components/shared/hero/Hero';
 
 export default function Home() {
 	return (
 		<>
-			<HeroCarousel />
+			<Hero />
 			<Benefits />
 			<Services />
 			<Catalog />

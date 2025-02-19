@@ -5,35 +5,23 @@ import 'swiper/css/pagination';
 import 'swiper/css/autoplay';
 import { Autoplay, Pagination } from 'swiper/modules';
 import HeroSection from './HeroSection';
+import { heroSwiperParams } from '@/config/swiper';
 
-export const HeroCarousel = () => {
-    const swiperParams = {
-        spaceBetween: 20,
-        slidesPerView: 1,
-        loop: true,
-        autoplay: {
-            delay: 5000,
-            disableOnInteraction: false,
-            pauseOnMouseEnter: true
-        },
-        speed: 1000,
-        pagination: { clickable: true }
-    };
+export const HeroCarousel = ({ items }: any) => {
+    if (!items || items.length === 0) return null;
 
     return (
         <Swiper
             modules={[Pagination, Autoplay]}
-            {...swiperParams}
+            {...heroSwiperParams}
         >
-            <SwiperSlide>
-                <HeroSection />
-            </SwiperSlide>
-            <SwiperSlide>
-                <HeroSection />
-            </SwiperSlide>
-            <SwiperSlide>
-                <HeroSection />
-            </SwiperSlide>
+            {
+                items.map((item: any) => (
+                    <SwiperSlide key={item._key}>
+                        <HeroSection {...item} />
+                    </SwiperSlide>
+                ))
+            }
         </Swiper>
     )
 }
