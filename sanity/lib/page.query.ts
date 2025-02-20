@@ -24,7 +24,13 @@ export const HERO_QUERY = `*[_type == "page"][0] {
           title,
           subtitle,
           description,
-          "imageUrl": image.asset->url
+          "imageUrl": image.asset->url,
+          ctaButtonList[] {
+            _key,
+            text,
+            buttonType,
+            link
+          }
       }
     }
   }`;

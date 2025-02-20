@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import { motion } from 'framer-motion';
 
 export default function HeroSection(props: any) {
-	const { title, subtitle, description, orientation, imageUrl } = props || {};
+	const { title, orientation, imageUrl } = props || {};
 
 	if (!title) return null;
 
@@ -37,7 +37,7 @@ export default function HeroSection(props: any) {
 							translate: '0',
 						}}
 					>
-						<HeroContent title={title} description={description} subtitle={subtitle} />
+						<HeroContent {...props} />
 					</motion.div>
 					{imageUrl && <Image
 						alt={'ArtMarketPrint'}
