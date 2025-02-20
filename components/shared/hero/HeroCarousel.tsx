@@ -11,7 +11,7 @@ export const HeroCarousel = ({ items }: any) => {
     if (!items || items.length === 0) return null;
 
     return (
-        <Swiper<SwiperProps>
+        <Swiper
             modules={[Pagination, Autoplay]}
             {...heroSwiperParams}
         >
