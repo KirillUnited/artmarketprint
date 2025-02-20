@@ -12,7 +12,19 @@ const components: PortableTextComponents = {
 	},
 };
 
-export default function HeroContent({title, description, subtitle, ctaButtonList = []}: {title: any; description?: string; subtitle?: string}) {
+interface HeroContentProps {
+	title: any;
+	description?: string;
+	subtitle?: string;
+	ctaButtonList?: Array<{
+		_key?: string;
+		buttonType?: string;
+		text?: string;
+		link?: string;
+	}>;
+}
+
+export default function HeroContent({title, description, subtitle, ctaButtonList = []}: HeroContentProps) {
 	return (
 		<>
 			<div className="flex flex-col gap-4 md:gap-6">
