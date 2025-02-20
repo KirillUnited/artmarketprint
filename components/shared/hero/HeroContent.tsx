@@ -51,8 +51,6 @@ export default function HeroContent({ title, description, subtitle }: { title?: 
                         translate: '0',
                     }}
                 >
-                    {/* <span className="hidden md:inline">Профессиональная</span> <span className="hidden md:inline">печать</span> <span className="md:hidden">Печать</span> на
-                        <span className="font-extrabold"> любых материалах </span>в<span className="font-extrabold bg-brand-gradient text-fill-transparent"> Минске</span> */}
                     <PortableText value={title} components={components} />
                 </motion.div>
                 {
