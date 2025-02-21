@@ -1,22 +1,18 @@
 import OrderForm from '@/components/ui/OrderForm';
 import Image from 'next/image';
-import { Image as HeroImage } from '@heroui/image';
 import { siteConfig } from '@/config/site';
 import BaseBreadcrumb from '@/components/ui/Breadcrumb';
-import { BrandCardProps } from '@/types';
-import BrandCard from '@/components/ui/BrandCard';
 import BrandButton from '@/components/ui/BrandButton';
 import { ServiceDetails } from "@/components/shared/Services";
-import { getCatalogData } from "@/lib/actions/services.actions";
 import Link from 'next/link';
 import { client } from '@/sanity/client';
 import { SanityImageSource } from '@sanity/image-url/lib/types/types';
 import imageUrlBuilder from "@sanity/image-url";
 import { PortableText, SanityDocument } from 'next-sanity';
 import { getUrlFor } from '@/lib/utils';
-import Section, {SectionButton} from "@/components/layout/Section";
-import {ProjectList, ProjectsHeading} from "@/components/shared/Projects";
-import {PROJECTS_BY_CATEGORY_QUERY, PROJECTS_BY_SERVICE_QUERY} from "@/lib/queries";
+import Section, { SectionButton } from "@/components/layout/Section";
+import { ProjectList, ProjectsHeading } from "@/components/shared/Projects";
+import { NAVIGATION_QUERY, PROJECTS_BY_CATEGORY_QUERY, PROJECTS_BY_SERVICE_QUERY } from "@/sanity/lib/queries";
 
 type Props = {
 	slug: string;
@@ -54,11 +50,12 @@ const options = { next: { revalidate: 30 } };
 
 export default async function CategoryPage({ params }: { params: Promise<Props> }) {
 	const category = await client.fetch<SanityDocument>(CATEGORY_QUERY, await params, options);
-	const categoryImageUrl = await category.image
+	const categoryImageUrl = await category?.image
 		? urlFor(category.image)?.width(550).height(310).url()
 		: null;
 
 	const filteredProjects = await client.fetch<SanityDocument>(PROJECTS_BY_CATEGORY_QUERY, await params, options);
+	const breadcrumbs = (await client.fetch<SanityDocument>(NAVIGATION_QUERY))[0].links;
 	const { projects = [] } = filteredProjects?.[0] || {};
 
 	return (
@@ -81,8 +78,8 @@ export default async function CategoryPage({ params }: { params: Promise<Props> 
 			</section>
 			<section>
 				<div className="container">
-					<div className="my-6">
-						<BaseBreadcrumb section='catalog' />
+					<div className="mt-10 my-6">
+						<BaseBreadcrumb items={breadcrumbs} section='catalog' />
 					</div>
 				</div>
 			</section>
@@ -97,11 +94,11 @@ export default async function CategoryPage({ params }: { params: Promise<Props> 
 			<Section className="bg-[#F9F9F9]">
 				<ProjectsHeading title='Примеры работ' subtitle={'галерея'} description={'Портфолио выполненных работ'} />
 
-				<ProjectList projectList={projects} />
+				<ProjectList projectList={projects} bentoGrid={false} />
 
 				<SectionButton label="Все проекты" href={'/projects'} className='lg:hidden flex' />
 			</Section >
-			<Section>
+			<Section id='contacts'>
 				<OrderForm />
 			</Section>
 			{/*<section className="relative bg-[#F1F4FA]" id="catalog">*/}

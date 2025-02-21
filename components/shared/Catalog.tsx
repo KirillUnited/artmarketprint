@@ -6,7 +6,7 @@ import { SanityDocument } from 'next-sanity';
 import BrandCard from '../ui/BrandCard';
 
 import { siteConfig } from '@/config/site';
-import { getSanityDocuments } from '@/lib/getData';
+import { getSanityDocuments } from '@/lib/fetch-sanity-data';
 import Section, { SectionDescription, SectionHeading, SectionSubtitle, SectionTitle } from '@/components/layout/Section';
 import { getUrlFor } from '@/lib/utils';
 

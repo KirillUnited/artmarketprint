@@ -10,7 +10,7 @@ import BrandModalOffer from '../ui/BrandModalOffer';
 import { siteConfig } from '@/config/site';
 import { ServiceDetailsProps } from '@/types';
 import { client } from '@/sanity/client';
-import { getSanityDocuments } from '@/lib/getData';
+import { getSanityDocuments } from '@/lib/fetch-sanity-data';
 import Section, { SectionDescription, SectionHeading, SectionSubtitle, SectionTitle } from "@/components/layout/Section";
 import { ArrowUpRightIcon } from "lucide-react";
 
@@ -105,7 +105,7 @@ export const ServiceDetails = ({ name, description, image, price, advantages, ch
 						</ul>
 					</div>
 				)}
-				<article className="prose">{children}</article>
+				<article className="prose text-balance">{children}</article>
 				{price && (
 					<div className="flex flex-col gap-4">
 						<h3 className="text-xl md:text-2xl font-bold text-gray-900">Цены</h3>
@@ -117,7 +117,7 @@ export const ServiceDetails = ({ name, description, image, price, advantages, ch
 				<BrandModalOffer />
 
 				<Button as={Link} className="bg-brand-gradient text-fill-transparent font-semibold flex-1 basis-36"
-					color="secondary" href={'/#contacts'} radius="sm" size="lg" variant="ghost">
+					color="secondary" href={'#contacts'} radius="sm" size="lg" variant="ghost">
 					КОНСУЛЬТАЦИЯ
 				</Button>
 			</div>

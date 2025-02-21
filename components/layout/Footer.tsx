@@ -3,8 +3,8 @@ import Link from 'next/link'
 
 import BrandLogo from '../ui/BrandLogo'
 
-import Socials from './Socials';
-import ContactsList from './ContactsList';
+import Socials from '@/components/shared/Socials';
+import ContactsList from '@/components/shared/ContactsList';
 
 import { siteConfig } from '@/config/site';
 

@@ -7,8 +7,8 @@ import { Providers } from './providers';
 
 import { siteConfig } from '@/config/site';
 import { fontSans } from '@/config/fonts';
-import Header from '@/components/shared/Header';
-import Footer from '@/components/shared/Footer';
+import Header from '@/components/layout/Header';
+import Footer from '@/components/layout/Footer';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://artmarketprint.by'),

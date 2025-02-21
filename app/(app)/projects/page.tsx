@@ -2,14 +2,15 @@ import Image from 'next/image';
 
 import { siteConfig } from '@/config/site';
 import ContactUs from '@/components/shared/ContactUs';
-import { getSanityDocuments } from '@/lib/getData';
+import { getSanityDocuments } from '@/lib/fetch-sanity-data';
 import { ProjectList } from '@/components/shared/Projects';
-import { PROJECTS_QUERY } from '@/lib/queries';
+import { NAVIGATION_QUERY, PROJECTS_QUERY } from '@/sanity/lib/queries';
 import Section from '@/components/layout/Section';
 import BaseBreadcrumb from '@/components/ui/Breadcrumb';
 
 export default async function ProjectsPage() {
 	const data = await getSanityDocuments(PROJECTS_QUERY, { limit: 12 });
+	const breadcrumbs = (await getSanityDocuments(NAVIGATION_QUERY))[0].links;
 	const { title = '', subtitle = '', description = '', projects = [] } = data?.[0] || {};
 
 	return (
@@ -26,7 +27,7 @@ export default async function ProjectsPage() {
 			<section>
 				<div className="container">
 					<div className="mt-10 mb-6">
-						<BaseBreadcrumb section='Проекты'/>
+						<BaseBreadcrumb items={breadcrumbs} section='Проекты' />
 					</div>
 				</div>
 			</section>

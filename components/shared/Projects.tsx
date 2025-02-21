@@ -2,13 +2,13 @@ import Link from 'next/link';
 import { Button } from '@heroui/button';
 import { SanityDocument } from 'next-sanity';
 
-import { getSanityDocuments } from '@/lib/getData';
+import { getSanityDocuments } from '@/lib/fetch-sanity-data';
 import Section, { SectionButton, SectionDescription, SectionHeading, SectionSubtitle, SectionTitle } from '@/components/layout/Section';
 import { Card, CardFooter } from '@heroui/card';
 import { Image } from '@heroui/image';
 import clsx from 'clsx';
 import { Suspense } from 'react';
-import { PROJECTS_QUERY } from '@/lib/queries';
+import { PROJECTS_QUERY } from '@/sanity/lib/queries';
 
 export const ProjectsHeading = ({ title, subtitle, description }: { title?: string; subtitle?: string; description?: string }) => (
 	<div className="flex flex-wrap items-end justify-between gap-4">
@@ -27,7 +27,7 @@ export const ProjectTagList = ({ tags }: { tags: { _id: string; title: string }[
 		<ul className='flex flex-wrap gap-2'>
 			{
 				tags?.map(({ _id, title }: { _id: string; title: string }) => (
-					<span key={_id} className='text-tiny text-white/80 bg-primary rounded-small px-1 self-start leading-normal'>{title}</span>
+					<li key={_id} className='text-tiny text-white/80 bg-primary rounded-small px-1 self-start leading-normal'>{title}</li>
 				))
 			}
 		</ul>
@@ -44,7 +44,7 @@ export const ProjectCard = ({ project }: { project: SanityDocument }) => (
 			radius='sm'
 		/>
 		<CardFooter className="absolute bg-black/40 bottom-0 w-full z-10 max-h-0 overflow-hidden group-hover:max-h-full transition-all duration-700 p-0">
-			<div className="flex flex-col gap-4 p-3">
+			<div className="flex flex-col gap-4 p-3 w-full">
 				{
 					project?.service_tags?.length > 0 && (
 						<ProjectTagList tags={project.service_tags} />
@@ -59,7 +59,7 @@ export const ProjectCard = ({ project }: { project: SanityDocument }) => (
 					<h4 className="text-lg font-semibold text-white/80 line-clamp-2 leading-tight">{project.title}</h4>
 					<p className="text-xs text-white/80">{project.shortDescription}</p>
 				</div>
-				<Button radius="sm" size="sm" color='secondary'>
+				<Button as={'div'} radius="sm" size="sm" color='secondary'>
 					Подробнее
 				</Button>
 			</div>
@@ -101,7 +101,7 @@ export const ProjectList = (
 export const Projects = async () => {
 	const data = await getSanityDocuments(PROJECTS_QUERY, { limit: 3 });
 	const { title = '', subtitle = '', description = '', projects = [] } = data?.[0] || {};
-	console.log(projects)
+
 	if (!data || data.length === 0) {
 		console.warn("Нет данных о проектах");
 		return null;

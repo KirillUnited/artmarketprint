@@ -41,6 +41,7 @@ export default function OrderForm({ className }: { className?: string }): JSX.El
 
     return (
         <Form
+            id='orderForm'
             className={clsx('gap-6', className)}
             validationBehavior="native"
             onSubmit={handleSubmit}>
@@ -98,7 +99,9 @@ export default function OrderForm({ className }: { className?: string }): JSX.El
             </div>
             <div className="w-full flex flex-wrap">
 
-                <BrandButton className='flex-1 basis-32' isDisabled={isPending} isLoading={isPending} state='primary' type="submit">ОТПРАВИТЬ</BrandButton>
+                <BrandButton className='flex-1 basis-32 uppercase' isDisabled={isPending} isLoading={isPending} state='primary' type="submit">
+                    {isPending ? 'Отправка...' : 'ОТПРАВИТЬ'}
+                </BrandButton>
             </div>
 
         </Form>

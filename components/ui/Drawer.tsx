@@ -20,6 +20,7 @@ export default function Drawer({ navigation, className, children }: { navigation
 
             <BaseDrawer
                 backdrop='blur'
+                size='xs'
                 radius='sm'
                 isOpen={isOpen}
                 motionProps={{
@@ -52,20 +53,18 @@ export default function Drawer({ navigation, className, children }: { navigation
                                         </NavbarItem>
                                     ))}
                                 </ul>
-                                <HeroModalOffer />
-                            </DrawerBody>
-                            <DrawerFooter className="justify-center">
-                                <div className="flex flex-col gap-2 items-center">
+                                <div className='grow'><HeroModalOffer /></div>
+                                <div className="flex flex-col gap-2">
                                     {siteConfig?.contacts?.[0]?.list?.map((item) => (
                                         <Link key={item.href} className="font-bold text-left flex items-center gap-2" href={`tel:${item.href}` || '#'}>
                                             <PhoneIcon size={20} />
                                             {item.label}
                                         </Link>
                                     ))}
-
+                                    
                                     <div className='mt-6'><Socials /></div>
                                 </div>
-                            </DrawerFooter>
+                            </DrawerBody>
                         </>
                     )}
                 </DrawerContent>

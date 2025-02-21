@@ -53,7 +53,11 @@ export const PROJECT_QUERY = `*[_type == "completedProjects"] {
       description,
       "imageUrl": image.asset->url,
       altText,
-      tags[]->{
+      category_tags[]->{
+        _id,
+        title
+      },
+      service_tags[]->{
         _id,
         title
       }
@@ -64,21 +68,3 @@ export const PROJECT_SLUGS_QUERY: string = `*[_type == "completedProjects"] {
       "slug": slug.current
     }
   }`;
-
-export const NAVIGATION_QUERY = `*[_type == "navigation"] {
-  _id,
-  title,
-  links[]{
-	title,
-	"url": slug.current,
-	submenu[]{
-	  title,
-	  "url": slug.current,
-	  services[]->{
-		title,
-        description,
-		"url": slug.current
-	  }
-	}
-  }
-}`;

@@ -1,31 +1,27 @@
 import Image from 'next/image';
 import imageUrlBuilder from '@sanity/image-url';
-import {SanityImageSource} from '@sanity/image-url/lib/types/types';
+import { SanityImageSource } from '@sanity/image-url/lib/types/types';
 
 import { siteConfig } from '@/config/site';
 import BrandCard from '@/components/ui/BrandCard';
 import { FAQ } from '@/components/shared/FAQ';
 import ContactUs from '@/components/shared/ContactUs';
 import BaseBreadcrumb from '@/components/ui/Breadcrumb';
-import {client} from '@/sanity/client';
-import {getSanityDocuments} from '@/lib/getData';
+import { client } from '@/sanity/client';
+import { getSanityDocuments } from '@/lib/fetch-sanity-data';
+import { CATEGORIES_QUERY, NAVIGATION_QUERY } from '@/sanity/lib/queries';
+import Section from '@/components/layout/Section';
 
-const CATEGORIES_QUERY = `*[
-  _type == "category"
-  && defined(slug.current)
-]|order(publishedAt desc)[0...12]{title,
-    description,
-    image, 
-    price,
-    "currentSlug": slug.current}`;
 const builder = imageUrlBuilder(client);
 
 export default async function CatalogPage() {
     const categories = await getSanityDocuments(CATEGORIES_QUERY);
+    const breadcrumbs = (await getSanityDocuments(NAVIGATION_QUERY))[0].links;
+
     const urlFor = (source: SanityImageSource) => {
         return builder.image(source).url();
     }
-    
+
     return (
         <>
             <section className="py-12 md:py-24 relative after:absolute after:inset-0 after:bg-gradient-to-t after:from-black after:to-transparent">
@@ -51,20 +47,25 @@ export default async function CatalogPage() {
                     {/*<BrandButton as={Link} href="/#categoryList" state="primary" className={'self-center'}>ПОДРОБНЕЕ</BrandButton>*/}
                 </div>
             </section>
-            <section className="py-16" id="categoryList">
+
+            <section>
                 <div className="container">
-                    <BaseBreadcrumb section='catalog' />
-                    <ul className="grid grid-cols-[var(--grid-template-columns)] gap-8 mt-4">
-                        {
-                            categories.map((category) => (
-                                <li key={category.title}>
-                                    <BrandCard description={category.description} href={`/catalog/${category.currentSlug}`} image={urlFor(category.image)} price={category.price} title={category.title} variant="product" />
-                                </li>
-                            ))
-                        }
-                    </ul>
+                    <div className="mt-10 mb-6">
+                        <BaseBreadcrumb items={breadcrumbs} section='catalog' />
+                    </div>
                 </div>
             </section>
+            <Section innerClassname='pt-6 md:pt-6' id="categoryList">
+                <ul className="grid grid-cols-[var(--grid-template-columns)] gap-8">
+                    {
+                        categories.map((category) => (
+                            <li key={category.title}>
+                                <BrandCard description={category.description} href={`/catalog/${category.currentSlug}`} image={urlFor(category.image)} price={category.price} title={category.title} variant="product" />
+                            </li>
+                        ))
+                    }
+                </ul>
+            </Section>
             <FAQ />
             <ContactUs />
         </>
