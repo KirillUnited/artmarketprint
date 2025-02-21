@@ -4,19 +4,21 @@ import {ArrowUpRightIcon} from 'lucide-react';
 import React from 'react';
 
 import BrandButton from '@/components/ui/BrandButton';
-const getCTAButton = (buttonType: 'cta' | 'secondary', text: string, link: string)=>{
+
+const getCTAButton = (_key: string, buttonType: 'cta' | 'secondary', text: string, link: string)=>{
 	const CTAButtons = {
 		'cta': (text: any, link: any) => (
-			<BrandButton as={Link} href={link} state="primary" className="uppercase">
+			<BrandButton key={_key} as={Link} href={link} state="primary" className="uppercase">
 				{text}
 			</BrandButton>
 		),
 		'secondary': (text: any, link: any) => (
 			<Button
+				key={_key}
 				as={Link}
 				className="bg-brand-gradient text-fill-transparent font-semibold uppercase"
 				color="secondary"
-				href={link}
+				href={link || ''}
 				radius="sm"
 				size="lg"
 				target="_blank"
@@ -35,16 +37,12 @@ export const HeroContentCTA = ({buttonList}: {buttonList: any[] | null | undefin
 	if (!buttonList || buttonList.length === 0) return null;
 
 	return (
-		<ul className="flex flex-col md:flex-row gap-2 md:gap-4">
+		<div className="flex flex-col md:flex-row gap-2 md:gap-4">
 			{buttonList.map(({_key, buttonType, text, link}) => {
 				return (
-					<li key={_key}>
-						{
-							getCTAButton(buttonType, text, link)
-						}
-					</li>
+					getCTAButton(_key ,buttonType, text, link)
 				)
 			})}
-		</ul>
+		</div>
 	);
 };
