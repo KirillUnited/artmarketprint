@@ -1,13 +1,9 @@
 import OrderForm from '@/components/ui/OrderForm';
 import Image from 'next/image';
-import { Image as HeroImage } from '@heroui/image';
 import { siteConfig } from '@/config/site';
 import BaseBreadcrumb from '@/components/ui/Breadcrumb';
-import { BrandCardProps } from '@/types';
-import BrandCard from '@/components/ui/BrandCard';
 import BrandButton from '@/components/ui/BrandButton';
 import { ServiceDetails } from "@/components/shared/Services";
-import { getCatalogData } from "@/lib/actions/services.actions";
 import Link from 'next/link';
 import { client } from '@/sanity/client';
 import { SanityImageSource } from '@sanity/image-url/lib/types/types';
@@ -54,7 +50,7 @@ const options = { next: { revalidate: 30 } };
 
 export default async function CategoryPage({ params }: { params: Promise<Props> }) {
 	const category = await client.fetch<SanityDocument>(CATEGORY_QUERY, await params, options);
-	const categoryImageUrl = await category.image
+	const categoryImageUrl = await category?.image
 		? urlFor(category.image)?.width(550).height(310).url()
 		: null;
 
