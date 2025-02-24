@@ -1,6 +1,6 @@
 import { Benefits } from '@/components/shared/Benefits';
 import About from '@/components/shared/About';
-import { FAQ } from '@/components/shared/FAQ';
+import { FAQSection } from '@/components/shared/faq';
 import { Catalog } from '@/components/shared/Catalog';
 import { Services } from '@/components/shared/Services';
 import ContactUs, { MapFrame } from '@/components/shared/ContactUs';
@@ -20,7 +20,7 @@ export default function Home() {
 			<About />
 			<Projects />
 			<InstagramFeedSection id='instagram'/>
-			<FAQ className="bg-[#F1F4FA]" />
+			<FAQSection className="bg-[#F1F4FA]" />
 			<ContactUs className="bg-background" id='contacts' />
 			<MapFrame />
 			{/* <Testimonials /> */}
