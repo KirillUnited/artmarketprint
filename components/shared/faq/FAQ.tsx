@@ -1,4 +1,3 @@
-'use client';
 import { Button } from '@heroui/button';
 import Link from 'next/link';
 import Section, { SectionDescription, SectionHeading, SectionSubtitle, SectionTitle } from "@/components/layout/Section";
