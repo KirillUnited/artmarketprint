@@ -18,7 +18,7 @@ export default function HeroSection(props: any) {
 						['justify-center']: orientation === 'textCenter',
 					}
 				)}>
-					<motion.div
+					<motion.header
 						data-orientation={orientation || 'textLeft'}
 						className={clsx("bg-[rgba(255,255,255,0.50)] backdrop-blur-md rounded-lg py-10 md:py-16 pr-4 md:pr-7 flex flex-col gap-8 md:gap-16 z-10 max-w-full md:max-w-4xl overflow-hidden",
 							{
@@ -38,7 +38,7 @@ export default function HeroSection(props: any) {
 						}}
 					>
 						<HeroContent {...props} />
-					</motion.div>
+					</motion.header>
 					{imageUrl && <Image
 						alt={'ArtMarketPrint'}
 						className={clsx("w-2/3 h-full absolute right-0 top-0 object-cover",

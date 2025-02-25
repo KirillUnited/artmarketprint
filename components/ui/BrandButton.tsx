@@ -3,6 +3,8 @@
 import { Button } from '@heroui/button'
 import clsx from 'clsx'
 import React from 'react'
+import Link from 'next/link';
+import {ArrowUpRightIcon} from 'lucide-react';
 
 import { BrandButtonProps } from '@/types'
 
@@ -15,6 +17,40 @@ export default function BrandButton({ state, className, onPress, children, ...pr
             )} color={state !== null ? state : undefined} radius='sm' size='lg' variant={'shadow'}
             onPress={onPress}
             {...props}
-        >{children}</Button>
+        >
+            {children}
+        </Button>
     )
+}
+
+export const getCTAButton = (_key: string, buttonType: 'cta' | 'secondary', text: string, link: string)=>{
+    const CTAButtons = {
+        cta: (text: string, link: string) => (
+            <BrandButton key={_key} as={Link} className="uppercase" href={link} state="primary">
+                {text}
+            </BrandButton>
+        ),
+        secondary: (text: string, link: string) => (
+            <Button
+                key={_key}
+                as={Link}
+                className={clsx(
+                    'bg-brand-gradient text-fill-transparent',
+                    'font-semibold uppercase',
+                    'group'
+                )}
+                color="secondary"
+                href={link || ''}
+                radius="sm"
+                size="lg"
+                target="_blank"
+                variant="bordered"
+            >
+                <span className="leading-none">{text}</span>
+                <ArrowUpRightIcon className="text-secondary group-hover:translate-x-1 transition-transform" size={18} />
+            </Button>
+        ),
+    };
+
+    return CTAButtons[buttonType](text, link) || null;
 }
