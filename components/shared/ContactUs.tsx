@@ -40,7 +40,7 @@ export default function ContactUs({ className, ...props }: SectionProps) {
 export const ContactUsHeading = ({ title, subtitle, description }: { title?: string; subtitle?: string; description?: string }) => (
 	<div className="flex flex-wrap items-end justify-between gap-4">
 		<SectionHeading>
-			<SectionSubtitle>- {subtitle} -</SectionSubtitle>
+			<SectionSubtitle>{subtitle}</SectionSubtitle>
 			<SectionTitle>{title}</SectionTitle>
 			<SectionDescription>{description}</SectionDescription>
 		</SectionHeading>

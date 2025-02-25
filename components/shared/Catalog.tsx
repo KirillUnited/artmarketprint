@@ -22,7 +22,7 @@ const CATEGORIES_QUERY = `*[
 export const CatalogHeading = () => (
 	<div className="flex flex-wrap items-end justify-between gap-4">
 		<SectionHeading>
-			<SectionSubtitle>- каталог -</SectionSubtitle>
+			<SectionSubtitle>каталог</SectionSubtitle>
 			<SectionTitle>{siteConfig.catalogSection.title}</SectionTitle>
 			<SectionDescription>{siteConfig.catalogSection.description}</SectionDescription>
 		</SectionHeading>

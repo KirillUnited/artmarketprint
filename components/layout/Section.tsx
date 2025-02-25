@@ -1,10 +1,10 @@
 import React from 'react'
 import clsx from 'clsx';
-
-import { SectionProps } from '@/types';
 import { Button } from '@heroui/button';
 import { ArrowUpRightIcon } from 'lucide-react';
 import Link from 'next/link';
+
+import { SectionProps } from '@/types';
 
 export default function Section({ className, containerFluid, innerClassname: innerClassName, children, ...props }: SectionProps) {
 	return (
@@ -49,7 +49,7 @@ export const SectionInner = ({ className, children }: SectionProps) => (
 export const SectionButton = ({ label, href, className }: SectionProps) => (
 	<Button
 		as={Link}
-		className={clsx("bg-brand-gradient text-fill-transparent font-semibold border-1", className)}
+		className={clsx('bg-brand-gradient text-fill-transparent font-semibold border-1', className)}
 		color="secondary"
 		href={href}
 		radius="sm"

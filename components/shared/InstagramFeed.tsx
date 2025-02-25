@@ -1,9 +1,9 @@
 import clsx from 'clsx';
 import Script from 'next/script';
+import Link from 'next/link';
 
 import Section, {SectionDescription, SectionHeading, SectionSubtitle, SectionTitle} from '@/components/layout/Section';
 import {SectionProps} from '@/types';
-import Link from 'next/link';
 
 export default function InstagramFeed({className}: React.HTMLAttributes<HTMLDivElement>) {
      return (
@@ -25,7 +25,7 @@ export const InstagramFeedSection = ({className}: SectionProps) => {
             <div className="container flex flex-col items-center text-center">
                 <SectionHeading>
                     <SectionSubtitle>
-                        - мы в instagram -
+                        мы в instagram
                     </SectionSubtitle>
                     <SectionTitle>
                        <Link className='bg-brand-gradient text-fill-transparent truncate' href={'https://www.instagram.com/artmarketprint_by/'} target='_blank'> @artmarketprint_by</Link>

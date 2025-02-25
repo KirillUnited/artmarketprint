@@ -82,7 +82,7 @@ export default async function ServicePage({ params }: { params: Promise<Props> }
                         </p>
                     </div>
 
-                    <BrandButton as={Link} href={'#serviceDetails'} state="primary" className={'self-center'}>УЗНАТЬ</BrandButton>
+                    <BrandButton as={Link} href={'#serviceDetails'} state="primary" className={'self-center'}>Подробнее</BrandButton>
                 </div>
             </section>
             <section>

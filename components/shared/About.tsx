@@ -17,7 +17,7 @@ export default function About() {
 				<div className="flex flex-col gap-8 md:gap-16">
 					<SectionHeading className="max-w-full">
 						<SectionSubtitle>
-							- О нас -
+							О нас
 						</SectionSubtitle>
 						<SectionTitle>
 							<span

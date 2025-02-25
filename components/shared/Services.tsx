@@ -26,7 +26,7 @@ export const Services = async () => {
 			<div className="flex flex-wrap items-end justify-between gap-4">
 				<SectionHeading>
 					<SectionSubtitle>
-						- наши услуги печати -
+						наши услуги печати
 					</SectionSubtitle>
 					<SectionTitle>
 						Популярные услуги
