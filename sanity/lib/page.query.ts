@@ -34,3 +34,22 @@ export const HERO_QUERY = `*[_type == "page"][0] {
       }
     }
   }`;
+
+export const FAQ_QUERY = `*[_type == "page"][0] {
+    content[_type == "faqs"][0] {
+      slides[]{
+        _key,
+        orientation,
+        title,
+        subtitle,
+        description,
+        "imageUrl": image.asset->url,
+        ctaButtonList[] {
+          _key,
+          text,
+          buttonType,
+          link
+        }
+    }
+  }
+}`;
