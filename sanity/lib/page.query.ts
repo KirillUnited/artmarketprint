@@ -53,3 +53,9 @@ export const FAQ_QUERY = `*[_type == "page"][0] {
     }
   }
 }`;
+
+export const HOME_PAGE_QUERY = `*[_id == "siteSettings"][0]{
+    homePage->{
+      content
+    }
+  }`;

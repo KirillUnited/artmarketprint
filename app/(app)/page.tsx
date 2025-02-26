@@ -8,8 +8,18 @@ import {InstagramFeedSection} from '@/components/shared/InstagramFeed';
 import {Projects} from '@/components/shared/Projects';
 import { ProductSection } from '@/components/shared/product/ProductSection';
 import { Hero } from '@/components/shared/hero/Hero';
+import {getSanityDocuments} from "@/lib/fetch-sanity-data";
+import {HOME_PAGE_QUERY} from "@/sanity/lib/page.query";
 
-export default function Home() {
+export default async function Home() {
+	const {homePage} = await getSanityDocuments(HOME_PAGE_QUERY);
+
+	if (!Array.isArray(homePage?.content) || homePage.length === 0) {
+		console.warn("Нет данных о главной странице");
+
+		return null;
+	}
+
 	return (
 		<>
 			<Hero />
@@ -19,9 +29,9 @@ export default function Home() {
 			<ProductSection />
 			<About />
 			<Projects />
-			<InstagramFeedSection id='instagram'/>
+			<InstagramFeedSection id="instagram" />
 			<FAQSection className="bg-[#F1F4FA]" />
-			<ContactUs className="bg-background" id='contacts' />
+			<ContactUs className="bg-background" id="contacts" />
 			<MapFrame />
 			{/* <Testimonials /> */}
 			{/*<Script*/}
