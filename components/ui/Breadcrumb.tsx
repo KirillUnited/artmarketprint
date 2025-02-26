@@ -43,7 +43,11 @@ export default function BaseBreadcrumb({ items, section }: { items: any, section
 					return (
 						<BreadcrumbItem key={href} href={`${href}`} className={clsx(
 							"font-semibold",
-						)} isDisabled={isLast}>
+						)} 
+						classNames={{
+							separator: 'text-primary',
+						}}
+						isDisabled={isLast}>
 							{title}
 						</BreadcrumbItem>
 					)
