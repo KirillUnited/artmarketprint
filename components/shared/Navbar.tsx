@@ -54,7 +54,7 @@ export default function Navbar({ navigation }: any) {
 					})}
 				</NavbarContent>
 				<div className="flex flex-row gap-8 items-center shrink-0">
-					<SearchIcon />
+					{/* <SearchIcon /> */}
 					<div className="hidden md:flex gap-2">
 						<Link
 							className="flex flex-row gap-4 items-center justify-start self-stretch shrink-0 relative"

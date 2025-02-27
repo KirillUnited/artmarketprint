@@ -4,15 +4,28 @@ import { Input, Textarea } from '@heroui/input'
 import React, { useState } from 'react'
 import clsx from 'clsx'
 import { Alert } from '@heroui/alert';
-
+import { Select, SelectItem } from "@heroui/select";
 import BrandButton from '../BrandButton'
 
 import { sendOrder } from '@/lib/actions/order.actions';
 
 
+import { defaultCountries, FlagImage, parseCountry, usePhoneInput } from "react-international-phone";
+import "react-international-phone/style.css";
+
+
 export default function OrderForm({ className }: { className?: string }): JSX.Element {
     const [isPending, setIsPending] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
+    const [phone, setPhone] = useState("");
+    const { inputValue, handlePhoneValueChange, inputRef, country, setCountry } =
+        usePhoneInput({
+            defaultCountry: "by",
+            value: phone,
+            countries: defaultCountries,
+            onChange: (data) => setPhone(data.phone),
+        });
+
     const phoneRegex = /^\+375[-\s]?\(?\d{2}\)?[-\s]?\d{3}[-\s]?\d{2}[-\s]?\d{2}$/;
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -21,6 +34,7 @@ export default function OrderForm({ className }: { className?: string }): JSX.El
         const formData = new FormData(event.currentTarget);
 
         event.currentTarget.reset();
+        setPhone('');
 
         setIsPending(true);
 
@@ -67,12 +81,13 @@ export default function OrderForm({ className }: { className?: string }): JSX.El
                     errorMessage="Пожалуйста, введите Ваше имя"
                     id='user_name'
                     label="Имя"
+                    labelPlacement='outside'
                     name='user_name'
                     placeholder="Напишите Ваше имя"
                     radius='sm'
                     variant="bordered"
                 />
-                <Input
+                {/* <Input
                     isRequired
                     color="primary"
                     errorMessage="Пожалуйста, введите действительный номер телефона"
@@ -86,11 +101,60 @@ export default function OrderForm({ className }: { className?: string }): JSX.El
                         if (!value.match(phoneRegex)) return 'Пожалуйста, введите корректный номер в формате +375 XX XXX-XX-XX';
                     }}
                     variant="bordered"
+                /> */}
+                <Input
+                    value={inputValue}
+                    onChange={handlePhoneValueChange}
+                    type="tel"
+                    ref={inputRef}
+                    aria-label={'Телефон'}
+                    isRequired
+                    color="primary"
+                    errorMessage="Пожалуйста, введите действительный номер телефона"
+                    id='user_phone'
+                    label="Телефон"
+                    labelPlacement='outside'
+                    name='user_phone'
+                    radius='sm'
+                    variant="bordered"
+                    startContent={
+                        <Select
+                            selectedKeys={[country.iso2]}
+                            onChange={(e) => setCountry(e.target.value)}
+                            className="w-16"
+                            startContent={<FlagImage iso2={country.iso2} />}
+                            aria-label="Select country"
+                            classNames={{
+                                popoverContent: 'w-60',
+                                value: 'hidden',
+                                listbox: 'w-60',
+                                trigger: 'bg-transparent data-[hover=true]:bg-transparent group-data-[focus=true]:bg-transparent px-0',
+                            }}
+                        >
+                            {defaultCountries.map((c) => {
+                                const country = parseCountry(c);
+
+                                return (
+                                    <SelectItem
+                                        key={country.iso2}
+                                        textValue={country.name}
+                                    >
+                                        <div className="flex items-center gap-2">
+                                            <FlagImage iso2={country.iso2} />
+                                            <span>{country.name}</span>
+                                            <span>+{country.dialCode}</span>
+                                        </div>
+                                    </SelectItem>
+                                );
+                            })}
+                        </Select>
+                    }
                 />
                 <Textarea
                     color="primary"
                     id='comment'
                     label="Комментарий"
+                    labelPlacement='outside'
                     name='user_comment'
                     placeholder="Введите Ваш комментарий"
                     radius='sm'
