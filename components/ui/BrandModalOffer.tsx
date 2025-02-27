@@ -136,10 +136,10 @@ export function HeroModalOffer() {
 
 	return (
 		<>
-			<Button className="leading-normal font-semibold" color="primary" radius='sm' variant="solid" onPress={onOpen}>
-				<CalendarIcon size={18} />
+			<BrandButton className="leading-normal font-semibold group" state="primary" radius='sm' variant="solid" onPress={onOpen} size={'md'}>
+				<CalendarIcon size={18} className={'group-hover:scale-110 transition-transform'}/>
 				<span>ЗАКАЗАТЬ ЗВОНОК</span>
-			</Button>
+			</BrandButton>
 			<Modal backdrop="blur" className='bg-background' isOpen={isOpen} placement="top-center" onOpenChange={onOpenChange}>
 				<ModalContent>
 					{(onClose) => (
