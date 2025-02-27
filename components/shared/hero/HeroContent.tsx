@@ -27,7 +27,7 @@ interface HeroContentProps {
 export default function HeroContent({title, description, subtitle, ctaButtonList = []}: HeroContentProps) {
 	return (
 		<>
-			<div className="flex flex-col gap-4 md:gap-6">
+			<article className="flex flex-col gap-4 md:gap-6">
 				{subtitle && (
 					<motion.span
 						className="text-primary uppercase text-base leading-normal font-bold"
@@ -61,7 +61,7 @@ export default function HeroContent({title, description, subtitle, ctaButtonList
 					<PortableText components={components} value={title} />
 				</motion.div>
 				{description && <p className="text-foreground/70 text-base md:text-lg leading-normal font-medium">{description}</p>}
-			</div>
+			</article>
 			{ctaButtonList && ctaButtonList.length > 0 && <HeroContentCTA buttonList={ctaButtonList} />}
 		</>
 	);

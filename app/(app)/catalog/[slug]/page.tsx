@@ -72,7 +72,7 @@ export default async function CategoryPage({ params }: { params: Promise<Props> 
 						<p className="mt-4 text-xl text-white">{category.description}</p>
 					</div>
 					<BrandButton as={Link} href='#categoryDetails' state="primary" className={'self-center'}>
-						УЗНАТЬ
+						Подробнее
 					</BrandButton>
 				</div>
 			</section>
