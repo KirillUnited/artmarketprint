@@ -18,12 +18,21 @@ export default function OrderForm({ className }: { className?: string }): JSX.El
     const [isPending, setIsPending] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
     const [phone, setPhone] = useState("");
+
+    const [error, setError] = useState("");
     const { inputValue, handlePhoneValueChange, inputRef, country, setCountry } =
         usePhoneInput({
             defaultCountry: "by",
             value: phone,
             countries: defaultCountries,
-            onChange: (data) => setPhone(data.phone),
+            onChange: (data) => {
+                setPhone(data.phone);
+                if (data.country.iso2 === "by" && !/^\+375(29|33|25|44)\d{7}$/.test(data.phone)) {
+                    setError("Invalid Belarus phone number");
+                  } else {
+                    setError("");
+                  }
+            },
         });
 
     const phoneRegex = /^\+375[-\s]?\(?\d{2}\)?[-\s]?\d{3}[-\s]?\d{2}[-\s]?\d{2}$/;
@@ -117,6 +126,7 @@ export default function OrderForm({ className }: { className?: string }): JSX.El
                     name='user_phone'
                     radius='sm'
                     variant="bordered"
+                    isInvalid={!!error}
                     startContent={
                         <Select
                             selectedKeys={[country.iso2]}
