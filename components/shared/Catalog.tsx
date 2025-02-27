@@ -1,15 +1,14 @@
 import Link from 'next/link';
-import { Button } from '@heroui/button';
-import { ArrowUpRightIcon } from 'lucide-react';
-import { SanityDocument } from 'next-sanity';
+import {Button} from '@heroui/button';
+import {ArrowUpRightIcon} from 'lucide-react';
+import {SanityDocument} from 'next-sanity';
 
 import BrandCard from '../ui/BrandCard';
 
-import { siteConfig } from '@/config/site';
-import { getSanityDocuments } from '@/lib/fetch-sanity-data';
-import Section, { SectionDescription, SectionHeading, SectionSubtitle, SectionTitle } from '@/components/layout/Section';
-import { getUrlFor } from '@/lib/utils';
-
+import {siteConfig} from '@/config/site';
+import {getSanityDocuments} from '@/lib/fetch-sanity-data';
+import Section, {SectionDescription, SectionHeading, SectionSubtitle, SectionTitle} from '@/components/layout/Section';
+import {getUrlFor} from '@/lib/utils';
 const CATEGORIES_QUERY = `*[
   _type == "category"
   && defined(slug.current)
@@ -42,7 +41,7 @@ export const CatalogHeading = () => (
 	</div>
 );
 
-export const CategoryList = ({ categories }: { categories: SanityDocument[] }) => (
+export const CategoryList = ({categories}: {categories: SanityDocument[]}) => (
 	<ul className="grid grid-cols-[var(--grid-template-columns)] gap-8">
 		{categories.map((category: SanityDocument) => (
 			<li key={category.title}>
@@ -66,7 +65,7 @@ export const Catalog = async () => {
 		<Section className="relative" id="catalog" innerClassname="md:pt-0">
 			<CatalogHeading />
 			{categories && <CategoryList categories={categories} />}
-			
+
 			<Button
 				as={Link}
 				className="bg-brand-gradient text-fill-transparent font-semibold border-1 lg:hidden flex"

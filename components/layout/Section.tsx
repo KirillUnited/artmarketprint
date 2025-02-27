@@ -6,7 +6,7 @@ import Link from 'next/link';
 
 import { SectionProps } from '@/types';
 
-export default function Section({ className, containerFluid, innerClassname: innerClassName, children, ...props }: SectionProps) {
+export default function Section({className, containerFluid, innerClassname: innerClassName, children, ...props}: SectionProps) {
 	return (
 		<section className={clsx(className)} {...props}>
 			<div

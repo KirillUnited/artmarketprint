@@ -48,7 +48,7 @@ export const ContactUsHeading = ({ title, subtitle, description }: { title?: str
 );
 
 export const MapFrame = () => (
-	<div className="w-full" style={{ position: 'relative', overflow: 'hidden' }}>
+	<section className="w-full" style={{ position: 'relative', overflow: 'hidden' }}>
 		<a href="https://yandex.by/navi/org/art_market_print/100202069960/?utm_medium=mapframe&utm_source=maps" style={{ color: '#eee', fontSize: 12, position: 'absolute', top: 0 }}>
 			Арт Маркет Принт
 		</a>
@@ -66,5 +66,5 @@ export const MapFrame = () => (
 			title="ArtMarketPrint"
 			width={'100%'}
 		/>
-	</div>
+	</section>
 );

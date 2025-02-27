@@ -1,9 +1,11 @@
 import { Button } from '@heroui/button';
 import Link from 'next/link';
-import Section, { SectionDescription, SectionHeading, SectionSubtitle, SectionTitle } from "@/components/layout/Section";
-import { SectionProps } from "@/types";
-import clsx from "clsx";
+import clsx from 'clsx';
+
 import { FAQList } from './faqList';
+
+import Section, { SectionDescription, SectionHeading, SectionSubtitle, SectionTitle } from '@/components/layout/Section';
+import { SectionProps } from '@/types';
 
 export const FAQSection = ({ className }: SectionProps) => {
 	return (
@@ -29,7 +31,7 @@ export const FAQsFooter = () => (
 			<h3 className="text-2xl md:text-3xl leading-[120%] font-bold">Остались вопросы?</h3>
 			<p className="leading-normal font-normal text-foreground/70 text-balance">Не стесняйтесь обращаться к нам за дополнительной информацией.</p>
 		</div>
-		<Button as={Link} href={'/#contacts'} className="bg-brand-gradient text-fill-transparent font-semibold border-1" color="secondary" radius="sm" size="md" variant="bordered">
+		<Button as={Link} className="bg-brand-gradient text-fill-transparent font-semibold border-1" color="secondary" href={'/#contacts'} radius="sm" size="md" variant="bordered">
 			КОНСУЛЬТАЦИЯ
 		</Button>
 	</div>
