@@ -10,10 +10,6 @@ import Section, {SectionButton, SectionDescription, SectionHeading, SectionSubti
 import {getSanityDocuments} from '@/lib/fetch-sanity-data';
 import {PROJECTS_QUERY} from '@/sanity/lib/queries';
 
-interface ProjectsProps {
-	key?: unknown;
-}
-
 export const ProjectsHeading = ({title, subtitle, description}: {title?: string; subtitle?: string; description?: string}) => (
 	<div className="flex flex-wrap items-end justify-between gap-4">
 		<SectionHeading>
@@ -80,7 +76,7 @@ export const ProjectList = ({projectList, bentoGrid = true, className}: {project
 	);
 };
 
-export const Projects = async ({key}: ProjectsProps) => {
+export const Projects = async () => {
 	const data = await getSanityDocuments(PROJECTS_QUERY, {limit: 3});
 	const {subtitle = '', projects = []} = data?.[0] || {};
 
@@ -92,7 +88,7 @@ export const Projects = async ({key}: ProjectsProps) => {
 
 	return (
 		<Suspense fallback={<p className="text-center text-gray-500">Загрузка проектов...</p>}>
-			<Section key={key} className="relative" id="projects">
+			<Section className="relative" id="projects">
 				<ProjectsHeading description={'Портфолио выполненных работ'} subtitle={subtitle} title={'Наши проекты'} />
 
 				{projects && <ProjectList projectList={projects} />}

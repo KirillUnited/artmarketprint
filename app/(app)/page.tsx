@@ -3,9 +3,9 @@ import {HOME_PAGE_QUERY} from '@/sanity/lib/page.query';
 import {PageBuilder} from '@/components/PageBuilder';
 
 export default async function Home() {
-	const {homePage} = await getSanityDocuments(HOME_PAGE_QUERY);
+	const data: any = await getSanityDocuments(HOME_PAGE_QUERY);
 
-	if (!Array.isArray(homePage?.content) || homePage.length === 0) {
+	if (!Array.isArray(data?.homePage?.content) || data?.homePage.length === 0) {
 		console.warn('Нет данных о главной странице');
 
 		return null;
@@ -13,7 +13,7 @@ export default async function Home() {
 
 	return (
 		<>
-			<PageBuilder content={homePage?.content} />
+			<PageBuilder content={data?.homePage?.content} />
 			{/*<Script*/}
 			{/*	async*/}
 			{/*	src="https://static.elfsight.com/platform/platform.js"*/}
