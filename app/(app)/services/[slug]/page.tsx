@@ -1,18 +1,21 @@
-import OrderForm from "@/components/ui/OrderForm";
 import Image from "next/image";
+
+import { SanityImageSource } from "@sanity/image-url/lib/types/types";
+
+import Link from "next/link";
 import { siteConfig } from "@/config/site";
 import BaseBreadcrumb from "@/components/ui/Breadcrumb";
 import BrandButton from "@/components/ui/BrandButton";
 import { ServiceDetails } from "@/components/shared/Services";
-import Link from "next/link";
+
 import { client } from "@/sanity/client";
-import { SanityImageSource } from "@sanity/image-url/lib/types/types";
 import imageUrlBuilder from "@sanity/image-url";
 import { PortableText, SanityDocument } from "next-sanity";
 import { getUrlFor } from "@/lib/utils";
 import { ProjectList, ProjectsHeading } from "@/components/shared/Projects";
 import { NAVIGATION_QUERY, PROJECTS_BY_SERVICE_QUERY, PROJECTS_QUERY } from "@/sanity/lib/queries";
 import Section, { SectionButton } from "@/components/layout/Section";
+import {OrderForm} from "@/components/ui/form";
 
 type Props = {
     slug: string

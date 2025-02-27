@@ -1,14 +1,13 @@
 import React from 'react';
 import clsx from 'clsx';
 
-import OrderForm from '../ui/OrderForm';
-
 import Socials from './Socials';
 import ContactsList from './ContactsList';
 
 import { SectionProps } from '@/types';
 import Section, { SectionDescription, SectionHeading, SectionSubtitle, SectionTitle } from '@/components/layout/Section';
 import { Card } from '@heroui/card';
+import {OrderForm} from "@/components/ui/form";
 
 export default function ContactUs({ className, ...props }: SectionProps) {
 	return (

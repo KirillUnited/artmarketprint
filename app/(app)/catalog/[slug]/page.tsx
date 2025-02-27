@@ -1,18 +1,19 @@
-import OrderForm from '@/components/ui/OrderForm';
 import Image from 'next/image';
+import Link from 'next/link';
+import { SanityImageSource } from '@sanity/image-url/lib/types/types';
+import imageUrlBuilder from '@sanity/image-url';
+import { PortableText, SanityDocument } from 'next-sanity';
+
 import { siteConfig } from '@/config/site';
 import BaseBreadcrumb from '@/components/ui/Breadcrumb';
 import BrandButton from '@/components/ui/BrandButton';
-import { ServiceDetails } from "@/components/shared/Services";
-import Link from 'next/link';
+import { ServiceDetails } from '@/components/shared/Services';
 import { client } from '@/sanity/client';
-import { SanityImageSource } from '@sanity/image-url/lib/types/types';
-import imageUrlBuilder from "@sanity/image-url";
-import { PortableText, SanityDocument } from 'next-sanity';
 import { getUrlFor } from '@/lib/utils';
-import Section, { SectionButton } from "@/components/layout/Section";
-import { ProjectList, ProjectsHeading } from "@/components/shared/Projects";
-import { NAVIGATION_QUERY, PROJECTS_BY_CATEGORY_QUERY, PROJECTS_BY_SERVICE_QUERY } from "@/sanity/lib/queries";
+import Section, { SectionButton } from '@/components/layout/Section';
+import { ProjectList, ProjectsHeading } from '@/components/shared/Projects';
+import { NAVIGATION_QUERY, PROJECTS_BY_CATEGORY_QUERY } from '@/sanity/lib/queries';
+import {OrderForm} from '@/components/ui/form';
 
 type Props = {
 	slug: string;
@@ -63,7 +64,7 @@ export default async function CategoryPage({ params }: { params: Promise<Props> 
 			<section className="py-12 md:py-24 relative after:absolute after:inset-0 after:bg-gradient-to-t after:from-black after:to-transparent">
 				{
 					categoryImageUrl && (
-						<Image priority src={`${categoryImageUrl}`} alt={category.title} className="absolute inset-0 object-cover w-full h-full" width={1920} height={1080} />
+						<Image priority alt={category.title} className="absolute inset-0 object-cover w-full h-full" height={1080} src={`${categoryImageUrl}`} width={1920} />
 					)
 				}
 				<div className="container flex flex-col gap-10 max-w-4xl relative z-10">
@@ -71,7 +72,7 @@ export default async function CategoryPage({ params }: { params: Promise<Props> 
 						<h1 className="text-4xl font-extrabold text-background sm:text-6xl">{category.title}</h1>
 						<p className="mt-4 text-xl text-white">{category.description}</p>
 					</div>
-					<BrandButton as={Link} href='#categoryDetails' state="primary" className={'self-center'}>
+					<BrandButton as={Link} className={'self-center'} href='#categoryDetails' state="primary">
 						Подробнее
 					</BrandButton>
 				</div>
@@ -83,20 +84,20 @@ export default async function CategoryPage({ params }: { params: Promise<Props> 
 					</div>
 				</div>
 			</section>
-			<section id='categoryDetails' className="section relative overflow-hidden pb-10 md:pb-20 pt-3 md:pt-6">
+			<section className="section relative overflow-hidden pb-10 md:pb-20 pt-3 md:pt-6" id='categoryDetails'>
 				<div className="container">
-					<ServiceDetails name={category.title} image={getUrlFor(category.image)} price={category.price} advantages={category.advantages}>
+					<ServiceDetails advantages={category.advantages} image={getUrlFor(category.image)} name={category.title} price={category.price}>
 						{Array.isArray(category.body) && <PortableText value={category.body} onMissingComponent={false} />}
 					</ServiceDetails>
 				</div>
 			</section>
 
 			<Section className="bg-[#F9F9F9]">
-				<ProjectsHeading title='Примеры работ' subtitle={'галерея'} description={'Портфолио выполненных работ'} />
+				<ProjectsHeading description={'Портфолио выполненных работ'} subtitle={'галерея'} title='Примеры работ' />
 
-				<ProjectList projectList={projects} bentoGrid={false} />
+				<ProjectList bentoGrid={false} projectList={projects} />
 
-				<SectionButton label="Все проекты" href={'/projects'} className='lg:hidden flex' />
+				<SectionButton className='lg:hidden flex' href={'/projects'} label="Все проекты" />
 			</Section >
 			<Section id='contacts'>
 				<OrderForm />
