@@ -53,7 +53,9 @@ export default function Drawer({ navigation, className, children }: { navigation
                                         </NavbarItem>
                                     ))}
                                 </ul>
-                                <div className='grow'><HeroModalOffer /></div>
+                                <div className='grow flex flex-col'>
+                                    <HeroModalOffer />
+                                </div>
                                 <div className="flex flex-col gap-2">
                                     {siteConfig?.contacts?.[0]?.list?.map((item) => (
                                         <Link key={item.href} className="font-bold text-left flex items-center gap-2" href={`tel:${item.href}` || '#'}>

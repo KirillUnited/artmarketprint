@@ -49,7 +49,11 @@ export const SectionInner = ({ className, children }: SectionProps) => (
 export const SectionButton = ({ label, href, className }: SectionProps) => (
 	<Button
 		as={Link}
-		className={clsx('bg-brand-gradient text-fill-transparent font-semibold border-1', className)}
+		className={clsx(
+			'bg-brand-gradient text-fill-transparent',
+			'font-semibold border-1',
+			'group',
+			className)}
 		color="secondary"
 		href={href}
 		radius="sm"
@@ -58,6 +62,6 @@ export const SectionButton = ({ label, href, className }: SectionProps) => (
 		variant="bordered"
 	>
 		<span className="leading-none">{label}</span>
-		<ArrowUpRightIcon className="text-secondary" size={18} />
+		<ArrowUpRightIcon className="text-secondary group-hover:translate-x-1 transition-transform" size={18} />
 	</Button>
 );

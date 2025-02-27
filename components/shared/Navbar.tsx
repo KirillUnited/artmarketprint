@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import { Button } from '@heroui/button';
-import { Navbar as BaseNavbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenu, NavbarMenuItem, NavbarMenuToggle } from '@heroui/navbar';
+import { Navbar as BaseNavbar, NavbarBrand, NavbarContent, NavbarItem } from '@heroui/navbar';
 import { Link } from '@heroui/link';
 import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@heroui/dropdown';
 import { ChevronDownIcon, Projector, TagsIcon } from 'lucide-react';
