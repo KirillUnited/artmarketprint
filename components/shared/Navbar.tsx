@@ -4,7 +4,7 @@ import { Button } from '@heroui/button';
 import { Navbar as BaseNavbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenu, NavbarMenuItem, NavbarMenuToggle } from '@heroui/navbar';
 import { Link } from '@heroui/link';
 import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@heroui/dropdown';
-import { ChevronDownIcon } from 'lucide-react';
+import { ChevronDownIcon, Projector, TagsIcon } from 'lucide-react';
 
 import { SearchIcon, TelegramIcon, ViberIcon } from '../icons';
 import BrandLogo from '../ui/BrandLogo';
@@ -72,7 +72,7 @@ export default function Navbar({ navigation }: any) {
 					<div className="hidden lg:block">
 						<HeroModalOffer />
 					</div>
-					<Drawer navigation={navigation} className="xl:hidden h-6 w-auto min-w-min"/>
+					<Drawer navigation={navigation} className="xl:hidden h-6 w-auto min-w-min" />
 				</div>
 			</div>
 		</BaseNavbar>
@@ -108,9 +108,11 @@ const NavbarDropdownMenu = ({ triggerLabel, items }: HeaderDropdownMenuProps) =>
 					title: 'font-semibold truncate max-w-full',
 				}}
 			>
-				<DropdownItem key={items[0].title} classNames={{
-					title: 'font-light'
-				}} href={items[0].url}>
+				<DropdownItem
+					startContent={<TagsIcon />}
+					key={items[0].title} classNames={{
+						title: 'font-light'
+					}} href={items[0].url}>
 					{items[0].title}
 				</DropdownItem>
 				{items[0]?.services?.map((item: any) => (

@@ -5,7 +5,7 @@ import React, { useState } from 'react'
 import clsx from 'clsx'
 import { Alert } from '@heroui/alert';
 
-import BrandButton from './BrandButton'
+import BrandButton from '../BrandButton'
 
 import { sendOrder } from '@/lib/actions/order.actions';
 
