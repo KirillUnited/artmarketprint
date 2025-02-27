@@ -12,7 +12,13 @@ import {siteConfig} from '@/config/site';
 import {ServiceDetailsProps} from '@/types';
 import {client} from '@/sanity/client';
 import {getSanityDocuments} from '@/lib/fetch-sanity-data';
-import Section, {SectionDescription, SectionHeading, SectionSubtitle, SectionTitle} from '@/components/layout/Section';
+import Section, {
+	SectionButton,
+	SectionDescription,
+	SectionHeading,
+	SectionSubtitle,
+	SectionTitle
+} from '@/components/layout/Section';
 
 export const Services = async () => {
 	const services = await getSanityDocuments();
@@ -29,19 +35,8 @@ export const Services = async () => {
 					<SectionTitle>Популярные услуги</SectionTitle>
 					<SectionDescription>{siteConfig.serviceSection.description}</SectionDescription>
 				</SectionHeading>
-				<Button
-					as={Link}
-					className="bg-brand-gradient text-fill-transparent font-semibold border-1 hidden lg:flex"
-					color="secondary"
-					href={siteConfig.serviceSection.href}
-					radius="sm"
-					size="md"
-					target="_blank"
-					variant="bordered"
-				>
-					<span className="leading-none">Все услуги</span>
-					<ArrowUpRightIcon className="text-secondary" size={18} />
-				</Button>
+
+				<SectionButton className="hidden lg:flex" href={siteConfig.serviceSection.href} label="Все услуги" />
 			</div>
 
 			<div className="grid grid-cols-[var(--grid-template-columns)] gap-8">
@@ -58,19 +53,7 @@ export const Services = async () => {
 				))}
 			</div>
 
-			<Button
-				as={Link}
-				className="bg-brand-gradient text-fill-transparent font-semibold border-1 lg:hidden flex"
-				color="secondary"
-				href={siteConfig.serviceSection.href}
-				radius="sm"
-				size="md"
-				target="_blank"
-				variant="bordered"
-			>
-				<span className="leading-none">Все услуги</span>
-				<ArrowUpRightIcon className="text-secondary" size={18} />
-			</Button>
+			<SectionButton className="lg:hidden flex" href={siteConfig.serviceSection.href} label="Все услуги" />
 		</Section>
 	);
 };

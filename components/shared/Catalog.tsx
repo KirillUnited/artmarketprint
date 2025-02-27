@@ -7,7 +7,13 @@ import BrandCard from '../ui/BrandCard';
 
 import {siteConfig} from '@/config/site';
 import {getSanityDocuments} from '@/lib/fetch-sanity-data';
-import Section, {SectionDescription, SectionHeading, SectionSubtitle, SectionTitle} from '@/components/layout/Section';
+import Section, {
+	SectionButton,
+	SectionDescription,
+	SectionHeading,
+	SectionSubtitle,
+	SectionTitle
+} from '@/components/layout/Section';
 import {getUrlFor} from '@/lib/utils';
 const CATEGORIES_QUERY = `*[
   _type == "category"
@@ -25,19 +31,8 @@ export const CatalogHeading = () => (
 			<SectionTitle>{siteConfig.catalogSection.title}</SectionTitle>
 			<SectionDescription>{siteConfig.catalogSection.description}</SectionDescription>
 		</SectionHeading>
-		<Button
-			as={Link}
-			className="bg-brand-gradient text-fill-transparent font-semibold border-1 hidden lg:flex"
-			color="secondary"
-			href={siteConfig.catalogSection.href}
-			radius="sm"
-			size="md"
-			target="_blank"
-			variant="bordered"
-		>
-			<span className="leading-none">Все категории</span>
-			<ArrowUpRightIcon className="text-secondary" size={18} />
-		</Button>
+
+		<SectionButton className="hidden lg:flex" href={siteConfig.catalogSection.href} label="Все категории" />
 	</div>
 );
 
@@ -66,19 +61,7 @@ export const Catalog = async () => {
 			<CatalogHeading />
 			{categories && <CategoryList categories={categories} />}
 
-			<Button
-				as={Link}
-				className="bg-brand-gradient text-fill-transparent font-semibold border-1 lg:hidden flex"
-				color="secondary"
-				href={siteConfig.catalogSection.href}
-				radius="sm"
-				size="md"
-				target="_blank"
-				variant="bordered"
-			>
-				<span className="leading-none">Все категории</span>
-				<ArrowUpRightIcon className="text-secondary" size={18} />
-			</Button>
+			<SectionButton className="lg:hidden flex" href={siteConfig.catalogSection.href} label="Все категории" />
 		</Section>
 	);
 };
