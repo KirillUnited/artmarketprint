@@ -27,8 +27,8 @@ export const BrandCardFooter = ({ variant, href }: { variant: string; href: stri
 		)}
 		{variant === 'product' && (
 			<div className="flex flex-wrap gap-4 md:gap-6 items-center justify-center border-t-1 border-foreground/20 pt-6 overflow-hidden">
-				<BrandModalOffer />
 				<BrandCardLink href={href} />
+				<BrandModalOffer />
 			</div>
 		)}
 	</>
