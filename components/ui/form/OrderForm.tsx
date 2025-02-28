@@ -9,6 +9,7 @@ import BrandButton from '@/components/ui/BrandButton';
 
 import { sendOrder } from '@/lib/actions/order.actions';
 
+import { PhoneNumberUtil } from "google-libphonenumber";
 import { defaultCountries, FlagImage, parseCountry, usePhoneInput } from "react-international-phone";
 import "react-international-phone/style.css";
 
@@ -17,12 +18,22 @@ const countries = defaultCountries.filter((country) => {
     const { iso2 } = parseCountry(country);
     return ['by', 'ru'].includes(iso2);
 });
+const phoneUtil = PhoneNumberUtil.getInstance();
+const isPhoneValid = (phone: string) => {
+    try {
+        return phoneUtil.isValidNumber(phoneUtil.parseAndKeepRawInput(phone));
+    } catch (error) {
+        return false;
+    }
+};
 
 export default function OrderForm({ className }: { className?: string }): JSX.Element {
     const [isPending, setIsPending] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
+    const [username, setUsername] = useState("");
     const [phone, setPhone] = useState("");
     const [error, setError] = useState("");
+    const validPhone = isPhoneValid(phone);
     const { inputValue, handlePhoneValueChange, inputRef, country, setCountry } = usePhoneInput(
         {
             defaultCountry: "by",
@@ -36,9 +47,11 @@ export default function OrderForm({ className }: { className?: string }): JSX.El
                     setError("");
                 }
             },
-            
+
         }
     );
+
+    console.log(validPhone)
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
@@ -47,6 +60,8 @@ export default function OrderForm({ className }: { className?: string }): JSX.El
 
         event.currentTarget.reset();
         setPhone('');
+        setUsername('');
+        setError('');
         setIsPending(true);
 
         try {
@@ -68,14 +83,8 @@ export default function OrderForm({ className }: { className?: string }): JSX.El
         <Form
             id='orderForm'
             className={clsx('gap-6', className)}
-            validationBehavior="native"
+            validationBehavior="aria"
             onSubmit={handleSubmit}>
-            <div className='flex flex-col gap-2'>
-                <h3 className="text-2xl md:text-3xl leading-[120%] font-bold">
-                    Оставить заявку
-                </h3>
-                <p>Оставьте заявку и мы свяжемся с Вами в ближайшее время</p>
-            </div>
             <div className="w-full flex flex-col gap-4">
                 {
                     showAlert && <Alert
@@ -97,6 +106,9 @@ export default function OrderForm({ className }: { className?: string }): JSX.El
                     placeholder="Напишите Ваше имя"
                     radius='sm'
                     variant="bordered"
+                    value={username}
+                    onValueChange={setUsername}
+                    isInvalid={!username}
                 />
                 {/* <Input
                     isRequired
@@ -128,7 +140,7 @@ export default function OrderForm({ className }: { className?: string }): JSX.El
                     name='user_phone'
                     radius='sm'
                     variant="bordered"
-                    isInvalid={!!error}
+                    isInvalid={!validPhone}
                     startContent={
                         <Select
                             selectedKeys={[country.iso2]}
@@ -175,7 +187,7 @@ export default function OrderForm({ className }: { className?: string }): JSX.El
             </div>
             <div className="w-full flex flex-wrap">
 
-                <BrandButton className='flex-1 basis-32 uppercase' isDisabled={isPending} isLoading={isPending} state='primary' type="submit">
+                <BrandButton className='flex-1 basis-32 uppercase' isDisabled={!!error || isPending} isLoading={isPending} state='primary' type="submit" size='md'>
                     {isPending ? 'Отправка...' : 'ОТПРАВИТЬ'}
                 </BrandButton>
             </div>
