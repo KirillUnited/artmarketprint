@@ -12,6 +12,7 @@ import { sendOrder } from '@/lib/actions/order.actions';
 import { PhoneNumberUtil } from "google-libphonenumber";
 import { defaultCountries, FlagImage, parseCountry, usePhoneInput } from "react-international-phone";
 import "react-international-phone/style.css";
+import useForm from '@/hooks/useForm';
 
 const countries = defaultCountries.filter((country) => {
     const { iso2 } = parseCountry(country);
@@ -27,47 +28,60 @@ const isPhoneValid = (phone: string) => {
 };
 
 export default function OrderForm({ className }: { className?: string }): JSX.Element {
-    const [isPending, setIsPending] = useState(false);
-    const [showAlert, setShowAlert] = useState(false);
-    // const [username, setUsername] = useState("");
-    const [phone, setPhone] = useState("");
-    const validPhone = isPhoneValid(phone);
-    const { inputValue, handlePhoneValueChange, inputRef, country, setCountry } = usePhoneInput(
-        {
-            defaultCountry: "by",
-            value: phone,
-            countries: countries,
-            defaultMask: '+375 (12) 345-67-89',
-            onChange: (data) => {
-                setPhone(data.phone);
-            },
+    const {
+        isPending,
+        showAlert,
+        inputValue,
+        handlePhoneValueChange,
+        inputRef,
+        country,
+        setCountry,
+        countries,
+        validPhone,
+        handleSubmit,
+        setShowAlert
+    } = useForm();
+    // const [isPending, setIsPending] = useState(false);
+    // const [showAlert, setShowAlert] = useState(false);
+    // // const [username, setUsername] = useState("");
+    // const [phone, setPhone] = useState("");
+    // const validPhone = isPhoneValid(phone);
+    // const { inputValue, handlePhoneValueChange, inputRef, country, setCountry } = usePhoneInput(
+    //     {
+    //         defaultCountry: "by",
+    //         value: phone,
+    //         countries: countries,
+    //         defaultMask: '+375 (12) 345-67-89',
+    //         onChange: (data) => {
+    //             setPhone(data.phone);
+    //         },
 
-        }
-    );
+    //     }
+    // );
 
-    async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-        event.preventDefault();
+    // async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    //     event.preventDefault();
 
-        const formData = new FormData(event.currentTarget);
+    //     const formData = new FormData(event.currentTarget);
 
-        event.currentTarget.reset();
-        setPhone('');
-        setIsPending(true);
+    //     event.currentTarget.reset();
+    //     setPhone('');
+    //     setIsPending(true);
 
-        try {
-            const result = await sendOrder(formData);
+    //     try {
+    //         const result = await sendOrder(formData);
 
-            if (result.ok) {
-                setIsPending(false);
-                setShowAlert(true);
-                setTimeout(() => {
-                    setShowAlert(false);
-                }, 3000);
-            }
-        } catch (error) {
-            console.log(error)
-        }
-    }
+    //         if (result.ok) {
+    //             setIsPending(false);
+    //             setShowAlert(true);
+    //             setTimeout(() => {
+    //                 setShowAlert(false);
+    //             }, 3000);
+    //         }
+    //     } catch (error) {
+    //         console.log(error)
+    //     }
+    // }
 
     return (
         <Form
