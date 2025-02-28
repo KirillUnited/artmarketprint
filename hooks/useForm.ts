@@ -28,7 +28,7 @@ interface UseFormReturn {
     setShowAlert: (value: boolean) => void;
 }
 
-const useForm = (phoneUtil: PhoneNumberUtil, onClose: () => void): UseFormReturn => {
+const useForm = (onClose: () => void): UseFormReturn => {
     const [isPending, setIsPending] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
     const [phone, setPhone] = useState('');

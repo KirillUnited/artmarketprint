@@ -19,7 +19,7 @@ import { PhoneNumberUtil } from 'google-libphonenumber';
 
 const phoneUtil = PhoneNumberUtil.getInstance();
 
-export const ModalOfferForm = ({ onClose }: { onClose: () => void }) => {
+export const ModalOfferForm = ({ onClose }: { onClose?: () => void }) => {
 	const {
 		isPending,
 		showAlert,
@@ -32,7 +32,7 @@ export const ModalOfferForm = ({ onClose }: { onClose: () => void }) => {
 		validPhone,
 		handleSubmit,
 		setShowAlert
-	} = useForm(phoneUtil, onClose);
+	} = useForm(onClose || (() => {}));
 
 	return (
 		<Form
