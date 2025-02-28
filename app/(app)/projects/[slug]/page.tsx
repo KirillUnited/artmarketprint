@@ -67,6 +67,7 @@ export default async function ProjectPage({ params }: { params: Promise<Props> }
                         className="absolute inset-0 object-cover w-full h-full"
                         width={1920}
                         height={1080}
+                        quality={50}
                     />
                 )}
                 <div className="container flex flex-col gap-10 max-w-4xl relative z-10">
@@ -95,7 +96,7 @@ export default async function ProjectPage({ params }: { params: Promise<Props> }
                         <p className="text-sm font-semibold">Услуги:</p>
                         {
                             project?.service_tags?.length > 0 && (
-                                <ProjectTagList tags={project.service_tags} />
+                                <ProjectTagList tags={project.service_tags} color='primary' />
                             )
                         }
                     </div>
@@ -103,7 +104,7 @@ export default async function ProjectPage({ params }: { params: Promise<Props> }
                         <p className="text-sm font-semibold">Категории:</p>
                         {
                             project?.category_tags?.length > 0 && (
-                                <ProjectTagList tags={project.category_tags} />
+                                <ProjectTagList tags={project.category_tags} color='secondary' />
                             )
                         }
                     </div>
