@@ -89,7 +89,7 @@ export default function BrandModalOffer() {
 
 	return (
 		<>
-			<BrandButton className="flex-1 min-w-fit" state="primary" onPress={onOpen}>
+			<BrandButton className="grow min-w-fit" state="primary" size='md' onPress={onOpen}>
 				ЗАКАЗАТЬ
 			</BrandButton>
 			<Modal backdrop="blur" className="bg-background" isOpen={isOpen} placement="top-center" onOpenChange={onOpenChange}>

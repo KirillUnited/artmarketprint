@@ -67,6 +67,7 @@ export default async function ProjectPage({ params }: { params: Promise<Props> }
                         className="absolute inset-0 object-cover w-full h-full"
                         width={1920}
                         height={1080}
+                        quality={50}
                     />
                 )}
                 <div className="container flex flex-col gap-10 max-w-4xl relative z-10">

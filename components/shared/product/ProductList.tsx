@@ -1,4 +1,4 @@
-import BrandCard from "@/components/ui/BrandCard";
+import {BrandCard} from "@/components/ui/card";
 
 export default function ProductList({ jsonData }: any) {
   return (

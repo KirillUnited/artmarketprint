@@ -3,9 +3,8 @@ import {Button} from '@heroui/button';
 import Image from 'next/image';
 import {SanityImageSource} from '@sanity/image-url/lib/types/types';
 import imageUrlBuilder from '@sanity/image-url';
-import {ArrowUpRightIcon} from 'lucide-react';
 
-import BrandCard from '../ui/BrandCard';
+import {BrandCard} from '../ui/card';
 import BrandModalOffer from '../ui/BrandModalOffer';
 
 import {siteConfig} from '@/config/site';
@@ -91,7 +90,7 @@ export const ServiceDetails = ({name, description, image, price, advantages, chi
 			<div className="flex flex-wrap gap-2 md:gap-4">
 				<BrandModalOffer />
 
-				<Button as={Link} className="bg-brand-gradient text-fill-transparent font-semibold flex-1 min-w-40" color="secondary" href={'#contacts'} radius="sm" size="lg" variant="ghost">
+				<Button as={Link} className="bg-brand-gradient text-fill-transparent font-semibold flex-1 min-w-40" color="secondary" href={'#contacts'} radius="sm" size="md" variant="ghost">
 					КОНСУЛЬТАЦИЯ
 				</Button>
 			</div>

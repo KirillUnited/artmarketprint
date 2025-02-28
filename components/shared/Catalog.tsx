@@ -1,9 +1,6 @@
-import Link from 'next/link';
-import {Button} from '@heroui/button';
-import {ArrowUpRightIcon} from 'lucide-react';
 import {SanityDocument} from 'next-sanity';
 
-import BrandCard from '../ui/BrandCard';
+import {BrandCard} from '../ui/card';
 
 import {siteConfig} from '@/config/site';
 import {getSanityDocuments} from '@/lib/fetch-sanity-data';
@@ -57,7 +54,7 @@ export const Catalog = async () => {
 	const categories: SanityDocument[] = await getSanityDocuments(CATEGORIES_QUERY);
 
 	return (
-		<Section className="relative" id="catalog" innerClassname="md:pt-0">
+		<Section className="relative" id="catalog">
 			<CatalogHeading />
 			{categories && <CategoryList categories={categories} />}
 
