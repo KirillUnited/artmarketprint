@@ -1,45 +1,31 @@
 'use client';
 import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from '@heroui/modal';
-import { Input } from '@heroui/input';
 import { Button } from '@heroui/button';
 import { Form } from '@heroui/form';
 import { CalendarIcon } from 'lucide-react';
-import { useState } from 'react';
 import { Alert } from '@heroui/alert';
 
 import BrandButton from './BrandButton';
 
-import { sendOrder } from '@/lib/actions/order.actions';
 import 'react-international-phone/style.css';
+import { UsernameInput, UserPhoneInput } from './form';
+import useForm from '@/hooks/useForm';
+import "react-international-phone/style.css";
 
-export const ModalOfferForm = ({ onClose }: { onClose: () => void }) => {
-	const [isPending, setIsPending] = useState(false);
-	const [showAlert, setShowAlert] = useState(false);
-	const phoneRegex = /^\+375[-\s]?\(?\d{2}\)?[-\s]?\d{3}[-\s]?\d{2}[-\s]?\d{2}$/;
-	
-	async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-		event.preventDefault();
-
-		const formData = new FormData(event.currentTarget);
-
-		event.currentTarget.reset();
-
-		setIsPending(true);
-
-		try {
-			const result = await sendOrder(formData);
-
-			if (result.ok) {
-				setIsPending(false);
-				setShowAlert(true);
-				setTimeout(() => {
-					onClose();
-				}, 3000);
-			}
-		} catch (error) {
-			console.log(error)
-		}
-	}
+export const ModalOfferForm = ({ onClose }: { onClose?: () => void }) => {
+	const {
+		isPending,
+		showAlert,
+		inputValue,
+		handlePhoneValueChange,
+		inputRef,
+		country,
+		setCountry,
+		countries,
+		validPhone,
+		handleSubmit,
+		setShowAlert
+	} = useForm(onClose || (() => {}));
 
 	return (
 		<Form
@@ -62,25 +48,13 @@ export const ModalOfferForm = ({ onClose }: { onClose: () => void }) => {
 			{!showAlert && (
 				<>
 					<ModalBody className="w-full">
-						<Input isRequired color="primary" errorMessage="Пожалуйста, введите Ваше имя" id="user_name" label="Имя" name="user_name" placeholder="Напишите Ваше имя" variant="bordered" />
-						<Input
-							isRequired
-							color="primary"
-							errorMessage="Пожалуйста, введите корректный номер в формате +375 (XX) XXX-XX-XX"
-							id="user_phone"
-							inputMode="tel"
-							label="Телефон"
-							name="user_phone"
-							placeholder="+375 (99) 999-99-99"
-							validate={(value) => {
-								if (!value.match(phoneRegex)) return 'Пожалуйста, введите корректный номер в формате +375 XX XXX-XX-XX';
-							}}
-							variant="bordered"
-						/>
-						{/*<BasePhoneInput />*/}
+						<UsernameInput />
+
+						<UserPhoneInput inputValue={inputValue} handlePhoneValueChange={handlePhoneValueChange} inputRef={inputRef} country={country} setCountry={setCountry} countries={countries} validPhone={validPhone} />
+						
 					</ModalBody>
 					<ModalFooter className="w-full">
-						<Button className="bg-brand-gradient text-fill-transparent font-semibold" color="secondary" radius="sm" size="lg" variant="ghost" onPress={onClose}>
+						<Button className="bg-brand-gradient text-fill-transparent font-semibold" color="secondary" radius="sm" size="md" variant="ghost" onPress={onClose}>
 							ОТМЕНА
 						</Button>
 						<BrandButton
@@ -99,6 +73,7 @@ export const ModalOfferForm = ({ onClose }: { onClose: () => void }) => {
 							}
 							state="primary"
 							type="submit"
+							size='md'
 						>
 							{isPending ? 'Отправка...' : 'ОТПРАВИТЬ'}
 						</BrandButton>
@@ -114,7 +89,7 @@ export default function BrandModalOffer() {
 
 	return (
 		<>
-			<BrandButton className="flex-1 basis-52" state="primary" onPress={onOpen}>
+			<BrandButton className="flex-1 min-w-fit" state="primary" onPress={onOpen}>
 				ЗАКАЗАТЬ
 			</BrandButton>
 			<Modal backdrop="blur" className="bg-background" isOpen={isOpen} placement="top-center" onOpenChange={onOpenChange}>
@@ -137,7 +112,7 @@ export function HeroModalOffer() {
 	return (
 		<>
 			<BrandButton className="leading-normal font-semibold group" state="primary" radius='sm' variant="solid" onPress={onOpen} size={'md'}>
-				<CalendarIcon size={18} className={'group-hover:scale-110 transition-transform'}/>
+				<CalendarIcon size={18} className={'group-hover:scale-110 transition-transform'} />
 				<span>ЗАКАЗАТЬ ЗВОНОК</span>
 			</BrandButton>
 			<Modal backdrop="blur" className='bg-background' isOpen={isOpen} placement="top-center" onOpenChange={onOpenChange}>
