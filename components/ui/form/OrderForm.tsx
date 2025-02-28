@@ -13,7 +13,6 @@ import { PhoneNumberUtil } from "google-libphonenumber";
 import { defaultCountries, FlagImage, parseCountry, usePhoneInput } from "react-international-phone";
 import "react-international-phone/style.css";
 
-const phoneRegex = /^\+375(29|33|25|44)\d{7}$/;
 const countries = defaultCountries.filter((country) => {
     const { iso2 } = parseCountry(country);
     return ['by', 'ru'].includes(iso2);
@@ -30,28 +29,21 @@ const isPhoneValid = (phone: string) => {
 export default function OrderForm({ className }: { className?: string }): JSX.Element {
     const [isPending, setIsPending] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
-    const [username, setUsername] = useState("");
+    // const [username, setUsername] = useState("");
     const [phone, setPhone] = useState("");
-    const [error, setError] = useState("");
     const validPhone = isPhoneValid(phone);
     const { inputValue, handlePhoneValueChange, inputRef, country, setCountry } = usePhoneInput(
         {
             defaultCountry: "by",
             value: phone,
             countries: countries,
+            defaultMask: '+375 (12) 345-67-89',
             onChange: (data) => {
                 setPhone(data.phone);
-                if (data.country.iso2 === "by" && !phoneRegex.test(data.phone)) {
-                    setError("Invalid Belarus phone number");
-                } else {
-                    setError("");
-                }
             },
 
         }
     );
-
-    console.log(validPhone)
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
@@ -60,8 +52,6 @@ export default function OrderForm({ className }: { className?: string }): JSX.El
 
         event.currentTarget.reset();
         setPhone('');
-        setUsername('');
-        setError('');
         setIsPending(true);
 
         try {
@@ -83,7 +73,7 @@ export default function OrderForm({ className }: { className?: string }): JSX.El
         <Form
             id='orderForm'
             className={clsx('gap-6', className)}
-            validationBehavior="aria"
+            validationBehavior="native"
             onSubmit={handleSubmit}>
             <div className="w-full flex flex-col gap-4">
                 {
@@ -106,25 +96,7 @@ export default function OrderForm({ className }: { className?: string }): JSX.El
                     placeholder="Напишите Ваше имя"
                     radius='sm'
                     variant="bordered"
-                    value={username}
-                    onValueChange={setUsername}
-                    isInvalid={!username}
                 />
-                {/* <Input
-                    isRequired
-                    color="primary"
-                    errorMessage="Пожалуйста, введите действительный номер телефона"
-                    id='user_phone'
-                    label="Телефон"
-                    name='user_phone'
-                    placeholder="+375 (99) 999-99-99"
-                    radius='sm'
-                    type="tel"
-                    validate={(value) => {
-                        if (!value.match(phoneRegex)) return 'Пожалуйста, введите корректный номер в формате +375 XX XXX-XX-XX';
-                    }}
-                    variant="bordered"
-                /> */}
                 <Input
                     value={inputValue}
                     onChange={handlePhoneValueChange}
@@ -140,7 +112,10 @@ export default function OrderForm({ className }: { className?: string }): JSX.El
                     name='user_phone'
                     radius='sm'
                     variant="bordered"
-                    isInvalid={!validPhone}
+                    validate={(value) => {
+                        if (!validPhone) return 'Пожалуйста, введите корректный номер в формате +375 XX XXX-XX-XX';
+                    }}
+                    placeholder='+375 (__) ___-__-__'
                     startContent={
                         <Select
                             selectedKeys={[country.iso2]}
@@ -187,7 +162,7 @@ export default function OrderForm({ className }: { className?: string }): JSX.El
             </div>
             <div className="w-full flex flex-wrap">
 
-                <BrandButton className='flex-1 basis-32 uppercase' isDisabled={!!error || isPending} isLoading={isPending} state='primary' type="submit" size='md'>
+                <BrandButton className='flex-1 basis-32 uppercase' isDisabled={isPending} isLoading={isPending} state='primary' type="submit" size='md'>
                     {isPending ? 'Отправка...' : 'ОТПРАВИТЬ'}
                 </BrandButton>
             </div>
