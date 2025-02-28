@@ -1,31 +1,14 @@
 'use client';
 import { Form } from '@heroui/form'
 import { Input, Textarea } from '@heroui/input'
-import React, { useState } from 'react'
+import React from 'react'
 import clsx from 'clsx'
 import { Alert } from '@heroui/alert';
 import { Select, SelectItem } from "@heroui/select";
 import BrandButton from '@/components/ui/BrandButton';
-
-import { sendOrder } from '@/lib/actions/order.actions';
-
-import { PhoneNumberUtil } from "google-libphonenumber";
-import { defaultCountries, FlagImage, parseCountry, usePhoneInput } from "react-international-phone";
+import { FlagImage, parseCountry } from "react-international-phone";
 import "react-international-phone/style.css";
 import useForm from '@/hooks/useForm';
-
-const countries = defaultCountries.filter((country) => {
-    const { iso2 } = parseCountry(country);
-    return ['by', 'ru'].includes(iso2);
-});
-const phoneUtil = PhoneNumberUtil.getInstance();
-const isPhoneValid = (phone: string) => {
-    try {
-        return phoneUtil.isValidNumber(phoneUtil.parseAndKeepRawInput(phone));
-    } catch (error) {
-        return false;
-    }
-};
 
 export default function OrderForm({ className }: { className?: string }): JSX.Element {
     const {
@@ -41,47 +24,6 @@ export default function OrderForm({ className }: { className?: string }): JSX.El
         handleSubmit,
         setShowAlert
     } = useForm();
-    // const [isPending, setIsPending] = useState(false);
-    // const [showAlert, setShowAlert] = useState(false);
-    // // const [username, setUsername] = useState("");
-    // const [phone, setPhone] = useState("");
-    // const validPhone = isPhoneValid(phone);
-    // const { inputValue, handlePhoneValueChange, inputRef, country, setCountry } = usePhoneInput(
-    //     {
-    //         defaultCountry: "by",
-    //         value: phone,
-    //         countries: countries,
-    //         defaultMask: '+375 (12) 345-67-89',
-    //         onChange: (data) => {
-    //             setPhone(data.phone);
-    //         },
-
-    //     }
-    // );
-
-    // async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    //     event.preventDefault();
-
-    //     const formData = new FormData(event.currentTarget);
-
-    //     event.currentTarget.reset();
-    //     setPhone('');
-    //     setIsPending(true);
-
-    //     try {
-    //         const result = await sendOrder(formData);
-
-    //         if (result.ok) {
-    //             setIsPending(false);
-    //             setShowAlert(true);
-    //             setTimeout(() => {
-    //                 setShowAlert(false);
-    //             }, 3000);
-    //         }
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
-    // }
 
     return (
         <Form
