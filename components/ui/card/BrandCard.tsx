@@ -9,6 +9,7 @@ import clsx from 'clsx';
 import BrandModalOffer from '../BrandModalOffer';
 
 import { BrandCardProps } from '@/types';
+import { ShoppingCartIcon } from 'lucide-react';
 
 export const BrandCardLink = ({ href }: { href: string }) => (
 	<Button
@@ -38,7 +39,7 @@ export const BrandCardFooter = ({ variant, href }: { variant: string; href: stri
 		{variant === 'product' && (
 			<div className="flex flex-wrap gap-3 items-center justify-center border-t-1 border-foreground/20 pt-6 overflow-hidden">
 				{/* <BrandCardLink href={href} /> */}
-				<BrandModalOffer />
+				<BrandModalOffer icon={<ShoppingCartIcon size={18} />} />
 			</div>
 		)}
 	</>

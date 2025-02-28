@@ -84,13 +84,14 @@ export const ModalOfferForm = ({ onClose }: { onClose?: () => void }) => {
 	);
 };
 
-export default function BrandModalOffer() {
+export default function BrandModalOffer({icon}: {icon?: React.ReactNode}) {
 	const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
 	return (
 		<>
 			<BrandButton className="grow min-w-fit" state="primary" size='md' onPress={onOpen}>
-				ЗАКАЗАТЬ
+				{icon}
+				<span>ЗАКАЗАТЬ</span>
 			</BrandButton>
 			<Modal backdrop="blur" className="bg-background" isOpen={isOpen} placement="top-center" onOpenChange={onOpenChange}>
 				<ModalContent>
