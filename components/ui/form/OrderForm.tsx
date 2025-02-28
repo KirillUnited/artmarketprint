@@ -5,37 +5,40 @@ import React, { useState } from 'react'
 import clsx from 'clsx'
 import { Alert } from '@heroui/alert';
 import { Select, SelectItem } from "@heroui/select";
-import BrandButton from '../BrandButton'
+import BrandButton from '@/components/ui/BrandButton';
 
 import { sendOrder } from '@/lib/actions/order.actions';
-
 
 import { defaultCountries, FlagImage, parseCountry, usePhoneInput } from "react-international-phone";
 import "react-international-phone/style.css";
 
+const phoneRegex = /^\+375(29|33|25|44)\d{7}$/;
+const countries = defaultCountries.filter((country) => {
+    const { iso2 } = parseCountry(country);
+    return ['by', 'ru'].includes(iso2);
+});
 
 export default function OrderForm({ className }: { className?: string }): JSX.Element {
     const [isPending, setIsPending] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
     const [phone, setPhone] = useState("");
-
     const [error, setError] = useState("");
-    const { inputValue, handlePhoneValueChange, inputRef, country, setCountry } =
-        usePhoneInput({
+    const { inputValue, handlePhoneValueChange, inputRef, country, setCountry } = usePhoneInput(
+        {
             defaultCountry: "by",
             value: phone,
-            countries: defaultCountries,
+            countries: countries,
             onChange: (data) => {
                 setPhone(data.phone);
-                if (data.country.iso2 === "by" && !/^\+375(29|33|25|44)\d{7}$/.test(data.phone)) {
+                if (data.country.iso2 === "by" && !phoneRegex.test(data.phone)) {
                     setError("Invalid Belarus phone number");
-                  } else {
+                } else {
                     setError("");
-                  }
+                }
             },
-        });
-
-    const phoneRegex = /^\+375[-\s]?\(?\d{2}\)?[-\s]?\d{3}[-\s]?\d{2}[-\s]?\d{2}$/;
+            
+        }
+    );
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
@@ -44,7 +47,6 @@ export default function OrderForm({ className }: { className?: string }): JSX.El
 
         event.currentTarget.reset();
         setPhone('');
-
         setIsPending(true);
 
         try {
@@ -141,7 +143,7 @@ export default function OrderForm({ className }: { className?: string }): JSX.El
                                 trigger: 'bg-transparent data-[hover=true]:bg-transparent group-data-[focus=true]:bg-transparent px-0',
                             }}
                         >
-                            {defaultCountries.map((c) => {
+                            {countries.map((c) => {
                                 const country = parseCountry(c);
 
                                 return (
@@ -152,7 +154,7 @@ export default function OrderForm({ className }: { className?: string }): JSX.El
                                         <div className="flex items-center gap-2">
                                             <FlagImage iso2={country.iso2} />
                                             <span>{country.name}</span>
-                                            <span>+{country.dialCode}</span>
+                                            <span className='font-light text-gray-600'>+{country.dialCode}</span>
                                         </div>
                                     </SelectItem>
                                 );
