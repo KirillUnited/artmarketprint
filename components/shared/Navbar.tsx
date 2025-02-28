@@ -4,7 +4,7 @@ import { Button } from '@heroui/button';
 import { Navbar as BaseNavbar, NavbarBrand, NavbarContent, NavbarItem } from '@heroui/navbar';
 import { Link } from '@heroui/link';
 import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@heroui/dropdown';
-import { ChevronDownIcon, Projector, TagsIcon } from 'lucide-react';
+import { ChevronDownIcon, Settings, TagsIcon } from 'lucide-react';
 
 import { SearchIcon, TelegramIcon, ViberIcon } from '../icons';
 import BrandLogo from '../ui/BrandLogo';
@@ -109,7 +109,7 @@ const NavbarDropdownMenu = ({ triggerLabel, items }: HeaderDropdownMenuProps) =>
 				}}
 			>
 				<DropdownItem
-					startContent={<TagsIcon />}
+					startContent={triggerLabel === 'Услуги' ? <Settings />: <TagsIcon />}
 					key={items[0].title} classNames={{
 						title: 'font-light'
 					}} href={items[0].url}>
