@@ -28,7 +28,7 @@ interface UseFormReturn {
     setShowAlert: (value: boolean) => void;
 }
 
-const useForm = (): UseFormReturn => {
+const useForm = (phoneUtil: PhoneNumberUtil, onClose: () => void): UseFormReturn => {
     const [isPending, setIsPending] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
     const [phone, setPhone] = useState('');
@@ -59,7 +59,10 @@ const useForm = (): UseFormReturn => {
             if (result.ok) {
                 setIsPending(false);
                 setShowAlert(true);
-                setTimeout(() => setShowAlert(false), 3000);
+                setTimeout(() => {
+                    typeof onClose === 'function' && onClose();
+                    setShowAlert(false)
+                }, 3000);
             }
         } catch (error) {
             console.error(error);

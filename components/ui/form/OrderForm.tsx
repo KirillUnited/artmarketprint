@@ -9,8 +9,11 @@ import BrandButton from '@/components/ui/BrandButton';
 import { FlagImage, parseCountry } from "react-international-phone";
 import "react-international-phone/style.css";
 import useForm from '@/hooks/useForm';
+import { PhoneNumberUtil } from 'google-libphonenumber';
 
-export default function OrderForm({ className }: { className?: string }): JSX.Element {
+const phoneUtil = PhoneNumberUtil.getInstance();
+
+export default function OrderForm({ className, onClose }: { className?: string, onClose: () => void }): JSX.Element {
     const {
         isPending,
         showAlert,
@@ -23,7 +26,7 @@ export default function OrderForm({ className }: { className?: string }): JSX.El
         validPhone,
         handleSubmit,
         setShowAlert
-    } = useForm();
+    } = useForm(phoneUtil, onClose);
 
     return (
         <Form
