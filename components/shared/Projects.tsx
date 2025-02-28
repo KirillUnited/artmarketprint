@@ -1,16 +1,16 @@
 import Link from 'next/link';
-import {Button} from '@heroui/button';
-import {SanityDocument} from 'next-sanity';
-import {Card, CardFooter} from '@heroui/card';
-import {Image} from '@heroui/image';
+import { Button } from '@heroui/button';
+import { SanityDocument } from 'next-sanity';
+import { Card, CardFooter } from '@heroui/card';
+import { Image } from '@heroui/image';
 import clsx from 'clsx';
-import {Suspense} from 'react';
+import { Suspense } from 'react';
 
-import Section, {SectionButton, SectionDescription, SectionHeading, SectionSubtitle, SectionTitle} from '@/components/layout/Section';
-import {getSanityDocuments} from '@/lib/fetch-sanity-data';
-import {PROJECTS_QUERY} from '@/sanity/lib/queries';
+import Section, { SectionButton, SectionDescription, SectionHeading, SectionSubtitle, SectionTitle } from '@/components/layout/Section';
+import { getSanityDocuments } from '@/lib/fetch-sanity-data';
+import { PROJECTS_QUERY } from '@/sanity/lib/queries';
 
-export const ProjectsHeading = ({title, subtitle, description}: {title?: string; subtitle?: string; description?: string}) => (
+export const ProjectsHeading = ({ title, subtitle, description }: { title?: string; subtitle?: string; description?: string }) => (
 	<div className="flex flex-wrap items-end justify-between gap-4">
 		<SectionHeading>
 			<SectionSubtitle>{subtitle}</SectionSubtitle>
@@ -22,11 +22,17 @@ export const ProjectsHeading = ({title, subtitle, description}: {title?: string;
 	</div>
 );
 
-export const ProjectTagList = ({tags}: {tags: {_id: string; title: string}[]}) => {
+export const ProjectTagList = ({ tags, color }: { tags: { _id: string; title: string }[], color?: 'primary' | 'secondary' }) => {
 	return (
-		<ul className="flex flex-wrap gap-2">
-			{tags?.map(({_id, title}: {_id: string; title: string}) => (
-				<li key={_id} className="text-tiny text-white/80 bg-primary rounded-small px-1 self-start leading-normal">
+		<ul className="flex flex-wrap gap-2 line-clamp-1">
+			{tags?.map(({ _id, title }: { _id: string; title: string }, index) => (
+				<li key={_id} className={clsx(
+					"text-tiny rounded-small px-1 self-start leading-normal",
+					{
+						'bg-secondary text-white/80': color === 'secondary',
+						'bg-primary text-white/80': color === 'primary',
+					}
+				)}>
 					{title}
 				</li>
 			))}
@@ -34,13 +40,15 @@ export const ProjectTagList = ({tags}: {tags: {_id: string; title: string}[]}) =
 	);
 };
 
-export const ProjectCard = ({project}: {project: SanityDocument}) => (
-	<Card isFooterBlurred as={Link} className="h-full group" href={`/projects/${project.currentSlug}`} radius="sm">
+export const ProjectCard = ({ project }: { project: SanityDocument }) => (
+	<Card isFooterBlurred as={Link} className="h-full group relative" href={`/projects/${project.currentSlug}`} radius="sm">
+		<div className="absolute top-3 left-3 z-10 flex flex-wrap gap-2">
+			{project?.service_tags?.length > 0 && <ProjectTagList tags={project.service_tags} color='primary' />}
+			{project?.category_tags?.length > 0 && <ProjectTagList tags={project.category_tags} color='secondary' />}
+		</div>
 		<Image removeWrapper alt={project.altText} className="z-0 w-full h-full object-cover" radius="sm" src={project.imageUrl} />
 		<CardFooter className="absolute bg-black/40 bottom-0 w-full z-10 max-h-0 overflow-hidden group-hover:max-h-full transition-all duration-700 p-0">
 			<div className="flex flex-col gap-4 p-3 w-full">
-				{project?.service_tags?.length > 0 && <ProjectTagList tags={project.service_tags} />}
-				{project?.category_tags?.length > 0 && <ProjectTagList tags={project.category_tags} />}
 				<div className="flex flex-col gap-2">
 					<h4 className="text-lg font-semibold text-white/80 line-clamp-2 leading-tight">{project.title}</h4>
 					<p className="text-xs text-white/80">{project.shortDescription}</p>
@@ -53,7 +61,7 @@ export const ProjectCard = ({project}: {project: SanityDocument}) => (
 	</Card>
 );
 
-export const ProjectList = ({projectList, bentoGrid = true, className}: {projectList: SanityDocument[]; bentoGrid?: boolean; className?: string}) => {
+export const ProjectList = ({ projectList, bentoGrid = true, className }: { projectList: SanityDocument[]; bentoGrid?: boolean; className?: string }) => {
 	if (projectList.length === 0) return <p className="text-center text-gray-500 mt-4">Пока нет выполненных проектов.</p>;
 
 	return (
@@ -77,8 +85,8 @@ export const ProjectList = ({projectList, bentoGrid = true, className}: {project
 };
 
 export const Projects = async () => {
-	const data = await getSanityDocuments(PROJECTS_QUERY, {limit: 3});
-	const {subtitle = '', projects = []} = data?.[0] || {};
+	const data = await getSanityDocuments(PROJECTS_QUERY, { limit: 3 });
+	const { subtitle = '', projects = [] } = data?.[0] || {};
 
 	if (!data || data.length === 0) {
 		console.warn('Нет данных о проектах');

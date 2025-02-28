@@ -96,7 +96,7 @@ export default async function ProjectPage({ params }: { params: Promise<Props> }
                         <p className="text-sm font-semibold">Услуги:</p>
                         {
                             project?.service_tags?.length > 0 && (
-                                <ProjectTagList tags={project.service_tags} />
+                                <ProjectTagList tags={project.service_tags} color='primary' />
                             )
                         }
                     </div>
@@ -104,7 +104,7 @@ export default async function ProjectPage({ params }: { params: Promise<Props> }
                         <p className="text-sm font-semibold">Категории:</p>
                         {
                             project?.category_tags?.length > 0 && (
-                                <ProjectTagList tags={project.category_tags} />
+                                <ProjectTagList tags={project.category_tags} color='secondary' />
                             )
                         }
                     </div>
