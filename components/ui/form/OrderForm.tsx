@@ -1,14 +1,14 @@
 'use client';
 import { Form } from '@heroui/form'
-import { Input, Textarea } from '@heroui/input'
 import React from 'react'
 import clsx from 'clsx'
 import { Alert } from '@heroui/alert';
-import { Select, SelectItem } from "@heroui/select";
 import BrandButton from '@/components/ui/BrandButton';
-import { FlagImage, parseCountry } from "react-international-phone";
 import "react-international-phone/style.css";
 import useForm from '@/hooks/useForm';
+import { UsernameInput } from './UsernameInput';
+import { UserPhoneInput } from './UserPhoneInput';
+import { UserTextareaInput } from './UserTextareaInput';
 
 export default function OrderForm({ className, onClose }: { className?: string, onClose?: () => void }): JSX.Element {
     const {
@@ -23,7 +23,7 @@ export default function OrderForm({ className, onClose }: { className?: string, 
         validPhone,
         handleSubmit,
         setShowAlert
-    } = useForm(onClose || (() => {}));
+    } = useForm(onClose || (() => { }));
 
     return (
         <Form
@@ -41,80 +41,11 @@ export default function OrderForm({ className, onClose }: { className?: string, 
                         variant='solid'
                         onClose={() => setShowAlert(false)}
                     />}
-                <Input
-                    isRequired
-                    color="primary"
-                    errorMessage="Пожалуйста, введите Ваше имя"
-                    id='user_name'
-                    label="Имя"
-                    labelPlacement='outside'
-                    name='user_name'
-                    placeholder="Напишите Ваше имя"
-                    radius='sm'
-                    variant="bordered"
-                />
-                <Input
-                    value={inputValue}
-                    onChange={handlePhoneValueChange}
-                    type="tel"
-                    ref={inputRef}
-                    aria-label={'Телефон'}
-                    isRequired
-                    color="primary"
-                    errorMessage="Пожалуйста, введите действительный номер телефона"
-                    id='user_phone'
-                    label="Телефон"
-                    labelPlacement='outside'
-                    name='user_phone'
-                    radius='sm'
-                    variant="bordered"
-                    validate={(value) => {
-                        if (!validPhone) return 'Пожалуйста, введите корректный номер в формате +375 XX XXX-XX-XX';
-                    }}
-                    placeholder='+375 (__) ___-__-__'
-                    startContent={
-                        <Select
-                            selectedKeys={[country.iso2]}
-                            onChange={(e) => setCountry(e.target.value)}
-                            className="w-16"
-                            startContent={<FlagImage iso2={country.iso2} />}
-                            aria-label="Select country"
-                            classNames={{
-                                popoverContent: 'w-60',
-                                value: 'hidden',
-                                listbox: 'w-60',
-                                trigger: 'bg-transparent data-[hover=true]:bg-transparent group-data-[focus=true]:bg-transparent px-0',
-                            }}
-                        >
-                            {countries.map((c) => {
-                                const country = parseCountry(c);
+                <UsernameInput />
 
-                                return (
-                                    <SelectItem
-                                        key={country.iso2}
-                                        textValue={country.name}
-                                    >
-                                        <div className="flex items-center gap-2">
-                                            <FlagImage iso2={country.iso2} />
-                                            <span>{country.name}</span>
-                                            <span className='font-light text-gray-600'>+{country.dialCode}</span>
-                                        </div>
-                                    </SelectItem>
-                                );
-                            })}
-                        </Select>
-                    }
-                />
-                <Textarea
-                    color="primary"
-                    id='comment'
-                    label="Комментарий"
-                    labelPlacement='outside'
-                    name='user_comment'
-                    placeholder="Введите Ваш комментарий"
-                    radius='sm'
-                    variant="bordered"
-                />
+                <UserPhoneInput inputValue={inputValue} handlePhoneValueChange={handlePhoneValueChange} inputRef={inputRef} country={country} setCountry={setCountry} countries={countries} validPhone={validPhone} />
+
+                <UserTextareaInput />
             </div>
             <div className="w-full flex flex-wrap">
 
