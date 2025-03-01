@@ -1,3 +1,5 @@
+import { PROJECT_FIELDS } from "./project.query";
+
 export const NAVIGATION_QUERY = `*[_type == "navigation"] {
     _id,
     title,
@@ -53,9 +55,65 @@ export const FAQ_QUERY = `*[_type == "page"][0] {
     }
   }
 }`;
-
+export const SECTION_FIELDS = `
+    title,
+    description,
+    isActive,
+    link,
+    subtitle
+`;
 export const HOME_PAGE_QUERY = `*[_id == "siteSettings"][0]{
     homePage->{
-      content
+      content[] {
+        _type == "hero" => {
+          _key,
+          _type,
+          slides[]
+        },
+        _type == "serviceList" => {
+          _key,
+          _type,
+          ${SECTION_FIELDS},
+          services[]->
+        },
+        _type == "imageTextBlock" => {
+          _key,
+          _type,
+          ${SECTION_FIELDS},
+          "imageUrl": image.asset->url,
+          ctaButtonList[],
+          orientation
+        },
+        _type == "categoryList" => {
+          _key,
+          _type,
+          ${SECTION_FIELDS},
+          services[]->
+        },
+        _type == "projectList" => {
+          _key,
+          _type,
+          ${SECTION_FIELDS},
+          showLastProjects,
+          projects[]-> {
+            ${PROJECT_FIELDS}
+          }
+        },
+        _type == "faqs" => {
+          _key,
+          _type,
+          ${SECTION_FIELDS},
+          faqs[]->,
+          faqsFooter
+        },
+        _type == "contactUsBlock" => {
+          _key,
+          _type,
+          ${SECTION_FIELDS},
+          showContactForm,
+          showContacts,
+          showMapEmbed
+        },
+      }
     }
   }`;

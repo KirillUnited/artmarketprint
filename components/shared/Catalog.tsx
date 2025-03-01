@@ -12,14 +12,7 @@ import Section, {
 	SectionTitle
 } from '@/components/layout/Section';
 import { getUrlFor } from '@/lib/utils';
-const CATEGORIES_QUERY = `*[
-  _type == "category"
-  && defined(slug.current)
-]|order(publishedAt desc)[0...4]{title,
-    description,
-    image, 
-    price,
-    "currentSlug": slug.current}`;
+import { CATEGORIES_QUERY } from '@/sanity/lib/category.query';
 
 export const CatalogHeading = ({ categoryItemsCount }: { categoryItemsCount: number }) => (
 	<div className="flex flex-wrap items-end justify-between gap-4">

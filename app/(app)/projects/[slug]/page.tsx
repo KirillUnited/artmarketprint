@@ -7,7 +7,7 @@ import { PortableText, SanityDocument } from "next-sanity";
 import { getSanityDocuments } from "@/lib/fetch-sanity-data";
 import { NAVIGATION_QUERY, PROJECT_QUERY, PROJECT_SLUGS_QUERY } from "@/sanity/lib/queries";
 import Section from "@/components/layout/Section";
-import { ProjectTagList } from "@/components/shared/Projects";
+import { ProjectTagList } from "@/components/shared/project";
 import { client } from "@/sanity/client";
 
 type Props = {
@@ -30,7 +30,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Promise<Props> }) {
     const data = await getSanityDocuments(PROJECT_QUERY, await params);
-    const { title = '', shortDescription = '', keywords = '' } = data?.[0]?.projects[0] || {};
+    const { title = '', shortDescription = '', keywords = '' } = data?.[0] || {};
 
     return {
         title: `${title || ''}`,
@@ -47,14 +47,13 @@ export async function generateMetadata({ params }: { params: Promise<Props> }) {
 export default async function ProjectPage({ params }: { params: Promise<Props> }) {
     const data = await getSanityDocuments(PROJECT_QUERY, await params);
     const breadcrumbs = (await client.fetch(NAVIGATION_QUERY))[0].links;
-    const project = data?.[0]?.projects[0] || {};
+    const project = data?.[0] || {};
 
     if (!data || data.length === 0) {
         console.warn("Нет данных о проекте");
 
         return <p className="text-center text-gray-500 mt-10">Нет данных о проекте</p>
     }
-
     return (
         <>
             <section
