@@ -17,7 +17,7 @@ export const ProjectList = ({ projectList, bentoGrid = true, className }: { proj
             )}
         >
             {projectList.map((project: SanityDocument) => (
-                <li key={project.title}>
+                <li key={project._id}>
                     <ProjectCard project={project} />
                 </li>
             ))}

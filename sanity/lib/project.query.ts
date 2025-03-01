@@ -1,17 +1,21 @@
-export const PROJECTS_QUERY = `*[_type == "project" && defined(slug.current)][0...$limit] {
+export const PROJECT_FIELDS = `
+    _id,
     title,
-      "currentSlug": slug.current,
-      shortDescription,
-      "imageUrl": image.asset->url,
-      altText,
-      category_tags[]->{
-        _id,
-        title
-      },
-      service_tags[]->{
-        _id,
-        title
-      }
+    "currentSlug": slug.current,
+    shortDescription,
+    "imageUrl": image.asset->url,
+    altText,
+    category_tags[]->{
+      _id,
+      title
+    },
+    service_tags[]->{
+      _id,
+      title
+    }
+`;
+export const PROJECTS_QUERY = `*[_type == "project" && defined(slug.current)][0...$limit] {
+    ${PROJECT_FIELDS}
   }`;
 
 export const PROJECTS_BY_SERVICE_QUERY = `*[_type == "completedProjects"] {

@@ -1,3 +1,5 @@
+import { PROJECT_FIELDS } from "./project.query";
+
 export const NAVIGATION_QUERY = `*[_type == "navigation"] {
     _id,
     title,
@@ -93,7 +95,9 @@ export const HOME_PAGE_QUERY = `*[_id == "siteSettings"][0]{
           _type,
           ${SECTION_FIELDS},
           showLastProjects,
-          projects[]->
+          projects[]-> {
+            ${PROJECT_FIELDS}
+          }
         },
         _type == "faqs" => {
           _key,
