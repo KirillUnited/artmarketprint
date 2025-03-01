@@ -44,23 +44,9 @@ export const PROJECTS_BY_CATEGORY_QUERY = `*[_type == "completedProjects"] {
       },
     }
   }`;
-export const PROJECT_QUERY = `*[_type == "completedProjects"] {
-    projects[slug.current == $slug]{
-      title,
-      "currentSlug": slug.current,
-      shortDescription,
-      description,
-      "imageUrl": image.asset->url,
-      altText,
-      category_tags[]->{
-        _id,
-        title
-      },
-      service_tags[]->{
-        _id,
-        title
-      }
-    }
+export const PROJECT_QUERY = `*[_type == "project"][slug.current == $slug] {
+    ${PROJECT_FIELDS},
+    description
   }`;
 export const PROJECT_SLUGS_QUERY: string = `*[_type == "completedProjects"] {
     projects[] {
