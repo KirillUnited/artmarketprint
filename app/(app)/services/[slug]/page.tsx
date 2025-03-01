@@ -15,7 +15,7 @@ import { getUrlFor } from "@/lib/utils";
 import { ProjectList, ProjectsHeading } from "@/components/shared/project";
 import { NAVIGATION_QUERY, PROJECTS_BY_SERVICE_QUERY, PROJECTS_QUERY } from "@/sanity/lib/queries";
 import Section, { SectionButton } from "@/components/layout/Section";
-import {OrderForm} from "@/components/ui/form";
+import { OrderForm } from "@/components/ui/form";
 
 type Props = {
     slug: string
@@ -58,8 +58,8 @@ export default async function ServicePage({ params }: { params: Promise<Props> }
         ? urlFor(service.image)?.width(550).height(310).url()
         : null;
 
-    const filteredProjects = await client.fetch<SanityDocument>(PROJECTS_BY_SERVICE_QUERY, await params, options);
-    const { projects = [] } = filteredProjects?.[0] || {};
+    const relatedProjects = await client.fetch<SanityDocument>(PROJECTS_BY_SERVICE_QUERY, await params, options);
+    const relatedProjectsArray = Array.isArray(relatedProjects) ? relatedProjects : [relatedProjects];
 
     return (
         <>
@@ -103,7 +103,7 @@ export default async function ServicePage({ params }: { params: Promise<Props> }
             <Section className="bg-[#F9F9F9]">
                 <ProjectsHeading title='Примеры работ' subtitle={'галерея'} description={'Портфолио выполненных работ'} />
 
-                <ProjectList projectList={projects} bentoGrid={false} />
+                <ProjectList projectList={relatedProjectsArray} bentoGrid={false} />
 
                 <SectionButton label="Все проекты" href={'/projects'} className='lg:hidden flex' />
             </Section >

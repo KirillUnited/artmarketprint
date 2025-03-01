@@ -7,6 +7,7 @@ import { ProjectList } from '@/components/shared/project';
 import { NAVIGATION_QUERY, PROJECTS_QUERY } from '@/sanity/lib/queries';
 import Section, { SectionSubtitle } from '@/components/layout/Section';
 import BaseBreadcrumb from '@/components/ui/Breadcrumb';
+import { SanityDocument } from 'next-sanity';
 
 export const PAGE_QUERY = `*[_id == "siteSettings"][0]{
     homePage->{
