@@ -49,3 +49,8 @@ export const PROJECT_SLUGS_QUERY: string = `*[_type == "completedProjects"] {
       "slug": slug.current
     }
   }`;
+export const PROJECTS_PAGE_QUERY = `*[_id == "siteSettings"][0]{
+    homePage->{
+      content[_type == "projectList"][0]
+    }
+  }`;
