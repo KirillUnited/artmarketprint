@@ -18,6 +18,8 @@ export function PageBuilder({content}: PageBuilderProps) {
 		return null;
 	}
 
+	console.log(content);
+
 	return (
 		<>
 			{content.map((block) => {

@@ -11,8 +11,6 @@ export default async function Home() {
 		return null;
 	}
 
-	console.log(data);
-
 	return (
 		<>
 			<PageBuilder content={data?.homePage?.content} />
