@@ -58,13 +58,13 @@ export const Services = async () => {
 };
 
 export const ServiceDetails = ({name, description, image, price, advantages, children}: ServiceDetailsProps) => (
-	<div className="grid md:grid-cols-2 items-center gap-12">
-		{image && <Image alt={name} className="h-full object-cover w-full aspect-video" height={640} src={`${image}`} width={640} />}
+	<div className="grid md:grid-cols-2 items-start gap-12">
+		{image && <Image alt={name} className="md:sticky top-16 object-cover w-full aspect-square" height={640} src={`${image}`} width={640} />}
 		<div className="flex flex-col gap-8 md:gap-16">
 			<div className="flex flex-col gap-4 md:gap-6">
 				<div className="flex flex-col gap-2">
 					<span className="text-gray-600">О услуге</span>
-					<h2 className="text-3xl md:text-4xl font-bold hyphens-auto break-words">{name}</h2>
+					<h2 className="text-3xl md:text-4xl font-bold break-words">{name}</h2>
 				</div>
 				{description && <p className="text-foreground/70 text-balance leading-normal font-light">{description}</p>}
 				{advantages && advantages.length > 0 && (

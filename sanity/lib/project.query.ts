@@ -19,6 +19,7 @@ export const PROJECTS_QUERY = `*[_type == "project" && defined(slug.current)][0.
   }`;
 
 export const PROJECTS_BY_SERVICE_QUERY = `*[_type == "project"][references(*[_type == "service" && slug.current == $slug]._id)] {
+      _id,
       title,
       "currentSlug": slug.current,
       shortDescription,
@@ -30,6 +31,7 @@ export const PROJECTS_BY_SERVICE_QUERY = `*[_type == "project"][references(*[_ty
       }
   }`;
 export const PROJECTS_BY_CATEGORY_QUERY = `*[_type == "project"][references(*[_type == "category" && slug.current == $slug]._id)] {
+      _id,
       title,
       "currentSlug": slug.current,
       shortDescription,
