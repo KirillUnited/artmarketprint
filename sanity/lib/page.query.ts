@@ -53,9 +53,49 @@ export const FAQ_QUERY = `*[_type == "page"][0] {
     }
   }
 }`;
-
+export const SECTION_FIELDS = `
+    title,
+    description,
+    isActive,
+    link,
+    subtitle
+`;
 export const HOME_PAGE_QUERY = `*[_id == "siteSettings"][0]{
     homePage->{
-      content
+      content[] {
+        _type == "hero" => {
+          slides[]
+        },
+        _type == "serviceList" => {
+          ${SECTION_FIELDS},
+          services[]->
+        },
+        _type == "imageTextBlock" => {
+          ${SECTION_FIELDS},
+          "imageUrl": image.asset->url,
+          ctaButtonList[],
+          orientation
+        },
+        _type == "categoryList" => {
+          ${SECTION_FIELDS},
+          services[]->
+        },
+        _type == "projectList" => {
+          ${SECTION_FIELDS},
+          showLastProjects,
+          projects[]->
+        },
+        _type == "faqs" => {
+          ${SECTION_FIELDS},
+          faqs[]->,
+          faqsFooter
+        },
+        _type == "contactUsBlock" => {
+          ${SECTION_FIELDS},
+          showContactForm,
+          showContacts,
+          showMapEmbed
+        },
+      }
     }
   }`;
