@@ -12,7 +12,7 @@ export const ProjectCard = ({ project }: { project: SanityDocument }) => (
             {project?.service_tags?.length > 0 && <ProjectTagList tags={project.service_tags} color='primary' />}
             {project?.category_tags?.length > 0 && <ProjectTagList tags={project.category_tags} color='secondary' />}
         </div>
-        <Image removeWrapper alt={project.altText} className="z-0 w-full h-full object-cover" radius="sm" src={project.imageUrl ? project.imageUrl : getUrlFor(project.image)} />
+        <Image removeWrapper alt={project.altText} className="z-0 w-full h-full object-cover" radius="sm" src={project.imageUrl ? project.imageUrl : getUrlFor(project.image)} width={220} height={320}/>
         <CardFooter className="absolute bg-black/40 bottom-0 w-full z-10 max-h-0 overflow-hidden group-hover:max-h-full transition-all duration-700 p-0">
             <div className="flex flex-col gap-4 p-3 w-full">
                 <div className="flex flex-col gap-2">
