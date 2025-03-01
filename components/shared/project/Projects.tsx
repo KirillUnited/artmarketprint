@@ -6,6 +6,8 @@ import { PROJECTS_QUERY } from '@/sanity/lib/queries';
 import { ProjectList } from './ProjectList';
 
 interface ProjectsProps {
+	isActive?: boolean;
+	showLastProjects?: boolean;
 	title?: string;
 	subtitle?: string;
 	description?: string;
@@ -26,15 +28,18 @@ export const ProjectsHeading = ({ title, subtitle, description }: { title?: stri
 );
 
 export const Projects = async (props: ProjectsProps) => {
-	const data = await getSanityDocuments(PROJECTS_QUERY, { limit: 3 });
 	const { subtitle = '', description = '', title = '', link = { text: '', link: '' } } = await props;
+
+	if (!props.isActive) return null;
+
+	const data = props.showLastProjects ? (await getSanityDocuments(PROJECTS_QUERY, { limit: 3 })) : props.projects;
 
 	if (!data || data.length === 0) {
 		console.warn('Нет данных о проектах');
 
 		return null;
 	}
-	
+
 	return (
 		<Suspense fallback={<p className="text-center text-gray-500">Загрузка проектов...</p>}>
 			<Section className="relative" id="projects">
