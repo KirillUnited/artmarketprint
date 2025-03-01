@@ -7,7 +7,7 @@ import { PortableText, SanityDocument } from "next-sanity";
 import { getSanityDocuments } from "@/lib/fetch-sanity-data";
 import { NAVIGATION_QUERY, PROJECT_QUERY, PROJECT_SLUGS_QUERY } from "@/sanity/lib/queries";
 import Section from "@/components/layout/Section";
-import { ProjectTagList } from "@/components/shared/Projects";
+import { ProjectTagList } from "@/components/shared/project";
 import { client } from "@/sanity/client";
 
 type Props = {

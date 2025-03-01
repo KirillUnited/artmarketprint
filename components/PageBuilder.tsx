@@ -3,7 +3,7 @@ import {Benefits} from '@/components/shared/Benefits';
 import {Services} from '@/components/shared/Services';
 import {Catalog} from '@/components/shared/Catalog';
 import About from '@/components/shared/About';
-import {Projects} from '@/components/shared/Projects';
+import {Projects} from '@/components/shared/project/Projects';
 import {InstagramFeedSection} from '@/components/shared/InstagramFeed';
 import {FAQSection} from '@/components/shared/faq';
 import ContactUs, {MapFrame} from '@/components/shared/ContactUs';
@@ -38,7 +38,7 @@ export function PageBuilder({content}: PageBuilderProps) {
 					case 'projectList':
 						return (
 							<Fragment key={block._key}	>
-								<Projects />
+								<Projects {...block} />
 								<InstagramFeedSection id="instagram" />
 							</Fragment>
 						);

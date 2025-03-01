@@ -1,9 +1,5 @@
-export const PROJECTS_QUERY = `*[_type == "completedProjects"]{
+export const PROJECTS_QUERY = `*[_type == "project" && defined(slug.current)][0...$limit] {
     title,
-    subtitle,
-    description,
-    projects[][0...$limit]{
-      title,
       "currentSlug": slug.current,
       shortDescription,
       "imageUrl": image.asset->url,
@@ -16,7 +12,6 @@ export const PROJECTS_QUERY = `*[_type == "completedProjects"]{
         _id,
         title
       }
-    }
   }`;
 
 export const PROJECTS_BY_SERVICE_QUERY = `*[_type == "completedProjects"] {

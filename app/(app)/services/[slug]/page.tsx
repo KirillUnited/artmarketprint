@@ -12,7 +12,7 @@ import { client } from "@/sanity/client";
 import imageUrlBuilder from "@sanity/image-url";
 import { PortableText, SanityDocument } from "next-sanity";
 import { getUrlFor } from "@/lib/utils";
-import { ProjectList, ProjectsHeading } from "@/components/shared/Projects";
+import { ProjectList, ProjectsHeading } from "@/components/shared/project";
 import { NAVIGATION_QUERY, PROJECTS_BY_SERVICE_QUERY, PROJECTS_QUERY } from "@/sanity/lib/queries";
 import Section, { SectionButton } from "@/components/layout/Section";
 import {OrderForm} from "@/components/ui/form";
