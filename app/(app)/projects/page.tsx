@@ -35,7 +35,7 @@ export default async function ProjectsPage() {
 				</div>
 			</section>
 			<Section innerClassname='pt-6 md:pt-6'>
-				<ProjectList projectList={projects} bentoGrid={false} />
+				<ProjectList projectList={projects} bentoGrid={true} />
 			</Section>
 			<ContactUs />
 		</>
