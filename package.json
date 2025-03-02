@@ -42,6 +42,7 @@
   "framer-motion": "11.13.1",
   "google-libphonenumber": "^3.2.40",
   "intl-messageformat": "^10.5.0",
+  "lightbox.js-react": "^1.4.8",
   "lucide-react": "^0.474.0",
   "next": "^15.1.6",
   "next-sanity": "^9.8.47",
