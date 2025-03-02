@@ -3,7 +3,12 @@ import imageUrlBuilder from "@sanity/image-url";
 import { SanityImageSource } from "@sanity/image-url/lib/types/types";
 const fs = require("fs").promises;
 const path = require("path");
+import { clsx, type ClassValue } from "clsx"
+import { twMerge } from "tailwind-merge"
 
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
 
 export const getUrlFor = (source: SanityImageSource) => {
   const builder = imageUrlBuilder(client);

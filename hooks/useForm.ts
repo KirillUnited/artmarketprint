@@ -3,6 +3,7 @@ import { useState, FormEvent } from 'react';
 import { PhoneNumberUtil } from 'google-libphonenumber';
 import { CountryData, defaultCountries, parseCountry, usePhoneInput } from 'react-international-phone';
 import { sendOrder } from '@/lib/actions/order.actions';
+import { toast } from 'sonner';
 
 const phoneUtil = PhoneNumberUtil.getInstance();
 
@@ -16,7 +17,6 @@ const isPhoneValid = (phone: string): boolean => {
 
 interface UseFormReturn {
     isPending: boolean;
-    showAlert: boolean;
     inputValue: string;
     handlePhoneValueChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => string;
     inputRef: React.RefObject<HTMLInputElement>;
@@ -25,7 +25,6 @@ interface UseFormReturn {
     countries: CountryData[];
     validPhone: boolean;
     handleSubmit: (event: FormEvent<HTMLFormElement>) => Promise<void>;
-    setShowAlert: (value: boolean) => void;
 }
 
 const useForm = (onClose: () => void): UseFormReturn => {
@@ -58,11 +57,12 @@ const useForm = (onClose: () => void): UseFormReturn => {
             const result = await sendOrder(formData);
             if (result.ok) {
                 setIsPending(false);
-                setShowAlert(true);
+                toast.success("Заявка отправлена", {
+                    description: `Заказ от ${new Date().toLocaleString()}. Спасибо за заявку! Мы свяжемся с Вами в ближайшее время.`,
+                })
                 setTimeout(() => {
                     typeof onClose === 'function' && onClose();
-                    setShowAlert(false)
-                }, 3000);
+                }, 5000);
             }
         } catch (error) {
             console.error(error);
@@ -71,7 +71,6 @@ const useForm = (onClose: () => void): UseFormReturn => {
 
     return {
         isPending,
-        showAlert,
         inputValue,
         handlePhoneValueChange,
         inputRef,
@@ -80,7 +79,6 @@ const useForm = (onClose: () => void): UseFormReturn => {
         countries,
         validPhone,
         handleSubmit,
-        setShowAlert,
     };
 };
 
