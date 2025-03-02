@@ -9,6 +9,7 @@ import { NAVIGATION_QUERY, PROJECT_QUERY, PROJECT_SLUGS_QUERY } from "@/sanity/l
 import Section from "@/components/layout/Section";
 import { ProjectTagList } from "@/components/shared/project";
 import { client } from "@/sanity/client";
+import ProjectGallery from "@/components/shared/project/ProjectGallery";
 
 type Props = {
     slug: string
@@ -54,6 +55,7 @@ export default async function ProjectPage({ params }: { params: Promise<Props> }
 
         return <p className="text-center text-gray-500 mt-10">Нет данных о проекте</p>
     }
+    console.log('project', project)
     return (
         <>
             <section
@@ -111,6 +113,12 @@ export default async function ProjectPage({ params }: { params: Promise<Props> }
                 <ServiceDetails name={project.title} image={project.imageUrl}>
                     {Array.isArray(project.description) && <PortableText value={project.description} onMissingComponent={false} />}
                 </ServiceDetails>
+            </Section>
+            <Section id="projectGallery" className="bg-slate-100">
+                <div className="flex flex-col items-center gap-4 md:gap-6">
+                    <p className="text-3xl font-semibold">Фотографии</p>
+                    <ProjectGallery items={project.gallery} />
+                </div>
             </Section>
         </>
     );

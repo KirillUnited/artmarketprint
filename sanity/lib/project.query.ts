@@ -5,6 +5,11 @@ export const PROJECT_FIELDS = `
     shortDescription,
     "imageUrl": image.asset->url,
     altText,
+    "gallery": gallery[] {
+      "imageUrl": asset->url,
+      "altText": altText,
+      _key
+    },
     category_tags[]->{
       _id,
       title
@@ -25,6 +30,7 @@ export const PROJECTS_BY_SERVICE_QUERY = `*[_type == "project"][references(*[_ty
       shortDescription,
       "imageUrl": image.asset->url,
       altText,
+      gallery[],
       service_tags[]->{
         _id,
         title
@@ -37,6 +43,7 @@ export const PROJECTS_BY_CATEGORY_QUERY = `*[_type == "project"][references(*[_t
       shortDescription,
       "imageUrl": image.asset->url,
       altText,
+      gallery[],
       category_tags[]->{
         _id,
         title
