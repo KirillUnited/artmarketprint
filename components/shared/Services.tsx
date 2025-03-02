@@ -79,7 +79,7 @@ export const ServiceDetails = ({name, description, image, price, advantages, chi
 						</ul>
 					</div>
 				)}
-				<article className="prose text-balance">{children}</article>
+				<article className="text-balance">{children}</article>
 				{price && (
 					<div className="flex flex-col gap-4">
 						<h3 className="text-xl md:text-2xl font-bold text-gray-900">Цены</h3>

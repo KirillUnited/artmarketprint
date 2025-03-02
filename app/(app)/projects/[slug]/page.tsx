@@ -10,6 +10,7 @@ import Section from "@/components/layout/Section";
 import { ProjectTagList } from "@/components/shared/project";
 import { client } from "@/sanity/client";
 import ProjectGallery from "@/components/shared/project/ProjectGallery";
+import { ArrowDownCircle } from "lucide-react";
 
 type Props = {
     slug: string
@@ -49,6 +50,7 @@ export default async function ProjectPage({ params }: { params: Promise<Props> }
     const data = await getSanityDocuments(PROJECT_QUERY, await params);
     const breadcrumbs = (await client.fetch(NAVIGATION_QUERY))[0].links;
     const project = data?.[0] || {};
+    const hasGallery = Array.isArray(project?.gallery) && project?.gallery.length > 0;
 
     if (!data || data.length === 0) {
         console.warn("Нет данных о проекте");
@@ -81,7 +83,14 @@ export default async function ProjectPage({ params }: { params: Promise<Props> }
                         </p>
                     </div>
 
-                    <BrandButton as={Link} href={'#serviceDetails'} state="primary" className={'self-center'}>Подробнее</BrandButton>
+                    {
+                        hasGallery && (
+                            <BrandButton as={Link} href={'#projectGallery'} state="primary" className={'group self-center'}>
+                                <span>Смотреть результат</span>
+                                <ArrowDownCircle className="group-hover:scale-110 scale-100 transition-transform" size={18} />
+                            </BrandButton>
+                        )
+                    }
                 </div>
             </section>
             <section>
@@ -114,12 +123,16 @@ export default async function ProjectPage({ params }: { params: Promise<Props> }
                     {Array.isArray(project.description) && <PortableText value={project.description} onMissingComponent={false} />}
                 </ServiceDetails>
             </Section>
-            <Section id="projectGallery" className="bg-slate-100">
-                <div className="flex flex-col items-center gap-4 md:gap-6">
-                    <p className="text-3xl font-semibold">Фотографии</p>
-                    <ProjectGallery items={project.gallery} />
-                </div>
-            </Section>
+            {
+                hasGallery && (
+                    <Section id="projectGallery" className="bg-slate-100">
+                        <div className="flex flex-col items-center gap-4 md:gap-6">
+                            <p className="text-3xl font-semibold">Результат</p>
+                            <ProjectGallery items={project.gallery} />
+                        </div>
+                    </Section>
+                )
+            }
         </>
     );
 }
