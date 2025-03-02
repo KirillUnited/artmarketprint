@@ -13,7 +13,6 @@ import { UserTextareaInput } from './UserTextareaInput';
 export default function OrderForm({ className, onClose }: { className?: string, onClose?: () => void }): JSX.Element {
     const {
         isPending,
-        showAlert,
         inputValue,
         handlePhoneValueChange,
         inputRef,
@@ -22,7 +21,6 @@ export default function OrderForm({ className, onClose }: { className?: string, 
         countries,
         validPhone,
         handleSubmit,
-        setShowAlert
     } = useForm(onClose || (() => { }));
 
     return (
@@ -32,15 +30,6 @@ export default function OrderForm({ className, onClose }: { className?: string, 
             validationBehavior="native"
             onSubmit={handleSubmit}>
             <div className="w-full flex flex-col gap-4">
-                {
-                    showAlert && <Alert
-                        className="w-full text-white/80"
-                        color='success'
-                        description="Спасибо за заявку! Мы свяжемся с Вами в ближайшее время."
-                        title="Заявка отправлена"
-                        variant='solid'
-                        onClose={() => setShowAlert(false)}
-                    />}
                 <UsernameInput />
 
                 <UserPhoneInput inputValue={inputValue} handlePhoneValueChange={handlePhoneValueChange} inputRef={inputRef} country={country} setCountry={setCountry} countries={countries} validPhone={validPhone} />
