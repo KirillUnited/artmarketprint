@@ -10,6 +10,7 @@ import { fontSans } from '@/config/fonts';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Toaster } from '@/components/ui/sonner';
+import { SalesBanner } from '@/components/shared/banner';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://artmarketprint.by'),
@@ -62,6 +63,7 @@ export default function RootLayout({
       >
         <Providers themeProps={{ attribute: 'class', defaultTheme: 'light' }}>
           <div className="min-h-screen flex flex-col">
+            <SalesBanner />
             <Header />
             <main className="flex-grow">
               {children}
