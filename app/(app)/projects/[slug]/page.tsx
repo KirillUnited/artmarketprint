@@ -6,13 +6,16 @@ import Link from "next/link";
 import { PortableText, SanityDocument } from "next-sanity";
 import { getSanityDocuments } from "@/lib/fetch-sanity-data";
 import { NAVIGATION_QUERY, PROJECT_QUERY, PROJECT_SLUGS_QUERY } from "@/sanity/lib/queries";
-import Section from "@/components/layout/Section";
-import { ProjectTagList } from "@/components/shared/project";
+import Section, { SectionButton } from "@/components/layout/Section";
+import { ProjectList, ProjectsHeading, ProjectTagList } from "@/components/shared/project";
 import { client } from "@/sanity/client";
 import ProjectGallery from "@/components/shared/project/ProjectGallery";
 import { ArrowDownCircle } from "lucide-react";
+import clsx from "clsx";
+import { HOME_PAGE_PROJECTS_QUERY, RELATED_PROJECTS_QUERY } from "@/sanity/lib/project.query";
 
 type Props = {
+    id: string,
     slug: string
 }
 
@@ -22,7 +25,10 @@ export async function generateStaticParams() {
     return projects.map((document) => {
         return {
             projects: document.projects.map((project: SanityDocument) => {
+                
+console.log('projects id', project._id)
                 return {
+                    id: project._id,
                     slug: project.slug.current,
                 };
             }),
@@ -50,6 +56,7 @@ export default async function ProjectPage({ params }: { params: Promise<Props> }
     const data = await getSanityDocuments(PROJECT_QUERY, await params);
     const breadcrumbs = (await client.fetch(NAVIGATION_QUERY))[0].links;
     const project = data?.[0] || {};
+    const relatedProjects = await getSanityDocuments(RELATED_PROJECTS_QUERY, { id: project._id, limit: 4 });
     const hasGallery = Array.isArray(project?.gallery) && project?.gallery.length > 0;
 
     if (!data || data.length === 0) {
@@ -57,7 +64,7 @@ export default async function ProjectPage({ params }: { params: Promise<Props> }
 
         return <p className="text-center text-gray-500 mt-10">Нет данных о проекте</p>
     }
-    console.log('project', project)
+
     return (
         <>
             <section
@@ -133,6 +140,17 @@ export default async function ProjectPage({ params }: { params: Promise<Props> }
                     </Section>
                 )
             }
+            {Array.isArray(relatedProjects) && (
+                <Section className={clsx(
+                    { ["bg-[#F9F9F9]"]: !hasGallery },
+                )}>
+                    <ProjectsHeading title='Еще проекты' subtitle={'галерея'} description={'Посмотрите другие проекты'} />
+
+                    <ProjectList projectList={relatedProjects} bentoGrid={false} />
+
+                    <SectionButton label="Все проекты" href={'/projects'} className='lg:hidden flex' />
+                </Section >
+            )}
         </>
     );
 }

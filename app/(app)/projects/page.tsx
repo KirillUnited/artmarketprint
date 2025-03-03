@@ -7,10 +7,10 @@ import { ProjectList } from '@/components/shared/project';
 import { NAVIGATION_QUERY, PROJECTS_QUERY } from '@/sanity/lib/queries';
 import Section, { SectionSubtitle } from '@/components/layout/Section';
 import BaseBreadcrumb from '@/components/ui/Breadcrumb';
-import { PROJECTS_PAGE_QUERY } from '@/sanity/lib/project.query';
+import { HOME_PAGE_PROJECTS_QUERY } from '@/sanity/lib/project.query';
 
 export default async function ProjectsPage() {
-	const data: any = (await getSanityDocuments(PROJECTS_PAGE_QUERY)) || {};
+	const data: any = (await getSanityDocuments(HOME_PAGE_PROJECTS_QUERY)) || {};
 	const projects = await getSanityDocuments(PROJECTS_QUERY, { limit: 12 });
 	const breadcrumbs = (await getSanityDocuments(NAVIGATION_QUERY))[0].links;
 	const { title = '', description = '', subtitle } = data?.homePage?.content || {};

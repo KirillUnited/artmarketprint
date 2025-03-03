@@ -3,7 +3,7 @@ import { ProjectCard } from "./ProjectCard";
 import clsx from "clsx";
 
 export const ProjectList = ({ projectList, bentoGrid = true, className }: { projectList: SanityDocument[]; bentoGrid?: boolean; className?: string }) => {
-    if (projectList.length === 0) return <p className="text-center text-gray-500 mt-4">Пока нет выполненных проектов.</p>;
+    if (!Array.isArray(projectList) || projectList.length === 0) return <p className="text-center text-gray-500 mt-4">Пока нет выполненных проектов.</p>;
 
     return (
         <ul

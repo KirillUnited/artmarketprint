@@ -55,11 +55,15 @@ export const PROJECT_QUERY = `*[_type == "project"][slug.current == $slug] {
   }`;
 export const PROJECT_SLUGS_QUERY: string = `*[_type == "completedProjects"] {
     projects[] {
+      _id,
       "slug": slug.current
     }
   }`;
-export const PROJECTS_PAGE_QUERY = `*[_id == "siteSettings"][0]{
+export const HOME_PAGE_PROJECTS_QUERY = `*[_id == "siteSettings"][0]{
     homePage->{
       content[_type == "projectList"][0]
     }
   }`;
+export const RELATED_PROJECTS_QUERY = `*[_type == "project" && _id != $id][0...$limit] {
+    ${PROJECT_FIELDS}
+}`;
