@@ -1,12 +1,25 @@
 import {BrandCard} from "@/components/ui/card";
 
-export default function ProductList({ jsonData }: any) {
+export interface ProductListProps {
+  items: Array<{
+    product: {
+      __cdata: string
+    }
+    general_description: {
+      __cdata: string
+    }
+    images_urls: string
+    price: string
+  }>
+}
+
+export default function ProductList({ items }: ProductListProps) {
   return (
     <>
-      {jsonData.length > 0 ? (
+      {items.length > 0 ? (
         <div className="grid grid-cols-[var(--grid-template-columns)] gap-8">
           {
-            jsonData.map((item: any, index: number) => (
+            items.map((item, index: number) => (
               <BrandCard
                 key={index}
                 title={item.product.__cdata}

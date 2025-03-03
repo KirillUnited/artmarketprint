@@ -30,7 +30,7 @@ export const ProductSection = async () => {
                 description={'Мы предлагаем широкий выбор продукции для нанесения печати: одежда, аксессуары, сувениры и многое другое'}
             />
 
-            <ProductList jsonData={data} />
+            <ProductList items={data} />
 
             <SectionButton label="Все товары" href={'/catalog'} className='lg:hidden flex' />
         </Section>
