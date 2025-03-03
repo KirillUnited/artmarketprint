@@ -96,8 +96,9 @@ export async function getAllProducts() {
 
 export async function getAllProductCategories() {
   const products = await getAllProducts();
+  const categories = new Set(products?.map((product: any) => product.category));
 
-  return products?.map((product: any) => product.category);
+  return Array.from(categories).slice(0, 10);
 }
 
 export async function getProductsByLimit(limit: number) {

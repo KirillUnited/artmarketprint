@@ -9,7 +9,6 @@ import ProductsView from '@/components/shared/product/ProductsView';
 import { getAllProductCategories, getProductsByLimit } from '@/lib/actions/product.actions';
 
 export default async function ProductsPage() {
-    // const categories = await getSanityDocuments(CATEGORIES_QUERY);
     const breadcrumbs = (await getSanityDocuments(NAVIGATION_QUERY))[0].links;
     const products = await getProductsByLimit(10);
     const categories = await getAllProductCategories();

@@ -59,7 +59,7 @@ export default function BrandCard({
 }: BrandCardProps) {
 	return (
 		<div className={clsx(
-			"h-full overflow-hidden rounded-md shadow-small hover:shadow-large transition-all flex flex-col group relative",
+			"h-full overflow-hidden rounded-small shadow-small hover:shadow-large transition-all flex flex-col group relative",
 			className
 		)}>
 			<div className="absolute top-3 left-3 z-10 flex flex-wrap gap-2">
