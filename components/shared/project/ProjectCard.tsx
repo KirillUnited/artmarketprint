@@ -5,6 +5,8 @@ import { SanityDocument } from "next-sanity";
 import { Image } from "@heroui/image";
 import { Button } from "@heroui/button";
 import { getUrlFor } from "@/lib/utils";
+import clsx from "clsx";
+import { ArrowUpRightIcon } from "lucide-react";
 
 export const ProjectCard = ({ project }: { project: SanityDocument }) => (
     <Card isFooterBlurred as={Link} className="h-full group relative" href={`/projects/${project.currentSlug}`} radius="sm">
@@ -12,15 +14,25 @@ export const ProjectCard = ({ project }: { project: SanityDocument }) => (
             {project?.service_tags?.length > 0 && <ProjectTagList tags={project.service_tags} color='primary' />}
             {project?.category_tags?.length > 0 && <ProjectTagList tags={project.category_tags} color='secondary' />}
         </div>
-        <Image removeWrapper alt={project.altText} className="z-0 w-full h-full object-cover aspect-square" radius="sm" src={project.imageUrl ? project.imageUrl : getUrlFor(project.image)} width={220}/>
-        <CardFooter className="absolute bg-black/40 bottom-0 w-full z-10 max-h-0 overflow-hidden group-hover:max-h-full transition-all duration-700 p-0">
-            <div className="flex flex-col gap-4 p-3 w-full">
+        <Image removeWrapper alt={project.altText} className="z-0 w-full h-full object-cover aspect-square" radius="sm" src={project.imageUrl ? project.imageUrl : getUrlFor(project.image)} width={220} />
+        <CardFooter className={clsx(
+            "absolute bg-black/40 bottom-0 w-full z-10 p-0",
+        )}>
+            <div className="flex flex-col gap-2 p-3 w-full">
                 <div className="flex flex-col gap-2">
                     <h4 title={project.title} className="text-lg font-semibold text-white/80 line-clamp-2 leading-tight">{project.title}</h4>
-                    <p title={project.shortDescription} className="text-xs text-white/80 line-clamp-4 overflow-hidden">{project.shortDescription}</p>
+                    <p
+                        title={project.shortDescription}
+                        className={clsx(
+                            "text-xs text-white/80",
+                            "grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-all duration-500 overflow-hidden"
+                        )}>
+                        <span className="line-clamp-4">{project.shortDescription}</span>
+                    </p>
                 </div>
-                <Button as={'div'} color="secondary" role="presentation" radius="sm" size="sm">
-                    Подробнее
+                <Button as={'span'} className="group/button self-start" color="secondary" role="presentation" radius="sm" size="sm">
+                    <span>Подробнее</span>
+                    <ArrowUpRightIcon className="group-hover/button:translate-x-1 transition-transform" size={18} />
                 </Button>
             </div>
         </CardFooter>

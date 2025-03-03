@@ -28,7 +28,6 @@
 @layer components {
     .bento-grid-template {
         grid-template-columns: repeat(2, 1fr);
-        /* grid-template-rows: repeat(2, var(--row-height, 300px)); */
         grid-auto-rows: minmax(100px, var(--row-height, 300px));
 
         & > :nth-child(4n + 1) {
