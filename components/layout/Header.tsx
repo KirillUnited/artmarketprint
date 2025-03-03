@@ -7,7 +7,7 @@ import { getSanityDocuments } from '@/lib/fetch-sanity-data';
 
 export default async function Header() {
 	const navigation = await client.fetch(NAVIGATION_QUERY);
-	const sales = await getSanityDocuments(`*[_type == "salesType"][0]`);
+	const sales = await getSanityDocuments(`*[_type == "salesType" && isActive][0]`) || null;
 
 	return <Navbar navigation={navigation[0].links} sales={sales} />;
 }
