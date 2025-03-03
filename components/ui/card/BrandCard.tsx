@@ -10,6 +10,7 @@ import BrandModalOffer from '../BrandModalOffer';
 
 import { BrandCardProps } from '@/types';
 import { ShoppingCartIcon } from 'lucide-react';
+import { ProjectTagList } from '@/components/shared/project';
 
 export const BrandCardLink = ({ href }: { href: string }) => (
 	<Button
@@ -45,9 +46,25 @@ export const BrandCardFooter = ({ variant, href }: { variant: string; href: stri
 	</>
 );
 
-export default function BrandCard({ title, variant, price, description, image, href, imageFit = "cover" }: BrandCardProps) {
+export default function BrandCard({
+	title,
+	variant,
+	price,
+	description,
+	image,
+	tags,
+	href,
+	imageFit = 'cover',
+	className
+}: BrandCardProps) {
 	return (
-		<div className="h-full overflow-hidden rounded-md shadow-small hover:shadow-large transition-all flex flex-col group relative">
+		<div className={clsx(
+			"h-full overflow-hidden rounded-small shadow-small hover:shadow-large transition-all flex flex-col group relative",
+			className
+		)}>
+			<div className="absolute top-3 left-3 z-10 flex flex-wrap gap-2">
+				{tags && <ProjectTagList tags={tags} color='warning' />}
+			</div>
 			<Link
 				className={clsx('overflow-hidden', {
 					'absolute inset-0': variant === 'service',
@@ -56,7 +73,7 @@ export default function BrandCard({ title, variant, price, description, image, h
 				title={title}
 			>
 				{
-					image && 
+					image &&
 					<picture>
 						<Image
 							alt={title}
@@ -71,7 +88,7 @@ export default function BrandCard({ title, variant, price, description, image, h
 							width={270}
 						/>
 					</picture>
-					}
+				}
 			</Link>
 			<div
 				className={clsx('p-4 flex flex-col gap-4', {
@@ -84,13 +101,12 @@ export default function BrandCard({ title, variant, price, description, image, h
 					{
 						'pt-20': variant === 'service'
 					}
-					)}
+				)}
 					title={title}
-					>
-					<h3 title={`${title} - ${price}`} className="text-base md:text-xl leading-[120%] font-semibold line-clamp-2">
+				>
+					<span className="text-xl md:text-2xl text-primary font-semibold">{price}</span>
+					<h3 title={`${title} - ${price}`} className="leading-[120%] font-semibold line-clamp-2">
 						{title}
-						<br />
-						<span className="text-primary">{price}</span>
 					</h3>
 					<p title={description} className="text-xs text-foreground/90 leading-normal font-medium line-clamp-2">{description}</p>
 				</Link>

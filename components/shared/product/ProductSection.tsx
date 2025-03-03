@@ -10,7 +10,7 @@ export const ProductSectionHeading = ({ title, subtitle, description }: { title?
             <SectionDescription>{description}</SectionDescription>
         </SectionHeading>
 
-        <SectionButton label="Все товары" href={'/catalog'} className='hidden lg:flex' />
+        <SectionButton label="Все товары" href={'/products'} className='hidden lg:flex' />
     </div>
 );
 
@@ -27,12 +27,12 @@ export const ProductSection = async () => {
             <ProductSectionHeading
                 title={'Популярные товары'}
                 subtitle={'Каталог'}
-                description={'Мы предлагаем широкий выбор продукции для нанесения печати: одежда, аксессуары, сувениры и многое другое'}
+                description={'Ознакомьтесь с хитами продаж и новинками, которые выбирают наши покупатели.'}
             />
 
-            <ProductList jsonData={data} />
+            <ProductList items={data} />
 
-            <SectionButton label="Все товары" href={'/catalog'} className='lg:hidden flex' />
+            <SectionButton label="Все товары" href={'/products'} className='lg:hidden flex' />
         </Section>
     );
 };

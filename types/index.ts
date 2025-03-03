@@ -16,14 +16,16 @@ export interface BrandButtonProps extends ButtonProps {
 	children: React.ReactNode;
 }
 
-export interface BrandCardProps extends React.AllHTMLAttributes<HTMLDivElement> {
+export interface BrandCardProps {
 	title: string;
+	variant: 'product' | 'service';
 	price?: string;
 	description?: string;
 	image?: string;
-	href?: string;
-	variant?: string;
+	tags?: { _id: string; title: string }[];
+	href: string;
 	imageFit?: 'cover' | 'contain';
+	className?: string;
 }
 
 export interface ServiceDetailsProps {
