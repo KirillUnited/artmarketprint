@@ -1,5 +1,12 @@
-export default function SearchPage() {
-  return (
-    <div>SearchPage</div>
-  )
+export default async function SearchPage({
+    searchParams
+}: {
+    searchParams: {
+        query: string
+    }
+}) {
+    const { query } = await searchParams;
+    return (
+        <div>SearchPage: {query} </div>
+    )
 }

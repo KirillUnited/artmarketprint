@@ -8,7 +8,7 @@ import clsx from 'clsx';
 
 import BrandModalOffer from '../BrandModalOffer';
 
-// import { BrandCardProps } from '@/types';
+import { BrandCardProps } from '@/types';
 import { ShoppingCartIcon } from 'lucide-react';
 import { ProjectTagList } from '@/components/shared/project';
 
@@ -45,18 +45,6 @@ export const BrandCardFooter = ({ variant, href }: { variant: string; href: stri
 		)}
 	</>
 );
-
-export interface BrandCardProps {
-	title: string;
-	variant: 'product' | 'service';
-	price?: string;
-	description?: string;
-	image?: string;
-	tags?: { _id: string; title: string }[];
-	href: string;
-	imageFit?: 'cover' | 'contain';
-	className?: string;
-}
 
 export default function BrandCard({
 	title,
