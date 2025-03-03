@@ -13,6 +13,7 @@ import { HeroModalOffer } from '../ui/BrandModalOffer';
 import { siteConfig } from '@/config/site';
 import { PhoneListDropdown } from '@/components/ui/PhoneListDropdown';
 import Drawer from '../ui/Drawer';
+import { SalesBanner } from './banner';
 
 type HeaderDropdownMenuProps = {
 	triggerLabel: string;
@@ -26,56 +27,59 @@ export default function Navbar({ navigation }: any) {
 	const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
 	return (
-		<BaseNavbar
-			shouldHideOnScroll
-			classNames={{
-				base: 'shadow-medium',
-				wrapper: 'max-w-full p-0 items-center',
-			}}
-			isMenuOpen={isMenuOpen}
-			onMenuOpenChange={setIsMenuOpen}
-			onScrollPositionChange={() => setIsMenuOpen(false)}
-		>
-			<div className="container flex flex-row items-center justify-between gap-4">
-				<NavbarBrand as={Link} className="grow-0 basis-auto" href={'/'}>
-					<BrandLogo alt={'ArtMarketPrint'} />
-				</NavbarBrand>
-				<NavbarContent className="hidden xl:flex gap-8" justify="center">
-					{navigation?.map((navItem: any) => {
-						return navItem?.submenu ? (
-							<NavbarDropdownMenu key={navItem.title} items={navItem.submenu} triggerLabel={navItem.title} />
-						) : (
-							<NavbarItem key={navItem.title}>
-								<Link aria-current="page" className="leading-normal font-semibold hover:underline hover:text-primary transition" color={'foreground'} href={navItem.url} size="sm">
-									{navItem.title}
-								</Link>
-							</NavbarItem>
-						);
-					})}
-				</NavbarContent>
-				<div className="flex flex-row gap-8 items-center shrink-0">
-					{/* <SearchIcon /> */}
-					<div className="hidden md:flex gap-2">
-						<Link
-							className="flex flex-row gap-4 items-center justify-start self-stretch shrink-0 relative"
-							href={`https://t.me/${siteConfig?.contacts?.[0]?.list?.[0]?.href}`}
-							target="_blank"
-						>
-							<TelegramIcon />
-						</Link>
-						<Link href={`https://msng.link/o?${siteConfig?.contacts?.[0].list?.[0]?.href}=vi`} target="_blank">
-							<ViberIcon />
-						</Link>
+		<>
+			<SalesBanner />
+			<BaseNavbar
+				shouldHideOnScroll
+				classNames={{
+					base: 'shadow-medium',
+					wrapper: 'max-w-full p-0 items-center',
+				}}
+				isMenuOpen={isMenuOpen}
+				onMenuOpenChange={setIsMenuOpen}
+				onScrollPositionChange={() => setIsMenuOpen(false)}
+			>
+				<div className="container flex flex-row items-center justify-between gap-4">
+					<NavbarBrand as={Link} className="grow-0 basis-auto" href={'/'}>
+						<BrandLogo alt={'ArtMarketPrint'} />
+					</NavbarBrand>
+					<NavbarContent className="hidden xl:flex gap-8" justify="center">
+						{navigation?.map((navItem: any) => {
+							return navItem?.submenu ? (
+								<NavbarDropdownMenu key={navItem.title} items={navItem.submenu} triggerLabel={navItem.title} />
+							) : (
+								<NavbarItem key={navItem.title}>
+									<Link aria-current="page" className="leading-normal font-semibold hover:underline hover:text-primary transition" color={'foreground'} href={navItem.url} size="sm">
+										{navItem.title}
+									</Link>
+								</NavbarItem>
+							);
+						})}
+					</NavbarContent>
+					<div className="flex flex-row gap-8 items-center shrink-0">
+						{/* <SearchIcon /> */}
+						<div className="hidden md:flex gap-2">
+							<Link
+								className="flex flex-row gap-4 items-center justify-start self-stretch shrink-0 relative"
+								href={`https://t.me/${siteConfig?.contacts?.[0]?.list?.[0]?.href}`}
+								target="_blank"
+							>
+								<TelegramIcon />
+							</Link>
+							<Link href={`https://msng.link/o?${siteConfig?.contacts?.[0].list?.[0]?.href}=vi`} target="_blank">
+								<ViberIcon />
+							</Link>
+						</div>
+	
+						<PhoneListDropdown />
+						<div className="hidden lg:block">
+							<HeroModalOffer />
+						</div>
+						<Drawer navigation={navigation} className="xl:hidden h-6 w-auto min-w-min" />
 					</div>
-
-					<PhoneListDropdown />
-					<div className="hidden lg:block">
-						<HeroModalOffer />
-					</div>
-					<Drawer navigation={navigation} className="xl:hidden h-6 w-auto min-w-min" />
 				</div>
-			</div>
-		</BaseNavbar>
+			</BaseNavbar>
+		</>
 	);
 }
 

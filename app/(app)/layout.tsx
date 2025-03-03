@@ -63,7 +63,6 @@ export default function RootLayout({
       >
         <Providers themeProps={{ attribute: 'class', defaultTheme: 'light' }}>
           <div className="min-h-screen flex flex-col">
-            <SalesBanner />
             <Header />
             <main className="flex-grow">
               {children}
