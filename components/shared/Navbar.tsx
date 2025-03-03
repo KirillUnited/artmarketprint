@@ -23,12 +23,12 @@ type HeaderDropdownMenuProps = {
 	}[];
 };
 
-export default function Navbar({ navigation }: any) {
+export default function Navbar({ navigation, sales }: any) {
 	const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
 	return (
 		<>
-			<SalesBanner />
+			<SalesBanner {...sales} />
 			<BaseNavbar
 				shouldHideOnScroll
 				classNames={{
