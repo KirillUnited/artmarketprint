@@ -94,8 +94,20 @@ export async function getAllProducts() {
   return data.item?.map((product: any) => product);
 }
 
+export async function getAllProductCategories() {
+  const products = await getAllProducts();
+
+  return products?.map((product: any) => product.category);
+}
+
 export async function getProductsByLimit(limit: number) {
   const products = await getAllProducts();
 
   return products.slice(0, limit);
+}
+
+export async function getProductsByCategory(category: string) {
+  const products = await getAllProducts();
+
+  return products.filter((product: any) => product.category === category);
 }

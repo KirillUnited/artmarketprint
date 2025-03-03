@@ -2,6 +2,9 @@ import {BrandCard} from "@/components/ui/card";
 
 export interface ProductListProps {
   items: Array<{
+    id: {
+      "#text": string
+    }
     product: {
       __cdata: string
     }
@@ -16,12 +19,12 @@ export interface ProductListProps {
 export default function ProductList({ items }: ProductListProps) {
   return (
     <>
-      {items.length > 0 ? (
+      {(Array.isArray(items) && items.length > 0 )? (
         <div className="grid grid-cols-[var(--grid-template-columns)] gap-8">
           {
             items.map((item, index: number) => (
               <BrandCard
-                key={index}
+                key={item.id["#text"]}
                 title={item.product.__cdata}
                 description={item.general_description.__cdata}
                 image={item.images_urls.split(",")[0]}

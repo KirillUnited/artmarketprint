@@ -1,3 +1,4 @@
+import { defineQuery } from "next-sanity";
 import { PROJECT_FIELDS } from "./project.query";
 
 export const NAVIGATION_QUERY = `*[_type == "navigation"] {
@@ -62,7 +63,7 @@ export const SECTION_FIELDS = `
     link,
     subtitle
 `;
-export const HOME_PAGE_QUERY = `*[_id == "siteSettings"][0]{
+export const HOME_PAGE_QUERY = defineQuery(`*[_id == "siteSettings"][0]{
     homePage->{
       content[] {
         _type == "hero" => {
@@ -116,4 +117,4 @@ export const HOME_PAGE_QUERY = `*[_id == "siteSettings"][0]{
         },
       }
     }
-  }`;
+  }`);
