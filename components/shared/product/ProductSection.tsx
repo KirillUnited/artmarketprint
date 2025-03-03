@@ -27,7 +27,7 @@ export const ProductSection = async () => {
             <ProductSectionHeading
                 title={'Популярные товары'}
                 subtitle={'Каталог'}
-                description={'Мы предлагаем широкий выбор продукции для нанесения печати: одежда, аксессуары, сувениры и многое другое'}
+                description={'Ознакомьтесь с хитами продаж и новинками, которые выбирают наши покупатели.'}
             />
 
             <ProductList items={data} />

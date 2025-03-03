@@ -3,7 +3,7 @@ import clsx from "clsx";
 
 interface ProjectTagListProps {
     tags: { _id: string; title: string }[];
-    color?: 'primary' | 'secondary';
+    color?: 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'default';
 }
 
 export const ProjectTagList = ({ tags, color }: ProjectTagListProps) => {
