@@ -17,15 +17,16 @@ import clsx from 'clsx';
 
 interface HeroCarouselProps {
     items?: any;
+    className?: string
 }
 
-export const ProductCarousel = ({ items }: HeroCarouselProps) => {
+export const ProductCarousel = ({ items, className }: HeroCarouselProps) => {
     const [thumbsSwiper, setThumbsSwiper] = useState<any>(null);
 
     if (!Array.isArray(items) || items.length === 0) return null;
 
     return (
-        <div className={styles["swiper-container"]}>
+        <div className={clsx(styles["swiper-container"], className)}>
             <Swiper
                 thumbs={{ swiper: thumbsSwiper }}
                 modules={[FreeMode, Navigation, Thumbs]}

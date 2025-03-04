@@ -6,7 +6,7 @@ import { siteConfig } from '@/config/site';
 import { HomeIcon } from 'lucide-react';
 import clsx from 'clsx';
 
-export default function BaseBreadcrumb({ items, section }: { items: any, section: string }): JSX.Element {
+export default function BaseBreadcrumb({ items, section }: { items: any, section?: string }): JSX.Element {
 	const pathname = usePathname();
 	const pathSegments = pathname.split('/').filter(Boolean);
 	const [navigation, setNavigation] = useState<any>({});
