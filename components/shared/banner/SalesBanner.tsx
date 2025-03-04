@@ -1,9 +1,10 @@
 'use client';
 import { Button } from "@heroui/button";
-import { ArrowRightIcon, Eclipse, XIcon } from "lucide-react";
+import { ArrowRightIcon, TicketPercent, XIcon } from "lucide-react";
+import Link from "next/link";
 import { useState } from "react";
 
-export default function SalesBanner({ isActive, title, description, discountPercentage }: any) {
+export default function SalesBanner({ isActive, title, description, discountPercentage, products }: any) {
   const [isVisible, setIsVisible] = useState(isActive);
 
   if (!isVisible) return null;
@@ -11,29 +12,37 @@ export default function SalesBanner({ isActive, title, description, discountPerc
   return (
     <div className="bg-brand-gradient text-primary-foreground px-4 py-3">
       <div className="container">
-        <div className="flex gap-2">
-          <div className="flex grow items-baseline gap-3">
-            <Eclipse className=" shrink-0 opacity-60" size={16} aria-hidden="true" />
-            <div className="flex grow flex-col justify-between gap-2">
-              <p className="text-xl font-semibold">
-                {title} - <span className="text-2xl font-bold">{discountPercentage}%</span>
-              </p>
-              <p>
-                {description}
-              </p>
-              <Button href="#" variant="bordered" color="default" className="text-primary-foreground group text-sm font-medium whitespace-nowrap self-start">
-                Узнать больше
+        <div className="flex gap-3 md:items-center">
+          <div className="flex flex-1 md:items-center gap-3">
+            <div
+              className="bg-secondary/30 flex size-9 shrink-0 items-center justify-center rounded-full"
+              aria-hidden="true"
+            >
+              <TicketPercent className="opacity-80" size={16} />
+            </div>
+            <div className="flex grow flex-col md:flex-row md:items-center justify-between gap-3">
+              <div className="flex flex-1 flex-col gap-1">
+                <p className="text-sm font-medium leading-none">
+                  {title} - <span className="text-lg font-bold leading-none">{discountPercentage}%</span>
+                </p>
+                <p className="text-xs font-extralight text-slate-100">
+                  {description}
+                </p>
+              </div>
+              <Button as={Link} href={`/services/${products?.slug?.current}`} target="_blank" size="sm" radius="sm" className="group font-medium whitespace-nowrap text-foreground">
+                Заказать
                 <ArrowRightIcon
-                  className="ms-1 -mt-0.5 inline-flex opacity-60 transition-transform group-hover:translate-x-0.5"
-                  size={16}
+                  className="transition-transform group-hover:translate-x-0.5"
+                  size={12}
                   aria-hidden="true"
+                  color="currentColor"
                 />
               </Button>
             </div>
           </div>
           <Button
             variant="ghost"
-            className="group -my-1.5 -me-2 size-8 shrink-0 p-0 hover:bg-transparent"
+            className="group size-9 min-w-0 shrink-0 p-0 hover:bg-transparent"
             onPress={() => setIsVisible(false)}
             aria-label="Close banner"
             isIconOnly
