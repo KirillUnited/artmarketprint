@@ -12,7 +12,7 @@ import styles from './product.module.css';
 
 // import required modules
 import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
-import Image from 'next/image';
+import {Image} from '@heroui/image';
 import clsx from 'clsx';
 
 interface HeroCarouselProps {
@@ -37,7 +37,7 @@ export const ProductCarousel = ({ items, className }: HeroCarouselProps) => {
                 {items.map((item: string, index: number) => (
                     <SwiperSlide key={index} className={styles["swiper-slide"]}>
                         <picture className='h-full'>
-                            <Image src={item} alt={'image'} width={500} height={500} className={'w-full aspect-square'} />
+                            <Image removeWrapper src={item} alt={'image'} width={'100%'} height={'100%'} className={'w-full aspect-square'} />
                         </picture>
                     </SwiperSlide>
                 ))}
@@ -54,7 +54,7 @@ export const ProductCarousel = ({ items, className }: HeroCarouselProps) => {
                 {items.map((item: string, index: number) => (
                     <SwiperSlide key={index} className={styles["swiper-slide"]} >
                         <picture className='h-full border-slate-300 border p-3'>
-                            <Image src={item} alt={'image'} className={'w-full'} width={150} height={150} />
+                            <Image removeWrapper src={item} alt={'image'} className={'w-full'} width={'100%'} height={'100%'} />
                         </picture>
                     </SwiperSlide>
                 ))}
