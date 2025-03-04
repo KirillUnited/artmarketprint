@@ -17,7 +17,5 @@ export default async function Header() {
 		products[0]->
 		}`)) || null;
 
-	console.log(sales)
-
 	return <Navbar navigation={navigation[0].links} sales={sales} products={sales?.products} />;
 }

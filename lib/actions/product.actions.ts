@@ -94,11 +94,11 @@ export async function getAllProducts() {
   return data.item?.map((product: any) => product);
 }
 
-export async function getAllProductCategories() {
+export async function getAllProductCategories(limit=10) {
   const products = await getAllProducts();
   const categories = new Set(products?.map((product: any) => product.category));
 
-  return Array.from(categories).slice(0, 10);
+  return Array.from(categories).slice(0, limit);
 }
 
 export async function getProductsByLimit(limit: number) {
@@ -111,4 +111,10 @@ export async function getProductsByCategory(category: string) {
   const products = await getAllProducts();
 
   return products.filter((product: any) => product.category === category);
+}
+
+export async function getProductBySlug(slug: string) {
+  const products = await getAllProducts();
+
+  return products.find((product: any) => product.id['#text'] === Number(slug));
 }
