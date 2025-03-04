@@ -26,6 +26,7 @@ export interface BrandCardProps {
 	href: string;
 	imageFit?: 'cover' | 'contain';
 	className?: string;
+	buttonLabel?: string;
 }
 
 export interface ServiceDetailsProps {

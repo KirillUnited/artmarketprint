@@ -29,9 +29,10 @@ export default function ProductList({ items }: ProductListProps) {
                 description={item.general_description.__cdata}
                 image={item.images_urls.split(",")[0]}
                 imageFit="contain"
-                href={`/catalog`}
+                href={`/products/${item.id["#text"]}`}
                 price={`${item.price} BYN`}
                 variant="product"
+                buttonLabel="предзаказ"
               />
             ))
           }

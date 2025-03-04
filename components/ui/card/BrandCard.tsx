@@ -30,7 +30,7 @@ export const BrandCardLink = ({ href }: { href: string }) => (
 		</svg>
 	</Button>
 );
-export const BrandCardFooter = ({ variant, href }: { variant: string; href: string }) => (
+export const BrandCardFooter = ({ variant, href, buttonLabel }: { variant: string; href: string, buttonLabel?: string }) => (
 	<>
 		{/* {variant === 'service' && (
 			<div className="flex flex-row gap-2 items-center">
@@ -40,7 +40,7 @@ export const BrandCardFooter = ({ variant, href }: { variant: string; href: stri
 		{variant === 'product' && (
 			<div className="flex flex-wrap gap-3 items-center justify-center border-t-1 border-foreground/20 pt-6 overflow-hidden">
 				{/* <BrandCardLink href={href} /> */}
-				<BrandModalOffer icon={<ShoppingCartIcon size={18} />} />
+				<BrandModalOffer buttonLabel={buttonLabel || ''} icon={<ShoppingCartIcon size={18} />} />
 			</div>
 		)}
 	</>
@@ -55,7 +55,8 @@ export default function BrandCard({
 	tags,
 	href,
 	imageFit = 'cover',
-	className
+	className,
+	buttonLabel
 }: BrandCardProps) {
 	return (
 		<div className={clsx(
@@ -110,7 +111,7 @@ export default function BrandCard({
 					</h3>
 					<p title={description} className="text-xs text-foreground/90 leading-normal font-medium line-clamp-2">{description}</p>
 				</Link>
-				{variant === 'product' && <BrandCardFooter variant={variant || ''} href={href || ''} />}
+				{variant === 'product' && <BrandCardFooter buttonLabel={buttonLabel || ''} variant={variant || ''} href={href || ''} />}
 			</div>
 		</div>
 	);
