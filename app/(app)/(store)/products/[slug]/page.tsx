@@ -1,3 +1,5 @@
+import Section from "@/components/layout/Section";
+import { ProductCarousel } from "@/components/shared/product";
 import { getProductBySlug } from "@/lib/actions/product.actions";
 
 export interface Props {
@@ -14,6 +16,11 @@ export default async function ProductPage({ params }: { params: Promise<Props> }
     console.log('product', product)
 
     return (
-        <div>Product: {product.product?.__cdata || 'Not found'}</div>
+        <Section>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <ProductCarousel items={product?.images_urls?.split(",")} />
+
+            </div>
+        </Section>
     )
 }
