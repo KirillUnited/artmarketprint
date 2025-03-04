@@ -32,6 +32,7 @@ export default function ProductList({ items }: ProductListProps) {
                 href={`/products/${item.id["#text"]}`}
                 price={`${item.price} BYN`}
                 variant="product"
+                buttonLabel="предзаказ"
               />
             ))
           }
