@@ -1,16 +1,16 @@
 import Link from 'next/link';
-import {Button} from '@heroui/button';
+import { Button } from '@heroui/button';
 import Image from 'next/image';
-import {SanityImageSource} from '@sanity/image-url/lib/types/types';
+import { SanityImageSource } from '@sanity/image-url/lib/types/types';
 import imageUrlBuilder from '@sanity/image-url';
 
-import {BrandCard} from '../ui/card';
+import { BrandCard } from '../ui/card';
 import BrandModalOffer from '../ui/BrandModalOffer';
 
-import {siteConfig} from '@/config/site';
-import {ServiceDetailsProps} from '@/types';
-import {client} from '@/sanity/client';
-import {getSanityDocuments} from '@/lib/fetch-sanity-data';
+import { siteConfig } from '@/config/site';
+import { ServiceDetailsProps } from '@/types';
+import { client } from '@/sanity/client';
+import { getSanityDocuments } from '@/lib/fetch-sanity-data';
 import Section, {
 	SectionButton,
 	SectionDescription,
@@ -18,6 +18,7 @@ import Section, {
 	SectionSubtitle,
 	SectionTitle
 } from '@/components/layout/Section';
+import { ProjectCard } from './project';
 
 export const Services = async () => {
 	const services = await getSanityDocuments();
@@ -39,17 +40,11 @@ export const Services = async () => {
 			</div>
 
 			<div className="grid grid-cols-[var(--grid-template-columns)] gap-8">
-				{services.map((service) => (
-					<BrandCard
-						key={service.title}
-						description={service.description}
-						href={`/services/${service.currentSlug}`}
-						image={urlFor(service.image)}
-						price={service.price}
-						title={service.title}
-						variant="service"
+				{/* {services.map((service) => (
+					<ProjectCard
+						project={service}
 					/>
-				))}
+				))} */}
 			</div>
 
 			<SectionButton className="lg:hidden flex" href={siteConfig.serviceSection.href} label="Все услуги" />
@@ -57,7 +52,7 @@ export const Services = async () => {
 	);
 };
 
-export const ServiceDetails = ({name, description, image, price, advantages, children}: ServiceDetailsProps) => (
+export const ServiceDetails = ({ name, description, image, price, advantages, children }: ServiceDetailsProps) => (
 	<div className="grid md:grid-cols-2 items-start gap-12">
 		{image && <Image alt={name} className="md:sticky top-16 object-cover w-full aspect-square" height={640} src={`${image}`} width={640} />}
 		<div className="flex flex-col gap-8 md:gap-16">
