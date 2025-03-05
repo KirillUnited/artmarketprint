@@ -9,8 +9,6 @@ export const ProductSectionHeading = ({ title, subtitle, description }: { title?
             <SectionTitle>{title}</SectionTitle>
             <SectionDescription>{description}</SectionDescription>
         </SectionHeading>
-
-        <SectionButton label="Все товары" href={'/products'} className='hidden lg:flex' />
     </div>
 );
 
@@ -32,7 +30,7 @@ export const ProductSection = async () => {
 
             <ProductList items={data} />
 
-            <SectionButton label="Все товары" href={'/products'} className='lg:hidden flex' />
+            <SectionButton label="Все товары" href={'/products'} className="self-start"/>
         </Section>
     );
 };

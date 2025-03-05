@@ -22,8 +22,6 @@ export const ProjectsHeading = ({ title, subtitle, description }: { title?: stri
 			<SectionTitle>{title}</SectionTitle>
 			<SectionDescription>{description}</SectionDescription>
 		</SectionHeading>
-
-		<SectionButton className="hidden lg:flex" href={'/projects'} label="Все проекты" />
 	</div>
 );
 
@@ -47,7 +45,7 @@ export const Projects = async (props: ProjectsProps) => {
 
 				{data && <ProjectList projectList={data} />}
 
-				{link?.text && <SectionButton className="lg:hidden flex" href={link.link} label={link.text} />}
+				{link?.text && <SectionButton href={link.link} label={link.text} className='self-start' />}
 			</Section>
 		</Suspense>
 	);

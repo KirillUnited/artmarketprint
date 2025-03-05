@@ -36,7 +36,6 @@ export const Services = async () => {
 					<SectionDescription>{siteConfig.serviceSection.description}</SectionDescription>
 				</SectionHeading>
 
-				<SectionButton className="hidden lg:flex" href={siteConfig.serviceSection.href} label="Все услуги" />
 			</div>
 
 			<div className="grid grid-cols-[var(--grid-template-columns)] gap-8">
@@ -53,7 +52,7 @@ export const Services = async () => {
 				))}
 			</div>
 
-			<SectionButton className="lg:hidden flex" href={siteConfig.serviceSection.href} label="Все услуги" />
+			<SectionButton className='self-start' href={siteConfig.serviceSection.href} label="Все услуги" />
 		</Section>
 	);
 };
