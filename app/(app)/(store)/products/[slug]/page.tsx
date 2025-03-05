@@ -5,8 +5,10 @@ import BaseBreadcrumb from "@/components/ui/Breadcrumb";
 import { getProductBySlug } from "@/lib/actions/product.actions";
 import { client } from "@/sanity/client";
 import { NAVIGATION_QUERY } from "@/sanity/lib/page.query";
+import { Button } from "@heroui/button";
 import { Card, CardBody, CardFooter } from "@heroui/card";
 import { SanityDocument } from "next-sanity";
+import Link from "next/link";
 
 export interface Props {
     slug: string,
@@ -46,7 +48,7 @@ export default async function ProductPage({ params }: { params: Promise<Props> }
                                         <span className="text-3xl text-foreground font-bold">{` ${price} р`}</span></p>
                                 </CardBody>
                                 <CardFooter>
-                                    <BrandButton className="w-full uppercase" state={"primary"}>Предзаказ</BrandButton>
+                                    <Button className="bg-brand-gradient font-semibold w-full uppercase text-primary-foreground"  size="md" radius="sm">Предзаказ</Button>
                                 </CardFooter>
                             </Card>
                             <div dangerouslySetInnerHTML={{ __html: variation_description }} />
