@@ -40,11 +40,17 @@ export const Services = async () => {
 			</div>
 
 			<div className="grid grid-cols-[var(--grid-template-columns)] gap-8">
-				{/* {services.map((service) => (
-					<ProjectCard
-						project={service}
+				{services.map((service) => (
+					<BrandCard
+						key={service.title}
+						description={service.description}
+						href={`/services/${service.currentSlug}`}
+						image={urlFor(service.image)}
+						price={service.price}
+						title={service.title}
+						variant="service"
 					/>
-				))} */}
+				))}
 			</div>
 
 			<SectionButton className="lg:hidden flex" href={siteConfig.serviceSection.href} label="Все услуги" />
