@@ -21,8 +21,6 @@ export const CatalogHeading = ({ categoryItemsCount }: { categoryItemsCount: num
 			<SectionTitle>{siteConfig.catalogSection.title}</SectionTitle>
 			<SectionDescription>{siteConfig.catalogSection.description}</SectionDescription>
 		</SectionHeading>
-
-		{categoryItemsCount > 4 && <SectionButton className="hidden lg:flex" href={siteConfig.catalogSection.href} label="Все категории" />}
 	</div>
 );
 
@@ -52,7 +50,7 @@ export const Catalog = async () => {
 			<CatalogHeading categoryItemsCount={categoryItemsCount} />
 			{categories && <CategoryList categories={categories} />}
 
-			{categoryItemsCount > 4 && <SectionButton className="lg:hidden flex" href={siteConfig.catalogSection.href} label="Все категории" />}
+			{categoryItemsCount > 4 && <SectionButton href={siteConfig.catalogSection.href} label="Все категории" />}
 		</Section>
 	);
 };
