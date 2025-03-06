@@ -31,7 +31,7 @@ export default function BaseBreadcrumb({ items, section }: { items: any, section
 	}, []);
 
 	return (
-		<Breadcrumbs>
+		<Breadcrumbs variant='bordered'>
 			<BreadcrumbItem href="/" className="font-semibold text-primary">
 				<HomeIcon size={18} />
 			</BreadcrumbItem>
