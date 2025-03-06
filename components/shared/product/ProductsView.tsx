@@ -5,6 +5,7 @@ import ProductList from './ProductList'
 import Pagination from '@/components/ui/Pagination'
 
 export default function ProductsView({ products, categories }: any) {
+    // const [filteredItems, setFilteredItems] = React.useState([]);
     return (
         <div className='flex flex-col gap-8'>
             <ProductsFilter categories={categories} />
