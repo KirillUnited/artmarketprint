@@ -6,10 +6,13 @@ import { Input } from '@heroui/input';
 import { useDisclosure } from '@heroui/modal';
 import { Select, SelectItem } from '@heroui/select'
 import { FilterIcon } from 'lucide-react';
-import React from 'react'
+import React from 'react';
+
+const getCategory = (category: string) => category.split('|').shift();
 
 export default function ProductsFilter(props: any) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
   return (
     <div className='flex gap-4 justify-between items-center sticky top-0 z-10 bg-background py-4 border-bottom border-y
     '>
@@ -17,7 +20,7 @@ export default function ProductsFilter(props: any) {
         <Select label="Фильтр по категориям" labelPlacement='outside' aria-label='Select category' radius='sm' size='sm' selectionMode='multiple' className='hidden md:block w-80'>
           {props?.categories?.map((category: string) => (
             <SelectItem key={category}>
-              {category.split('|').shift()}
+              {getCategory(category)}
             </SelectItem>
           ))}
         </Select>
@@ -46,7 +49,7 @@ export default function ProductsFilter(props: any) {
                   <AccordionItem title={`Категории`}>
                     {props?.categories?.map((category: string) => (
                       <p key={category}>
-                        {category.split('|').shift()}
+                        {getCategory(category)}
                       </p>
                     ))}
                   </AccordionItem>
