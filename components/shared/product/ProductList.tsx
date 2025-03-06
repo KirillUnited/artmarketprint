@@ -1,21 +1,38 @@
-import BrandCard from "@/components/ui/BrandCard";
+import {BrandCard} from "@/components/ui/card";
 
-export default function ProductList({ jsonData }: any) {
+export interface ProductListProps {
+  items: Array<{
+    id: {
+      "#text": string
+    }
+    product: {
+      __cdata: string
+    }
+    general_description: {
+      __cdata: string
+    }
+    images_urls: string
+    price: string
+  }>
+}
+
+export default function ProductList({ items }: ProductListProps) {
   return (
     <>
-      {jsonData.length > 0 ? (
+      {(Array.isArray(items) && items.length > 0 )? (
         <div className="grid grid-cols-[var(--grid-template-columns)] gap-8">
           {
-            jsonData.map((item: any, index: number) => (
+            items.map((item, index: number) => (
               <BrandCard
-                key={index}
+                key={item.id["#text"]}
                 title={item.product.__cdata}
                 description={item.general_description.__cdata}
                 image={item.images_urls.split(",")[0]}
                 imageFit="contain"
-                href={`/catalog`}
+                href={`/products/${item.id["#text"]}`}
                 price={`${item.price} BYN`}
                 variant="product"
+                buttonLabel="предзаказ"
               />
             ))
           }

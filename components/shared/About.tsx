@@ -26,22 +26,25 @@ export default function About() {
 						</SectionDescription>
 					</SectionHeading>
 					<div className="flex flex-col md:flex-row gap-2 md:gap-4">
-						<BrandButton as={Link} href={'/services'} state="primary">
+						<BrandButton as={Link} href={'/services'} state="primary"
+						className='min-w-40'
+						size='md'
+						>
 							УСЛУГИ
 						</BrandButton>
 
 						<Button
 							as={Link}
-							className="bg-brand-gradient text-fill-transparent font-semibold"
+							className="bg-brand-gradient text-fill-transparent font-semibold group"
 							color="secondary"
 							href={'/catalog'}
 							radius="sm"
-							size="lg"
+							size="md"
 							target="_blank"
 							variant="bordered"
 						>
 							<span className="leading-none">КАТАЛОГ</span>
-							<ArrowUpRightIcon className="text-secondary" size={18} />
+							<ArrowUpRightIcon className="text-secondary group-hover:translate-x-1 transition-transform" size={18} />
 						</Button>
 					</div>
 				</div>

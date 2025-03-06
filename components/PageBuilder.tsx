@@ -1,19 +1,20 @@
-import {Hero} from '@/components/shared/hero/Hero';
-import {Benefits} from '@/components/shared/Benefits';
-import {Services} from '@/components/shared/Services';
-import {Catalog} from '@/components/shared/Catalog';
+import { Hero } from '@/components/shared/hero/Hero';
+import { Benefits } from '@/components/shared/Benefits';
+import { Services } from '@/components/shared/Services';
+import { Catalog } from '@/components/shared/Catalog';
 import About from '@/components/shared/About';
-import {Projects} from '@/components/shared/Projects';
-import {InstagramFeedSection} from '@/components/shared/InstagramFeed';
-import {FAQSection} from '@/components/shared/faq';
-import ContactUs, {MapFrame} from '@/components/shared/ContactUs';
-import {Fragment} from "react";
+import { Projects } from '@/components/shared/project/Projects';
+import { InstagramFeedSection } from '@/components/shared/InstagramFeed';
+import { FAQSection } from '@/components/shared/faq';
+import ContactUs, { MapFrame } from '@/components/shared/ContactUs';
+import { Fragment } from "react";
+import { ProductSection } from './shared/product/ProductSection';
 
 interface PageBuilderProps {
 	content?: any;
 }
 
-export function PageBuilder({content}: PageBuilderProps) {
+export function PageBuilder({ content }: PageBuilderProps) {
 	if (!Array.isArray(content)) {
 		return null;
 	}
@@ -30,7 +31,12 @@ export function PageBuilder({content}: PageBuilderProps) {
 							</Fragment>
 						);
 					case 'serviceList':
-						return <Services key={block._key} />;
+						return (
+							<Fragment key={block._key}>
+								<Services key={block._key} />
+								<ProductSection />
+							</Fragment>
+						);
 					case 'categoryList':
 						return <Catalog key={block._key} />;
 					case 'imageTextBlock':
@@ -38,7 +44,7 @@ export function PageBuilder({content}: PageBuilderProps) {
 					case 'projectList':
 						return (
 							<Fragment key={block._key}	>
-								<Projects />
+								<Projects {...block} />
 								<InstagramFeedSection id="instagram" />
 							</Fragment>
 						);

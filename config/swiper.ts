@@ -1,7 +1,7 @@
-import {SwiperProps} from "swiper/react";
+import { SwiperProps } from "swiper/react";
 
 export const heroSwiperParams: SwiperProps = {
-    autoHeight: true,
+    autoHeight: false,
     spaceBetween: 10,
     slidesPerView: 1,
     loop: true,

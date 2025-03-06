@@ -7,7 +7,7 @@ import ContactsList from './ContactsList';
 import { SectionProps } from '@/types';
 import Section, { SectionDescription, SectionHeading, SectionSubtitle, SectionTitle } from '@/components/layout/Section';
 import { Card } from '@heroui/card';
-import {OrderForm} from "@/components/ui/form";
+import { OrderForm } from "@/components/ui/form";
 
 export default function ContactUs({ className, ...props }: SectionProps) {
 	return (
@@ -28,7 +28,16 @@ export default function ContactUs({ className, ...props }: SectionProps) {
 					</div>
 				</div>
 
-				<Card radius='sm' shadow='sm' className='p-4 bg-background sticky top-16'>
+				<Card radius='sm' shadow='sm' className={clsx(
+					'flex flex-col gap-6',
+					'p-4 bg-background sticky top-16'
+				)}>
+					<div className='flex flex-col gap-2'>
+						<h3 className="text-2xl md:text-3xl leading-[120%] font-bold">
+							Оставить заявку
+						</h3>
+						<p>Оставьте заявку и мы свяжемся с Вами в ближайшее время</p>
+					</div>
 					<OrderForm className="w-full" />
 				</Card>
 			</div>

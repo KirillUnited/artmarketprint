@@ -83,15 +83,38 @@ export async function fetchXMLStream() {
   return jsonData;
 }
 
-export async function getProductsByLimit(limit: number) {
+export async function getAllProducts() {
   const DATA_FILE_PATH = path.join(process.cwd(), '_data/products.json');
-  const {data} = await getJsonFileData(DATA_FILE_PATH) ?? {};
+  const { data } = await getJsonFileData(DATA_FILE_PATH) ?? {};
 
   if (!data) {
     return [];
   }
 
-  const products = data.item?.map((product: any) => product);
+  return data.item?.map((product: any) => product);
+}
+
+export async function getAllProductCategories(limit=10) {
+  const products = await getAllProducts();
+  const categories = new Set(products?.map((product: any) => product.category));
+
+  return Array.from(categories).slice(0, limit);
+}
+
+export async function getProductsByLimit(limit: number) {
+  const products = await getAllProducts();
 
   return products.slice(0, limit);
+}
+
+export async function getProductsByCategory(category: string) {
+  const products = await getAllProducts();
+
+  return products.filter((product: any) => product.category === category);
+}
+
+export async function getProductBySlug(slug: string) {
+  const products = await getAllProducts();
+
+  return products.find((product: any) => product.id['#text'] === Number(slug));
 }

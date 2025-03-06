@@ -9,13 +9,11 @@ export const ProductSectionHeading = ({ title, subtitle, description }: { title?
             <SectionTitle>{title}</SectionTitle>
             <SectionDescription>{description}</SectionDescription>
         </SectionHeading>
-
-        <SectionButton label="Все товары" href={'/catalog'} className='hidden lg:flex' />
     </div>
 );
 
 export const ProductSection = async () => {
-    const data = await getProductsByLimit(4);
+    const data = await getProductsByLimit(5);
 
     if (!data || data.length === 0) {
         console.warn("Нет данных о продуктах");
@@ -27,12 +25,12 @@ export const ProductSection = async () => {
             <ProductSectionHeading
                 title={'Популярные товары'}
                 subtitle={'Каталог'}
-                description={'Мы предлагаем широкий выбор продукции для нанесения печати: одежда, аксессуары, сувениры и многое другое'}
+                description={'Ознакомьтесь с хитами продаж и новинками, которые выбирают наши покупатели.'}
             />
 
-            <ProductList jsonData={data} />
+            <ProductList items={data} />
 
-            <SectionButton label="Все товары" href={'/catalog'} className='lg:hidden flex' />
+            <SectionButton label="Все товары" href={'/products'} className="self-start"/>
         </Section>
     );
 };

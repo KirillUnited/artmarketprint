@@ -11,9 +11,9 @@ import { ServiceDetails } from '@/components/shared/Services';
 import { client } from '@/sanity/client';
 import { getUrlFor } from '@/lib/utils';
 import Section, { SectionButton } from '@/components/layout/Section';
-import { ProjectList, ProjectsHeading } from '@/components/shared/Projects';
+import { ProjectList, ProjectsHeading } from '@/components/shared/project';
 import { NAVIGATION_QUERY, PROJECTS_BY_CATEGORY_QUERY } from '@/sanity/lib/queries';
-import {OrderForm} from '@/components/ui/form';
+import { OrderForm } from '@/components/ui/form';
 
 type Props = {
 	slug: string;
@@ -51,13 +51,13 @@ const options = { next: { revalidate: 30 } };
 
 export default async function CategoryPage({ params }: { params: Promise<Props> }) {
 	const category = await client.fetch<SanityDocument>(CATEGORY_QUERY, await params, options);
+	const breadcrumbs = (await client.fetch<SanityDocument>(NAVIGATION_QUERY))[0].links;
 	const categoryImageUrl = await category?.image
 		? urlFor(category.image)?.width(550).height(310).url()
 		: null;
 
-	const filteredProjects = await client.fetch<SanityDocument>(PROJECTS_BY_CATEGORY_QUERY, await params, options);
-	const breadcrumbs = (await client.fetch<SanityDocument>(NAVIGATION_QUERY))[0].links;
-	const { projects = [] } = filteredProjects?.[0] || {};
+	const relatedProjects = await client.fetch<SanityDocument>(PROJECTS_BY_CATEGORY_QUERY, await params, options);
+	const relatedProjectsArray = Array.isArray(relatedProjects) ? relatedProjects : [relatedProjects];
 
 	return (
 		<>
@@ -95,7 +95,7 @@ export default async function CategoryPage({ params }: { params: Promise<Props> 
 			<Section className="bg-[#F9F9F9]">
 				<ProjectsHeading description={'Портфолио выполненных работ'} subtitle={'галерея'} title='Примеры работ' />
 
-				<ProjectList bentoGrid={false} projectList={projects} />
+				<ProjectList bentoGrid={false} projectList={relatedProjectsArray} />
 
 				<SectionButton className='lg:hidden flex' href={'/projects'} label="Все проекты" />
 			</Section >
