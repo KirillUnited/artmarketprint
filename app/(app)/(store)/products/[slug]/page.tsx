@@ -1,14 +1,13 @@
 import Section from "@/components/layout/Section";
 import { ProductCarousel } from "@/components/shared/product";
-import BrandButton from "@/components/ui/BrandButton";
+import RelatedProducts from "@/components/shared/product/RelatedProducts";
 import BaseBreadcrumb from "@/components/ui/Breadcrumb";
-import { getProductBySlug } from "@/lib/actions/product.actions";
+import { getProductBySlug, getProductsByCategory } from "@/lib/actions/product.actions";
 import { client } from "@/sanity/client";
 import { NAVIGATION_QUERY } from "@/sanity/lib/page.query";
 import { Button } from "@heroui/button";
 import { Card, CardBody, CardFooter } from "@heroui/card";
 import { SanityDocument } from "next-sanity";
-import Link from "next/link";
 
 export interface Props {
     slug: string,
@@ -21,8 +20,6 @@ export default async function ProductPage({ params }: { params: Promise<Props> }
     const breadcrumbs = (await client.fetch<SanityDocument>(NAVIGATION_QUERY))[0].links;
 
     if (!product) return <div className="text-center text-2xl mt-10 ">Товар не найден</div>
-
-    console.log('product', product)
 
     const {
         product: { __cdata: title },
@@ -62,6 +59,7 @@ export default async function ProductPage({ params }: { params: Promise<Props> }
                     </p>
                 </article>
             </Section>
+            <RelatedProducts product={product} />
         </>
     )
 }
