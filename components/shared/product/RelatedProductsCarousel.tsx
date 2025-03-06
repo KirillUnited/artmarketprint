@@ -13,18 +13,17 @@ export default function RelatedProductsCarousel({ relatedProducts }: any) {
     console.log(relatedProducts);
     return (
         <Swiper
-            slidesPerView={3}
+            slidesPerView={4}
             spaceBetween={10}
-            loop={true}
             modules={[Navigation]}
             navigation={true}
             className='max-w-full'
         >
             {relatedProducts?.map((item: any) => (
-                <SwiperSlide key={`${item?.id["#text"]}`}>
+                <SwiperSlide key={`${item?.id["#text"]}`} className='w-full'>
                     <Card className="h-full group relative max-w-full" radius="sm" >
                         <CardBody>
-                            <Image removeWrapper alt={item.altText} className="object-cover aspect-square" radius="sm" src={item.images_urls?.split(",")[0]} width={220} />
+                            <Image removeWrapper alt={item.altText} className="object-cover aspect-square mx-auto" radius="sm" src={item.images_urls?.split(",")[0]} width={220} />
                             <h3 className="text-2xl font-bold text-gray-900 line-clamp-1">{item.product?.__cdata}</h3>
                             <p className="text-gray-600 line-clamp-1">{item.general_description?.__cdata}</p>
                         </CardBody>
