@@ -23,8 +23,8 @@ export default function ProductsFilter(props: any) {
         </Select>
         <Input label='Поиск товара' labelPlacement='outside' variant='bordered' type='search' placeholder='Поиск' radius='sm' size='sm' classNames={{ inputWrapper: 'border-1' }} />
       </div>
-      <div className='flex gap-4'>
-        <Select label="Сортировать" labelPlacement='outside' radius='sm' size='sm' className='hidden md:block w-60'>
+      <div className='hidden md:flex gap-4'>
+        <Select label="Сортировать цены" labelPlacement='outside' radius='sm' size='sm' className='w-60'>
           <SelectItem key="1" textValue='По убыванию'>
             По убыванию
           </SelectItem>
@@ -50,7 +50,7 @@ export default function ProductsFilter(props: any) {
                       </p>
                     ))}
                   </AccordionItem>
-                  <AccordionItem title={`Сортировать`}>
+                  <AccordionItem title={`Сортировать цены`}>
                     <Input label='По убыванию' type='checkbox' />
                     <Input label='По возрастанию' type='checkbox' />
                   </AccordionItem>
