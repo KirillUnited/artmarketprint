@@ -27,7 +27,6 @@ export default function ProductsFilter(props: any) {
     // props.setFilteredItems(filteredItems);
   };
   const sortByPrice = (order: string) => {
-    console.log(order)
     const sorted = [...props?.products].sort((a, b) =>
       order === "asc" ? a.price - b.price : b.price - a.price
     );
