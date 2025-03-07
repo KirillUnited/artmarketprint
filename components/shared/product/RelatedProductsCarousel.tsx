@@ -11,7 +11,6 @@ import { Image } from '@heroui/image';
 import { Link } from '@heroui/link';
 
 export default function RelatedProductsCarousel({ relatedProducts }: any) {
-    console.log(relatedProducts);
     return (
         <Swiper
             slidesPerView={4}
@@ -43,6 +42,7 @@ export default function RelatedProductsCarousel({ relatedProducts }: any) {
                     <Card className="h-full group relative max-w-full shadow-sm" radius="sm" >
                         <CardBody as={Link} href={`/products/${item?.id["#text"]}`}>
                             <Image removeWrapper alt={item.altText} className="object-cover aspect-square mx-auto" radius="sm" src={item.images_urls?.split(",")[0]} width={220} />
+                            <span className="text-xl md:text-2xl text-primary font-semibold self-start">{`${item.price} BYN`}</span>
                             <h3 className="text-2xl font-bold text-gray-900 line-clamp-2">{item.product?.__cdata}</h3>
                             <p className="text-gray-600 line-clamp-2">{item.general_description?.__cdata}</p>
                         </CardBody>
