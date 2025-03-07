@@ -7,7 +7,7 @@ import { toast } from 'sonner';
 
 const phoneUtil = PhoneNumberUtil.getInstance();
 
-const isPhoneValid = (phone: string): boolean => {
+export const isPhoneValid = (phone: string): boolean => {
     try {
         return phoneUtil.isValidNumber(phoneUtil.parseAndKeepRawInput(phone));
     } catch (error) {
