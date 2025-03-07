@@ -9,11 +9,14 @@ import { FilterIcon } from 'lucide-react';
 import React, { useState } from 'react';
 import ProductList from './ProductList';
 
-const getCategory = (category: string) => category.split('|').shift();
+export const getCategory = (category: string) => category.split('|').shift();
 
 export default function ProductsFilter(props: any) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+
+  const [sortOrder, setSortOrder] = useState("asc");
+  const [sortedProducts, setSortedProducts] = useState(props.products);
 
   const handleFilterChange = (category: string) => {
     setSelectedCategory(category);
@@ -21,8 +24,18 @@ export default function ProductsFilter(props: any) {
       ? props?.categories?.filter((item: any) => item === selectedCategory)
       : props?.categories ?? [];
 
-    // props.filteredItems(filteredItems);
+    // props.setFilteredItems(filteredItems);
   };
+  const sortByPrice = (order: string) => {
+    console.log(order)
+    const sorted = [...props?.products].sort((a, b) =>
+      order === "asc" ? a.price - b.price : b.price - a.price
+    );
+    setSortedProducts(sorted);
+    setSortOrder(order);
+    props.sortedProducts(sorted);
+  };
+  console.log(sortedProducts);
 
   return (
     <>
@@ -39,11 +52,11 @@ export default function ProductsFilter(props: any) {
           <Input label='Поиск товара' labelPlacement='outside' variant='bordered' type='search' placeholder='Поиск' radius='sm' size='sm' classNames={{ inputWrapper: 'border-1' }} />
         </div>
         <div className='hidden md:flex gap-4'>
-          <Select label="Сортировать цены" labelPlacement='outside' radius='sm' size='sm' className='w-60'>
-            <SelectItem key="1" textValue='По убыванию'>
+          <Select label="Сортировать цены" labelPlacement='outside' radius='sm' size='sm' className='w-60' onChange={(e) => sortByPrice(e.target.value)}>
+            <SelectItem key="desc" textValue='По убыванию'>
               По убыванию
             </SelectItem>
-            <SelectItem key="2" textValue='По возрастанию'>
+            <SelectItem key="asc" textValue='По возрастанию'>
               По возрастанию
             </SelectItem>
           </Select>
