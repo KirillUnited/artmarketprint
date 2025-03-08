@@ -108,10 +108,11 @@ export async function getProductsByLimit(limit: number) {
   return products.slice(0, limit);
 }
 
-export async function getProductsByCategory(category: string) {
+export async function getRelatedProductsByCategory(category: string, id: number, limit = 10) {
   const products = await getAllProducts();
+  const relatedProducts = products.filter((product: any) => product.category === category && product.id['#text'] !== id);
 
-  return products.filter((product: any) => product.category === category);
+  return Array.from(relatedProducts).slice(0, limit);
 }
 
 export async function getProductBySlug(slug: string) {
