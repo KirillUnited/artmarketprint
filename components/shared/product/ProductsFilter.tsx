@@ -11,38 +11,16 @@ import ProductList from './ProductList';
 
 export const getCategory = (category: string) => category.split('|').shift();
 
-export default function ProductsFilter(props: any) {
+export default function ProductsFilter({ sortOrder, selectedCategory, onFilterChange, categories }: any) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-
-  const [sortOrder, setSortOrder] = useState("asc");
-  const [sortedProducts, setSortedProducts] = useState(props.products);
-
-  const handleFilterChange = (category: string) => {
-    setSelectedCategory(category);
-    const filteredItems = selectedCategory
-      ? props?.categories?.filter((item: any) => item === selectedCategory)
-      : props?.categories ?? [];
-
-    // props.setFilteredItems(filteredItems);
-  };
-  const sortByPrice = (order: string) => {
-    const sorted = [...props?.products].sort((a, b) =>
-      order === "asc" ? a.price - b.price : b.price - a.price
-    );
-    setSortedProducts(sorted);
-    setSortOrder(order);
-    props.sortedProducts(sorted);
-  };
-  console.log(sortedProducts);
 
   return (
     <>
       <div className='flex gap-4 justify-between items-center sticky top-0 z-10 bg-background py-4 border-bottom border-y
       '>
         <div className='flex gap-4 flex-1'>
-          <Select label="Фильтр по категориям" labelPlacement='outside' aria-label='Select category' radius='sm' size='sm' selectionMode='multiple' className='hidden md:block w-80' onChange={(e) => handleFilterChange(e.target.value)}>
-            {props?.categories?.map((category: string) => (
+          <Select label="Фильтр по категориям" labelPlacement='outside' aria-label='Select category' radius='sm' size='sm' className='hidden md:block w-80' onChange={(e) => onFilterChange(sortOrder, e.target.value)}>
+            {categories?.map((category: string) => (
               <SelectItem key={category}>
                 {getCategory(category)}
               </SelectItem>
@@ -51,7 +29,7 @@ export default function ProductsFilter(props: any) {
           <Input label='Поиск товара' labelPlacement='outside' variant='bordered' type='search' placeholder='Поиск' radius='sm' size='sm' classNames={{ inputWrapper: 'border-1' }} />
         </div>
         <div className='hidden md:flex gap-4'>
-          <Select label="Сортировать цены" labelPlacement='outside' radius='sm' size='sm' className='w-60' onChange={(e) => sortByPrice(e.target.value)}>
+          <Select label="Сортировать цены" labelPlacement='outside' radius='sm' size='sm' className='w-60' onChange={(e) => onFilterChange(e.target.value, selectedCategory)}>
             <SelectItem key="desc" textValue='По убыванию'>
               По убыванию
             </SelectItem>
@@ -71,7 +49,7 @@ export default function ProductsFilter(props: any) {
                 <DrawerBody>
                   <Accordion title='Категории' aria-label='Select category' selectionMode='multiple' className='w-80'>
                     <AccordionItem title={`Категории`}>
-                      {props?.categories?.map((category: string) => (
+                      {categories?.map((category: string) => (
                         <p key={category}>
                           {getCategory(category)}
                         </p>

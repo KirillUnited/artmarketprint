@@ -1,24 +1,31 @@
 'use client';
 import React from 'react'
-import ProductsFilter from './ProductsFilter'
-import ProductList from './ProductList'
+import ProductsFilter, { getCategory } from './ProductsFilter'
 import Pagination from '@/components/ui/Pagination'
-import RelatedProductsCarousel from './RelatedProductsCarousel'
 import { Card, CardBody, CardFooter } from '@heroui/card';
 import { Link } from '@heroui/link';
 import { Image } from '@heroui/image';
 import { Button } from '@heroui/button';
 
 export default function ProductsView({ products, categories }: any) {
-    const [filteredItems, setFilteredItems] = React.useState(products);
-    const [sortedItems, setSortedItems] = React.useState(products);
+    const [sortOrder, setSortOrder] = React.useState("asc");
+    const [selectedCategory, setSelectedCategory] = React.useState('');
+    const handleFilterChange = (newSortOrder: string, newCategory: string) => {
+        setSortOrder(newSortOrder);
+        setSelectedCategory(newCategory);
+    };
+    const filteredProducts = (selectedCategory ? products
+        .filter((product: any) => getCategory(product?.category) === selectedCategory) : products ?? [])
+        .sort((a: any, b: any) => (sortOrder === "asc" ? a.price - b.price : b.price - a.price));
+
     return (
         <div className='flex flex-col gap-8'>
-            <ProductsFilter categories={categories} products={products} sortedProducts={setSortedItems} />
-            {/* <ProductList items={products} /> */}
-            {/* <RelatedProductsCarousel relatedProducts={sortedItems} /> */}
+            <ProductsFilter sortOrder={sortOrder}
+                selectedCategory={selectedCategory}
+                onFilterChange={handleFilterChange}
+                categories={categories} />
             <ul className="grid grid-cols-[var(--grid-template-columns)] gap-8">
-                {sortedItems?.map((item: any) => (
+                {filteredProducts?.map((item: any) => (
                     <li key={`${item?.id["#text"]}`}>
                         <Card className="h-full group relative max-w-full shadow-sm" radius="sm" >
                             <CardBody as={Link} href={`/products/${item?.id["#text"]}`}>
