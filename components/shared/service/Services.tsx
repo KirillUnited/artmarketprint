@@ -17,7 +17,7 @@ import Section, {
 	SectionSubtitle,
 	SectionTitle
 } from '@/components/layout/Section';
-import ServiceListItems from './ServiceListItems';
+import ServiceListItems from './_ServiceListItems';
 
 export const Services = async () => {
 	const services = await getSanityDocuments();
