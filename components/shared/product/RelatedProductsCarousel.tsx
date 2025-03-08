@@ -10,6 +10,7 @@ import {  Navigation } from 'swiper/modules';
 import { Image } from '@heroui/image';
 import { Link } from '@heroui/link';
 import Loader from '@/components/ui/Loader';
+import { getPrice } from '@/lib/getPrice';
 
 export default function RelatedProductsCarousel({ relatedProducts }: any) {
     const [products, setProducts] = React.useState([]);
@@ -53,7 +54,7 @@ export default function RelatedProductsCarousel({ relatedProducts }: any) {
                     <Card className="h-full group relative max-w-full shadow-sm" radius="sm" >
                         <CardBody as={Link} href={`/products/${item?.id["#text"]}`} className='items-stretch'>
                             <Image removeWrapper alt={item.altText} className="object-cover aspect-square mx-auto" radius="sm" src={item.images_urls?.split(",")[0]} width={220} />
-                            <span className="text-xl md:text-2xl text-primary font-semibold self-start">{`${item.price} BYN`}</span>
+                            <span className="text-xl md:text-2xl text-primary font-semibold self-start">{`${getPrice(item.price, 1.1)} BYN`}</span>
                             <h3 className="text-2xl font-bold text-gray-900 line-clamp-2">{item.product?.__cdata}</h3>
                             <p className="text-gray-600 line-clamp-2">{item.general_description?.__cdata}</p>
                         </CardBody>
