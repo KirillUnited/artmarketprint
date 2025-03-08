@@ -1,0 +1,1 @@
+export const getPrice = (price: any, rate: number) => (Number(price)*rate).toFixed(2);

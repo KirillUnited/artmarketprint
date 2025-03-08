@@ -1,4 +1,5 @@
 import {BrandCard} from "@/components/ui/card";
+import { getPrice } from "@/lib/getPrice";
 
 export interface ProductListProps {
   items: Array<{
@@ -30,7 +31,7 @@ export default function ProductList({ items }: ProductListProps) {
                 image={item.images_urls.split(",")[0]}
                 imageFit="contain"
                 href={`/products/${item.id["#text"]}`}
-                price={`${item.price} BYN`}
+                price={`${getPrice(item?.price, 1.1)} BYN`}
                 variant="product"
                 buttonLabel="предзаказ"
               />
