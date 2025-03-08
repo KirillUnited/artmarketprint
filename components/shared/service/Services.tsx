@@ -4,8 +4,8 @@ import Image from 'next/image';
 import { SanityImageSource } from '@sanity/image-url/lib/types/types';
 import imageUrlBuilder from '@sanity/image-url';
 
-import { BrandCard } from '../ui/card';
-import BrandModalOffer from '../ui/BrandModalOffer';
+import { BrandCard } from '../../ui/card';
+import BrandModalOffer from '../../ui/BrandModalOffer';
 
 import { siteConfig } from '@/config/site';
 import { ServiceDetailsProps } from '@/types';
@@ -18,7 +18,7 @@ import Section, {
 	SectionSubtitle,
 	SectionTitle
 } from '@/components/layout/Section';
-import { ProjectCard } from './project';
+import { ProjectCard } from '../project';
 
 export const Services = async () => {
 	const services = await getSanityDocuments();

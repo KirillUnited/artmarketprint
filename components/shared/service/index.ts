@@ -1,3 +1,4 @@
-import ServiceListItems from './serviceListItems';
+import ServiceListItems from './ServiceListItems';
+import { Services, ServiceDetails } from './Services';
 
-export { ServiceListItems };
+export { ServiceListItems, Services, ServiceDetails };

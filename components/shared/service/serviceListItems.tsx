@@ -10,7 +10,7 @@ import { ArrowUpRightIcon } from 'lucide-react';
 export default function ServiceListItems({ services }: any) {
     return (
         <ul className="grid grid-cols-[var(--grid-template-columns)] gap-8">
-            {services.map((service: any) => (
+            {services?.map((service: any) => (
                 <li key={service.title}>
                     <Card isFooterBlurred as={Link} className="h-full group relative" href={`/services/${service.currentSlug}`} radius="sm">
                         <div className="absolute top-3 left-3 z-10 flex flex-wrap gap-2">
