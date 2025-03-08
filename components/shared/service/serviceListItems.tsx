@@ -1,5 +1,5 @@
 import { ProjectTagList } from '@/components/shared/project';
-import { Image as HeroUIImage } from '@heroui/image';
+import { Image} from '@heroui/image';
 import { Card, CardFooter } from '@heroui/card';
 import { Link } from '@heroui/link';
 import { getUrlFor } from '@/lib/utils';
@@ -17,7 +17,7 @@ export default function ServiceListItems({ services }: any) {
                             {service?.service_tags?.length > 0 && <ProjectTagList tags={service.service_tags} color='primary' />}
                             {service?.category_tags?.length > 0 && <ProjectTagList tags={service.category_tags} color='secondary' />}
                         </div>
-                        <HeroUIImage removeWrapper alt={service.altText} className="z-0 w-full h-full object-cover aspect-square" radius="sm" src={service.imageUrl ? service.imageUrl : getUrlFor(service.image)} width={220} />
+                        <Image removeWrapper isZoomed alt={service.altText} className="z-0 w-full h-full object-cover aspect-square" radius="sm" src={service.imageUrl ? service.imageUrl : getUrlFor(service.image)} width={220} />
                         <CardFooter className={clsx(
                             "absolute bg-black/40 bottom-0 w-full z-10 p-0",
                         )}>

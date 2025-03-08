@@ -4,7 +4,6 @@ import Image from 'next/image';
 import { SanityImageSource } from '@sanity/image-url/lib/types/types';
 import imageUrlBuilder from '@sanity/image-url';
 
-import { BrandCard } from '../../ui/card';
 import BrandModalOffer from '../../ui/BrandModalOffer';
 
 import { siteConfig } from '@/config/site';
@@ -18,7 +17,7 @@ import Section, {
 	SectionSubtitle,
 	SectionTitle
 } from '@/components/layout/Section';
-import { ProjectCard } from '../project';
+import ServiceListItems from './ServiceListItems';
 
 export const Services = async () => {
 	const services = await getSanityDocuments();
@@ -38,19 +37,7 @@ export const Services = async () => {
 
 			</div>
 
-			<div className="grid grid-cols-[var(--grid-template-columns)] gap-8">
-				{services.map((service) => (
-					<BrandCard
-						key={service.title}
-						description={service.description}
-						href={`/services/${service.currentSlug}`}
-						image={urlFor(service.image)}
-						price={service.price}
-						title={service.title}
-						variant="service"
-					/>
-				))}
-			</div>
+			<ServiceListItems services={services} />
 
 			<SectionButton className='self-start' href={siteConfig.serviceSection.href} label="Все услуги" />
 		</Section>
