@@ -44,8 +44,13 @@ export default async function ServicesPage() {
 				<ul className="grid grid-cols-[var(--grid-template-columns)] gap-8">
 					{services.map((service) => (
 						<li key={service.title}>
-							<ProjectCard
-								project={service}
+							<BrandCard
+								description={service.description}
+								href={`/services/${service.currentSlug}`}
+								image={urlFor(service.image)}
+								price={service.price}
+								title={service.title}
+								variant="service"
 							/>
 						</li>
 					))}

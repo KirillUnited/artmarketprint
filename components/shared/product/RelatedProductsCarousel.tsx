@@ -1,5 +1,5 @@
 'use client';
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Card, CardBody, CardFooter } from '@heroui/card';
 import { Button } from '@heroui/button';
@@ -9,8 +9,19 @@ import 'swiper/css/navigation';
 import {  Navigation } from 'swiper/modules';
 import { Image } from '@heroui/image';
 import { Link } from '@heroui/link';
+import Loader from '@/components/ui/Loader';
 
 export default function RelatedProductsCarousel({ relatedProducts }: any) {
+    const [products, setProducts] = React.useState([]);
+    const [isLoading, setIsLoading] = React.useState(true);
+
+    useEffect(() => {
+        setProducts(relatedProducts);
+        setIsLoading(false);
+    }, [relatedProducts]);
+
+    if (isLoading) return <Loader />;
+
     return (
         <Swiper
             slidesPerView={4}
@@ -24,11 +35,11 @@ export default function RelatedProductsCarousel({ relatedProducts }: any) {
                     spaceBetween: 10,
                 },
                 640: {
-                    slidesPerView: 2,
+                    slidesPerView: 'auto',
                     spaceBetween: 10,
                 },
                 768: {
-                    slidesPerView: 3,
+                    slidesPerView: 'auto',
                     spaceBetween: 10,
                 },
                 1024: {
@@ -37,10 +48,10 @@ export default function RelatedProductsCarousel({ relatedProducts }: any) {
                 },
             }}
         >
-            {relatedProducts?.map((item: any) => (
-                <SwiperSlide key={`${item?.id["#text"]}`}>
+            {products?.map((item: any) => (
+                <SwiperSlide key={`${item?.id["#text"]}`} className='lg:min-w-64'>
                     <Card className="h-full group relative max-w-full shadow-sm" radius="sm" >
-                        <CardBody as={Link} href={`/products/${item?.id["#text"]}`}>
+                        <CardBody as={Link} href={`/products/${item?.id["#text"]}`} className='items-stretch'>
                             <Image removeWrapper alt={item.altText} className="object-cover aspect-square mx-auto" radius="sm" src={item.images_urls?.split(",")[0]} width={220} />
                             <span className="text-xl md:text-2xl text-primary font-semibold self-start">{`${item.price} BYN`}</span>
                             <h3 className="text-2xl font-bold text-gray-900 line-clamp-2">{item.product?.__cdata}</h3>

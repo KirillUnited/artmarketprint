@@ -2,7 +2,7 @@ import Section from "@/components/layout/Section";
 import { ProductCarousel } from "@/components/shared/product";
 import RelatedProducts from "@/components/shared/product/RelatedProducts";
 import BaseBreadcrumb from "@/components/ui/Breadcrumb";
-import { getProductBySlug, getProductsByCategory } from "@/lib/actions/product.actions";
+import { getProductBySlug, getRelatedProductsByCategory } from "@/lib/actions/product.actions";
 import { client } from "@/sanity/client";
 import { NAVIGATION_QUERY } from "@/sanity/lib/page.query";
 import { Button } from "@heroui/button";
