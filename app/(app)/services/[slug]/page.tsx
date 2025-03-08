@@ -6,7 +6,7 @@ import Link from "next/link";
 import { siteConfig } from "@/config/site";
 import BaseBreadcrumb from "@/components/ui/Breadcrumb";
 import BrandButton from "@/components/ui/BrandButton";
-import { ServiceDetails } from "@/components/shared/Services";
+import { ServiceDetails } from "@/components/shared/service";
 
 import { client } from "@/sanity/client";
 import imageUrlBuilder from "@sanity/image-url";

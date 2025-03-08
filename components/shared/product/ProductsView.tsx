@@ -28,11 +28,11 @@ export default function ProductsView({ products, categories }: any) {
                 {filteredProducts?.map((item: any) => (
                     <li key={`${item?.id["#text"]}`}>
                         <Card className="h-full group relative max-w-full shadow-sm" radius="sm" >
-                            <CardBody as={Link} href={`/products/${item?.id["#text"]}`}>
+                            <CardBody as={Link} href={`/products/${item?.id["#text"]}`} className='items-stretch'>
                                 <Image removeWrapper alt={item.altText} className="object-cover aspect-square mx-auto" radius="sm" src={item.images_urls?.split(",")[0]} width={220} />
                                 <span className="text-xl md:text-2xl text-primary font-semibold self-start">{`${item.price} BYN`}</span>
-                                <h3 className="text-2xl font-bold text-gray-900 line-clamp-2">{item.product?.__cdata}</h3>
-                                <p className="text-gray-600 line-clamp-2">{item.general_description?.__cdata}</p>
+                                <h3 className=" font-bold text-gray-900 line-clamp-2">{item.product?.__cdata}</h3>
+                                <p className="text-gray-600 line-clamp-2 text-xs">{item.general_description?.__cdata}</p>
                             </CardBody>
                             <CardFooter>
                                 <Button as={Link} target='_blank' href={`/products/${item?.id["#text"]}`} size="md" color='secondary' radius='sm'>Подробнее</Button>

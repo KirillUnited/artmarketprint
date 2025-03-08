@@ -6,8 +6,7 @@ import { Input } from '@heroui/input';
 import { useDisclosure } from '@heroui/modal';
 import { Select, SelectItem } from '@heroui/select'
 import { FilterIcon } from 'lucide-react';
-import React, { useState } from 'react';
-import ProductList from './ProductList';
+import React from 'react';
 
 export const getCategory = (category: string) => category.split('|').shift();
 
@@ -56,8 +55,8 @@ export default function ProductsFilter({ sortOrder, selectedCategory, onFilterCh
                       ))}
                     </AccordionItem>
                     <AccordionItem title={`Сортировать цены`}>
-                      <Input label='По убыванию' type='checkbox' />
-                      <Input label='По возрастанию' type='checkbox' />
+                      <p>По убыванию</p>
+                      <p>По возрастанию</p>
                     </AccordionItem>
                   </Accordion>
                 </DrawerBody>

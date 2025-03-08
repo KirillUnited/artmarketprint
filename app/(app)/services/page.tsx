@@ -3,7 +3,6 @@ import { SanityImageSource } from '@sanity/image-url/lib/types/types';
 import imageUrlBuilder from '@sanity/image-url';
 
 import { siteConfig } from '@/config/site';
-import { BrandCard } from '@/components/ui/card';
 import { FAQSection } from '@/components/shared/faq';
 import ContactUs from '@/components/shared/ContactUs';
 import BaseBreadcrumb from '@/components/ui/Breadcrumb';
@@ -11,7 +10,7 @@ import { client } from '@/sanity/client';
 import { getSanityDocuments } from '@/lib/fetch-sanity-data';
 import { NAVIGATION_QUERY, SERVICES_QUERY } from '@/sanity/lib/queries';
 import Section from '@/components/layout/Section';
-import { ProjectCard } from '@/components/shared/project';
+import { ServiceListItems } from '@/components/shared/service';
 
 const builder = imageUrlBuilder(client);
 
@@ -41,20 +40,7 @@ export default async function ServicesPage() {
 				</div>
 			</section>
 			<Section innerClassname='pt-6 md:pt-6' id="serviceList">
-				<ul className="grid grid-cols-[var(--grid-template-columns)] gap-8">
-					{services.map((service) => (
-						<li key={service.title}>
-							<BrandCard
-								description={service.description}
-								href={`/services/${service.currentSlug}`}
-								image={urlFor(service.image)}
-								price={service.price}
-								title={service.title}
-								variant="service"
-							/>
-						</li>
-					))}
-				</ul>
+				<ServiceListItems services={services} />
 			</Section>
 			<FAQSection />
 			<ContactUs />
