@@ -18,6 +18,7 @@ export default function ProductsFilter({ sortOrder, selectedCategory, onFilterCh
     <>
       <div className='flex flex-col gap-4 sticky top-16 z-30 bg-background py-4 border-bottom border-y
       '>
+        <p className='text-2xl font-bold'>Фильтры</p>
         <div className='flex gap-4 flex-1'>
           <RadioGroup title='Фильтр по категориям' label='Фильтр по категориям'>
             {categories?.map((category: string) => (
