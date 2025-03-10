@@ -2,9 +2,7 @@
 import { Accordion, AccordionItem } from '@heroui/accordion';
 import { Button } from '@heroui/button';
 import { Drawer, DrawerBody, DrawerContent, DrawerFooter, DrawerHeader } from '@heroui/drawer';
-import { Input } from '@heroui/input';
 import { useDisclosure } from '@heroui/modal';
-import { Select, SelectItem } from '@heroui/select'
 import { FilterIcon } from 'lucide-react';
 import { Radio, RadioGroup } from '@heroui/radio';
 import React from 'react';
