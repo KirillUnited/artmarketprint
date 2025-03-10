@@ -66,7 +66,6 @@ export default function Pagination({className, total}: PaginationProps) {
                 ref={ref}
                 className={clsx(
                     className,
-                    isActive && "text-white bg-gradient-to-br from-indigo-500 to-pink-500 font-bold",
                 )}
                 onClick={() => setPage(value)}
             >
@@ -77,7 +76,6 @@ export default function Pagination({className, total}: PaginationProps) {
 
     return (
         <BasePagination
-            disableCursorAnimation
             showControls
             className={clsx(
                 "gap-2",

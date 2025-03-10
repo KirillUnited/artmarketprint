@@ -9,9 +9,15 @@ import { Button } from '@heroui/button';
 import { getPrice } from '@/lib/getPrice';
 import { Input } from '@heroui/input';
 
-export default function ProductsView({ products, categories }: any) {
+const ITEMS_PER_PAGE = 8;
+
+export default function ProductsView({ products, categories, totalItemsView=ITEMS_PER_PAGE }: any) {
     const [sortOrder, setSortOrder] = React.useState("asc");
     const [selectedCategory, setSelectedCategory] = React.useState('');
+    const [currentPage, setCurrentPage] = React.useState(1);
+    const handlePageChange = (page: number) => {
+        setCurrentPage(page);
+      };
     const handleFilterChange = (newSortOrder: string, newCategory: string) => {
         setSortOrder(newSortOrder);
         setSelectedCategory(newCategory);
@@ -20,6 +26,12 @@ export default function ProductsView({ products, categories }: any) {
         .filter((product: any) => getCategory(product?.category) === selectedCategory) : products ?? [])
         .sort((a: any, b: any) => (sortOrder === "asc" ? a.price - b.price : b.price - a.price));
 
+    const paginatedItems = filteredProducts.slice(
+        (currentPage - 1) * totalItemsView,
+        currentPage * totalItemsView
+    );
+    console.log('paginatedItems', paginatedItems);
+
     return (
         <div className='flex flex-col gap-8'>
             <div className='grid grid-cols-[auto_1fr] items-start gap-8'>
@@ -27,11 +39,10 @@ export default function ProductsView({ products, categories }: any) {
                     selectedCategory={selectedCategory}
                     onFilterChange={handleFilterChange}
                     categories={categories} />
-    
                 <div>
                     <Input label='Поиск товара' labelPlacement='outside' variant='bordered' type='search' placeholder='Поиск' radius='sm' size='sm' classNames={{ inputWrapper: 'border-1' }} />
                     <ul className="grid grid-cols-[var(--grid-template-columns)] gap-8">
-                        {filteredProducts?.map((item: any) => (
+                        {paginatedItems?.map((item: any) => (
                             <li key={`${item?.id["#text"]}`}>
                                 <Card className="h-full group relative max-w-full shadow-sm" radius="sm" >
                                     <CardBody as={Link} href={`/products/${item?.id["#text"]}`} className='items-stretch'>
@@ -49,7 +60,12 @@ export default function ProductsView({ products, categories }: any) {
                     </ul>
                 </div>
             </div>
-            {/* <Pagination total={10} className='self-center' /> */}
+            {
+                filteredProducts.length > totalItemsView && 
+                <Pagination total={Math.ceil(filteredProducts.length / totalItemsView)}
+                onChange={handlePageChange}
+                className='self-center' />
+            }
         </div>
     )
 }
