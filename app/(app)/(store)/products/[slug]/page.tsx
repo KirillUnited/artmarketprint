@@ -8,6 +8,7 @@ import { client } from "@/sanity/client";
 import { NAVIGATION_QUERY } from "@/sanity/lib/page.query";
 import { Button } from "@heroui/button";
 import { Card, CardBody, CardFooter } from "@heroui/card";
+import { ShoppingCartIcon } from "lucide-react";
 import { SanityDocument } from "next-sanity";
 
 export interface Props {
@@ -46,7 +47,10 @@ export default async function ProductPage({ params }: { params: Promise<Props> }
                                         <span className="text-3xl text-foreground font-bold">{` ${getPrice(price, 1.1)} р`}</span></p>
                                 </CardBody>
                                 <CardFooter>
-                                    <Button className="bg-brand-gradient font-semibold w-full uppercase text-primary-foreground"  size="md" radius="sm">Предзаказ</Button>
+                                    <Button className="bg-brand-gradient font-semibold w-full uppercase text-primary-foreground" size="md" radius="sm">
+                                        <ShoppingCartIcon size={18} />
+                                        <span>Предзаказ</span>
+                                    </Button>
                                 </CardFooter>
                             </Card>
                             <div dangerouslySetInnerHTML={{ __html: variation_description }} />

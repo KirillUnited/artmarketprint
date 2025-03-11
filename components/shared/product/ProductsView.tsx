@@ -8,10 +8,11 @@ import { Image } from '@heroui/image';
 import { Button } from '@heroui/button';
 import { getPrice } from '@/lib/getPrice';
 import { Input } from '@heroui/input';
+import { AnimatePresence, motion } from 'framer-motion';
 
 const ITEMS_PER_PAGE = 8;
 
-export default function ProductsView({ products, categories, totalItemsView=ITEMS_PER_PAGE }: any) {
+export default function ProductsView({ products, categories, totalItemsView = ITEMS_PER_PAGE }: any) {
     const [sortOrder, setSortOrder] = React.useState("asc");
     const [selectedCategory, setSelectedCategory] = React.useState('');
     const [currentPage, setCurrentPage] = React.useState(1);
@@ -40,28 +41,36 @@ export default function ProductsView({ products, categories, totalItemsView=ITEM
                     <Input label='Поиск товара' labelPlacement='outside' variant='bordered' type='search' placeholder='Поиск' radius='sm' size='sm' classNames={{ inputWrapper: 'border-1' }} />
                     <ul className="grid grid-cols-[var(--grid-template-columns)] gap-8">
                         {paginatedItems?.map((item: any) => (
-                            <li key={`${item?.id["#text"]}`}>
-                                <Card className="h-full group relative max-w-full shadow-sm" radius="sm" >
-                                    <CardBody as={Link} href={`/products/${item?.id["#text"]}`} className='items-stretch'>
-                                        <Image removeWrapper alt={item.altText} className="object-cover aspect-square mx-auto" radius="sm" src={item.images_urls?.split(",")[0]} width={220} />
-                                        <span className="text-xl md:text-2xl text-primary font-semibold self-start">{`${getPrice(item.price, 1.1)} BYN`}</span>
-                                        <h3 className=" font-bold text-gray-900 line-clamp-2">{item.product?.__cdata}</h3>
-                                        <p className="text-gray-600 line-clamp-2 text-xs">{item.general_description?.__cdata}</p>
-                                    </CardBody>
-                                    <CardFooter>
-                                        <Button as={Link} target='_blank' href={`/products/${item?.id["#text"]}`} size="md" color='secondary' radius='sm'>Подробнее</Button>
-                                    </CardFooter>
-                                </Card>
-                            </li>
+                            <AnimatePresence key={`${item?.id["#text"]}`}>
+                                <motion.li
+                                    key={`${item?.id["#text"]}`}
+                                    layout
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    exit={{ opacity: 0 }}
+                                >
+                                    <Card className="h-full group relative max-w-full shadow-sm" radius="sm" >
+                                        <CardBody as={Link} href={`/products/${item?.id["#text"]}`} className='items-stretch'>
+                                            <Image removeWrapper alt={item.altText} className="object-cover aspect-square mx-auto" radius="sm" src={item.images_urls?.split(",")[0]} width={220} />
+                                            <span className="text-xl md:text-2xl text-primary font-semibold self-start">{`${getPrice(item.price, 1.1)} BYN`}</span>
+                                            <h3 className=" font-bold text-gray-900 line-clamp-2">{item.product?.__cdata}</h3>
+                                            <p className="text-gray-600 line-clamp-2 text-xs">{item.general_description?.__cdata}</p>
+                                        </CardBody>
+                                        <CardFooter>
+                                            <Button as={Link} target='_blank' href={`/products/${item?.id["#text"]}`} size="md" color='secondary' radius='sm'>Подробнее</Button>
+                                        </CardFooter>
+                                    </Card>
+                                </motion.li>
+                            </AnimatePresence>
                         ))}
                     </ul>
                 </div>
             </div>
             {
-                filteredProducts.length > totalItemsView && 
+                filteredProducts.length > totalItemsView &&
                 <Pagination total={Math.ceil(filteredProducts.length / totalItemsView)}
-                onChange={(value) => setCurrentPage(value)}
-                className='self-center' />
+                    onChange={(value) => setCurrentPage(value)}
+                    className='self-center' />
             }
         </div>
     )
