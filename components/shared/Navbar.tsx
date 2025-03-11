@@ -6,14 +6,15 @@ import { Link } from '@heroui/link';
 import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@heroui/dropdown';
 import { ChevronDownIcon, Settings, TagsIcon } from 'lucide-react';
 
-import { SearchIcon, TelegramIcon, ViberIcon } from '../icons';
+import { TelegramIcon, ViberIcon } from '../icons';
 import BrandLogo from '../ui/BrandLogo';
 import { HeroModalOffer } from '../ui/BrandModalOffer';
+import Drawer from '../ui/Drawer';
+
+import { SalesBanner } from './banner';
 
 import { siteConfig } from '@/config/site';
 import { PhoneListDropdown } from '@/components/ui/PhoneListDropdown';
-import Drawer from '../ui/Drawer';
-import { SalesBanner } from './banner';
 
 type HeaderDropdownMenuProps = {
 	triggerLabel: string;
@@ -75,7 +76,7 @@ export default function Navbar({ navigation, sales }: any) {
 						<div className="hidden lg:block">
 							<HeroModalOffer />
 						</div>
-						<Drawer navigation={navigation} className="xl:hidden h-6 w-auto min-w-min" />
+						<Drawer className="xl:hidden h-6 w-auto min-w-min" navigation={navigation} />
 					</div>
 				</div>
 			</BaseNavbar>
@@ -113,10 +114,10 @@ const NavbarDropdownMenu = ({ triggerLabel, items }: HeaderDropdownMenuProps) =>
 				}}
 			>
 				<DropdownItem
-					startContent={triggerLabel === 'Услуги' ? <Settings />: <TagsIcon />}
-					key={items[0].title} classNames={{
+					key={items[0].title}
+					classNames={{
 						title: 'font-light'
-					}} href={items[0].url}>
+					}} href={items[0].url} startContent={triggerLabel === 'Услуги' ? <Settings />: <TagsIcon />}>
 					{items[0].title}
 				</DropdownItem>
 				{items[0]?.services?.map((item: any) => (

@@ -6,6 +6,8 @@ import imageUrlBuilder from '@sanity/image-url';
 
 import BrandModalOffer from '../../ui/BrandModalOffer';
 
+import ServiceListItems from './_ServiceListItems';
+
 import { siteConfig } from '@/config/site';
 import { ServiceDetailsProps } from '@/types';
 import { client } from '@/sanity/client';
@@ -17,7 +19,6 @@ import Section, {
 	SectionSubtitle,
 	SectionTitle
 } from '@/components/layout/Section';
-import ServiceListItems from './_ServiceListItems';
 
 export const Services = async () => {
 	const services = await getSanityDocuments();

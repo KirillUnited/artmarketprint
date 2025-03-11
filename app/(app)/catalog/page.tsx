@@ -55,7 +55,7 @@ export default async function CatalogPage() {
                     </div>
                 </div>
             </section>
-            <Section innerClassname='pt-6 md:pt-6' id="categoryList">
+            <Section id="categoryList" innerClassname='pt-6 md:pt-6'>
                 <ul className="grid grid-cols-[var(--grid-template-columns)] gap-8">
                     {
                         categories.map((category) => (

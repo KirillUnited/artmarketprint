@@ -1,14 +1,17 @@
 'use client';
 import { Button } from '@heroui/button';
-import { Drawer as BaseDrawer, DrawerBody, DrawerContent, DrawerFooter, DrawerHeader, DrawerProps } from '@heroui/drawer';
+import { Drawer as BaseDrawer, DrawerBody, DrawerContent, DrawerHeader } from '@heroui/drawer';
 import { useDisclosure } from '@heroui/modal';
 import { MenuIcon, PhoneIcon } from 'lucide-react';
 import React from 'react';
-import Socials from '../shared/Socials';
-import { HeroModalOffer } from './BrandModalOffer';
 import { NavbarItem } from '@heroui/navbar';
 import { Link } from '@heroui/link';
+
+import Socials from '../shared/Socials';
+
+import { HeroModalOffer } from './BrandModalOffer';
 import BrandLogo from './BrandLogo';
+
 import { siteConfig } from '@/config/site';
 
 export default function Drawer({ navigation, className, children }: { navigation: any, className?: string, children?: React.ReactNode }) {
@@ -16,12 +19,10 @@ export default function Drawer({ navigation, className, children }: { navigation
 
     return (
         <>
-            <Button onPress={onOpen} variant="light" isIconOnly className={className}><MenuIcon /></Button>
+            <Button isIconOnly className={className} variant="light" onPress={onOpen}><MenuIcon /></Button>
 
             <BaseDrawer
                 backdrop='blur'
-                size='xs'
-                radius='sm'
                 isOpen={isOpen}
                 motionProps={{
                     variants: {
@@ -35,6 +36,8 @@ export default function Drawer({ navigation, className, children }: { navigation
                         },
                     },
                 }}
+                radius='sm'
+                size='xs'
                 onOpenChange={onOpenChange}
             >
                 <DrawerContent>
@@ -47,7 +50,7 @@ export default function Drawer({ navigation, className, children }: { navigation
                                 <ul className="flex flex-col gap-4">
                                     {navigation?.map((navItem: any) => (
                                         <NavbarItem key={navItem.title}>
-                                            <Link onPress={onClose} aria-current="page" className="leading-normal font-semibold hover:underline hover:text-primary transition" color={'foreground'} href={navItem.url} size="sm">
+                                            <Link aria-current="page" className="leading-normal font-semibold hover:underline hover:text-primary transition" color={'foreground'} href={navItem.url} size="sm" onPress={onClose}>
                                                 {navItem.title}
                                             </Link>
                                         </NavbarItem>

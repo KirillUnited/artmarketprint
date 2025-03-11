@@ -23,7 +23,7 @@ export interface ProjectGalleryProps {
 export default function ProjectGallery({ items }: ProjectGalleryProps): React.ReactElement {
     return (
         <SlideshowLightbox className='grid grid-cols-1 md:grid-cols-3 gap-4' showThumbnails={true}>
-            {items.map(({ _key, imageUrl, altText }: ProjectGalleryItem) => <img key={_key} className='w-full rounded-small aspect-square object-cover' src={imageUrl} alt={altText} width={320} height={320} data-lightboxjs="lightbox1" loading='lazy' decoding='async' />)}
+            {items.map(({ _key, imageUrl, altText }: ProjectGalleryItem) => <img key={_key} alt={altText} className='w-full rounded-small aspect-square object-cover' data-lightboxjs="lightbox1" decoding='async' height={320} loading='lazy' src={imageUrl} width={320} />)}
         </SlideshowLightbox>
     )
 }

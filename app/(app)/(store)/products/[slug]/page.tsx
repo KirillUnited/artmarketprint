@@ -1,14 +1,16 @@
-import Section from "@/components/layout/Section";
-import { ProductCarousel } from "@/components/shared/product";
-import RelatedProducts from "@/components/shared/product/RelatedProducts";
-import BaseBreadcrumb from "@/components/ui/Breadcrumb";
-import { getProductBySlug, getRelatedProductsByCategory } from "@/lib/actions/product.actions";
-import { getPrice } from "@/lib/getPrice";
-import { client } from "@/sanity/client";
-import { NAVIGATION_QUERY } from "@/sanity/lib/page.query";
-import { Button } from "@heroui/button";
-import { Card, CardBody, CardFooter } from "@heroui/card";
-import { SanityDocument } from "next-sanity";
+import { Button } from '@heroui/button';
+import { Card, CardBody, CardFooter } from '@heroui/card';
+import { ShoppingCartIcon } from 'lucide-react';
+import { SanityDocument } from 'next-sanity';
+
+import Section from '@/components/layout/Section';
+import { ProductCarousel } from '@/components/shared/product';
+import RelatedProducts from '@/components/shared/product/RelatedProducts';
+import BaseBreadcrumb from '@/components/ui/Breadcrumb';
+import { getProductBySlug } from '@/lib/actions/product.actions';
+import { getPrice } from '@/lib/getPrice';
+import { client } from '@/sanity/client';
+import { NAVIGATION_QUERY } from '@/sanity/lib/page.query';
 
 export interface Props {
     slug: string,
@@ -28,13 +30,13 @@ export default async function ProductPage({ params }: { params: Promise<Props> }
         variation_description: { __cdata: variation_description },
         price
     } = product || {};
-    const productImages = product?.images_urls?.split(",");
+    const productImages = product?.images_urls?.split(',');
 
     return (
         <>
             <Section>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <ProductCarousel items={productImages} className="md:sticky top-16" />
+                    <ProductCarousel className="md:sticky top-16" items={productImages} />
                     <div className="flex flex-col gap-4">
                         <BaseBreadcrumb items={breadcrumbs} />
                         <article className="prose flex flex-col">
@@ -46,7 +48,10 @@ export default async function ProductPage({ params }: { params: Promise<Props> }
                                         <span className="text-3xl text-foreground font-bold">{` ${getPrice(price, 1.1)} р`}</span></p>
                                 </CardBody>
                                 <CardFooter>
-                                    <Button className="bg-brand-gradient font-semibold w-full uppercase text-primary-foreground"  size="md" radius="sm">Предзаказ</Button>
+                                    <Button className="bg-brand-gradient font-semibold w-full uppercase text-primary-foreground" radius="sm" size="md">
+                                        <ShoppingCartIcon size={18} />
+                                        <span>Предзаказ</span>
+                                    </Button>
                                 </CardFooter>
                             </Card>
                             <div dangerouslySetInnerHTML={{ __html: variation_description }} />

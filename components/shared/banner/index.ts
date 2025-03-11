@@ -1,3 +1,3 @@
-import SalesBanner from "./SalesBanner";
+import SalesBanner from './SalesBanner';
 
 export { SalesBanner };

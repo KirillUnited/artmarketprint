@@ -5,20 +5,20 @@ import Image from 'next/image';
 import { Button } from '@heroui/button';
 import Link from 'next/link';
 import clsx from 'clsx';
+import { ShoppingCartIcon } from 'lucide-react';
 
 import BrandModalOffer from '../BrandModalOffer';
 
 import { BrandCardProps } from '@/types';
-import { ShoppingCartIcon } from 'lucide-react';
 import { ProjectTagList } from '@/components/shared/project';
 
 export const BrandCardLink = ({ href }: { href: string }) => (
 	<Button
 		as={Link}
 		className={clsx(
-			"self-center",
-			"group",
-			"border-small rounded-small"
+			'self-center',
+			'group',
+			'border-small rounded-small'
 		)}
 		color="primary"
 		href={href}
@@ -60,11 +60,11 @@ export default function BrandCard({
 }: BrandCardProps) {
 	return (
 		<div className={clsx(
-			"h-full overflow-hidden rounded-small shadow-small hover:shadow-large transition-all flex flex-col group relative",
+			'h-full overflow-hidden rounded-small shadow-small hover:shadow-large transition-all flex flex-col group relative',
 			className
 		)}>
 			<div className="absolute top-3 left-3 z-10 flex flex-wrap gap-2">
-				{tags && <ProjectTagList tags={tags} color='warning' />}
+				{tags && <ProjectTagList color='warning' tags={tags} />}
 			</div>
 			<Link
 				className={clsx('overflow-hidden', {
@@ -97,21 +97,21 @@ export default function BrandCard({
 					'bg-product-gradient relative min-h-[50%] grow-0 mt-auto': variant === 'service',
 				})}
 			>
-				<Link href={href || ''} className={clsx(
-					"flex flex-col gap-1 grow",
+				<Link className={clsx(
+					'flex flex-col gap-1 grow',
 					{
 						'pt-20': variant === 'service'
 					}
-				)}
+				)} href={href || ''}
 					title={title}
 				>
 					<span className="text-xl md:text-2xl text-primary font-semibold">{price}</span>
-					<h3 title={`${title} - ${price}`} className="leading-[120%] font-semibold line-clamp-2">
+					<h3 className="leading-[120%] font-semibold line-clamp-2" title={`${title} - ${price}`}>
 						{title}
 					</h3>
-					<p title={description} className="text-xs text-foreground/90 leading-normal font-medium line-clamp-2">{description}</p>
+					<p className="text-xs text-foreground/90 leading-normal font-medium line-clamp-2" title={description}>{description}</p>
 				</Link>
-				{variant === 'product' && <BrandCardFooter buttonLabel={buttonLabel || ''} variant={variant || ''} href={href || ''} />}
+				{variant === 'product' && <BrandCardFooter buttonLabel={buttonLabel || ''} href={href || ''} variant={variant || ''} />}
 			</div>
 		</div>
 	);

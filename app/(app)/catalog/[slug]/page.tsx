@@ -40,7 +40,7 @@ export async function generateMetadata({ params }: { params: Promise<Props> }) {
 	};
 }
 
-const CATEGORY_QUERY = `*[_type == "category" && slug.current == $slug][0]`;
+const CATEGORY_QUERY = '*[_type == "category" && slug.current == $slug][0]';
 const { projectId, dataset } = client.config();
 const urlFor = (source: SanityImageSource) =>
 	projectId && dataset

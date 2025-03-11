@@ -1,18 +1,19 @@
-import Image from "next/image";
-import BaseBreadcrumb from "@/components/ui/Breadcrumb";
-import BrandButton from "@/components/ui/BrandButton";
-import { ServiceDetails } from "@/components/shared/service";
-import Link from "next/link";
-import { PortableText, SanityDocument } from "next-sanity";
-import { getSanityDocuments } from "@/lib/fetch-sanity-data";
-import { NAVIGATION_QUERY, PROJECT_QUERY, PROJECT_SLUGS_QUERY } from "@/sanity/lib/queries";
-import Section, { SectionButton } from "@/components/layout/Section";
-import { ProjectList, ProjectsHeading, ProjectTagList } from "@/components/shared/project";
-import { client } from "@/sanity/client";
-import ProjectGallery from "@/components/shared/project/ProjectGallery";
-import { ArrowDownCircle } from "lucide-react";
-import clsx from "clsx";
-import { HOME_PAGE_PROJECTS_QUERY, RELATED_PROJECTS_QUERY } from "@/sanity/lib/project.query";
+import Image from 'next/image';
+import Link from 'next/link';
+import { PortableText, SanityDocument } from 'next-sanity';
+import { ArrowDownCircle } from 'lucide-react';
+import clsx from 'clsx';
+
+import BaseBreadcrumb from '@/components/ui/Breadcrumb';
+import BrandButton from '@/components/ui/BrandButton';
+import { ServiceDetails } from '@/components/shared/service';
+import { getSanityDocuments } from '@/lib/fetch-sanity-data';
+import { NAVIGATION_QUERY, PROJECT_QUERY, PROJECT_SLUGS_QUERY } from '@/sanity/lib/queries';
+import Section, { SectionButton } from '@/components/layout/Section';
+import { ProjectList, ProjectsHeading, ProjectTagList } from '@/components/shared/project';
+import { client } from '@/sanity/client';
+import ProjectGallery from '@/components/shared/project/ProjectGallery';
+import { RELATED_PROJECTS_QUERY } from '@/sanity/lib/project.query';
 
 type Props = {
     id: string,
@@ -27,6 +28,7 @@ export async function generateStaticParams() {
             projects: document.projects.map((project: SanityDocument) => {
                 
 console.log('projects id', project._id)
+
                 return {
                     id: project._id,
                     slug: project.slug.current,
@@ -60,7 +62,7 @@ export default async function ProjectPage({ params }: { params: Promise<Props> }
     const hasGallery = Array.isArray(project?.gallery) && project?.gallery.length > 0;
 
     if (!data || data.length === 0) {
-        console.warn("Нет данных о проекте");
+        console.warn('Нет данных о проекте');
 
         return <p className="text-center text-gray-500 mt-10">Нет данных о проекте</p>
     }
@@ -72,12 +74,12 @@ export default async function ProjectPage({ params }: { params: Promise<Props> }
                 {project.imageUrl && (
                     <Image
                         priority
-                        src={`${project.imageUrl}`}
                         alt={project.title}
                         className="absolute inset-0 object-cover w-full h-full"
-                        width={1920}
                         height={1080}
                         quality={50}
+                        src={`${project.imageUrl}`}
+                        width={1920}
                     />
                 )}
                 <div className="container flex flex-col gap-10 max-w-4xl relative z-10">
@@ -92,7 +94,7 @@ export default async function ProjectPage({ params }: { params: Promise<Props> }
 
                     {
                         hasGallery && (
-                            <BrandButton as={Link} href={'#projectGallery'} state="primary" className={'group self-center'}>
+                            <BrandButton as={Link} className={'group self-center'} href={'#projectGallery'} state="primary">
                                 <span>Смотреть результат</span>
                                 <ArrowDownCircle className="group-hover:scale-110 scale-100 transition-transform" size={18} />
                             </BrandButton>
@@ -113,7 +115,7 @@ export default async function ProjectPage({ params }: { params: Promise<Props> }
                         <p className="text-sm font-semibold">Услуги:</p>
                         {
                             project?.service_tags?.length > 0 && (
-                                <ProjectTagList tags={project.service_tags} color='primary' />
+                                <ProjectTagList color='primary' tags={project.service_tags} />
                             )
                         }
                     </div>
@@ -121,18 +123,18 @@ export default async function ProjectPage({ params }: { params: Promise<Props> }
                         <p className="text-sm font-semibold">Категории:</p>
                         {
                             project?.category_tags?.length > 0 && (
-                                <ProjectTagList tags={project.category_tags} color='secondary' />
+                                <ProjectTagList color='secondary' tags={project.category_tags} />
                             )
                         }
                     </div>
                 </div>
-                <ServiceDetails name={project.title} image={project.imageUrl}>
+                <ServiceDetails image={project.imageUrl} name={project.title}>
                     {Array.isArray(project.description) && <PortableText value={project.description} onMissingComponent={false} />}
                 </ServiceDetails>
             </Section>
             {
                 hasGallery && (
-                    <Section id="projectGallery" className="bg-slate-100">
+                    <Section className="bg-slate-100" id="projectGallery">
                         <div className="flex flex-col items-center gap-4 md:gap-6">
                             <p className="text-3xl font-semibold">Результат</p>
                             <ProjectGallery items={project.gallery} />
@@ -142,13 +144,13 @@ export default async function ProjectPage({ params }: { params: Promise<Props> }
             }
             {Array.isArray(relatedProjects) && (
                 <Section className={clsx(
-                    { ["bg-[#F9F9F9]"]: !hasGallery },
+                    { ['bg-[#F9F9F9]']: !hasGallery },
                 )}>
-                    <ProjectsHeading title='Еще проекты' subtitle={'галерея'} description={'Посмотрите другие проекты'} />
+                    <ProjectsHeading description={'Посмотрите другие проекты'} subtitle={'галерея'} title='Еще проекты' />
 
-                    <ProjectList projectList={relatedProjects} bentoGrid={false} />
+                    <ProjectList bentoGrid={false} projectList={relatedProjects} />
 
-                    <SectionButton label="Все проекты" href={'/projects'} className='lg:hidden flex' />
+                    <SectionButton className='lg:hidden flex' href={'/projects'} label="Все проекты" />
                 </Section >
             )}
         </>

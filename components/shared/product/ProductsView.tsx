@@ -1,18 +1,19 @@
 'use client';
 import React from 'react'
-import ProductsFilter, { getCategory } from './ProductsFilter'
-import Pagination from '@/components/ui/Pagination'
-import { Card, CardBody, CardFooter } from '@heroui/card';
-import { Link } from '@heroui/link';
-import { Image } from '@heroui/image';
-import { Button } from '@heroui/button';
-import { getPrice } from '@/lib/getPrice';
 import { Input } from '@heroui/input';
+import { AnimatePresence, motion } from 'framer-motion';
+import { Form } from '@heroui/form';
+import { SearchIcon } from 'lucide-react';
+
+import ProductThumb from './ProductThumb';
+import ProductsFilter, { getCategory } from './ProductsFilter'
+
+import Pagination from '@/components/ui/Pagination'
 
 const ITEMS_PER_PAGE = 8;
 
-export default function ProductsView({ products, categories, totalItemsView=ITEMS_PER_PAGE }: any) {
-    const [sortOrder, setSortOrder] = React.useState("asc");
+export default function ProductsView({ products, categories, totalItemsView = ITEMS_PER_PAGE }: any) {
+    const [sortOrder, setSortOrder] = React.useState('asc');
     const [selectedCategory, setSelectedCategory] = React.useState('');
     const [currentPage, setCurrentPage] = React.useState(1);
     const handleFilterChange = (newSortOrder: string, newCategory: string) => {
@@ -21,47 +22,46 @@ export default function ProductsView({ products, categories, totalItemsView=ITEM
     };
     const filteredProducts = (selectedCategory ? products
         .filter((product: any) => getCategory(product?.category) === selectedCategory) : products ?? [])
-        .sort((a: any, b: any) => (sortOrder === "asc" ? a.price - b.price : b.price - a.price));
+        .sort((a: any, b: any) => (sortOrder === 'asc' ? a.price - b.price : b.price - a.price));
 
     const paginatedItems = filteredProducts.slice(
         (currentPage - 1) * totalItemsView,
         currentPage * totalItemsView
     );
-    console.log('paginatedItems', paginatedItems);
 
     return (
         <div className='flex flex-col gap-8'>
             <div className='grid grid-cols-[auto_1fr] items-start gap-8'>
-                <ProductsFilter sortOrder={sortOrder}
+                <ProductsFilter categories={categories}
                     selectedCategory={selectedCategory}
-                    onFilterChange={handleFilterChange}
-                    categories={categories} />
-                <div>
-                    <Input label='Поиск товара' labelPlacement='outside' variant='bordered' type='search' placeholder='Поиск' radius='sm' size='sm' classNames={{ inputWrapper: 'border-1' }} />
+                    sortOrder={sortOrder}
+                    onFilterChange={handleFilterChange} />
+                <div className='flex flex-col gap-8'>
+                    <Form action={'/search'} className='flex flex-col gap-4'>
+                        <Input classNames={{ inputWrapper: 'border-1' }} labelPlacement='outside' name='query' placeholder='Поиск товара...' radius='sm' size='md' startContent={<SearchIcon size={16} />} type='search' variant='bordered'/>
+                    </Form>
                     <ul className="grid grid-cols-[var(--grid-template-columns)] gap-8">
                         {paginatedItems?.map((item: any) => (
-                            <li key={`${item?.id["#text"]}`}>
-                                <Card className="h-full group relative max-w-full shadow-sm" radius="sm" >
-                                    <CardBody as={Link} href={`/products/${item?.id["#text"]}`} className='items-stretch'>
-                                        <Image removeWrapper alt={item.altText} className="object-cover aspect-square mx-auto" radius="sm" src={item.images_urls?.split(",")[0]} width={220} />
-                                        <span className="text-xl md:text-2xl text-primary font-semibold self-start">{`${getPrice(item.price, 1.1)} BYN`}</span>
-                                        <h3 className=" font-bold text-gray-900 line-clamp-2">{item.product?.__cdata}</h3>
-                                        <p className="text-gray-600 line-clamp-2 text-xs">{item.general_description?.__cdata}</p>
-                                    </CardBody>
-                                    <CardFooter>
-                                        <Button as={Link} target='_blank' href={`/products/${item?.id["#text"]}`} size="md" color='secondary' radius='sm'>Подробнее</Button>
-                                    </CardFooter>
-                                </Card>
-                            </li>
+                            <AnimatePresence key={`${item?.id['#text']}`}>
+                                <motion.li
+                                    key={`${item?.id['#text']}`}
+                                    layout
+                                    animate={{ opacity: 1 }}
+                                    exit={{ opacity: 0 }}
+                                    initial={{ opacity: 0 }}
+                                >
+                                    <ProductThumb item={item} />
+                                </motion.li>
+                            </AnimatePresence>
                         ))}
                     </ul>
                 </div>
             </div>
             {
-                filteredProducts.length > totalItemsView && 
-                <Pagination total={Math.ceil(filteredProducts.length / totalItemsView)}
-                onChange={(value) => setCurrentPage(value)}
-                className='self-center' />
+                filteredProducts.length > totalItemsView &&
+                <Pagination className='self-center'
+                    total={Math.ceil(filteredProducts.length / totalItemsView)}
+                    onChange={(value) => setCurrentPage(value)} />
             }
         </div>
     )

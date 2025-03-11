@@ -1,4 +1,4 @@
-import { FAQSection } from "./FAQ";
+import { FAQSection } from './FAQ';
 
 export {
     FAQSection

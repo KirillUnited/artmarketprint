@@ -1,3 +1,7 @@
+import { Fragment } from 'react';
+
+import { ProductSection } from './shared/product/ProductSection';
+
 import { Hero } from '@/components/shared/hero/Hero';
 import { Benefits } from '@/components/shared/Benefits';
 import { Services } from '@/components/shared/service';
@@ -7,8 +11,6 @@ import { Projects } from '@/components/shared/project/Projects';
 import { InstagramFeedSection } from '@/components/shared/InstagramFeed';
 import { FAQSection } from '@/components/shared/faq';
 import ContactUs, { MapFrame } from '@/components/shared/ContactUs';
-import { Fragment } from "react";
-import { ProductSection } from './shared/product/ProductSection';
 
 interface PageBuilderProps {
 	content?: any;

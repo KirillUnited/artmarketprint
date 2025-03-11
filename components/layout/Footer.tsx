@@ -5,7 +5,6 @@ import BrandLogo from '../ui/BrandLogo'
 
 import Socials from '@/components/shared/Socials';
 import ContactsList from '@/components/shared/ContactsList';
-
 import { siteConfig } from '@/config/site';
 
 export default function Footer() {
@@ -30,7 +29,7 @@ export default function Footer() {
                             {
                                 siteConfig?.navItems?.map((link) => (
                                     <li key={link.href}>
-                                        <Link href={link.href} className="text-[#eeeeee] text-left font-text-small-link-font-family text-text-small-link-font-size leading-text-small-link-line-height font-text-small-link-font-weight relative self-stretch hover:text-primary transition">
+                                        <Link className="text-[#eeeeee] text-left font-text-small-link-font-family text-text-small-link-font-size leading-text-small-link-line-height font-text-small-link-font-weight relative self-stretch hover:text-primary transition" href={link.href}>
                                             {link.label}
                                         </Link>
                                     </li>
