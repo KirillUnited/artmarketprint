@@ -6,7 +6,7 @@ import { getPrice } from '@/lib/getPrice';
 
 export default function ProductThumb({ item }: any) {
     return (
-        <Card className="h-full group relative max-w-full shadow-sm" radius="sm" >
+        <Card className="h-full group relative max-w-full shadow-small" radius="sm" >
             <CardBody as={Link} href={`/products/${item?.id["#text"]}`} className='items-stretch'>
                 <Image removeWrapper alt={item.altText} className="object-cover aspect-square mx-auto" radius="sm" src={item.images_urls?.split(",")[0]} width={220} />
                 <span className="text-xl md:text-2xl text-primary font-semibold self-start">{`${getPrice(item.price, 1.1)} BYN`}</span>

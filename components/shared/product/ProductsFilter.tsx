@@ -65,17 +65,27 @@ export default function ProductsFilter({ sortOrder, selectedCategory, onFilterCh
                 <DrawerHeader className="flex flex-col gap-1">Фильтры</DrawerHeader>
                 <DrawerBody>
                   <Accordion title='Категории' aria-label='Select category' selectionMode='multiple' className='w-80'>
-                    <AccordionItem title={`Категории`}>
+                    <AccordionItem title={`Категории`} classNames={
+                      {
+                        title: 'font-semibold',
+                        trigger: 'font-semibold',
+                      }
+                    }>
                       {CatFilter({ sortOrder, onFilterChange, categories })}
                     </AccordionItem>
-                    <AccordionItem title={`Сортировать цены`}>
+                    <AccordionItem title={`Сортировать цены`} classNames={
+                      {
+                        title: 'font-semibold',
+                        trigger: 'font-semibold',
+                      }
+                    }>
                       {SortFilter({ sortOrder, selectedCategory, onFilterChange })}
                     </AccordionItem>
                   </Accordion>
                 </DrawerBody>
                 <DrawerFooter>
-                  <Button color="danger" variant="light" onPress={onClose}>
-                    Закрыть
+                  <Button color="primary" variant="solid" onPress={onClose} radius='sm'>
+                    Применить
                   </Button>
                 </DrawerFooter>
               </>

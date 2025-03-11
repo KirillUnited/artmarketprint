@@ -5,6 +5,8 @@ import Pagination from '@/components/ui/Pagination'
 import { Input } from '@heroui/input';
 import { AnimatePresence, motion } from 'framer-motion';
 import ProductThumb from './ProductThumb';
+import { Form } from '@heroui/form';
+import { SearchIcon } from 'lucide-react';
 
 const ITEMS_PER_PAGE = 8;
 
@@ -33,8 +35,10 @@ export default function ProductsView({ products, categories, totalItemsView = IT
                     selectedCategory={selectedCategory}
                     onFilterChange={handleFilterChange}
                     categories={categories} />
-                <div>
-                    <Input label='Поиск товара' labelPlacement='outside' variant='bordered' type='search' placeholder='Поиск' radius='sm' size='sm' classNames={{ inputWrapper: 'border-1' }} />
+                <div className='flex flex-col gap-8'>
+                    <Form action={'/search'} className='flex flex-col gap-4'>
+                        <Input name='query' labelPlacement='outside' variant='bordered' type='search' placeholder='Поиск товара...' radius='sm' size='md' classNames={{ inputWrapper: 'border-1' }} startContent={<SearchIcon size={16} />}/>
+                    </Form>
                     <ul className="grid grid-cols-[var(--grid-template-columns)] gap-8">
                         {paginatedItems?.map((item: any) => (
                             <AnimatePresence key={`${item?.id["#text"]}`}>

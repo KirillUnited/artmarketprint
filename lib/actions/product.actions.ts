@@ -120,3 +120,9 @@ export async function getProductBySlug(slug: string) {
 
   return products.find((product: any) => product.id['#text'] === Number(slug));
 }
+
+export async function searchProductsByName(searchParam: string) {
+ const products = await getAllProducts();
+
+ return products.filter((product: any) => product.product?.__cdata.toLowerCase().includes(searchParam.toLowerCase()));
+}
