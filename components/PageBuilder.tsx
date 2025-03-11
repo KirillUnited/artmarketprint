@@ -1,6 +1,6 @@
 import { Hero } from '@/components/shared/hero/Hero';
 import { Benefits } from '@/components/shared/Benefits';
-import { Services } from '@/components/shared/Services';
+import { Services } from '@/components/shared/service';
 import { Catalog } from '@/components/shared/Catalog';
 import About from '@/components/shared/About';
 import { Projects } from '@/components/shared/project/Projects';

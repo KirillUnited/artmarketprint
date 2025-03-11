@@ -1,7 +1,7 @@
 import Image from "next/image";
 import BaseBreadcrumb from "@/components/ui/Breadcrumb";
 import BrandButton from "@/components/ui/BrandButton";
-import { ServiceDetails } from "@/components/shared/Services";
+import { ServiceDetails } from "@/components/shared/service";
 import Link from "next/link";
 import { PortableText, SanityDocument } from "next-sanity";
 import { getSanityDocuments } from "@/lib/fetch-sanity-data";
