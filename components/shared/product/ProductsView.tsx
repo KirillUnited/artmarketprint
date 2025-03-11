@@ -15,9 +15,6 @@ export default function ProductsView({ products, categories, totalItemsView=ITEM
     const [sortOrder, setSortOrder] = React.useState("asc");
     const [selectedCategory, setSelectedCategory] = React.useState('');
     const [currentPage, setCurrentPage] = React.useState(1);
-    const handlePageChange = (page: number) => {
-        setCurrentPage(page);
-      };
     const handleFilterChange = (newSortOrder: string, newCategory: string) => {
         setSortOrder(newSortOrder);
         setSelectedCategory(newCategory);
@@ -63,7 +60,7 @@ export default function ProductsView({ products, categories, totalItemsView=ITEM
             {
                 filteredProducts.length > totalItemsView && 
                 <Pagination total={Math.ceil(filteredProducts.length / totalItemsView)}
-                onChange={handlePageChange}
+                onChange={(value) => setCurrentPage(value)}
                 className='self-center' />
             }
         </div>

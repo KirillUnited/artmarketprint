@@ -25,7 +25,7 @@ export const ChevronIcon = (props: any) => {
     );
 };
 
-export default function Pagination({className, total}: PaginationProps) {
+export default function Pagination({className, total, onChange, ...props}: PaginationProps) {
     const renderItem = ({ ref, key, value, isActive, onNext, onPrevious, setPage, className }: any) => {
         if (value === PaginationItemType.NEXT) {
             return (
@@ -86,6 +86,7 @@ export default function Pagination({className, total}: PaginationProps) {
             renderItem={renderItem}
             total={total}
             variant="light"
+            onChange={onChange}
         />
     );
 }
