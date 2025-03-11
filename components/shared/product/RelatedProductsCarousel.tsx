@@ -6,11 +6,13 @@ import { Button } from '@heroui/button';
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/navigation';
-import {  Navigation } from 'swiper/modules';
+import 'swiper/css/pagination';
+import { Navigation, Pagination } from 'swiper/modules';
 import { Image } from '@heroui/image';
 import { Link } from '@heroui/link';
 import Loader from '@/components/ui/Loader';
 import { getPrice } from '@/lib/getPrice';
+import styles from './product.module.css';
 
 export default function RelatedProductsCarousel({ relatedProducts }: any) {
     const [products, setProducts] = React.useState([]);
@@ -25,16 +27,16 @@ export default function RelatedProductsCarousel({ relatedProducts }: any) {
 
     return (
         <Swiper
-            slidesPerView={4}
+            slidesPerView={1}
             spaceBetween={10}
-            modules={[Navigation]}
-            navigation={true}
-            className='max-w-full'
+            modules={[Navigation, Pagination]}
+            navigation={false}
+            pagination={{
+                clickable: true,
+                dynamicBullets: true,
+            }}
+            className={styles.RelatedProductsSwiper}
             breakpoints={{
-                0: {
-                    slidesPerView: 1,
-                    spaceBetween: 10,
-                },
                 640: {
                     slidesPerView: 'auto',
                     spaceBetween: 10,

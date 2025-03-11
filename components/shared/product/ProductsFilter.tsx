@@ -12,7 +12,7 @@ export const getCategory = (category: string) => category.split('|').shift();
 export const CatFilter = ({ sortOrder, onFilterChange, categories }: any) => {
   return (
     <div className='flex gap-4 flex-1'>
-      <RadioGroup title='Фильтр по категориям' label='Фильтр по категориям' classNames={{ label: 'font-bold' }}>
+      <RadioGroup title='Фильтр по категориям' label='Фильтр по категориям' classNames={{ label: 'font-semibold text-foreground' }}>
         {categories?.map((category: string) => (
           <Radio key={category} value={category} onChange={(e) => onFilterChange(sortOrder, e.target.value)}>
             {getCategory(category)}
@@ -25,7 +25,7 @@ export const CatFilter = ({ sortOrder, onFilterChange, categories }: any) => {
 export const SortFilter = ({ sortOrder, selectedCategory, onFilterChange }: any) => {
   return (
     <div className='flex gap-4'>
-      <RadioGroup title='Сортировать цены' label='Сортировать цены' classNames={{ label: 'font-bold' }}>
+      <RadioGroup title='Сортировать цены' label='Сортировать цены' classNames={{ label: 'font-semibold text-foreground' }}>
         <Radio value="desc" onChange={(e) => onFilterChange(e.target.value, selectedCategory)}>По убыванию</Radio>
         <Radio value="asc" onChange={(e) => onFilterChange(e.target.value, selectedCategory)}>По возрастанию</Radio>
       </RadioGroup>
