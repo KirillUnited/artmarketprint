@@ -1,10 +1,10 @@
-import Section, { SectionTitle } from "@/components/layout/Section";
-import ProductsView from "@/components/shared/product/ProductsView";
-import ProductThumb from "@/components/shared/product/ProductThumb";
-import { getAllProductCategories, searchProductsByName } from "@/lib/actions/product.actions";
-import { Card, CardBody } from "@heroui/card";
-import { ArrowLeftIcon, BackpackIcon } from "lucide-react";
-import Link from "next/link";
+import { Card, CardBody } from '@heroui/card';
+import { ArrowLeftIcon } from 'lucide-react';
+import Link from 'next/link';
+
+import Section, { SectionTitle } from '@/components/layout/Section';
+import ProductsView from '@/components/shared/product/ProductsView';
+import { getAllProductCategories, searchProductsByName } from '@/lib/actions/product.actions';
 
 export default async function SearchPage({
     searchParams
@@ -14,6 +14,7 @@ export default async function SearchPage({
     }>
 }) {
     const { query } = await searchParams;
+
     try {
         const products = await searchProductsByName(query);
         const categories = await getAllProductCategories(100);
@@ -23,20 +24,20 @@ export default async function SearchPage({
                 {
                     Array.isArray(products) && products.length > 0 ?
                         <>
-                            <SectionTitle>Результаты поиска для "{query}"</SectionTitle>
-                            <Link href="/products" className="flex items-center gap-2 text-primary">
+                            <SectionTitle>{`Результаты поиска для "${query}"`}</SectionTitle>
+                            <Link className="flex items-center gap-2 text-primary" href="/products">
                                         <ArrowLeftIcon className="w-6 h-6" />
                                         <span>Вернуться в каталог</span></Link>
-                            <ProductsView products={products} categories={categories} totalItemsView={8} />
+                            <ProductsView categories={categories} products={products} totalItemsView={8} />
                         </> :
                         <div className="flex flex-col items-center gap-8">
-                            <SectionTitle>Товар не найден для "{query}"</SectionTitle>
+                            <SectionTitle>{`Товар не найден для "${query}"`}</SectionTitle>
                             <Card className="self-stretch items-center">
                                 <CardBody className="text-center text-slate-500">
                                     <p>Попробуйте изменить запрос</p>
                                 </CardBody>
                                 <CardBody className="text-center items-center">
-                                    <Link href="/products" className="flex items-center gap-2 text-primary">
+                                    <Link className="flex items-center gap-2 text-primary" href="/products">
                                         <ArrowLeftIcon className="w-6 h-6" />
                                         <span>Вернуться в каталог</span></Link>
                                 </CardBody>

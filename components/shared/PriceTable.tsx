@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import {Table, TableHeader, TableBody, TableColumn, TableRow, TableCell, getKeyValue} from '@heroui/table';
-import {Spinner} from "@heroui/spinner";
+import {Spinner} from '@heroui/spinner';
 
 const list = {
 	items: [

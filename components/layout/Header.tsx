@@ -1,10 +1,10 @@
 import React from 'react';
+import { defineQuery } from 'next-sanity';
 
 import Navbar from '@/components/shared/Navbar';
 import { client } from '@/sanity/client';
 import { NAVIGATION_QUERY } from '@/sanity/lib/queries';
 import { getSanityDocuments } from '@/lib/fetch-sanity-data';
-import { defineQuery } from 'next-sanity';
 
 export default async function Header() {
 	const navigation = await client.fetch(NAVIGATION_QUERY);
@@ -17,5 +17,5 @@ export default async function Header() {
 		products[0]->
 		}`)) || null;
 
-	return <Navbar navigation={navigation[0].links} sales={sales} products={sales?.products} />;
+	return <Navbar navigation={navigation[0].links} products={sales?.products} sales={sales} />;
 }

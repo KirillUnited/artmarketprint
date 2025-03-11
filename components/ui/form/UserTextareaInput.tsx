@@ -1,4 +1,4 @@
-import { Textarea } from "@heroui/input";
+import { Textarea } from '@heroui/input';
 
 export const UserTextareaInput = ({ ...props }) => (
     <Textarea

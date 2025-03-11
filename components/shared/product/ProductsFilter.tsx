@@ -12,7 +12,7 @@ export const getCategory = (category: string) => category.split('|').shift();
 export const CatFilter = ({ sortOrder, onFilterChange, categories }: any) => {
   return (
     <div className='flex gap-4 flex-1'>
-      <RadioGroup title='Фильтр по категориям' label='Фильтр по категориям' classNames={{ label: 'font-semibold text-foreground' }}>
+      <RadioGroup classNames={{ label: 'font-semibold text-foreground' }} label='Фильтр по категориям' title='Фильтр по категориям'>
         {categories?.map((category: string) => (
           <Radio key={category} value={category} onChange={(e) => onFilterChange(sortOrder, e.target.value)}>
             {getCategory(category)}
@@ -25,7 +25,7 @@ export const CatFilter = ({ sortOrder, onFilterChange, categories }: any) => {
 export const SortFilter = ({ sortOrder, selectedCategory, onFilterChange }: any) => {
   return (
     <div className='flex gap-4'>
-      <RadioGroup title='Сортировать цены' label='Сортировать цены' classNames={{ label: 'font-semibold text-foreground' }}>
+      <RadioGroup classNames={{ label: 'font-semibold text-foreground' }} label='Сортировать цены' title='Сортировать цены'>
         <Radio value="desc" onChange={(e) => onFilterChange(e.target.value, selectedCategory)}>По убыванию</Radio>
         <Radio value="asc" onChange={(e) => onFilterChange(e.target.value, selectedCategory)}>По возрастанию</Radio>
       </RadioGroup>
@@ -54,8 +54,8 @@ export default function ProductsFilter({ sortOrder, selectedCategory, onFilterCh
     <>
       <div className='flex flex-col gap-4 sticky top-16 z-30 bg-background py-4 border-bottom border-y
       '>
-        <FilterGroup sortOrder={sortOrder} selectedCategory={selectedCategory} onFilterChange={onFilterChange} categories={categories} />
-        <Button isIconOnly variant='light' onPress={onOpen} className='md:hidden'>
+        <FilterGroup categories={categories} selectedCategory={selectedCategory} sortOrder={sortOrder} onFilterChange={onFilterChange} />
+        <Button isIconOnly className='md:hidden' variant='light' onPress={onOpen}>
           <FilterIcon />
         </Button>
         <Drawer isOpen={isOpen} onOpenChange={onOpenChange}>
@@ -64,27 +64,27 @@ export default function ProductsFilter({ sortOrder, selectedCategory, onFilterCh
               <>
                 <DrawerHeader className="flex flex-col gap-1">Фильтры</DrawerHeader>
                 <DrawerBody>
-                  <Accordion title='Категории' aria-label='Select category' selectionMode='multiple' className='w-80'>
-                    <AccordionItem title={`Категории`} classNames={
+                  <Accordion aria-label='Select category' className='w-80' selectionMode='multiple' title='Категории'>
+                    <AccordionItem classNames={
                       {
                         title: 'font-semibold',
                         trigger: 'font-semibold',
                       }
-                    }>
+                    } title={'Категории'}>
                       {CatFilter({ sortOrder, onFilterChange, categories })}
                     </AccordionItem>
-                    <AccordionItem title={`Сортировать цены`} classNames={
+                    <AccordionItem classNames={
                       {
                         title: 'font-semibold',
                         trigger: 'font-semibold',
                       }
-                    }>
+                    } title={'Сортировать цены'}>
                       {SortFilter({ sortOrder, selectedCategory, onFilterChange })}
                     </AccordionItem>
                   </Accordion>
                 </DrawerBody>
                 <DrawerFooter>
-                  <Button color="primary" variant="solid" onPress={onClose} radius='sm'>
+                  <Button color="primary" radius='sm' variant="solid" onPress={onClose}>
                     Применить
                   </Button>
                 </DrawerFooter>

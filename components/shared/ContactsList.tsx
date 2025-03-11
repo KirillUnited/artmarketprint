@@ -1,8 +1,9 @@
-import {siteConfig} from '@/config/site';
 import clsx from 'clsx';
 import {MailIcon, MapIcon, PhoneIcon, TimerIcon} from 'lucide-react';
 import Link from 'next/link';
 import React from 'react';
+
+import {siteConfig} from '@/config/site';
 
 export default function ContactsList({className}: React.AllHTMLAttributes<HTMLDivElement>) {
 	return (
@@ -11,7 +12,7 @@ export default function ContactsList({className}: React.AllHTMLAttributes<HTMLDi
 				<h5 className="font-bold">Адрес:</h5>
 				<p className="break-words flex items-center gap-2">
 					<MapIcon className="text-primary" size={20} />
-					<Link href={'https://yandex.by/navi/-/CHeQRZz4'} target="_blank" className="hover:text-primary transition">{siteConfig?.contacts?.[2]?.text}</Link>
+					<Link className="hover:text-primary transition" href={'https://yandex.by/navi/-/CHeQRZz4'} target="_blank">{siteConfig?.contacts?.[2]?.text}</Link>
 				</p>
 			</div>
 			<div className="flex flex-col gap-1">

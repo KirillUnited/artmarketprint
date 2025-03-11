@@ -3,10 +3,6 @@ import { Input } from '@heroui/input';
 import React, { useState } from 'react'
 import {
     PhoneInput,
-    defaultCountries,
-    FlagImage,
-    parseCountry,
-    usePhoneInput,
 } from 'react-international-phone';
 
 export const BasePhoneInput = () => {
@@ -26,22 +22,22 @@ export const BasePhoneInput = () => {
 
 	return (
 		<Input
-			id="user_phone"
-			name="user_phone"
 			isRequired
+			color='primary'
 			errorMessage="Пожалуйста, введите действительный номер телефона"
+			id="user_phone"
+			inputMode="tel"
 			label="Телефон"
+			name="user_phone"
 			placeholder="+375 (99) 999-99-99"
 			type="tel"
 			variant="bordered"
-			color='primary'
-			inputMode="tel"
 		>
             <PhoneInput
-                inputProps={{ required: true, id: 'user_phone', name: 'user_phone', onChange: handleChange }}
                 defaultCountry="by"
-                value={phone}
                 inputClassName='w-full'
+                inputProps={{ required: true, id: 'user_phone', name: 'user_phone', onChange: handleChange }}
+                value={phone}
             />
             </Input>
 	)

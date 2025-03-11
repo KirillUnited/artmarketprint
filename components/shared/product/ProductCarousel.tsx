@@ -1,19 +1,18 @@
 'use client';
-import React, { useRef, useState } from 'react';
-// Import Swiper React components
+import React, { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-// Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/free-mode';
 import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
-import styles from './product.module.css';
 
 // import required modules
 import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
 import {Image} from '@heroui/image';
 import clsx from 'clsx';
+
+import styles from './product.module.css';
 
 interface HeroCarouselProps {
     items?: any;
@@ -26,35 +25,35 @@ export const ProductCarousel = ({ items, className }: HeroCarouselProps) => {
     if (!Array.isArray(items) || items.length === 0) return null;
 
     return (
-        <div className={clsx(styles["swiper-container"], className)}>
+        <div className={clsx(styles['swiper-container'], className)}>
             <Swiper
-                thumbs={{ swiper: thumbsSwiper }}
+                className={clsx(styles['swiper'], styles['mySwiper2'])}
                 modules={[FreeMode, Navigation, Thumbs]}
-                spaceBetween={10}
                 navigation={true}
-                className={clsx(styles["swiper"], styles["mySwiper2"])}
+                spaceBetween={10}
+                thumbs={{ swiper: thumbsSwiper }}
             >
                 {items.map((item: string, index: number) => (
-                    <SwiperSlide key={index} className={styles["swiper-slide"]}>
+                    <SwiperSlide key={index} className={styles['swiper-slide']}>
                         <picture className='h-full'>
-                            <Image removeWrapper src={item} alt={'image'} width={'100%'} height={'100%'} className={'w-full aspect-square'} />
+                            <Image removeWrapper alt={'image'} className={'w-full aspect-square'} height={'100%'} src={item} width={'100%'} />
                         </picture>
                     </SwiperSlide>
                 ))}
             </Swiper>
             <Swiper
-                onSwiper={(swiper) => setThumbsSwiper(swiper)}
-                spaceBetween={10}
-                slidesPerView={4}
+                className={styles['mySwiper']}
                 freeMode={true}
-                watchSlidesProgress={true}
                 modules={[FreeMode, Navigation, Thumbs]}
-                className={styles["mySwiper"]}
+                slidesPerView={4}
+                spaceBetween={10}
+                watchSlidesProgress={true}
+                onSwiper={(swiper) => setThumbsSwiper(swiper)}
             >
                 {items.map((item: string, index: number) => (
-                    <SwiperSlide key={index} className={styles["swiper-slide"]} >
+                    <SwiperSlide key={index} className={styles['swiper-slide']} >
                         <picture className='h-full border-slate-300 border p-3'>
-                            <Image removeWrapper src={item} alt={'image'} className={'w-full'} width={'100%'} height={'100%'} />
+                            <Image removeWrapper alt={'image'} className={'w-full'} height={'100%'} src={item} width={'100%'} />
                         </picture>
                     </SwiperSlide>
                 ))}

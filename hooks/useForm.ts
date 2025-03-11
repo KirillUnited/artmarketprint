@@ -2,8 +2,9 @@
 import { useState, FormEvent } from 'react';
 import { PhoneNumberUtil } from 'google-libphonenumber';
 import { CountryData, defaultCountries, parseCountry, usePhoneInput } from 'react-international-phone';
-import { sendOrder } from '@/lib/actions/order.actions';
 import { toast } from 'sonner';
+
+import { sendOrder } from '@/lib/actions/order.actions';
 
 const phoneUtil = PhoneNumberUtil.getInstance();
 
@@ -35,6 +36,7 @@ const useForm = (onClose: () => void): UseFormReturn => {
 
     const countries = defaultCountries.filter((country) => {
         const { iso2, name, dialCode } = parseCountry(country);
+
         return ['by', 'ru'].includes(iso2);
     });
 
@@ -49,15 +51,17 @@ const useForm = (onClose: () => void): UseFormReturn => {
     async function handleSubmit(event: FormEvent<HTMLFormElement>): Promise<void> {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
+
         event.currentTarget.reset();
         setPhone('');
         setIsPending(true);
 
         try {
             const result = await sendOrder(formData);
+
             if (result.ok) {
                 setIsPending(false);
-                toast.success("Заявка отправлена", {
+                toast.success('Заявка отправлена', {
                     description: `Заказ от ${new Date().toLocaleString()}. Спасибо за заявку! Мы свяжемся с Вами в ближайшее время.`,
                 })
                 setTimeout(() => {
