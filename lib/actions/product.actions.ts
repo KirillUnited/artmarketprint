@@ -7,7 +7,6 @@ import { ARTE_PRODUCTS_FILE_PATH } from "../fetch-artegifts-data";
 export async function getAllProducts() {
   const DATA_FILE_PATH = path.join(process.cwd(), ARTE_PRODUCTS_FILE_PATH);
   const { data } = await getJsonFileData(DATA_FILE_PATH) ?? {};
-  console.log(data);
 
   if (!data) {
     return [];
@@ -32,7 +31,7 @@ export async function getProductsByLimit(limit: number) {
 
 export async function getRelatedProductsByCategory(category: string, id: number, limit = 10) {
   const products = await getAllProducts();
-  const relatedProducts = products.filter((product: any) => product.category === category && product.id['#text'] !== id);
+  const relatedProducts = products.filter((product: any) => product.category[0] === category && product.id[0]['_'] !== id);
 
   return Array.from(relatedProducts).slice(0, limit);
 }
@@ -40,11 +39,11 @@ export async function getRelatedProductsByCategory(category: string, id: number,
 export async function getProductBySlug(slug: string) {
   const products = await getAllProducts();
 
-  return products.find((product: any) => product.id['#text'] === Number(slug));
+  return products.find((product: any) => product.id[0]['_'] === slug);
 }
 
 export async function searchProductsByName(searchParam: string) {
  const products = await getAllProducts();
 
- return products.filter((product: any) => product.product?.__cdata.toLowerCase().includes(searchParam.toLowerCase()));
+ return products.filter((product: any) => product.product[0]['_'].toLowerCase().includes(searchParam.toLowerCase()));
 }
