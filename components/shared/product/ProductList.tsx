@@ -4,14 +4,14 @@ import { getPrice } from '@/lib/getPrice';
 export interface ProductListProps {
   items: Array<{
     id: {
-      '#text': string
-    }
+      '_': string
+    }[]
     product: {
-      __cdata: string
-    }
+      '_': string
+    }[]
     general_description: {
-      __cdata: string
-    }
+      '_': string
+    }[]
     images_urls: string
     price: string
   }>
@@ -25,14 +25,14 @@ export default function ProductList({ items }: ProductListProps) {
           {
             items.map((item, index: number) => (
               <BrandCard
-                key={item.id['#text']}
+                key={item.id[0]['_']}
                 buttonLabel="предзаказ"
-                description={item.general_description.__cdata}
-                href={`/products/${item.id['#text']}`}
-                image={item.images_urls.split(',')[0]}
+                description={item.general_description[0]['_']}
+                href={`/products/${item.id[0]['_']}`}
+                image={item.images_urls[0].split(',')[0]}
                 imageFit="contain"
                 price={`${getPrice(item?.price, 1.1)} BYN`}
-                title={item.product.__cdata}
+                title={item.product[0]['_']}
                 variant="product"
               />
             ))

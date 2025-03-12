@@ -2,10 +2,12 @@
 
 import path from "path";
 import { getJsonFileData } from "@/lib/utils";
+import { ARTE_PRODUCTS_FILE_PATH } from "../fetch-artegifts-data";
 
 export async function getAllProducts() {
-  const DATA_FILE_PATH = path.join(process.cwd(), '_data/products.json');
+  const DATA_FILE_PATH = path.join(process.cwd(), ARTE_PRODUCTS_FILE_PATH);
   const { data } = await getJsonFileData(DATA_FILE_PATH) ?? {};
+  console.log(data);
 
   if (!data) {
     return [];
