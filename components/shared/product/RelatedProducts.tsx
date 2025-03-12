@@ -6,7 +6,7 @@ import Section from '@/components/layout/Section';
 import { getRelatedProductsByCategory } from '@/lib/actions/product.actions';
 
 export default async function RelatedProducts({ product }: any) {
-    const relatedProducts = await getRelatedProductsByCategory(product?.category, product?.id['#text']);
+    const relatedProducts = await getRelatedProductsByCategory(product?.category[0], product?.id[0]?.['_']);
 
     if (!Array.isArray(relatedProducts) || relatedProducts.length === 0) return null;
 

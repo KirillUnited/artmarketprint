@@ -25,12 +25,12 @@ export default async function ProductPage({ params }: { params: Promise<Props> }
     if (!product) return <div className="text-center text-2xl mt-10 ">Товар не найден</div>
 
     const {
-        product: { __cdata: title },
-        general_description: { __cdata: general_description },
-        variation_description: { __cdata: variation_description },
+        product: productTitle,
+        general_description,
+        variation_description,
         price
     } = product || {};
-    const productImages = product?.images_urls?.split(',');
+    const productImages = product?.images_urls[0].split(',');
 
     return (
         <>
@@ -40,7 +40,7 @@ export default async function ProductPage({ params }: { params: Promise<Props> }
                     <div className="flex flex-col gap-4">
                         <BaseBreadcrumb items={breadcrumbs} />
                         <article className="prose flex flex-col">
-                            <h1 className="text-2xl">{title}</h1>
+                            <h1 className="text-2xl">{productTitle[0]['_']}</h1>
                             <Card className="bg-indigo-100">
                                 <CardBody>
                                     <p className="my-0">
@@ -54,14 +54,14 @@ export default async function ProductPage({ params }: { params: Promise<Props> }
                                     </Button>
                                 </CardFooter>
                             </Card>
-                            <div dangerouslySetInnerHTML={{ __html: variation_description }} />
+                            <div dangerouslySetInnerHTML={{ __html: variation_description[0] }} />
                         </article>
                     </div>
                 </div>
                 <article className="prose mt-8 max-w-full">
                     <h2>Описание</h2>
                     <p>
-                        {general_description}
+                        {general_description[0]}
                     </p>
                 </article>
             </Section>
