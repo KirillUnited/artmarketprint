@@ -43,7 +43,7 @@ export const FilterGroup = ({ sortOrder, selectedCategory, categories, onFilterC
         SortFilter({ sortOrder, selectedCategory, onFilterChange })
       }
 
-      <Button color="danger" radius='sm' variant="light" type='reset' className='self-center'>
+      <Button color="danger" radius='sm' variant="light" type='reset'>
         Сбросить
       </Button>
     </Form>
