@@ -31,7 +31,7 @@ export default async function ProductPage({ params }: { params: Promise<Props> }
         price
     } = product || {};
     const productImages = product?.images_urls[0].split(',');
-
+    
     return (
         <>
             <Section>
@@ -45,7 +45,7 @@ export default async function ProductPage({ params }: { params: Promise<Props> }
                                 <CardBody>
                                     <p className="my-0">
                                         Стоимость:
-                                        <span className="text-3xl text-foreground font-bold">{` ${getPrice(price, 1.1)} р`}</span></p>
+                                        <span className="text-3xl text-foreground font-bold">{` ${getPrice(price[0], 1.1)} р`}</span></p>
                                 </CardBody>
                                 <CardFooter>
                                     <Button className="bg-brand-gradient font-semibold w-full uppercase text-primary-foreground" radius="sm" size="md">
