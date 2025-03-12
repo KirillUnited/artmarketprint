@@ -50,7 +50,7 @@ export default function RelatedProductsCarousel({ relatedProducts }: any) {
             spaceBetween={10}
         >
             {products?.map((item: any) => (
-                <SwiperSlide key={`${item?.id['#text']}`} className='lg:min-w-64'>
+                <SwiperSlide key={`${item?.id['#text']}`} className='lg:min-w-64 h-full'>
                     <ProductThumb item={item} />
                 </SwiperSlide>
             ))}

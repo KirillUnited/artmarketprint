@@ -1,14 +1,12 @@
 'use client';
 import React from 'react'
-import { Input } from '@heroui/input';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Form } from '@heroui/form';
-import { SearchIcon } from 'lucide-react';
 
 import ProductThumb from './ProductThumb';
 import ProductsFilter, { getCategory } from './ProductsFilter'
 
 import Pagination from '@/components/ui/Pagination'
+import ProductSearchForm from './ProductSearchForm';
 
 const ITEMS_PER_PAGE = 8;
 
@@ -31,15 +29,13 @@ export default function ProductsView({ products, categories, totalItemsView = IT
 
     return (
         <div className='flex flex-col gap-8'>
-            <div className='grid grid-cols-[auto_1fr] items-start gap-8'>
+            <div className='grid grid-cols-[auto_1fr] items-start gap-4 md:gap-8'>
                 <ProductsFilter categories={categories}
                     selectedCategory={selectedCategory}
                     sortOrder={sortOrder}
                     onFilterChange={handleFilterChange} />
                 <div className='flex flex-col gap-8'>
-                    <Form action={'/search'} className='flex flex-col gap-4'>
-                        <Input classNames={{ inputWrapper: 'border-1' }} labelPlacement='outside' name='query' placeholder='Поиск товара...' radius='sm' size='md' startContent={<SearchIcon size={16} />} type='search' variant='bordered'/>
-                    </Form>
+                    <ProductSearchForm />
                     <ul className="grid grid-cols-[var(--grid-template-columns)] gap-8">
                         {paginatedItems?.map((item: any) => (
                             <AnimatePresence key={`${item?.id['#text']}`}>
@@ -49,6 +45,9 @@ export default function ProductsView({ products, categories, totalItemsView = IT
                                     animate={{ opacity: 1 }}
                                     exit={{ opacity: 0 }}
                                     initial={{ opacity: 0 }}
+                                    transition={{
+                                        duration: 0.5,
+                                    }}
                                 >
                                     <ProductThumb item={item} />
                                 </motion.li>

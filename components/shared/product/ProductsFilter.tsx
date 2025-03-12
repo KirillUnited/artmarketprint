@@ -35,7 +35,6 @@ export const SortFilter = ({ sortOrder, selectedCategory, onFilterChange }: any)
 export const FilterGroup = ({ sortOrder, selectedCategory, categories, onFilterChange }: any) => {
   return (
     <div className='hidden md:flex flex-col gap-4'>
-      <p className='text-2xl font-bold'>Фильтры</p>
       {
         CatFilter({ sortOrder, onFilterChange, categories })
       }
@@ -52,10 +51,9 @@ export default function ProductsFilter({ sortOrder, selectedCategory, onFilterCh
 
   return (
     <>
-      <div className='flex flex-col gap-4 sticky top-16 z-30 bg-background py-4 border-bottom border-y
-      '>
+      <div className='flex flex-col gap-4 sticky top-20 z-30 bg-background'>
         <FilterGroup categories={categories} selectedCategory={selectedCategory} sortOrder={sortOrder} onFilterChange={onFilterChange} />
-        <Button isIconOnly className='md:hidden' variant='light' onPress={onOpen}>
+        <Button isIconOnly className='md:hidden' variant='shadow' radius='sm' onPress={onOpen}>
           <FilterIcon />
         </Button>
         <Drawer isOpen={isOpen} onOpenChange={onOpenChange}>
@@ -64,7 +62,7 @@ export default function ProductsFilter({ sortOrder, selectedCategory, onFilterCh
               <>
                 <DrawerHeader className="flex flex-col gap-1">Фильтры</DrawerHeader>
                 <DrawerBody>
-                  <Accordion aria-label='Select category' className='w-80' selectionMode='multiple' title='Категории'>
+                  <Accordion aria-label='Select category' selectionMode='multiple' title='Категории'>
                     <AccordionItem classNames={
                       {
                         title: 'font-semibold',
@@ -78,7 +76,7 @@ export default function ProductsFilter({ sortOrder, selectedCategory, onFilterCh
                         title: 'font-semibold',
                         trigger: 'font-semibold',
                       }
-                    } title={'Сортировать цены'}>
+                    } title={'Цены'}>
                       {SortFilter({ sortOrder, selectedCategory, onFilterChange })}
                     </AccordionItem>
                   </Accordion>
