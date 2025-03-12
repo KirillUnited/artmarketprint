@@ -10,8 +10,8 @@ import { getAllProductCategories, getProductsByLimit } from '@/lib/actions/produ
 
 export default async function ProductsPage() {
     const breadcrumbs = (await getSanityDocuments(NAVIGATION_QUERY))[0].links;
-    const products = await getProductsByLimit(1000);
-    const categories = await getAllProductCategories(100);
+    const products = await getProductsByLimit(10000);
+    const categories = await getAllProductCategories(1000);
 
     return (
         <>
