@@ -36,23 +36,28 @@ export default function ProductsView({ products, categories, totalItemsView = IT
                     onFilterChange={handleFilterChange} />
                 <div className='flex flex-col gap-8'>
                     <ProductSearchForm />
-                    <ul className="grid grid-cols-[var(--grid-template-columns)] gap-8">
-                        {paginatedItems?.map((item: any) => (
-                            <AnimatePresence key={`${item?.id[0]['_']}`}>
-                                <motion.li
-                                    layout
-                                    animate={{ opacity: 1 }}
-                                    exit={{ opacity: 0 }}
-                                    initial={{ opacity: 0 }}
-                                    transition={{
-                                        duration: 0.5,
-                                    }}
-                                >
-                                    <ProductThumb item={item} />
-                                </motion.li>
-                            </AnimatePresence>
-                        ))}
-                    </ul>
+                    {
+                        paginatedItems.length ?
+                            <ul className="grid grid-cols-[var(--grid-template-columns)] gap-8">
+                                {
+                                    paginatedItems?.map((item: any) => (
+                                        <AnimatePresence key={`${item?.id[0]['_']}`}>
+                                            <motion.li
+                                                layout
+                                                animate={{ opacity: 1 }}
+                                                exit={{ opacity: 0 }}
+                                                initial={{ opacity: 0 }}
+                                                transition={{
+                                                    duration: 0.5,
+                                                }}
+                                            >
+                                                <ProductThumb item={item} />
+                                            </motion.li>
+                                        </AnimatePresence>
+                                    ))
+                                }
+                            </ul> :
+                            <p className="text-center mt-8 text-gray-500">Нет товаров</p>}
                 </div>
             </div>
             {
