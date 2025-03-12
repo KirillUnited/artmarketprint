@@ -8,7 +8,7 @@ import { Radio, RadioGroup } from '@heroui/radio';
 import React from 'react';
 import { Form } from '@heroui/form';
 
-export const getCategory = (category: string) => category.split('|').shift();
+export const getCategory = (category: string) => category[0].split('|').shift();
 
 export const CatFilter = ({ sortOrder, onFilterChange, categories }: any) => {
   return (
@@ -16,7 +16,7 @@ export const CatFilter = ({ sortOrder, onFilterChange, categories }: any) => {
       <RadioGroup classNames={{ label: 'font-semibold text-foreground' }} label='Фильтр по категориям' title='Фильтр по категориям'>
         {categories?.map((category: string) => (
           <Radio key={category} value={category} onChange={(e) => onFilterChange(sortOrder, e.target.value)}>
-            {getCategory(category)}
+            {category}
           </Radio>
         ))}
       </RadioGroup>

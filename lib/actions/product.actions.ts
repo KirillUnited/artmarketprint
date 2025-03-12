@@ -18,7 +18,7 @@ export async function getAllProducts() {
 
 export async function getAllProductCategories(limit = 10) {
   const products = await getAllProducts();
-  const getCategory = (category: string) => category.split('|').shift();
+  const getCategory = (category: string) => category[0].split('|').shift();
   const categories = new Set(products?.map((product: any) => getCategory(product.category)));
 
   return Array.from(categories).slice(0, limit);

@@ -38,9 +38,8 @@ export default function ProductsView({ products, categories, totalItemsView = IT
                     <ProductSearchForm />
                     <ul className="grid grid-cols-[var(--grid-template-columns)] gap-8">
                         {paginatedItems?.map((item: any) => (
-                            <AnimatePresence key={`${item?.id['#text']}`}>
+                            <AnimatePresence key={`${item?.id[0]['_']}`}>
                                 <motion.li
-                                    key={`${item?.id['#text']}`}
                                     layout
                                     animate={{ opacity: 1 }}
                                     exit={{ opacity: 0 }}
