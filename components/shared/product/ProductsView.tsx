@@ -17,6 +17,7 @@ export default function ProductsView({ products, categories, totalItemsView = IT
     const handleFilterChange = (newSortOrder: string, newCategory: string) => {
         setSortOrder(newSortOrder);
         setSelectedCategory(newCategory);
+        setCurrentPage(1);
     };
     const filteredProducts = (selectedCategory ? products
         .filter((product: any) => getCategory(product?.category) === selectedCategory) : products ?? [])
@@ -64,7 +65,7 @@ export default function ProductsView({ products, categories, totalItemsView = IT
                 filteredProducts.length > totalItemsView &&
                 <Pagination className='self-center'
                     total={Math.ceil(filteredProducts.length / totalItemsView)}
-                    onChange={(value) => setCurrentPage(value)} />
+                    onChange={(value) => setCurrentPage(value)} page={currentPage} />
             }
         </div>
     )

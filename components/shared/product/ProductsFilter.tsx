@@ -43,7 +43,7 @@ export const FilterGroup = ({ sortOrder, selectedCategory, categories, onFilterC
         SortFilter({ sortOrder, selectedCategory, onFilterChange })
       }
 
-      <Button color="danger" radius='sm' variant="light" type='reset'>
+      <Button color="danger" radius='sm' variant="light" type='reset' onPress={() => onFilterChange('asc', '')}>
         Сбросить
       </Button>
     </Form>
@@ -88,7 +88,7 @@ export default function ProductsFilter({ sortOrder, selectedCategory, onFilterCh
                     </Accordion>
                   </DrawerBody>
                   <DrawerFooter>
-                    <Button color="danger" radius='sm' variant="light" type='reset'>
+                    <Button color="danger" radius='sm' variant="light" type='reset' onPress={() => onFilterChange('asc', '')}>
                       Сбросить
                     </Button>
                     <Button color="primary" radius='sm' variant="solid" onPress={onClose}>

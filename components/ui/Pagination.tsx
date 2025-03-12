@@ -87,6 +87,7 @@ export default function Pagination({className, total, onChange, ...props}: Pagin
             total={total}
             variant="light"
             onChange={onChange}
+            page={props.page}
         />
     );
 }
