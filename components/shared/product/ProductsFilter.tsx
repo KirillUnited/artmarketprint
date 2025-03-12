@@ -6,6 +6,7 @@ import { useDisclosure } from '@heroui/modal';
 import { FilterIcon } from 'lucide-react';
 import { Radio, RadioGroup } from '@heroui/radio';
 import React from 'react';
+import { Form } from '@heroui/form';
 
 export const getCategory = (category: string) => category.split('|').shift();
 
@@ -34,14 +35,18 @@ export const SortFilter = ({ sortOrder, selectedCategory, onFilterChange }: any)
 };
 export const FilterGroup = ({ sortOrder, selectedCategory, categories, onFilterChange }: any) => {
   return (
-    <div className='hidden md:flex flex-col gap-4'>
+    <Form className='hidden md:flex flex-col gap-4'>
       {
         CatFilter({ sortOrder, onFilterChange, categories })
       }
       {
         SortFilter({ sortOrder, selectedCategory, onFilterChange })
       }
-    </div>
+
+      <Button color="danger" radius='sm' variant="light" type='reset' className='self-center'>
+        Сбросить
+      </Button>
+    </Form>
 
   )
 }
@@ -61,31 +66,36 @@ export default function ProductsFilter({ sortOrder, selectedCategory, onFilterCh
             {(onClose) => (
               <>
                 <DrawerHeader className="flex flex-col gap-1">Фильтры</DrawerHeader>
-                <DrawerBody>
-                  <Accordion aria-label='Select category' selectionMode='multiple' title='Категории'>
-                    <AccordionItem classNames={
-                      {
-                        title: 'font-semibold',
-                        trigger: 'font-semibold',
-                      }
-                    } title={'Категории'}>
-                      {CatFilter({ sortOrder, onFilterChange, categories })}
-                    </AccordionItem>
-                    <AccordionItem classNames={
-                      {
-                        title: 'font-semibold',
-                        trigger: 'font-semibold',
-                      }
-                    } title={'Цены'}>
-                      {SortFilter({ sortOrder, selectedCategory, onFilterChange })}
-                    </AccordionItem>
-                  </Accordion>
-                </DrawerBody>
-                <DrawerFooter>
-                  <Button color="primary" radius='sm' variant="solid" onPress={onClose}>
-                    Применить
-                  </Button>
-                </DrawerFooter>
+                <Form className='w-full items-stretch'>
+                  <DrawerBody>
+                    <Accordion aria-label='Select category' selectionMode='multiple' title='Категории'>
+                      <AccordionItem classNames={
+                        {
+                          title: 'font-semibold',
+                          trigger: 'font-semibold',
+                        }
+                      } title={'Категории'}>
+                        {CatFilter({ sortOrder, onFilterChange, categories })}
+                      </AccordionItem>
+                      <AccordionItem classNames={
+                        {
+                          title: 'font-semibold',
+                          trigger: 'font-semibold',
+                        }
+                      } title={'Цены'}>
+                        {SortFilter({ sortOrder, selectedCategory, onFilterChange })}
+                      </AccordionItem>
+                    </Accordion>
+                  </DrawerBody>
+                  <DrawerFooter>
+                    <Button color="danger" radius='sm' variant="light" type='reset'>
+                      Сбросить
+                    </Button>
+                    <Button color="primary" radius='sm' variant="solid" onPress={onClose}>
+                      Применить
+                    </Button>
+                  </DrawerFooter>
+                </Form>
               </>
             )}
           </DrawerContent>
