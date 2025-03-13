@@ -58,7 +58,7 @@ export default function ProductsFilter({ sortOrder, selectedCategory, onFilterCh
     <>
       <div className='flex flex-col gap-4 sticky top-20 z-30 bg-background'>
         <FilterGroup categories={categories} selectedCategory={selectedCategory} sortOrder={sortOrder} onFilterChange={onFilterChange} />
-        <Button isIconOnly className='md:hidden' variant='shadow' radius='sm' onPress={onOpen}>
+        <Button isIconOnly className='md:hidden border-1' variant='bordered' radius='sm' onPress={onOpen}>
           <FilterIcon />
         </Button>
         <Drawer isOpen={isOpen} onOpenChange={onOpenChange}>

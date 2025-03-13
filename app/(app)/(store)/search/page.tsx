@@ -28,7 +28,7 @@ export default async function SearchPage({
                             <Link className="flex items-center gap-2 text-primary" href="/products">
                                         <ArrowLeftIcon className="w-6 h-6" />
                                         <span>Вернуться в каталог</span></Link>
-                            <ProductsView categories={categories} products={products} totalItemsView={8} />
+                            <ProductsView categories={categories} products={products} totalItemsView={8} isSearchPage />
                         </> :
                         <div className="flex flex-col items-center gap-8">
                             <SectionTitle>{`Товар не найден для "${query}"`}</SectionTitle>
