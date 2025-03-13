@@ -1,4 +1,4 @@
-import BrandCard from "./BrandCard";
+import BrandCard from './BrandCard';
 
 export {
     BrandCard

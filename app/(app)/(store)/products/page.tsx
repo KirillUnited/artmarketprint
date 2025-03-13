@@ -10,8 +10,8 @@ import { getAllProductCategories, getProductsByLimit } from '@/lib/actions/produ
 
 export default async function ProductsPage() {
     const breadcrumbs = (await getSanityDocuments(NAVIGATION_QUERY))[0].links;
-    const products = await getProductsByLimit(1000);
-    const categories = await getAllProductCategories(100);
+    const products = await getProductsByLimit(2000);
+    const categories = await getAllProductCategories(200);
 
     return (
         <>
@@ -27,10 +27,10 @@ export default async function ProductsPage() {
                 <div className="container flex flex-col gap-8 max-w-2xl relative z-10">
                     <div className="text-center">
                         <h1 className="text-4xl font-extrabold text-background sm:text-5xl">
-                            {`Каталог`}
+                            {'Каталог'}
                         </h1>
                         <p className="mt-4 text-xl text-white">
-                            {`Наш каталог товаров`}
+                            {'Наш каталог товаров'}
                         </p>
 
                     </div>
@@ -44,8 +44,8 @@ export default async function ProductsPage() {
                     </div>
                 </div>
             </section>
-            <Section innerClassname='pt-6 md:pt-6' id="products">
-                <ProductsView products={products} categories={categories} />
+            <Section id="products" innerClassname='pt-6 md:pt-6'>
+                <ProductsView categories={categories} products={products} />
             </Section>
         </>
     );

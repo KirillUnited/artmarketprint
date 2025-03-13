@@ -1,9 +1,10 @@
 import { Suspense } from 'react';
 
+import { ProjectList } from './ProjectList';
+
 import Section, { SectionButton, SectionDescription, SectionHeading, SectionSubtitle, SectionTitle } from '@/components/layout/Section';
 import { getSanityDocuments } from '@/lib/fetch-sanity-data';
 import { PROJECTS_QUERY } from '@/sanity/lib/queries';
-import { ProjectList } from './ProjectList';
 
 interface ProjectsProps {
 	isActive?: boolean;
@@ -45,7 +46,7 @@ export const Projects = async (props: ProjectsProps) => {
 
 				{data && <ProjectList projectList={data} />}
 
-				{link?.text && <SectionButton href={link.link} label={link.text} className='self-start' />}
+				{link?.text && <SectionButton className='self-start' href={link.link} label={link.text} />}
 			</Section>
 		</Suspense>
 	);

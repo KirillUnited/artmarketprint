@@ -26,9 +26,9 @@ export default function About() {
 						</SectionDescription>
 					</SectionHeading>
 					<div className="flex flex-col md:flex-row gap-2 md:gap-4">
-						<BrandButton as={Link} href={'/services'} state="primary"
-						className='min-w-40'
+						<BrandButton as={Link} className='min-w-40' href={'/services'}
 						size='md'
+						state="primary"
 						>
 							УСЛУГИ
 						</BrandButton>

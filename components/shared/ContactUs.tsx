@@ -1,13 +1,13 @@
 import React from 'react';
 import clsx from 'clsx';
+import { Card } from '@heroui/card';
 
 import Socials from './Socials';
 import ContactsList from './ContactsList';
 
 import { SectionProps } from '@/types';
 import Section, { SectionDescription, SectionHeading, SectionSubtitle, SectionTitle } from '@/components/layout/Section';
-import { Card } from '@heroui/card';
-import { OrderForm } from "@/components/ui/form";
+import { OrderForm } from '@/components/ui/form';
 
 export default function ContactUs({ className, ...props }: SectionProps) {
 	return (
@@ -15,9 +15,9 @@ export default function ContactUs({ className, ...props }: SectionProps) {
 			<div className="grid md:grid-cols-2 items-start gap-x-20 gap-y-10">
 				<div className='flex flex-col gap-10'>
 					<ContactUsHeading
-						title="Мы всегда рады вам помочь!"
-						subtitle="Свяжитесь с нами"
 						description="Если у вас есть вопросы, предложения или хотите связаться с нами, используйте любой удобный способ:"
+						subtitle="Свяжитесь с нами"
+						title="Мы всегда рады вам помочь!"
 					/>
 					<div className="flex flex-wrap gap-10 justify-between">
 						<div className="flex flex-col gap-6">
@@ -28,10 +28,10 @@ export default function ContactUs({ className, ...props }: SectionProps) {
 					</div>
 				</div>
 
-				<Card radius='sm' shadow='sm' className={clsx(
+				<Card className={clsx(
 					'flex flex-col gap-6',
 					'p-4 bg-background sticky top-16'
-				)}>
+				)} radius='sm' shadow='sm'>
 					<div className='flex flex-col gap-2'>
 						<h3 className="text-2xl md:text-3xl leading-[120%] font-bold">
 							Оставить заявку

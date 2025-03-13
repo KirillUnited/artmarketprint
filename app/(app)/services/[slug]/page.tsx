@@ -1,21 +1,19 @@
-import Image from "next/image";
+import Image from 'next/image';
+import { SanityImageSource } from '@sanity/image-url/lib/types/types';
+import Link from 'next/link';
+import imageUrlBuilder from '@sanity/image-url';
+import { PortableText, SanityDocument } from 'next-sanity';
 
-import { SanityImageSource } from "@sanity/image-url/lib/types/types";
-
-import Link from "next/link";
-import { siteConfig } from "@/config/site";
-import BaseBreadcrumb from "@/components/ui/Breadcrumb";
-import BrandButton from "@/components/ui/BrandButton";
-import { ServiceDetails } from "@/components/shared/service";
-
-import { client } from "@/sanity/client";
-import imageUrlBuilder from "@sanity/image-url";
-import { PortableText, SanityDocument } from "next-sanity";
-import { getUrlFor } from "@/lib/utils";
-import { ProjectList, ProjectsHeading } from "@/components/shared/project";
-import { NAVIGATION_QUERY, PROJECTS_BY_SERVICE_QUERY, PROJECTS_QUERY } from "@/sanity/lib/queries";
-import Section, { SectionButton } from "@/components/layout/Section";
-import { OrderForm } from "@/components/ui/form";
+import { siteConfig } from '@/config/site';
+import BaseBreadcrumb from '@/components/ui/Breadcrumb';
+import BrandButton from '@/components/ui/BrandButton';
+import { ServiceDetails } from '@/components/shared/service';
+import { client } from '@/sanity/client';
+import { getUrlFor } from '@/lib/utils';
+import { ProjectList, ProjectsHeading } from '@/components/shared/project';
+import { NAVIGATION_QUERY, PROJECTS_BY_SERVICE_QUERY } from '@/sanity/lib/queries';
+import Section, { SectionButton } from '@/components/layout/Section';
+import { OrderForm } from '@/components/ui/form';
 
 type Props = {
     slug: string
@@ -42,7 +40,7 @@ export async function generateMetadata({ params }: { params: Promise<Props> }) {
     }
 }
 
-const SERVICE_QUERY = `*[_type == "service" && slug.current == $slug][0]`;
+const SERVICE_QUERY = '*[_type == "service" && slug.current == $slug][0]';
 const { projectId, dataset } = client.config();
 const urlFor = (source: SanityImageSource) =>
     projectId && dataset
@@ -68,11 +66,11 @@ export default async function ServicePage({ params }: { params: Promise<Props> }
                 {serviceImageUrl && (
                     <Image
                         priority
-                        src={`${serviceImageUrl}`}
                         alt={service.title}
                         className="absolute inset-0 object-cover w-full h-full"
-                        width={1920}
                         height={1080}
+                        src={`${serviceImageUrl}`}
+                        width={1920}
                     />
                 )}
                 <div className="container flex flex-col gap-10 max-w-2xl relative z-10">
@@ -85,7 +83,7 @@ export default async function ServicePage({ params }: { params: Promise<Props> }
                         </p>
                     </div>
 
-                    <BrandButton as={Link} href={'#serviceDetails'} state="primary" className={'self-center'}>Подробнее</BrandButton>
+                    <BrandButton as={Link} className={'self-center'} href={'#serviceDetails'} state="primary">Подробнее</BrandButton>
                 </div>
             </section>
             <section>
@@ -96,16 +94,16 @@ export default async function ServicePage({ params }: { params: Promise<Props> }
                 </div>
             </section>
             <Section id="serviceDetails" innerClassname='pt-6 md:pt-6'>
-                <ServiceDetails name={service.title} image={getUrlFor(service.image)} price={service.price} advantages={service.advantages}>
+                <ServiceDetails advantages={service.advantages} image={getUrlFor(service.image)} name={service.title} price={service.price}>
                     {Array.isArray(service.body) && <PortableText value={service.body} onMissingComponent={false} />}
                 </ServiceDetails>
             </Section>
             <Section className="bg-[#F9F9F9]">
-                <ProjectsHeading title='Примеры работ' subtitle={'галерея'} description={'Портфолио выполненных работ'} />
+                <ProjectsHeading description={'Портфолио выполненных работ'} subtitle={'галерея'} title='Примеры работ' />
 
-                <ProjectList projectList={relatedProjectsArray} bentoGrid={false} />
+                <ProjectList bentoGrid={false} projectList={relatedProjectsArray} />
 
-                <SectionButton label="Все проекты" href={'/projects'} className='lg:hidden flex' />
+                <SectionButton className='lg:hidden flex' href={'/projects'} label="Все проекты" />
             </Section >
             <Section id="contacts">
                 <OrderForm />

@@ -1,8 +1,8 @@
 'use client';
-import { Button } from "@heroui/button";
-import { ArrowRightIcon, TicketPercent, XIcon } from "lucide-react";
-import Link from "next/link";
-import { useState } from "react";
+import { Button } from '@heroui/button';
+import { ArrowRightIcon, TicketPercent, XIcon } from 'lucide-react';
+import Link from 'next/link';
+import { useState } from 'react';
 
 export default function SalesBanner({ isActive, title, description, discountPercentage, products }: any) {
   const [isVisible, setIsVisible] = useState(isActive);
@@ -15,8 +15,8 @@ export default function SalesBanner({ isActive, title, description, discountPerc
         <div className="flex gap-3 md:items-center">
           <div className="flex flex-1 md:items-center gap-3">
             <div
-              className="bg-secondary/30 flex size-9 shrink-0 items-center justify-center rounded-full"
               aria-hidden="true"
+              className="bg-secondary/30 flex size-9 shrink-0 items-center justify-center rounded-full"
             >
               <TicketPercent className="opacity-80" size={16} />
             </div>
@@ -29,28 +29,28 @@ export default function SalesBanner({ isActive, title, description, discountPerc
                   {description}
                 </p>
               </div>
-              <Button as={Link} href={`/services/${products?.slug?.current}`} target="_blank" size="sm" radius="sm" className="group font-medium whitespace-nowrap text-foreground">
+              <Button as={Link} className="group font-medium whitespace-nowrap text-foreground" href={`/services/${products?.slug?.current}`} radius="sm" size="sm" target="_blank">
                 Заказать
                 <ArrowRightIcon
-                  className="transition-transform group-hover:translate-x-0.5"
-                  size={12}
                   aria-hidden="true"
+                  className="transition-transform group-hover:translate-x-0.5"
                   color="currentColor"
+                  size={12}
                 />
               </Button>
             </div>
           </div>
           <Button
-            variant="ghost"
-            className="group size-9 min-w-0 shrink-0 p-0 hover:bg-transparent"
-            onPress={() => setIsVisible(false)}
-            aria-label="Close banner"
             isIconOnly
+            aria-label="Close banner"
+            className="group size-9 min-w-0 shrink-0 p-0 hover:bg-transparent"
+            variant="ghost"
+            onPress={() => setIsVisible(false)}
           >
             <XIcon
-              size={16}
-              className="opacity-60 transition-opacity group-hover:opacity-100"
               aria-hidden="true"
+              className="opacity-60 transition-opacity group-hover:opacity-100"
+              size={16}
             />
           </Button>
         </div>

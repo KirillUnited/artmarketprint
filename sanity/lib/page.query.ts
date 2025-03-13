@@ -1,5 +1,6 @@
-import { defineQuery } from "next-sanity";
-import { PROJECT_FIELDS } from "./project.query";
+import { defineQuery } from 'next-sanity';
+
+import { PROJECT_FIELDS } from './project.query';
 
 export const NAVIGATION_QUERY = `*[_type == "navigation"] {
     _id,

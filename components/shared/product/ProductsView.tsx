@@ -1,67 +1,71 @@
 'use client';
 import React from 'react'
+import { AnimatePresence, motion } from 'framer-motion';
+
+import ProductThumb from './ProductThumb';
 import ProductsFilter, { getCategory } from './ProductsFilter'
+
 import Pagination from '@/components/ui/Pagination'
-import { Card, CardBody, CardFooter } from '@heroui/card';
-import { Link } from '@heroui/link';
-import { Image } from '@heroui/image';
-import { Button } from '@heroui/button';
-import { getPrice } from '@/lib/getPrice';
-import { Input } from '@heroui/input';
+import ProductSearchForm from './ProductSearchForm';
 
 const ITEMS_PER_PAGE = 8;
 
-export default function ProductsView({ products, categories, totalItemsView=ITEMS_PER_PAGE }: any) {
-    const [sortOrder, setSortOrder] = React.useState("asc");
+export default function ProductsView({ products, categories, totalItemsView = ITEMS_PER_PAGE }: any) {
+    const [sortOrder, setSortOrder] = React.useState('asc');
     const [selectedCategory, setSelectedCategory] = React.useState('');
     const [currentPage, setCurrentPage] = React.useState(1);
     const handleFilterChange = (newSortOrder: string, newCategory: string) => {
         setSortOrder(newSortOrder);
         setSelectedCategory(newCategory);
+        setCurrentPage(1);
     };
     const filteredProducts = (selectedCategory ? products
         .filter((product: any) => getCategory(product?.category) === selectedCategory) : products ?? [])
-        .sort((a: any, b: any) => (sortOrder === "asc" ? a.price - b.price : b.price - a.price));
+        .sort((a: any, b: any) => (sortOrder === 'asc' ? a.price - b.price : b.price - a.price));
 
     const paginatedItems = filteredProducts.slice(
         (currentPage - 1) * totalItemsView,
         currentPage * totalItemsView
     );
-    console.log('paginatedItems', paginatedItems);
 
     return (
         <div className='flex flex-col gap-8'>
-            <div className='grid grid-cols-[auto_1fr] items-start gap-8'>
-                <ProductsFilter sortOrder={sortOrder}
+            <div className='grid grid-cols-[auto_1fr] items-start gap-4 md:gap-8'>
+                <ProductsFilter categories={categories}
                     selectedCategory={selectedCategory}
-                    onFilterChange={handleFilterChange}
-                    categories={categories} />
-                <div>
-                    <Input label='Поиск товара' labelPlacement='outside' variant='bordered' type='search' placeholder='Поиск' radius='sm' size='sm' classNames={{ inputWrapper: 'border-1' }} />
-                    <ul className="grid grid-cols-[var(--grid-template-columns)] gap-8">
-                        {paginatedItems?.map((item: any) => (
-                            <li key={`${item?.id["#text"]}`}>
-                                <Card className="h-full group relative max-w-full shadow-sm" radius="sm" >
-                                    <CardBody as={Link} href={`/products/${item?.id["#text"]}`} className='items-stretch'>
-                                        <Image removeWrapper alt={item.altText} className="object-cover aspect-square mx-auto" radius="sm" src={item.images_urls?.split(",")[0]} width={220} />
-                                        <span className="text-xl md:text-2xl text-primary font-semibold self-start">{`${getPrice(item.price, 1.1)} BYN`}</span>
-                                        <h3 className=" font-bold text-gray-900 line-clamp-2">{item.product?.__cdata}</h3>
-                                        <p className="text-gray-600 line-clamp-2 text-xs">{item.general_description?.__cdata}</p>
-                                    </CardBody>
-                                    <CardFooter>
-                                        <Button as={Link} target='_blank' href={`/products/${item?.id["#text"]}`} size="md" color='secondary' radius='sm'>Подробнее</Button>
-                                    </CardFooter>
-                                </Card>
-                            </li>
-                        ))}
-                    </ul>
+                    sortOrder={sortOrder}
+                    onFilterChange={handleFilterChange} />
+                <div className='flex flex-col gap-8'>
+                    <ProductSearchForm />
+                    {
+                        paginatedItems.length ?
+                            <ul className="grid grid-cols-[var(--grid-template-columns)] gap-8">
+                                {
+                                    paginatedItems?.map((item: any) => (
+                                        <AnimatePresence key={`${item?.id[0]['_']}`}>
+                                            <motion.li
+                                                layout
+                                                animate={{ opacity: 1 }}
+                                                exit={{ opacity: 0 }}
+                                                initial={{ opacity: 0 }}
+                                                transition={{
+                                                    duration: 0.5,
+                                                }}
+                                            >
+                                                <ProductThumb item={item} />
+                                            </motion.li>
+                                        </AnimatePresence>
+                                    ))
+                                }
+                            </ul> :
+                            <p className="text-center mt-8 text-gray-500">Нет товаров</p>}
                 </div>
             </div>
             {
-                filteredProducts.length > totalItemsView && 
-                <Pagination total={Math.ceil(filteredProducts.length / totalItemsView)}
-                onChange={(value) => setCurrentPage(value)}
-                className='self-center' />
+                filteredProducts.length > totalItemsView &&
+                <Pagination className='self-center'
+                    total={Math.ceil(filteredProducts.length / totalItemsView)}
+                    onChange={(value) => setCurrentPage(value)} page={currentPage} />
             }
         </div>
     )

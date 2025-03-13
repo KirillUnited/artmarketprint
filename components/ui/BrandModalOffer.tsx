@@ -8,8 +8,9 @@ import BrandButton from './BrandButton';
 
 import 'react-international-phone/style.css';
 import { UsernameInput, UserPhoneInput } from './form';
+
 import useForm from '@/hooks/useForm';
-import "react-international-phone/style.css";
+import 'react-international-phone/style.css';
 
 export const ModalOfferForm = ({ onClose }: { onClose?: () => void }) => {
 	const {
@@ -34,7 +35,7 @@ export const ModalOfferForm = ({ onClose }: { onClose?: () => void }) => {
 			<ModalBody className="w-full">
 				<UsernameInput />
 
-				<UserPhoneInput inputValue={inputValue} handlePhoneValueChange={handlePhoneValueChange} inputRef={inputRef} country={country} setCountry={setCountry} countries={countries} validPhone={validPhone} />
+				<UserPhoneInput countries={countries} country={country} handlePhoneValueChange={handlePhoneValueChange} inputRef={inputRef} inputValue={inputValue} setCountry={setCountry} validPhone={validPhone} />
 
 			</ModalBody>
 			<ModalFooter className="w-full">
@@ -45,6 +46,7 @@ export const ModalOfferForm = ({ onClose }: { onClose?: () => void }) => {
 					className="flex-1 basis-32 uppercase"
 					disabled={isPending}
 					isLoading={isPending}
+					size='md'
 					spinner={
 						<svg className="animate-spin h-5 w-5 text-current" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 							<circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
@@ -57,7 +59,6 @@ export const ModalOfferForm = ({ onClose }: { onClose?: () => void }) => {
 					}
 					state="primary"
 					type="submit"
-					size='md'
 				>
 					{isPending ? 'Отправка...' : 'ОТПРАВИТЬ'}
 				</BrandButton>
@@ -71,9 +72,9 @@ export default function BrandModalOffer({buttonLabel, icon }: {buttonLabel?: str
 
 	return (
 		<>
-			<BrandButton className="grow min-w-fit uppercase" state="primary" size='md' onPress={onOpen}>
+			<BrandButton className="grow min-w-fit uppercase" size='md' state="primary" onPress={onOpen}>
 				{icon}
-				<span>{buttonLabel || `ЗАКАЗАТЬ`}</span>
+				<span>{buttonLabel || 'ЗАКАЗАТЬ'}</span>
 			</BrandButton>
 			<Modal backdrop="blur" className="bg-background" isOpen={isOpen} placement="top-center" onOpenChange={onOpenChange}>
 				<ModalContent>
@@ -94,8 +95,8 @@ export function HeroModalOffer() {
 
 	return (
 		<>
-			<BrandButton className="leading-normal font-semibold group" state="primary" radius='sm' variant="solid" onPress={onOpen} size={'md'}>
-				<CalendarIcon size={18} className={'group-hover:scale-110 transition-transform'} />
+			<BrandButton className="leading-normal font-semibold group" radius='sm' size={'md'} state="primary" variant="solid" onPress={onOpen}>
+				<CalendarIcon className={'group-hover:scale-110 transition-transform'} size={18} />
 				<span>ЗАКАЗАТЬ ЗВОНОК</span>
 			</BrandButton>
 			<Modal backdrop="blur" className='bg-background' isOpen={isOpen} placement="top-center" onOpenChange={onOpenChange}>

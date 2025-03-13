@@ -1,6 +1,6 @@
 'use client';
-import { Pagination as BasePagination, PaginationItemType, PaginationProps } from "@heroui/pagination";
-import clsx from "clsx";
+import { Pagination as BasePagination, PaginationItemType, PaginationProps } from '@heroui/pagination';
+import clsx from 'clsx';
 
 export const ChevronIcon = (props: any) => {
     return (
@@ -31,7 +31,7 @@ export default function Pagination({className, total, onChange, ...props}: Pagin
             return (
                 <button
                     key={key}
-                    className={clsx(className, "bg-default-200/50 min-w-8 w-8 h-8")}
+                    className={clsx(className, 'bg-default-200/50 min-w-8 w-8 h-8')}
                     onClick={onNext}
                 >
                     <ChevronIcon className="rotate-180" />
@@ -43,7 +43,7 @@ export default function Pagination({className, total, onChange, ...props}: Pagin
             return (
                 <button
                     key={key}
-                    className={clsx(className, "bg-default-200/50 min-w-8 w-8 h-8")}
+                    className={clsx(className, 'bg-default-200/50 min-w-8 w-8 h-8')}
                     onClick={onPrevious}
                 >
                     <ChevronIcon />
@@ -78,7 +78,7 @@ export default function Pagination({className, total, onChange, ...props}: Pagin
         <BasePagination
             showControls
             className={clsx(
-                "gap-2",
+                'gap-2',
                 className
             )}
             initialPage={1}
@@ -87,6 +87,7 @@ export default function Pagination({className, total, onChange, ...props}: Pagin
             total={total}
             variant="light"
             onChange={onChange}
+            page={props.page}
         />
     );
 }

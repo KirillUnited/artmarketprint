@@ -1,6 +1,4 @@
 import Image from 'next/image';
-import { SanityImageSource } from '@sanity/image-url/lib/types/types';
-import imageUrlBuilder from '@sanity/image-url';
 
 import { siteConfig } from '@/config/site';
 import { FAQSection } from '@/components/shared/faq';
@@ -12,14 +10,9 @@ import { NAVIGATION_QUERY, SERVICES_QUERY } from '@/sanity/lib/queries';
 import Section from '@/components/layout/Section';
 import { ServiceListItems } from '@/components/shared/service';
 
-const builder = imageUrlBuilder(client);
-
 export default async function ServicesPage() {
 	const services = await getSanityDocuments(SERVICES_QUERY);
 	const breadcrumbs = (await client.fetch(NAVIGATION_QUERY))[0].links;
-	const urlFor = (source: SanityImageSource) => {
-		return builder.image(source).url();
-	}
 
 	return (
 		<>
@@ -39,7 +32,7 @@ export default async function ServicesPage() {
 					</div>
 				</div>
 			</section>
-			<Section innerClassname='pt-6 md:pt-6' id="serviceList">
+			<Section id="serviceList" innerClassname='pt-6 md:pt-6'>
 				<ServiceListItems services={services} />
 			</Section>
 			<FAQSection />
