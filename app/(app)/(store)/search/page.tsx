@@ -17,7 +17,7 @@ export default async function SearchPage({
 
     try {
         const products = await searchProductsByName(query);
-        const categories = await getAllProductCategories(100);
+        const categories = await getAllProductCategories();
 
         return (
             <Section>
