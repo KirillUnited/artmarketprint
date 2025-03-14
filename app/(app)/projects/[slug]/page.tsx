@@ -25,10 +25,7 @@ export async function generateStaticParams() {
 
     return projects.map((document) => {
         return {
-            projects: document.projects.map((project: SanityDocument) => {
-                
-console.log('projects id', project._id)
-
+            projects: document.projects.map((project: SanityDocument) => {                
                 return {
                     id: project._id,
                     slug: project.slug.current,
