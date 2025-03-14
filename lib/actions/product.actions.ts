@@ -8,19 +8,38 @@ export async function getAllProducts() {
   const DATA_FILE_PATH = path.join(process.cwd(), '_data/products-12-03-25.json');
   const { data } = await getJsonFileData(DATA_FILE_PATH) ?? {};
 
-  if (!data) {
-    return [];
-  }
-
-  return data.item?.map((product: any) => product);
+  return data?.item ?? [];
 }
 
-export async function getAllProductCategories(limit = 10) {
+/**
+ * Retrieves a list of unique product categories from the available products.
+ *
+ * @return {string[]} An array of unique product categories
+ */
+export async function getAllProductCategories() {
+  // Fetch all products
   const products = await getAllProducts();
-  const getCategory = (category: string) => category[0].split('|').shift();
-  const categories = new Set(products?.map((product: any) => getCategory(product.category)));
 
-  return Array.from(categories).slice(0, limit);
+  // Define a function that takes a category string and returns the first part of it
+  // The category string is in the format "category|subcategory"
+  const getCategory = (category: string) => {
+    // Split the category string into an array of two strings
+    const [categoryName, subcategoryName] = category[0].split('|');
+    // Return the first string (the category name)
+    return categoryName;
+  };
+
+  // Create a Set to store the unique categories
+  const categories = new Set();
+
+  // Loop through each product and add its category to the Set
+  products?.map((product: any) => {
+    const categoryName = getCategory(product.category);
+    categories.add(categoryName);
+  });
+
+  // Convert the Set to an array and return it
+  return Array.from(categories);
 }
 
 export async function getProductsByLimit(limit: number) {
