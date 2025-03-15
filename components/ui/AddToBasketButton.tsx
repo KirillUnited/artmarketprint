@@ -8,15 +8,17 @@ import React, { useEffect } from 'react';
 
 interface AddToBasketButtonProps {
     product: {
-        id: {
+        id: Array<{
             '_': string
-        }
+        }>
     }
 }
 
 export default function AddToBasketButton({ product }: AddToBasketButtonProps) {
-    const { addItem, removeItem, getItemCount } = useBasketStore();
-    const itemCount = getItemCount(product.id['_']);
+    const { addItem, removeItem, getItemCount, items } = useBasketStore();
+    const itemCount = getItemCount(product.id[0]['_']);
+
+    console.log(items);
 
     const [isClient, setIsClient] = React.useState(false);
 
@@ -34,7 +36,7 @@ export default function AddToBasketButton({ product }: AddToBasketButtonProps) {
                     className="bg-default-100 hover:bg-default-200"
                     radius="sm"
                     size="md"
-                    onPress={() => removeItem(product.id['_'])}
+                    onPress={() => removeItem(product.id[0]._)}
                 >
                     <MinusIcon size={16} />
                 </Button>
@@ -52,7 +54,7 @@ export default function AddToBasketButton({ product }: AddToBasketButtonProps) {
                     radius="sm"
                     size="md"
                     onPress={() => addItem({
-                        id: product.id['_'],
+                        id: product.id[0]._,
                         name: 'Product Name',
                         price: 100,
                         quantity: 1
