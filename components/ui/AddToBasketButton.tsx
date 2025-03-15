@@ -8,6 +8,7 @@ import { Input } from '@heroui/input';
 import { ArrowUpRightIcon, MinusIcon, PlusIcon, ShoppingCartIcon } from 'lucide-react';
 import Link from 'next/link';
 import React, { useEffect } from 'react';
+import { getCTAButton } from './BrandButton';
 
 // Types
 interface QuantityControlsProps {
@@ -30,7 +31,7 @@ const QuantityControls: React.FC<QuantityControlsProps> = ({ itemCount, onDecrea
             size="md"
             onPress={onDecrease}
         >
-            <MinusIcon size={16} />
+            <MinusIcon size={20} className='text-secondary' />
         </Button>
         <Input
             type="text"
@@ -49,26 +50,15 @@ const QuantityControls: React.FC<QuantityControlsProps> = ({ itemCount, onDecrea
             size="md"
             onPress={onIncrease}
         >
-            <PlusIcon size={16} />
+            <PlusIcon size={20} className='text-secondary' />
         </Button>
     </div>
 );
 
 const ViewBasketButton: React.FC = () => (
-    <Button
-        className="flex-grow basis-40 uppercase group border-1"
-        radius="sm"
-        size="md"
-        as={Link}
-        href="/basket"
-        target='_blank'
-        variant='ghost'
-        color='primary'
-    >
-        В корзину
-        <ArrowUpRightIcon size={18}
-            className='group-hover:translate-x-1 transition-transform duration-300' />
-    </Button>
+    <div className='flex flex-col flex-grow basis-40'>
+        {getCTAButton('view-basket', 'secondary', 'В корзине', '/basket', 'md')}
+    </div>
 );
 
 const AddToBasketButton: React.FC<AddToBasketButtonProps> = ({ product }) => {
