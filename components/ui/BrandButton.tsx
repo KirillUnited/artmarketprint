@@ -23,7 +23,7 @@ export default function BrandButton({ state, className, onPress, children, ...pr
     )
 }
 
-export const getCTAButton = (_key: string, buttonType: 'cta' | 'secondary', text: string, link: string)=>{
+export const getCTAButton = (_key: string, buttonType: 'cta' | 'secondary', text: string, link: string, size: 'lg' | 'md' = 'lg')=>{
     const CTAButtons = {
         cta: (text: string, link: string) => (
             <BrandButton key={_key} as={Link} className="uppercase" href={link} state="primary">
@@ -42,7 +42,7 @@ export const getCTAButton = (_key: string, buttonType: 'cta' | 'secondary', text
                 color="secondary"
                 href={link || ''}
                 radius="sm"
-                size="lg"
+                size={size}
                 target="_blank"
                 variant="bordered"
             >
