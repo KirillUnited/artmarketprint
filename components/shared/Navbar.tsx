@@ -26,14 +26,15 @@ type HeaderDropdownMenuProps = {
 	}[];
 };
 
-export const cartLinkButton = (itemsCount: number) => {
+export const CartLinkButton = (itemsCount: number) => {
 	return (
 		<Link href='/cart' target='_blank' className='relative flex flex-row gap-2 items-center'>
 			<ShoppingBagIcon size={22} className='text-primary' />
-			<Chip size='sm' color='danger' className='absolute -top-3 -right-3'>{itemsCount}</Chip>
+			<span className='bg-danger text-white rounded-full text-xs text-center px-1 py-1 truncate w-6 h-6 absolute -top-3 -right-3'>{itemsCount}</span>
 		</Link>
 	)
 }
+
 export default function Navbar({ navigation, sales }: any) {
 	const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 	const itemsCount = useBasketStore((state) => state.items.length);
@@ -85,7 +86,7 @@ export default function Navbar({ navigation, sales }: any) {
 	
 						<PhoneListDropdown />
 
-						{cartLinkButton(itemsCount)}
+						{CartLinkButton(itemsCount)}
 
 						<div className="hidden lg:block">
 							<HeroModalOffer />
