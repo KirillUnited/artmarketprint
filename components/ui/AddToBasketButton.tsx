@@ -104,4 +104,4 @@ const AddToBasketButton: React.FC<AddToBasketButtonProps> = ({ product }) => {
     );
 };
 
-export default AddToBasketButton;
+export { AddToBasketButton as default, QuantityControls, ViewBasketButton };

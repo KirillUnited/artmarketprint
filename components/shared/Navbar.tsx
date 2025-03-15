@@ -16,7 +16,6 @@ import { SalesBanner } from './banner';
 import { siteConfig } from '@/config/site';
 import { PhoneListDropdown } from '@/components/ui/PhoneListDropdown';
 import useBasketStore from '@/store/store';
-import { Chip } from '@heroui/chip';
 
 type HeaderDropdownMenuProps = {
 	triggerLabel: string;
@@ -28,7 +27,7 @@ type HeaderDropdownMenuProps = {
 
 export const CartLinkButton = (itemsCount: number) => {
 	return (
-		<Link href='/cart' target='_blank' className='relative flex flex-row gap-2 items-center'>
+		<Link href='/cart' target='_blank' className='relative'>
 			<ShoppingBagIcon size={22} className='text-primary' />
 			<span className='bg-danger text-white rounded-full text-xs text-center px-1 py-1 truncate w-6 h-6 absolute -top-3 -right-3'>{itemsCount}</span>
 		</Link>
