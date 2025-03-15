@@ -1,8 +1,8 @@
 'use client'
 
-import { getPrice } from '@/lib/getPrice';
+import { extractProductData } from '@/lib/extract-product-data';
 import useBasketStore from '@/store/store';
-import { Product, ProductData } from '@/types/product.types';
+import { Product } from '@/types/product.types';
 import { Button } from '@heroui/button';
 import { Input } from '@heroui/input';
 import { ArrowUpRightIcon, MinusIcon, PlusIcon, ShoppingCartIcon } from 'lucide-react';
@@ -10,7 +10,6 @@ import Link from 'next/link';
 import React, { useEffect } from 'react';
 
 // Types
-
 interface QuantityControlsProps {
     itemCount: number;
     onDecrease: () => void;
@@ -20,14 +19,6 @@ interface QuantityControlsProps {
 interface AddToBasketButtonProps {
     product: Product;
 }
-
-// Product helper functions
-const extractProductData = (product: Product): ProductData => ({
-    id: product.id[0]._,
-    name: product.product[0]._,
-    price: parseFloat(getPrice(product.price[0], 1.1)),
-    quantity: 1
-});
 
 // Components
 const QuantityControls: React.FC<QuantityControlsProps> = ({ itemCount, onDecrease, onIncrease }) => (
