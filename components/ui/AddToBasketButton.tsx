@@ -5,8 +5,7 @@ import useBasketStore from '@/store/store';
 import { Product } from '@/types/product.types';
 import { Button } from '@heroui/button';
 import { Input } from '@heroui/input';
-import { ArrowUpRightIcon, MinusIcon, PlusIcon, ShoppingCartIcon } from 'lucide-react';
-import Link from 'next/link';
+import { MinusIcon, PlusIcon, ShoppingCartIcon } from 'lucide-react';
 import React, { useEffect } from 'react';
 import { getCTAButton } from './BrandButton';
 
@@ -57,17 +56,18 @@ const QuantityControls: React.FC<QuantityControlsProps> = ({ itemCount, onDecrea
 
 const ViewBasketButton: React.FC = () => (
     <div className='flex flex-col flex-grow basis-40'>
-        {getCTAButton('view-basket', 'secondary', 'В корзине', '/basket', 'md')}
+        {getCTAButton('view-basket', 'secondary', 'В корзине', '/cart', 'md')}
     </div>
 );
 
 const AddToBasketButton: React.FC<AddToBasketButtonProps> = ({ product }) => {
-    const { addItem, removeItem, getItemCount } = useBasketStore();
+    const { addItem, removeItem, getItemCount, items } = useBasketStore();
     const [isClient, setIsClient] = React.useState(false);
     
     const productData = extractProductData(product);
     const itemCount = getItemCount(productData.id);
 
+    console.log(items);
     useEffect(() => {
         setIsClient(true);
     }, []);

@@ -4,7 +4,7 @@ import { Button } from '@heroui/button';
 import { Navbar as BaseNavbar, NavbarBrand, NavbarContent, NavbarItem } from '@heroui/navbar';
 import { Link } from '@heroui/link';
 import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@heroui/dropdown';
-import { ChevronDownIcon, Settings, TagsIcon } from 'lucide-react';
+import { ChevronDownIcon, Settings, ShoppingBagIcon, TagsIcon } from 'lucide-react';
 
 import { TelegramIcon, ViberIcon } from '../icons';
 import BrandLogo from '../ui/BrandLogo';
@@ -15,6 +15,8 @@ import { SalesBanner } from './banner';
 
 import { siteConfig } from '@/config/site';
 import { PhoneListDropdown } from '@/components/ui/PhoneListDropdown';
+import useBasketStore from '@/store/store';
+import { Chip } from '@heroui/chip';
 
 type HeaderDropdownMenuProps = {
 	triggerLabel: string;
@@ -24,9 +26,18 @@ type HeaderDropdownMenuProps = {
 	}[];
 };
 
+export const cartLinkButton = (itemsCount: number) => {
+	return (
+		<Link href='/cart' target='_blank' className='relative flex flex-row gap-2 items-center'>
+			<ShoppingBagIcon size={22} className='text-primary' />
+			<Chip size='sm' color='danger' className='absolute -top-3 -right-3'>{itemsCount}</Chip>
+		</Link>
+	)
+}
 export default function Navbar({ navigation, sales }: any) {
 	const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-
+	const itemsCount = useBasketStore((state) => state.items.length);
+	
 	return (
 		<>
 			<SalesBanner {...sales} />
@@ -73,6 +84,9 @@ export default function Navbar({ navigation, sales }: any) {
 						</div>
 	
 						<PhoneListDropdown />
+
+						{cartLinkButton(itemsCount)}
+
 						<div className="hidden lg:block">
 							<HeroModalOffer />
 						</div>
