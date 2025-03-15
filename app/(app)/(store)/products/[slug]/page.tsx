@@ -38,8 +38,8 @@ export default async function ProductPage({ params }: { params: Promise<Props> }
                     <ProductCarousel className="md:sticky top-16" items={productImages} />
                     <div className="flex flex-col gap-4">
                         <BaseBreadcrumb items={breadcrumbs} />
-                        <article className="prose flex flex-col">
-                            <h1 className="text-2xl">{productTitle[0]['_']}</h1>
+                        <div className="flex flex-col gap-4">
+                            <h1 className="text-2xl font-bold">{productTitle[0]['_']}</h1>
                             <Card className="bg-indigo-100">
                                 <CardBody>
                                     <p className="my-0">
@@ -50,8 +50,8 @@ export default async function ProductPage({ params }: { params: Promise<Props> }
                                     <AddToBasketButton product={product} />
                                 </CardFooter>
                             </Card>
-                            <div dangerouslySetInnerHTML={{ __html: variation_description[0] }} />
-                        </article>
+                            <article className="prose" dangerouslySetInnerHTML={{ __html: variation_description[0] }} />
+                        </div>
                     </div>
                 </div>
                 <article className="prose mt-8 max-w-full">
