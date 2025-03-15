@@ -29,7 +29,11 @@ export const CartLinkButton = (itemsCount: number) => {
 	return (
 		<Link href='/cart' target='_blank' className='relative'>
 			<ShoppingBagIcon size={22} className='text-primary' />
-			<span className='bg-danger text-white rounded-full text-xs text-center px-1 py-1 truncate w-6 h-6 absolute -top-3 -right-3'>{itemsCount}</span>
+			{
+				itemsCount > 0 && (
+					<span className='bg-danger text-white rounded-full text-xs text-center px-1 py-1 truncate w-6 h-6 absolute -top-3 -right-3'>{itemsCount}</span>
+				)
+			}
 		</Link>
 	)
 }
@@ -37,7 +41,7 @@ export const CartLinkButton = (itemsCount: number) => {
 export default function Navbar({ navigation, sales }: any) {
 	const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 	const itemsCount = useBasketStore((state) => state.items.length);
-	
+
 	return (
 		<>
 			<SalesBanner {...sales} />
@@ -82,7 +86,7 @@ export default function Navbar({ navigation, sales }: any) {
 								<ViberIcon />
 							</Link>
 						</div>
-	
+
 						<PhoneListDropdown />
 
 						{CartLinkButton(itemsCount)}
@@ -131,7 +135,7 @@ const NavbarDropdownMenu = ({ triggerLabel, items }: HeaderDropdownMenuProps) =>
 					key={items[0].title}
 					classNames={{
 						title: 'font-light'
-					}} href={items[0].url} startContent={triggerLabel === 'Услуги' ? <Settings />: <TagsIcon />}>
+					}} href={items[0].url} startContent={triggerLabel === 'Услуги' ? <Settings /> : <TagsIcon />}>
 					{items[0].title}
 				</DropdownItem>
 				{items[0]?.services?.map((item: any) => (
