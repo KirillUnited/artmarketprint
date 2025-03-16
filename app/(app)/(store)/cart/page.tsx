@@ -50,7 +50,7 @@ const CartPage = () => {
                     isLoading ? <Loader /> :
                         items.map((item) => (
                             <Card key={item.id} shadow='sm' radius='sm'>
-                                <CardBody className='flex flex-row gap-4 items-center'>
+                                <CardBody className='flex md:flex-row flex-col gap-4 items-center'>
                                     <Image as={NextImage} src={item.image} alt={item.name} width={64} height={64} />
                                     <div className="flex-1 flex flex-col gap-0">
                                         <h1 className="text-large font-bold">{item.name}</h1>
