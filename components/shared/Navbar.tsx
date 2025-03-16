@@ -4,7 +4,7 @@ import { Button } from '@heroui/button';
 import { Navbar as BaseNavbar, NavbarBrand, NavbarContent, NavbarItem } from '@heroui/navbar';
 import { Link } from '@heroui/link';
 import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@heroui/dropdown';
-import { ChevronDownIcon, Settings, TagsIcon } from 'lucide-react';
+import { ChevronDownIcon, Settings, ShoppingBagIcon, TagsIcon } from 'lucide-react';
 
 import { TelegramIcon, ViberIcon } from '../icons';
 import BrandLogo from '../ui/BrandLogo';
@@ -15,6 +15,7 @@ import { SalesBanner } from './banner';
 
 import { siteConfig } from '@/config/site';
 import { PhoneListDropdown } from '@/components/ui/PhoneListDropdown';
+import useBasketStore from '@/store/store';
 
 type HeaderDropdownMenuProps = {
 	triggerLabel: string;
@@ -24,8 +25,22 @@ type HeaderDropdownMenuProps = {
 	}[];
 };
 
+export const CartLinkButton = (itemsCount: number) => {
+	return (
+		<Link href='/cart' target='_blank' className='relative'>
+			<ShoppingBagIcon size={22} className='text-primary' />
+			{
+				itemsCount > 0 && (
+					<span className='bg-danger text-white rounded-full text-xs text-center px-1 py-1 truncate w-6 h-6 absolute -top-3 -right-3'>{itemsCount}</span>
+				)
+			}
+		</Link>
+	)
+}
+
 export default function Navbar({ navigation, sales }: any) {
 	const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+	const itemsCount = useBasketStore((state) => state.items.length);
 
 	return (
 		<>
@@ -71,8 +86,11 @@ export default function Navbar({ navigation, sales }: any) {
 								<ViberIcon />
 							</Link>
 						</div>
-	
+
 						<PhoneListDropdown />
+
+						{CartLinkButton(itemsCount)}
+
 						<div className="hidden lg:block">
 							<HeroModalOffer />
 						</div>
@@ -117,7 +135,7 @@ const NavbarDropdownMenu = ({ triggerLabel, items }: HeaderDropdownMenuProps) =>
 					key={items[0].title}
 					classNames={{
 						title: 'font-light'
-					}} href={items[0].url} startContent={triggerLabel === 'Услуги' ? <Settings />: <TagsIcon />}>
+					}} href={items[0].url} startContent={triggerLabel === 'Услуги' ? <Settings /> : <TagsIcon />}>
 					{items[0].title}
 				</DropdownItem>
 				{items[0]?.services?.map((item: any) => (

@@ -1,6 +1,4 @@
-import { Button } from '@heroui/button';
 import { Card, CardBody, CardFooter } from '@heroui/card';
-import { ShoppingCartIcon } from 'lucide-react';
 import { SanityDocument } from 'next-sanity';
 
 import Section from '@/components/layout/Section';
@@ -11,6 +9,7 @@ import { getProductBySlug } from '@/lib/actions/product.actions';
 import { getPrice } from '@/lib/getPrice';
 import { client } from '@/sanity/client';
 import { NAVIGATION_QUERY } from '@/sanity/lib/page.query';
+import AddToBasketButton from '@/components/ui/AddToBasketButton';
 
 export interface Props {
     slug: string,
@@ -31,7 +30,7 @@ export default async function ProductPage({ params }: { params: Promise<Props> }
         price
     } = product || {};
     const productImages = product?.images_urls[0].split(',');
-    
+
     return (
         <>
             <Section>
@@ -39,8 +38,8 @@ export default async function ProductPage({ params }: { params: Promise<Props> }
                     <ProductCarousel className="md:sticky top-16" items={productImages} />
                     <div className="flex flex-col gap-4">
                         <BaseBreadcrumb items={breadcrumbs} />
-                        <article className="prose flex flex-col">
-                            <h1 className="text-2xl">{productTitle[0]['_']}</h1>
+                        <div className="flex flex-col gap-4">
+                            <h1 className="text-2xl font-bold">{productTitle[0]['_']}</h1>
                             <Card className="bg-indigo-100">
                                 <CardBody>
                                     <p className="my-0">
@@ -48,14 +47,11 @@ export default async function ProductPage({ params }: { params: Promise<Props> }
                                         <span className="text-3xl text-foreground font-bold">{` ${getPrice(price[0], 1.1)} р`}</span></p>
                                 </CardBody>
                                 <CardFooter>
-                                    <Button className="bg-brand-gradient font-semibold w-full uppercase text-primary-foreground" radius="sm" size="md">
-                                        <ShoppingCartIcon size={18} />
-                                        <span>Предзаказ</span>
-                                    </Button>
+                                    <AddToBasketButton product={product} />
                                 </CardFooter>
                             </Card>
-                            <div dangerouslySetInnerHTML={{ __html: variation_description[0] }} />
-                        </article>
+                            <article className="prose" dangerouslySetInnerHTML={{ __html: variation_description[0] }} />
+                        </div>
                     </div>
                 </div>
                 <article className="prose mt-8 max-w-full">
