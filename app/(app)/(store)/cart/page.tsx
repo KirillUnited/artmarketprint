@@ -210,9 +210,8 @@ const CartPage = () => {
                                                 autoComplete="country-name"
                                                 className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-2 pl-3 pr-8 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                             >
-                                                <option>United States</option>
-                                                <option>Canada</option>
-                                                <option>Mexico</option>
+                                                <option>Республика Беларусь</option>
+                                                <option>Россия</option>
                                             </select>
                                             <ChevronDownIcon
                                                 aria-hidden="true"
@@ -390,7 +389,7 @@ const CartPage = () => {
                         </div>
 
                         {/* Order summary */}
-                        <div className="mt-10 lg:mt-0">
+                        <div className="mt-10 lg:mt-0 sticky top-20 self-start">
                             <h2 className="text-lg font-medium text-gray-900">Сводка заказа</h2>
 
                             <div className="mt-4 rounded-lg border border-gray-200 bg-white shadow-sm">
@@ -425,31 +424,14 @@ const CartPage = () => {
                                                     </div>
                                                 </div>
 
-                                                <div className="flex flex-1 items-end justify-between pt-2">
-                                                    <p className="mt-1 text-sm font-medium text-gray-900">{product.price}</p>
+                                                <div className="flex flex-wrap gap-2 flex-1 items-end justify-between pt-2">
+                                                    <p className="mt-1 text-sm font-medium text-gray-900">{product.price} р.</p>
 
-                                                    <div className="ml-4">
-                                                        <div className="grid grid-cols-1">
-                                                            <select
-                                                                id="quantity"
-                                                                name="quantity"
-                                                                aria-label="Quantity"
-                                                                className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-2 pl-3 pr-8 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                                                            >
-                                                                <option value={1}>1</option>
-                                                                <option value={2}>2</option>
-                                                                <option value={3}>3</option>
-                                                                <option value={4}>4</option>
-                                                                <option value={5}>5</option>
-                                                                <option value={6}>6</option>
-                                                                <option value={7}>7</option>
-                                                                <option value={8}>8</option>
-                                                            </select>
-                                                            <ChevronDownIcon
-                                                                aria-hidden="true"
-                                                                className="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4"
-                                                            />
-                                                        </div>
+                                                    <div className='basis-20'>
+                                                        <QuantityControls
+                                                            itemCount={product.quantity}
+                                                            onDecrease={() => removeItem(product.id)}
+                                                            onIncrease={() => addItem(product)} />
                                                     </div>
                                                 </div>
                                             </div>
