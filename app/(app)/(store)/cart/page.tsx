@@ -74,7 +74,6 @@ const CartPage = () => {
                                             id="email-address"
                                             name="email-address"
                                             type="email"
-                                            autoComplete="email"
                                             className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                         />
                                     </div>
@@ -94,7 +93,6 @@ const CartPage = () => {
                                                 id="first-name"
                                                 name="first-name"
                                                 type="text"
-                                                autoComplete="given-name"
                                                 className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                             />
                                         </div>
@@ -109,7 +107,6 @@ const CartPage = () => {
                                                 id="last-name"
                                                 name="last-name"
                                                 type="text"
-                                                autoComplete="family-name"
                                                 className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                             />
                                         </div>
@@ -138,7 +135,6 @@ const CartPage = () => {
                                                 id="address"
                                                 name="address"
                                                 type="text"
-                                                autoComplete="street-address"
                                                 className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                             />
                                         </div>
@@ -167,7 +163,6 @@ const CartPage = () => {
                                                 id="city"
                                                 name="city"
                                                 type="text"
-                                                autoComplete="address-level2"
                                                 className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                             />
                                         </div>
@@ -181,7 +176,6 @@ const CartPage = () => {
                                             <select
                                                 id="country"
                                                 name="country"
-                                                autoComplete="country-name"
                                                 className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-2 pl-3 pr-8 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                             >
                                                 <option>Республика Беларусь</option>
@@ -203,7 +197,6 @@ const CartPage = () => {
                                                 id="region"
                                                 name="region"
                                                 type="text"
-                                                autoComplete="address-level1"
                                                 className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                             />
                                         </div>
@@ -218,7 +211,6 @@ const CartPage = () => {
                                                 id="postal-code"
                                                 name="postal-code"
                                                 type="text"
-                                                autoComplete="postal-code"
                                                 className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                             />
                                         </div>
@@ -233,7 +225,6 @@ const CartPage = () => {
                                                 id="phone"
                                                 name="phone"
                                                 type="text"
-                                                autoComplete="tel"
                                                 className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                             />
                                         </div>
@@ -275,7 +266,6 @@ const CartPage = () => {
                                                 id="card-number"
                                                 name="card-number"
                                                 type="text"
-                                                autoComplete="cc-number"
                                                 className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                             />
                                         </div>
@@ -290,7 +280,6 @@ const CartPage = () => {
                                                 id="name-on-card"
                                                 name="name-on-card"
                                                 type="text"
-                                                autoComplete="cc-name"
                                                 className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                             />
                                         </div>
@@ -305,7 +294,6 @@ const CartPage = () => {
                                                 id="expiration-date"
                                                 name="expiration-date"
                                                 type="text"
-                                                autoComplete="cc-exp"
                                                 className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                             />
                                         </div>
@@ -320,7 +308,6 @@ const CartPage = () => {
                                                 id="cvc"
                                                 name="cvc"
                                                 type="text"
-                                                autoComplete="csc"
                                                 className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                             />
                                         </div>
@@ -335,7 +322,7 @@ const CartPage = () => {
 
                             <div className="mt-4 rounded-lg border border-gray-200 bg-white shadow-sm">
                                 <h3 className="sr-only">Товары в корзине</h3>
-                                <ul role="list" className="divide-y divide-gray-200">
+                                <ul  className="divide-y divide-gray-200">
                                     {isLoading ? <Loader /> : items.map((product) => (
                                         <li key={product.id} className="flex px-4 py-6 sm:px-6">
                                             <div className="shrink-0">
