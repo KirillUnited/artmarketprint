@@ -1,18 +1,17 @@
 'use client';
 import Section, { SectionHeading, SectionTitle } from '@/components/layout/Section';
 import useBasketStore from '@/store/store';
-import { Card, CardBody } from '@heroui/card';
 import { Image } from '@heroui/image';
 import React, { useEffect, useState } from 'react';
 import NextImage from 'next/image';
 import Loader from '@/components/ui/Loader';
 import { QuantityControls } from '@/components/ui/AddToBasketButton';
-import { CheckCircleIcon, ChevronDownIcon, TrashIcon } from 'lucide-react';
-import { Radio, RadioGroup } from '@heroui/radio';
+import { ChevronDownIcon, TrashIcon } from 'lucide-react';
 
 const CartPage = () => {
     const items = useBasketStore((state) => state.items);
     const removeItem = useBasketStore((state) => state.removeItem);
+    const removeItemCompletely = useBasketStore((state) => state.removeItemCompletely);
     const addItem = useBasketStore((state) => state.addItem);
     const [isClient, setIsClient] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
@@ -37,8 +36,6 @@ const CartPage = () => {
 
     if (!isClient) return null;
 
-    console.log('BASKET CONTENT', items);
-
     if (items.length === 0) {
         return (
             <Section>
@@ -59,29 +56,6 @@ const CartPage = () => {
                 <SectionTitle>Корзина</SectionTitle>
             </SectionHeading>
 
-            {/* <div className='flex flex-col gap-4'>
-                {
-                    isLoading ? <Loader /> :
-                        items.map((item) => (
-                            <Card key={item.id} shadow='sm' radius='sm'>
-                                <CardBody className='flex md:flex-row flex-col gap-4 items-center'>
-                                    <Image as={NextImage} src={item.image} alt={item.name} width={64} height={64} />
-                                    <div className="flex-1 flex flex-col gap-0">
-                                        <h1 className="text-large font-bold">{item.name}</h1>
-                                        <p className="text-small text-foreground/80 line-clamp-2">Цена: <span className='text-base text-primary font-bold'>{item.price} р.</span></p>
-                                        <p className="text-small text-foreground/80 line-clamp-2">Количество: {item.quantity} шт.</p>
-                                    </div>
-                                    <div className='basis-20'>
-                                        <QuantityControls
-                                            itemCount={item.quantity}
-                                            onDecrease={() => removeItem(item.id)}
-                                            onIncrease={() => addItem(item)} />
-                                    </div>
-                                </CardBody>
-                            </Card>
-                        ))
-                }
-            </div> */}
             <div className="bg-gray-50">
                 <div className="mx-auto max-w-2xl px-4 pb-24 pt-16 sm:px-6 lg:max-w-7xl lg:px-8">
                     <h2 className="sr-only">Оформление заказа</h2>
@@ -265,39 +239,7 @@ const CartPage = () => {
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-
-                            <div className="mt-10 border-t border-gray-200 pt-10">
-                                <h2 className="text-lg font-medium text-gray-900">Способ доставки</h2>
-
-                                <div className="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
-                                    {deliveryMethods.map((deliveryMethod) => (
-                                        <div key={deliveryMethod.id} className="relative flex cursor-pointer rounded-lg border border-gray-300 bg-white p-4 shadow-sm focus:outline-none">
-                                            <input
-                                                type="radio"
-                                                name="delivery-method"
-                                                value={deliveryMethod.id}
-                                                className="relative size-4 appearance-none rounded-full border border-gray-300 bg-white before:absolute before:inset-1 before:rounded-full before:bg-white checked:border-indigo-600 checked:bg-indigo-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:before:bg-gray-400 forced-colors:appearance-auto forced-colors:before:hidden [&:not(:checked)]:before:hidden"
-                                                onChange={(e) => setSelectedDeliveryMethod(deliveryMethod)}
-                                                checked={selectedDeliveryMethod.id === deliveryMethod.id}
-                                            />
-                                            <span className="flex flex-1 ml-3">
-                                                <span className="flex flex-col">
-                                                    <span className="block text-sm font-medium text-gray-900">{deliveryMethod.title}</span>
-                                                    <span className="mt-1 flex items-center text-sm text-gray-500">
-                                                        {deliveryMethod.turnaround}
-                                                    </span>
-                                                    <span className="mt-6 text-sm font-medium text-gray-900">{deliveryMethod.price}</span>
-                                                </span>
-                                            </span>
-                                            <CheckCircleIcon
-                                                aria-hidden="true"
-                                                className="size-5 text-indigo-600 hidden peer-checked:block"
-                                            />
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
+                            </div>                        
 
                             {/* Payment */}
                             <div className="mt-10 border-t border-gray-200 pt-10">
@@ -394,7 +336,7 @@ const CartPage = () => {
                             <div className="mt-4 rounded-lg border border-gray-200 bg-white shadow-sm">
                                 <h3 className="sr-only">Товары в корзине</h3>
                                 <ul role="list" className="divide-y divide-gray-200">
-                                    {items.map((product) => (
+                                    {isLoading ? <Loader /> : items.map((product) => (
                                         <li key={product.id} className="flex px-4 py-6 sm:px-6">
                                             <div className="shrink-0">
                                                 <Image as={NextImage} src={product.image} alt={product.name} width={64} height={64} />
@@ -416,12 +358,7 @@ const CartPage = () => {
                                                         <button
                                                             type="button"
                                                             className="-m-2.5 flex items-center justify-center bg-white p-2.5 text-gray-400 hover:text-gray-500"
-                                                            onClick={() => {
-                                                                // Remove all quantities of this item
-                                                                for (let i = 0; i < product.quantity; i++) {
-                                                                    removeItem(product.id);
-                                                                }
-                                                            }}
+                                                            onClick={() => removeItemCompletely(product.id)}
                                                         >
                                                             <span className="sr-only">Удалить</span>
                                                             <TrashIcon aria-hidden="true" className="size-5" />
