@@ -13,12 +13,13 @@ const CartPage = () => {
     const removeItem = useBasketStore((state) => state.removeItem);
     const removeItemCompletely = useBasketStore((state) => state.removeItemCompletely);
     const addItem = useBasketStore((state) => state.addItem);
+    const getTotalPrice = useBasketStore((state) => state.getTotalPrice);
     const [isClient, setIsClient] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
 
     const deliveryMethods = [
-        { id: 1, title: 'Standard', turnaround: '4–10 business days', price: '$5.00' },
-        { id: 2, title: 'Express', turnaround: '2–5 business days', price: '$16.00' },
+        { id: 1, title: 'Standard', turnaround: '4–10 business days', price: 5.00 },
+        { id: 2, title: 'Express', turnaround: '2–5 business days', price: 16.00 },
     ]
     const paymentMethods = [
         { id: 'credit-card', title: 'Credit card' },
@@ -337,8 +338,8 @@ const CartPage = () => {
                                                                 {product.name}
                                                             </div>
                                                         </h4>
-                                                        <p className="mt-1 text-sm text-gray-500">{product.description}</p>
-                                                        <p className="mt-1 text-sm text-gray-500">{product.category}</p>
+                                                        <p className="mt-1 text-sm text-gray-500 line-clamp-2">{product.description}</p>
+                                                        <p className="mt-1 text-sm text-gray-500 line-clamp-1">{product.category}</p>
                                                     </div>
 
                                                     <div className="ml-4 flow-root shrink-0">
@@ -370,19 +371,21 @@ const CartPage = () => {
                                 <dl className="space-y-6 border-t border-gray-200 px-4 py-6 sm:px-6">
                                     <div className="flex items-center justify-between">
                                         <dt className="text-sm">Подытог</dt>
-                                        <dd className="text-sm font-medium text-gray-900">$64.00</dd>
+                                        <dd className="text-sm font-medium text-gray-900">{getTotalPrice().toFixed(2)} р.</dd>
                                     </div>
                                     <div className="flex items-center justify-between">
                                         <dt className="text-sm">Доставка</dt>
-                                        <dd className="text-sm font-medium text-gray-900">$5.00</dd>
+                                        <dd className="text-sm font-medium text-gray-900">{selectedDeliveryMethod.price.toFixed(2)} р.</dd>
                                     </div>
                                     <div className="flex items-center justify-between">
                                         <dt className="text-sm">Налоги</dt>
-                                        <dd className="text-sm font-medium text-gray-900">$5.52</dd>
+                                        <dd className="text-sm font-medium text-gray-900">{(getTotalPrice() * 0.2).toFixed(2)} р.</dd>
                                     </div>
                                     <div className="flex items-center justify-between border-t border-gray-200 pt-6">
                                         <dt className="text-base font-medium">Итого</dt>
-                                        <dd className="text-base font-medium text-gray-900">$75.52</dd>
+                                        <dd className="text-base font-medium text-gray-900">
+                                            {(getTotalPrice() + selectedDeliveryMethod.price + (getTotalPrice() * 0.2)).toFixed(2)} р.
+                                        </dd>
                                     </div>
                                 </dl>
 
