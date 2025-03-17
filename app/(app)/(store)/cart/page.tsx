@@ -84,16 +84,16 @@ const CartPage = () => {
             </div> */}
             <div className="bg-gray-50">
                 <div className="mx-auto max-w-2xl px-4 pb-24 pt-16 sm:px-6 lg:max-w-7xl lg:px-8">
-                    <h2 className="sr-only">Checkout</h2>
+                    <h2 className="sr-only">Оформление заказа</h2>
 
                     <form className="lg:grid lg:grid-cols-2 lg:gap-x-12 xl:gap-x-16">
                         <div>
                             <div>
-                                <h2 className="text-lg font-medium text-gray-900">Contact information</h2>
+                                <h2 className="text-lg font-medium text-gray-900">Контактная информация</h2>
 
                                 <div className="mt-4">
                                     <label htmlFor="email-address" className="block text-sm/6 font-medium text-gray-700">
-                                        Email address
+                                        Электронная почта
                                     </label>
                                     <div className="mt-2">
                                         <input
@@ -108,12 +108,12 @@ const CartPage = () => {
                             </div>
 
                             <div className="mt-10 border-t border-gray-200 pt-10">
-                                <h2 className="text-lg font-medium text-gray-900">Shipping information</h2>
+                                <h2 className="text-lg font-medium text-gray-900">Информация о доставке</h2>
 
                                 <div className="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
                                     <div>
                                         <label htmlFor="first-name" className="block text-sm/6 font-medium text-gray-700">
-                                            First name
+                                            Имя
                                         </label>
                                         <div className="mt-2">
                                             <input
@@ -128,7 +128,7 @@ const CartPage = () => {
 
                                     <div>
                                         <label htmlFor="last-name" className="block text-sm/6 font-medium text-gray-700">
-                                            Last name
+                                            Фамилия
                                         </label>
                                         <div className="mt-2">
                                             <input
@@ -143,7 +143,7 @@ const CartPage = () => {
 
                                     <div className="sm:col-span-2">
                                         <label htmlFor="company" className="block text-sm/6 font-medium text-gray-700">
-                                            Company
+                                            Компания
                                         </label>
                                         <div className="mt-2">
                                             <input
@@ -157,7 +157,7 @@ const CartPage = () => {
 
                                     <div className="sm:col-span-2">
                                         <label htmlFor="address" className="block text-sm/6 font-medium text-gray-700">
-                                            Address
+                                            Адрес
                                         </label>
                                         <div className="mt-2">
                                             <input
@@ -172,7 +172,7 @@ const CartPage = () => {
 
                                     <div className="sm:col-span-2">
                                         <label htmlFor="apartment" className="block text-sm/6 font-medium text-gray-700">
-                                            Apartment, suite, etc.
+                                            Квартира, офис и т.д.
                                         </label>
                                         <div className="mt-2">
                                             <input
@@ -186,7 +186,7 @@ const CartPage = () => {
 
                                     <div>
                                         <label htmlFor="city" className="block text-sm/6 font-medium text-gray-700">
-                                            City
+                                            Город
                                         </label>
                                         <div className="mt-2">
                                             <input
@@ -201,7 +201,7 @@ const CartPage = () => {
 
                                     <div>
                                         <label htmlFor="country" className="block text-sm/6 font-medium text-gray-700">
-                                            Country
+                                            Страна
                                         </label>
                                         <div className="mt-2 grid grid-cols-1">
                                             <select
@@ -223,7 +223,7 @@ const CartPage = () => {
 
                                     <div>
                                         <label htmlFor="region" className="block text-sm/6 font-medium text-gray-700">
-                                            State / Province
+                                            Область / Регион
                                         </label>
                                         <div className="mt-2">
                                             <input
@@ -238,7 +238,7 @@ const CartPage = () => {
 
                                     <div>
                                         <label htmlFor="postal-code" className="block text-sm/6 font-medium text-gray-700">
-                                            Postal code
+                                            Почтовый индекс
                                         </label>
                                         <div className="mt-2">
                                             <input
@@ -253,7 +253,7 @@ const CartPage = () => {
 
                                     <div className="sm:col-span-2">
                                         <label htmlFor="phone" className="block text-sm/6 font-medium text-gray-700">
-                                            Phone
+                                            Телефон
                                         </label>
                                         <div className="mt-2">
                                             <input
@@ -270,21 +270,19 @@ const CartPage = () => {
 
                             <div className="mt-10 border-t border-gray-200 pt-10">
                                 <fieldset>
-                                    <legend className="text-lg font-medium text-gray-900">Delivery method</legend>
-                                    <RadioGroup
-                                        value={selectedDeliveryMethod}
-                                        onChange={setSelectedDeliveryMethod}
-                                        className="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4"
-                                    >
+                                    <legend className="text-lg font-medium text-gray-900">Способ доставки</legend>
+                                    <div className="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
                                         {deliveryMethods.map((deliveryMethod) => (
-                                            <Radio
-                                                key={deliveryMethod.id}
-                                                value={deliveryMethod}
-                                                aria-label={deliveryMethod.title}
-                                                aria-description={`${deliveryMethod.turnaround} for ${deliveryMethod.price}`}
-                                                className="group relative flex cursor-pointer rounded-lg border border-gray-300 bg-white p-4 shadow-sm focus:outline-none data-[checked]:border-transparent data-[focus]:ring-2 data-[focus]:ring-indigo-500"
-                                            >
-                                                <span className="flex flex-1">
+                                            <div key={deliveryMethod.id} className="relative flex cursor-pointer rounded-lg border border-gray-300 bg-white p-4 shadow-sm focus:outline-none">
+                                                <input
+                                                    type="radio"
+                                                    name="delivery-method"
+                                                    value={deliveryMethod.id}
+                                                    className="relative size-4 appearance-none rounded-full border border-gray-300 bg-white before:absolute before:inset-1 before:rounded-full before:bg-white checked:border-indigo-600 checked:bg-indigo-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:before:bg-gray-400 forced-colors:appearance-auto forced-colors:before:hidden [&:not(:checked)]:before:hidden"
+                                                    onChange={(e) => setSelectedDeliveryMethod(deliveryMethod)}
+                                                    checked={selectedDeliveryMethod.id === deliveryMethod.id}
+                                                />
+                                                <span className="flex flex-1 ml-3">
                                                     <span className="flex flex-col">
                                                         <span className="block text-sm font-medium text-gray-900">{deliveryMethod.title}</span>
                                                         <span className="mt-1 flex items-center text-sm text-gray-500">
@@ -295,24 +293,20 @@ const CartPage = () => {
                                                 </span>
                                                 <CheckCircleIcon
                                                     aria-hidden="true"
-                                                    className="size-5 text-indigo-600 group-[&:not([data-checked])]:hidden"
+                                                    className="size-5 text-indigo-600 hidden peer-checked:block"
                                                 />
-                                                <span
-                                                    aria-hidden="true"
-                                                    className="pointer-events-none absolute -inset-px rounded-lg border-2 border-transparent group-data-[focus]:border group-data-[checked]:border-indigo-500"
-                                                />
-                                            </Radio>
+                                            </div>
                                         ))}
-                                    </RadioGroup>
+                                    </div>
                                 </fieldset>
                             </div>
 
                             {/* Payment */}
                             <div className="mt-10 border-t border-gray-200 pt-10">
-                                <h2 className="text-lg font-medium text-gray-900">Payment</h2>
+                                <h2 className="text-lg font-medium text-gray-900">Оплата</h2>
 
                                 <fieldset className="mt-4">
-                                    <legend className="sr-only">Payment type</legend>
+                                    <legend className="sr-only">Способ оплаты</legend>
                                     <div className="space-y-4 sm:flex sm:items-center sm:space-x-10 sm:space-y-0">
                                         {paymentMethods.map((paymentMethod, paymentMethodIdx) => (
                                             <div key={paymentMethod.id} className="flex items-center">
@@ -334,7 +328,7 @@ const CartPage = () => {
                                 <div className="mt-6 grid grid-cols-4 gap-x-4 gap-y-6">
                                     <div className="col-span-4">
                                         <label htmlFor="card-number" className="block text-sm/6 font-medium text-gray-700">
-                                            Card number
+                                            Номер карты
                                         </label>
                                         <div className="mt-2">
                                             <input
@@ -349,7 +343,7 @@ const CartPage = () => {
 
                                     <div className="col-span-4">
                                         <label htmlFor="name-on-card" className="block text-sm/6 font-medium text-gray-700">
-                                            Name on card
+                                            Имя на карте
                                         </label>
                                         <div className="mt-2">
                                             <input
@@ -364,7 +358,7 @@ const CartPage = () => {
 
                                     <div className="col-span-3">
                                         <label htmlFor="expiration-date" className="block text-sm/6 font-medium text-gray-700">
-                                            Expiration date (MM/YY)
+                                            Срок действия (ММ/ГГ)
                                         </label>
                                         <div className="mt-2">
                                             <input
@@ -397,10 +391,10 @@ const CartPage = () => {
 
                         {/* Order summary */}
                         <div className="mt-10 lg:mt-0">
-                            <h2 className="text-lg font-medium text-gray-900">Order summary</h2>
+                            <h2 className="text-lg font-medium text-gray-900">Сводка заказа</h2>
 
                             <div className="mt-4 rounded-lg border border-gray-200 bg-white shadow-sm">
-                                <h3 className="sr-only">Items in your cart</h3>
+                                <h3 className="sr-only">Товары в корзине</h3>
                                 <ul role="list" className="divide-y divide-gray-200">
                                     {items.map((product) => (
                                         <li key={product.id} className="flex px-4 py-6 sm:px-6">
@@ -464,19 +458,19 @@ const CartPage = () => {
                                 </ul>
                                 <dl className="space-y-6 border-t border-gray-200 px-4 py-6 sm:px-6">
                                     <div className="flex items-center justify-between">
-                                        <dt className="text-sm">Subtotal</dt>
+                                        <dt className="text-sm">Подытог</dt>
                                         <dd className="text-sm font-medium text-gray-900">$64.00</dd>
                                     </div>
                                     <div className="flex items-center justify-between">
-                                        <dt className="text-sm">Shipping</dt>
+                                        <dt className="text-sm">Доставка</dt>
                                         <dd className="text-sm font-medium text-gray-900">$5.00</dd>
                                     </div>
                                     <div className="flex items-center justify-between">
-                                        <dt className="text-sm">Taxes</dt>
+                                        <dt className="text-sm">Налоги</dt>
                                         <dd className="text-sm font-medium text-gray-900">$5.52</dd>
                                     </div>
                                     <div className="flex items-center justify-between border-t border-gray-200 pt-6">
-                                        <dt className="text-base font-medium">Total</dt>
+                                        <dt className="text-base font-medium">Итого</dt>
                                         <dd className="text-base font-medium text-gray-900">$75.52</dd>
                                     </div>
                                 </dl>
@@ -486,7 +480,7 @@ const CartPage = () => {
                                         type="submit"
                                         className="w-full rounded-md border border-transparent bg-indigo-600 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50"
                                     >
-                                        Confirm order
+                                        Подтвердить заказ
                                     </button>
                                 </div>
                             </div>
