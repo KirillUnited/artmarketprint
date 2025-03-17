@@ -268,36 +268,35 @@ const CartPage = () => {
                             </div>
 
                             <div className="mt-10 border-t border-gray-200 pt-10">
-                                <fieldset>
-                                    <legend className="text-lg font-medium text-gray-900">Способ доставки</legend>
-                                    <div className="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
-                                        {deliveryMethods.map((deliveryMethod) => (
-                                            <div key={deliveryMethod.id} className="relative flex cursor-pointer rounded-lg border border-gray-300 bg-white p-4 shadow-sm focus:outline-none">
-                                                <input
-                                                    type="radio"
-                                                    name="delivery-method"
-                                                    value={deliveryMethod.id}
-                                                    className="relative size-4 appearance-none rounded-full border border-gray-300 bg-white before:absolute before:inset-1 before:rounded-full before:bg-white checked:border-indigo-600 checked:bg-indigo-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:before:bg-gray-400 forced-colors:appearance-auto forced-colors:before:hidden [&:not(:checked)]:before:hidden"
-                                                    onChange={(e) => setSelectedDeliveryMethod(deliveryMethod)}
-                                                    checked={selectedDeliveryMethod.id === deliveryMethod.id}
-                                                />
-                                                <span className="flex flex-1 ml-3">
-                                                    <span className="flex flex-col">
-                                                        <span className="block text-sm font-medium text-gray-900">{deliveryMethod.title}</span>
-                                                        <span className="mt-1 flex items-center text-sm text-gray-500">
-                                                            {deliveryMethod.turnaround}
-                                                        </span>
-                                                        <span className="mt-6 text-sm font-medium text-gray-900">{deliveryMethod.price}</span>
+                                <h2 className="text-lg font-medium text-gray-900">Способ доставки</h2>
+
+                                <div className="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
+                                    {deliveryMethods.map((deliveryMethod) => (
+                                        <div key={deliveryMethod.id} className="relative flex cursor-pointer rounded-lg border border-gray-300 bg-white p-4 shadow-sm focus:outline-none">
+                                            <input
+                                                type="radio"
+                                                name="delivery-method"
+                                                value={deliveryMethod.id}
+                                                className="relative size-4 appearance-none rounded-full border border-gray-300 bg-white before:absolute before:inset-1 before:rounded-full before:bg-white checked:border-indigo-600 checked:bg-indigo-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:before:bg-gray-400 forced-colors:appearance-auto forced-colors:before:hidden [&:not(:checked)]:before:hidden"
+                                                onChange={(e) => setSelectedDeliveryMethod(deliveryMethod)}
+                                                checked={selectedDeliveryMethod.id === deliveryMethod.id}
+                                            />
+                                            <span className="flex flex-1 ml-3">
+                                                <span className="flex flex-col">
+                                                    <span className="block text-sm font-medium text-gray-900">{deliveryMethod.title}</span>
+                                                    <span className="mt-1 flex items-center text-sm text-gray-500">
+                                                        {deliveryMethod.turnaround}
                                                     </span>
+                                                    <span className="mt-6 text-sm font-medium text-gray-900">{deliveryMethod.price}</span>
                                                 </span>
-                                                <CheckCircleIcon
-                                                    aria-hidden="true"
-                                                    className="size-5 text-indigo-600 hidden peer-checked:block"
-                                                />
-                                            </div>
-                                        ))}
-                                    </div>
-                                </fieldset>
+                                            </span>
+                                            <CheckCircleIcon
+                                                aria-hidden="true"
+                                                className="size-5 text-indigo-600 hidden peer-checked:block"
+                                            />
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
 
                             {/* Payment */}
@@ -417,8 +416,14 @@ const CartPage = () => {
                                                         <button
                                                             type="button"
                                                             className="-m-2.5 flex items-center justify-center bg-white p-2.5 text-gray-400 hover:text-gray-500"
+                                                            onClick={() => {
+                                                                // Remove all quantities of this item
+                                                                for (let i = 0; i < product.quantity; i++) {
+                                                                    removeItem(product.id);
+                                                                }
+                                                            }}
                                                         >
-                                                            <span className="sr-only">Remove</span>
+                                                            <span className="sr-only">Удалить</span>
                                                             <TrashIcon aria-hidden="true" className="size-5" />
                                                         </button>
                                                     </div>
