@@ -20,7 +20,7 @@ export const OrderSummary = ({ items, onRemoveItem }: OrderSummaryProps) => {
         <div className="mt-10 lg:mt-0">
             <h2 className="text-lg font-medium text-gray-900">Сводка заказа</h2>
             <div className="mt-4 rounded-lg border border-gray-200 bg-white shadow-sm">
-                <ul role="list" className="divide-y divide-gray-200">
+                <ul  className="divide-y divide-gray-200">
                     {items.map((item) => (
                         <li key={item.id} className="flex py-6">
                             <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
