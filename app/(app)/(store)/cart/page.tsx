@@ -7,6 +7,7 @@ import NextImage from 'next/image';
 import Loader from '@/components/ui/Loader';
 import { QuantityControls } from '@/components/ui/AddToBasketButton';
 import { ChevronDownIcon, TrashIcon } from 'lucide-react';
+import { Button } from '@heroui/button';
 
 const CartPage = () => {
     const items = useBasketStore((state) => state.items);
@@ -57,7 +58,7 @@ const CartPage = () => {
                 <SectionTitle>Корзина</SectionTitle>
             </SectionHeading>
 
-            <div className="bg-gray-50">
+            <div className="bg-gray-50 rounded-small outline -outline-offset-1 outline-1 outline-gray-200">
                 <div className="mx-auto max-w-2xl px-4 pb-24 pt-16 sm:px-6 lg:max-w-7xl lg:px-8">
                     <h2 className="sr-only">Оформление заказа</h2>
 
@@ -75,7 +76,7 @@ const CartPage = () => {
                                             id="email-address"
                                             name="email-address"
                                             type="email"
-                                            className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                                            className="block w-full rounded-small bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                         />
                                     </div>
                                 </div>
@@ -94,7 +95,7 @@ const CartPage = () => {
                                                 id="first-name"
                                                 name="first-name"
                                                 type="text"
-                                                className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                                                className="block w-full rounded-small bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                             />
                                         </div>
                                     </div>
@@ -108,7 +109,7 @@ const CartPage = () => {
                                                 id="last-name"
                                                 name="last-name"
                                                 type="text"
-                                                className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                                                className="block w-full rounded-small bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                             />
                                         </div>
                                     </div>
@@ -122,7 +123,7 @@ const CartPage = () => {
                                                 id="company"
                                                 name="company"
                                                 type="text"
-                                                className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                                                className="block w-full rounded-small bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                             />
                                         </div>
                                     </div>
@@ -136,7 +137,7 @@ const CartPage = () => {
                                                 id="address"
                                                 name="address"
                                                 type="text"
-                                                className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                                                className="block w-full rounded-small bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                             />
                                         </div>
                                     </div>
@@ -150,7 +151,7 @@ const CartPage = () => {
                                                 id="apartment"
                                                 name="apartment"
                                                 type="text"
-                                                className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                                                className="block w-full rounded-small bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                             />
                                         </div>
                                     </div>
@@ -164,7 +165,7 @@ const CartPage = () => {
                                                 id="city"
                                                 name="city"
                                                 type="text"
-                                                className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                                                className="block w-full rounded-small bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                             />
                                         </div>
                                     </div>
@@ -177,7 +178,7 @@ const CartPage = () => {
                                             <select
                                                 id="country"
                                                 name="country"
-                                                className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-2 pl-3 pr-8 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                                                className="col-start-1 row-start-1 w-full appearance-none rounded-small bg-white py-2 pl-3 pr-8 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                             >
                                                 <option>Республика Беларусь</option>
                                                 <option>Россия</option>
@@ -198,7 +199,7 @@ const CartPage = () => {
                                                 id="region"
                                                 name="region"
                                                 type="text"
-                                                className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                                                className="block w-full rounded-small bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                             />
                                         </div>
                                     </div>
@@ -212,7 +213,7 @@ const CartPage = () => {
                                                 id="postal-code"
                                                 name="postal-code"
                                                 type="text"
-                                                className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                                                className="block w-full rounded-small bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                             />
                                         </div>
                                     </div>
@@ -226,12 +227,12 @@ const CartPage = () => {
                                                 id="phone"
                                                 name="phone"
                                                 type="text"
-                                                className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                                                className="block w-full rounded-small bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                             />
                                         </div>
                                     </div>
                                 </div>
-                            </div>                        
+                            </div>
 
                             {/* Payment */}
                             <div className="mt-10 border-t border-gray-200 pt-10">
@@ -256,74 +257,16 @@ const CartPage = () => {
                                         ))}
                                     </div>
                                 </fieldset>
-
-                                <div className="mt-6 grid grid-cols-4 gap-x-4 gap-y-6">
-                                    <div className="col-span-4">
-                                        <label htmlFor="card-number" className="block text-sm/6 font-medium text-gray-700">
-                                            Номер карты
-                                        </label>
-                                        <div className="mt-2">
-                                            <input
-                                                id="card-number"
-                                                name="card-number"
-                                                type="text"
-                                                className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                                            />
-                                        </div>
-                                    </div>
-
-                                    <div className="col-span-4">
-                                        <label htmlFor="name-on-card" className="block text-sm/6 font-medium text-gray-700">
-                                            Имя на карте
-                                        </label>
-                                        <div className="mt-2">
-                                            <input
-                                                id="name-on-card"
-                                                name="name-on-card"
-                                                type="text"
-                                                className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                                            />
-                                        </div>
-                                    </div>
-
-                                    <div className="col-span-3">
-                                        <label htmlFor="expiration-date" className="block text-sm/6 font-medium text-gray-700">
-                                            Срок действия (ММ/ГГ)
-                                        </label>
-                                        <div className="mt-2">
-                                            <input
-                                                id="expiration-date"
-                                                name="expiration-date"
-                                                type="text"
-                                                className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                                            />
-                                        </div>
-                                    </div>
-
-                                    <div>
-                                        <label htmlFor="cvc" className="block text-sm/6 font-medium text-gray-700">
-                                            CVC
-                                        </label>
-                                        <div className="mt-2">
-                                            <input
-                                                id="cvc"
-                                                name="cvc"
-                                                type="text"
-                                                className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
 
                         {/* Order summary */}
                         <div className="mt-10 lg:mt-0 sticky top-20 self-start">
-                            <h2 className="text-lg font-medium text-gray-900">Сводка заказа</h2>
+                            <h2 className="text-lg font-medium text-gray-900">Заказ</h2>
 
-                            <div className="mt-4 rounded-lg border border-gray-200 bg-white shadow-sm">
+                            <div className="mt-4 rounded-small border border-gray-200 bg-white shadow-sm">
                                 <h3 className="sr-only">Товары в корзине</h3>
-                                <ul  className="divide-y divide-gray-200">
+                                <ul className="divide-y divide-gray-200">
                                     {isLoading ? <Loader /> : items.map((product) => (
                                         <li key={product.id} className="flex px-4 py-6 sm:px-6">
                                             <div className="shrink-0">
@@ -339,7 +282,6 @@ const CartPage = () => {
                                                             </div>
                                                         </h4>
                                                         <p className="mt-1 text-sm text-gray-500 line-clamp-2">{product.description}</p>
-                                                        <p className="mt-1 text-sm text-gray-500 line-clamp-1">{product.category}</p>
                                                     </div>
 
                                                     <div className="ml-4 flow-root shrink-0">
@@ -370,32 +312,31 @@ const CartPage = () => {
                                 </ul>
                                 <dl className="space-y-6 border-t border-gray-200 px-4 py-6 sm:px-6">
                                     <div className="flex items-center justify-between">
-                                        <dt className="text-sm">Подытог</dt>
+                                        <dt className="text-sm">Сумма</dt>
                                         <dd className="text-sm font-medium text-gray-900">{getTotalPrice().toFixed(2)} р.</dd>
                                     </div>
                                     <div className="flex items-center justify-between">
                                         <dt className="text-sm">Доставка</dt>
                                         <dd className="text-sm font-medium text-gray-900">{selectedDeliveryMethod.price.toFixed(2)} р.</dd>
                                     </div>
-                                    <div className="flex items-center justify-between">
-                                        <dt className="text-sm">Налоги</dt>
-                                        <dd className="text-sm font-medium text-gray-900">{(getTotalPrice() * 0.2).toFixed(2)} р.</dd>
-                                    </div>
                                     <div className="flex items-center justify-between border-t border-gray-200 pt-6">
-                                        <dt className="text-base font-medium">Итого</dt>
-                                        <dd className="text-base font-medium text-gray-900">
-                                            {(getTotalPrice() + selectedDeliveryMethod.price + (getTotalPrice() * 0.2)).toFixed(2)} р.
+                                        <dt className="text-lg font-bold">Итого</dt>
+                                        <dd className="text-lg font-bold text-gray-900">
+                                            {(getTotalPrice() + selectedDeliveryMethod.price).toFixed(2)} р.
                                         </dd>
                                     </div>
                                 </dl>
 
                                 <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
-                                    <button
+                                    <Button
                                         type="submit"
-                                        className="w-full rounded-md border border-transparent bg-indigo-600 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50"
+                                        className="w-full bg-brand-gradient font-semibold"
+                                        radius="sm"
+                                        size="lg"
+                                        color="primary"
                                     >
                                         Подтвердить заказ
-                                    </button>
+                                    </Button>
                                 </div>
                             </div>
                         </div>
