@@ -7,6 +7,7 @@ import NextImage from 'next/image';
 import Loader from '@/components/ui/Loader';
 import { QuantityControls } from '@/components/ui/AddToBasketButton';
 import { ChevronDownIcon, TrashIcon } from 'lucide-react';
+import { Button } from '@heroui/button';
 
 const CartPage = () => {
     const items = useBasketStore((state) => state.items);
@@ -327,12 +328,15 @@ const CartPage = () => {
                                 </dl>
 
                                 <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
-                                    <button
+                                    <Button
                                         type="submit"
-                                        className="w-full rounded-small border border-transparent bg-indigo-600 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50"
+                                        className="w-full bg-brand-gradient font-semibold"
+                                        radius="sm"
+                                        size="lg"
+                                        color="primary"
                                     >
                                         Подтвердить заказ
-                                    </button>
+                                    </Button>
                                 </div>
                             </div>
                         </div>
