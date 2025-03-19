@@ -281,7 +281,7 @@ const CartPage = () => {
                             </div>
 
                             {/* Delivery */}
-                            <div className="mt-10 border-t border-gray-200 pt-10">
+                            {/* <div className="mt-10 border-t border-gray-200 pt-10">
                                 <fieldset>
                                     <legend className="text-lg font-medium text-gray-900">Способ доставки</legend>
                                     <RadioGroup
@@ -303,10 +303,10 @@ const CartPage = () => {
                                         ))}
                                     </RadioGroup>
                                 </fieldset>
-                            </div>
+                            </div> */}
 
                             {/* Payment */}
-                            <div className="mt-10 border-t border-gray-200 pt-10">
+                            {/* <div className="mt-10 border-t border-gray-200 pt-10">
                                 <h2 className="text-lg font-medium text-gray-900">Оплата</h2>
 
                                 <fieldset className="mt-4">
@@ -321,7 +321,7 @@ const CartPage = () => {
                                         ))}
                                     </RadioGroup>
                                 </fieldset>
-                            </div>
+                            </div> */}
                         </div>
 
                         {/* Order summary */}
