@@ -1,0 +1,3 @@
+.instagramFeed :global(a[href*="https://apps.elfsight.com/panel/applications/instashow/?utm_source=websites&utm_medium=clients&utm_content=instagram-feed&utm_term=localhost:3000&utm_campaign=deactivated-widget&show_pricing=true"]) {
+    display: none !important;
+}
