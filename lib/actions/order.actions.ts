@@ -66,7 +66,7 @@ ${items.map((item: any) => `
   Сумма: ${item.price * item.quantity} BYN
 `).join('\n')}
 
-💰 Сумма заказа: ${items.reduce((acc: number, item: any) => acc + item.price * item.quantity, 0)} BYN
+💰 Сумма заказа: ${(items.reduce((acc: number, item: any) => acc + item.price * item.quantity, 0) + (deliveryMethod === '1' ? 0 : 10))} BYN
 `;
 
 	return await axios

@@ -20,6 +20,7 @@ const CartPage = () => {
     const removeItemCompletely = useBasketStore((state) => state.removeItemCompletely);
     const addItem = useBasketStore((state) => state.addItem);
     const getTotalPrice = useBasketStore((state) => state.getTotalPrice);
+    const clearBasket = useBasketStore((state) => state.clearBasket);
     const [isClient, setIsClient] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -60,6 +61,7 @@ const CartPage = () => {
                 toast.success('Заявка отправлена', {
                     description: `Заказ от ${new Date().toLocaleString()}. Спасибо за заявку! Мы свяжемся с Вами в ближайшее время.`,
                 })
+                clearBasket();
             }
         } catch (error) {
             console.error(error);
@@ -67,6 +69,8 @@ const CartPage = () => {
             toast.error('Ошибка отправки заказа', {
                 description: 'Пожалуйста, попробуйте еще раз позже.',
             });
+        } finally {
+            setIsPending(false);
         }
     }
 
