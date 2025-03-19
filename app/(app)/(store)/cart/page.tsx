@@ -20,6 +20,7 @@ const CartPage = () => {
     const removeItemCompletely = useBasketStore((state) => state.removeItemCompletely);
     const addItem = useBasketStore((state) => state.addItem);
     const getTotalPrice = useBasketStore((state) => state.getTotalPrice);
+    const clearBasket = useBasketStore((state) => state.clearBasket);
     const [isClient, setIsClient] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -60,6 +61,7 @@ const CartPage = () => {
                 toast.success('Заявка отправлена', {
                     description: `Заказ от ${new Date().toLocaleString()}. Спасибо за заявку! Мы свяжемся с Вами в ближайшее время.`,
                 })
+                clearBasket();
             }
         } catch (error) {
             console.error(error);
@@ -67,6 +69,8 @@ const CartPage = () => {
             toast.error('Ошибка отправки заказа', {
                 description: 'Пожалуйста, попробуйте еще раз позже.',
             });
+        } finally {
+            setIsPending(false);
         }
     }
 
@@ -120,6 +124,7 @@ const CartPage = () => {
                                                 id="first-name"
                                                 name="first-name"
                                                 type="text"
+                                                required
                                                 className="block w-full rounded-small bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                             />
                                         </div>
@@ -190,6 +195,7 @@ const CartPage = () => {
                                                 id="city"
                                                 name="city"
                                                 type="text"
+                                                required
                                                 className="block w-full rounded-small bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                             />
                                         </div>
@@ -203,6 +209,7 @@ const CartPage = () => {
                                             <select
                                                 id="country"
                                                 name="country"
+                                                required
                                                 className="col-start-1 row-start-1 w-full appearance-none rounded-small bg-white py-2 pl-3 pr-8 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                             >
                                                 <option>Республика Беларусь</option>
@@ -252,6 +259,7 @@ const CartPage = () => {
                                                 id="phone"
                                                 name="phone"
                                                 type="text"
+                                                required
                                                 className="block w-full rounded-small bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                             />
                                         </div>
