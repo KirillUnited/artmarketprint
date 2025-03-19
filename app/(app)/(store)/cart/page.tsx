@@ -8,28 +8,8 @@ import Loader from '@/components/ui/Loader';
 import { QuantityControls } from '@/components/ui/AddToBasketButton';
 import { ChevronDownIcon, TrashIcon } from 'lucide-react';
 import { Button } from '@heroui/button';
-import { Radio, RadioGroup } from '@heroui/radio';
-import clsx from 'clsx';
-
-export const CustomRadio = (props: { children: React.ReactNode } & React.ComponentProps<typeof Radio>) => {
-    const { children, ...otherProps } = props;
-
-    return (
-        <Radio
-            {...otherProps}
-            classNames={{
-                base: clsx(
-                    "inline-flex flex-1 m-0 bg-content1 hover:bg-content2 items-center justify-between",
-                    "flex-row-reverse max-w-[300px] cursor-pointer rounded-small gap-4 p-4 border-1 border-gray-200",
-                    "data-[selected=true]:border-primary",
-                ),
-                description: 'mt-2'
-            }}
-        >
-            {children}
-        </Radio>
-    );
-};
+import { RadioGroup } from '@heroui/radio';
+import CustomRadio from '@/components/ui/form/CustomRadio';
 
 const CartPage = () => {
     const items = useBasketStore((state) => state.items);
@@ -266,7 +246,9 @@ const CartPage = () => {
                                             if (method) setSelectedDeliveryMethod(method);
                                         }}
                                         value={selectedDeliveryMethod.id.toString()}
-                                        orientation='horizontal' className='mt-4'>
+                                        orientation='horizontal' className='mt-4'
+                                        name='delivery-method'
+                                        >
                                         {deliveryMethods.map((deliveryMethod, deliveryMethodIdx) => (
                                             <CustomRadio key={deliveryMethod.id} description={deliveryMethod.turnaround} value={deliveryMethod.id.toString()}>
                                                 <div className='flex flex-col gap-1'>
@@ -285,22 +267,13 @@ const CartPage = () => {
 
                                 <fieldset className="mt-4">
                                     <legend className="sr-only">Способ оплаты</legend>
-                                    <div className="space-y-4 sm:flex sm:items-center sm:space-x-10 sm:space-y-0">
-                                        {paymentMethods.map((paymentMethod, paymentMethodIdx) => (
-                                            <div key={paymentMethod.id} className="flex items-center">
-                                                <input
-                                                    defaultChecked={paymentMethodIdx === 0}
-                                                    id={paymentMethod.id}
-                                                    name="payment-type"
-                                                    type="radio"
-                                                    className="relative size-4 appearance-none rounded-full border border-gray-300 bg-white before:absolute before:inset-1 before:rounded-full before:bg-white checked:border-indigo-600 checked:bg-indigo-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:before:bg-gray-400 forced-colors:appearance-auto forced-colors:before:hidden [&:not(:checked)]:before:hidden"
-                                                />
-                                                <label htmlFor={paymentMethod.id} className="ml-3 block text-sm/6 font-medium text-gray-700">
-                                                    {paymentMethod.title}
-                                                </label>
-                                            </div>
+                                    <RadioGroup orientation='horizontal' className='gap-4'>
+                                        {paymentMethods.map((paymentMethod) => (
+                                            <CustomRadio key={paymentMethod.id} value={paymentMethod.id}>
+                                                <span className="text-sm font-medium text-gray-900">{paymentMethod.title}</span>
+                                            </CustomRadio>
                                         ))}
-                                    </div>
+                                    </RadioGroup>
                                 </fieldset>
                             </div>
                         </div>
