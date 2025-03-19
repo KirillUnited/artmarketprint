@@ -2,7 +2,7 @@
 import Section, { SectionHeading, SectionTitle } from '@/components/layout/Section';
 import useBasketStore from '@/store/store';
 import { Image } from '@heroui/image';
-import React, { useEffect, useState } from 'react';
+import React, { FormEvent, useEffect, useState } from 'react';
 import NextImage from 'next/image';
 import Loader from '@/components/ui/Loader';
 import { QuantityControls } from '@/components/ui/AddToBasketButton';
@@ -10,6 +10,8 @@ import { ChevronDownIcon, TrashIcon } from 'lucide-react';
 import { Button } from '@heroui/button';
 import { RadioGroup } from '@heroui/radio';
 import CustomRadio from '@/components/ui/form/CustomRadio';
+import { createProductCheckoutOrder } from '@/lib/actions/order.actions';
+import { toast } from 'sonner';
 
 const CartPage = () => {
     const items = useBasketStore((state) => state.items);
@@ -30,7 +32,42 @@ const CartPage = () => {
         { id: 'etransfer', title: 'eTransfer' },
     ]
 
-    const [selectedDeliveryMethod, setSelectedDeliveryMethod] = useState(deliveryMethods[0])
+    const [selectedDeliveryMethod, setSelectedDeliveryMethod] = useState(deliveryMethods[0]);
+    const [isPending, setIsPending] = useState(false);
+
+    async function handleSubmit(event: FormEvent<HTMLFormElement>): Promise<void> {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+
+        // Add cart items to form data
+        const cartItems = items.map(item => ({
+            id: item.id,
+            name: item.name,
+            price: item.price,
+            quantity: item.quantity
+        }));
+        formData.append('items', JSON.stringify(cartItems));
+
+        event.currentTarget.reset();
+        setIsPending(true);
+
+        try {
+            const result = await createProductCheckoutOrder(formData);
+
+            if (result.ok) {
+                setIsPending(false);
+                toast.success('Заявка отправлена', {
+                    description: `Заказ от ${new Date().toLocaleString()}. Спасибо за заявку! Мы свяжемся с Вами в ближайшее время.`,
+                })
+            }
+        } catch (error) {
+            console.error(error);
+            setIsPending(false);
+            toast.error('Ошибка отправки заказа', {
+                description: 'Пожалуйста, попробуйте еще раз позже.',
+            });
+        }
+    }
 
     // This is a workaround to prevent the component from rendering on the server
     useEffect(() => {
@@ -64,28 +101,12 @@ const CartPage = () => {
                 <div className="mx-auto max-w-2xl px-4 pb-24 pt-16 sm:px-6 lg:max-w-7xl lg:px-8">
                     <h2 className="sr-only">Оформление заказа</h2>
 
-                    <form className="lg:grid lg:grid-cols-2 lg:gap-x-12 xl:gap-x-16">
+                    <form className="lg:grid lg:grid-cols-2 lg:gap-x-12 xl:gap-x-16"
+                        onSubmit={handleSubmit}
+                    >
                         <div>
                             <div>
                                 <h2 className="text-lg font-medium text-gray-900">Контактная информация</h2>
-
-                                <div className="mt-4">
-                                    <label htmlFor="email-address" className="block text-sm/6 font-medium text-gray-700">
-                                        Электронная почта
-                                    </label>
-                                    <div className="mt-2">
-                                        <input
-                                            id="email-address"
-                                            name="email-address"
-                                            type="email"
-                                            className="block w-full rounded-small bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="mt-10 border-t border-gray-200 pt-10">
-                                <h2 className="text-lg font-medium text-gray-900">Информация о доставке</h2>
 
                                 <div className="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
                                     <div>
@@ -233,6 +254,19 @@ const CartPage = () => {
                                             />
                                         </div>
                                     </div>
+                                    <div className="sm:col-span-2">
+                                        <label htmlFor="email-address" className="block text-sm/6 font-medium text-gray-700">
+                                            Электронная почта
+                                        </label>
+                                        <div className="mt-2">
+                                            <input
+                                                id="email-address"
+                                                name="email-address"
+                                                type="email"
+                                                className="block w-full rounded-small bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                                            />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -248,7 +282,7 @@ const CartPage = () => {
                                         value={selectedDeliveryMethod.id.toString()}
                                         orientation='horizontal' className='mt-4'
                                         name='delivery-method'
-                                        >
+                                    >
                                         {deliveryMethods.map((deliveryMethod, deliveryMethodIdx) => (
                                             <CustomRadio key={deliveryMethod.id} description={deliveryMethod.turnaround} value={deliveryMethod.id.toString()}>
                                                 <div className='flex flex-col gap-1'>
@@ -352,8 +386,10 @@ const CartPage = () => {
                                         radius="sm"
                                         size="lg"
                                         color="primary"
+                                        disabled={isPending}
+                                        isLoading={isPending}
                                     >
-                                        Подтвердить заказ
+                                        {isPending ? 'Отправка...' : 'Подтвердить заказ'}
                                     </Button>
                                 </div>
                             </div>
