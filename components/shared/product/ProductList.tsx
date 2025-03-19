@@ -26,7 +26,7 @@ export default function ProductList({ items }: ProductListProps) {
             items.map((item, index: number) => (
               <BrandCard
                 key={item.id[0]['_']}
-                buttonLabel="предзаказ"
+                buttonLabel="заказать"
                 description={item.general_description[0]['_']}
                 href={`/products/${item.id[0]['_']}`}
                 image={item.images_urls[0].split(',')[0]}
