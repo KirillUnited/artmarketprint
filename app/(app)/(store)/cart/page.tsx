@@ -8,8 +8,6 @@ import Loader from '@/components/ui/Loader';
 import { QuantityControls } from '@/components/ui/AddToBasketButton';
 import { ChevronDownIcon, TrashIcon } from 'lucide-react';
 import { Button } from '@heroui/button';
-import { RadioGroup } from '@heroui/radio';
-import CustomRadio from '@/components/ui/form/CustomRadio';
 import { createProductCheckoutOrder } from '@/lib/actions/order.actions';
 import { toast } from 'sonner';
 import { Form } from '@heroui/form';
@@ -276,6 +274,21 @@ const CartPage = () => {
                                                 className="block w-full rounded-small bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                             />
                                         </div>
+                                    </div>
+                                    <div className="sm:col-span-2">
+                                        <label htmlFor="comment" className="block text-sm/6 font-medium text-gray-700">
+                                            Комментарий
+                                        </label>
+                                        <div className="mt-2">
+                                            <textarea
+                                                placeholder='Напишите комментарий к заказу'
+                                                id="comment"
+                                                name="comment"
+                                                rows={3}
+                                                className="block w-full rounded-small bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                                            />
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
