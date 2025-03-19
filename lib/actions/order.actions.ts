@@ -54,9 +54,9 @@ Email: ${email}
 Страна: ${country}
 Почтовый индекс: ${postalCode}
 
-🚚 Способ доставки: ${deliveryMethod}
+🚚 Способ доставки: ${deliveryMethod === '1' ? 'Самовывоз' : 'Доставка'}
 
-💳 Способ оплаты: ${paymentMethod}
+💳 Способ оплаты: ${paymentMethod === 'erip' ? 'ЕРИП' : 'Кредитная карта'}
 
 🛒 Товары:
 ${items.map((item: any) => `
@@ -65,6 +65,8 @@ ${items.map((item: any) => `
   Количество: ${item.quantity}
   Сумма: ${item.price * item.quantity} BYN
 `).join('\n')}
+
+💰 Сумма заказа: ${items.reduce((acc: number, item: any) => acc + item.price * item.quantity, 0)} BYN
 `;
 
 	return await axios

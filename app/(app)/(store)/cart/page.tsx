@@ -12,6 +12,7 @@ import { RadioGroup } from '@heroui/radio';
 import CustomRadio from '@/components/ui/form/CustomRadio';
 import { createProductCheckoutOrder } from '@/lib/actions/order.actions';
 import { toast } from 'sonner';
+import { Form } from '@heroui/form';
 
 const CartPage = () => {
     const items = useBasketStore((state) => state.items);
@@ -27,9 +28,8 @@ const CartPage = () => {
         { id: 2, name: 'Доставка', title: 'Доставка', turnaround: '1–5 дней', price: 10.00 },
     ]
     const paymentMethods = [
-        { id: 'credit-card', title: 'Credit card' },
-        { id: 'paypal', title: 'PayPal' },
-        { id: 'etransfer', title: 'eTransfer' },
+        { id: 'credit-card', title: 'Кредитная карта' },
+        { id: 'erip', title: 'ЕРИП' },
     ]
 
     const [selectedDeliveryMethod, setSelectedDeliveryMethod] = useState(deliveryMethods[0]);
@@ -102,8 +102,9 @@ const CartPage = () => {
                 <div className="mx-auto max-w-2xl px-4 pb-24 pt-16 sm:px-6 lg:max-w-7xl lg:px-8">
                     <h2 className="sr-only">Оформление заказа</h2>
 
-                    <form className="lg:grid lg:grid-cols-2 lg:gap-x-12 xl:gap-x-16"
+                    <Form className="lg:grid lg:grid-cols-2 lg:gap-x-12 xl:gap-x-16"
                         onSubmit={handleSubmit}
+                        validationBehavior='native'
                     >
                         <div>
                             <div>
@@ -282,6 +283,7 @@ const CartPage = () => {
                                         }}
                                         value={selectedDeliveryMethod.id.toString()}
                                         orientation='horizontal' className='mt-4'
+                                        name='delivery-method'
                                     >
                                         {deliveryMethods.map((deliveryMethod, deliveryMethodIdx) => (
                                             <CustomRadio name={deliveryMethod.title} key={deliveryMethod.id} description={deliveryMethod.turnaround} value={deliveryMethod.id.toString()}>
@@ -301,7 +303,9 @@ const CartPage = () => {
 
                                 <fieldset className="mt-4">
                                     <legend className="sr-only">Способ оплаты</legend>
-                                    <RadioGroup orientation='horizontal' className='gap-4'>
+                                    <RadioGroup orientation='horizontal' className='gap-4'
+                                        name='payment-method'
+                                    >
                                         {paymentMethods.map((paymentMethod) => (
                                             <CustomRadio key={paymentMethod.id} value={paymentMethod.id}>
                                                 <span className="text-sm font-medium text-gray-900">{paymentMethod.title}</span>
@@ -394,7 +398,7 @@ const CartPage = () => {
                                 </div>
                             </div>
                         </div>
-                    </form>
+                    </Form>
                 </div>
             </div>
 
