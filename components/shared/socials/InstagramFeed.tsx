@@ -1,3 +1,4 @@
+'use client'
 import clsx from 'clsx';
 import Script from 'next/script';
 import Link from 'next/link';
@@ -5,11 +6,24 @@ import Link from 'next/link';
 import Section, {SectionDescription, SectionHeading, SectionSubtitle, SectionTitle} from '@/components/layout/Section';
 import {SectionProps} from '@/types';
 
+import styles from './style.module.css';
+import { useEffect, useState } from 'react';
+
 export default function InstagramFeed({className}: React.HTMLAttributes<HTMLDivElement>) {
+    const [isLoaded, setIsLoaded] = useState(false);
+    
+    useEffect(() => {
+        const handleScriptLoad = () => {
+            setIsLoaded(true);
+        };
+        window.addEventListener('elfsight:widget:loaded', handleScriptLoad);
+        return () => window.removeEventListener('elfsight:widget:loaded', handleScriptLoad);
+    }, []);
      return (
         <div className={
             clsx(
 				'relative after:absolute after:z-[99999] after:left-0 after:bottom-0 after:w-full after:block after:bg-background after:h-12',
+                styles.instagramFeed,
                 className
             )
         }>
