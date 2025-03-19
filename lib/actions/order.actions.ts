@@ -38,6 +38,7 @@ export async function createProductCheckoutOrder(formData: FormData): Promise<an
 	const items = JSON.parse(formData.get('items') as string);
 	const deliveryMethod = formData.get('delivery-method') as string;
 	const paymentMethod = formData.get('payment-method') as string;
+	const comment = formData.get('comment') as string;
 
 	const message = `
 🛍️ Новый заказ товаров:
@@ -67,6 +68,8 @@ ${items.map((item: any) => `
 `).join('\n')}
 
 💰 Сумма заказа: ${(items.reduce((acc: number, item: any) => acc + item.price * item.quantity, 0) + (deliveryMethod === '1' ? 0 : 10))} BYN
+
+💬 Комментарий: ${comment}
 `;
 
 	return await axios
