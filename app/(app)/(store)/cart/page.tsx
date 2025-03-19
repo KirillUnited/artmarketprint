@@ -286,13 +286,13 @@ const CartPage = () => {
                                 <h3 className="sr-only">Товары в корзине</h3>
                                 <ul className="divide-y divide-gray-200">
                                     {isLoading ? <Loader /> : items.map((product) => (
-                                        <li key={product.id} className="flex px-4 py-6 sm:px-6">
+                                        <li key={product.id} className="flex gap-4 px-4 py-6 sm:px-6">
                                             <div className="shrink-0">
                                                 <Image as={NextImage} src={product.image} alt={product.name} width={64} height={64} />
                                             </div>
 
-                                            <div className="ml-6 flex flex-1 flex-col">
-                                                <div className="flex">
+                                            <div className="flex flex-1 flex-col">
+                                                <div className="flex gap-2">
                                                     <div className="min-w-0 flex-1">
                                                         <h4 className="text-sm">
                                                             <div className="font-medium text-gray-700 hover:text-gray-800">
@@ -302,10 +302,10 @@ const CartPage = () => {
                                                         <p className="mt-1 text-sm text-gray-500 line-clamp-2">{product.description}</p>
                                                     </div>
 
-                                                    <div className="ml-4 flow-root shrink-0">
+                                                    <div className="flow-root">
                                                         <button
                                                             type="button"
-                                                            className="-m-2.5 flex items-center justify-center bg-white p-2.5 text-gray-400 hover:text-gray-500"
+                                                            className="flex items-center justify-center bg-white p-2.5 text-gray-400 hover:text-gray-500"
                                                             onClick={() => removeItemCompletely(product.id)}
                                                         >
                                                             <span className="sr-only">Удалить</span>
