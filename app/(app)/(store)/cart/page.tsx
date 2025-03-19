@@ -8,6 +8,28 @@ import Loader from '@/components/ui/Loader';
 import { QuantityControls } from '@/components/ui/AddToBasketButton';
 import { ChevronDownIcon, TrashIcon } from 'lucide-react';
 import { Button } from '@heroui/button';
+import { Radio, RadioGroup } from '@heroui/radio';
+import clsx from 'clsx';
+
+export const CustomRadio = (props: { children: React.ReactNode } & React.ComponentProps<typeof Radio>) => {
+    const { children, ...otherProps } = props;
+
+    return (
+        <Radio
+            {...otherProps}
+            classNames={{
+                base: clsx(
+                    "inline-flex flex-1 m-0 bg-content1 hover:bg-content2 items-center justify-between",
+                    "flex-row-reverse max-w-[300px] cursor-pointer rounded-small gap-4 p-4 border-1 border-gray-200",
+                    "data-[selected=true]:border-primary",
+                ),
+                description: 'mt-2'
+            }}
+        >
+            {children}
+        </Radio>
+    );
+};
 
 const CartPage = () => {
     const items = useBasketStore((state) => state.items);
@@ -19,8 +41,8 @@ const CartPage = () => {
     const [isLoading, setIsLoading] = useState(true);
 
     const deliveryMethods = [
-        { id: 1, title: 'Standard', turnaround: '4–10 business days', price: 5.00 },
-        { id: 2, title: 'Express', turnaround: '2–5 business days', price: 16.00 },
+        { id: 1, title: 'Самовывоз', turnaround: 'Бесплатно', price: 0 },
+        { id: 2, title: 'Доставка', turnaround: '1–5 дней', price: 10.00 },
     ]
     const paymentMethods = [
         { id: 'credit-card', title: 'Credit card' },
@@ -232,6 +254,29 @@ const CartPage = () => {
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+
+                            {/* Delivery */}
+                            <div className="mt-10 border-t border-gray-200 pt-10">
+                                <fieldset>
+                                    <legend className="text-lg font-medium text-gray-900">Способ доставки</legend>
+                                    <RadioGroup
+                                        onChange={(e) => {
+                                            const method = deliveryMethods.find(method => method.id.toString() === e.target.value);
+                                            if (method) setSelectedDeliveryMethod(method);
+                                        }}
+                                        value={selectedDeliveryMethod.id.toString()}
+                                        orientation='horizontal' className='mt-4'>
+                                        {deliveryMethods.map((deliveryMethod, deliveryMethodIdx) => (
+                                            <CustomRadio key={deliveryMethod.id} description={deliveryMethod.turnaround} value={deliveryMethod.id.toString()}>
+                                                <div className='flex flex-col gap-1'>
+                                                    <span className="text-sm font-semibold text-gray-900">{deliveryMethod.title}</span>
+                                                    <span className="text-sm font-semibold text-gray-900">{deliveryMethod.price} р.</span>
+                                                </div>
+                                            </CustomRadio>
+                                        ))}
+                                    </RadioGroup>
+                                </fieldset>
                             </div>
 
                             {/* Payment */}
