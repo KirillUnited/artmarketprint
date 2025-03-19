@@ -23,8 +23,8 @@ const CartPage = () => {
     const [isLoading, setIsLoading] = useState(true);
 
     const deliveryMethods = [
-        { id: 1, title: 'Самовывоз', turnaround: 'Бесплатно', price: 0 },
-        { id: 2, title: 'Доставка', turnaround: '1–5 дней', price: 10.00 },
+        { id: 1, name: 'Самовывоз', title: 'Самовывоз', turnaround: 'Бесплатно', price: 0 },
+        { id: 2, name: 'Доставка', title: 'Доставка', turnaround: '1–5 дней', price: 10.00 },
     ]
     const paymentMethods = [
         { id: 'credit-card', title: 'Credit card' },
@@ -44,7 +44,8 @@ const CartPage = () => {
             id: item.id,
             name: item.name,
             price: item.price,
-            quantity: item.quantity
+            quantity: item.quantity,
+            total: item.price * item.quantity
         }));
         formData.append('items', JSON.stringify(cartItems));
 
@@ -281,10 +282,9 @@ const CartPage = () => {
                                         }}
                                         value={selectedDeliveryMethod.id.toString()}
                                         orientation='horizontal' className='mt-4'
-                                        name='delivery-method'
                                     >
                                         {deliveryMethods.map((deliveryMethod, deliveryMethodIdx) => (
-                                            <CustomRadio key={deliveryMethod.id} description={deliveryMethod.turnaround} value={deliveryMethod.id.toString()}>
+                                            <CustomRadio name={deliveryMethod.title} key={deliveryMethod.id} description={deliveryMethod.turnaround} value={deliveryMethod.id.toString()}>
                                                 <div className='flex flex-col gap-1'>
                                                     <span className="text-sm font-semibold text-gray-900">{deliveryMethod.title}</span>
                                                     <span className="text-sm font-semibold text-gray-900">{deliveryMethod.price} р.</span>
