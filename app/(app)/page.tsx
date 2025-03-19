@@ -16,12 +16,12 @@ export default async function Home() {
 	return (
 		<>
 			<PageBuilder content={data?.homePage?.content} />
-			<Script
+			{/* <Script
 			async
 			src="https://static.elfsight.com/platform/platform.js"
 			strategy="lazyOnload"
 			/>
-			<div data-elfsight-app-lazy className="elfsight-app-7f56de0f-7490-4845-801c-cf32d1a5aeb1" />
+			<div data-elfsight-app-lazy className="elfsight-app-7f56de0f-7490-4845-801c-cf32d1a5aeb1" /> */}
 		</>
 	);
 }
