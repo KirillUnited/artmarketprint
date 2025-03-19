@@ -2,12 +2,17 @@
 import Section, { SectionHeading, SectionTitle } from '@/components/layout/Section';
 import useBasketStore from '@/store/store';
 import { Image } from '@heroui/image';
-import React, { useEffect, useState } from 'react';
+import React, { FormEvent, useEffect, useState } from 'react';
 import NextImage from 'next/image';
 import Loader from '@/components/ui/Loader';
 import { QuantityControls } from '@/components/ui/AddToBasketButton';
 import { ChevronDownIcon, TrashIcon } from 'lucide-react';
 import { Button } from '@heroui/button';
+import { RadioGroup } from '@heroui/radio';
+import CustomRadio from '@/components/ui/form/CustomRadio';
+import { createProductCheckoutOrder } from '@/lib/actions/order.actions';
+import { toast } from 'sonner';
+import { Form } from '@heroui/form';
 
 const CartPage = () => {
     const items = useBasketStore((state) => state.items);
@@ -19,16 +24,51 @@ const CartPage = () => {
     const [isLoading, setIsLoading] = useState(true);
 
     const deliveryMethods = [
-        { id: 1, title: 'Standard', turnaround: '4–10 business days', price: 5.00 },
-        { id: 2, title: 'Express', turnaround: '2–5 business days', price: 16.00 },
+        { id: 1, name: 'Самовывоз', title: 'Самовывоз', turnaround: 'Бесплатно', price: 0 },
+        { id: 2, name: 'Доставка', title: 'Доставка', turnaround: '1–5 дней', price: 10.00 },
     ]
     const paymentMethods = [
-        { id: 'credit-card', title: 'Credit card' },
-        { id: 'paypal', title: 'PayPal' },
-        { id: 'etransfer', title: 'eTransfer' },
+        { id: 'credit-card', title: 'Кредитная карта' },
+        { id: 'erip', title: 'ЕРИП' },
     ]
 
-    const [selectedDeliveryMethod, setSelectedDeliveryMethod] = useState(deliveryMethods[0])
+    const [selectedDeliveryMethod, setSelectedDeliveryMethod] = useState(deliveryMethods[0]);
+    const [isPending, setIsPending] = useState(false);
+
+    async function handleSubmit(event: FormEvent<HTMLFormElement>): Promise<void> {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+
+        // Add cart items to form data
+        const cartItems = items.map(item => ({
+            id: item.id,
+            name: item.name,
+            price: item.price,
+            quantity: item.quantity,
+            total: item.price * item.quantity
+        }));
+        formData.append('items', JSON.stringify(cartItems));
+
+        event.currentTarget.reset();
+        setIsPending(true);
+
+        try {
+            const result = await createProductCheckoutOrder(formData);
+
+            if (result.ok) {
+                setIsPending(false);
+                toast.success('Заявка отправлена', {
+                    description: `Заказ от ${new Date().toLocaleString()}. Спасибо за заявку! Мы свяжемся с Вами в ближайшее время.`,
+                })
+            }
+        } catch (error) {
+            console.error(error);
+            setIsPending(false);
+            toast.error('Ошибка отправки заказа', {
+                description: 'Пожалуйста, попробуйте еще раз позже.',
+            });
+        }
+    }
 
     // This is a workaround to prevent the component from rendering on the server
     useEffect(() => {
@@ -62,28 +102,13 @@ const CartPage = () => {
                 <div className="mx-auto max-w-2xl px-4 pb-24 pt-16 sm:px-6 lg:max-w-7xl lg:px-8">
                     <h2 className="sr-only">Оформление заказа</h2>
 
-                    <form className="lg:grid lg:grid-cols-2 lg:gap-x-12 xl:gap-x-16">
+                    <Form className="lg:grid lg:grid-cols-2 lg:gap-x-12 xl:gap-x-16"
+                        onSubmit={handleSubmit}
+                        validationBehavior='native'
+                    >
                         <div>
                             <div>
                                 <h2 className="text-lg font-medium text-gray-900">Контактная информация</h2>
-
-                                <div className="mt-4">
-                                    <label htmlFor="email-address" className="block text-sm/6 font-medium text-gray-700">
-                                        Электронная почта
-                                    </label>
-                                    <div className="mt-2">
-                                        <input
-                                            id="email-address"
-                                            name="email-address"
-                                            type="email"
-                                            className="block w-full rounded-small bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="mt-10 border-t border-gray-200 pt-10">
-                                <h2 className="text-lg font-medium text-gray-900">Информация о доставке</h2>
 
                                 <div className="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
                                     <div>
@@ -231,7 +256,45 @@ const CartPage = () => {
                                             />
                                         </div>
                                     </div>
+                                    <div className="sm:col-span-2">
+                                        <label htmlFor="email-address" className="block text-sm/6 font-medium text-gray-700">
+                                            Электронная почта
+                                        </label>
+                                        <div className="mt-2">
+                                            <input
+                                                id="email-address"
+                                                name="email-address"
+                                                type="email"
+                                                className="block w-full rounded-small bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                                            />
+                                        </div>
+                                    </div>
                                 </div>
+                            </div>
+
+                            {/* Delivery */}
+                            <div className="mt-10 border-t border-gray-200 pt-10">
+                                <fieldset>
+                                    <legend className="text-lg font-medium text-gray-900">Способ доставки</legend>
+                                    <RadioGroup
+                                        onChange={(e) => {
+                                            const method = deliveryMethods.find(method => method.id.toString() === e.target.value);
+                                            if (method) setSelectedDeliveryMethod(method);
+                                        }}
+                                        value={selectedDeliveryMethod.id.toString()}
+                                        orientation='horizontal' className='mt-4'
+                                        name='delivery-method'
+                                    >
+                                        {deliveryMethods.map((deliveryMethod, deliveryMethodIdx) => (
+                                            <CustomRadio name={deliveryMethod.title} key={deliveryMethod.id} description={deliveryMethod.turnaround} value={deliveryMethod.id.toString()}>
+                                                <div className='flex flex-col gap-1'>
+                                                    <span className="text-sm font-semibold text-gray-900">{deliveryMethod.title}</span>
+                                                    <span className="text-sm font-semibold text-gray-900">{deliveryMethod.price} р.</span>
+                                                </div>
+                                            </CustomRadio>
+                                        ))}
+                                    </RadioGroup>
+                                </fieldset>
                             </div>
 
                             {/* Payment */}
@@ -240,22 +303,15 @@ const CartPage = () => {
 
                                 <fieldset className="mt-4">
                                     <legend className="sr-only">Способ оплаты</legend>
-                                    <div className="space-y-4 sm:flex sm:items-center sm:space-x-10 sm:space-y-0">
-                                        {paymentMethods.map((paymentMethod, paymentMethodIdx) => (
-                                            <div key={paymentMethod.id} className="flex items-center">
-                                                <input
-                                                    defaultChecked={paymentMethodIdx === 0}
-                                                    id={paymentMethod.id}
-                                                    name="payment-type"
-                                                    type="radio"
-                                                    className="relative size-4 appearance-none rounded-full border border-gray-300 bg-white before:absolute before:inset-1 before:rounded-full before:bg-white checked:border-indigo-600 checked:bg-indigo-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:before:bg-gray-400 forced-colors:appearance-auto forced-colors:before:hidden [&:not(:checked)]:before:hidden"
-                                                />
-                                                <label htmlFor={paymentMethod.id} className="ml-3 block text-sm/6 font-medium text-gray-700">
-                                                    {paymentMethod.title}
-                                                </label>
-                                            </div>
+                                    <RadioGroup orientation='horizontal' className='gap-4'
+                                        name='payment-method'
+                                    >
+                                        {paymentMethods.map((paymentMethod) => (
+                                            <CustomRadio key={paymentMethod.id} value={paymentMethod.id}>
+                                                <span className="text-sm font-medium text-gray-900">{paymentMethod.title}</span>
+                                            </CustomRadio>
                                         ))}
-                                    </div>
+                                    </RadioGroup>
                                 </fieldset>
                             </div>
                         </div>
@@ -268,13 +324,13 @@ const CartPage = () => {
                                 <h3 className="sr-only">Товары в корзине</h3>
                                 <ul className="divide-y divide-gray-200">
                                     {isLoading ? <Loader /> : items.map((product) => (
-                                        <li key={product.id} className="flex px-4 py-6 sm:px-6">
+                                        <li key={product.id} className="flex gap-4 px-4 py-6 sm:px-6">
                                             <div className="shrink-0">
                                                 <Image as={NextImage} src={product.image} alt={product.name} width={64} height={64} />
                                             </div>
 
-                                            <div className="ml-6 flex flex-1 flex-col">
-                                                <div className="flex">
+                                            <div className="flex flex-1 flex-col">
+                                                <div className="flex gap-2">
                                                     <div className="min-w-0 flex-1">
                                                         <h4 className="text-sm">
                                                             <div className="font-medium text-gray-700 hover:text-gray-800">
@@ -284,10 +340,10 @@ const CartPage = () => {
                                                         <p className="mt-1 text-sm text-gray-500 line-clamp-2">{product.description}</p>
                                                     </div>
 
-                                                    <div className="ml-4 flow-root shrink-0">
+                                                    <div className="flow-root">
                                                         <button
                                                             type="button"
-                                                            className="-m-2.5 flex items-center justify-center bg-white p-2.5 text-gray-400 hover:text-gray-500"
+                                                            className="flex items-center justify-center bg-white p-2.5 text-gray-400 hover:text-gray-500"
                                                             onClick={() => removeItemCompletely(product.id)}
                                                         >
                                                             <span className="sr-only">Удалить</span>
@@ -334,13 +390,15 @@ const CartPage = () => {
                                         radius="sm"
                                         size="lg"
                                         color="primary"
+                                        disabled={isPending}
+                                        isLoading={isPending}
                                     >
-                                        Подтвердить заказ
+                                        {isPending ? 'Отправка...' : 'Подтвердить заказ'}
                                     </Button>
                                 </div>
                             </div>
                         </div>
-                    </form>
+                    </Form>
                 </div>
             </div>
 

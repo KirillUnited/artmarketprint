@@ -36,6 +36,8 @@ export async function createProductCheckoutOrder(formData: FormData): Promise<an
 	const postalCode = formData.get('postal-code') as string;
 	const phone = formData.get('phone') as string;
 	const items = JSON.parse(formData.get('items') as string);
+	const deliveryMethod = formData.get('delivery-method') as string;
+	const paymentMethod = formData.get('payment-method') as string;
 
 	const message = `
 🛍️ Новый заказ товаров:
@@ -52,12 +54,19 @@ Email: ${email}
 Страна: ${country}
 Почтовый индекс: ${postalCode}
 
+🚚 Способ доставки: ${deliveryMethod === '1' ? 'Самовывоз' : 'Доставка'}
+
+💳 Способ оплаты: ${paymentMethod === 'erip' ? 'ЕРИП' : 'Кредитная карта'}
+
 🛒 Товары:
 ${items.map((item: any) => `
 - ${item.name}
   Цена: ${item.price} BYN
   Количество: ${item.quantity}
+  Сумма: ${item.price * item.quantity} BYN
 `).join('\n')}
+
+💰 Сумма заказа: ${items.reduce((acc: number, item: any) => acc + item.price * item.quantity, 0)} BYN
 `;
 
 	return await axios
