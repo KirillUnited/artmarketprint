@@ -61,13 +61,12 @@ const ViewBasketButton: React.FC = () => (
 );
 
 const AddToBasketButton: React.FC<AddToBasketButtonProps> = ({ product }) => {
-    const { addItem, removeItem, getItemCount, items } = useBasketStore();
+    const { addItem, removeItem, getItemCount } = useBasketStore();
     const [isClient, setIsClient] = React.useState(false);
     
     const productData = extractProductData(product);
     const itemCount = getItemCount(productData.id);
 
-    console.log(items);
     useEffect(() => {
         setIsClient(true);
     }, []);
