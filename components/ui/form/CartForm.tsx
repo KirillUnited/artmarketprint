@@ -37,6 +37,35 @@ export default function CartForm() {
 
     if (!isClient) return null;
 
+    // Handle PDF file upload
+    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (file) {
+            setIsLoading(true); // Show loading UI
+
+            if (file.size > 5 * 1024 * 1024) { // 5MB limit
+                toast.error('Ошибка загрузки файла', {
+                    description: 'Размер файла не должен превышать 5MB',
+                });
+                setIsLoading(false); // Hide loading UI
+                return;
+            }
+            if (file.type !== 'application/pdf') {
+                toast.error('Ошибка загрузки файла', {
+                    description: 'Поддерживается только формат PDF',
+                });
+                setIsLoading(false); // Hide loading UI
+                return;
+            }
+
+            // Simulate file upload process
+            setTimeout(() => {
+                setIsLoading(false); // Hide loading UI after upload
+                toast.success('Файл успешно загружен');
+            }, 2000); // Simulate 2 seconds upload time
+        }
+    };
+
     async function handleSubmit(event: FormEvent<HTMLFormElement>): Promise<void> {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
@@ -50,23 +79,6 @@ export default function CartForm() {
             total: item.price * item.quantity
         }));
         formData.append('items', JSON.stringify(cartItems));
-
-        // Handle PDF file upload
-        const pdfFile = formData.get('requisites-pdf') as File;
-        if (pdfFile && pdfFile.size > 0) {
-            if (pdfFile.size > 5 * 1024 * 1024) { // 5MB limit
-                toast.error('Ошибка загрузки файла', {
-                    description: 'Размер файла не должен превышать 5MB',
-                });
-                return;
-            }
-            if (pdfFile.type !== 'application/pdf') {
-                toast.error('Ошибка загрузки файла', {
-                    description: 'Поддерживается только формат PDF',
-                });
-                return;
-            }
-        }
 
         event.currentTarget.reset();
         setIsPending(true);
@@ -262,8 +274,9 @@ export default function CartForm() {
                                     id="requisites-pdf"
                                     name="requisites-pdf"
                                     type="file"
-                                    accept=".pdf"
+                                    accept=".pdf"   
                                     required
+                                    onChange={handleFileChange}
                                     className="block w-full rounded-small bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                 />
                             </div>
