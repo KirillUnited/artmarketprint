@@ -8,6 +8,7 @@ import { Input } from '@heroui/input';
 import { MinusIcon, PlusIcon, ShoppingCartIcon } from 'lucide-react';
 import React, { useEffect } from 'react';
 import { getCTAButton } from './BrandButton';
+import { toast } from 'sonner';
 
 // Types
 interface QuantityControlsProps {
@@ -73,8 +74,14 @@ const AddToBasketButton: React.FC<AddToBasketButtonProps> = ({ product }) => {
 
     if (!isClient) return null;
 
-    const handleAddItem = () => addItem(productData);
-    const handleRemoveItem = () => removeItem(productData.id);
+    const handleAddItem = () => {
+        addItem(productData)
+        toast.success('Товар добавлен в корзину')
+    };
+    const handleRemoveItem = () => {
+        removeItem(productData.id)
+        toast.info('Товар удален из корзины')
+    };
 
     return (
         <div className="flex flex-wrap gap-4 w-full">
