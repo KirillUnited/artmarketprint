@@ -108,9 +108,9 @@ const CartPage = () => {
                         onSubmit={handleSubmit}
                         validationBehavior='native'
                     >
-                        <div>
-                            <div>
-                                <h2 className="text-lg font-medium text-gray-900">Контактная информация</h2>
+                        <div className='w-full'>
+                            <fieldset>
+                                <legend className="text-lg font-medium text-gray-900">Контактная информация</legend>
 
                                 <div className="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
                                     <div>
@@ -220,34 +220,6 @@ const CartPage = () => {
                                         </div>
                                     </div>
 
-                                    <div>
-                                        <label htmlFor="region" className="block text-sm/6 font-medium text-gray-700">
-                                            Область / Регион
-                                        </label>
-                                        <div className="mt-2">
-                                            <input
-                                                id="region"
-                                                name="region"
-                                                type="text"
-                                                className="block w-full rounded-small bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                                            />
-                                        </div>
-                                    </div>
-
-                                    <div>
-                                        <label htmlFor="postal-code" className="block text-sm/6 font-medium text-gray-700">
-                                            Почтовый индекс
-                                        </label>
-                                        <div className="mt-2">
-                                            <input
-                                                id="postal-code"
-                                                name="postal-code"
-                                                type="text"
-                                                className="block w-full rounded-small bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                                            />
-                                        </div>
-                                    </div>
-
                                     <div className="sm:col-span-2">
                                         <label htmlFor="phone" className="block text-sm/6 font-medium text-gray-700">
                                             Телефон
@@ -262,7 +234,29 @@ const CartPage = () => {
                                             />
                                         </div>
                                     </div>
-                                    <div className="sm:col-span-2">
+
+                                </div>
+                            </fieldset>
+
+                            {/* Payment */}
+                            <div className="mt-10 border-t border-gray-200 pt-10">
+                                <fieldset>
+                                    <legend className="text-lg font-medium text-gray-900">Оплата</legend>
+                                    <div className="sm:col-span-2 mt-4">
+                                        <label htmlFor="requisites" className="block text-sm/6 font-medium text-gray-700">
+                                            Реквизиты
+                                        </label>
+                                        <div className="mt-2">
+                                            <input
+                                                id="requisites"
+                                                name="requisites"
+                                                type="text"
+                                                required
+                                                className="block w-full rounded-small bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="sm:col-span-2 mt-4">
                                         <label htmlFor="email-address" className="block text-sm/6 font-medium text-gray-700">
                                             Электронная почта
                                         </label>
@@ -271,11 +265,12 @@ const CartPage = () => {
                                                 id="email-address"
                                                 name="email-address"
                                                 type="email"
+                                                required
                                                 className="block w-full rounded-small bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                             />
                                         </div>
                                     </div>
-                                    <div className="sm:col-span-2">
+                                    <div className="sm:col-span-2 mt-4">
                                         <label htmlFor="comment" className="block text-sm/6 font-medium text-gray-700">
                                             Комментарий
                                         </label>
@@ -284,57 +279,15 @@ const CartPage = () => {
                                                 placeholder='Напишите комментарий к заказу'
                                                 id="comment"
                                                 name="comment"
-                                                rows={3}
+                                                rows={5}
                                                 className="block w-full rounded-small bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                             />
                                         </div>
-
+    
                                     </div>
-                                </div>
+    
+                                </fieldset>
                             </div>
-
-                            {/* Delivery */}
-                            {/* <div className="mt-10 border-t border-gray-200 pt-10">
-                                <fieldset>
-                                    <legend className="text-lg font-medium text-gray-900">Способ доставки</legend>
-                                    <RadioGroup
-                                        onChange={(e) => {
-                                            const method = deliveryMethods.find(method => method.id.toString() === e.target.value);
-                                            if (method) setSelectedDeliveryMethod(method);
-                                        }}
-                                        value={selectedDeliveryMethod.id.toString()}
-                                        orientation='horizontal' className='mt-4'
-                                        name='delivery-method'
-                                    >
-                                        {deliveryMethods.map((deliveryMethod, deliveryMethodIdx) => (
-                                            <CustomRadio name={deliveryMethod.title} key={deliveryMethod.id} description={deliveryMethod.turnaround} value={deliveryMethod.id.toString()}>
-                                                <div className='flex flex-col gap-1'>
-                                                    <span className="text-sm font-semibold text-gray-900">{deliveryMethod.title}</span>
-                                                    <span className="text-sm font-semibold text-gray-900">{deliveryMethod.price} р.</span>
-                                                </div>
-                                            </CustomRadio>
-                                        ))}
-                                    </RadioGroup>
-                                </fieldset>
-                            </div> */}
-
-                            {/* Payment */}
-                            {/* <div className="mt-10 border-t border-gray-200 pt-10">
-                                <h2 className="text-lg font-medium text-gray-900">Оплата</h2>
-
-                                <fieldset className="mt-4">
-                                    <legend className="sr-only">Способ оплаты</legend>
-                                    <RadioGroup orientation='horizontal' className='gap-4'
-                                        name='payment-method'
-                                    >
-                                        {paymentMethods.map((paymentMethod) => (
-                                            <CustomRadio key={paymentMethod.id} value={paymentMethod.id}>
-                                                <span className="text-sm font-medium text-gray-900">{paymentMethod.title}</span>
-                                            </CustomRadio>
-                                        ))}
-                                    </RadioGroup>
-                                </fieldset>
-                            </div> */}
                         </div>
 
                         {/* Order summary */}
