@@ -36,8 +36,7 @@ export async function createProductCheckoutOrder(formData: FormData): Promise<an
 	const postalCode = formData.get('postal-code') as string;
 	const phone = formData.get('phone') as string;
 	const items = JSON.parse(formData.get('items') as string);
-	const deliveryMethod = formData.get('delivery-method') as string;
-	const paymentMethod = formData.get('payment-method') as string;
+	const requisites = formData.get('requisites') as string;
 	const comment = formData.get('comment') as string;
 
 	const message = `
@@ -55,19 +54,17 @@ Email: ${email}
 Страна: ${country}
 Почтовый индекс: ${postalCode}
 
-🚚 Способ доставки: ${deliveryMethod === '1' ? 'Самовывоз' : 'Доставка'}
-
-💳 Способ оплаты: ${paymentMethod === 'erip' ? 'ЕРИП' : 'Кредитная карта'}
+💳 Реквизиты: ${requisites}
 
 🛒 Товары:
 ${items.map((item: any) => `
 - ${item.name}
   Цена: ${item.price} BYN
   Количество: ${item.quantity}
-  Сумма: ${item.price * item.quantity} BYN
+  Сумма: ${(item.price * item.quantity).toFixed(2)} BYN
 `).join('\n')}
 
-💰 Сумма заказа: ${(items.reduce((acc: number, item: any) => acc + item.price * item.quantity, 0) + (deliveryMethod === '1' ? 0 : 10))} BYN
+💰 Сумма заказа: ${(items.reduce((acc: number, item: any) => acc + item.price * item.quantity, 0)).toFixed(2)} BYN
 
 💬 Комментарий: ${comment}
 `;
