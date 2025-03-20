@@ -49,57 +49,64 @@ export const FilterGroup = ({ sortOrder, selectedCategory, categories, onFilterC
     </Form>
 
   )
+};
+export const FilterButton = ({ onOpen }: any) => {
+  return (
+    <Button className='md:hidden border-1' variant='light' radius='sm' onPress={onOpen}>
+      <span className='text-sm'>Фильтры</span>
+      <FilterIcon size={16} />
+    </Button>
+  )
+};
+export const FilterDrawer = ({ isOpen, onOpenChange, onFilterChange, categories, sortOrder, selectedCategory }: any) => {
+  return (
+    <Drawer isOpen={isOpen} onOpenChange={onOpenChange} radius='none'>
+      <DrawerContent>
+        {(onClose) => (
+          <>
+            <DrawerHeader className="flex flex-col gap-1">Фильтры</DrawerHeader>
+            <Form className='w-full items-stretch'>
+              <DrawerBody>
+                <Accordion aria-label='Select category' selectionMode='multiple' title='Категории'>
+                  <AccordionItem classNames={
+                    {
+                      title: 'font-semibold',
+                      trigger: 'font-semibold',
+                    }
+                  } title={'Категории'}>
+                    {CatFilter({ sortOrder, onFilterChange, categories })}
+                  </AccordionItem>
+                  <AccordionItem classNames={
+                    {
+                      title: 'font-semibold',
+                      trigger: 'font-semibold',
+                    }
+                  } title={'Цены'}>
+                    {SortFilter({ sortOrder, selectedCategory, onFilterChange })}
+                  </AccordionItem>
+                </Accordion>
+              </DrawerBody>
+              <DrawerFooter>
+                <Button color="danger" radius='sm' variant="light" type='reset' onPress={() => onFilterChange('asc', '')}>
+                  Сбросить
+                </Button>
+                <Button color="primary" radius='sm' variant="solid" onPress={onClose}>
+                  Применить
+                </Button>
+              </DrawerFooter>
+            </Form>
+          </>
+        )}
+      </DrawerContent>
+    </Drawer>
+  )
 }
 
 export default function ProductsFilter({ sortOrder, selectedCategory, onFilterChange, categories }: any) {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
-
   return (
     <>
       <div className='flex flex-col gap-4 sticky top-20 z-30 bg-background'>
         <FilterGroup categories={categories} selectedCategory={selectedCategory} sortOrder={sortOrder} onFilterChange={onFilterChange} />
-        <Button isIconOnly className='md:hidden border-1' variant='bordered' radius='sm' onPress={onOpen}>
-          <FilterIcon />
-        </Button>
-        <Drawer isOpen={isOpen} onOpenChange={onOpenChange}>
-          <DrawerContent>
-            {(onClose) => (
-              <>
-                <DrawerHeader className="flex flex-col gap-1">Фильтры</DrawerHeader>
-                <Form className='w-full items-stretch'>
-                  <DrawerBody>
-                    <Accordion aria-label='Select category' selectionMode='multiple' title='Категории'>
-                      <AccordionItem classNames={
-                        {
-                          title: 'font-semibold',
-                          trigger: 'font-semibold',
-                        }
-                      } title={'Категории'}>
-                        {CatFilter({ sortOrder, onFilterChange, categories })}
-                      </AccordionItem>
-                      <AccordionItem classNames={
-                        {
-                          title: 'font-semibold',
-                          trigger: 'font-semibold',
-                        }
-                      } title={'Цены'}>
-                        {SortFilter({ sortOrder, selectedCategory, onFilterChange })}
-                      </AccordionItem>
-                    </Accordion>
-                  </DrawerBody>
-                  <DrawerFooter>
-                    <Button color="danger" radius='sm' variant="light" type='reset' onPress={() => onFilterChange('asc', '')}>
-                      Сбросить
-                    </Button>
-                    <Button color="primary" radius='sm' variant="solid" onPress={onClose}>
-                      Применить
-                    </Button>
-                  </DrawerFooter>
-                </Form>
-              </>
-            )}
-          </DrawerContent>
-        </Drawer>
       </div>
 
     </>
