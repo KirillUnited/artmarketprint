@@ -3,11 +3,12 @@ import React from 'react'
 import { AnimatePresence, motion } from 'framer-motion';
 
 import ProductThumb from './ProductThumb';
-import ProductsFilter, { getCategory } from './ProductsFilter'
+import ProductsFilter, { FilterButton, FilterDrawer, getCategory } from './ProductsFilter'
 
 import Pagination from '@/components/ui/Pagination'
 import ProductSearchForm from './ProductSearchForm';
 import clsx from 'clsx';
+import { useDisclosure } from '@heroui/modal';
 
 const ITEMS_PER_PAGE = 8;
 
@@ -15,6 +16,7 @@ export default function ProductsView({ products, categories, totalItemsView = IT
     const [sortOrder, setSortOrder] = React.useState('asc');
     const [selectedCategory, setSelectedCategory] = React.useState('');
     const [currentPage, setCurrentPage] = React.useState(1);
+    const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const handleFilterChange = (newSortOrder: string, newCategory: string) => {
         setSortOrder(newSortOrder);
         setSelectedCategory(newCategory);
@@ -44,7 +46,11 @@ export default function ProductsView({ products, categories, totalItemsView = IT
                         onFilterChange={handleFilterChange} />
                 }
                 <div className='flex flex-col gap-8'>
-                    <ProductSearchForm />
+                    <div className='flex flex-wrap gap-4 w-full'>
+                        <FilterButton onOpen={onOpen} />
+                        <FilterDrawer isOpen={isOpen} onOpenChange={onOpenChange} onFilterChange={handleFilterChange} categories={categories} sortOrder={sortOrder} selectedCategory={selectedCategory} />
+                        <ProductSearchForm />
+                    </div>
                     {
                         paginatedItems.length ?
                             <ul className="grid grid-cols-[var(--grid-template-columns)] gap-8">

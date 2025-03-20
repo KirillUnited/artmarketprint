@@ -26,10 +26,6 @@ const CartPage = () => {
         { id: 1, name: 'Самовывоз', title: 'Самовывоз', turnaround: 'Бесплатно', price: 0 },
         { id: 2, name: 'Доставка', title: 'Доставка', turnaround: '1–5 дней', price: 10.00 },
     ]
-    const paymentMethods = [
-        { id: 'credit-card', title: 'Кредитная карта' },
-        { id: 'erip', title: 'ЕРИП' },
-    ]
 
     const [selectedDeliveryMethod, setSelectedDeliveryMethod] = useState(deliveryMethods[0]);
     const [isPending, setIsPending] = useState(false);
@@ -47,6 +43,23 @@ const CartPage = () => {
             total: item.price * item.quantity
         }));
         formData.append('items', JSON.stringify(cartItems));
+
+        // Handle PDF file upload
+        const pdfFile = formData.get('requisites-pdf') as File;
+        if (pdfFile && pdfFile.size > 0) {
+            if (pdfFile.size > 5 * 1024 * 1024) { // 5MB limit
+                toast.error('Ошибка загрузки файла', {
+                    description: 'Размер файла не должен превышать 5MB',
+                });
+                return;
+            }
+            if (pdfFile.type !== 'application/pdf') {
+                toast.error('Ошибка загрузки файла', {
+                    description: 'Поддерживается только формат PDF',
+                });
+                return;
+            }
+        }
 
         event.currentTarget.reset();
         setIsPending(true);
@@ -251,10 +264,26 @@ const CartPage = () => {
                                                 id="requisites"
                                                 name="requisites"
                                                 type="text"
-                                                required
                                                 className="block w-full rounded-small bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                             />
                                         </div>
+                                    </div>
+                                    <div className="sm:col-span-2 mt-4">
+                                        <label htmlFor="requisites-pdf" className="block text-sm/6 font-medium text-gray-700">
+                                            Реквизиты (PDF)
+                                        </label>
+                                        <div className="mt-2">
+                                            <input
+                                                id="requisites-pdf"
+                                                name="requisites-pdf"
+                                                type="file"
+                                                accept=".pdf"
+                                                className="block w-full rounded-small bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                                            />
+                                        </div>
+                                        <p className="mt-1 text-sm text-gray-500">
+                                            Загрузите файл с реквизитами в формате PDF (не более 5MB)
+                                        </p>
                                     </div>
                                     <div className="sm:col-span-2 mt-4">
                                         <label htmlFor="email-address" className="block text-sm/6 font-medium text-gray-700">
@@ -344,10 +373,6 @@ const CartPage = () => {
                                     <div className="flex items-center justify-between">
                                         <dt className="text-sm">Сумма</dt>
                                         <dd className="text-sm font-medium text-gray-900">{getTotalPrice().toFixed(2)} р.</dd>
-                                    </div>
-                                    <div className="flex items-center justify-between">
-                                        <dt className="text-sm">Доставка</dt>
-                                        <dd className="text-sm font-medium text-gray-900">{selectedDeliveryMethod.price.toFixed(2)} р.</dd>
                                     </div>
                                     <div className="flex items-center justify-between border-t border-gray-200 pt-6">
                                         <dt className="text-lg font-bold">Итого</dt>
