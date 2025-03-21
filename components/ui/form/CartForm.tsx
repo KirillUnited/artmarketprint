@@ -87,15 +87,15 @@ export default function CartForm() {
             const result = await createProductCheckoutOrder(formData);
 
             if (result.ok) {
-                form.reset();
                 toast.success('Заявка отправлена', {
                     description: `Заказ от ${new Date().toLocaleString()}. Спасибо за заявку! Мы свяжемся с Вами в ближайшее время.`,
                 })
                 clearBasket();
+                form.reset();
             }
         } catch (error) {
             console.error(error);
-            toast.error('Ошибка отправки заказа', {
+            toast.warning('Ошибка отправки заказа', {
                 description: 'Пожалуйста, попробуйте еще раз позже.',
             });
         } finally {
