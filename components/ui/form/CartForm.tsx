@@ -68,7 +68,8 @@ export default function CartForm() {
 
     async function handleSubmit(event: FormEvent<HTMLFormElement>): Promise<void> {
         event.preventDefault();
-        const formData = new FormData(event.currentTarget);
+        const form = event.currentTarget;
+        const formData = new FormData(form);
 
         // Add cart items to form data
         const cartItems = items.map(item => ({
@@ -86,7 +87,7 @@ export default function CartForm() {
             const result = await createProductCheckoutOrder(formData);
 
             if (result.ok) {
-                event.currentTarget.reset();
+                form.reset();
                 toast.success('Заявка отправлена', {
                     description: `Заказ от ${new Date().toLocaleString()}. Спасибо за заявку! Мы свяжемся с Вами в ближайшее время.`,
                 })
