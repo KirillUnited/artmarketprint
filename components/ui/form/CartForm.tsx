@@ -68,7 +68,8 @@ export default function CartForm() {
 
     async function handleSubmit(event: FormEvent<HTMLFormElement>): Promise<void> {
         event.preventDefault();
-        const formData = new FormData(event.currentTarget);
+        const form = event.currentTarget;
+        const formData = new FormData(form);
 
         // Add cart items to form data
         const cartItems = items.map(item => ({
@@ -80,14 +81,13 @@ export default function CartForm() {
         }));
         formData.append('items', JSON.stringify(cartItems));
 
-        event.currentTarget.reset();
         setIsPending(true);
 
         try {
             const result = await createProductCheckoutOrder(formData);
 
             if (result.ok) {
-                setIsPending(false);
+                form.reset();
                 toast.success('Заявка отправлена', {
                     description: `Заказ от ${new Date().toLocaleString()}. Спасибо за заявку! Мы свяжемся с Вами в ближайшее время.`,
                 })
@@ -95,7 +95,6 @@ export default function CartForm() {
             }
         } catch (error) {
             console.error(error);
-            setIsPending(false);
             toast.error('Ошибка отправки заказа', {
                 description: 'Пожалуйста, попробуйте еще раз позже.',
             });
@@ -274,7 +273,7 @@ export default function CartForm() {
                                     id="requisites-pdf"
                                     name="requisites-pdf"
                                     type="file"
-                                    accept=".pdf"   
+                                    accept=".pdf"
                                     required
                                     onChange={handleFileChange}
                                     className="block w-full rounded-small bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"

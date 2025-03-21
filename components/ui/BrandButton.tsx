@@ -43,7 +43,6 @@ export const getCTAButton = (_key: string, buttonType: 'cta' | 'secondary', text
                 href={link || ''}
                 radius="sm"
                 size={size}
-                target="_blank"
                 variant="bordered"
             >
                 <span className="leading-none">{text}</span>

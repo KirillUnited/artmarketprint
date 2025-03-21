@@ -35,7 +35,7 @@ export default function ProductsView({ products, categories, totalItemsView = IT
         <div className='flex flex-col gap-8'>
             <div className={clsx(
                 'grid items-start gap-4 md:gap-8', {
-                ['grid-cols-[auto_1fr]']: !isSearchPage
+                ['md:grid-cols-[auto_1fr]']: !isSearchPage
             }
             )}>
                 {
@@ -53,7 +53,7 @@ export default function ProductsView({ products, categories, totalItemsView = IT
                     </div>
                     {
                         paginatedItems.length ?
-                            <ul className="grid grid-cols-[var(--grid-template-columns)] gap-8">
+                            <ul className="grid grid-cols-[var(--grid-template-columns)] gap-4 md:gap-8">
                                 {
                                     paginatedItems?.map((item: any) => (
                                         <AnimatePresence key={`${item?.id[0]['_']}`}>
