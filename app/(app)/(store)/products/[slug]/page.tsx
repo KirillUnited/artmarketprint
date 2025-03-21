@@ -10,6 +10,7 @@ import { getPrice } from '@/lib/getPrice';
 import { client } from '@/sanity/client';
 import { NAVIGATION_QUERY } from '@/sanity/lib/page.query';
 import AddToBasketButton from '@/components/ui/AddToBasketButton';
+import ProductPrice from '@/components/shared/product/ProductPrice';
 
 export interface Props {
     slug: string,
@@ -49,7 +50,8 @@ export default async function ProductPage({ params }: { params: Promise<Props> }
                             <CardBody>
                                 <p className="my-0">
                                     Стоимость:
-                                    <span className="text-3xl text-foreground font-bold">{` ${getPrice(price[0], 1.1)} р`}</span></p>
+                                    <ProductPrice price={getPrice(price[0], 1.1)} productId={product.id[0]['_']} />
+                                </p>
                             </CardBody>
                             <CardFooter>
                                 <AddToBasketButton product={product} />
