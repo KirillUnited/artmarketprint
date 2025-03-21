@@ -24,7 +24,6 @@ interface AddToBasketButtonProps {
 // Components
 const QuantityControls: React.FC<QuantityControlsProps> = ({ itemCount, onDecrease, onIncrease }) => {
     const [inputValue, setInputValue] = React.useState(itemCount.toString());
-    const { addItem, removeItem } = useBasketStore();
 
     React.useEffect(() => {
         setInputValue(itemCount.toString());
