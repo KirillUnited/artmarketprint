@@ -91,7 +91,7 @@ interface FilterGroupProps {
  */
 export const FilterGroup: FC<FilterGroupProps> = ({ sortOrder, selectedCategory, categories, onFilterChange }) => {
   return (
-    <Form className='hidden md:flex flex-col gap-4'>
+    <Form className='flex flex-col gap-4'>
       {/* Render category filter */}
       {CatFilter({ sortOrder, onFilterChange, categories })}
       {/* Render sort filter */}
@@ -116,7 +116,7 @@ interface FilterButtonProps {
  */
 export const FilterButton: FC<FilterButtonProps> = ({ onOpen }) => {
   return (
-    <Button className='md:hidden border-1' variant='light' radius='sm' onPress={onOpen}>
+    <Button className='md:hidden border-1' radius='sm' color='primary' onPress={onOpen}>
       <span className='text-sm'>Фильтры</span>
       <FilterIcon size={16} />
     </Button>
@@ -191,7 +191,7 @@ interface ProductsFilterProps {
  */
 const ProductsFilter: FC<ProductsFilterProps> = ({ sortOrder, selectedCategory, onFilterChange, categories }) => {
   return (
-    <div className='flex flex-col gap-4 sticky top-20 z-30 bg-background'>
+    <div className='hidden md:flex flex-col gap-4 sticky top-20 z-30 bg-background'>
       <FilterGroup categories={categories} selectedCategory={selectedCategory} sortOrder={sortOrder} onFilterChange={onFilterChange} />
     </div>
   );
