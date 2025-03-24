@@ -78,6 +78,25 @@ ${items.map((item: any) => `
 	});
 
 	// If there's a PDF file, send it as a document
+	// if (requisitesPdf && requisitesPdf.size > 0 && chatId) {
+	// 	const pdfBuffer = Buffer.from(await requisitesPdf.arrayBuffer());
+	// 	const formData = new FormData();
+	// 	formData.append('chat_id', chatId);
+	// 	formData.append('document', new Blob([pdfBuffer]), requisitesPdf.name);
+
+	// 	await axios.post(`https://api.telegram.org/bot${telegramBotToken}/sendDocument`, formData, {
+	// 		headers: {
+	// 			'Content-Type': 'multipart/form-data',
+	// 		},
+	// 	});
+	// }
+
+	return messageResponse.data;
+}
+
+export async function sendProductCheckoutFile(formData: FormData): Promise<any> {
+	const requisitesPdf = formData.get('requisites-pdf') as File;
+
 	if (requisitesPdf && requisitesPdf.size > 0 && chatId) {
 		const pdfBuffer = Buffer.from(await requisitesPdf.arrayBuffer());
 		const formData = new FormData();
@@ -90,6 +109,4 @@ ${items.map((item: any) => `
 			},
 		});
 	}
-
-	return messageResponse.data;
 }
