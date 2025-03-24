@@ -6,3 +6,5 @@ export const CATEGORIES_QUERY = `*[
       image, 
       price,
       "currentSlug": slug.current}`;
+
+export const CATEGORY_QUERY = `*[_type == "category" && slug.current == $slug][0]`;
