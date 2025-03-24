@@ -23,7 +23,7 @@ export default async function CategoryPage({ params }: { params: Promise<Props> 
         ? getUrlFor(category.image)
         : null;
 
-    if (!Array.isArray(products) || products.length === 0) return <div className="text-center text-2xl mt-10 ">Товары не найдены</div>
+    if (!Array.isArray(products) || products.length === 0) return <div className="text-center text-2xl my-10 ">Товары не найдены</div>
 
     return (
         <>
