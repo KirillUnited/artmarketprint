@@ -3,9 +3,9 @@
 import NextImage from 'next/image';
 import Loader from '@/components/ui/Loader';
 import { QuantityControls } from '@/components/ui/AddToBasketButton';
-import { ChevronDownIcon, TrashIcon } from 'lucide-react';
+import { ChevronDownIcon, Loader2, TrashIcon } from 'lucide-react';
 import { Button } from '@heroui/button';
-import { createProductCheckoutOrder } from '@/lib/actions/order.actions';
+import { createProductCheckoutOrder, sendProductCheckoutFile } from '@/lib/actions/order.actions';
 import { toast } from 'sonner';
 import { Form } from '@heroui/form';
 import { Image } from '@heroui/image';
@@ -85,13 +85,13 @@ export default function CartForm() {
 
         try {
             const result = await createProductCheckoutOrder(formData);
+            const sendAttach = await sendProductCheckoutFile(formData);
 
             if (result.ok) {
                 toast.success('Заявка отправлена', {
                     description: `Заказ от ${new Date().toLocaleString()}. Спасибо за заявку! Мы свяжемся с Вами в ближайшее время.`,
                 })
                 clearBasket();
-                form.reset();
             }
         } catch (error) {
             console.error(error);
@@ -117,6 +117,11 @@ export default function CartForm() {
             onSubmit={handleSubmit}
             validationBehavior='native'
         >
+            {
+                true && <div className='z-50 fixed top-0 left-0 w-full h-full bg-white/50'>
+                    <Loader />
+                </div>
+            }
             <div className='w-full'>
                 <fieldset>
                     <legend className="text-lg font-medium text-gray-900">Контактная информация</legend>
