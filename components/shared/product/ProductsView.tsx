@@ -13,7 +13,7 @@ import { useDisclosure } from '@heroui/modal';
 const ITEMS_PER_PAGE = 8;
 
 export default function ProductsView({ products, categories, totalItemsView = ITEMS_PER_PAGE, isSearchPage = false }: any) {
-    const [sortOrder, setSortOrder] = React.useState('asc');
+    const [sortOrder, setSortOrder] = React.useState('');
     const [selectedCategory, setSelectedCategory] = React.useState('');
     const [currentPage, setCurrentPage] = React.useState(1);
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
