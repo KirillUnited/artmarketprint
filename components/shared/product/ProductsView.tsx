@@ -11,7 +11,7 @@ import clsx from 'clsx';
 import { useDisclosure } from '@heroui/modal';
 import Loader from '@/components/ui/Loader';
 
-const ITEMS_PER_PAGE = 8;
+const ITEMS_PER_PAGE = 20;
 
 export default function ProductsView({ products, categories, totalItemsView = ITEMS_PER_PAGE, isSearchPage = false }: any) {
     const [sortOrder, setSortOrder] = React.useState('');
