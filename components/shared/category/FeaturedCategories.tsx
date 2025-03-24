@@ -16,7 +16,7 @@ import { CATEGORIES_QUERY } from '@/sanity/lib/category.query';
 
 export const FeaturedCategoryThumb = ({ item }: any) => {
     return (
-        <Card isFooterBlurred as={Link} className="h-full group relative" href={`/catalog/${item.currentSlug}`} radius="sm">
+        <Card isFooterBlurred as={Link} className="h-full group relative" href={`/categories/${item.currentSlug}`} radius="sm">
             <Image as={NextImage} isZoomed removeWrapper alt={item.title} className="z-0 w-full h-full object-cover aspect-square" radius="sm" src={item.imageUrl ? item.imageUrl : getUrlFor(item.image)} width={220} height={220} />
             <CardFooter className={clsx(
                 'absolute bg-black/40 bottom-0 w-full z-10 p-0',
