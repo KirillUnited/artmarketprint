@@ -37,28 +37,29 @@ export async function createProductCheckoutOrder(formData: FormData): Promise<an
 	const phone = formData.get('phone') as string;
 	const items = JSON.parse(formData.get('items') as string);
 	const requisites = formData.get('requisites') as string;
+	const requisitesPdf = formData.get('requisites-pdf') as File;
 	const comment = formData.get('comment') as string;
 
 	const message = `
 🛍️ Новый заказ товаров:
 
 👤 Контактная информация:
-Email: ${email}
-Телефон: ${phone}
-
-📦 Информация о доставке:
 Имя: ${firstName}
 Фамилия: ${lastName}
+Телефон: ${phone}
 Адрес: ${address}
 Город: ${city}
 Страна: ${country}
 Почтовый индекс: ${postalCode}
+Email: ${email}
 
 💳 Реквизиты: ${requisites}
+${requisitesPdf ? '📄 Реквизиты (PDF): Прикреплен файл' : ''}
 
 🛒 Товары:
 ${items.map((item: any) => `
 - ${item.name}
+  Номер: ${item.id}
   Цена: ${item.price} BYN
   Количество: ${item.quantity}
   Сумма: ${(item.price * item.quantity).toFixed(2)} BYN
@@ -69,18 +70,30 @@ ${items.map((item: any) => `
 💬 Комментарий: ${comment}
 `;
 
-	return await axios
-		.post(BASE_URL, {
-			chat_id: chatId,
-			text: message,
-			parse_mode: 'HTML'
-		})
-		.then((response) => {
-			console.log('Order sent to Telegram:', response.data);
-			return response.data;
-		})
-		.catch((error) => {
-			console.error('Error sending order to Telegram:', error);
-			throw error;
+	// First, send the message
+	const messageResponse = await axios.post(BASE_URL, {
+		chat_id: chatId,
+		text: message,
+		parse_mode: 'HTML'
+	});
+
+	return messageResponse.data;
+}
+
+export async function sendProductCheckoutFile(formData: FormData): Promise<any> {
+	const requisitesPdf = formData.get('requisites-pdf') as File;
+	
+	// If there's a PDF file, send it as a document
+	if (requisitesPdf && requisitesPdf.size > 0 && chatId) {
+		const pdfBuffer = Buffer.from(await requisitesPdf.arrayBuffer());
+		const formData = new FormData();
+		formData.append('chat_id', chatId);
+		formData.append('document', new Blob([pdfBuffer]), requisitesPdf.name);
+
+		await axios.post(`https://api.telegram.org/bot${telegramBotToken}/sendDocument`, formData, {
+			headers: {
+				'Content-Type': 'multipart/form-data',
+			},
 		});
+	}
 }

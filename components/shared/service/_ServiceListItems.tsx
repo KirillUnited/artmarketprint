@@ -1,4 +1,5 @@
 import { Image} from '@heroui/image';
+import NextImage from 'next/image';
 import { Card, CardFooter } from '@heroui/card';
 import { Link } from '@heroui/link';
 import clsx from 'clsx';
@@ -18,7 +19,7 @@ export default function ServiceListItems({ services }: any) {
                             {service?.service_tags?.length > 0 && <ProjectTagList color='primary' tags={service.service_tags} />}
                             {service?.category_tags?.length > 0 && <ProjectTagList color='secondary' tags={service.category_tags} />}
                         </div>
-                        <Image isZoomed removeWrapper alt={service.altText} className="z-0 w-full h-full object-cover aspect-square" radius="sm" src={service.imageUrl ? service.imageUrl : getUrlFor(service.image)} width={220} />
+                        <Image as={NextImage} isZoomed removeWrapper alt={service.title} className="z-0 w-full h-full object-cover aspect-square" radius="sm" src={service.imageUrl ? service.imageUrl : getUrlFor(service.image)} width={220} height={220} />
                         <CardFooter className={clsx(
                             'absolute bg-black/40 bottom-0 w-full z-10 p-0',
                         )}>
@@ -30,8 +31,8 @@ export default function ServiceListItems({ services }: any) {
                                             'text-xs text-white/80',
                                             'grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-all duration-500 overflow-hidden'
                                         )}
-                                        title={service.shortDescription}>
-                                        <span className="line-clamp-4">{service.shortDescription}</span>
+                                        title={service.description}>
+                                        <span className="line-clamp-4">{service.description}</span>
                                     </p>
                                 </div>
                                 <Button as={'span'} className="group/button self-start" color="secondary" radius="sm" role="presentation" size="sm">

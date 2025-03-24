@@ -5,12 +5,12 @@ import { ProductSection } from './shared/product/ProductSection';
 import { Hero } from '@/components/shared/hero/Hero';
 import { Benefits } from '@/components/shared/Benefits';
 import { Services } from '@/components/shared/service';
-import { Catalog } from '@/components/shared/Catalog';
 import About from '@/components/shared/About';
 import { Projects } from '@/components/shared/project/Projects';
 import { InstagramFeedSection } from '@/components/shared/socials/InstagramFeed';
 import { FAQSection } from '@/components/shared/faq';
 import ContactUs, { MapFrame } from '@/components/shared/ContactUs';
+import FeaturedCategories from './shared/FeaturedCategories';
 
 interface PageBuilderProps {
 	content?: any;
@@ -40,7 +40,7 @@ export function PageBuilder({ content }: PageBuilderProps) {
 							</Fragment>
 						);
 					case 'categoryList':
-						return <Catalog key={block._key} />;
+						return <FeaturedCategories key={block._key} />;
 					case 'imageTextBlock':
 						return <About key={block._key} />;
 					case 'projectList':
