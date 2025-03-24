@@ -66,3 +66,17 @@ export async function searchProductsByName(searchParam: string) {
 
  return products.filter((product: any) => product.product[0]['_'].toLowerCase().includes(searchParam.toLowerCase()));
 }
+
+export async function getProductsByCategory(category: string) {
+  const products = await getAllProducts();
+
+  return products.filter((product: any) => {
+    return (product.category[0].split('|')[0] === category);
+  });
+}
+
+export async function getProductsByCategoryTitle(categoryTitle: string) {
+  const products = await getAllProducts();
+
+  return products.filter((product: any) => product.category[0] === categoryTitle);
+}
