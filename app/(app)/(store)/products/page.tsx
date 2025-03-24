@@ -6,11 +6,11 @@ import { getSanityDocuments } from '@/lib/fetch-sanity-data';
 import { NAVIGATION_QUERY } from '@/sanity/lib/queries';
 import Section from '@/components/layout/Section';
 import ProductsView from '@/components/shared/product/ProductsView';
-import { getAllProductCategories, getAllProducts } from '@/lib/actions/product.actions';
+import { getAllProductCategories, getAllProducts, getProductsByLimit } from '@/lib/actions/product.actions';
 
 export default async function ProductsPage() {
     const breadcrumbs = (await getSanityDocuments(NAVIGATION_QUERY))[0].links;
-    const products = await getAllProducts();
+    const products = await getProductsByLimit(5000);
     const categories = await getAllProductCategories();
 
     return (
