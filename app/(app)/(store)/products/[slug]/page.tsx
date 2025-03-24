@@ -17,6 +17,26 @@ export interface Props {
     id?: number
 }
 
+export const generateMetadata = async ({ params }: { params: Promise<Props> }) => {
+    const { slug } = await params;
+    const product = await getProductBySlug(slug);
+
+    return {
+        title: product.product[0]['_'],
+        description: product.general_description[0],
+
+        openGraph: {
+            title: `${product.product[0]['_']}`,
+            description: `${product.general_description[0]}`,
+            images: [`${product.images_urls[0].split(',')[0]}`],
+            type: 'website',
+            locale: 'ru',
+            siteName: 'Art Market Print',
+            url: `https://artmarketprint.by/products/${slug}`,
+        },
+    }
+}
+
 export default async function ProductPage({ params }: { params: Promise<Props> }) {
     const { slug } = await params;
     const product = await getProductBySlug(slug);
