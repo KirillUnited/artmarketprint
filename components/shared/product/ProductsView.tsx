@@ -55,7 +55,7 @@ export default function ProductsView({ products, categories, totalItemsView = IT
                                 sortOrder={sortOrder}
                                 onFilterChange={handleFilterChange} />
                         }
-                        <div className='flex flex-col gap-8 overflow-hidden'>
+                        <div className='flex flex-col gap-8'>
                             {
                                 !isSearchPage &&
                                 <div className='flex flex-wrap flex-col md:flex-row gap-4 w-full'>
