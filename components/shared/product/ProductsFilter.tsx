@@ -3,78 +3,14 @@ import { Accordion, AccordionItem } from '@heroui/accordion';
 import { Button } from '@heroui/button';
 import { Drawer, DrawerBody, DrawerContent, DrawerFooter, DrawerHeader } from '@heroui/drawer';
 import { FilterIcon } from 'lucide-react';
-import { Radio, RadioGroup } from '@heroui/radio';
 import React from 'react';
 import { Form } from '@heroui/form';
 
 export const getCategory = (category: string) => category[0].split('|').shift();
 
 import { FC } from 'react';
-
-interface CatFilterProps {
-  sortOrder: string;
-  onFilterChange: (sortOrder: string, category: string) => void;
-  categories: string[];
-}
-
-/**
- * Component for filtering products by category.
- *
- * @param {CatFilterProps} props - The properties for the CatFilter component.
- * @returns {JSX.Element} The rendered CatFilter component.
- */
-export const CatFilter: FC<CatFilterProps> = ({ sortOrder, onFilterChange, categories }) => {
-  return (
-    <div className='flex gap-4 flex-1'>
-      <RadioGroup classNames={{ label: 'font-semibold text-foreground' }} label='Фильтр по категориям' title='Фильтр по категориям'>
-        {categories?.map((category: string) => (
-          <Radio key={category} value={category} onChange={(e) => onFilterChange(sortOrder, e.target.value)}>
-            {category}
-          </Radio>
-        ))}
-      </RadioGroup>
-    </div>
-  )
-};
-/**
- * Component for sorting products by price.
- *
- * @param {Object} props - The properties for the SortFilter component.
- * @param {string} props.sortOrder - The current sort order.
- * @param {string} props.selectedCategory - The currently selected category.
- * @param {Function} props.onFilterChange - Callback function to handle filter changes.
- * @returns {JSX.Element} The rendered SortFilter component.
- */
-export const SortFilter: FC<{
-  sortOrder: string;
-  selectedCategory: string;
-  onFilterChange: (sortOrder: string, category: string) => void;
-}> = ({ sortOrder, selectedCategory, onFilterChange }) => {
-  return (
-    <div className='flex gap-4'>
-      <RadioGroup
-        classNames={{ label: 'font-semibold text-foreground' }}
-        label='Сортировать цены'
-        title='Сортировать цены'
-      >
-        {/* Radio button for descending order */}
-        <Radio
-          value="desc"
-          onChange={(e) => onFilterChange(e.target.value, selectedCategory)}
-        >
-          По убыванию
-        </Radio>
-        {/* Radio button for ascending order */}
-        <Radio
-          value="asc"
-          onChange={(e) => onFilterChange(e.target.value, selectedCategory)}
-        >
-          По возрастанию
-        </Radio>
-      </RadioGroup>
-    </div>
-  );
-};
+import { CatFilter } from '@/components/ui/filter/CatFilter';
+import { SortFilter } from '@/components/ui/filter/SortFilter';
 
 interface FilterGroupProps {
   sortOrder: string;
@@ -116,9 +52,9 @@ interface FilterButtonProps {
  */
 export const FilterButton: FC<FilterButtonProps> = ({ onOpen }) => {
   return (
-    <Button className='md:hidden border-1' radius='sm' color='primary' onPress={onOpen}>
-      <span className='text-sm'>Фильтры</span>
+    <Button className='flex-grow min-w-max md:hidden border-1' radius='sm' color='primary' onPress={onOpen}>
       <FilterIcon size={16} />
+      <span className='text-sm'>Фильтры по товарам</span>
     </Button>
   );
 };
@@ -144,7 +80,7 @@ export const FilterDrawer: FC<FilterDrawerProps> = ({ isOpen, onOpenChange, onFi
       <DrawerContent>
         {(onClose) => (
           <>
-            <DrawerHeader className="flex flex-col gap-1">Фильтры</DrawerHeader>
+            <DrawerHeader className="flex flex-col gap-1">Фильтры по товарам</DrawerHeader>
             <Form className='w-full items-stretch'>
               <DrawerBody>
                 <Accordion aria-label='Select category' selectionMode='multiple' title='Категории'>
