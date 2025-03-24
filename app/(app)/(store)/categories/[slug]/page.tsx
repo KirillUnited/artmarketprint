@@ -47,7 +47,7 @@ export default async function CategoryPage({ params }: { params: Promise<Props> 
                     </div>
                 </div>
             </section>
-            <Section>
+            <Section innerClassname="pt-0 md:pt-0">
                 <SectionHeading>
                     <SectionTitle>{categoryTitle}</SectionTitle>
                 </SectionHeading>
