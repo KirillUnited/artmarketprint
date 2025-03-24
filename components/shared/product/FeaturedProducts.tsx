@@ -13,7 +13,7 @@ export const ProductSectionHeading = ({ title, subtitle, description }: { title?
     </div>
 );
 
-export const ProductSection = async () => {
+export const FeaturedProducts = async () => {
     const data = await getProductsByLimit(5);
 
     if (!data || data.length === 0) {

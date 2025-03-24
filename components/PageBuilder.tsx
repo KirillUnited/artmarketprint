@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
 
-import { ProductSection } from './shared/product/ProductSection';
+import { FeaturedProducts } from '@/components/shared/product/FeaturedProducts';
 
 import { Hero } from '@/components/shared/hero/Hero';
 import { Benefits } from '@/components/shared/Benefits';
@@ -10,7 +10,7 @@ import { Projects } from '@/components/shared/project/Projects';
 import { InstagramFeedSection } from '@/components/shared/socials/InstagramFeed';
 import { FAQSection } from '@/components/shared/faq';
 import ContactUs, { MapFrame } from '@/components/shared/ContactUs';
-import FeaturedCategories from './shared/FeaturedCategories';
+import { FeaturedCategories } from './shared/category';
 
 interface PageBuilderProps {
 	content?: any;
@@ -36,7 +36,7 @@ export function PageBuilder({ content }: PageBuilderProps) {
 						return (
 							<Fragment key={block._key}>
 								<Services key={block._key} />
-								<ProductSection />
+								<FeaturedProducts />
 							</Fragment>
 						);
 					case 'categoryList':
