@@ -66,7 +66,9 @@ export default async function FeaturedCategories() {
 
             <FeaturedCategoryList items={categories} />
 
-            {categoryItemsCount > 4 && <SectionButton href={siteConfig.catalogSection.href} label="Все категории" />}
+            {categoryItemsCount > 4 && <SectionButton href={siteConfig.catalogSection.href} label="Все категории"
+                className='self-start'
+            />}
         </Section>
     );
 }
