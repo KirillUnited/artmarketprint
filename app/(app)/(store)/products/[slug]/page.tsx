@@ -34,6 +34,15 @@ export const generateMetadata = async ({ params }: { params: Promise<Props> }) =
             siteName: 'Art Market Print',
             url: `https://artmarketprint.by/products/${slug}`,
         },
+        twitter: {
+            card: 'summary_large_image',
+            title: `${product.product[0]['_']}`,
+            description: `${product.general_description[0]}`,
+            images: [`${product.images_urls[0].split(',')[0]}`],
+            creator: '@artmarketprint',
+            site: '@artmarketprint',
+            url: `https://artmarketprint.by/products/${slug}`,
+        },
     }
 }
 
