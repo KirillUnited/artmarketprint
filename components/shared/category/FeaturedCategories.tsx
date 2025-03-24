@@ -1,6 +1,6 @@
 import React from 'react'
-import Section, { SectionButton } from '../layout/Section';
-import { CatalogHeading } from './Catalog';
+import Section, { SectionButton } from '../../layout/Section';
+import { CatalogHeading } from '../Catalog';
 import { siteConfig } from '@/config/site';
 import { Card, CardFooter } from '@heroui/card';
 import clsx from 'clsx';
