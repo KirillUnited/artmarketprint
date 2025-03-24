@@ -45,12 +45,15 @@ export default function ProductsView({ products, categories, totalItemsView = IT
                         sortOrder={sortOrder}
                         onFilterChange={handleFilterChange} />
                 }
-                <div className='flex flex-col gap-8'>
-                    <div className='flex flex-wrap gap-4 w-full'>
-                        <FilterButton onOpen={onOpen} />
-                        <FilterDrawer isOpen={isOpen} onOpenChange={onOpenChange} onFilterChange={handleFilterChange} categories={categories} sortOrder={sortOrder} selectedCategory={selectedCategory} />
-                        <ProductSearchForm />
-                    </div>
+                <div className='flex flex-col gap-8 overflow-hidden'>
+                    {
+                        !isSearchPage &&
+                        <div className='flex flex-wrap flex-col md:flex-row gap-4 w-full'>
+                            <FilterButton onOpen={onOpen} />
+                            <FilterDrawer isOpen={isOpen} onOpenChange={onOpenChange} onFilterChange={handleFilterChange} categories={categories} sortOrder={sortOrder} selectedCategory={selectedCategory} />
+                            <ProductSearchForm />
+                        </div>
+                    }
                     {
                         paginatedItems.length ?
                             <ul className="grid grid-cols-[var(--grid-template-columns)] gap-4 md:gap-8">
@@ -73,14 +76,14 @@ export default function ProductsView({ products, categories, totalItemsView = IT
                                 }
                             </ul> :
                             <p className="text-center mt-8 text-gray-500">Нет товаров</p>}
+                    {
+                        filteredProducts.length > totalItemsView &&
+                        <Pagination className='self-center'
+                            total={Math.ceil(filteredProducts.length / totalItemsView)}
+                            onChange={(value) => setCurrentPage(value)} page={currentPage} />
+                    }
                 </div>
             </div>
-            {
-                filteredProducts.length > totalItemsView &&
-                <Pagination className='self-center'
-                    total={Math.ceil(filteredProducts.length / totalItemsView)}
-                    onChange={(value) => setCurrentPage(value)} page={currentPage} />
-            }
         </div>
     )
 }

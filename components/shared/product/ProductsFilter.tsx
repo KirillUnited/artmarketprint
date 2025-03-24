@@ -116,9 +116,9 @@ interface FilterButtonProps {
  */
 export const FilterButton: FC<FilterButtonProps> = ({ onOpen }) => {
   return (
-    <Button className='md:hidden border-1' radius='sm' color='primary' onPress={onOpen}>
-      <span className='text-sm'>Фильтры</span>
+    <Button className='flex-grow min-w-max md:hidden border-1' radius='sm' color='primary' onPress={onOpen}>
       <FilterIcon size={16} />
+      <span className='text-sm'>Фильтры по товарам</span>
     </Button>
   );
 };
@@ -144,7 +144,7 @@ export const FilterDrawer: FC<FilterDrawerProps> = ({ isOpen, onOpenChange, onFi
       <DrawerContent>
         {(onClose) => (
           <>
-            <DrawerHeader className="flex flex-col gap-1">Фильтры</DrawerHeader>
+            <DrawerHeader className="flex flex-col gap-1">Фильтры по товарам</DrawerHeader>
             <Form className='w-full items-stretch'>
               <DrawerBody>
                 <Accordion aria-label='Select category' selectionMode='multiple' title='Категории'>
