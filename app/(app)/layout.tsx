@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     images: ['/apple-touch-icon.png'],
     type: 'website',
     locale: 'ru',
-    siteName: 'artmarketprint',
+    siteName: 'Art Market Print',
 		url: 'https://artmarketprint.by',
   },
   twitter: {
