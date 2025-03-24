@@ -12,6 +12,8 @@ export default async function ProductsPage() {
     const breadcrumbs = (await getSanityDocuments(NAVIGATION_QUERY))[0].links;
     const products = await getProductsByLimit(5000);
     const categories = await getAllProductCategories();
+    const allProducts = await getAllProducts();
+    console.log(allProducts);
 
     return (
         <>
