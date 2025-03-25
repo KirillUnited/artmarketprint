@@ -46,7 +46,7 @@ export function PageBuilder({ content }: PageBuilderProps) {
 					case 'projectList':
 						return (
 							<Fragment key={block._key}	>
-								<Projects {...block} />
+								<Projects {...block} className='bg-[#F1F4FA]' />
 								<InstagramFeedSection id="instagram" />
 							</Fragment>
 						);
