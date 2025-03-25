@@ -5,6 +5,7 @@ import { ProjectList } from './ProjectList';
 import Section, { SectionButton, SectionDescription, SectionHeading, SectionSubtitle, SectionTitle } from '@/components/layout/Section';
 import { getSanityDocuments } from '@/lib/fetch-sanity-data';
 import { PROJECTS_QUERY } from '@/sanity/lib/queries';
+import clsx from 'clsx';
 
 interface ProjectsProps {
 	isActive?: boolean;
@@ -14,6 +15,7 @@ interface ProjectsProps {
 	description?: string;
 	link?: { text: string; link: string };
 	projects?: any;
+	className?: string;
 }
 
 export const ProjectsHeading = ({ title, subtitle, description }: { title?: string; subtitle?: string; description?: string }) => (
@@ -41,7 +43,13 @@ export const Projects = async (props: ProjectsProps) => {
 
 	return (
 		<Suspense fallback={<p className="text-center text-gray-500">Загрузка проектов...</p>}>
-			<Section className="relative" id="projects">
+			<Section
+				className={clsx(
+					"relative",
+					props.className
+				)}
+				id="projects"
+			>
 				<ProjectsHeading description={description} subtitle={subtitle} title={title} />
 
 				{data && <ProjectList projectList={data} />}
