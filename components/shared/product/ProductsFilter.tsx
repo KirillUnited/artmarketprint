@@ -6,11 +6,11 @@ import { FilterIcon } from 'lucide-react';
 import React from 'react';
 import { Form } from '@heroui/form';
 
-export const getCategory = (category: string) => category[0].split('|').shift();
-
 import { FC } from 'react';
 import { CatFilter } from '@/components/ui/filter/CatFilter';
 import { SortFilter } from '@/components/ui/filter/SortFilter';
+
+export const getCategory = (category: string) => category[0].split('|').shift();
 
 interface FilterGroupProps {
   sortOrder: string;
@@ -29,7 +29,7 @@ export const FilterGroup: FC<FilterGroupProps> = ({ sortOrder, selectedCategory,
   return (
     <Form className='flex flex-col gap-4'>
       {/* Render category filter */}
-      {CatFilter({ sortOrder, onFilterChange, categories })}
+      {categories && CatFilter({ sortOrder, onFilterChange, categories })}
       {/* Render sort filter */}
       {SortFilter({ sortOrder, selectedCategory, onFilterChange })}
       {/* Reset button to clear filters */}
@@ -85,9 +85,14 @@ export const FilterDrawer: FC<FilterDrawerProps> = ({ isOpen, onOpenChange, onFi
               <DrawerBody>
                 <Accordion aria-label='Select category' selectionMode='multiple' title='Категории'>
                   {/* Accordion item for category filter */}
-                  <AccordionItem classNames={{ title: 'font-semibold', trigger: 'font-semibold' }} title={'Категории'}>
-                    {CatFilter({ sortOrder, onFilterChange, categories })}
-                  </AccordionItem>
+                  <>
+                    {
+                      (Array.isArray(categories) && categories.length > 0) &&
+                      <AccordionItem classNames={{ title: 'font-semibold', trigger: 'font-semibold' }} title={'Категории'}>
+                        {CatFilter({ sortOrder, onFilterChange, categories })}
+                      </AccordionItem>
+                    }
+                  </>
                   {/* Accordion item for price sort filter */}
                   <AccordionItem classNames={{ title: 'font-semibold', trigger: 'font-semibold' }} title={'Цены'}>
                     {SortFilter({ sortOrder, selectedCategory, onFilterChange })}
