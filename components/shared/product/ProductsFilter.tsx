@@ -85,14 +85,9 @@ export const FilterDrawer: FC<FilterDrawerProps> = ({ isOpen, onOpenChange, onFi
               <DrawerBody>
                 <Accordion aria-label='Select category' selectionMode='multiple' title='Категории'>
                   {/* Accordion item for category filter */}
-                  <>
-                    {
-                      (Array.isArray(categories) && categories.length > 0) &&
-                      <AccordionItem classNames={{ title: 'font-semibold', trigger: 'font-semibold' }} title={'Категории'}>
-                        {CatFilter({ sortOrder, onFilterChange, categories })}
-                      </AccordionItem>
-                    }
-                  </>
+                  <AccordionItem classNames={{ title: 'font-semibold', trigger: 'font-semibold' }} title={'Категории'}>
+                    {CatFilter({ sortOrder, onFilterChange, categories })}
+                  </AccordionItem>
                   {/* Accordion item for price sort filter */}
                   <AccordionItem classNames={{ title: 'font-semibold', trigger: 'font-semibold' }} title={'Цены'}>
                     {SortFilter({ sortOrder, selectedCategory, onFilterChange })}
