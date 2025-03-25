@@ -14,16 +14,16 @@ interface CatFilterProps {
  * @returns {JSX.Element} The rendered CatFilter component.
  */
 export const CatFilter: FC<CatFilterProps> = ({ sortOrder, onFilterChange, categories }) => {
-    if (!Array.isArray(categories) || categories.length === 0) return null;
-    
     return (
         <div className='flex gap-4 flex-1'>
             <RadioGroup classNames={{ label: 'font-semibold text-foreground' }} label='Фильтр по категориям' title='Фильтр по категориям'>
-                {categories?.map((category: string) => (
-                    <Radio key={category} value={category} onChange={(e) => onFilterChange(sortOrder, e.target.value)}>
-                        {category}
-                    </Radio>
-                ))}
+                {
+                    categories ? categories.map((category: string) => (
+                        <Radio key={category} value={category} onChange={(e) => onFilterChange(sortOrder, e.target.value)}>
+                            {category}
+                        </Radio>
+                    )) : <p className="text-sm">Категории не найдены</p>
+            }
             </RadioGroup>
         </div>
     )

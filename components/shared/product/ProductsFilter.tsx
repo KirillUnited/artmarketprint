@@ -29,7 +29,7 @@ export const FilterGroup: FC<FilterGroupProps> = ({ sortOrder, selectedCategory,
   return (
     <Form className='flex flex-col gap-4'>
       {/* Render category filter */}
-      {CatFilter({ sortOrder, onFilterChange, categories })}
+      {categories && CatFilter({ sortOrder, onFilterChange, categories })}
       {/* Render sort filter */}
       {SortFilter({ sortOrder, selectedCategory, onFilterChange })}
       {/* Reset button to clear filters */}
