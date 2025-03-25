@@ -85,7 +85,6 @@ export default function CartForm() {
 
         try {
             const result = await createProductCheckoutOrder(formData);
-            const sendAttach = await sendProductCheckoutFile(formData);
 
             if (result.ok) {
                 toast.success('Заявка отправлена', {
@@ -100,6 +99,12 @@ export default function CartForm() {
             });
         } finally {
             setIsPending(false);
+        }
+
+        try {
+            const sendAttach = await sendProductCheckoutFile(formData);
+        } catch (error) {
+            console.error(error);
         }
     }
 
