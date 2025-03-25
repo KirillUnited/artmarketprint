@@ -75,6 +75,13 @@ interface FilterDrawerProps {
  * @returns {JSX.Element} The rendered FilterDrawer component.
  */
 export const FilterDrawer: FC<FilterDrawerProps> = ({ isOpen, onOpenChange, onFilterChange, categories, sortOrder, selectedCategory }) => {
+  const categoriesSet = categories
+    ?
+    <AccordionItem classNames={{ title: 'font-semibold', trigger: 'font-semibold' }} title={'Категории'}>
+      {CatFilter({ sortOrder, onFilterChange, categories })}
+    </AccordionItem>
+    : null;
+
   return (
     <Drawer isOpen={isOpen} onOpenChange={onOpenChange} radius='none'>
       <DrawerContent>
@@ -85,9 +92,7 @@ export const FilterDrawer: FC<FilterDrawerProps> = ({ isOpen, onOpenChange, onFi
               <DrawerBody>
                 <Accordion aria-label='Select category' selectionMode='multiple' title='Категории'>
                   {/* Accordion item for category filter */}
-                  <AccordionItem classNames={{ title: 'font-semibold', trigger: 'font-semibold' }} title={'Категории'}>
-                    {CatFilter({ sortOrder, onFilterChange, categories })}
-                  </AccordionItem>
+                  {categoriesSet}
                   {/* Accordion item for price sort filter */}
                   <AccordionItem classNames={{ title: 'font-semibold', trigger: 'font-semibold' }} title={'Цены'}>
                     {SortFilter({ sortOrder, selectedCategory, onFilterChange })}

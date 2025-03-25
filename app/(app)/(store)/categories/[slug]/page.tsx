@@ -7,8 +7,10 @@ import { getUrlFor } from "@/lib/utils";
 import { client } from "@/sanity/client";
 import { CATEGORY_QUERY } from "@/sanity/lib/category.query";
 import { NAVIGATION_QUERY } from "@/sanity/lib/page.query";
+import { ArrowLeftIcon } from "lucide-react";
 import { SanityDocument } from "next-sanity";
 import Image from "next/image";
+import Link from "next/link";
 
 export interface Props {
     slug: string,
@@ -50,6 +52,9 @@ export default async function CategoryPage({ params }: { params: Promise<Props> 
             <Section innerClassname="pt-0 md:pt-0">
                 <SectionHeading>
                     <SectionTitle>{categoryTitle}</SectionTitle>
+                    <Link className="flex items-center gap-2 text-primary" href="/products">
+                        <ArrowLeftIcon className="w-6 h-6" />
+                        <span>Вернуться в каталог</span></Link>
                 </SectionHeading>
 
                 <ProductsView products={products} />
