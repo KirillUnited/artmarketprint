@@ -6,11 +6,11 @@ import { FilterIcon } from 'lucide-react';
 import React from 'react';
 import { Form } from '@heroui/form';
 
-export const getCategory = (category: string) => category[0].split('|').shift();
-
 import { FC } from 'react';
 import { CatFilter } from '@/components/ui/filter/CatFilter';
 import { SortFilter } from '@/components/ui/filter/SortFilter';
+
+export const getCategory = (category: string) => category[0].split('|').shift();
 
 interface FilterGroupProps {
   sortOrder: string;
