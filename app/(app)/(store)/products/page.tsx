@@ -7,11 +7,11 @@ import { NAVIGATION_QUERY } from '@/sanity/lib/queries';
 import Section from '@/components/layout/Section';
 import ProductsView from '@/components/shared/product/ProductsView';
 import { getAllProductCategories, getAllProducts, getProductsByLimit } from '@/lib/actions/product.actions';
+import { Suspense } from 'react';
 
 export default async function ProductsPage() {
     const breadcrumbs = (await getSanityDocuments(NAVIGATION_QUERY))[0].links;
-    const products = await getProductsByLimit(5000);
-    // const products = await getAllProducts();
+    const products = await getAllProducts();
     const categories = await getAllProductCategories();
 
     return (
@@ -46,7 +46,9 @@ export default async function ProductsPage() {
                 </div>
             </section>
             <Section id="products" innerClassname='pt-6 md:pt-6'>
-                <ProductsView categories={categories} products={products} />
+                <Suspense fallback={<div className="text-center">Loading...</div>}>
+                    <ProductsView categories={categories} products={products} />
+                </Suspense>
             </Section>
         </>
     );

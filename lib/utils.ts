@@ -34,9 +34,9 @@ export async function saveJsonToFile(filename: string, data: any) {
 
 export async function getJsonFileData(filename: string): Promise<any> {
   try {
-    const fileContent = await fs.readFile(filename, 'utf-8');
+    const fileContent = await import('../_data/products-20-03-25.json');
 
-    return JSON.parse(fileContent);
+    return fileContent.default;
   } catch (error) {
     console.error('Error reading JSON file:', error);
     throw new Error(`Failed to load '${filename}' file data`);
