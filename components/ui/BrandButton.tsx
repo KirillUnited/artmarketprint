@@ -4,17 +4,18 @@ import { Button } from '@heroui/button'
 import clsx from 'clsx'
 import React from 'react'
 import Link from 'next/link';
-import {ArrowUpRightIcon} from 'lucide-react';
+import { ArrowUpRightIcon } from 'lucide-react';
 
 import { BrandButtonProps } from '@/types'
+import BrandModalOffer from './BrandModalOffer';
 
 export default function BrandButton({ state, className, onPress, children, ...props }: BrandButtonProps) {
     return (
         <Button className={clsx(
-                { 'bg-brand-gradient font-semibold': state === 'primary' },
-                { 'brand-gradient-border bg-brand-gradient text-fill-transparent': state === 'secondary' },
-                className
-            )} color={state !== null ? state : undefined} radius='sm' size='lg' variant={'shadow'}
+            { 'bg-brand-gradient font-semibold': state === 'primary' },
+            { 'brand-gradient-border bg-brand-gradient text-fill-transparent': state === 'secondary' },
+            className
+        )} color={state !== null ? state : undefined} radius='sm' size='lg' variant={'shadow'}
             onPress={onPress}
             {...props}
         >
@@ -23,7 +24,7 @@ export default function BrandButton({ state, className, onPress, children, ...pr
     )
 }
 
-export const getCTAButton = (_key: string, buttonType: 'cta' | 'secondary', text: string, link: string, size: 'lg' | 'md' = 'lg')=>{
+export const getCTAButton = (_key: string, buttonType: 'cta' | 'secondary' | 'ctaModal', text: string, link: string, size: 'lg' | 'md' = 'lg') => {
     const CTAButtons = {
         cta: (text: string, link: string) => (
             <BrandButton key={_key} as={Link} className="uppercase" href={link} state="primary">
@@ -49,6 +50,9 @@ export const getCTAButton = (_key: string, buttonType: 'cta' | 'secondary', text
                 <ArrowUpRightIcon className="text-secondary group-hover:translate-x-1 transition-transform" size={18} />
             </Button>
         ),
+        ctaModal: (text: string, link: string) => (
+            <BrandModalOffer key={_key} buttonLabel={text} />
+        )
     };
 
     return CTAButtons[buttonType](text, link) || null;
