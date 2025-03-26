@@ -13,8 +13,8 @@ export const UserPhoneInput = ({ ...props }) => {
     const [errorMessage, setErrorMessage] = useState('');
 
     const handlePhoneChange = (value: string, unmaskedValue: any) => {
-        setErrorMessage(isPhoneValid(unmaskedValue._value) ? '' : 'Введите корректный номер в формате +375 (XX) XXX-XX-XX');
-        // props.setIsValidPhone(isPhoneValid(unmaskedValue._value));
+        setErrorMessage(isPhoneValid(unmaskedValue._value) ? '' : 'Введите корректный номер');
+        isPhoneValid(unmaskedValue._value) ? props.validPhone(true) : props.validPhone(false);
     };
 
     return (
@@ -34,6 +34,7 @@ export const UserPhoneInput = ({ ...props }) => {
                 unmask={true}
                 // value={props.inputValue}
                 onAccept={handlePhoneChange}
+                pattern='^\+375\s\(\d{2}\)\s\d{3}-\d{2}-\d{2}$'
             />
             {errorMessage && <span className="text-red-500 text-xs">{errorMessage}</span>}
         </div>

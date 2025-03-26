@@ -11,6 +11,7 @@ import { UsernameInput, UserPhoneInput } from './form';
 
 import useForm from '@/hooks/useForm';
 import 'react-international-phone/style.css';
+import React from 'react';
 
 export const ModalOfferForm = ({ onClose }: { onClose?: () => void }) => {
 	const {
@@ -24,6 +25,7 @@ export const ModalOfferForm = ({ onClose }: { onClose?: () => void }) => {
 		validPhone,
 		handleSubmit,
 	} = useForm(onClose || (() => { }));
+	const [phoneValid, setPhoneValid] = React.useState(false);
 
 	return (
 		<Form
@@ -35,7 +37,7 @@ export const ModalOfferForm = ({ onClose }: { onClose?: () => void }) => {
 			<ModalBody className="w-full">
 				<UsernameInput />
 
-				<UserPhoneInput countries={countries} country={country} handlePhoneValueChange={handlePhoneValueChange} inputRef={inputRef} inputValue={inputValue} setCountry={setCountry} validPhone={validPhone} />
+				<UserPhoneInput countries={countries} country={country} handlePhoneValueChange={handlePhoneValueChange} inputRef={inputRef} inputValue={inputValue} setCountry={setCountry} validPhone={setPhoneValid} />
 
 			</ModalBody>
 			<ModalFooter className="w-full">
@@ -44,7 +46,7 @@ export const ModalOfferForm = ({ onClose }: { onClose?: () => void }) => {
 				</Button>
 				<BrandButton
 					className="flex-1 basis-32 uppercase"
-					disabled={isPending}
+					isDisabled={!phoneValid || isPending}
 					isLoading={isPending}
 					size='md'
 					spinner={

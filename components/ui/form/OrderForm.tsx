@@ -24,6 +24,7 @@ export default function OrderForm({ className, onClose }: { className?: string, 
         validPhone,
         handleSubmit,
     } = useForm(onClose || (() => { }));
+    const [phoneValid, setPhoneValid] = React.useState(false);
 
     return (
         <Form
@@ -34,13 +35,13 @@ export default function OrderForm({ className, onClose }: { className?: string, 
             <div className="w-full flex flex-col gap-4">
                 <UsernameInput />
 
-                <UserPhoneInput countries={countries} country={country} handlePhoneValueChange={handlePhoneValueChange} inputRef={inputRef} inputValue={inputValue} setCountry={setCountry} validPhone={validPhone} />
+                <UserPhoneInput countries={countries} country={country} handlePhoneValueChange={handlePhoneValueChange} inputRef={inputRef} inputValue={inputValue} setCountry={setCountry} validPhone={setPhoneValid} />
 
                 <UserTextareaInput />
             </div>
             <div className="w-full flex flex-wrap">
 
-                <BrandButton className='flex-1 basis-32 uppercase' isDisabled={isPending} isLoading={isPending} size='md' state='primary' type="submit">
+                <BrandButton className='flex-1 basis-32 uppercase' isDisabled={!phoneValid || isPending} isLoading={isPending} size='md' state='primary' type="submit">
                     {isPending ? 'Отправка...' : 'ОТПРАВИТЬ'}
                 </BrandButton>
             </div>
