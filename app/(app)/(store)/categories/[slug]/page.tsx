@@ -79,12 +79,12 @@ export default async function CategoryPage({ params }: { params: Promise<Props> 
                     </div>
                 </div>
             </section>
-            <Section innerClassname="pt-0 md:pt-0">
+            <Section id="products" innerClassname="pt-0 md:pt-0">
                 <SectionHeading>
                     <SectionTitle>{categoryTitle}</SectionTitle>
                     <Link className="flex items-center gap-2 text-primary" href="/products">
                         <ArrowLeftIcon className="w-6 h-6" />
-                        <span>Вернуться в каталог</span></Link>
+                        <span>В каталог</span></Link>
                 </SectionHeading>
 
                 <ProductsView products={products} />

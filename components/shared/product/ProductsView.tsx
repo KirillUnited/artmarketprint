@@ -1,5 +1,5 @@
 'use client';
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { AnimatePresence, motion } from 'framer-motion';
 
 import ProductThumb from './ProductThumb';
@@ -10,6 +10,7 @@ import ProductSearchForm from './ProductSearchForm';
 import clsx from 'clsx';
 import { useDisclosure } from '@heroui/modal';
 import Loader from '@/components/ui/Loader';
+import { scrollTo } from '@/lib/scrollTo';
 
 const ITEMS_PER_PAGE = 20;
 
@@ -18,26 +19,39 @@ export default function ProductsView({ products, categories, totalItemsView = IT
     const [selectedCategory, setSelectedCategory] = React.useState('');
     const [currentPage, setCurrentPage] = React.useState(1);
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
+    const [filteredProducts, setFilteredProducts] = React.useState<any[]>([]);
+    const [paginatedItems, setPaginatedItems] = React.useState<any[]>([]);
     const [isMounted, setIsMounted] = React.useState(false);
-    
-    // Workaround for hydration
-    React.useEffect(() => {
+
+    useEffect(() => {
         setIsMounted(true);
     }, []);
+
+    useEffect(() => {
+        const filtered = selectedCategory ? products
+            .filter((product: any) => getCategory(product?.category) === selectedCategory) : products ?? [];
+
+        const sorted = filtered.sort((a: any, b: any) => (sortOrder === 'asc' ? a.price - b.price : b.price - a.price));
+
+        setFilteredProducts(sorted);
+        setPaginatedItems(sorted.slice(0, totalItemsView));
+    }, [products, selectedCategory, sortOrder]);
 
     const handleFilterChange = (newSortOrder: string, newCategory: string) => {
         setSortOrder(newSortOrder);
         setSelectedCategory(newCategory);
         setCurrentPage(1);
+        scrollTo('products');
     };
-    const filteredProducts = (selectedCategory ? products
-        .filter((product: any) => getCategory(product?.category) === selectedCategory) : products ?? [])
-        .sort((a: any, b: any) => (sortOrder === 'asc' ? a.price - b.price : b.price - a.price));
 
-    const paginatedItems = filteredProducts.slice(
-        (currentPage - 1) * totalItemsView,
-        currentPage * totalItemsView
-    );
+    const handlePageChange = (newPage: number) => {
+        setPaginatedItems(filteredProducts.slice(
+            (newPage - 1) * totalItemsView,
+            newPage * totalItemsView
+        ));
+        setCurrentPage(newPage);
+        scrollTo('products');
+    };
 
     return (
         <>
@@ -90,7 +104,7 @@ export default function ProductsView({ products, categories, totalItemsView = IT
                                 filteredProducts.length > totalItemsView &&
                                 <Pagination className='self-center'
                                     total={Math.ceil(filteredProducts.length / totalItemsView)}
-                                    onChange={(value) => setCurrentPage(value)} page={currentPage} />
+                                    onChange={handlePageChange} page={currentPage} />
                             }
                         </div>
                     </div>
@@ -99,3 +113,4 @@ export default function ProductsView({ products, categories, totalItemsView = IT
         </>
     )
 }
+
