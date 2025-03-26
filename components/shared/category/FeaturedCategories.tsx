@@ -1,7 +1,5 @@
 import React from 'react'
 import Section, { SectionButton, SectionDescription, SectionHeading, SectionSubtitle, SectionTitle } from '../../layout/Section';
-import { CatalogHeading } from '../Catalog';
-import { siteConfig } from '@/config/site';
 import { Card, CardFooter } from '@heroui/card';
 import clsx from 'clsx';
 import Link from 'next/link';
@@ -22,6 +20,7 @@ import { SanityDocument } from 'next-sanity';
  * and a SectionButton.
  */
 export interface FeaturedCategoriesProps {
+    isActive: boolean;
     services: SanityDocument[];
     title?: string;
     subtitle?: string;
@@ -29,6 +28,8 @@ export interface FeaturedCategoriesProps {
 }
 
 export default async function FeaturedCategories(props: FeaturedCategoriesProps): Promise<JSX.Element | null> {
+    // If the component is not active, return null
+    if (!props.isActive) return null;
     // If no featured categories are found, return null
     if (!Array.isArray(props.services) || props.services.length === 0) return null;
 
@@ -38,7 +39,7 @@ export default async function FeaturedCategories(props: FeaturedCategoriesProps)
     // Render the section
     return (
         <Section className="relative" id="categories">
-            {/* Render the heading with the category count */}
+            {/* Render the heading with title, subtitle, and description */}
             <FeaturedCategoriesHeading title={title} subtitle={subtitle} description={description} />
 
             {/* Render the list of featured categories */}
