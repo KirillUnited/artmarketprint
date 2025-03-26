@@ -1,5 +1,7 @@
 import Section, { SectionHeading, SectionTitle } from "@/components/layout/Section";
+import { HeroContentCTA } from "@/components/shared/hero/HeroContentCTA";
 import ProductsView from "@/components/shared/product/ProductsView";
+import { getCTAButton } from "@/components/ui/BrandButton";
 import BaseBreadcrumb from "@/components/ui/Breadcrumb";
 import { getProductsByCategory } from "@/lib/actions/product.actions";
 import { getSanityDocuments } from "@/lib/fetch-sanity-data";
@@ -7,7 +9,8 @@ import { getUrlFor } from "@/lib/utils";
 import { client } from "@/sanity/client";
 import { CATEGORY_QUERY } from "@/sanity/lib/category.query";
 import { NAVIGATION_QUERY } from "@/sanity/lib/page.query";
-import { ArrowLeftIcon } from "lucide-react";
+import { Button } from "@heroui/button";
+import { ArrowLeftIcon, ArrowUpRightIcon } from "lucide-react";
 import { SanityDocument } from "next-sanity";
 import Image from "next/image";
 import Link from "next/link";
@@ -15,6 +18,20 @@ import Link from "next/link";
 export interface Props {
     slug: string,
 }
+const ctaButtonList = [
+    {
+        _key: "1",
+        buttonType: "ctaModal",
+        text: "Заказать печать",
+    },
+    {
+        _key: "2",
+        buttonType: "secondary",
+        text: "Все Услуги",
+        link: "/services",
+    }
+];
+
 export default async function CategoryPage({ params }: { params: Promise<Props> }) {
     const { slug } = await params;
     const category: any = await getSanityDocuments(CATEGORY_QUERY, { slug });
@@ -36,10 +53,23 @@ export default async function CategoryPage({ params }: { params: Promise<Props> 
                     )
                 }
                 <div className="container flex flex-col gap-10 max-w-4xl relative z-10">
-                    <div className="text-center">
+                    <article className="text-center">
                         <h1 className="text-4xl font-extrabold text-background sm:text-6xl">{category.title}</h1>
                         <p className="mt-4 text-xl text-white">{category.description}</p>
-                    </div>
+                    </article>
+                    {
+                        ctaButtonList.length > 0
+                        &&
+                        <footer className="flex flex-col md:flex-row gap-4">
+                            {
+                                getCTAButton(ctaButtonList[0]._key, ctaButtonList[0].buttonType as 'cta' | 'secondary' | 'ctaModal', ctaButtonList[0].text, '', 'md')}
+                            <Button as={Link} href={ctaButtonList[1].link} className="uppercase" color="default" size="md" radius="sm">
+                                {ctaButtonList[1].text}
+                                <ArrowUpRightIcon className="text-secondary group-hover:translate-x-1 transition-transform" size={18} />
+                            </Button>
+                        </footer>
+                    }
+
                 </div>
             </section>
             <section>
