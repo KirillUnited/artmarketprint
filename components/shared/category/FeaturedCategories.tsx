@@ -54,18 +54,41 @@ export const FeaturedCategoryList = ({ items }: any) => {
         </ul>
     )
 }
-export default async function FeaturedCategories() {
+/**
+ * A function that fetches featured categories from Sanity and renders them.
+ * @returns {JSX.Element | null} A JSX element or null if no categories are found.
+ * 
+ * This function fetches a list of categories from Sanity using the CATEGORIES_QUERY.
+ * It then filters out the categories that are not marked as featured.
+ * Finally, it renders a Section component with a CatalogHeading, a FeaturedCategoryList,
+ * and a SectionButton.
+ */
+export default async function FeaturedCategories(): Promise<JSX.Element | null> {
+    // Fetch the categories from Sanity
     const categories: SanityDocument[] = await getSanityDocuments(CATEGORIES_QUERY);
-    const categoryItemsCount = categories.length;
-
+    
+    // If no categories are found, return null
     if (!Array.isArray(categories) || categories.length === 0) return null;
+    
+    // Get the count of all categories
+    const categoryItemsCount = categories.length;
+    
+    // Filter out the categories that are not marked as featured
+    const featuredCategories = categories.filter((category: SanityDocument) => category.featured === true);
+    
+    // If no featured categories are found, return null
+    if (!Array.isArray(featuredCategories) || featuredCategories.length === 0) return null;
 
+    // Render the section
     return (
         <Section className="relative" id="categories">
+            {/* Render the heading with the category count */}
             <CatalogHeading categoryItemsCount={categoryItemsCount} />
 
-            <FeaturedCategoryList items={categories} />
+            {/* Render the list of featured categories */}
+            <FeaturedCategoryList items={featuredCategories} />
 
+            {/* If there are more than 4 categories, render a button to view all categories */}
             {categoryItemsCount > 4 && <SectionButton href={`/categories`} label="Все категории"
                 className='self-start'
             />}
