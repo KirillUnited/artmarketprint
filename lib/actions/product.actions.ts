@@ -5,7 +5,8 @@ import { getJsonFileData } from "@/lib/utils";
 // import { ARTE_PRODUCTS_FILE_PATH } from "../fetch-artegifts-data";
 
 export async function getAllProducts() {
-  const DATA_FILE_PATH = path.join(process.cwd(), '_data/products-20-03-25.json');
+  // const DATA_FILE_PATH = path.join(process.cwd(), '_data/products-20-03-25.json');
+  const DATA_FILE_PATH = '../_data/products-20-03-25.json';
   const { data } = await getJsonFileData(DATA_FILE_PATH) ?? {};
 
   return data?.item ?? [];
@@ -43,9 +44,8 @@ export async function getAllProductCategories() {
 }
 
 export async function getProductsByLimit(limit: number) {
-  const products = await getAllProducts();
-
-  return products.slice(0, limit);
+  // Use a more efficient way to get a subset of the products array
+  return (await getAllProducts()).slice(0, limit);
 }
 
 export async function getRelatedProductsByCategory(category: string, id: number, limit = 10) {
