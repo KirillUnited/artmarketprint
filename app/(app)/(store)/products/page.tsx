@@ -12,7 +12,7 @@ import { Suspense } from 'react';
 export default async function ProductsPage() {
     const breadcrumbs = (await getSanityDocuments(NAVIGATION_QUERY))[0].links;
     const products = await getAllProducts();
-    const categories = await getAllProductCategories();
+    // const categories = await getAllProductCategories();
 
     return (
         <>
@@ -47,7 +47,7 @@ export default async function ProductsPage() {
             </section>
             <Section id="products" innerClassname='pt-6 md:pt-6'>
                 <Suspense fallback={<div className="text-center">Loading...</div>}>
-                    <ProductsView categories={categories} products={products} />
+                    <ProductsView products={products} />
                 </Suspense>
             </Section>
         </>

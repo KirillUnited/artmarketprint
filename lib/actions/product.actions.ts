@@ -6,7 +6,7 @@ import { getJsonFileData } from "@/lib/utils";
 
 export async function getAllProducts() {
   // const DATA_FILE_PATH = path.join(process.cwd(), '_data/products-20-03-25.json');
-  const DATA_FILE_PATH = '../_data/products-20-03-25.json';
+  const DATA_FILE_PATH = '../_data/products-27-03-25.json';
   const { data } = await getJsonFileData(DATA_FILE_PATH) ?? {};
 
   return data?.item ?? [];
