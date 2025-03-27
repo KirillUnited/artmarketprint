@@ -9,7 +9,7 @@ import { saveJsonToFile } from '@/lib/utils';
 const PRODUCT_DESCRIPTION_URL = 'https://art24.by/capi_v100_xmls/products_description_xml_cdata001.xml';
 const MINSKSTOCKS_URL = 'https://art24.by/capi_v100_xmls/minskstocks.xml';
 const AUTH = Buffer.from('resu100capixml:67919f4F4f4f6a376d80919dEQli_f35a812').toString('base64');
-export const ARTE_PRODUCTS_FILE_PATH = '_data/products-20-03-25.json';
+export const ARTE_PRODUCTS_FILE_PATH = '_data/products-27-03-25.json';
 
 export async function getXmlData(url=PRODUCT_DESCRIPTION_URL) {
     try {
