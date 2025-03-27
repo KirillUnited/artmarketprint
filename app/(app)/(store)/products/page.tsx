@@ -6,17 +6,64 @@ import { getSanityDocuments } from '@/lib/fetch-sanity-data';
 import { NAVIGATION_QUERY } from '@/sanity/lib/queries';
 import Section from '@/components/layout/Section';
 import ProductsView from '@/components/shared/product/ProductsView';
-import { getAllProductCategories, getAllProducts, getProductsByLimit } from '@/lib/actions/product.actions';
 import { Suspense } from 'react';
+import { cache } from 'react';
+
+import fs from 'fs/promises';
+import path from 'path';
+
+const DATA_FILE_NAME = 'products-27-03-25.json';
+const DATA_FILE_PATH = path.join(process.cwd(), '_data', DATA_FILE_NAME);
+
+// Кешируем данные, чтобы не загружать файл при каждом запросе
+let cachedData: any | null = null;
+
+export async function getJsonFileData(): Promise<any> {
+  if (cachedData) return cachedData;
+
+  try {
+    const fileContent = await fs.readFile(DATA_FILE_PATH, 'utf-8');
+    cachedData = JSON.parse(fileContent);
+    return cachedData;
+  } catch (error) {
+    console.error('Error reading JSON file:', error);
+    throw new Error(`Failed to load '${DATA_FILE_NAME}' file data`);
+  }
+}
+
+export async function getAllProducts() {
+  const jsonData = await getJsonFileData();
+  return jsonData?.data?.item ?? [];
+}
+
+export async function getAllProductCategories() {
+  const products = await getAllProducts();
+
+  const categories = new Set<string>();
+
+  for (const product of products) {
+    if (!product?.category) continue;
+    const [categoryName] = product.category[0].split('|');
+    categories.add(categoryName);
+  }
+
+  return Array.from(categories);
+}
+
+const getCachedProducts = cache(() => getAllProducts());
 
 export default async function ProductsPage() {
-    const breadcrumbsPromise = getSanityDocuments(NAVIGATION_QUERY);
-    const productsPromise = getProductsByLimit(8000);
-    const categoriesPromise = getAllProductCategories();
     console.log('Page started');
-    const [products, categories, breadcrumbs] = await Promise.all([productsPromise, categoriesPromise, breadcrumbsPromise]);
+    const products = await getCachedProducts();
+    console.log('Products loades');
 
-    console.log('Products Page', products);
+    const categories = await getAllProductCategories();
+    console.log('Categories loaded');
+
+    const breadcrumbs = await getSanityDocuments(NAVIGATION_QUERY);
+    console.log(breadcrumbs)
+
+    console.log('Products Page loaded');
 
     return (
         <>
@@ -50,7 +97,7 @@ export default async function ProductsPage() {
                 </div>
             </section>
             <Section id="products" innerClassname='pt-6 md:pt-6'>
-                <Suspense fallback={<div className="text-center">Loading...</div>}>
+                <Suspense fallback={<div className="text-center">Загрузка товаров...</div>}>
                     <ProductsView products={products} categories={categories} />
                 </Suspense>
             </Section>

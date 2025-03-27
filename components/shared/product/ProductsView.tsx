@@ -20,7 +20,6 @@ export default function ProductsView({ products, categories, totalItemsView = IT
     const [currentPage, setCurrentPage] = React.useState(1);
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [isMounted, setIsMounted] = React.useState(false);
-    // Используем useMemo для оптимизации фильтрации и сортировки
     const filteredProducts = useMemo(() => {
         let result = products;
 
@@ -32,7 +31,6 @@ export default function ProductsView({ products, categories, totalItemsView = IT
             ? [...result].sort((a: any, b: any) => a.price - b.price)
             : [...result].sort((a: any, b: any) => b.price - a.price);
     }, [products, selectedCategory, sortOrder]);
-    // Оптимизация пагинации
     const paginatedItems = useMemo(() => {
         const start = (currentPage - 1) * totalItemsView;
         return filteredProducts.slice(start, start + totalItemsView);
@@ -50,7 +48,7 @@ export default function ProductsView({ products, categories, totalItemsView = IT
 
     useEffect(() => {
         setIsMounted(true);
-        console.log('Products View', products);
+        console.log('Products View page loaded');
     }, []);
 
     return (
