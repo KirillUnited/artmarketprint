@@ -84,31 +84,26 @@ export default function ProductsView({ products, categories, totalItemsView = IT
                             }
                             {
                                 paginatedItems.length ?
-                                <ul>
-                                {
-                                    paginatedItems.map((item: any) => (
-                                        <li key={`${item?.id[0]['_']}`}>
-                                            <div
-                                                className={clsx(
-                                                    "h-full group relative max-w-full shadow-small hover:shadow-large transition-shadow"
-                                                )}
-                                            >
-                                                <div className='items-stretch'>
-                                                    <Image alt={item.product[0]['_']} className="object-contain aspect-square mx-auto" src={item.images_urls[0]?.split(',')[0]} width={220} height={220}
-                                                        quality={50}
-                                                    />
-                                                    <span className="text-xl md:text-2xl text-primary font-semibold self-start">{`${item.price} BYN`}</span>
-                                                    <h3 className="font-bold text-gray-900 line-clamp-2">{item.product[0]['_']}</h3>
-                                                    <p className="text-gray-600 line-clamp-2 text-xs">{item.general_description[0]}</p>
-                                                </div>
-                                                <div>
-                                                    <Button as={Link} color='secondary' href={`/products/${item.id[0]['_']}`} radius='sm' size="md" target='_blank'>Подробнее</Button>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    ))
-                                }
-                            </ul> :
+                                    <ul className="grid grid-cols-[var(--grid-template-columns)] gap-8">
+                                        <AnimatePresence>
+                                            {
+                                                paginatedItems?.map((item: any) => (
+                                                    <motion.li
+                                                        key={`${item?.id[0]['_']}`}
+                                                        layout
+                                                        animate={{ opacity: 1 }}
+                                                        exit={{ opacity: 0 }}
+                                                        initial={{ opacity: 0 }}
+                                                        transition={{
+                                                            duration: 0.5,
+                                                        }}
+                                                    >
+                                                        <ProductThumb item={item} />
+                                                    </motion.li>
+                                                ))
+                                            }
+                                        </AnimatePresence>
+                                    </ul> :
                                     <p className="text-center mt-8 text-gray-500">Нет товаров</p>}
                             {
                                 filteredProducts.length > totalItemsView &&

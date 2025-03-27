@@ -1,9 +1,9 @@
 'use server';
 
-import { data } from '@/_data/products-27-03-25';
+import { getJsonFileData } from '../utils';
 
 export async function getAllProducts() {
-  const products = data;
+  const products = await getJsonFileData()
 
   return products?.data?.item ?? [];
 }
