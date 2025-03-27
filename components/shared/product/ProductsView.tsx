@@ -59,7 +59,8 @@ export default function ProductsView({ products, categories, totalItemsView = IT
 
     return (
         <>
-            {
+        {`${paginatedItems}`}
+            {/* {
                 !isMounted ? <Loader /> : <div className='flex flex-col gap-8'>
                     <div className={clsx(
                         'grid items-start gap-4 md:gap-8', {
@@ -119,7 +120,7 @@ export default function ProductsView({ products, categories, totalItemsView = IT
                         </div>
                     </div>
                 </div>
-            }
+            } */}
         </>
     )
 }
