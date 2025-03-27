@@ -9,7 +9,7 @@ import ProductsView from '@/components/shared/product/ProductsView';
 import { cache } from 'react';
 import { getAllProductCategories, getProductsByLimit } from '@/lib/actions/product.actions';
 
-const getCachedProducts = cache(() => getProductsByLimit(8000));
+const getCachedProducts = cache(() => getProductsByLimit(3000));
 
 export default async function ProductsPage() {
     const products = await getCachedProducts();

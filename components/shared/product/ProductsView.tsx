@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { AnimatePresence, motion } from 'framer-motion';
 
 import ProductThumb from './ProductThumb';
@@ -11,10 +11,6 @@ import clsx from 'clsx';
 import { useDisclosure } from '@heroui/modal';
 import Loader from '@/components/ui/Loader';
 import { scrollTo } from '@/lib/scrollTo';
-import { BrandCard } from '@/components/ui/card';
-import Image from 'next/image';
-import Link from 'next/link';
-import { Button } from '@heroui/button';
 
 const ITEMS_PER_PAGE = 20;
 
@@ -43,8 +39,8 @@ export default function ProductsView({ products, categories, totalItemsView = IT
     }, [products, selectedCategory, sortOrder]);
     const totalPages = Math.ceil(filteredProducts.length / totalItemsView);
     const paginatedItems = filteredProducts.slice(
-        (currentPage - 1) * totalItemsView,
-        currentPage * totalItemsView
+        (currentPage - 1) * ITEMS_PER_PAGE,
+        currentPage * ITEMS_PER_PAGE
     );
     const handleFilterChange = (newSortOrder: string, newCategory: string) => {
         setSortOrder(newSortOrder);
@@ -59,8 +55,7 @@ export default function ProductsView({ products, categories, totalItemsView = IT
 
     return (
         <>
-        {`${paginatedItems}`}
-            {/* {
+            {
                 !isMounted ? <Loader /> : <div className='flex flex-col gap-8'>
                     <div className={clsx(
                         'grid items-start gap-4 md:gap-8', {
@@ -85,31 +80,26 @@ export default function ProductsView({ products, categories, totalItemsView = IT
                             }
                             {
                                 paginatedItems.length ?
-                                <ul>
-                                {
-                                    paginatedItems.map((item: any) => (
-                                        <li key={`${item?.id[0]['_']}`}>
-                                            <div
-                                                className={clsx(
-                                                    "h-full group relative max-w-full shadow-small hover:shadow-large transition-shadow"
-                                                )}
-                                            >
-                                                <div className='items-stretch'>
-                                                    <Image alt={item.product[0]['_']} className="object-contain aspect-square mx-auto" src={item.images_urls[0]?.split(',')[0]} width={220} height={220}
-                                                        quality={50}
-                                                    />
-                                                    <span className="text-xl md:text-2xl text-primary font-semibold self-start">{`${item.price} BYN`}</span>
-                                                    <h3 className="font-bold text-gray-900 line-clamp-2">{item.product[0]['_']}</h3>
-                                                    <p className="text-gray-600 line-clamp-2 text-xs">{item.general_description[0]}</p>
-                                                </div>
-                                                <div>
-                                                    <Button as={Link} color='secondary' href={`/products/${item.id[0]['_']}`} radius='sm' size="md" target='_blank'>Подробнее</Button>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    ))
-                                }
-                            </ul> :
+                                    <ul className="grid grid-cols-[var(--grid-template-columns)] gap-8">
+                                        <AnimatePresence>
+                                            {
+                                                paginatedItems?.map((item: any) => (
+                                                    <motion.li
+                                                        key={`${item?.id[0]['_']}`}
+                                                        layout
+                                                        animate={{ opacity: 1 }}
+                                                        exit={{ opacity: 0 }}
+                                                        initial={{ opacity: 0 }}
+                                                        transition={{
+                                                            duration: 0.5,
+                                                        }}
+                                                    >
+                                                        <ProductThumb item={item} />
+                                                    </motion.li>
+                                                ))
+                                            }
+                                        </AnimatePresence>
+                                    </ul> :
                                     <p className="text-center mt-8 text-gray-500">Нет товаров</p>}
                             {
                                 filteredProducts.length > totalItemsView &&
@@ -120,7 +110,7 @@ export default function ProductsView({ products, categories, totalItemsView = IT
                         </div>
                     </div>
                 </div>
-            } */}
+            }
         </>
     )
 }
