@@ -9,21 +9,14 @@ import ProductsView from '@/components/shared/product/ProductsView';
 import { Suspense } from 'react';
 import { cache } from 'react';
 import { getAllProductCategories, getAllProducts, getProductsByLimit } from '@/lib/actions/product.actions';
+import Head from 'next/head';
 
 const getCachedProducts = cache(() => getProductsByLimit(3000));
 
 export default async function ProductsPage() {
-    console.log('Page started');
     const products = await getCachedProducts();
-    console.log('Products loades');
-
     const categories = await getAllProductCategories();
-    console.log('Categories loaded');
-
     const breadcrumbs = await getSanityDocuments(NAVIGATION_QUERY);
-    console.log('NAVIGATION_QUERY')
-
-    console.log('Products Page loaded');
 
     return (
         <>
