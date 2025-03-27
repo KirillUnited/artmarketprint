@@ -13,7 +13,10 @@ export default async function ProductsPage() {
     const breadcrumbsPromise = getSanityDocuments(NAVIGATION_QUERY);
     const productsPromise = getProductsByLimit(8000);
     const categoriesPromise = getAllProductCategories();
+    console.log('Page started');
     const [products, categories, breadcrumbs] = await Promise.all([productsPromise, categoriesPromise, breadcrumbsPromise]);
+
+    console.log('Products Page', products);
 
     return (
         <>
@@ -48,7 +51,7 @@ export default async function ProductsPage() {
             </section>
             <Section id="products" innerClassname='pt-6 md:pt-6'>
                 <Suspense fallback={<div className="text-center">Loading...</div>}>
-                    <ProductsView products={products} categories={Array.from(categories)} />
+                    <ProductsView products={products} categories={categories} />
                 </Suspense>
             </Section>
         </>
