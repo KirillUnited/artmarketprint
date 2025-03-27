@@ -20,22 +20,28 @@ export default function ProductsView({ products, categories, totalItemsView = IT
     const [currentPage, setCurrentPage] = React.useState(1);
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [isMounted, setIsMounted] = React.useState(false);
+
+    useEffect(() => {
+        setIsMounted(true);
+        console.log('Products View page loaded');
+    }, []);
+
     const filteredProducts = useMemo(() => {
         let result = products;
 
         if (selectedCategory) {
             result = result.filter((product: any) => getCategory(product?.category) === selectedCategory);
         }
-console.log('filteredProducts', result)
+
         return sortOrder === 'asc'
             ? [...result].sort((a: any, b: any) => a.price - b.price)
             : [...result].sort((a: any, b: any) => b.price - a.price);
     }, [products, selectedCategory, sortOrder]);
-    const paginatedItems = useMemo(() => {
-        const start = (currentPage - 1) * totalItemsView;
-        console.log('paginatedItems start', start)
-        return filteredProducts.slice(start, start + totalItemsView);
-    }, [filteredProducts, currentPage, totalItemsView]);
+    const totalPages = Math.ceil(filteredProducts.length / totalItemsView);
+    const paginatedItems = filteredProducts.slice(
+        (currentPage - 1) * ITEMS_PER_PAGE,
+        currentPage * ITEMS_PER_PAGE
+    );
     const handleFilterChange = (newSortOrder: string, newCategory: string) => {
         setSortOrder(newSortOrder);
         setSelectedCategory(newCategory);
@@ -46,11 +52,6 @@ console.log('filteredProducts', result)
         setCurrentPage(newPage);
         scrollTo('products');
     };
-
-    useEffect(() => {
-        setIsMounted(true);
-        console.log('Products View page loaded');
-    }, []);
 
     return (
         <>
@@ -103,7 +104,7 @@ console.log('filteredProducts', result)
                             {
                                 filteredProducts.length > totalItemsView &&
                                 <Pagination className='self-center'
-                                    total={Math.ceil(filteredProducts.length / totalItemsView)}
+                                    total={totalPages}
                                     onChange={handlePageChange} page={currentPage} />
                             }
                         </div>
