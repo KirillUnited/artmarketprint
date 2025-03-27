@@ -21,7 +21,7 @@ export default async function ProductsPage() {
     console.log('Categories loaded');
 
     const breadcrumbs = await getSanityDocuments(NAVIGATION_QUERY);
-    console.log(breadcrumbs)
+    console.log('NAVIGATION_QUERY')
 
     console.log('Products Page loaded');
 

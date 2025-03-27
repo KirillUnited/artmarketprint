@@ -3,11 +3,14 @@
 import path from "path";
 import { getJsonFileData } from "@/lib/utils";
 // import { ARTE_PRODUCTS_FILE_PATH } from "../fetch-artegifts-data";
+import {data} from '@/_data/products-27-03-25';
 
 
 export async function getAllProducts() {
-  const jsonData = await getJsonFileData();
-  return jsonData?.data?.item ?? [];
+  // const jsonData = await getJsonFileData();
+  // return jsonData?.data?.item ?? [];
+  const products = await data?.data?.item;
+  return products;
 }
 
 export async function getAllProductCategories() {
