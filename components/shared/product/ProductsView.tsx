@@ -43,8 +43,8 @@ export default function ProductsView({ products, categories, totalItemsView = IT
     }, [products, selectedCategory, sortOrder]);
     const totalPages = Math.ceil(filteredProducts.length / totalItemsView);
     const paginatedItems = filteredProducts.slice(
-        (currentPage - 1) * totalItemsView,
-        currentPage * totalItemsView
+        (currentPage - 1) * ITEMS_PER_PAGE,
+        currentPage * ITEMS_PER_PAGE
     );
     const handleFilterChange = (newSortOrder: string, newCategory: string) => {
         setSortOrder(newSortOrder);

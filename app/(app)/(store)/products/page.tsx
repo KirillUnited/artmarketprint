@@ -6,10 +6,11 @@ import { getSanityDocuments } from '@/lib/fetch-sanity-data';
 import { NAVIGATION_QUERY } from '@/sanity/lib/queries';
 import Section from '@/components/layout/Section';
 import ProductsView from '@/components/shared/product/ProductsView';
+import { Suspense } from 'react';
 import { cache } from 'react';
-import { getAllProductCategories, getAllProducts, getProductsByLimit } from '@/lib/actions/product.actions';
+import { getAllProductCategories, getProductsByLimit } from '@/lib/actions/product.actions';
 
-const getCachedProducts = cache(() => getAllProducts());
+const getCachedProducts = cache(() => getProductsByLimit(3000));
 
 export default async function ProductsPage() {
     const products = await getCachedProducts();
