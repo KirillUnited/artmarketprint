@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { AnimatePresence, motion } from 'framer-motion';
 
 import ProductThumb from './ProductThumb';
@@ -11,10 +11,6 @@ import clsx from 'clsx';
 import { useDisclosure } from '@heroui/modal';
 import Loader from '@/components/ui/Loader';
 import { scrollTo } from '@/lib/scrollTo';
-import { BrandCard } from '@/components/ui/card';
-import Image from 'next/image';
-import Link from 'next/link';
-import { Button } from '@heroui/button';
 
 const ITEMS_PER_PAGE = 20;
 
