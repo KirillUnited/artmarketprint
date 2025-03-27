@@ -10,6 +10,20 @@ import styles from './style.module.css';
 import { useEffect, useState } from 'react';
 
 export default function InstagramFeed({ className }: React.HTMLAttributes<HTMLDivElement>) {
+    return (
+        <div className={
+            clsx(
+                className
+            )
+        }>
+            <Script src="https://cdn.lightwidget.com/widgets/lightwidget.js"></Script>
+            <iframe src="//lightwidget.com/widgets/9182bf37593d50c0a994202f51247340.html" className="lightwidget-widget" scrolling='no' style={{ width: '100%', border: 0, overflow: 'hidden' }}>
+            </iframe>
+        </div>
+    )
+}
+
+export const InstagramFeedOld = ({ className }: SectionProps) => {
     const [isLoaded, setIsLoaded] = useState(true);
 
     useEffect(() => {
@@ -52,7 +66,7 @@ export const InstagramFeedSection = ({ className }: SectionProps) => {
                     </SectionDescription>
                 </SectionHeading>
             </div>
-            {/* <InstagramFeed/> */}
+            <InstagramFeed />
         </Section>
     )
 }
