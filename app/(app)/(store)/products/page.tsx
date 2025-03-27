@@ -7,9 +7,9 @@ import { NAVIGATION_QUERY } from '@/sanity/lib/queries';
 import Section from '@/components/layout/Section';
 import ProductsView from '@/components/shared/product/ProductsView';
 import { cache } from 'react';
-import { getAllProductCategories, getProductsByLimit } from '@/lib/actions/product.actions';
+import { getAllProductCategories, getAllProducts, getProductsByLimit } from '@/lib/actions/product.actions';
 
-const getCachedProducts = cache(() => getProductsByLimit(8000));
+const getCachedProducts = cache(() => getAllProducts());
 
 export default async function ProductsPage() {
     const products = await getCachedProducts();

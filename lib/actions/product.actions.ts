@@ -1,10 +1,10 @@
 'use server';
 
-import data from '@/_data/products-27-03-25.json';
+import { data } from '@/_data/products-27-03-25';
 
 export async function getAllProducts() {
-  const products = JSON.parse(JSON.stringify(data));
-  
+  const products = data;
+
   return products?.data?.item ?? [];
 }
 
@@ -80,9 +80,9 @@ export async function getProductBySlug(slug: string) {
 }
 
 export async function searchProductsByName(searchParam: string) {
- const products = await getAllProducts();
+  const products = await getAllProducts();
 
- return products.filter((product: any) => product.product[0]['_'].toLowerCase().includes(searchParam.toLowerCase()));
+  return products.filter((product: any) => product.product[0]['_'].toLowerCase().includes(searchParam.toLowerCase()));
 }
 
 export async function getProductsByCategory(category: string) {
