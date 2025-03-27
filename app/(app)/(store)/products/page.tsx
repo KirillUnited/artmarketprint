@@ -8,9 +8,9 @@ import Section from '@/components/layout/Section';
 import ProductsView from '@/components/shared/product/ProductsView';
 import { Suspense } from 'react';
 import { cache } from 'react';
-import { getAllProductCategories, getAllProducts } from '@/lib/actions/product.actions';
+import { getAllProductCategories, getAllProducts, getProductsByLimit } from '@/lib/actions/product.actions';
 
-const getCachedProducts = cache(() => getAllProducts());
+const getCachedProducts = cache(() => getProductsByLimit(5000));
 
 export default async function ProductsPage() {
     console.log('Page started');
