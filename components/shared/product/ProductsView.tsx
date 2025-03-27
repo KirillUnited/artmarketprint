@@ -99,12 +99,12 @@ export default function ProductsView({ products, categories, totalItemsView = IT
                                         </AnimatePresence>
                                     </ul> :
                                     <p className="text-center mt-8 text-gray-500">Нет товаров</p>}
-                            {
+                            {/* {
                                 filteredProducts.length > totalItemsView &&
                                 <Pagination className='self-center'
                                     total={Math.ceil(filteredProducts.length / totalItemsView)}
                                     onChange={handlePageChange} page={currentPage} />
-                            }
+                            } */}
                         </div>
                     </div>
                 </div>

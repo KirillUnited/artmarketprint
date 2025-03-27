@@ -10,7 +10,7 @@ import { Suspense } from 'react';
 import { cache } from 'react';
 import { getAllProductCategories, getAllProducts, getProductsByLimit } from '@/lib/actions/product.actions';
 
-const getCachedProducts = cache(() => getProductsByLimit(5000));
+const getCachedProducts = cache(() => getProductsByLimit(3000));
 
 export default async function ProductsPage() {
     console.log('Page started');
