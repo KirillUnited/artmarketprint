@@ -17,7 +17,7 @@ export default function InstagramFeed({ className }: React.HTMLAttributes<HTMLDi
             )
         }>
             <Script src="https://cdn.lightwidget.com/widgets/lightwidget.js"></Script>
-            <iframe src="//lightwidget.com/widgets/9182bf37593d50c0a994202f51247340.html" className="lightwidget-widget" scrolling='no' style={{ width: '100%', border: 0, overflow: 'hidden' }}>
+            <iframe title='Instagram Feed' src="//lightwidget.com/widgets/9182bf37593d50c0a994202f51247340.html" className="lightwidget-widget" scrolling='no' style={{ width: '100%', border: 0, overflow: 'hidden' }}>
             </iframe>
         </div>
     )
