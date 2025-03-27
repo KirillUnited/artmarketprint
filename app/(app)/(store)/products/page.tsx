@@ -8,47 +8,7 @@ import Section from '@/components/layout/Section';
 import ProductsView from '@/components/shared/product/ProductsView';
 import { Suspense } from 'react';
 import { cache } from 'react';
-
-import fs from 'fs/promises';
-import path from 'path';
-
-const DATA_FILE_NAME = 'products-27-03-25.json';
-const DATA_FILE_PATH = path.join(process.cwd(), '_data', DATA_FILE_NAME);
-
-// Кешируем данные, чтобы не загружать файл при каждом запросе
-let cachedData: any | null = null;
-
-export async function getJsonFileData(): Promise<any> {
-  if (cachedData) return cachedData;
-
-  try {
-    const fileContent = await fs.readFile(DATA_FILE_PATH, 'utf-8');
-    cachedData = JSON.parse(fileContent);
-    return cachedData;
-  } catch (error) {
-    console.error('Error reading JSON file:', error);
-    throw new Error(`Failed to load '${DATA_FILE_NAME}' file data`);
-  }
-}
-
-export async function getAllProducts() {
-  const jsonData = await getJsonFileData();
-  return jsonData?.data?.item ?? [];
-}
-
-export async function getAllProductCategories() {
-  const products = await getAllProducts();
-
-  const categories = new Set<string>();
-
-  for (const product of products) {
-    if (!product?.category) continue;
-    const [categoryName] = product.category[0].split('|');
-    categories.add(categoryName);
-  }
-
-  return Array.from(categories);
-}
+import { getAllProductCategories, getAllProducts } from '@/lib/actions/product.actions';
 
 const getCachedProducts = cache(() => getAllProducts());
 

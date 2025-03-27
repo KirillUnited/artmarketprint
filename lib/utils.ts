@@ -32,13 +32,21 @@ export async function saveJsonToFile(filename: string, data: any) {
   }
 }
 
-export async function getJsonFileData(filename: string): Promise<any> {
-  try {
-    const fileContent = await import('../_data/products-27-03-25.json');
+const DATA_FILE_NAME = 'products-27-03-25.json';
+const DATA_FILE_PATH = path.join(process.cwd(), '_data', DATA_FILE_NAME);
 
-    return fileContent.default;
+// Кешируем данные, чтобы не загружать файл при каждом запросе
+let cachedData: any | null = null;
+
+export async function getJsonFileData(): Promise<any> {
+  if (cachedData) return cachedData;
+
+  try {
+    const fileContent = await fs.readFile(DATA_FILE_PATH, 'utf-8');
+    cachedData = JSON.parse(fileContent);
+    return cachedData;
   } catch (error) {
     console.error('Error reading JSON file:', error);
-    throw new Error(`Failed to load '${filename}' file data`);
+    throw new Error(`Failed to load '${DATA_FILE_NAME}' file data`);
   }
 }
