@@ -26,13 +26,14 @@ export default function ProductsView({ products, categories, totalItemsView = IT
         if (selectedCategory) {
             result = result.filter((product: any) => getCategory(product?.category) === selectedCategory);
         }
-
+console.log('filteredProducts', result)
         return sortOrder === 'asc'
             ? [...result].sort((a: any, b: any) => a.price - b.price)
             : [...result].sort((a: any, b: any) => b.price - a.price);
     }, [products, selectedCategory, sortOrder]);
     const paginatedItems = useMemo(() => {
         const start = (currentPage - 1) * totalItemsView;
+        console.log('paginatedItems start', start)
         return filteredProducts.slice(start, start + totalItemsView);
     }, [filteredProducts, currentPage, totalItemsView]);
     const handleFilterChange = (newSortOrder: string, newCategory: string) => {
@@ -99,12 +100,12 @@ export default function ProductsView({ products, categories, totalItemsView = IT
                                         </AnimatePresence>
                                     </ul> :
                                     <p className="text-center mt-8 text-gray-500">Нет товаров</p>}
-                            {/* {
+                            {
                                 filteredProducts.length > totalItemsView &&
                                 <Pagination className='self-center'
                                     total={Math.ceil(filteredProducts.length / totalItemsView)}
                                     onChange={handlePageChange} page={currentPage} />
-                            } */}
+                            }
                         </div>
                     </div>
                 </div>
