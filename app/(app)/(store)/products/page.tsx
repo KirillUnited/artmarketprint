@@ -6,17 +6,24 @@ import { getSanityDocuments } from '@/lib/fetch-sanity-data';
 import { NAVIGATION_QUERY } from '@/sanity/lib/queries';
 import Section from '@/components/layout/Section';
 import ProductsView from '@/components/shared/product/ProductsView';
-import { getAllProductCategories, getAllProducts, getProductsByLimit } from '@/lib/actions/product.actions';
 import { Suspense } from 'react';
+import { cache } from 'react';
+import { getAllProductCategories, getAllProducts } from '@/lib/actions/product.actions';
+
+const getCachedProducts = cache(() => getAllProducts());
 
 export default async function ProductsPage() {
-    const breadcrumbsPromise = getSanityDocuments(NAVIGATION_QUERY);
-    const productsPromise = getProductsByLimit(8000);
-    const categoriesPromise = getAllProductCategories();
     console.log('Page started');
-    const [products, categories, breadcrumbs] = await Promise.all([productsPromise, categoriesPromise, breadcrumbsPromise]);
+    const products = await getCachedProducts();
+    console.log('Products loades');
 
-    console.log('Products Page', products);
+    const categories = await getAllProductCategories();
+    console.log('Categories loaded');
+
+    const breadcrumbs = await getSanityDocuments(NAVIGATION_QUERY);
+    console.log(breadcrumbs)
+
+    console.log('Products Page loaded');
 
     return (
         <>
@@ -50,7 +57,7 @@ export default async function ProductsPage() {
                 </div>
             </section>
             <Section id="products" innerClassname='pt-6 md:pt-6'>
-                <Suspense fallback={<div className="text-center">Loading...</div>}>
+                <Suspense fallback={<div className="text-center">Загрузка товаров...</div>}>
                     <ProductsView products={products} categories={categories} />
                 </Suspense>
             </Section>
