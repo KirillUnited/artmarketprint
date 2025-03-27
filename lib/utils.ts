@@ -34,7 +34,7 @@ export async function saveJsonToFile(filename: string, data: any) {
 
 export async function getJsonFileData(filename: string): Promise<any> {
   try {
-    const fileContent = await import('../_data/products-20-03-25.json');
+    const fileContent = await import('../_data/products-27-03-25.json');
 
     return fileContent.default;
   } catch (error) {
