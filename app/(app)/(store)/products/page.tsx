@@ -50,9 +50,7 @@ export default async function ProductsPage() {
                 </div>
             </section>
             <Section id="products" innerClassname='pt-6 md:pt-6'>
-                <Suspense fallback={<div className="text-center">Загрузка товаров...</div>}>
-                    <ProductsView products={products} categories={categories} />
-                </Suspense>
+                <ProductsView products={products} categories={categories} />
             </Section>
         </>
     );
