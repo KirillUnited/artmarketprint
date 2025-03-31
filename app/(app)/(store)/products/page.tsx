@@ -6,12 +6,15 @@ import { getSanityDocuments } from '@/lib/fetch-sanity-data';
 import { NAVIGATION_QUERY } from '@/sanity/lib/queries';
 import Section from '@/components/layout/Section';
 import ProductsView from '@/components/shared/product/ProductsView';
+import { cache } from 'react';
 import { getAllProductCategories, getProductsByLimit } from '@/lib/actions/product.actions';
 
+const getCachedProducts = cache(() => getProductsByLimit(5000));
+
 export default async function ProductsPage() {
-    const breadcrumbs = (await getSanityDocuments(NAVIGATION_QUERY))[0].links;
-    const products = await getProductsByLimit(5000);
+    const products = await getCachedProducts();
     const categories = await getAllProductCategories();
+    const breadcrumbs = await getSanityDocuments(NAVIGATION_QUERY);
 
     return (
         <>
@@ -40,12 +43,12 @@ export default async function ProductsPage() {
             <section>
                 <div className="container">
                     <div className="mt-10 mb-6">
-                        <BaseBreadcrumb items={breadcrumbs} section='catalog' />
+                        <BaseBreadcrumb items={breadcrumbs[0].links} section='catalog' />
                     </div>
                 </div>
             </section>
             <Section id="products" innerClassname='pt-6 md:pt-6'>
-                <ProductsView categories={categories} products={products} />
+                <ProductsView products={products} categories={categories} />
             </Section>
         </>
     );

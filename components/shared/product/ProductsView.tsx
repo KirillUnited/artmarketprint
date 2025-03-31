@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { AnimatePresence, motion } from 'framer-motion';
 
 import ProductThumb from './ProductThumb';
@@ -19,36 +19,36 @@ export default function ProductsView({ products, categories, totalItemsView = IT
     const [selectedCategory, setSelectedCategory] = React.useState('');
     const [currentPage, setCurrentPage] = React.useState(1);
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
-    const [filteredProducts, setFilteredProducts] = React.useState<any[]>([]);
-    const [paginatedItems, setPaginatedItems] = React.useState<any[]>([]);
     const [isMounted, setIsMounted] = React.useState(false);
 
     useEffect(() => {
         setIsMounted(true);
+        console.log('Products View page loaded');
     }, []);
 
-    useEffect(() => {
-        const filtered = selectedCategory ? products
-            .filter((product: any) => getCategory(product?.category) === selectedCategory) : products ?? [];
+    const filteredProducts = useMemo(() => {
+        let result = products;
 
-        const sorted = filtered.sort((a: any, b: any) => (sortOrder === 'asc' ? a.price - b.price : b.price - a.price));
+        if (selectedCategory) {
+            result = result.filter((product: any) => getCategory(product?.category) === selectedCategory);
+        }
 
-        setFilteredProducts(sorted);
-        setPaginatedItems(sorted.slice(0, totalItemsView));
+        return sortOrder === 'asc'
+            ? [...result].sort((a: any, b: any) => a.price - b.price)
+            : [...result].sort((a: any, b: any) => b.price - a.price);
     }, [products, selectedCategory, sortOrder]);
-
+    const totalPages = Math.ceil(filteredProducts.length / totalItemsView);
+    const paginatedItems = filteredProducts.slice(
+        (currentPage - 1) * ITEMS_PER_PAGE,
+        currentPage * ITEMS_PER_PAGE
+    );
     const handleFilterChange = (newSortOrder: string, newCategory: string) => {
         setSortOrder(newSortOrder);
         setSelectedCategory(newCategory);
         setCurrentPage(1);
         scrollTo('products');
     };
-
     const handlePageChange = (newPage: number) => {
-        setPaginatedItems(filteredProducts.slice(
-            (newPage - 1) * totalItemsView,
-            newPage * totalItemsView
-        ));
         setCurrentPage(newPage);
         scrollTo('products');
     };
@@ -80,11 +80,12 @@ export default function ProductsView({ products, categories, totalItemsView = IT
                             }
                             {
                                 paginatedItems.length ?
-                                    <ul className="grid grid-cols-[var(--grid-template-columns)] gap-4 md:gap-8">
-                                        {
-                                            paginatedItems?.map((item: any) => (
-                                                <AnimatePresence key={`${item?.id[0]['_']}`}>
+                                    <ul className="grid grid-cols-[var(--grid-template-columns)] gap-8">
+                                        <AnimatePresence>
+                                            {
+                                                paginatedItems?.map((item: any) => (
                                                     <motion.li
+                                                        key={`${item?.id[0]['_']}`}
                                                         layout
                                                         animate={{ opacity: 1 }}
                                                         exit={{ opacity: 0 }}
@@ -95,15 +96,15 @@ export default function ProductsView({ products, categories, totalItemsView = IT
                                                     >
                                                         <ProductThumb item={item} />
                                                     </motion.li>
-                                                </AnimatePresence>
-                                            ))
-                                        }
+                                                ))
+                                            }
+                                        </AnimatePresence>
                                     </ul> :
                                     <p className="text-center mt-8 text-gray-500">Нет товаров</p>}
                             {
                                 filteredProducts.length > totalItemsView &&
                                 <Pagination className='self-center'
-                                    total={Math.ceil(filteredProducts.length / totalItemsView)}
+                                    total={totalPages}
                                     onChange={handlePageChange} page={currentPage} />
                             }
                         </div>
