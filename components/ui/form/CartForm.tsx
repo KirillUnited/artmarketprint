@@ -36,6 +36,7 @@ export default function CartForm() {
     const [isClient, setIsClient] = useState(false);
     const [isPending, setIsPending] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+    const [phoneValid, setPhoneValid] = useState(false);
 
     // This is a workaround to prevent the component from rendering on the server
     useEffect(() => {
@@ -221,7 +222,7 @@ export default function CartForm() {
                         </div>
 
                         <div className="sm:col-span-2">
-                            <UserPhoneInput />
+                            <UserPhoneInput validPhone={setPhoneValid} />
                         </div>
 
                     </div>
@@ -365,7 +366,7 @@ export default function CartForm() {
                             radius="sm"
                             size="lg"
                             color="primary"
-                            disabled={isPending}
+                            isDisabled={!phoneValid || isPending}
                             isLoading={isPending}
                         >
                             {isPending ? 'Отправка...' : 'Подтвердить заказ'}
