@@ -92,6 +92,7 @@ export default function BrandCard({
 							height={320}
 							src={`${image}`}
 							width={270}
+							quality={50}
 						/>
 					</picture>
 				}
