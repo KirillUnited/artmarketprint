@@ -3,7 +3,7 @@
 import NextImage from 'next/image';
 import Loader from '@/components/ui/Loader';
 import { QuantityControls } from '@/components/ui/AddToBasketButton';
-import { ChevronDownIcon, Loader2, TrashIcon } from 'lucide-react';
+import { TrashIcon } from 'lucide-react';
 import { Button } from '@heroui/button';
 import { createProductCheckoutOrder, sendProductCheckoutFile } from '@/lib/actions/order.actions';
 import { toast } from 'sonner';
@@ -11,10 +11,18 @@ import { Form } from '@heroui/form';
 import { Image } from '@heroui/image';
 import { FormEvent, useEffect, useState } from 'react';
 import useBasketStore from '@/store/store';
+import CartFormInput from './CartFormInput';
+import { Select, SelectItem } from '@heroui/select';
+import { UserPhoneInput } from './UserPhoneInput';
 
 const deliveryMethods = [
     { id: 1, name: 'Самовывоз', title: 'Самовывоз', turnaround: 'Бесплатно', price: 0 },
     { id: 2, name: 'Доставка', title: 'Доставка', turnaround: '1–5 дней', price: 10.00 },
+]
+
+const countryOptions = [
+    { key: 'by', value: 'Республика Беларусь' },
+    { key: 'ru', value: 'Россия' },
 ]
 
 export default function CartForm() {
@@ -28,6 +36,7 @@ export default function CartForm() {
     const [isClient, setIsClient] = useState(false);
     const [isPending, setIsPending] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+    const [phoneValid, setPhoneValid] = useState(false);
 
     // This is a workaround to prevent the component from rendering on the server
     useEffect(() => {
@@ -132,126 +141,88 @@ export default function CartForm() {
                     <legend className="text-lg font-medium text-gray-900">Контактная информация</legend>
 
                     <div className="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
-                        <div>
-                            <label htmlFor="first-name" className="block text-sm/6 font-medium text-gray-700">
-                                Имя
-                            </label>
-                            <div className="mt-2">
-                                <input
-                                    id="first-name"
-                                    name="first-name"
-                                    type="text"
-                                    required
-                                    className="block w-full rounded-small bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                                />
-                            </div>
-                        </div>
+                        <CartFormInput
+                            isRequired
+                            errorMessage="Пожалуйста, введите Ваше имя"
+                            id='first-name'
+                            name='first-name'
+                            placeholder="Напишите Ваше имя"
+                            label="Имя"
+                        />
+                        <CartFormInput
+                            id='last-name'
+                            label="Фамилия"
+                            name='last-name'
+                            placeholder='Напишите Вашу фамилию'
+                        />
 
-                        <div>
-                            <label htmlFor="last-name" className="block text-sm/6 font-medium text-gray-700">
-                                Фамилия
-                            </label>
-                            <div className="mt-2">
-                                <input
-                                    id="last-name"
-                                    name="last-name"
-                                    type="text"
-                                    className="block w-full rounded-small bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                                />
-                            </div>
+                        <div className="sm:col-span-2">
+                            <CartFormInput
+                                label="Компания"
+                                id="company"
+                                name="company"
+                                type="text"
+                                placeholder='Напишите название компании'
+                            />
                         </div>
 
                         <div className="sm:col-span-2">
-                            <label htmlFor="company" className="block text-sm/6 font-medium text-gray-700">
-                                Компания
-                            </label>
-                            <div className="mt-2">
-                                <input
-                                    id="company"
-                                    name="company"
-                                    type="text"
-                                    className="block w-full rounded-small bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                                />
-                            </div>
+                            <CartFormInput
+                                label='Адрес'
+                                id="address"
+                                name="address"
+                                type="text"
+                                placeholder='Напишите адрес'
+                            />
                         </div>
 
                         <div className="sm:col-span-2">
-                            <label htmlFor="address" className="block text-sm/6 font-medium text-gray-700">
-                                Адрес
-                            </label>
-                            <div className="mt-2">
-                                <input
-                                    id="address"
-                                    name="address"
-                                    type="text"
-                                    className="block w-full rounded-small bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                                />
-                            </div>
-                        </div>
 
-                        <div className="sm:col-span-2">
-                            <label htmlFor="apartment" className="block text-sm/6 font-medium text-gray-700">
-                                Квартира, офис и т.д.
-                            </label>
-                            <div className="mt-2">
-                                <input
-                                    id="apartment"
-                                    name="apartment"
-                                    type="text"
-                                    className="block w-full rounded-small bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                                />
-                            </div>
+                            <CartFormInput
+                                label='Квартира, офис и т.д.'
+                                id="apartment"
+                                name="apartment"
+                                type="text"
+                                placeholder='Напишите номер квартиры, офиса и т.д.'
+                            />
                         </div>
 
                         <div>
-                            <label htmlFor="city" className="block text-sm/6 font-medium text-gray-700">
-                                Город
-                            </label>
-                            <div className="mt-2">
-                                <input
-                                    id="city"
-                                    name="city"
-                                    type="text"
-                                    required
-                                    className="block w-full rounded-small bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                                />
-                            </div>
+                            <CartFormInput
+                                isRequired
+                                label='Город'
+                                id="city"
+                                name="city"
+                                type="text"
+                                placeholder='Напишите город'
+                            />
                         </div>
 
                         <div>
-                            <label htmlFor="country" className="block text-sm/6 font-medium text-gray-700">
-                                Страна
-                            </label>
-                            <div className="mt-2 grid grid-cols-1">
-                                <select
-                                    id="country"
-                                    name="country"
-                                    required
-                                    className="col-start-1 row-start-1 w-full appearance-none rounded-small bg-white py-2 pl-3 pr-8 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                                >
-                                    <option>Республика Беларусь</option>
-                                    <option>Россия</option>
-                                </select>
-                                <ChevronDownIcon
-                                    aria-hidden="true"
-                                    className="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4"
-                                />
-                            </div>
+                            <Select
+                                color="primary"
+                                labelPlacement='outside'
+                                radius='sm'
+                                variant="bordered"
+                                classNames={{
+                                    trigger: 'border-1 bg-background',
+                                }}
+                                label="Страна"
+                                id="country"
+                                name="country"
+                                placeholder='Выберите страну'
+                                defaultSelectedKeys={['by']}
+                            >
+                                {
+                                    countryOptions.map((option) => (
+                                        <SelectItem key={option.key}>{option.value}</SelectItem>
+                                    ))
+                                }
+                            </Select>
                         </div>
 
                         <div className="sm:col-span-2">
-                            <label htmlFor="phone" className="block text-sm/6 font-medium text-gray-700">
-                                Телефон
-                            </label>
-                            <div className="mt-2">
-                                <input
-                                    id="phone"
-                                    name="phone"
-                                    type="text"
-                                    required
-                                    className="block w-full rounded-small bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                                />
-                            </div>
+                            <UserPhoneInput validPhone={setPhoneValid} />
                         </div>
 
                     </div>
@@ -284,7 +255,6 @@ export default function CartForm() {
                                     name="requisites-pdf"
                                     type="file"
                                     accept=".pdf"
-                                    required
                                     onChange={handleFileChange}
                                     className="block w-full rounded-small bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                 />
@@ -302,7 +272,6 @@ export default function CartForm() {
                                     id="email-address"
                                     name="email-address"
                                     type="email"
-                                    required
                                     className="block w-full rounded-small bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                 />
                             </div>
@@ -397,7 +366,7 @@ export default function CartForm() {
                             radius="sm"
                             size="lg"
                             color="primary"
-                            disabled={isPending}
+                            isDisabled={!phoneValid || isPending}
                             isLoading={isPending}
                         >
                             {isPending ? 'Отправка...' : 'Подтвердить заказ'}
