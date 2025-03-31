@@ -2,23 +2,38 @@
 
 import { getJsonFileData } from '../utils';
 
-export async function getAllProducts() {
-  const products = await getJsonFileData()
+/**
+ * Fetches all products from the JSON file data.
+ *
+ * @return {Promise<any[]>} A promise that resolves to an array of products.
+ */
+export async function getAllProducts(): Promise<any[]> {
+  // Retrieve JSON file data using the utility function
+  const products = await getJsonFileData();
 
+  // Return the list of products or an empty array if not available
   return products?.data?.item ?? [];
 }
 
-export async function getAllProductCategories() {
+/**
+ * Retrieves a list of unique product categories from the available products.
+ *
+ * @return {string[]} An array of unique product categories
+ */
+export async function getAllProductCategories(): Promise<string[]> {
   const products = await getAllProducts();
 
   const categories = new Set<string>();
 
+  // Iterate over products and extract the category name from each product
+  // The category name is the first part of the category property, separated by '|'
   for (const product of products) {
     if (!product?.category) continue;
     const [categoryName] = product.category[0].split('|');
     categories.add(categoryName);
   }
 
+  // Convert the Set to an array and return it
   return Array.from(categories);
 }
 
