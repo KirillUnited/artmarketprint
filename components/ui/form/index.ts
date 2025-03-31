@@ -4,4 +4,6 @@ import { UserTextareaInput } from './UserTextareaInput';
 
 import OrderForm from '@/components/ui/form/OrderForm';
 
-export { OrderForm, UserPhoneInput, UsernameInput, UserTextareaInput };
+import CartFormInput from './CartFormInput';
+
+export { OrderForm, UserPhoneInput, UsernameInput, UserTextareaInput, CartFormInput };

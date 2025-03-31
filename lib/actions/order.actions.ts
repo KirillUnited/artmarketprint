@@ -27,14 +27,14 @@ export async function sendOrder(formData: FormData): Promise<any> {
 }
 
 export async function createProductCheckoutOrder(formData: FormData): Promise<any> {
-	const email = formData.get('email-address') as string;
+	const email = formData.get('email') as string;
 	const firstName = formData.get('first-name') as string;
 	const lastName = formData.get('last-name') as string;
 	const address = formData.get('address') as string;
 	const city = formData.get('city') as string;
 	const country = formData.get('country') as string;
 	const postalCode = formData.get('postal-code') as string;
-	const phone = formData.get('phone') as string;
+	const phone = formData.get('user_phone') as string;
 	const items = JSON.parse(formData.get('items') as string);
 	const requisites = formData.get('requisites') as string;
 	const requisitesPdf = formData.get('requisites-pdf') as File;
