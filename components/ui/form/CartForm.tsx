@@ -215,7 +215,7 @@ export default function CartForm() {
                             >
                                 {
                                     countryOptions.map((option) => (
-                                        <SelectItem key={option.key}>{option.value}</SelectItem>
+                                        <SelectItem key={option.key} textValue={option.value}>{option.value}</SelectItem>
                                     ))
                                 }
                             </Select>
@@ -230,66 +230,53 @@ export default function CartForm() {
 
                 {/* Payment */}
                 <div className="mt-10 border-t border-gray-200 pt-10">
-                    <fieldset>
+                    <fieldset className="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
                         <legend className="text-lg font-medium text-gray-900">Оплата</legend>
                         <div className="sm:col-span-2 mt-4">
-                            <label htmlFor="requisites" className="block text-sm/6 font-medium text-gray-700">
-                                Реквизиты
-                            </label>
-                            <div className="mt-2">
-                                <input
-                                    id="requisites"
-                                    name="requisites"
-                                    type="text"
-                                    className="block w-full rounded-small bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                                />
-                            </div>
+                            <CartFormInput
+                                isRequired
+                                errorMessage="Пожалуйста, напишите название компании или реквизиты"
+                                label='Реквизиты'
+                                id="requisites"
+                                name="requisites"
+                                type="text"
+                                placeholder='Напишите название компании или реквизиты'
+                            />
                         </div>
-                        <div className="sm:col-span-2 mt-4">
-                            <label htmlFor="requisites-pdf" className="block text-sm/6 font-medium text-gray-700">
-                                Реквизиты (PDF)
-                            </label>
-                            <div className="mt-2">
-                                <input
-                                    id="requisites-pdf"
-                                    name="requisites-pdf"
-                                    type="file"
-                                    accept=".pdf"
-                                    onChange={handleFileChange}
-                                    className="block w-full rounded-small bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                                />
-                            </div>
+                        <div className="sm:col-span-2">
+                            <CartFormInput
+                                isRequired
+                                errorMessage="Пожалуйста, загрузите файл с реквизитами"
+                                label='Реквизиты (PDF)'
+                                id="requisites-pdf"
+                                name="requisites-pdf"
+                                type="file"
+                                accept=".pdf"
+                                onChange={handleFileChange}
+                            />
                             <p className="mt-1 text-sm text-gray-500">
                                 Загрузите файл с реквизитами в формате PDF (не более 5MB)
                             </p>
                         </div>
-                        <div className="sm:col-span-2 mt-4">
-                            <label htmlFor="email-address" className="block text-sm/6 font-medium text-gray-700">
-                                Электронная почта
-                            </label>
-                            <div className="mt-2">
-                                <input
-                                    id="email-address"
-                                    name="email-address"
-                                    type="email"
-                                    className="block w-full rounded-small bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                                />
-                            </div>
+                        <div className="sm:col-span-2">
+                            <CartFormInput
+                                label='Почта'
+                                id="email"
+                                name="email"
+                                type="email"
+                                isRequired
+                                errorMessage="Пожалуйста, введите Вашу почту"
+                                placeholder='Напишите Вашу почту'
+                            />
                         </div>
-                        <div className="sm:col-span-2 mt-4">
-                            <label htmlFor="comment" className="block text-sm/6 font-medium text-gray-700">
-                                Комментарий
-                            </label>
-                            <div className="mt-2">
-                                <textarea
-                                    placeholder='Напишите комментарий к заказу'
-                                    id="comment"
-                                    name="comment"
-                                    rows={5}
-                                    className="block w-full rounded-small bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                                />
-                            </div>
-
+                        <div className="sm:col-span-2">
+                            <CartFormInput
+                                placeholder='Напишите комментарий к заказу'
+                                id="comment"
+                                name="comment"
+                                rows={5}
+                                label="Комментарий"
+                            />
                         </div>
 
                     </fieldset>
@@ -362,7 +349,7 @@ export default function CartForm() {
                     <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
                         <Button
                             type="submit"
-                            className="w-full bg-brand-gradient font-semibold"
+                            className="w-full bg-brand-gradient font-semibold disabled:cursor-not-allowed pointer-events-auto"
                             radius="sm"
                             size="lg"
                             color="primary"
