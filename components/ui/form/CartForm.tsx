@@ -34,7 +34,6 @@ export default function CartForm() {
     const addItem = useBasketStore((state) => state.addItem);
     const getTotalPrice = useBasketStore((state) => state.getTotalPrice);
     const clearBasket = useBasketStore((state) => state.clearBasket);
-    const [selectedDeliveryMethod, setSelectedDeliveryMethod] = useState(deliveryMethods[0]);
     const [isClient, setIsClient] = useState(false);
     const [isPending, setIsPending] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
@@ -341,7 +340,7 @@ export default function CartForm() {
                         <div className="flex items-center justify-between border-t border-gray-200 pt-6">
                             <dt className="text-lg font-bold">Итого</dt>
                             <dd className="text-lg font-bold text-gray-900">
-                                {(getTotalPrice() + selectedDeliveryMethod.price).toFixed(2)} р.
+                                {getTotalPrice().toFixed(2)} р.
                             </dd>
                         </div>
                     </dl>
