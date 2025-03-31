@@ -14,6 +14,7 @@ import useBasketStore from '@/store/store';
 import CartFormInput from './CartFormInput';
 import { Select, SelectItem } from '@heroui/select';
 import { UserPhoneInput } from './UserPhoneInput';
+import { useRouter } from 'next/navigation';
 
 const deliveryMethods = [
     { id: 1, name: 'Самовывоз', title: 'Самовывоз', turnaround: 'Бесплатно', price: 0 },
@@ -26,6 +27,7 @@ const countryOptions = [
 ]
 
 export default function CartForm() {
+    const router = useRouter();
     const items = useBasketStore((state) => state.items);
     const removeItem = useBasketStore((state) => state.removeItem);
     const removeItemCompletely = useBasketStore((state) => state.removeItemCompletely);
@@ -96,10 +98,8 @@ export default function CartForm() {
             const result = await createProductCheckoutOrder(formData);
 
             if (result.ok) {
-                toast.success('Заявка отправлена', {
-                    description: `Заказ от ${new Date().toLocaleString()}. Спасибо за заявку! Мы свяжемся с Вами в ближайшее время.`,
-                })
                 clearBasket();
+                router.push('/success');
             }
         } catch (error) {
             console.error(error);

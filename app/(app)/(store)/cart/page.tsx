@@ -1,6 +1,12 @@
 import Section, { SectionHeading, SectionTitle } from '@/components/layout/Section';
 import CartForm from '@/components/ui/form/CartForm';
 
+export const metadata = {
+    title: 'Корзина',
+    description: 'Оформление заказа',
+    keywords: 'Корзина, оформление заказа', 
+}
+
 const CartPage = () => {
     return (
         <Section>
