@@ -8,7 +8,7 @@ import BaseBreadcrumb from '@/components/ui/Breadcrumb';
 import { getProductBySlug } from '@/lib/actions/product.actions';
 import { getPrice } from '@/lib/getPrice';
 import { client } from '@/sanity/client';
-import { NAVIGATION_QUERY } from '@/sanity/lib/page.query';
+import { NAVIGATION_QUERY } from '@/sanity/lib/queries';
 import AddToBasketButton from '@/components/ui/AddToBasketButton';
 import ProductPrice from '@/components/shared/product/ProductPrice';
 
