@@ -19,7 +19,7 @@ export default function ServiceListItems({ services }: any) {
                             {service?.service_tags?.length > 0 && <ProjectTagList color='primary' tags={service.service_tags} />}
                             {service?.category_tags?.length > 0 && <ProjectTagList color='secondary' tags={service.category_tags} />}
                         </div>
-                        <Image as={NextImage} isZoomed removeWrapper alt={service.title} className="z-0 w-full h-full object-cover aspect-square" radius="sm" src={service.imageUrl ? service.imageUrl : getUrlFor(service.image)} width={220} height={220} />
+                        <Image as={NextImage} removeWrapper alt={service.title} className="z-0 w-full h-full object-cover aspect-square" radius="sm" src={service.imageUrl ? service.imageUrl : getUrlFor(service.image)} width={220} height={220} />
                         <CardFooter className={clsx(
                             'absolute bg-white/75 bottom-0 w-full z-10 p-0 backdrop-blur-lg',
                         )}>
