@@ -45,7 +45,7 @@ export const ModalOfferForm = ({ onClose }: { onClose?: () => void }) => {
 					ОТМЕНА
 				</Button>
 				<BrandButton
-					className="flex-1 basis-32 uppercase"
+					className="flex-1 basis-32 uppercase disabled:cursor-not-allowed pointer-events-auto"
 					isDisabled={!phoneValid || isPending}
 					isLoading={isPending}
 					size='md'

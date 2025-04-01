@@ -41,7 +41,7 @@ export default function OrderForm({ className, onClose }: { className?: string, 
             </div>
             <div className="w-full flex flex-wrap">
 
-                <BrandButton className='flex-1 basis-32 uppercase' isDisabled={!phoneValid || isPending} isLoading={isPending} size='md' state='primary' type="submit">
+                <BrandButton className='flex-1 basis-32 uppercase disabled:cursor-not-allowed pointer-events-auto' isDisabled={!phoneValid || isPending} isLoading={isPending} size='md' state='primary' type="submit">
                     {isPending ? 'Отправка...' : 'ОТПРАВИТЬ'}
                 </BrandButton>
             </div>
