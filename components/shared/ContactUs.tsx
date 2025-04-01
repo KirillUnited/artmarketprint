@@ -8,8 +8,15 @@ import ContactsList from './ContactsList';
 import { SectionProps } from '@/types';
 import Section, { SectionDescription, SectionHeading, SectionSubtitle, SectionTitle } from '@/components/layout/Section';
 import { OrderForm } from '@/components/ui/form';
+import { getSanityDocuments } from '@/lib/fetch-sanity-data';
+import { SITE_SETTINGS_QUERY } from '@/sanity/lib/site.query';
 
-export default function ContactUs({ className, ...props }: SectionProps) {
+interface ContactUsProps extends SectionProps { }
+
+const ContactUs: React.FC<ContactUsProps> = async ({ className, ...props }) => {
+	const siteSettings: any = await getSanityDocuments(SITE_SETTINGS_QUERY);
+	const contacts = siteSettings?.siteContactInfo || {};
+
 	return (
 		<Section className={clsx('bg-[#F1F4FA]', className)} {...props}>
 			<div className="grid md:grid-cols-2 items-start gap-x-20 gap-y-10">
@@ -21,7 +28,7 @@ export default function ContactUs({ className, ...props }: SectionProps) {
 					/>
 					<div className="flex flex-wrap gap-10 justify-between">
 						<div className="flex flex-col gap-6">
-							<ContactsList className="" />
+							<ContactsList items={contacts} className="" />
 							<Socials />
 							<p>Ждем вас в любое удобное время!</p>
 						</div>
@@ -43,7 +50,9 @@ export default function ContactUs({ className, ...props }: SectionProps) {
 			</div>
 		</Section>
 	);
-}
+};
+
+export default ContactUs;
 
 export const ContactUsHeading = ({ title, subtitle, description }: { title?: string; subtitle?: string; description?: string }) => (
 	<div className="flex flex-wrap items-end justify-between gap-4">
