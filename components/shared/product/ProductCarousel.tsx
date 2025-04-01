@@ -9,7 +9,8 @@ import 'swiper/css/thumbs';
 
 // import required modules
 import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
-import {Image} from '@heroui/image';
+import { Image } from '@heroui/image';
+import NextImage from 'next/image';
 import clsx from 'clsx';
 
 import styles from './product.module.css';
@@ -36,7 +37,7 @@ export const ProductCarousel = ({ items, className }: HeroCarouselProps) => {
                 {items.map((item: string, index: number) => (
                     <SwiperSlide key={index} className={styles['swiper-slide']}>
                         <picture className='h-full'>
-                            <Image removeWrapper alt={'image'} className={'w-full aspect-square'} height={'100%'} src={item} width={'100%'} />
+                            <Image priority as={NextImage} removeWrapper alt={'image'} className={'w-full aspect-square max-h-full'} width={500} height={500} src={item} radius='sm' />
                         </picture>
                     </SwiperSlide>
                 ))}
@@ -53,7 +54,7 @@ export const ProductCarousel = ({ items, className }: HeroCarouselProps) => {
                 {items.map((item: string, index: number) => (
                     <SwiperSlide key={index} className={styles['swiper-slide']} >
                         <picture className='h-full border-slate-300 border p-3'>
-                            <Image removeWrapper alt={'image'} className={'w-full'} height={'100%'} src={item} width={'100%'} />
+                            <Image as={NextImage} removeWrapper alt={'image'} className={'w-full aspect-square max-h-full'} src={item} width={104} height={104} radius='sm' />
                         </picture>
                     </SwiperSlide>
                 ))}

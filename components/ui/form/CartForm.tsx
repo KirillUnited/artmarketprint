@@ -5,40 +5,28 @@ import Loader from '@/components/ui/Loader';
 import { QuantityControls } from '@/components/ui/AddToBasketButton';
 import { TrashIcon } from 'lucide-react';
 import { Button } from '@heroui/button';
-import { createProductCheckoutOrder, sendProductCheckoutFile } from '@/lib/actions/order.actions';
-import { toast } from 'sonner';
 import { Form } from '@heroui/form';
 import { Image } from '@heroui/image';
-import { FormEvent, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import useBasketStore from '@/store/store';
-import CartFormInput from './CartFormInput';
-import { Select, SelectItem } from '@heroui/select';
-import { UserPhoneInput } from './UserPhoneInput';
-import { useRouter } from 'next/navigation';
+import { useCartForm } from '@/hooks/useCartForm';
+import FormContactFields from './FormContactFields';
+import FormPaymentFields from './FormPaymentFields';
 
 const deliveryMethods = [
     { id: 1, name: 'Самовывоз', title: 'Самовывоз', turnaround: 'Бесплатно', price: 0 },
     { id: 2, name: 'Доставка', title: 'Доставка', turnaround: '1–5 дней', price: 10.00 },
 ]
 
-const countryOptions = [
-    { key: 'by', value: 'Республика Беларусь' },
-    { key: 'ru', value: 'Россия' },
-]
-
 export default function CartForm() {
-    const router = useRouter();
     const items = useBasketStore((state) => state.items);
     const removeItem = useBasketStore((state) => state.removeItem);
     const removeItemCompletely = useBasketStore((state) => state.removeItemCompletely);
     const addItem = useBasketStore((state) => state.addItem);
     const getTotalPrice = useBasketStore((state) => state.getTotalPrice);
-    const clearBasket = useBasketStore((state) => state.clearBasket);
-    const [selectedDeliveryMethod, setSelectedDeliveryMethod] = useState(deliveryMethods[0]);
     const [isClient, setIsClient] = useState(false);
-    const [isPending, setIsPending] = useState(false);
-    const [isLoading, setIsLoading] = useState(true);
     const [phoneValid, setPhoneValid] = useState(false);
+    const { isLoading, setIsLoading, isPending, handleFileChange, handleSubmit } = useCartForm();
 
     // This is a workaround to prevent the component from rendering on the server
     useEffect(() => {
@@ -47,75 +35,6 @@ export default function CartForm() {
     }, []);
 
     if (!isClient) return null;
-
-    // Handle PDF file upload
-    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files?.[0];
-        if (file) {
-            setIsLoading(true); // Show loading UI
-
-            if (file.size > 5 * 1024 * 1024) { // 5MB limit
-                toast.error('Ошибка загрузки файла', {
-                    description: 'Размер файла не должен превышать 5MB',
-                });
-                setIsLoading(false); // Hide loading UI
-                return;
-            }
-            if (file.type !== 'application/pdf') {
-                toast.error('Ошибка загрузки файла', {
-                    description: 'Поддерживается только формат PDF',
-                });
-                setIsLoading(false); // Hide loading UI
-                return;
-            }
-
-            // Simulate file upload process
-            setTimeout(() => {
-                setIsLoading(false); // Hide loading UI after upload
-                toast.success('Файл успешно загружен');
-            }, 2000); // Simulate 2 seconds upload time
-        }
-    };
-
-    async function handleSubmit(event: FormEvent<HTMLFormElement>): Promise<void> {
-        event.preventDefault();
-        const form = event.currentTarget;
-        const formData = new FormData(form);
-
-        // Add cart items to form data
-        const cartItems = items.map(item => ({
-            id: item.id,
-            name: item.name,
-            price: item.price,
-            quantity: item.quantity,
-            total: item.price * item.quantity
-        }));
-        formData.append('items', JSON.stringify(cartItems));
-
-        setIsPending(true);
-
-        try {
-            const result = await createProductCheckoutOrder(formData);
-
-            if (result.ok) {
-                clearBasket();
-                router.push('/success');
-            }
-        } catch (error) {
-            console.error(error);
-            toast.warning('Ошибка отправки заказа', {
-                description: 'Пожалуйста, попробуйте еще раз позже.',
-            });
-        } finally {
-            setIsPending(false);
-        }
-
-        try {
-            const sendAttach = await sendProductCheckoutFile(formData);
-        } catch (error) {
-            console.error(error);
-        }
-    }
 
     if (items.length === 0) {
         return (
@@ -137,149 +56,12 @@ export default function CartForm() {
                 </div>
             }
             <div className='w-full'>
-                <fieldset>
-                    <legend className="text-lg font-medium text-gray-900">Контактная информация</legend>
-
-                    <div className="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
-                        <CartFormInput
-                            isRequired
-                            errorMessage="Пожалуйста, введите Ваше имя"
-                            id='first-name'
-                            name='first-name'
-                            placeholder="Напишите Ваше имя"
-                            label="Имя"
-                        />
-                        <CartFormInput
-                            id='last-name'
-                            label="Фамилия"
-                            name='last-name'
-                            placeholder='Напишите Вашу фамилию'
-                        />
-
-                        <div className="sm:col-span-2">
-                            <CartFormInput
-                                label="Компания"
-                                id="company"
-                                name="company"
-                                type="text"
-                                placeholder='Напишите название компании'
-                            />
-                        </div>
-
-                        <div className="sm:col-span-2">
-                            <CartFormInput
-                                label='Адрес'
-                                id="address"
-                                name="address"
-                                type="text"
-                                placeholder='Напишите адрес'
-                            />
-                        </div>
-
-                        <div className="sm:col-span-2">
-
-                            <CartFormInput
-                                label='Квартира, офис и т.д.'
-                                id="apartment"
-                                name="apartment"
-                                type="text"
-                                placeholder='Напишите номер квартиры, офиса и т.д.'
-                            />
-                        </div>
-
-                        <div>
-                            <CartFormInput
-                                isRequired
-                                label='Город'
-                                id="city"
-                                name="city"
-                                type="text"
-                                placeholder='Напишите город'
-                            />
-                        </div>
-
-                        <div>
-                            <Select
-                                color="primary"
-                                labelPlacement='outside'
-                                radius='sm'
-                                variant="bordered"
-                                classNames={{
-                                    trigger: 'border-1 bg-background',
-                                }}
-                                label="Страна"
-                                id="country"
-                                name="country"
-                                placeholder='Выберите страну'
-                                defaultSelectedKeys={['by']}
-                            >
-                                {
-                                    countryOptions.map((option) => (
-                                        <SelectItem key={option.key} textValue={option.value}>{option.value}</SelectItem>
-                                    ))
-                                }
-                            </Select>
-                        </div>
-
-                        <div className="sm:col-span-2">
-                            <UserPhoneInput validPhone={setPhoneValid} />
-                        </div>
-
-                    </div>
-                </fieldset>
+                {/* Contact information */}
+                <FormContactFields setPhoneValid={setPhoneValid} />
 
                 {/* Payment */}
                 <div className="mt-10 border-t border-gray-200 pt-10">
-                    <fieldset className="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
-                        <legend className="text-lg font-medium text-gray-900">Оплата</legend>
-                        <div className="sm:col-span-2 mt-4">
-                            <CartFormInput
-                                isRequired
-                                errorMessage="Пожалуйста, напишите название компании или реквизиты"
-                                label='Реквизиты'
-                                id="requisites"
-                                name="requisites"
-                                type="text"
-                                placeholder='Напишите название компании или реквизиты'
-                            />
-                        </div>
-                        <div className="sm:col-span-2">
-                            <CartFormInput
-                                isRequired
-                                errorMessage="Пожалуйста, загрузите файл с реквизитами"
-                                label='Реквизиты (PDF)'
-                                id="requisites-pdf"
-                                name="requisites-pdf"
-                                type="file"
-                                accept=".pdf"
-                                onChange={handleFileChange}
-                            />
-                            <p className="mt-1 text-sm text-gray-500">
-                                Загрузите файл с реквизитами в формате PDF (не более 5MB)
-                            </p>
-                        </div>
-                        <div className="sm:col-span-2">
-                            <CartFormInput
-                                label='Почта'
-                                id="email"
-                                name="email"
-                                type="email"
-                                isRequired
-                                errorMessage="Пожалуйста, введите Вашу почту"
-                                placeholder='Напишите Вашу почту'
-                            />
-                        </div>
-                        <div className="sm:col-span-2">
-                            <CartFormInput
-                                placeholder='Напишите комментарий к заказу'
-                                id="comment"
-                                name="comment"
-                                rows={5}
-                                label="Комментарий"
-                            />
-                        </div>
-
-                    </fieldset>
+                    <FormPaymentFields handleFileChange={handleFileChange} />
                 </div>
             </div>
 
@@ -341,7 +123,7 @@ export default function CartForm() {
                         <div className="flex items-center justify-between border-t border-gray-200 pt-6">
                             <dt className="text-lg font-bold">Итого</dt>
                             <dd className="text-lg font-bold text-gray-900">
-                                {(getTotalPrice() + selectedDeliveryMethod.price).toFixed(2)} р.
+                                {getTotalPrice().toFixed(2)} р.
                             </dd>
                         </div>
                     </dl>
@@ -364,3 +146,4 @@ export default function CartForm() {
         </Form>
     )
 }
+

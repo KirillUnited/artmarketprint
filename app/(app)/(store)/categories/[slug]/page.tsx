@@ -1,5 +1,4 @@
 import Section, { SectionHeading, SectionTitle } from "@/components/layout/Section";
-import { HeroContentCTA } from "@/components/shared/hero/HeroContentCTA";
 import ProductsView from "@/components/shared/product/ProductsView";
 import { getCTAButton } from "@/components/ui/BrandButton";
 import BaseBreadcrumb from "@/components/ui/Breadcrumb";
@@ -8,7 +7,7 @@ import { getSanityDocuments } from "@/lib/fetch-sanity-data";
 import { getUrlFor } from "@/lib/utils";
 import { client } from "@/sanity/client";
 import { CATEGORY_QUERY } from "@/sanity/lib/category.query";
-import { NAVIGATION_QUERY } from "@/sanity/lib/page.query";
+import { NAVIGATION_QUERY } from "@/sanity/lib/queries";
 import { Button } from "@heroui/button";
 import { ArrowLeftIcon, ArrowUpRightIcon } from "lucide-react";
 import { SanityDocument } from "next-sanity";
