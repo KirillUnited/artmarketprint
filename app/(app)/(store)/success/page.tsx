@@ -1,8 +1,16 @@
+'use client';
+
+import useBasketStore from '@/store/store';
 import { Button } from '@heroui/button'
 import Link from 'next/link'
 import React from 'react'
 
 export default function SuccessPage() {
+    const clearBasket = useBasketStore((state) => state.clearBasket);
+
+    React.useEffect(() => {
+        clearBasket();
+    }, [clearBasket])
 
     return (
         <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-4">
