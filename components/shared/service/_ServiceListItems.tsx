@@ -1,4 +1,4 @@
-import { Image} from '@heroui/image';
+import { Image } from '@heroui/image';
 import NextImage from 'next/image';
 import { Card, CardFooter } from '@heroui/card';
 import { Link } from '@heroui/link';
@@ -21,24 +21,27 @@ export default function ServiceListItems({ services }: any) {
                         </div>
                         <Image as={NextImage} isZoomed removeWrapper alt={service.title} className="z-0 w-full h-full object-cover aspect-square" radius="sm" src={service.imageUrl ? service.imageUrl : getUrlFor(service.image)} width={220} height={220} />
                         <CardFooter className={clsx(
-                            'absolute bg-black/40 bottom-0 w-full z-10 p-0',
+                            'absolute bg-white/75 bottom-0 w-full z-10 p-0 backdrop-blur-lg',
                         )}>
                             <div className="flex flex-col gap-2 p-3 w-full">
                                 <div className="flex flex-col gap-2">
-                                    <h4 className="text-lg font-semibold text-white/80 line-clamp-2 leading-tight" title={service.title}>{service.title}</h4>
+                                    <h4 className="flex flex-col gap-2 font-semibold line-clamp-2 leading-tight" title={service.title}>
+                                        {service.title}
+                                        <span className='text-primary text-xl font-bold'>{service.price}</span>
+                                    </h4>
                                     <p
                                         className={clsx(
-                                            'text-xs text-white/80',
+                                            'text-xs',
                                             'grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-all duration-500 overflow-hidden'
                                         )}
                                         title={service.description}>
                                         <span className="line-clamp-4">{service.description}</span>
                                     </p>
                                 </div>
-                                <Button as={'span'} className="group/button self-start" color="secondary" radius="sm" role="presentation" size="sm">
+                                {/* <Button as={'span'} className="group/button self-start" color="secondary" radius="sm" role="presentation" size="sm">
                                     <span>Подробнее</span>
                                     <ArrowUpRightIcon className="group-hover/button:translate-x-1 transition-transform" size={18} />
-                                </Button>
+                                </Button> */}
                             </div>
                         </CardFooter>
                     </Card>
