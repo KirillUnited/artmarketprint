@@ -38,9 +38,10 @@ export const CartLinkButton = (itemsCount: number) => {
 	)
 }
 
-export default function Navbar({ navigation, sales }: any) {
+export default function Navbar({ navigation, sales, siteSettings }: any) {
 	const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 	const itemsCount = useBasketStore((state) => state.items.length);
+	const phones = siteSettings?.siteContactInfo?.phones ?? [];
 
 	return (
 		<>
@@ -86,9 +87,9 @@ export default function Navbar({ navigation, sales }: any) {
 								<ViberIcon />
 							</Link>
 						</div>
-
-						<PhoneListDropdown />
-
+						{
+							phones.length > 0 && <PhoneListDropdown items={phones} />
+						}
 						{CartLinkButton(itemsCount)}
 
 						<div className="hidden lg:block">

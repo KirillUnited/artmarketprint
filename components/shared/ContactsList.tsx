@@ -1,38 +1,60 @@
 import clsx from 'clsx';
-import {MailIcon, MapIcon, PhoneIcon, TimerIcon} from 'lucide-react';
+import { MailIcon, MapIcon, PhoneIcon, TimerIcon } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react';
 
-import {siteConfig} from '@/config/site';
+export interface ContactsListProps extends React.AllHTMLAttributes<HTMLDivElement> {
+	items: {
+		address: Array<{ _key: string, location: string; link: string }>;
+		emails: Array<{ _key: string, email: string; link: string }>;
+		phones: Array<{ _key: string, number: string; link: string }>;
+		workingHours: string;
+	};
+}
 
-export default function ContactsList({className}: React.AllHTMLAttributes<HTMLDivElement>) {
+/**
+ * Contacts list component
+ * @param {ContactsListProps} props - Component props
+ * @returns {React.ReactElement} Contacts list component
+ */
+export default function ContactsList({ items, className }: ContactsListProps) {
+	const address = items?.address;
+	const emails = items?.emails;
+	const phones = items?.phones;
+	const workingHours = items?.workingHours;
+
+	// If no items are provided, do not render the component
+	if (!address || !emails || !phones || !workingHours) return null;
+
 	return (
 		<div className={clsx('flex flex-col gap-6', className)}>
 			<div className="flex flex-col gap-1">
 				<h5 className="font-light text-gray-500">Адрес:</h5>
 				<p className="break-words flex items-center gap-2">
 					<MapIcon className="text-primary" size={20} />
-					<Link className="font-medium hover:text-primary transition" href={'https://yandex.by/navi/-/CHeQRZz4'} target="_blank">{siteConfig?.contacts?.[2]?.text}</Link>
+					<Link className="font-medium hover:text-primary transition" href={`${address[0]?.link}`} target="_blank">{address[0]?.location}</Link>
 				</p>
 			</div>
 			<div className="flex flex-col gap-1">
 				<h5 className="font-light text-left text-gray-500">Контакты:</h5>
 				<ul className="flex flex-col">
-					{siteConfig?.contacts?.[0]?.list?.map((item) => (
-						<li key={item.label} className="self-start">
-							<Link key={item.href} className="font-medium break-words text-left flex items-center gap-2 hover:text-primary transition" href={`tel:${item.href}` || '#'}>
+					{phones?.map((item) => (
+						<li key={item._key} className="self-start">
+							<Link className="font-medium break-words text-left flex items-center gap-2 hover:text-primary transition" href={`tel:${item.link}` || '#'}>
 								<PhoneIcon className="text-primary" size={20} />
-								{item.label}
+								{item.number}
 							</Link>
 						</li>
 					))}
 
-					<li className="self-start">
-						<Link className="font-medium break-words text-left flex items-center gap-2 hover:text-primary transition" href={`${siteConfig?.contacts?.[1]?.href}` || '#'}>
-							<MailIcon className="text-primary" size={20} />
-							{siteConfig?.contacts?.[1]?.text}
-						</Link>
-					</li>
+					{emails?.map((item) => (
+						<li key={item._key} className="self-start">
+							<Link className="font-medium break-words text-left flex items-center gap-2 hover:text-primary transition" href={`mailto:${item.link}` || '#'}>
+								<MailIcon className="text-primary" size={20} />
+								{item.email}
+							</Link>
+						</li>
+					))}
 				</ul>
 			</div>
 
@@ -40,7 +62,7 @@ export default function ContactsList({className}: React.AllHTMLAttributes<HTMLDi
 				<h5 className="font-light text-gray-500">Время работы:</h5>
 				<p className="font-medium break-words flex items-center gap-2">
 					<TimerIcon className="text-primary" size={20} />
-					{siteConfig?.contacts?.[3]?.text}
+					{workingHours}
 				</p>
 			</div>
 		</div>

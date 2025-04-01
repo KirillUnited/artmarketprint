@@ -6,8 +6,13 @@ import BrandLogo from '../ui/BrandLogo'
 import Socials from '@/components/shared/Socials';
 import ContactsList from '@/components/shared/ContactsList';
 import { siteConfig } from '@/config/site';
+import { getSanityDocuments } from '@/lib/fetch-sanity-data';
+import { SITE_SETTINGS_QUERY } from '@/sanity/lib/site.query';
 
-export default function Footer() {
+export default async function Footer() {
+	const siteSettings: any = await getSanityDocuments(SITE_SETTINGS_QUERY);
+	const contacts = siteSettings?.siteContactInfo || {};
+
     return (
         <footer
             className="bg-foreground"
@@ -20,7 +25,7 @@ export default function Footer() {
                         className="flex flex-col gap-8"
                     >
                         <div className='self-start'><BrandLogo alt="ArtMarketPrint" /></div>
-                        <ContactsList className='text-[#eeeeee]' />
+                        <ContactsList items={contacts} className='text-[#eeeeee]' />
                     </div>
                     <div className="flex flex-col gap-8 divide-y divide-background">
                         <Socials />
