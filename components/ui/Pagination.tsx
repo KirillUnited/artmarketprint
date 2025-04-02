@@ -76,7 +76,7 @@ export default function Pagination({className, total, onChange, ...props}: Pagin
 
     return (
         <BasePagination
-            showControls
+            // showControls
             className={clsx(
                 'gap-2',
                 className
