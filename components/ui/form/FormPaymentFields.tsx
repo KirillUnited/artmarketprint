@@ -20,7 +20,6 @@ const FormPaymentFields = ({ handleFileChange }: { handleFileChange: (e: React.C
                     <CartFormInput
                         isRequired
                         errorMessage="Пожалуйста, загрузите файл с реквизитами"
-                        label='Реквизиты (PDF)'
                         id="requisites-pdf"
                         name="requisites-pdf"
                         type="file"
@@ -29,7 +28,7 @@ const FormPaymentFields = ({ handleFileChange }: { handleFileChange: (e: React.C
                         classNames={{ base: 'peer hidden' }}
                     />
                     <p className="peer-data-[invalid=true]:text-danger hidden text-tiny peer-data-[invalid=true]:block p-1">Пожалуйста, загрузите файл с реквизитами</p>
-                    <label htmlFor="requisites-pdf"  className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed hover:border-gray-400 transition-colors cursor-pointer rounded-small focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500 peer-data-[invalid=true]:border-danger">
+                    <label aria-describedby="requisites-pdf" aria-label="Пожалуйста, загрузите файл с реквизитами" title="Пожалуйста, загрузите файл с реквизитами" htmlFor="requisites-pdf"  className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed hover:border-gray-400 transition-colors cursor-pointer rounded-small focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500 peer-data-[invalid=true]:border-danger">
                         <div className="space-y-1 text-center">
                             <svg
                                 className="mx-auto h-12 w-12 text-gray-400"
