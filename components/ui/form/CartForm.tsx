@@ -97,6 +97,7 @@ export default function CartForm() {
                                                 size="sm"
                                                 variant='light'
                                                 color='default'
+                                                className='text-gray-400'
                                             >
                                                 <span className="sr-only">Удалить</span>
                                                 <TrashIcon aria-hidden="true" size={18} />
