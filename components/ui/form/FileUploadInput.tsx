@@ -1,10 +1,10 @@
 import React from 'react'
-import CartFormInput from './CartFormInput'
+import FormInput from './FormInput'
 
 export default function FileUploadInput({ handleFileChange }: { handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void }) {
     return (
         <div className="relative">
-            <CartFormInput
+            <FormInput
                 isRequired
                 errorMessage="Пожалуйста, загрузите файл с реквизитами"
                 id="requisites-pdf"

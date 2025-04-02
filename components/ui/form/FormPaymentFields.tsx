@@ -1,4 +1,4 @@
-import CartFormInput from "./CartFormInput";
+import FormInput from "./FormInput";
 import FileUploadInput from "./FileUploadInput";
 
 const FormPaymentFields = ({ handleFileChange }: { handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void }) => {
@@ -6,7 +6,7 @@ const FormPaymentFields = ({ handleFileChange }: { handleFileChange: (e: React.C
         <fieldset className="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
             <legend className="text-lg font-medium text-gray-900">Оплата</legend>
             <div className="sm:col-span-2 mt-4">
-                <CartFormInput
+                <FormInput
                     isRequired
                     errorMessage="Пожалуйста, напишите название компании или реквизиты"
                     label='Реквизиты'
@@ -20,7 +20,7 @@ const FormPaymentFields = ({ handleFileChange }: { handleFileChange: (e: React.C
                 <FileUploadInput handleFileChange={handleFileChange} />
             </div>
             <div className="sm:col-span-2">
-                <CartFormInput
+                <FormInput
                     label='Почта'
                     id="email"
                     name="email"
@@ -31,7 +31,7 @@ const FormPaymentFields = ({ handleFileChange }: { handleFileChange: (e: React.C
                 />
             </div>
             <div className="sm:col-span-2">
-                <CartFormInput
+                <FormInput
                     placeholder='Напишите комментарий к заказу'
                     id="comment"
                     name="comment"

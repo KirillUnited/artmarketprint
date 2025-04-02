@@ -1,7 +1,7 @@
 import { Input } from '@heroui/input'
 import React from 'react'
 
-export default function CartFormInput(props: React.ComponentProps<typeof Input>) {
+export default function FormInput(props: React.ComponentProps<typeof Input>) {
     return (
         <Input
             color="primary"
