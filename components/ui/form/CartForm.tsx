@@ -73,12 +73,12 @@ export default function CartForm() {
                     <h3 className="sr-only">Товары в корзине</h3>
                     <ul className="divide-y divide-gray-200">
                         {isLoading ? <Loader /> : items.map((product) => (
-                            <li key={product.id} className="flex gap-4 px-4 py-6 sm:px-6">
-                                <div className="shrink-0">
-                                    <Image as={NextImage} src={product.image} alt={product.name} width={64} height={64} />
+                            <li key={product.id} className="flex flex-wrap gap-4 px-4 py-6 sm:px-6">
+                                <div className="w-16">
+                                    <Image as={NextImage} className='object-contain' src={product.image} alt={product.name} width={64} height={64} />
                                 </div>
 
-                                <div className="flex flex-1 flex-col">
+                                <div className="flex flex-col flex-1 ">
                                     <div className="flex gap-2">
                                         <div className="min-w-0 flex-1">
                                             <h4 className="text-sm">
@@ -89,15 +89,19 @@ export default function CartForm() {
                                             <p className="mt-1 text-sm text-gray-500 line-clamp-2">{product.description}</p>
                                         </div>
 
-                                        <div className="flow-root">
-                                            <button
+                                        <div className="flow-root shrink-0">
+                                            <Button
                                                 type="button"
-                                                className="flex items-center justify-center bg-white p-2.5 text-gray-400 hover:text-gray-500"
-                                                onClick={() => removeItemCompletely(product.id)}
+                                                onPress={() => removeItemCompletely(product.id)}
+                                                isIconOnly
+                                                size="sm"
+                                                variant='light'
+                                                color='default'
+                                                className='text-gray-400'
                                             >
                                                 <span className="sr-only">Удалить</span>
-                                                <TrashIcon aria-hidden="true" className="size-5" />
-                                            </button>
+                                                <TrashIcon aria-hidden="true" size={18} />
+                                            </Button>
                                         </div>
                                     </div>
 
