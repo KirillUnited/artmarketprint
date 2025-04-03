@@ -1,5 +1,5 @@
 import { Select, SelectItem } from "@heroui/select";
-import CartFormInput from "./CartFormInput";
+import FormInput from "./FormInput";
 import { UserPhoneInput } from "./UserPhoneInput";
 
 const countryOptions = [
@@ -12,7 +12,7 @@ const FormContactFields = ({ setPhoneValid }: { setPhoneValid: (valid: boolean) 
             <legend className="text-lg font-medium text-gray-900">Контактная информация</legend>
 
             <div className="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
-                <CartFormInput
+                <FormInput
                     isRequired
                     errorMessage="Пожалуйста, введите Ваше имя"
                     id='first-name'
@@ -20,7 +20,7 @@ const FormContactFields = ({ setPhoneValid }: { setPhoneValid: (valid: boolean) 
                     placeholder="Напишите Ваше имя"
                     label="Имя"
                 />
-                <CartFormInput
+                <FormInput
                     id='last-name'
                     label="Фамилия"
                     name='last-name'
@@ -28,7 +28,7 @@ const FormContactFields = ({ setPhoneValid }: { setPhoneValid: (valid: boolean) 
                 />
 
                 <div className="sm:col-span-2">
-                    <CartFormInput
+                    <FormInput
                         label="Компания"
                         id="company"
                         name="company"
@@ -38,7 +38,7 @@ const FormContactFields = ({ setPhoneValid }: { setPhoneValid: (valid: boolean) 
                 </div>
 
                 <div className="sm:col-span-2">
-                    <CartFormInput
+                    <FormInput
                         label='Адрес'
                         id="address"
                         name="address"
@@ -48,7 +48,7 @@ const FormContactFields = ({ setPhoneValid }: { setPhoneValid: (valid: boolean) 
                 </div>
 
                 <div className="sm:col-span-2">
-                    <CartFormInput
+                    <FormInput
                         label='Квартира, офис и т.д.'
                         id="apartment"
                         name="apartment"
@@ -58,7 +58,7 @@ const FormContactFields = ({ setPhoneValid }: { setPhoneValid: (valid: boolean) 
                 </div>
 
                 <div>
-                    <CartFormInput
+                    <FormInput
                         isRequired
                         label='Город'
                         id="city"
