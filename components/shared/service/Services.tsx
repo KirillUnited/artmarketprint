@@ -27,6 +27,7 @@ import { SanityDocument } from 'next-sanity';
  * @returns A JSX element or null if no services are found.
  */
 export const Services = async (props: {
+	isActive: boolean;
 	services: SanityDocument[];
 	subtitle?: string;
 	title?: string;
@@ -34,6 +35,9 @@ export const Services = async (props: {
 	link?: { text: string; link: string };
 }): Promise<JSX.Element | null> => {
 	const { services } = props;
+	
+	// If the component is not active, return null
+	if (!props.isActive) return null;
 
 	// If no services are found, return null.
 	if (!Array.isArray(services) || services.length === 0) {
