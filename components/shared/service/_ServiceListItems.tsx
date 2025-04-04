@@ -10,11 +10,12 @@ import { getUrlFor } from '@/lib/utils';
 import { ProjectTagList } from '@/components/shared/project';
 
 export default function ServiceListItems({ services }: any) {
+    console.log('services', services);
     return (
         <ul className="grid grid-cols-[var(--grid-template-columns)] gap-8">
             {services?.map((service: any) => (
                 <li key={service.title}>
-                    <Card isFooterBlurred as={Link} className="h-full group relative" href={`/services/${service.currentSlug}`} radius="sm">
+                    <Card isFooterBlurred as={Link} className="h-full group relative" href={`/services/${service.currentSlug || service.slug?.current}`} radius="sm">
                         <div className="absolute top-3 left-3 z-10 flex flex-wrap gap-2">
                             {service?.service_tags?.length > 0 && <ProjectTagList color='primary' tags={service.service_tags} />}
                             {service?.category_tags?.length > 0 && <ProjectTagList color='secondary' tags={service.category_tags} />}

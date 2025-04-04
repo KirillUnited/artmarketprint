@@ -35,7 +35,7 @@ export function PageBuilder({ content }: PageBuilderProps) {
 					case 'serviceList':
 						return (
 							<Fragment key={block._key}>
-								<Services key={block._key} />
+								<Services {...block} />
 								<FeaturedProducts />
 							</Fragment>
 						);
