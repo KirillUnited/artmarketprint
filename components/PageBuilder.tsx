@@ -3,7 +3,7 @@ import { Fragment } from 'react';
 import { FeaturedProducts } from '@/components/shared/product/FeaturedProducts';
 
 import { Hero } from '@/components/shared/hero/Hero';
-import { Benefits } from '@/components/shared/Benefits';
+import { FeaturesSection } from '@/components/shared/FeaturesSection';
 import { Services } from '@/components/shared/service';
 import About from '@/components/shared/About';
 import { Projects } from '@/components/shared/project/Projects';
@@ -29,7 +29,7 @@ export function PageBuilder({ content }: PageBuilderProps) {
 						return (
 							<Fragment key={block._key}>
 								<Hero />
-								<Benefits />
+								<FeaturesSection />
 							</Fragment>
 						);
 					case 'serviceList':
