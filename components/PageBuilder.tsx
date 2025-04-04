@@ -51,7 +51,7 @@ export function PageBuilder({ content }: PageBuilderProps) {
 							</Fragment>
 						);
 					case 'faqs':
-						return <FAQSection key={block._key} className="bg-[#F1F4FA]" />;
+						return <FAQSection key={block._key} {...block}  className="bg-[#F1F4FA]" />;
 					case 'contactUsBlock':
 						return (
 							<Fragment key={block._key}>
