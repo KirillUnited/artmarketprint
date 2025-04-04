@@ -1,6 +1,6 @@
 import { siteConfig } from '@/config/site';
 
-export const Benefits = () => {
+export const FeaturesSection = () => {
 	return (
 		<section className="bg-[#F1F4FA] flex flex-col">
 			<div className="container">

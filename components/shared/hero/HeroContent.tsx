@@ -3,7 +3,7 @@ import React from 'react';
 import {motion} from 'framer-motion';
 import {PortableText, PortableTextComponents} from 'next-sanity';
 
-import {HeroContentCTA} from '@/components/shared/hero/HeroContentCTA';
+import {ContentCTA} from '@/components/shared/ContentCTA';
 
 const components: PortableTextComponents = {
 	marks: {
@@ -62,7 +62,7 @@ export default function HeroContent({title, description, subtitle, ctaButtonList
 				</motion.div>
 				{description && <p className="text-foreground/70 text-base md:text-lg leading-normal font-medium">{description}</p>}
 			</article>
-			{ctaButtonList && ctaButtonList.length > 0 && <HeroContentCTA buttonList={ctaButtonList} />}
+			{ctaButtonList && ctaButtonList.length > 0 && <ContentCTA buttonList={ctaButtonList} />}
 		</>
 	);
 }
