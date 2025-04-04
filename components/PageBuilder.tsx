@@ -42,7 +42,7 @@ export function PageBuilder({ content }: PageBuilderProps) {
 					case 'categoryList':
 						return <FeaturedCategories key={block._key} {...block} />;
 					case 'imageTextBlock':
-						return <About key={block._key} />;
+						return <About key={block._key} {...block} />;
 					case 'projectList':
 						return (
 							<Fragment key={block._key}	>

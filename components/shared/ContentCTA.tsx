@@ -3,7 +3,7 @@ import React from 'react';
 import {getCTAButton} from '@/components/ui/BrandButton';
 
 
-export const HeroContentCTA = ({buttonList}: {buttonList: any[] | null | undefined}) => {
+export const ContentCTA = ({buttonList}: {buttonList: any[] | null | undefined}) => {
 	if (!Array.isArray(buttonList)) return null;
 
 	return (
