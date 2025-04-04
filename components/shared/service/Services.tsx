@@ -1,8 +1,6 @@
 import Link from 'next/link';
 import { Button } from '@heroui/button';
 import Image from 'next/image';
-import { SanityImageSource } from '@sanity/image-url/lib/types/types';
-import imageUrlBuilder from '@sanity/image-url';
 
 import BrandModalOffer from '../../ui/BrandModalOffer';
 
@@ -10,7 +8,6 @@ import ServiceListItems from './_ServiceListItems';
 
 import { siteConfig } from '@/config/site';
 import { ServiceDetailsProps } from '@/types';
-import { client } from '@/sanity/client';
 import { getSanityDocuments } from '@/lib/fetch-sanity-data';
 import Section, {
 	SectionButton,
@@ -22,10 +19,6 @@ import Section, {
 
 export const Services = async () => {
 	const services = await getSanityDocuments();
-	const builder = imageUrlBuilder(client);
-	const urlFor = (source: SanityImageSource) => {
-		return builder.image(source).url();
-	};
 
 	return (
 		<Section className="relative" id="services">
