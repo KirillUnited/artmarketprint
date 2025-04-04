@@ -1,7 +1,6 @@
 import Image from 'next/image';
 
 import { siteConfig } from '@/config/site';
-import { FAQSection } from '@/components/shared/faq';
 import ContactUs from '@/components/shared/ContactUs';
 import BaseBreadcrumb from '@/components/ui/Breadcrumb';
 import { client } from '@/sanity/client';
@@ -35,7 +34,6 @@ export default async function ServicesPage() {
 			<Section id="serviceList" innerClassname='pt-6 md:pt-6'>
 				<ServiceListItems services={services} />
 			</Section>
-			<FAQSection />
 			<ContactUs />
 		</>
 	);

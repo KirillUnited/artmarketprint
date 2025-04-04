@@ -4,7 +4,6 @@ import { SanityImageSource } from '@sanity/image-url/lib/types/types';
 
 import { siteConfig } from '@/config/site';
 import {BrandCard} from '@/components/ui/card';
-import { FAQSection } from '@/components/shared/faq';
 import ContactUs from '@/components/shared/ContactUs';
 import BaseBreadcrumb from '@/components/ui/Breadcrumb';
 import { client } from '@/sanity/client';
@@ -66,7 +65,6 @@ export default async function CatalogPage() {
                     }
                 </ul>
             </Section>
-            <FAQSection />
             <ContactUs />
         </>
     );
