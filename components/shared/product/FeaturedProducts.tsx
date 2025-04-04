@@ -14,7 +14,7 @@ export const ProductSectionHeading = ({ title, subtitle, description }: { title?
 );
 
 export const FeaturedProducts = async () => {
-    const data = await getProductsByLimit(5);
+    const data = await getProductsByLimit(4);
 
     if (!data || data.length === 0) {
         console.warn('Нет данных о продуктах');

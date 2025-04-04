@@ -46,7 +46,7 @@ export default async function FeaturedCategories(props: FeaturedCategoriesProps)
             <FeaturedCategoryList items={props.services} />
 
             {/* If there are more than 4 categories, render a button to view all categories */}
-            {categoryItemsCount > 4 && <SectionButton href={`/categories`} label="Все категории"
+            {categoryItemsCount > 1 && <SectionButton href={`/categories`} label="Все категории"
                 className='self-start'
             />}
         </Section>

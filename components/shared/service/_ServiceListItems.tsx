@@ -10,7 +10,6 @@ import { getUrlFor } from '@/lib/utils';
 import { ProjectTagList } from '@/components/shared/project';
 
 export default function ServiceListItems({ services }: any) {
-    console.log('services', services);
     return (
         <ul className="grid grid-cols-[var(--grid-template-columns)] gap-8">
             {services?.map((service: any) => (
