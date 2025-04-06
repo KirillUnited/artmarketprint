@@ -19,27 +19,6 @@ type Props = {
     slug: string
 }
 
-export function generateStaticParams() {
-    return siteConfig?.serviceSection?.items.map(({ slug }) => ({ slug }));
-}
-
-export async function generateMetadata({ params }: { params: Promise<Props> }) {
-    const { slug: paramsSlug } = await params;
-    const data = siteConfig.serviceSection.items.find(({ slug }) => slug === paramsSlug);
-    const { title = '', description = '', keywords = '' } = data?.seo || {};
-
-    return {
-        title: `${title || ''}`,
-        description: `${description}`,
-        keywords: `${keywords}`,
-        openGraph: {
-            title: `${title || ''}`,
-            description: `${description}`,
-            images: '/apple-touch-icon.png'
-        }
-    }
-}
-
 const SERVICE_QUERY = '*[_type == "service" && slug.current == $slug][0]';
 const { projectId, dataset } = client.config();
 const urlFor = (source: SanityImageSource) =>
@@ -48,6 +27,22 @@ const urlFor = (source: SanityImageSource) =>
         : null;
 
 const options = { next: { revalidate: 30 } };
+
+export async function generateMetadata({ params }: { params: Promise<Props> }) {
+    const service = await client.fetch<SanityDocument>(SERVICE_QUERY, await params, options);
+    const { title = '', description = ''} = service || {};
+
+    return {
+        title: `${title || ''}`,
+        description: `${description}`,
+        keywords: `${title.split(' ').join(', ')}, ${description.split(' ').join(', ')}`,
+        openGraph: {
+            title: `${title || ''}`,
+            description: `${description}`,
+            images: '/apple-touch-icon.png'
+        }
+    }
+}
 
 export default async function ServicePage({ params }: { params: Promise<Props> }) {
     const service = await client.fetch<SanityDocument>(SERVICE_QUERY, await params, options);

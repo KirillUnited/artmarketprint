@@ -7,9 +7,25 @@ import { NAVIGATION_QUERY } from '@/sanity/lib/queries';
 import Section from '@/components/layout/Section';
 import ProductsView from '@/components/shared/product/ProductsView';
 import { cache } from 'react';
-import { getAllProductCategories, getProductsByLimit } from '@/lib/actions/product.actions';
+import { getProductsByLimit } from '@/lib/actions/product.actions';
 
 const getCachedProducts = cache(() => getProductsByLimit(5000));
+const getAllProductCategories = async (): Promise<string[]> => {
+    const products = await getCachedProducts();
+
+    const categories = new Set<string>();
+
+    // Iterate over products and extract the category name from each product
+    // The category name is the first part of the category property, separated by '|'
+    for (const product of products) {
+        if (!product?.category) continue;
+        const [categoryName] = product.category[0].split('|');
+        categories.add(categoryName);
+    }
+
+    // Convert the Set to an array and return it
+    return Array.from(categories);
+}
 
 export default async function ProductsPage() {
     const products = await getCachedProducts();
