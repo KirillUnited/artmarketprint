@@ -37,7 +37,7 @@ export const ProductCarousel = ({ items, className }: HeroCarouselProps) => {
                 {items.map((item: string, index: number) => (
                     <SwiperSlide key={index} className={styles['swiper-slide']}>
                         <picture className='h-full'>
-                            <Image priority as={NextImage} removeWrapper alt={'image'} className={'w-full aspect-square max-h-full'} width={500} height={500} src={item} radius='sm' />
+                            <Image priority as={NextImage} quality={60} removeWrapper alt={'image'} className={'w-full aspect-square max-h-full'} width={500} height={500} src={item} radius='sm' />
                         </picture>
                     </SwiperSlide>
                 ))}
