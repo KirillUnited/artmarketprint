@@ -1,7 +1,6 @@
 import { FC } from 'react';
 import { Card, CardBody, CardFooter } from '@heroui/card';
 import { Link } from '@heroui/link';
-import { Image } from '@heroui/image';
 import { Button } from '@heroui/button';
 import NextImage from 'next/image';
 

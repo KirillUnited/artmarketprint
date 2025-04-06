@@ -59,22 +59,22 @@ export function useCartForm() {
         setIsPending(true);
 
         try {
-            const result = await createProductCheckoutOrder(formData);
+            // Execute both operations concurrently
+            const [orderResult, attachResult] = await Promise.all([
+                createProductCheckoutOrder(formData),
+                sendProductCheckoutFile(formData)
+            ]);
 
-            if (result.ok) {
+            if (orderResult.ok) {
                 router.push('/success');
             }
         } catch (error) {
-            console.error(error);
+            console.error('Order processing error:', error);
             toast.warning('Ошибка отправки заказа', {
                 description: 'Пожалуйста, попробуйте еще раз позже.',
             });
-        }
-
-        try {
-            const sendAttach = await sendProductCheckoutFile(formData);
-        } catch (error) {
-            console.error(error);
+        } finally {
+            setIsPending(false);
         }
     }
     return {
