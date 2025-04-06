@@ -14,20 +14,34 @@ import { scrollTo } from '@/lib/scrollTo';
 
 const ITEMS_PER_PAGE = 20;
 
+import { useQuery } from '@tanstack/react-query';
+import { getAllProducts } from '@/lib/actions/product.actions';
+
+// React Query hook for products
+const useProducts = () => {
+    return useQuery({
+        queryKey: ['products'],
+        queryFn: getAllProducts,
+        staleTime: 5 * 60 * 1000, // Consider data fresh for 5 minutes
+        gcTime: 30 * 60 * 1000, // Cache data for 30 minutes
+    });
+};
+
+
 export default function ProductsView({ products, categories, totalItemsView = ITEMS_PER_PAGE, isSearchPage = false }: any) {
+    const { data, isLoading, error }: { data: any; isLoading: boolean; error: Error | null } = useProducts();
     const [sortOrder, setSortOrder] = React.useState('');
     const [selectedCategory, setSelectedCategory] = React.useState('');
     const [currentPage, setCurrentPage] = React.useState(1);
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [isMounted, setIsMounted] = React.useState(false);
 
-    useEffect(() => {
-        setIsMounted(true);
-        console.log('Products View page loaded');
-    }, []);
+    if (isLoading) {
+        return <Loader />;
+    }
 
-    const filteredProducts = useMemo(() => {
-        let result = products;
+    const filteredProducts = () => {
+        let result = data || [];
 
         if (selectedCategory) {
             result = result.filter((product: any) => getCategory(product?.category) === selectedCategory);
@@ -36,9 +50,9 @@ export default function ProductsView({ products, categories, totalItemsView = IT
         return sortOrder === 'asc'
             ? [...result].sort((a: any, b: any) => a.price - b.price)
             : [...result].sort((a: any, b: any) => b.price - a.price);
-    }, [products, selectedCategory, sortOrder]);
-    const totalPages = Math.ceil(filteredProducts.length / totalItemsView);
-    const paginatedItems = filteredProducts.slice(
+    };
+    const totalPages = Math.ceil(filteredProducts().length / totalItemsView);
+    const paginatedItems = filteredProducts().slice(
         (currentPage - 1) * ITEMS_PER_PAGE,
         currentPage * ITEMS_PER_PAGE
     );
@@ -56,7 +70,7 @@ export default function ProductsView({ products, categories, totalItemsView = IT
     return (
         <>
             {
-                !isMounted ? <Loader /> : <div className='flex flex-col gap-8'>
+                isLoading ? <Loader /> : <div className='flex flex-col gap-8'>
                     <div className={clsx(
                         'grid items-start gap-4 md:gap-8', {
                         ['md:grid-cols-[auto_1fr]']: !isSearchPage
@@ -102,7 +116,7 @@ export default function ProductsView({ products, categories, totalItemsView = IT
                                     </ul> :
                                     <p className="text-center mt-8 text-gray-500">Нет товаров</p>}
                             {
-                                filteredProducts.length > totalItemsView &&
+                                // filteredProducts().length > totalItemsView &&
                                 <Pagination className='self-center'
                                     total={totalPages}
                                     onChange={handlePageChange} page={currentPage} />

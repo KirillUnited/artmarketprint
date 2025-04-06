@@ -7,9 +7,27 @@ import { NAVIGATION_QUERY } from '@/sanity/lib/queries';
 import Section from '@/components/layout/Section';
 import ProductsView from '@/components/shared/product/ProductsView';
 import { cache } from 'react';
-import { getProductsByLimit } from '@/lib/actions/product.actions';
 
-const getCachedProducts = cache(() => getProductsByLimit(5000));
+const getProducts = async () => {
+    try {
+        const products = await import('../../../../_data/products.json')
+            .then((module: any) => module.default.data.item);
+        return products;
+    } catch (error) {
+        console.error('Error loading products:', error);
+        return [];
+    }
+};
+// Cache products data to improve performance and reduce API calls
+const getCachedProducts = cache(async () => {
+    try {
+        const products = await getProducts();
+        return products;
+    } catch (error) {
+        console.error('Error fetching cached products:', error);
+        return [];
+    }
+});
 const getAllProductCategories = async (): Promise<string[]> => {
     const products = await getCachedProducts();
 
@@ -28,7 +46,6 @@ const getAllProductCategories = async (): Promise<string[]> => {
 }
 
 export default async function ProductsPage() {
-    const products = await getCachedProducts();
     const categories = await getAllProductCategories();
     const breadcrumbs = await getSanityDocuments(NAVIGATION_QUERY);
 
@@ -64,7 +81,7 @@ export default async function ProductsPage() {
                 </div>
             </section>
             <Section id="products" innerClassname='pt-6 md:pt-6'>
-                <ProductsView products={products} categories={categories} />
+                <ProductsView products={null} categories={categories} />
             </Section>
         </>
     );
