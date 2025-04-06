@@ -1,5 +1,7 @@
 'use server';
 
+import { CATEGORIES_QUERY } from '@/sanity/lib/category.query';
+import { getSanityDocuments } from '../fetch-sanity-data';
 import { getJsonFileData } from '../utils';
 
 /**
@@ -10,9 +12,20 @@ import { getJsonFileData } from '../utils';
 export async function getAllProducts(): Promise<any[]> {
   // Retrieve JSON file data using the utility function
   const products = await getJsonFileData();
-  
+
   // Return the list of products or an empty array if not available
   return products?.data?.item ?? [];
+}
+
+export async function getAllProductCategories(): Promise<string[]> {
+  try {
+    const categories = await getSanityDocuments(CATEGORIES_QUERY);
+
+    return categories.map((category) => category.title);
+  } catch (error) {
+    console.error('Error fetching categories:', error);
+    return [];
+  }
 }
 
 /**
@@ -20,22 +33,22 @@ export async function getAllProducts(): Promise<any[]> {
  *
  * @return {string[]} An array of unique product categories
  */
-export async function getAllProductCategories(): Promise<string[]> {
-  const products = await getAllProducts();
+// export async function getAllProductCategories(): Promise<string[]> {
+//   const products = await getAllProducts();
 
-  const categories = new Set<string>();
+//   const categories = new Set<string>();
 
-  // Iterate over products and extract the category name from each product
-  // The category name is the first part of the category property, separated by '|'
-  for (const product of products) {
-    if (!product?.category) continue;
-    const [categoryName] = product.category[0].split('|');
-    categories.add(categoryName);
-  }
+//   // Iterate over products and extract the category name from each product
+//   // The category name is the first part of the category property, separated by '|'
+//   for (const product of products) {
+//     if (!product?.category) continue;
+//     const [categoryName] = product.category[0].split('|');
+//     categories.add(categoryName);
+//   }
 
-  // Convert the Set to an array and return it
-  return Array.from(categories);
-}
+//   // Convert the Set to an array and return it
+//   return Array.from(categories);
+// }
 
 // export async function getAllProducts() {
 //   // const DATA_FILE_PATH = path.join(process.cwd(), '_data/products-20-03-25.json');

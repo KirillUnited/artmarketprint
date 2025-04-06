@@ -3,15 +3,10 @@ import Image from 'next/image';
 import { siteConfig } from '@/config/site';
 import BaseBreadcrumb from '@/components/ui/Breadcrumb';
 import { getSanityDocuments } from '@/lib/fetch-sanity-data';
-import { CATEGORIES_QUERY, NAVIGATION_QUERY } from '@/sanity/lib/queries';
+import { NAVIGATION_QUERY } from '@/sanity/lib/queries';
 import Section from '@/components/layout/Section';
 import ProductsView from '@/components/shared/product/ProductsView';
-
-async function getAllProductCategories(): Promise<string[]> {
-    const categories = await getSanityDocuments(CATEGORIES_QUERY);
-  
-    return categories.map((category) => category.title);
-  }
+import { getAllProductCategories } from '@/lib/actions/product.actions';
 
 export default async function ProductsPage() {
     const categories = await getAllProductCategories();
