@@ -32,7 +32,7 @@ export async function saveJsonToFile(filename: string, data: any) {
   }
 }
 
-const DATA_FILE_NAME = 'products-27-03-25.json';
+const DATA_FILE_NAME = 'products.json';
 const DATA_FILE_PATH = path.join(process.cwd(), '_data', DATA_FILE_NAME);
 
 // Кешируем данные, чтобы не загружать файл при каждом запросе

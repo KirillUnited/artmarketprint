@@ -10,7 +10,7 @@ import { getJsonFileData } from '../utils';
 export async function getAllProducts(): Promise<any[]> {
   // Retrieve JSON file data using the utility function
   const products = await getJsonFileData();
-
+  
   // Return the list of products or an empty array if not available
   return products?.data?.item ?? [];
 }
