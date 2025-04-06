@@ -3,47 +3,15 @@ import Image from 'next/image';
 import { siteConfig } from '@/config/site';
 import BaseBreadcrumb from '@/components/ui/Breadcrumb';
 import { getSanityDocuments } from '@/lib/fetch-sanity-data';
-import { NAVIGATION_QUERY } from '@/sanity/lib/queries';
+import { CATEGORIES_QUERY, NAVIGATION_QUERY } from '@/sanity/lib/queries';
 import Section from '@/components/layout/Section';
 import ProductsView from '@/components/shared/product/ProductsView';
-import { cache } from 'react';
 
-const getProducts = async () => {
-    try {
-        const products = await import('../../../../_data/products.json')
-            .then((module: any) => module.default.data.item);
-        return products;
-    } catch (error) {
-        console.error('Error loading products:', error);
-        return [];
-    }
-};
-// Cache products data to improve performance and reduce API calls
-const getCachedProducts = cache(async () => {
-    try {
-        const products = await getProducts();
-        return products;
-    } catch (error) {
-        console.error('Error fetching cached products:', error);
-        return [];
-    }
-});
-const getAllProductCategories = async (): Promise<string[]> => {
-    const products = await getCachedProducts();
-
-    const categories = new Set<string>();
-
-    // Iterate over products and extract the category name from each product
-    // The category name is the first part of the category property, separated by '|'
-    for (const product of products) {
-        if (!product?.category) continue;
-        const [categoryName] = product.category[0].split('|');
-        categories.add(categoryName);
-    }
-
-    // Convert the Set to an array and return it
-    return Array.from(categories);
-}
+async function getAllProductCategories(): Promise<string[]> {
+    const categories = await getSanityDocuments(CATEGORIES_QUERY);
+  
+    return categories.map((category) => category.title);
+  }
 
 export default async function ProductsPage() {
     const categories = await getAllProductCategories();
