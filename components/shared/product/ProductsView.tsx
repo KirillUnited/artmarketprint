@@ -116,7 +116,7 @@ export default function ProductsView({ products, categories, totalItemsView = IT
                                     </ul> :
                                     <p className="text-center mt-8 text-gray-500">Нет товаров</p>}
                             {
-                                // filteredProducts().length > totalItemsView &&
+                                filteredProducts().length > totalItemsView &&
                                 <Pagination className='self-center'
                                     total={totalPages}
                                     onChange={handlePageChange} page={currentPage} />
