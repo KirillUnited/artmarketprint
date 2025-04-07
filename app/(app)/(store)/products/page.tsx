@@ -10,7 +10,7 @@ import { getAllProductCategories, getAllProducts, getProductsByLimit } from '@/l
 import { cache } from 'react';
 
 export const revalidate = 3600;
-const cachedProducts = cache(() => getProductsByLimit(2000));
+const cachedProducts = cache(() => getAllProducts());
 
 export default async function ProductsPage() {
     // Fetch data in parallel using Promise.all for better performance
@@ -22,6 +22,7 @@ export default async function ProductsPage() {
         getAllProductCategories(),
         getSanityDocuments(NAVIGATION_QUERY),
     ]);
+    const filteredProducts = products?.slice(0, 5000);
 
     return (
         <>
@@ -55,7 +56,7 @@ export default async function ProductsPage() {
                 </div>
             </section>
             <Section id="products" innerClassname='pt-6 md:pt-6'>
-                <ProductsView products={products} categories={categories} />
+                <ProductsView products={filteredProducts} categories={categories} />
             </Section>
         </>
     );
