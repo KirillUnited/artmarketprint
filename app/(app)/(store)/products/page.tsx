@@ -6,7 +6,8 @@ import { getSanityDocuments } from '@/lib/fetch-sanity-data';
 import { NAVIGATION_QUERY } from '@/sanity/lib/queries';
 import Section from '@/components/layout/Section';
 import ProductsView from '@/components/shared/product/ProductsView';
-import { getAllProductCategories, getAllProducts, getAllProductsFromSanity, getProductsByLimit } from '@/lib/actions/product.actions';
+import { getAllProductCategories } from '@/lib/actions/product.actions';
+import { getAllProductsFromSanity } from '@/lib/getAllProductsFromSanity';
 
 export default async function ProductsPage(
     {
