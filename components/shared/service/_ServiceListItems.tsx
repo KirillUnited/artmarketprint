@@ -3,8 +3,6 @@ import NextImage from 'next/image';
 import { Card, CardFooter } from '@heroui/card';
 import { Link } from '@heroui/link';
 import clsx from 'clsx';
-import { Button } from '@heroui/button';
-import { ArrowUpRightIcon } from 'lucide-react';
 
 import { getUrlFor } from '@/lib/utils';
 import { ProjectTagList } from '@/components/shared/project';
