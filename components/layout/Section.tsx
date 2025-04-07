@@ -33,7 +33,7 @@ export const SectionTitle = ({ children }: SectionProps) => (
 );
 
 export const SectionSubtitle = ({ children }: SectionProps) => (
-	<p className="text-base uppercase font-bold text-primary">- {children} -</p>
+	<p className="text-base uppercase font-bold text-primary-700">- {children} -</p>
 );
 
 export const SectionDescription = ({ children }: SectionProps) => (
