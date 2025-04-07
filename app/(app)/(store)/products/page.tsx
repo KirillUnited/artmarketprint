@@ -12,15 +12,21 @@ import { cache } from 'react';
 export const revalidate = 3600;
 const cachedProducts = cache(() => getAllProducts());
 
-export default async function ProductsPage() {
+export default async function ProductsPage(
+    {
+        searchParams,
+    }: {
+        searchParams: Promise<{
+            query?: string,
+            page?: string,
+        }>
+    }
+) {
     // Fetch data in parallel using Promise.all for better performance
-    // Fetch and cache products data
-    const products = await cachedProducts();
-    
-    // Fetch categories and navigation data in parallel
-    const [categories, breadcrumbs] = await Promise.all([
+    const [categories, breadcrumbs, products] = await Promise.all([
         getAllProductCategories(),
         getSanityDocuments(NAVIGATION_QUERY),
+        cachedProducts(),
     ]);
     const filteredProducts = products?.slice(0, 5000);
 
