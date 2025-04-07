@@ -23,7 +23,7 @@ export async function getXmlData(url=PRODUCT_DESCRIPTION_URL) {
         const xmlText = await response.text();
         const jsonData = await parseStringPromise(xmlText);
         await saveJsonToFile(ARTE_PRODUCTS_FILE_PATH, jsonData);
-        // return jsonData;
+        return jsonData;
     } catch (error) {
         console.error('Ошибка при загрузке XML:', error);
 

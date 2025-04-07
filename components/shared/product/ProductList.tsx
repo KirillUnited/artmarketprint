@@ -21,7 +21,7 @@ export default function ProductList({ items }: ProductListProps) {
   return (
     <>
       {(Array.isArray(items) && items.length > 0 )? (
-        <div className="grid grid-cols-[var(--grid-template-columns)] gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {
             items.map((item, index: number) => (
               <BrandCard

@@ -3,8 +3,6 @@ import NextImage from 'next/image';
 import { Card, CardFooter } from '@heroui/card';
 import { Link } from '@heroui/link';
 import clsx from 'clsx';
-import { Button } from '@heroui/button';
-import { ArrowUpRightIcon } from 'lucide-react';
 
 import { getUrlFor } from '@/lib/utils';
 import { ProjectTagList } from '@/components/shared/project';
@@ -25,10 +23,10 @@ export default function ServiceListItems({ services }: any) {
                         )}>
                             <div className="flex flex-col gap-2 p-3 w-full">
                                 <div className="flex flex-col gap-2">
-                                    <h4 className="flex flex-col gap-2 font-semibold line-clamp-2 leading-tight" title={service.title}>
+                                    <p className="flex flex-col gap-2 font-semibold line-clamp-2 leading-tight" title={service.title}>
                                         {service.title}
                                         <span className='text-primary text-xl font-bold'>{service.price}</span>
-                                    </h4>
+                                    </p>
                                     <p
                                         className={clsx(
                                             'text-xs',

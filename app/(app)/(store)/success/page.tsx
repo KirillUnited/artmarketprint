@@ -1,5 +1,6 @@
 'use client';
 
+import Section from '@/components/layout/Section';
 import useBasketStore from '@/store/store';
 import { Button } from '@heroui/button'
 import Link from 'next/link'
@@ -13,7 +14,7 @@ export default function SuccessPage() {
     }, [clearBasket])
 
     return (
-        <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-4">
+        <Section className="bg-gray-50" innerClassname='items-center justify-center'>
             <div className="max-w-md w-full bg-white rounded-small shadow-lg p-8 text-center">
                 <div className="mb-6">
                     <svg
@@ -45,6 +46,6 @@ export default function SuccessPage() {
                     </Button>
                 </div>
             </div>
-        </div>
+        </Section>
     )
 }

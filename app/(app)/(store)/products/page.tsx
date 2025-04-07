@@ -6,31 +6,32 @@ import { getSanityDocuments } from '@/lib/fetch-sanity-data';
 import { NAVIGATION_QUERY } from '@/sanity/lib/queries';
 import Section from '@/components/layout/Section';
 import ProductsView from '@/components/shared/product/ProductsView';
+import { getAllProductCategories, getAllProducts, getProductsByLimit } from '@/lib/actions/product.actions';
 import { cache } from 'react';
-import { getProductsByLimit } from '@/lib/actions/product.actions';
 
-const getCachedProducts = cache(() => getProductsByLimit(5000));
-const getAllProductCategories = async (): Promise<string[]> => {
-    const products = await getCachedProducts();
+export const revalidate = 3600;
+const cachedProducts = cache(() => getAllProducts());
 
-    const categories = new Set<string>();
-
-    // Iterate over products and extract the category name from each product
-    // The category name is the first part of the category property, separated by '|'
-    for (const product of products) {
-        if (!product?.category) continue;
-        const [categoryName] = product.category[0].split('|');
-        categories.add(categoryName);
+export default async function ProductsPage(
+    {
+        searchParams,
+    }: {
+        searchParams: Promise<{
+            query?: string,
+            page?: string,
+        }>
     }
+) {
+    // Fetch data in parallel using Promise.all for better performance
 
-    // Convert the Set to an array and return it
-    return Array.from(categories);
-}
-
-export default async function ProductsPage() {
-    const products = await getCachedProducts();
-    const categories = await getAllProductCategories();
-    const breadcrumbs = await getSanityDocuments(NAVIGATION_QUERY);
+    // Fetch categories and navigation data in parallel
+    const [categories, breadcrumbs] = await Promise.all([
+        getAllProductCategories(),
+        getSanityDocuments(NAVIGATION_QUERY),
+    ]);
+    // Fetch and cache products data
+    const products = await cachedProducts();
+    const filteredProducts = products?.slice(0, 5000);
 
     return (
         <>
@@ -64,7 +65,7 @@ export default async function ProductsPage() {
                 </div>
             </section>
             <Section id="products" innerClassname='pt-6 md:pt-6'>
-                <ProductsView products={products} categories={categories} />
+                <ProductsView products={filteredProducts} categories={categories} />
             </Section>
         </>
     );
