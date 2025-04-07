@@ -68,7 +68,7 @@ export default function ProductsView({ products, categories, totalItemsView = IT
                             }
                             {
                                 paginatedItems.length ?
-                                    <Suspense fallback={<Loader />}><ProductGrid products={paginatedItems} /></Suspense> :
+                                    <ProductGrid products={paginatedItems} /> :
                                     <p className="text-center mt-8 text-gray-500">Нет товаров</p>}
                             {
                                 filteredProducts.length > totalItemsView &&

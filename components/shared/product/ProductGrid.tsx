@@ -27,7 +27,7 @@ export default function ProductGrid({ products }: ProductGridProps): React.React
                 {
                     !isMounted ? <><ProductCardSkeleton /><Loader /></> : products.map((item: Product) => (
                         <motion.li
-                            key={`${item?.id[0]['_']}`}
+                            key={`${item._id}`}
                             layout
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
