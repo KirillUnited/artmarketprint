@@ -37,6 +37,6 @@ export async function importDataToSanity() {
 
         // return allProductsWritten;
     } catch (error) {
-        console.error('❌ Import failed:', error.message);
+        console.error('❌ Import failed:');
     }
 }
