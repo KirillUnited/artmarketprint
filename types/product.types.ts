@@ -15,4 +15,8 @@ export interface Product {
     images_urls: string[];
     general_description: string[];
     category: string[];
+    _id: string;
+    name: string;
+    description: string;
+    image: string;
 }
