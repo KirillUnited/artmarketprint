@@ -27,7 +27,12 @@ type HeaderDropdownMenuProps = {
 
 export const CartLinkButton = (itemsCount: number) => {
 	return (
-		<Link href='/cart' target='_blank' className='relative'>
+		<Link 
+			href='/cart' 
+			target='_blank' 
+			className='relative'
+			aria-label={`Shopping cart${itemsCount > 0 ? `, ${itemsCount} items` : ''}`}
+		>
 			<ShoppingBagIcon size={22} className='text-primary' />
 			{
 				itemsCount > 0 && (
