@@ -23,11 +23,14 @@ export default async function ProductsPage(
     }
 ) {
     // Fetch data in parallel using Promise.all for better performance
-    const [categories, breadcrumbs, products] = await Promise.all([
+
+    // Fetch categories and navigation data in parallel
+    const [categories, breadcrumbs] = await Promise.all([
         getAllProductCategories(),
         getSanityDocuments(NAVIGATION_QUERY),
-        cachedProducts(),
     ]);
+    // Fetch and cache products data
+    const products = await cachedProducts();
     const filteredProducts = products?.slice(0, 5000);
 
     return (
