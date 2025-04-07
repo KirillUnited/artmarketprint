@@ -32,7 +32,7 @@ export const ProjectCard = ({ project }: { project: SanityDocument }) => (
         )}>
             <div className="flex flex-col gap-2 p-3 w-full">
                 <div className="flex flex-col gap-2">
-                    <h4 className="text-lg font-semibold text-white/80 line-clamp-2 leading-tight" title={project.title}>{project.title}</h4>
+                    <p className="text-lg font-semibold text-white/80 line-clamp-2 leading-tight" title={project.title}>{project.title}</p>
                     <p
                         className={clsx(
                             'text-xs text-white/80',
