@@ -6,15 +6,10 @@ import NextImage from 'next/image';
 
 import { getPrice } from '@/lib/getPrice';
 import clsx from 'clsx';
+import { Product } from '@/types/product.types';
 
 interface ProductThumbProps extends React.HTMLAttributes<HTMLDivElement> {
-    item: {
-        id: [{ _: string }];
-        product: [{ _: string }];
-        images_urls: string[];
-        price: number;
-        general_description: string[];
-    };
+    item: Product;
 }
 
 /**
