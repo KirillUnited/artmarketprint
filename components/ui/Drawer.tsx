@@ -19,7 +19,15 @@ export default function Drawer({ navigation, className, children }: { navigation
 
     return (
         <>
-            <Button isIconOnly className={className} variant="light" onPress={onOpen}><MenuIcon /></Button>
+            <Button 
+                isIconOnly 
+                className={className} 
+                variant="light" 
+                onPress={onOpen} 
+                aria-label="Open menu"
+            >
+                <MenuIcon aria-hidden="true" />
+            </Button>
 
             <BaseDrawer
                 backdrop='blur'
