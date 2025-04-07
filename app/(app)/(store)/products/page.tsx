@@ -31,7 +31,7 @@ export default async function ProductsPage(
     ]);
     // Fetch and cache products data
     const products = await cachedProducts();
-    const filteredProducts = products?.slice(0, 5000);
+    const filteredProducts = products?.slice(0, 3000);
 
     return (
         <>
