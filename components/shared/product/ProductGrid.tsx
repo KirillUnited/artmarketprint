@@ -22,7 +22,7 @@ export default function ProductGrid({ products }: ProductGridProps): React.React
     }, [])
 
     return (
-        <ul className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 min-h-40 relative">
+        <ul className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-1 sm:gap-4 min-h-40 relative">
             <AnimatePresence>
                 {
                     !isMounted ? <><ProductCardSkeleton /><Loader /></> : products.map((item: ProductData) => (
