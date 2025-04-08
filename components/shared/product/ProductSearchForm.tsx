@@ -14,7 +14,7 @@ export default function ProductSearchForm(): JSX.Element {
         <Form action={'/search'} className='flex-row flex-1'>
             <Input className='flex-1' classNames={{ inputWrapper: 'border-1' }} labelPlacement='outside' name='query' placeholder='Поиск товара...' radius='sm' size='md' startContent={<SearchIcon size={16} />} type='search' variant='bordered' />
             <Button color='primary' type='submit' radius='sm' className='self-stretch min-w-max'>
-                <SearchIcon size={16} className='md:hidden' />
+                <SearchIcon size={16} className='md:hidden' aria-label='Найти'/>
                 <span className='hidden md:block'>Найти</span>
             </Button>
         </Form>

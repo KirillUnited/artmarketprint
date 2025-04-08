@@ -53,15 +53,15 @@ export default function Pagination({className, total, onChange, ...props}: Pagin
 
         if (value === PaginationItemType.DOTS) {
             return (
-                <button key={key} className={className}>
+                <li key={key} className={className}>
                     ...
-                </button>
+                </li>
             );
         }
 
         // cursor is the default item
         return (
-            <button
+            <li
                 key={key}
                 ref={ref}
                 className={clsx(
@@ -70,7 +70,7 @@ export default function Pagination({className, total, onChange, ...props}: Pagin
                 onClick={() => setPage(value)}
             >
                 {value}
-            </button>
+            </li>
         );
     };
 

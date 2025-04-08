@@ -34,7 +34,7 @@ const ProductThumb: FC<ProductThumbProps> = ({ item, ...props }) => {
             <CardBody as={Link} className='items-stretch' href={`/products/${id}`}>
                 <NextImage alt={name} className="object-contain aspect-square mx-auto mb-4" loading="lazy" src={image} width={220} height={220} quality={50} />
                 <span className="text-xl font-semibold self-start text-foreground">{`${price} BYN`}</span>
-                <h3 className="text-gray-900 line-clamp-2 text-xs sm:text-sm">{name}</h3>
+                <p className="text-gray-900 line-clamp-2 text-xs sm:text-sm">{name}</p>
             </CardBody>
             {/* <CardFooter className='hidden sm:flex'>
                 <Button as={Link} color='secondary' href={`/products/${id}`} radius='sm' size="md" target='_blank'>Подробнее</Button>
