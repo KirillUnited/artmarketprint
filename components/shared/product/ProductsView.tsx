@@ -12,7 +12,7 @@ const ITEMS_PER_PAGE = 20;
 
 import ProductGrid from './ProductGrid';
 
-export default function ProductsView({ products, categories, totalItemsView = ITEMS_PER_PAGE, isSearchPage = false }: any) {
+export default function ProductsView({ products, categories, totalItemsView = ITEMS_PER_PAGE, showFilter = true }: any) {
     const [sortOrder, setSortOrder] = React.useState('');
     const [selectedCategory, setSelectedCategory] = React.useState('');
     const [currentPage, setCurrentPage] = React.useState(1);
@@ -47,11 +47,11 @@ export default function ProductsView({ products, categories, totalItemsView = IT
                 <div className='flex flex-col gap-8'>
                     <div className={clsx(
                         'grid items-start gap-4 md:gap-8', {
-                        ['md:grid-cols-[auto_1fr]']: !isSearchPage
+                        ['md:grid-cols-[auto_1fr]']: showFilter
                     }
                     )}>
                         {
-                            !isSearchPage &&
+                            showFilter &&
                             <ProductsFilter categories={categories}
                                 selectedCategory={selectedCategory}
                                 sortOrder={sortOrder}
@@ -59,7 +59,7 @@ export default function ProductsView({ products, categories, totalItemsView = IT
                         }
                         <div className='flex flex-col gap-8 relative'>
                             {
-                                !isSearchPage &&
+                                showFilter &&
                                 <div className='flex flex-wrap flex-col md:flex-row gap-4 w-full'>
                                     <FilterButton onOpen={onOpen} />
                                     <FilterDrawer isOpen={isOpen} onOpenChange={onOpenChange} onFilterChange={handleFilterChange} categories={categories} sortOrder={sortOrder} selectedCategory={selectedCategory} />
