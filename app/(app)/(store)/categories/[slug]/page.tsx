@@ -13,6 +13,8 @@ import { ArrowLeftIcon, ArrowUpRightIcon } from "lucide-react";
 import { SanityDocument } from "next-sanity";
 import Image from "next/image";
 import Link from "next/link";
+import { getAllProductCategories } from "@/sanity/lib/product/getAllProductCategories";
+import { getAllProductsByCategory } from "@/sanity/lib/product/getAllProductsByCategory";
 
 export interface Props {
     slug: string,
@@ -35,7 +37,7 @@ export default async function CategoryPage({ params }: { params: Promise<Props> 
     const { slug } = await params;
     const category: any = await getSanityDocuments(CATEGORY_QUERY, { slug });
     const categoryTitle = category?.title;
-    const products = await getProductsByCategory(categoryTitle);
+    const products = await getAllProductsByCategory(categoryTitle);
     const breadcrumbs = (await client.fetch<SanityDocument>(NAVIGATION_QUERY))[0].links;
     const categoryImageUrl = await category?.image
         ? getUrlFor(category.image)
