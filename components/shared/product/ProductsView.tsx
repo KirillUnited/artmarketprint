@@ -19,7 +19,7 @@ export default function ProductsView({ products, categories, totalItemsView = IT
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
     const filteredProducts = React.useMemo(() => {
-        const result = products?.filter((product: any) => !selectedCategory || getCategory(product?.category) === selectedCategory) || [];
+        const result = products?.filter((product: any) => !selectedCategory || product?.category === selectedCategory) || [];
 
         return sortOrder === 'asc'
             ? result.sort((a: any, b: any) => a.price - b.price)
