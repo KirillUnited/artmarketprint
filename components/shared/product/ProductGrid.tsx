@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 import ProductThumb from "./ProductThumb";
-import { Product } from "@/types/product.types";
+import { ProductData } from "@/types/product.types";
 import { useEffect, useState } from "react";
 import Loader from "@/components/ui/Loader";
 import { Card, CardBody } from "@heroui/card";
@@ -11,7 +11,7 @@ import { Card, CardBody } from "@heroui/card";
  * @returns {React.ReactElement} The rendered component
  */
 export interface ProductGridProps {
-    products: Product[]
+    products: ProductData[]
 }
 
 export default function ProductGrid({ products }: ProductGridProps): React.ReactElement {
@@ -25,7 +25,7 @@ export default function ProductGrid({ products }: ProductGridProps): React.React
         <ul className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 min-h-40 relative">
             <AnimatePresence>
                 {
-                    !isMounted ? <><ProductCardSkeleton /><Loader /></> : products.map((item: Product) => (
+                    !isMounted ? <><ProductCardSkeleton /><Loader /></> : products.map((item: ProductData) => (
                         <motion.li
                             key={`${item._id}`}
                             layout

@@ -6,10 +6,10 @@ import NextImage from 'next/image';
 
 import { getPrice } from '@/lib/getPrice';
 import clsx from 'clsx';
-import { Product } from '@/types/product.types';
+import { ProductData } from '@/types/product.types';
 
 interface ProductThumbProps extends React.HTMLAttributes<HTMLDivElement> {
-    item: Product;
+    item: ProductData;
 }
 
 /**
@@ -34,10 +34,10 @@ const ProductThumb: FC<ProductThumbProps> = ({ item, ...props }) => {
             <CardBody as={Link} className='items-stretch' href={`/products/${id}`}>
                 <NextImage alt={name} className="object-contain aspect-square mx-auto mb-4" loading="lazy" src={image} width={220} height={220} quality={50} />
                 <span className="text-xl font-semibold self-start text-foreground">{`${price} BYN`}</span>
-                <h3 className="text-gray-900 line-clamp-1 text-xs sm:text-sm">{name}</h3>
+                <h3 className="text-gray-900 line-clamp-2 text-xs sm:text-sm">{name}</h3>
             </CardBody>
             {/* <CardFooter className='hidden sm:flex'>
-                <Button as={Link} color='secondary' href={`/products/${item.id[0]['_']}`} radius='sm' size="md" target='_blank'>Подробнее</Button>
+                <Button as={Link} color='secondary' href={`/products/${id}`} radius='sm' size="md" target='_blank'>Подробнее</Button>
             </CardFooter> */}
         </Card>
     );

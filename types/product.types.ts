@@ -1,4 +1,5 @@
 export interface ProductData {
+    _id: string;
     id: string;
     name: string;
     price: number;
@@ -15,8 +16,4 @@ export interface Product {
     images_urls: string[];
     general_description: string[];
     category: string[];
-    _id: string;
-    name: string;
-    description: string;
-    image: string;
 }
