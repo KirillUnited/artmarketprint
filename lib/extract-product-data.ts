@@ -3,6 +3,7 @@ import { getPrice } from '@/lib/getPrice';
 
 // Product helper functions
 export const extractProductData = (product: Product): ProductData => ({
+    _id: product.id[0]._,
     id: product.id[0]._,
     name: product.product[0]._,
     price: parseFloat(getPrice(product.price[0], 1.1)),
