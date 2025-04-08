@@ -2,7 +2,6 @@ import Section, { SectionHeading, SectionTitle } from "@/components/layout/Secti
 import ProductsView from "@/components/shared/product/ProductsView";
 import { getCTAButton } from "@/components/ui/BrandButton";
 import BaseBreadcrumb from "@/components/ui/Breadcrumb";
-import { getProductsByCategory } from "@/lib/actions/product.actions";
 import { getSanityDocuments } from "@/sanity/lib/fetch-sanity-data";
 import { getUrlFor } from "@/lib/utils";
 import { client } from "@/sanity/client";
@@ -13,7 +12,6 @@ import { ArrowLeftIcon, ArrowUpRightIcon } from "lucide-react";
 import { SanityDocument } from "next-sanity";
 import Image from "next/image";
 import Link from "next/link";
-import { getAllProductCategories } from "@/sanity/lib/product/getAllProductCategories";
 import { getAllProductsByCategory } from "@/sanity/lib/product/getAllProductsByCategory";
 
 export interface Props {
