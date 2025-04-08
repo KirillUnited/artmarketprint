@@ -4,8 +4,7 @@ import Link from 'next/link';
 
 import Section, { SectionTitle } from '@/components/layout/Section';
 import ProductsView from '@/components/shared/product/ProductsView';
-import { searchProductsByName } from '@/lib/actions/product.actions';
-import { getAllProductCategories } from '@/sanity/lib/product/getAllProductCategories';
+import { searchProductsByName } from '@/sanity/lib/product/searchProductsByName';
 
 export default async function SearchPage({
     searchParams
@@ -18,18 +17,17 @@ export default async function SearchPage({
 
     try {
         const products = await searchProductsByName(query);
-        const categories = await getAllProductCategories();
 
         return (
             <Section>
                 {
                     Array.isArray(products) && products.length > 0 ?
                         <>
-                            <SectionTitle>{`Результаты поиска для "${query}"`}</SectionTitle>
+                            <SectionTitle>{`Результаты поиска для "${query}" (${products.length} найдено)`}</SectionTitle>
                             <Link className="flex items-center gap-2 text-primary" href="/products">
                                 <ArrowLeftIcon className="w-6 h-6" />
                                 <span>Вернуться в каталог</span></Link>
-                            <ProductsView categories={categories} products={products} totalItemsView={8} showFilter={false} />
+                            <ProductsView products={products} totalItemsView={8} showFilter={false} />
                         </> :
                         <div className="flex flex-col items-center gap-8">
                             <SectionTitle>{`Товар не найден для "${query}"`}</SectionTitle>
