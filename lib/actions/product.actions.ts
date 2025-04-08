@@ -17,17 +17,6 @@ export async function getAllProducts(): Promise<any[]> {
   return products?.data?.item ?? [];
 }
 
-export async function getAllProductCategories(): Promise<string[]> {
-  try {
-    const categories = await getSanityDocuments(CATEGORIES_QUERY);
-
-    return categories.map((category) => category.title);
-  } catch (error) {
-    console.error('Error fetching categories:', error);
-    return [];
-  }
-}
-
 /**
  * Retrieves a list of unique product categories from the available products.
  *

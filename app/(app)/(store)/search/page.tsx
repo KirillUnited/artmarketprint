@@ -4,7 +4,8 @@ import Link from 'next/link';
 
 import Section, { SectionTitle } from '@/components/layout/Section';
 import ProductsView from '@/components/shared/product/ProductsView';
-import { getAllProductCategories, searchProductsByName } from '@/lib/actions/product.actions';
+import { searchProductsByName } from '@/lib/actions/product.actions';
+import { getAllProductCategories } from '@/sanity/lib/product/getAllProductCategories';
 
 export default async function SearchPage({
     searchParams
@@ -26,8 +27,8 @@ export default async function SearchPage({
                         <>
                             <SectionTitle>{`Результаты поиска для "${query}"`}</SectionTitle>
                             <Link className="flex items-center gap-2 text-primary" href="/products">
-                                        <ArrowLeftIcon className="w-6 h-6" />
-                                        <span>Вернуться в каталог</span></Link>
+                                <ArrowLeftIcon className="w-6 h-6" />
+                                <span>Вернуться в каталог</span></Link>
                             <ProductsView categories={categories} products={products} totalItemsView={8} showFilter={false} />
                         </> :
                         <div className="flex flex-col items-center gap-8">
