@@ -6,7 +6,7 @@ import BrandLogo from '../ui/BrandLogo'
 import Socials from '@/components/shared/Socials';
 import ContactsList from '@/components/shared/ContactsList';
 import { siteConfig } from '@/config/site';
-import { getSanityDocuments } from '@/lib/fetch-sanity-data';
+import { getSanityDocuments } from '@/sanity/lib/fetch-sanity-data';
 import { SITE_SETTINGS_QUERY } from '@/sanity/lib/site.query';
 
 export default async function Footer() {

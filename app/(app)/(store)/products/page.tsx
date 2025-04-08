@@ -2,12 +2,12 @@ import Image from 'next/image';
 
 import { siteConfig } from '@/config/site';
 import BaseBreadcrumb from '@/components/ui/Breadcrumb';
-import { getSanityDocuments } from '@/lib/fetch-sanity-data';
+import { getSanityDocuments } from '@/sanity/lib/fetch-sanity-data';
 import { NAVIGATION_QUERY } from '@/sanity/lib/queries';
 import Section from '@/components/layout/Section';
 import ProductsView from '@/components/shared/product/ProductsView';
 import { getAllProductCategories } from '@/lib/actions/product.actions';
-import { getAllProductsFromSanity } from '@/lib/getAllProductsFromSanity';
+import { getAllProductsFromSanity } from '@/sanity/lib/product/getAllProductsFromSanity';
 
 export default async function ProductsPage(
     {

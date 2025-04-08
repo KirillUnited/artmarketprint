@@ -3,7 +3,7 @@ import { SanityDocument } from 'next-sanity';
 import { BrandCard } from '../ui/card';
 
 import { siteConfig } from '@/config/site';
-import { getSanityDocuments } from '@/lib/fetch-sanity-data';
+import { getSanityDocuments } from '@/sanity/lib/fetch-sanity-data';
 import Section, {
 	SectionButton,
 	SectionDescription,

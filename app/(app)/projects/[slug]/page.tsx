@@ -7,7 +7,7 @@ import clsx from 'clsx';
 import BaseBreadcrumb from '@/components/ui/Breadcrumb';
 import BrandButton from '@/components/ui/BrandButton';
 import { ServiceDetails } from '@/components/shared/service';
-import { getSanityDocuments } from '@/lib/fetch-sanity-data';
+import { getSanityDocuments } from '@/sanity/lib/fetch-sanity-data';
 import { NAVIGATION_QUERY, PROJECT_QUERY, PROJECT_SLUGS_QUERY } from '@/sanity/lib/queries';
 import Section, { SectionButton } from '@/components/layout/Section';
 import { ProjectList, ProjectsHeading, ProjectTagList } from '@/components/shared/project';

@@ -2,7 +2,7 @@ import React from 'react';
 import Navbar from '@/components/shared/Navbar';
 import { client } from '@/sanity/client';
 import { NAVIGATION_QUERY } from '@/sanity/lib/queries';
-import { getSanityDocuments } from '@/lib/fetch-sanity-data';
+import { getSanityDocuments } from '@/sanity/lib/fetch-sanity-data';
 import { salesQuery } from '@/sanity/lib/queries';
 import { SITE_SETTINGS_QUERY } from '@/sanity/lib/site.query';
 

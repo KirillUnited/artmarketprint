@@ -3,7 +3,7 @@ import ProductsView from "@/components/shared/product/ProductsView";
 import { getCTAButton } from "@/components/ui/BrandButton";
 import BaseBreadcrumb from "@/components/ui/Breadcrumb";
 import { getProductsByCategory } from "@/lib/actions/product.actions";
-import { getSanityDocuments } from "@/lib/fetch-sanity-data";
+import { getSanityDocuments } from "@/sanity/lib/fetch-sanity-data";
 import { getUrlFor } from "@/lib/utils";
 import { client } from "@/sanity/client";
 import { CATEGORY_QUERY } from "@/sanity/lib/category.query";

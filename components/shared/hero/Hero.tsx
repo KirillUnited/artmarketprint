@@ -1,6 +1,6 @@
 import {HeroCarousel} from './HeroCarousel';
 
-import {getSanityDocuments} from '@/lib/fetch-sanity-data';
+import {getSanityDocuments} from '@/sanity/lib/fetch-sanity-data';
 import {HERO_QUERY} from '@/sanity/lib/queries';
 
 export async function Hero({}) {

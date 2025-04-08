@@ -1,4 +1,4 @@
-import { getSanityDocuments } from '@/lib/fetch-sanity-data';
+import { getSanityDocuments } from '@/sanity/lib/fetch-sanity-data';
 import { HOME_PAGE_QUERY } from '@/sanity/lib/page.query';
 import { PageBuilder } from '@/components/PageBuilder';
 

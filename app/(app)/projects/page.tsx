@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 import { siteConfig } from '@/config/site';
 import ContactUs from '@/components/shared/ContactUs';
-import { getSanityDocuments } from '@/lib/fetch-sanity-data';
+import { getSanityDocuments } from '@/sanity/lib/fetch-sanity-data';
 import { ProjectList } from '@/components/shared/project';
 import { NAVIGATION_QUERY, PROJECTS_QUERY } from '@/sanity/lib/queries';
 import Section, { SectionSubtitle } from '@/components/layout/Section';
