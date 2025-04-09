@@ -12,14 +12,14 @@ const ITEMS_PER_PAGE = 20;
 
 import ProductGrid from './ProductGrid';
 
-export default function ProductsView({ products, categories, totalItemsView = ITEMS_PER_PAGE, isSearchPage = false }: any) {
+export default function ProductsView({ products, categories, totalItemsView = ITEMS_PER_PAGE, showFilter = true }: any) {
     const [sortOrder, setSortOrder] = React.useState('');
     const [selectedCategory, setSelectedCategory] = React.useState('');
     const [currentPage, setCurrentPage] = React.useState(1);
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
     const filteredProducts = React.useMemo(() => {
-        const result = products?.filter((product: any) => !selectedCategory || getCategory(product?.category) === selectedCategory) || [];
+        const result = products?.filter((product: any) => !selectedCategory || product?.category === selectedCategory) || [];
 
         return sortOrder === 'asc'
             ? result.sort((a: any, b: any) => a.price - b.price)
@@ -27,8 +27,8 @@ export default function ProductsView({ products, categories, totalItemsView = IT
     }, [products, selectedCategory, sortOrder]);
     const totalPages = Math.ceil(filteredProducts.length / totalItemsView);
     const paginatedItems = filteredProducts.slice(
-        (currentPage - 1) * ITEMS_PER_PAGE,
-        currentPage * ITEMS_PER_PAGE
+        (currentPage - 1) * totalItemsView,
+        currentPage * totalItemsView
     );
     const handleFilterChange = (newSortOrder: string, newCategory: string) => {
         setSortOrder(newSortOrder);
@@ -47,11 +47,11 @@ export default function ProductsView({ products, categories, totalItemsView = IT
                 <div className='flex flex-col gap-8'>
                     <div className={clsx(
                         'grid items-start gap-4 md:gap-8', {
-                        ['md:grid-cols-[auto_1fr]']: !isSearchPage
+                        ['md:grid-cols-[auto_1fr]']: showFilter
                     }
                     )}>
                         {
-                            !isSearchPage &&
+                            showFilter &&
                             <ProductsFilter categories={categories}
                                 selectedCategory={selectedCategory}
                                 sortOrder={sortOrder}
@@ -59,7 +59,7 @@ export default function ProductsView({ products, categories, totalItemsView = IT
                         }
                         <div className='flex flex-col gap-8 relative'>
                             {
-                                !isSearchPage &&
+                                showFilter &&
                                 <div className='flex flex-wrap flex-col md:flex-row gap-4 w-full'>
                                     <FilterButton onOpen={onOpen} />
                                     <FilterDrawer isOpen={isOpen} onOpenChange={onOpenChange} onFilterChange={handleFilterChange} categories={categories} sortOrder={sortOrder} selectedCategory={selectedCategory} />
@@ -68,7 +68,7 @@ export default function ProductsView({ products, categories, totalItemsView = IT
                             }
                             {
                                 paginatedItems.length ?
-                                    <Suspense fallback={<Loader />}><ProductGrid products={paginatedItems} /></Suspense> :
+                                    <ProductGrid products={paginatedItems} /> :
                                     <p className="text-center mt-8 text-gray-500">Нет товаров</p>}
                             {
                                 filteredProducts.length > totalItemsView &&

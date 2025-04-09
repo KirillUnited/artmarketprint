@@ -2,8 +2,7 @@ import Section, { SectionHeading, SectionTitle } from "@/components/layout/Secti
 import ProductsView from "@/components/shared/product/ProductsView";
 import { getCTAButton } from "@/components/ui/BrandButton";
 import BaseBreadcrumb from "@/components/ui/Breadcrumb";
-import { getProductsByCategory } from "@/lib/actions/product.actions";
-import { getSanityDocuments } from "@/lib/fetch-sanity-data";
+import { getSanityDocuments } from "@/sanity/lib/fetch-sanity-data";
 import { getUrlFor } from "@/lib/utils";
 import { client } from "@/sanity/client";
 import { CATEGORY_QUERY } from "@/sanity/lib/category.query";
@@ -13,6 +12,7 @@ import { ArrowLeftIcon, ArrowUpRightIcon } from "lucide-react";
 import { SanityDocument } from "next-sanity";
 import Image from "next/image";
 import Link from "next/link";
+import { getAllProductsByCategory } from "@/sanity/lib/product/getAllProductsByCategory";
 
 export interface Props {
     slug: string,
@@ -35,7 +35,7 @@ export default async function CategoryPage({ params }: { params: Promise<Props> 
     const { slug } = await params;
     const category: any = await getSanityDocuments(CATEGORY_QUERY, { slug });
     const categoryTitle = category?.title;
-    const products = await getProductsByCategory(categoryTitle);
+    const products = await getAllProductsByCategory(categoryTitle);
     const breadcrumbs = (await client.fetch<SanityDocument>(NAVIGATION_QUERY))[0].links;
     const categoryImageUrl = await category?.image
         ? getUrlFor(category.image)

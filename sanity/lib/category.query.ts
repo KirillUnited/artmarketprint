@@ -3,7 +3,7 @@ import { defineQuery } from "next-sanity";
 export const CATEGORIES_QUERY = defineQuery(`*[
     _type == "category"
     && defined(slug.current)
-  ]|order(publishedAt desc)[0...20]{
+  ]|order(publishedAt desc){
       title,
       featured,
       description,

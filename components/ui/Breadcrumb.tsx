@@ -33,7 +33,7 @@ export default function BaseBreadcrumb({ items, section }: { items: any, section
 	return (
 		<Breadcrumbs variant='bordered'>
 			<BreadcrumbItem className="font-semibold text-primary" href="/">
-				<HomeIcon size={18} />
+				<HomeIcon size={18} aria-label='Home' />
 			</BreadcrumbItem>
 			{
 				pathSegments.length > 0 && pathSegments.map((segment: any, index: number) => {

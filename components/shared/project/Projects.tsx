@@ -3,7 +3,7 @@ import { Suspense } from 'react';
 import { ProjectList } from './ProjectList';
 
 import Section, { SectionButton, SectionDescription, SectionHeading, SectionSubtitle, SectionTitle } from '@/components/layout/Section';
-import { getSanityDocuments } from '@/lib/fetch-sanity-data';
+import { getSanityDocuments } from '@/sanity/lib/fetch-sanity-data';
 import { PROJECTS_QUERY } from '@/sanity/lib/queries';
 import clsx from 'clsx';
 

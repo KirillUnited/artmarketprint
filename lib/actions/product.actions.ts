@@ -1,7 +1,7 @@
 'use server';
 
 import { CATEGORIES_QUERY } from '@/sanity/lib/category.query';
-import { getSanityDocuments } from '../fetch-sanity-data';
+import { getSanityDocuments } from '../../sanity/lib/fetch-sanity-data';
 import { getJsonFileData } from '../utils';
 
 /**
@@ -15,17 +15,6 @@ export async function getAllProducts(): Promise<any[]> {
 
   // Return the list of products or an empty array if not available
   return products?.data?.item ?? [];
-}
-
-export async function getAllProductCategories(): Promise<string[]> {
-  try {
-    const categories = await getSanityDocuments(CATEGORIES_QUERY);
-
-    return categories.map((category) => category.title);
-  } catch (error) {
-    console.error('Error fetching categories:', error);
-    return [];
-  }
 }
 
 /**

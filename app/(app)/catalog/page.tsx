@@ -7,7 +7,7 @@ import {BrandCard} from '@/components/ui/card';
 import ContactUs from '@/components/shared/ContactUs';
 import BaseBreadcrumb from '@/components/ui/Breadcrumb';
 import { client } from '@/sanity/client';
-import { getSanityDocuments } from '@/lib/fetch-sanity-data';
+import { getSanityDocuments } from '@/sanity/lib/fetch-sanity-data';
 import { CATEGORIES_QUERY, NAVIGATION_QUERY } from '@/sanity/lib/queries';
 import Section from '@/components/layout/Section';
 

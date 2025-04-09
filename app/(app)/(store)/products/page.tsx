@@ -2,15 +2,12 @@ import Image from 'next/image';
 
 import { siteConfig } from '@/config/site';
 import BaseBreadcrumb from '@/components/ui/Breadcrumb';
-import { getSanityDocuments } from '@/lib/fetch-sanity-data';
+import { getSanityDocuments } from '@/sanity/lib/fetch-sanity-data';
 import { NAVIGATION_QUERY } from '@/sanity/lib/queries';
 import Section from '@/components/layout/Section';
 import ProductsView from '@/components/shared/product/ProductsView';
-import { getAllProductCategories, getAllProducts, getProductsByLimit } from '@/lib/actions/product.actions';
-import { cache } from 'react';
-
-export const revalidate = 3600;
-const cachedProducts = cache(() => getAllProducts());
+import { getAllProductCategories } from '@/sanity/lib/product/getAllProductCategories';
+import { getAllProductsFromSanity } from '@/sanity/lib/product/getAllProductsFromSanity';
 
 export default async function ProductsPage(
     {
@@ -23,15 +20,11 @@ export default async function ProductsPage(
     }
 ) {
     // Fetch data in parallel using Promise.all for better performance
-
-    // Fetch categories and navigation data in parallel
-    const [categories, breadcrumbs] = await Promise.all([
+    const [categories, breadcrumbs, products] = await Promise.all([
         getAllProductCategories(),
         getSanityDocuments(NAVIGATION_QUERY),
+        getAllProductsFromSanity()
     ]);
-    // Fetch and cache products data
-    const products = await cachedProducts();
-    const filteredProducts = products?.slice(0, 3000);
 
     return (
         <>
@@ -65,7 +58,7 @@ export default async function ProductsPage(
                 </div>
             </section>
             <Section id="products" innerClassname='pt-6 md:pt-6'>
-                <ProductsView products={filteredProducts} categories={categories} />
+                <ProductsView products={products} categories={categories} />
             </Section>
         </>
     );

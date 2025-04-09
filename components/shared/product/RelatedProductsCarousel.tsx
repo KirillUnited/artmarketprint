@@ -11,6 +11,7 @@ import styles from './product.module.css';
 import ProductThumb from './ProductThumb';
 
 import Loader from '@/components/ui/Loader';
+import { extractProductData } from '@/lib/extract-product-data';
 
 export default function RelatedProductsCarousel({ relatedProducts }: any) {
     const [products, setProducts] = React.useState([]);
@@ -49,11 +50,15 @@ export default function RelatedProductsCarousel({ relatedProducts }: any) {
             slidesPerView={1}
             spaceBetween={10}
         >
-            {products?.map((item: any) => (
-                <SwiperSlide key={`${item?.id[0]['_']}`} className='lg:min-w-64 h-full'>
-                    <ProductThumb item={item} />
-                </SwiperSlide>
-            ))}
+            {products?.map((item: any) => {
+                const formattedItem = extractProductData(item);
+                
+                return (
+                    <SwiperSlide key={`${item?.id[0]['_']}`} className='lg:min-w-64 h-full'>
+                        <ProductThumb item={formattedItem} />
+                    </SwiperSlide>
+                )
+            })}
         </Swiper>
     )
 }

@@ -8,7 +8,7 @@ import ContactsList from './ContactsList';
 import { SectionProps } from '@/types';
 import Section, { SectionDescription, SectionHeading, SectionSubtitle, SectionTitle } from '@/components/layout/Section';
 import { OrderForm } from '@/components/ui/form';
-import { getSanityDocuments } from '@/lib/fetch-sanity-data';
+import { getSanityDocuments } from '@/sanity/lib/fetch-sanity-data';
 import { SITE_SETTINGS_QUERY } from '@/sanity/lib/site.query';
 
 interface ContactUsProps extends SectionProps { }
