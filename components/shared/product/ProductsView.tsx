@@ -11,6 +11,8 @@ import { scrollTo } from '@/lib/scrollTo';
 const ITEMS_PER_PAGE = 20;
 
 import ProductGrid from './ProductGrid';
+import { Chip } from '@heroui/chip';
+import { DeleteIcon } from 'lucide-react';
 
 export default function ProductsView({ products, categories, totalItemsView = ITEMS_PER_PAGE, showFilter = true }: any) {
     const [sortOrder, setSortOrder] = React.useState('');
@@ -65,6 +67,12 @@ export default function ProductsView({ products, categories, totalItemsView = IT
                                     <FilterDrawer isOpen={isOpen} onOpenChange={onOpenChange} onFilterChange={handleFilterChange} categories={categories} sortOrder={sortOrder} selectedCategory={selectedCategory} />
                                     <ProductSearchForm />
                                 </div>
+                            }
+                            {
+                                selectedCategory && <Chip color='primary' radius='sm' classNames={{
+                                    base: 'md:hidden',
+                                    content: 'flex items-center gap-2'
+                                }}>{selectedCategory} <DeleteIcon className='cursor-pointer' onClick={() => handleFilterChange(sortOrder, '')} /></Chip>
                             }
                             {
                                 paginatedItems.length ?
