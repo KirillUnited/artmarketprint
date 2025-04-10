@@ -17,7 +17,7 @@ export const ProjectCard = ({ project }: { project: SanityDocument }) => (
             {project?.service_tags?.length > 0 && <ProjectTagList color='primary' tags={project.service_tags} />}
             {project?.category_tags?.length > 0 && <ProjectTagList color='secondary' tags={project.category_tags} />}
         </div>
-        <Image
+        {(project.imageUrl || project.image) && <Image
             as={NextImage}
             removeWrapper
             alt={project.title}
@@ -26,7 +26,7 @@ export const ProjectCard = ({ project }: { project: SanityDocument }) => (
             src={project.imageUrl ? project.imageUrl : getUrlFor(project.image)}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-        />
+        />}
         <CardFooter className={clsx(
             'absolute bg-black/40 bottom-0 w-full z-10 p-0',
         )}>
