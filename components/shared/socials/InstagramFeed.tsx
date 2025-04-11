@@ -66,7 +66,7 @@ export const InstagramFeedSection = ({ className }: SectionProps) => {
                     </SectionDescription>
                 </SectionHeading>
             </div>
-            <InstagramFeed />
+            <InstagramFeedOld />
         </Section>
     )
 }
