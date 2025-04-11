@@ -13,6 +13,7 @@ const ITEMS_PER_PAGE = 20;
 import ProductGrid from './ProductGrid';
 import { Chip } from '@heroui/chip';
 import { DeleteIcon } from 'lucide-react';
+import { SortFilter } from '@/components/ui/filter/SortFilter';
 
 export default function ProductsView({ products, categories, totalItemsView = ITEMS_PER_PAGE, showFilter = true }: any) {
     const [sortOrder, setSortOrder] = React.useState('');
@@ -60,6 +61,8 @@ export default function ProductsView({ products, categories, totalItemsView = IT
                                 onFilterChange={handleFilterChange} />
                         }
                         <div className='flex flex-col gap-8 relative'>
+
+                           <div className='md:hidden'> {SortFilter({ sortOrder, selectedCategory, onFilterChange: handleFilterChange })}</div>
                             {
                                 showFilter &&
                                 <div className='flex flex-wrap flex-col md:flex-row gap-4 w-full'>
