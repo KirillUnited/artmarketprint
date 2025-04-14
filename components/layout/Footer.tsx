@@ -10,8 +10,9 @@ import { getSanityDocuments } from '@/sanity/lib/fetch-sanity-data';
 import { SITE_SETTINGS_QUERY } from '@/sanity/lib/site.query';
 
 export default async function Footer() {
-	const siteSettings: any = await getSanityDocuments(SITE_SETTINGS_QUERY);
-	const contacts = siteSettings?.siteContactInfo || {};
+    const siteSettings: any = await getSanityDocuments(SITE_SETTINGS_QUERY);
+    const contacts = siteSettings?.siteContactInfo || {};
+    const socials = siteSettings?.siteContactInfo?.socialLinks ?? [];
 
     return (
         <footer
@@ -28,7 +29,7 @@ export default async function Footer() {
                         <ContactsList items={contacts} className='text-[#eeeeee]' />
                     </div>
                     <div className="flex flex-col gap-8 divide-y divide-background">
-                        <Socials />
+                        <Socials items={socials} />
 
                         <ul className="flex flex-col gap-1 pt-8">
                             {

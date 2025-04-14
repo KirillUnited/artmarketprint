@@ -16,6 +16,7 @@ interface ContactUsProps extends SectionProps { }
 const ContactUs: React.FC<ContactUsProps> = async ({ className, ...props }) => {
 	const siteSettings: any = await getSanityDocuments(SITE_SETTINGS_QUERY);
 	const contacts = siteSettings?.siteContactInfo || {};
+    const socials = siteSettings?.siteContactInfo?.socialLinks ?? [];
 
 	return (
 		<Section className={clsx('bg-[#F1F4FA]', className)} {...props}>
@@ -29,7 +30,7 @@ const ContactUs: React.FC<ContactUsProps> = async ({ className, ...props }) => {
 					<div className="flex flex-wrap gap-10 justify-between">
 						<div className="flex flex-col gap-6">
 							<ContactsList items={contacts} className="" />
-							<Socials />
+							<Socials items={socials} />
 							<p>Ждем вас в любое удобное время!</p>
 						</div>
 					</div>
