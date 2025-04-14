@@ -100,7 +100,7 @@ export default function Navbar({ navigation, sales, siteSettings }: any) {
 						<div className="hidden lg:block">
 							<HeroModalOffer />
 						</div>
-						<Drawer className="xl:hidden h-6 w-auto min-w-min" navigation={navigation} />
+						<Drawer className="xl:hidden h-6 w-auto min-w-min" navigation={navigation} siteSettings={siteSettings}  />
 					</div>
 				</div>
 			</BaseNavbar>
