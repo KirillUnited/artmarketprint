@@ -13,9 +13,11 @@ import { HeroModalOffer } from './BrandModalOffer';
 import BrandLogo from './BrandLogo';
 
 import { siteConfig } from '@/config/site';
+import { SanityDocument } from 'next-sanity';
 
-export default function Drawer({ navigation, className, children }: { navigation: any, className?: string, children?: React.ReactNode }) {
+export default function Drawer({ navigation, className, siteSettings, children }: { navigation: any, className?: string, siteSettings: SanityDocument, children?: React.ReactNode }) {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
+	const phones = siteSettings?.siteContactInfo?.phones ?? [];
 
     return (
         <>
@@ -68,10 +70,10 @@ export default function Drawer({ navigation, className, children }: { navigation
                                     <HeroModalOffer />
                                 </div>
                                 <div className="flex flex-col gap-2">
-                                    {siteConfig?.contacts?.[0]?.list?.map((item) => (
-                                        <Link key={item.href} className="font-bold text-left flex items-center gap-2" href={`tel:${item.href}` || '#'}>
+                                    {phones?.map((item: {link: string, number: string}) => (
+                                        <Link key={item.link} className="font-bold text-left flex items-center gap-2" href={`tel:${item.link}` || '#'}>
                                             <PhoneIcon size={20} />
-                                            {item.label}
+                                            {item.number}
                                         </Link>
                                     ))}
                                     
