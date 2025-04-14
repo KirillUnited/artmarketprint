@@ -18,6 +18,7 @@ import { SanityDocument } from 'next-sanity';
 export default function Drawer({ navigation, className, siteSettings, children }: { navigation: any, className?: string, siteSettings: SanityDocument, children?: React.ReactNode }) {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
 	const phones = siteSettings?.siteContactInfo?.phones ?? [];
+	const socials = siteSettings?.siteContactInfo?.socialLinks ?? [];
 
     return (
         <>
@@ -77,7 +78,7 @@ export default function Drawer({ navigation, className, siteSettings, children }
                                         </Link>
                                     ))}
                                     
-                                    <div className='mt-6'><Socials /></div>
+                                    <div className='mt-6'><Socials items={socials} /></div>
                                 </div>
                             </DrawerBody>
                         </>
