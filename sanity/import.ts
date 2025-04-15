@@ -1,7 +1,7 @@
 import { extractProductData } from "@/lib/extract-product-data";
 import { Product } from "@/types/product.types";
 import { client } from "./client";
-import { getAllProducts } from "@/lib/actions/product.actions";
+import { getProductsByLimit } from "@/lib/actions/product.actions";
 
 const jsonFilePath = '../_data/products.json';
 
@@ -17,12 +17,13 @@ function transform(external: Product) {
         category,
         description,
         image,
+        images_urls: external.images_urls,
     }
 }
 
 export async function importDataToSanity() {
     try {
-        const AllProducts = await getAllProducts();
+        const AllProducts = await getProductsByLimit(8000);
         const documents = AllProducts.map(transform);
 
         // Split documents into chunks
