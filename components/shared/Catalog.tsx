@@ -12,7 +12,7 @@ import Section, {
 	SectionTitle
 } from '@/components/layout/Section';
 import { getUrlFor } from '@/lib/utils';
-import { CATEGORIES_QUERY } from '@/sanity/lib/category.query';
+import { CATEGORIES_QUERY } from '@/sanity/lib/queries/category.query';
 
 export const CatalogHeading = ({ categoryItemsCount }: { categoryItemsCount: number }) => (
 	<div className="flex flex-wrap items-end justify-between gap-4">

@@ -4,7 +4,7 @@ import { client } from '@/sanity/client';
 import { NAVIGATION_QUERY } from '@/sanity/lib/queries';
 import { getSanityDocuments } from '@/sanity/lib/fetch-sanity-data';
 import { salesQuery } from '@/sanity/lib/queries';
-import { SITE_SETTINGS_QUERY } from '@/sanity/lib/site.query';
+import { SITE_SETTINGS_QUERY } from '@/sanity/lib/queries/site.query';
 
 /**
  * Header component that fetches navigation and sales data from Sanity and passes it to the Navbar component.

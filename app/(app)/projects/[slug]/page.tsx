@@ -13,7 +13,7 @@ import Section, { SectionButton } from '@/components/layout/Section';
 import { ProjectList, ProjectsHeading, ProjectTagList } from '@/components/shared/project';
 import { client } from '@/sanity/client';
 import ProjectGallery from '@/components/shared/project/ProjectGallery';
-import { RELATED_PROJECTS_QUERY } from '@/sanity/lib/project.query';
+import { RELATED_PROJECTS_QUERY } from '@/sanity/lib/queries/project.query';
 
 type Props = {
     id: string,

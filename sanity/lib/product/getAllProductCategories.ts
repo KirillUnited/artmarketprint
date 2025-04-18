@@ -1,4 +1,4 @@
-import { CATEGORIES_QUERY } from "../category.query";
+import { CATEGORIES_QUERY } from "../queries/category.query";
 import { getSanityDocuments } from "../fetch-sanity-data";
 
 /**

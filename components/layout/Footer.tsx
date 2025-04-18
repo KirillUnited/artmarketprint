@@ -7,7 +7,7 @@ import Socials from '@/components/shared/Socials';
 import ContactsList from '@/components/shared/ContactsList';
 import { siteConfig } from '@/config/site';
 import { getSanityDocuments } from '@/sanity/lib/fetch-sanity-data';
-import { SITE_SETTINGS_QUERY } from '@/sanity/lib/site.query';
+import { SITE_SETTINGS_QUERY } from '@/sanity/lib/queries/site.query';
 
 export default async function Footer() {
     const siteSettings: any = await getSanityDocuments(SITE_SETTINGS_QUERY);

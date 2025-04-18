@@ -7,7 +7,7 @@ import { ProjectList } from '@/components/shared/project';
 import { NAVIGATION_QUERY, PROJECTS_QUERY } from '@/sanity/lib/queries';
 import Section, { SectionSubtitle } from '@/components/layout/Section';
 import BaseBreadcrumb from '@/components/ui/Breadcrumb';
-import { HOME_PAGE_PROJECTS_QUERY } from '@/sanity/lib/project.query';
+import { HOME_PAGE_PROJECTS_QUERY } from '@/sanity/lib/queries/project.query';
 
 export default async function ProjectsPage() {
 	const data: any = (await getSanityDocuments(HOME_PAGE_PROJECTS_QUERY)) || {};
