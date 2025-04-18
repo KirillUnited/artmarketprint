@@ -17,7 +17,7 @@ function transform(external: Product) {
         category,
         description,
         image,
-        images_urls: external.images_urls,
+        images_urls: external.images_urls[0],
     }
 }
 
