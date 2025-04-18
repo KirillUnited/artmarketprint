@@ -51,8 +51,8 @@ export default function CartForm() {
             validationBehavior='native'
         >
             {
-                isPending && <div className='z-50 fixed top-0 left-0 w-full h-full bg-white/50'>
-                    <Loader />
+                isPending && <div className='z-50 fixed top-0 left-0 w-full h-full bg-background'>
+                    <Loader label='Отправка заказа...' />
                 </div>
             }
             <div className='w-full'>
