@@ -1,7 +1,7 @@
 import BaseBreadcrumb from '@/components/ui/Breadcrumb';
 import { siteConfig } from '@/config/site';
 import { getSanityDocuments } from '@/sanity/lib/fetch-sanity-data';
-import { CATEGORIES_QUERY } from '@/sanity/lib/category.query';
+import { CATEGORIES_QUERY } from '@/sanity/lib/queries/category.query';
 import { NAVIGATION_QUERY } from '@/sanity/lib/queries';
 import NextImage from 'next/image';
 import React from 'react';

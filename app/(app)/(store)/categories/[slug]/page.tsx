@@ -5,7 +5,7 @@ import BaseBreadcrumb from "@/components/ui/Breadcrumb";
 import { getSanityDocuments } from "@/sanity/lib/fetch-sanity-data";
 import { getUrlFor } from "@/lib/utils";
 import { client } from "@/sanity/client";
-import { CATEGORY_QUERY } from "@/sanity/lib/category.query";
+import { CATEGORY_QUERY } from "@/sanity/lib/queries/category.query";
 import { NAVIGATION_QUERY } from "@/sanity/lib/queries";
 import { Button } from "@heroui/button";
 import { ArrowLeftIcon, ArrowUpRightIcon } from "lucide-react";

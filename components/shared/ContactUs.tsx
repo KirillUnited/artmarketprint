@@ -9,7 +9,7 @@ import { SectionProps } from '@/types';
 import Section, { SectionDescription, SectionHeading, SectionSubtitle, SectionTitle } from '@/components/layout/Section';
 import { OrderForm } from '@/components/ui/form';
 import { getSanityDocuments } from '@/sanity/lib/fetch-sanity-data';
-import { SITE_SETTINGS_QUERY } from '@/sanity/lib/site.query';
+import { SITE_SETTINGS_QUERY } from '@/sanity/lib/queries/site.query';
 
 interface ContactUsProps extends SectionProps { }
 

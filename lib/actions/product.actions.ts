@@ -1,6 +1,6 @@
 'use server';
 
-import { CATEGORIES_QUERY } from '@/sanity/lib/category.query';
+import { CATEGORIES_QUERY } from '@/sanity/lib/queries/category.query';
 import { getSanityDocuments } from '../../sanity/lib/fetch-sanity-data';
 import { getJsonFileData } from '../utils';
 
