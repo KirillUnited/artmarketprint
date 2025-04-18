@@ -25,20 +25,25 @@ export default function ProductGrid({ products }: ProductGridProps): React.React
         <ul className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-1 sm:gap-4 min-h-40 relative">
             <AnimatePresence>
                 {
-                    !isMounted ? <><ProductCardSkeleton /><Loader /></> : products.map((item: ProductData) => (
-                        <motion.li
-                            key={`${item._id}`}
-                            layout
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            initial={{ opacity: 0 }}
-                            transition={{
-                                duration: 0.5,
-                            }}
-                        >
-                            <ProductThumb item={item} />
-                        </motion.li>
-                    ))
+                    !isMounted
+                        ? <>
+                            <ProductCardSkeleton />
+                            <Loader />
+                        </>
+                        : products.map((item: ProductData) => (
+                            <motion.li
+                                key={`${item._id}`}
+                                layout
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                initial={{ opacity: 0 }}
+                                transition={{
+                                    duration: 0.5,
+                                }}
+                            >
+                                <ProductThumb item={item} />
+                            </motion.li>
+                        ))
                 }
             </AnimatePresence>
         </ul>
