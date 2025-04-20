@@ -2,7 +2,7 @@
 import { Button } from '@heroui/button';
 import { Drawer as BaseDrawer, DrawerBody, DrawerContent, DrawerHeader } from '@heroui/drawer';
 import { useDisclosure } from '@heroui/modal';
-import { MenuIcon, PhoneIcon } from 'lucide-react';
+import { BookOpenIcon, BriefcaseIcon, FolderIcon, HomeIcon, MenuIcon, PhoneIcon, WrenchIcon } from 'lucide-react';
 import React from 'react';
 import { NavbarItem } from '@heroui/navbar';
 import { Link } from '@heroui/link';
@@ -12,21 +12,29 @@ import Socials from '../shared/Socials';
 import { HeroModalOffer } from './BrandModalOffer';
 import BrandLogo from './BrandLogo';
 
-import { siteConfig } from '@/config/site';
 import { SanityDocument } from 'next-sanity';
+
+const menuIcons = {
+    'Главная': <HomeIcon aria-hidden="true" className='text-primary' />,
+    'Услуги': <WrenchIcon aria-hidden="true"  className='text-primary'/>,
+    'Каталог': <BookOpenIcon aria-hidden="true" className='text-primary' />,
+    'Категории': <FolderIcon aria-hidden="true" className='text-primary' />,
+    'Проекты': <BriefcaseIcon aria-hidden="true" className='text-primary' />,
+    'Контакты': <PhoneIcon aria-hidden="true" className='text-primary' />
+};
 
 export default function Drawer({ navigation, className, siteSettings, children }: { navigation: any, className?: string, siteSettings: SanityDocument, children?: React.ReactNode }) {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
-	const phones = siteSettings?.siteContactInfo?.phones ?? [];
-	const socials = siteSettings?.siteContactInfo?.socialLinks ?? [];
+    const phones = siteSettings?.siteContactInfo?.phones ?? [];
+    const socials = siteSettings?.siteContactInfo?.socialLinks ?? [];
 
     return (
         <>
-            <Button 
-                isIconOnly 
-                className={className} 
-                variant="light" 
-                onPress={onOpen} 
+            <Button
+                isIconOnly
+                className={className}
+                variant="light"
+                onPress={onOpen}
                 aria-label="Open menu"
             >
                 <MenuIcon aria-hidden="true" />
@@ -47,7 +55,7 @@ export default function Drawer({ navigation, className, siteSettings, children }
                         },
                     },
                 }}
-                radius='sm'
+                radius='none'
                 size='xs'
                 onOpenChange={onOpenChange}
             >
@@ -61,7 +69,8 @@ export default function Drawer({ navigation, className, siteSettings, children }
                                 <ul className="flex flex-col gap-4">
                                     {navigation?.map((navItem: any) => (
                                         <NavbarItem key={navItem.title}>
-                                            <Link aria-current="page" className="leading-normal font-semibold hover:underline hover:text-primary transition" color={'foreground'} href={navItem.url} size="sm" onPress={onClose}>
+                                            <Link aria-current="page" className="leading-normal font-semibold hover:underline hover:text-primary transition gap-2" color={'foreground'} href={navItem.url} size="sm" onPress={onClose}>
+                                                {menuIcons[navItem.title as keyof typeof menuIcons]}
                                                 {navItem.title}
                                             </Link>
                                         </NavbarItem>
@@ -71,13 +80,13 @@ export default function Drawer({ navigation, className, siteSettings, children }
                                     <HeroModalOffer />
                                 </div>
                                 <div className="flex flex-col gap-2">
-                                    {phones?.map((item: {link: string, number: string}) => (
+                                    {phones?.map((item: { link: string, number: string }) => (
                                         <Link key={item.link} className="font-bold text-left flex items-center gap-2" href={`tel:${item.link}` || '#'}>
                                             <PhoneIcon size={20} />
                                             {item.number}
                                         </Link>
                                     ))}
-                                    
+
                                     <div className='mt-6'><Socials items={socials} /></div>
                                 </div>
                             </DrawerBody>
