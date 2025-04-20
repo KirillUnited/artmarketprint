@@ -9,6 +9,8 @@ import { toast } from 'sonner';
 export function useCartForm() {
     const [isPending, setIsPending] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+    const [fileUploaded, setFileUploaded] = useState(false);
+    const [fileUploadedName, setFileUploadedName] = useState('');
     const items = useBasketStore((state) => state.items);
     const router = useRouter();
 
@@ -37,6 +39,8 @@ export function useCartForm() {
             setTimeout(() => {
                 setIsLoading(false); // Hide loading UI after upload
                 toast.success('Файл успешно загружен');
+                setFileUploaded(true); // Set file uploaded state
+                setFileUploadedName(file.name); // Set file name
             }, 2000); // Simulate 2 seconds upload time
         }
     };
@@ -82,6 +86,8 @@ export function useCartForm() {
         isLoading,
         setIsLoading,
         handleFileChange,
+        fileUploaded,
+        fileUploadedName,
         handleSubmit
     };
 }
