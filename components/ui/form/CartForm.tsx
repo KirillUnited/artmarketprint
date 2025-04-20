@@ -26,7 +26,7 @@ export default function CartForm() {
     const getTotalPrice = useBasketStore((state) => state.getTotalPrice);
     const [isClient, setIsClient] = useState(false);
     const [phoneValid, setPhoneValid] = useState(false);
-    const { isLoading, setIsLoading, isPending, handleFileChange, handleSubmit } = useCartForm();
+    const { isLoading, setIsLoading, isPending, handleFileChange, handleSubmit, fileUploaded, fileUploadedName } = useCartForm();
 
     // This is a workaround to prevent the component from rendering on the server
     useEffect(() => {
@@ -61,7 +61,7 @@ export default function CartForm() {
 
                 {/* Payment */}
                 <div className="mt-10 border-t border-gray-200 pt-10">
-                    <FormPaymentFields handleFileChange={handleFileChange} />
+                    <FormPaymentFields handleFileChange={handleFileChange} fileUploaded={fileUploaded} fileUploadedName={fileUploadedName} />
                 </div>
             </div>
 

@@ -1,7 +1,10 @@
 import FormInput from "./FormInput";
 import FileUploadInput from "./FileUploadInput";
 
-const FormPaymentFields = ({ handleFileChange }: { handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void }) => {
+const FormPaymentFields = ({ handleFileChange, fileUploaded, fileUploadedName }: { handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void ,
+    fileUploaded: boolean,
+    fileUploadedName: string
+}) => {
     return (
         <fieldset className="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
             <legend className="text-lg font-medium text-gray-900">Оплата</legend>
@@ -17,7 +20,7 @@ const FormPaymentFields = ({ handleFileChange }: { handleFileChange: (e: React.C
                 />
             </div>
             <div className="sm:col-span-2">
-                <FileUploadInput handleFileChange={handleFileChange} />
+                <FileUploadInput handleFileChange={handleFileChange} fileUploaded={fileUploaded} fileUploadedName={fileUploadedName} />
             </div>
             <div className="sm:col-span-2">
                 <FormInput
