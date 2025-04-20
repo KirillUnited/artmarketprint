@@ -8,6 +8,8 @@ import Section from '@/components/layout/Section';
 import ProductsView from '@/components/shared/product/ProductsView';
 import { getAllProductCategories } from '@/sanity/lib/product/getAllProductCategories';
 import { getAllProductsFromSanity } from '@/sanity/lib/product/getAllProductsFromSanity';
+import { getProductsByLimit } from '@/lib/actions/product.actions';
+import { extractProductData } from '@/lib/extract-product-data';
 
 export default async function ProductsPage(
     {
@@ -23,8 +25,10 @@ export default async function ProductsPage(
     const [categories, breadcrumbs, products] = await Promise.all([
         getAllProductCategories(),
         getSanityDocuments(NAVIGATION_QUERY),
-        getAllProductsFromSanity()
+        // getAllProductsFromSanity(),
+        getProductsByLimit(5000),
     ]);
+    const productListByLimit = products.map((item) => {return extractProductData({...item, _id: 'id'} as any);})
 
     return (
         <>
@@ -58,7 +62,7 @@ export default async function ProductsPage(
                 </div>
             </section>
             <Section id="products" innerClassname='pt-6 md:pt-6'>
-                <ProductsView products={products} categories={categories} />
+                <ProductsView products={productListByLimit} categories={categories} />
             </Section>
         </>
     );
