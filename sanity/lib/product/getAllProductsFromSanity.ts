@@ -18,8 +18,6 @@ export async function getAllProductsFromSanity(): Promise<any[]> {
         // Fetch the products from Sanity using the client.fetch() method
         const products = await getSanityDocuments(ALL_PRODUCTS_QUERY);
 
-        console.log("Products", products);
-
         // Return the list of products or an empty array if not available
         return products ?? [];
     } catch (error) {
