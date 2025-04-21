@@ -15,6 +15,7 @@ import Section, {
 	SectionTitle
 } from '@/components/layout/Section';
 import { SanityDocument } from 'next-sanity';
+import { Alert } from '@heroui/alert';
 
 /**
  * A function that renders a section with a list of services and a button to view all services.
@@ -35,7 +36,7 @@ export const Services = async (props: {
 	link?: { text: string; link: string };
 }): Promise<JSX.Element | null> => {
 	const { services } = props;
-	
+
 	// If the component is not active, return null
 	if (!props.isActive) return null;
 
@@ -64,7 +65,7 @@ export const Services = async (props: {
 	);
 };
 
-export const ServiceDetails = ({ name, description, image, price, advantages, children }: ServiceDetailsProps) => (
+export const ServiceDetails = ({ name, description, image, price, advantages, layoutRequirements, children }: ServiceDetailsProps) => (
 	<div className="grid md:grid-cols-2 items-start gap-12">
 		{image && <Image alt={name} className="md:sticky top-16 object-cover w-full aspect-square" height={640} src={`${image}`} width={640} />}
 		<div className="flex flex-col gap-8 md:gap-16">
@@ -92,6 +93,11 @@ export const ServiceDetails = ({ name, description, image, price, advantages, ch
 						<h3 className="text-xl md:text-2xl font-bold text-gray-900">Цены</h3>
 						<p className="font-semibold text-secondary text-4xl">{price}</p>
 					</div>
+				)}
+				{layoutRequirements && (
+					<div className="flex flex-col gap-4">
+						<h3 className="text-xl md:text-2xl font-bold text-gray-900">Дополнительные информация:</h3>
+						<Alert className="prose flex-col" color="default" icon="info">{layoutRequirements}</Alert></div>
 				)}
 			</div>
 			<div className="flex flex-wrap gap-2 md:gap-4">
