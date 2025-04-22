@@ -2,9 +2,8 @@ import Image from 'next/image';
 import { SanityImageSource } from '@sanity/image-url/lib/types/types';
 import Link from 'next/link';
 import imageUrlBuilder from '@sanity/image-url';
-import { PortableText, SanityDocument } from 'next-sanity';
+import { defineQuery, PortableText, SanityDocument } from 'next-sanity';
 
-import { siteConfig } from '@/config/site';
 import BaseBreadcrumb from '@/components/ui/Breadcrumb';
 import BrandButton from '@/components/ui/BrandButton';
 import { ServiceDetails } from '@/components/shared/service';
@@ -12,14 +11,29 @@ import { client } from '@/sanity/client';
 import { getUrlFor } from '@/lib/utils';
 import { ProjectList, ProjectsHeading } from '@/components/shared/project';
 import { NAVIGATION_QUERY, PROJECTS_BY_SERVICE_QUERY } from '@/sanity/lib/queries';
-import Section, { SectionButton } from '@/components/layout/Section';
+import Section, { SectionButton, SectionDescription, SectionHeading, SectionSubtitle, SectionTitle } from '@/components/layout/Section';
 import { OrderForm } from '@/components/ui/form';
+import { Card } from '@heroui/card';
+import { clsx } from 'clsx';
+import { FAQSection } from '@/components/shared/faq';
+import { SECTION_FIELDS } from '@/sanity/lib/queries/page.query';
 
 type Props = {
     slug: string
 }
 
 const SERVICE_QUERY = '*[_type == "service" && slug.current == $slug][0]';
+const FAQ_QUERY = defineQuery(`*[_id == "siteSettings"][0]{
+    homePage->{
+      content[][_type == "faqs"] {
+          _key,
+          _type,
+          ${SECTION_FIELDS},
+          faqs[]->,
+      }
+    }
+  }`);
+
 const { projectId, dataset } = client.config();
 const urlFor = (source: SanityImageSource) =>
     projectId && dataset
@@ -30,7 +44,7 @@ const options = { next: { revalidate: 30 } };
 
 export async function generateMetadata({ params }: { params: Promise<Props> }) {
     const service = await client.fetch<SanityDocument>(SERVICE_QUERY, await params, options);
-    const { title = '', description = ''} = service || {};
+    const { title = '', description = '' } = service || {};
 
     return {
         title: `${title || ''}`,
@@ -47,6 +61,7 @@ export async function generateMetadata({ params }: { params: Promise<Props> }) {
 export default async function ServicePage({ params }: { params: Promise<Props> }) {
     const service = await client.fetch<SanityDocument>(SERVICE_QUERY, await params, options);
     const breadcrumbs = (await client.fetch(NAVIGATION_QUERY))[0].links;
+    const faq = await client.fetch<SanityDocument>(FAQ_QUERY, {}, options);
     const serviceImageUrl = service.image
         ? urlFor(service.image)?.width(550).height(310).url()
         : null;
@@ -73,7 +88,7 @@ export default async function ServicePage({ params }: { params: Promise<Props> }
                         <h1 className="text-4xl font-extrabold text-background sm:text-5xl">
                             {service.title}
                         </h1>
-                        <p className="mt-4 text-xl text-white">
+                        <p className="mt-4 text-xl text-white text-balance">
                             {service.description}
                         </p>
                     </div>
@@ -81,29 +96,48 @@ export default async function ServicePage({ params }: { params: Promise<Props> }
                     <BrandButton as={Link} className={'self-center'} href={'#serviceDetails'} state="primary">Подробнее</BrandButton>
                 </div>
             </section>
-            <section>
-                <div className="container">
-                    <div className="mt-10 mb-6">
-                        <BaseBreadcrumb items={breadcrumbs} section="services" />
+            <div className='max-w-3xl mx-auto'>
+                <section>
+                    <div className="container">
+                        <div className="mt-10 mb-6">
+                            <BaseBreadcrumb items={breadcrumbs} section="services" />
+                        </div>
                     </div>
-                </div>
-            </section>
-            <Section id="serviceDetails" innerClassname='pt-6 md:pt-6'>
-                <ServiceDetails advantages={service.advantages} image={getUrlFor(service.image)} name={service.title} price={service.price}
-                layoutRequirements={service.layoutRequirements && <PortableText value={service.layoutRequirements} onMissingComponent={false} />}
-                >
-                    {Array.isArray(service.body) && <PortableText value={service.body} onMissingComponent={false} />}
-                </ServiceDetails>
-            </Section>
+                </section>
+                <Section id="serviceDetails" innerClassname='pt-6 md:pt-6'>
+                    <ServiceDetails advantages={service.advantages} image={getUrlFor(service.image)} name={service.title} price={service.price}
+                        layoutRequirements={service.layoutRequirements && <PortableText value={service.layoutRequirements} onMissingComponent={false} />}
+                    >
+                        {Array.isArray(service.body) && <PortableText value={service.body} onMissingComponent={false} />}
+                    </ServiceDetails>
+                </Section>
+            </div>
             <Section className="bg-[#F9F9F9]">
-                <ProjectsHeading description={'Портфолио выполненных работ'} subtitle={'галерея'} title='Примеры работ' />
+                <div className='max-w-3xl w-full mx-auto flex flex-col gap-6 px-4'>
+                    <SectionHeading className='items-center text-center mx-auto'>
+                        <SectionSubtitle>{'галерея'}</SectionSubtitle>
+                        <SectionTitle>{'Примеры работ'}</SectionTitle>
+                        <SectionDescription>{'Портфолио выполненных работ'}</SectionDescription>
+                    </SectionHeading>
 
-                <ProjectList bentoGrid={false} projectList={relatedProjectsArray} />
+                    <ProjectList bentoGrid={false} projectList={relatedProjectsArray} />
 
-                <SectionButton className='lg:hidden flex' href={'/projects'} label="Все проекты" />
+                    <SectionButton className='lg:hidden flex' href={'/projects'} label="Все проекты" />
+                </div>
             </Section >
-            <Section id="contacts">
-                <OrderForm />
+            <FAQSection className='bg-[#F9F9F9]' {...faq.homePage.content[0]} />
+            <Section id="contacts" className='max-w-3xl mx-auto'>
+                <SectionHeading className='items-center text-center mx-auto'>
+                    <SectionSubtitle>{'обратная связь'}</SectionSubtitle>
+                    <SectionTitle>{'Оставить заявку'}</SectionTitle>
+                    <SectionDescription>{'Оставьте заявку и мы свяжемся с Вами в ближайшее время'}</SectionDescription>
+                </SectionHeading>
+                <Card className={clsx(
+                    'flex flex-col gap-6',
+                    'p-4 bg-background sticky top-16'
+                )} radius='sm' shadow='sm'>
+                    <OrderForm className="w-full" />
+                </Card>
             </Section>
         </>
     );
