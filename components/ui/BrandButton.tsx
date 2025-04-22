@@ -24,7 +24,7 @@ export default function BrandButton({ state, className, onPress, children, ...pr
     )
 }
 
-export const getCTAButton = (_key: string, buttonType: 'cta' | 'secondary' | 'ctaModal', text: string, link: string, size: 'lg' | 'md' = 'lg') => {
+export const getCTAButton = (_key: string, buttonType: 'cta' | 'secondary' | 'ctaModal', text: string, link: string, size: 'lg' | 'md' = 'lg', serviceId='') => {
     const CTAButtons = {
         cta: (text: string, link: string) => (
             <BrandButton key={_key} as={Link} className="uppercase" href={link} state="primary">
@@ -51,7 +51,7 @@ export const getCTAButton = (_key: string, buttonType: 'cta' | 'secondary' | 'ct
             </Button>
         ),
         ctaModal: (text: string, link: string) => (
-            <BrandModalOffer key={_key} buttonLabel={text} />
+            <BrandModalOffer key={_key} buttonLabel={text} id={serviceId} />
         )
     };
 

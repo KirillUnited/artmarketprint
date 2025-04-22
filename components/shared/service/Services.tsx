@@ -96,12 +96,12 @@ export const ServiceDetails = ({ name, description, image, price, advantages, la
 				)}
 				{layoutRequirements && (
 					<div className="flex flex-col gap-4">
-						<h3 className="text-xl md:text-2xl font-bold text-gray-900">Дополнительные информация:</h3>
+						<h3 className="text-xl md:text-2xl font-bold text-gray-900">Дополнительная информация:</h3>
 						<Alert className="prose flex-col" color="default" icon="info">{layoutRequirements}</Alert></div>
 				)}
 			</div>
 			<div className="flex flex-wrap gap-2 md:gap-4">
-				<BrandModalOffer />
+				<BrandModalOffer id={name}/>
 
 				<Button as={Link} className="bg-brand-gradient text-fill-transparent font-semibold flex-1 min-w-40" color="secondary" href={'#contacts'} radius="sm" size="md" variant="ghost">
 					КОНСУЛЬТАЦИЯ
