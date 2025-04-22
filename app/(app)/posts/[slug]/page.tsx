@@ -6,13 +6,12 @@ import { PortableText } from 'next-sanity'
 import { CalendarIcon } from 'lucide-react'
 
 interface PostPageProps {
-  params: {
-    slug: string
-  }
+  slug: string
 }
 
-export default async function PostPage({ params }: PostPageProps) {
-  const post = await getPostBySlug(params.slug);
+export default async function PostPage({ params }: { params: Promise<PostPageProps> }) {
+  const { slug } = await params;
+  const post = await getPostBySlug(slug);
 
   if (!post) {
     notFound()
