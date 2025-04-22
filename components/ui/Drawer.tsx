@@ -77,7 +77,7 @@ export default function Drawer({ navigation, className, siteSettings, children }
                                     ))}
                                 </ul>
                                 <div className='grow flex flex-col'>
-                                    <HeroModalOffer />
+                                    <HeroModalOffer id='Консультация' />
                                 </div>
                                 <div className="flex flex-col gap-2">
                                     {phones?.map((item: { link: string, number: string }) => (

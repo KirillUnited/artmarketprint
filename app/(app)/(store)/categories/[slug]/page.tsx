@@ -61,7 +61,7 @@ export default async function CategoryPage({ params }: { params: Promise<Props> 
                         &&
                         <footer className="flex flex-col md:flex-row gap-4">
                             {
-                                getCTAButton(ctaButtonList[0]._key, ctaButtonList[0].buttonType as 'cta' | 'secondary' | 'ctaModal', ctaButtonList[0].text, '', 'md')}
+                                getCTAButton(ctaButtonList[0]._key, ctaButtonList[0].buttonType as 'cta' | 'secondary' | 'ctaModal', ctaButtonList[0].text, '', 'md', category.title)}
                             <Button as={Link} href={ctaButtonList[1].link} className="uppercase" color="default" size="md" radius="sm">
                                 {ctaButtonList[1].text}
                                 <ArrowUpRightIcon className="text-secondary group-hover:translate-x-1 transition-transform" size={18} />

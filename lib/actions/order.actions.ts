@@ -6,10 +6,12 @@ const chatId = process.env.TELEGRAM_CHAT_ID;
 const BASE_URL = `https://api.telegram.org/bot${telegramBotToken}/sendMessage`;
 
 export async function sendOrder(formData: FormData): Promise<any> {
+	const formId = formData.get('form_id') as string;
 	const name = formData.get('user_name') as string;
 	const phone = formData.get('user_phone') as string;
 	const comment = formData.get('user_comment') as string;
-	const message = `Новый заказ: Имя: ${name} - Телефон: ${phone} - Комментарий: ${comment}`;
+	const termsChecked = formData.get('layout_image_terms') as string;
+	const message = `📝 Новый заказ для "${formId || '💬 Консультация'}":\n\n👤 Имя: ${name}\n📱 Телефон: ${phone}\n💭 Комментарий: ${comment}\n✅ Ознакомлен с требованиями к макету`;
 
 	return await axios
 		.post(BASE_URL, {

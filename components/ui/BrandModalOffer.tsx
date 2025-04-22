@@ -12,8 +12,10 @@ import { UsernameInput, UserPhoneInput } from './form';
 import useForm from '@/hooks/useForm';
 import 'react-international-phone/style.css';
 import React from 'react';
+import { Checkbox } from '@heroui/checkbox';
+import Link from 'next/link';
 
-export const ModalOfferForm = ({ onClose }: { onClose?: () => void }) => {
+export const ModalOfferForm = ({ id, onClose }: { id: string, onClose?: () => void }) => {
 	const {
 		isPending,
 		inputValue,
@@ -35,10 +37,15 @@ export const ModalOfferForm = ({ onClose }: { onClose?: () => void }) => {
 		>
 
 			<ModalBody className="w-full">
+				<input type="hidden" name="form_id" value={id} />
+
 				<UsernameInput />
 
 				<UserPhoneInput countries={countries} country={country} handlePhoneValueChange={handlePhoneValueChange} inputRef={inputRef} inputValue={inputValue} setCountry={setCountry} validPhone={setPhoneValid} />
 
+				<Checkbox className="w-full" classNames={{ label: 'text-sm' }} radius='sm' name="layout_image_terms" id="layout_image_terms" isRequired >
+					Ознакомлен с <Link href={'/posts/layout-image-terms'} target='_blank' className='relative z-10 underline text-primary'>Требованиями к макетам</Link>
+				</Checkbox>
 			</ModalBody>
 			<ModalFooter className="w-full">
 				<Button className="bg-brand-gradient text-fill-transparent font-semibold" color="secondary" radius="sm" size="md" variant="ghost" onPress={onClose}>
@@ -69,7 +76,7 @@ export const ModalOfferForm = ({ onClose }: { onClose?: () => void }) => {
 	);
 };
 
-export default function BrandModalOffer({buttonLabel, icon }: {buttonLabel?: string, icon?: React.ReactNode }) {
+export default function BrandModalOffer({ id, buttonLabel, icon }: { id: string, buttonLabel?: string, icon?: React.ReactNode }) {
 	const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
 	return (
@@ -83,7 +90,7 @@ export default function BrandModalOffer({buttonLabel, icon }: {buttonLabel?: str
 					{(onClose) => (
 						<>
 							<ModalHeader className="flex flex-col gap-1 text-2xl">Заказать звонок</ModalHeader>
-							<ModalOfferForm onClose={onClose} />
+							<ModalOfferForm id={`${id}`} onClose={onClose} />
 						</>
 					)}
 				</ModalContent>
@@ -92,7 +99,7 @@ export default function BrandModalOffer({buttonLabel, icon }: {buttonLabel?: str
 	);
 }
 
-export function HeroModalOffer() {
+export function HeroModalOffer({ id }: { id: string }) {
 	const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
 	return (
@@ -106,7 +113,7 @@ export function HeroModalOffer() {
 					{(onClose) => (
 						<>
 							<ModalHeader className="flex flex-col gap-1 text-2xl">Заказать звонок</ModalHeader>
-							<ModalOfferForm onClose={onClose} />
+							<ModalOfferForm id={`${id}`} onClose={onClose} />
 						</>
 					)}
 				</ModalContent>
