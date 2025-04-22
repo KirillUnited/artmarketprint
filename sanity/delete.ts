@@ -22,6 +22,7 @@ async function deleteAllOfType() {
       const ids = batch.map(doc => doc._id);
       await client.delete({ query: `*[_id in $ids]._id`, params: { ids } });
       console.log(`Deleted batch ${i / batchSize + 1}: ${ids.length} documents.`);
+      await new Promise(resolve => setTimeout(resolve, 1000)); // Delay for 1 second
     }
 
     console.log(`All documents of type "${DOC_TYPE}" have been deleted.`);
