@@ -44,7 +44,7 @@ function deleteAllOfType() {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 6, , 7]);
+                    _a.trys.push([0, 7, , 8]);
                     return [4 /*yield*/, client_1.client.fetch("*[_type == $type]{_id}", { type: DOC_TYPE })];
                 case 1:
                     docs = _a.sent();
@@ -56,25 +56,28 @@ function deleteAllOfType() {
                     i = 0;
                     _a.label = 2;
                 case 2:
-                    if (!(i < docs.length)) return [3 /*break*/, 5];
+                    if (!(i < docs.length)) return [3 /*break*/, 6];
                     batch = docs.slice(i, i + batchSize);
                     ids = batch.map(function (doc) { return doc._id; });
                     return [4 /*yield*/, client_1.client.delete({ query: "*[_id in $ids]._id", params: { ids: ids } })];
                 case 3:
                     _a.sent();
                     console.log("Deleted batch ".concat(i / batchSize + 1, ": ").concat(ids.length, " documents."));
-                    _a.label = 4;
+                    return [4 /*yield*/, new Promise(function (resolve) { return setTimeout(resolve, 1000); })];
                 case 4:
+                    _a.sent(); // Delay for 1 second
+                    _a.label = 5;
+                case 5:
                     i += batchSize;
                     return [3 /*break*/, 2];
-                case 5:
-                    console.log("All documents of type \"".concat(DOC_TYPE, "\" have been deleted."));
-                    return [3 /*break*/, 7];
                 case 6:
+                    console.log("All documents of type \"".concat(DOC_TYPE, "\" have been deleted."));
+                    return [3 /*break*/, 8];
+                case 7:
                     err_1 = _a.sent();
                     console.error('Error deleting documents:', err_1);
-                    return [3 /*break*/, 7];
-                case 7: return [2 /*return*/];
+                    return [3 /*break*/, 8];
+                case 8: return [2 /*return*/];
             }
         });
     });
