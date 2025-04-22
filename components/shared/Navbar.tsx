@@ -98,7 +98,7 @@ export default function Navbar({ navigation, sales, siteSettings }: any) {
 						{CartLinkButton(itemsCount)}
 
 						<div className="hidden lg:block">
-							<HeroModalOffer />
+							<HeroModalOffer id='Консультация' />
 						</div>
 						<Drawer className="xl:hidden h-6 w-auto min-w-min" navigation={navigation} siteSettings={siteSettings}  />
 					</div>
