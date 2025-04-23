@@ -1,0 +1,8 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /cart/
+Disallow: /search/
+Disallow: */search?query=
+Allow: /
+
+Sitemap: https://artmarketprint.by/sitemap.xml
