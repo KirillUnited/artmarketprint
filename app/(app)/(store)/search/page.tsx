@@ -38,7 +38,7 @@ export default async function SearchPage({
                                         <p className='text-3xl font-bold'>{`Товар не найден`}</p>
                                     </CardHeader>
                                     <CardBody className="prose text-balance text-slate-500 block">
-                                        <p>К сожалению, мы не нашли товаров по запросу <span className='font-bold'>"{query}"</span></p>
+                                        <p>К сожалению, мы не нашли товаров по запросу <span className='font-bold'>&quot;{`${query}`}&quot;</span></p>
                                         <p>Рекомендуем:</p>
                                         <ul>
                                             <li>Проверьте правильность написания запроса</li>
