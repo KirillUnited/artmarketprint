@@ -76,6 +76,8 @@ export default function RootLayout({
             `,
           }}
         />
+        {/* Google Search Console Verification */}
+        <meta name="google-site-verification" content="8YlcgzL83D40BFHx5ZMIaLjwHnFMG_kQ9XU_GJa4AaI" />
       </head>
       <body
         className={clsx(
