@@ -25,10 +25,10 @@ export default async function ProductsPage(
     const [categories, breadcrumbs, products] = await Promise.all([
         getAllProductCategories(),
         getSanityDocuments(NAVIGATION_QUERY),
-        // getAllProductsFromSanity(),
-        getProductsByLimit(5000),
+        getAllProductsFromSanity(),
+        // getProductsByLimit(5000),
     ]);
-    const productListByLimit = products.map((item) => {return extractProductData({...item, _id: 'id'} as any);})
+    // const productListByLimit = products.map((item) => {return extractProductData({...item, _id: 'id'} as any);})
 
     return (
         <>
@@ -62,7 +62,7 @@ export default async function ProductsPage(
                 </div>
             </section>
             <Section id="products" innerClassname='pt-6 md:pt-6'>
-                <ProductsView products={productListByLimit} categories={categories} />
+                <ProductsView products={products} categories={categories} />
             </Section>
         </>
     );
