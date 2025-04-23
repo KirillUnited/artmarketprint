@@ -3,7 +3,7 @@ import { Metadata, Viewport } from 'next';
 import clsx from 'clsx';
 import React from 'react';
 
-import { Providers } from './providers';
+import { Providers } from './(app)/providers';
 
 import { siteConfig } from '@/config/site';
 import { fontSans } from '@/config/fonts';
