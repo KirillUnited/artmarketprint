@@ -17,6 +17,7 @@ import { Card } from '@heroui/card';
 import { clsx } from 'clsx';
 import { FAQSection } from '@/components/shared/faq';
 import { SECTION_FIELDS } from '@/sanity/lib/queries/page.query';
+import ServiceJsonLd from '@/components/ServiceJsonLd';
 
 type Props = {
     slug: string
@@ -65,6 +66,7 @@ export async function generateMetadata({ params }: { params: Promise<Props> }) {
 }
 
 export default async function ServicePage({ params }: { params: Promise<Props> }) {
+    const { slug } = await params;
     const service = await client.fetch<SanityDocument>(SERVICE_QUERY, await params, options);
     const breadcrumbs = (await client.fetch(NAVIGATION_QUERY))[0].links;
     const faq = await client.fetch<SanityDocument>(FAQ_QUERY, {}, options);
@@ -146,6 +148,8 @@ export default async function ServicePage({ params }: { params: Promise<Props> }
                     <OrderForm className="w-full" />
                 </Card>
             </Section>
+
+            <ServiceJsonLd name={service.title} url={`https://artmarketprint.by/services/${slug}`} description={service.description} />
         </>
     );
 }

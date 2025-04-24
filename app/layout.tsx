@@ -11,6 +11,7 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Toaster } from '@/components/ui/sonner';
 import Script from 'next/script';
+import { LocalBusinessJsonLd } from '@/config/ld-json';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://artmarketprint.by'),
@@ -107,6 +108,10 @@ export default function RootLayout({
             />
           </div>
         </noscript>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(LocalBusinessJsonLd) }}
+        />
       </body>
     </html>
   );

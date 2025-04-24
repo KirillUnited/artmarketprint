@@ -3,67 +3,8 @@
 import React from 'react';
 import { Table, TableHeader, TableBody, TableColumn, TableRow, TableCell, getKeyValue } from '@heroui/table';
 import { Spinner } from '@heroui/spinner';
-
-// Define TypeScript interfaces for better type safety
-interface ColorPrice {
-	colors: string;
-	prices: number[];
-}
-
-interface PriceTableProps {
-	quantities: string[];
-	colorPrices: ColorPrice[];
-	additionalNotes?: string[];
-}
-
-interface TableRow {
-	key: string;
-	quantity: string;
-	[key: string]: string | number; // Allow dynamic color price columns
-}
-
-/**
- * Transforms raw price data into table row format
- * @param items - Price data including quantities and color prices
- * @returns Array of formatted table rows
- */
-const transformPriceData = (items: PriceTableProps): TableRow[] => {
-	return items.quantities.map((quantity: string, index: number) => {
-		const row: TableRow = {
-			key: quantity,
-			quantity: quantity
-		};
-
-		// Add prices for each color option
-		items.colorPrices.forEach((colorPrice: ColorPrice) => {
-			row[colorPrice.colors] = colorPrice.prices[index];
-		});
-
-		return row;
-	});
-};
-
-/**
- * Creates column definitions for the price table
- * @param items - Price data including color prices
- * @returns Array of column definitions
- */
-const createColumns = (items: PriceTableProps) => {
-	const baseColumns = [
-		{
-			key: "quantity",
-			label: "Тираж"
-		}
-	];
-
-	// Add column for each color option
-	const colorColumns = items.colorPrices.map((colorPrice) => ({
-		key: colorPrice.colors,
-		label: colorPrice.colors
-	}));
-
-	return [...baseColumns, ...colorColumns];
-};
+import { PriceTableProps, TableRowProps } from './table.props';
+import { createColumns, transformPriceData } from './lib';
 
 /**
  * PriceTable component displays pricing information in a tabular format
@@ -104,7 +45,7 @@ export default function PriceTable({ items }: { items: PriceTableProps }) {
 				>
 					{(item) => (
 						<TableRow
-							key={(item as TableRow).key}
+							key={(item as TableRowProps).key}
 							className='rounded-small'
 						>
 							{(columnKey) => (
