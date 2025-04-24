@@ -53,12 +53,12 @@ export default function PriceTable({ items }: any) {
 		<div className='flex flex-col gap-4'>
 			<p className='font-bold text-gray-900'>Цена за ед.в Бел.Рублях</p>
 			<Table aria-label="Example table with dynamic content" radius='sm' isStriped>
-				<TableHeader columns={columns}>
+				<TableHeader columns={columns} className='rounded-small'>
 					{(column: any) => <TableColumn className='font-bold uppercase' key={column.key}>{column.label}</TableColumn>}
 				</TableHeader>
 				<TableBody items={rows} loadingContent={<Spinner label="Loading..." />}>
 					{(item) => (
-						<TableRow key={(item as { key: string }).key}>
+						<TableRow key={(item as { key: string }).key} className='rounded-small'>
 							{(columnKey) => <TableCell>{getKeyValue(item, columnKey)}</TableCell>}
 						</TableRow>
 					)}
