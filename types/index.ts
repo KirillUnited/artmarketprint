@@ -36,6 +36,7 @@ export interface ServiceDetailsProps {
 	image?: string;
 	advantages?: string[];
 	price?: string;
+	priceTable?: any;
 	layoutRequirements?: any;
 	children?: React.ReactNode;
 }
