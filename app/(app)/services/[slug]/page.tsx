@@ -63,7 +63,7 @@ export default async function ServicePage({ params }: { params: Promise<Props> }
     const breadcrumbs = (await client.fetch(NAVIGATION_QUERY))[0].links;
     const faq = await client.fetch<SanityDocument>(FAQ_QUERY, {}, options);
     const serviceImageUrl = service.image
-        ? urlFor(service.image)?.width(550).height(310).url()
+        ? urlFor(service.image)?.width(1200).height(400).url()
         : null;
 
     const relatedProjects = await client.fetch<SanityDocument>(PROJECTS_BY_SERVICE_QUERY, await params, options);
@@ -107,6 +107,7 @@ export default async function ServicePage({ params }: { params: Promise<Props> }
                 <Section id="serviceDetails" innerClassname='pt-6 md:pt-6'>
                     <ServiceDetails advantages={service.advantages} image={getUrlFor(service.image)} name={service.title} price={service.price}
                         layoutRequirements={service.layoutRequirements && <PortableText value={service.layoutRequirements} onMissingComponent={false} />}
+                        priceTable={service.priceTable}
                     >
                         {Array.isArray(service.body) && <PortableText value={service.body} onMissingComponent={false} />}
                     </ServiceDetails>
