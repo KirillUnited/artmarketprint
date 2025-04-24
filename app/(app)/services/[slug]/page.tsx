@@ -43,8 +43,11 @@ const urlFor = (source: SanityImageSource) =>
 const options = { next: { revalidate: 30 } };
 
 export async function generateMetadata({ params }: { params: Promise<Props> }) {
+    const { slug } = await params;
     const service = await client.fetch<SanityDocument>(SERVICE_QUERY, await params, options);
     const { title = '', description = '' } = service || {};
+
+    const url = `https://artmarketprint.by/services/${slug}`;
 
     return {
         title: `${title || ''}`,
@@ -54,7 +57,10 @@ export async function generateMetadata({ params }: { params: Promise<Props> }) {
             title: `${title || ''}`,
             description: `${description}`,
             images: '/apple-touch-icon.png'
-        }
+        },
+        alternates: {
+            canonical: url,
+        },
     }
 }
 

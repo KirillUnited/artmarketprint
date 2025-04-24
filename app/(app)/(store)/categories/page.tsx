@@ -8,6 +8,17 @@ import React from 'react';
 import Section from '@/components/layout/Section';
 import { FeaturedCategoryList } from '@/components/shared/category';
 
+export async function generateMetadata() {
+
+    const url = `https://artmarketprint.by/categories`;
+
+    return {
+        alternates: {
+            canonical: url,
+        },
+    }
+}
+
 export default async function CategoriesPage() {
     const categories = await getSanityDocuments(CATEGORIES_QUERY);
     const breadcrumbs = (await getSanityDocuments(NAVIGATION_QUERY))[0].links;

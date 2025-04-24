@@ -8,6 +8,23 @@ import { searchProductsByName } from '@/sanity/lib/product/searchProductsByName'
 import { Button } from '@heroui/button';
 import { FeaturedProducts } from '@/components/shared/product/FeaturedProducts';
 
+type Props = {
+    slug: string
+}
+export async function generateMetadata({ params }: { params: Promise<Props> }) {
+
+    const url = `https://artmarketprint.by/search`;
+
+    return {
+        title: `Поиск`,
+        
+        alternates: {
+            canonical: url,
+        },
+    }
+}
+
+
 export default async function SearchPage({
     searchParams
 }: {

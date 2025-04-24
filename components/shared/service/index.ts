@@ -1,4 +1,5 @@
 import ServiceListItems from './_ServiceListItems';
-import { Services, ServiceDetails } from './Services';
+import { Services } from './Services';
+import { ServiceDetails } from './ServiceDetails';
 
 export { ServiceListItems, Services, ServiceDetails };
