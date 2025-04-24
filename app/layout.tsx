@@ -38,6 +38,9 @@ export const metadata: Metadata = {
     description: `${siteConfig.description}`,
     images: ['/apple-touch-icon.png'],
   },
+  alternates: {
+    canonical: 'https://artmarketprint.by',
+  },
 };
 
 export const viewport: Viewport = {

@@ -25,7 +25,7 @@ export async function generateStaticParams() {
 
     return projects.map((document) => {
         return {
-            projects: document.projects.map((project: SanityDocument) => {                
+            projects: document.projects.map((project: SanityDocument) => {
                 return {
                     id: project._id,
                     slug: project.slug.current,
@@ -36,8 +36,10 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: { params: Promise<Props> }) {
+    const { slug } = await params;
     const data = await getSanityDocuments(PROJECT_QUERY, await params);
     const { title = '', shortDescription = '', keywords = '' } = data?.[0] || {};
+    const url = `https://artmarketprint.by/projects/${slug}`;
 
     return {
         title: `${title || ''}`,
@@ -47,7 +49,10 @@ export async function generateMetadata({ params }: { params: Promise<Props> }) {
             title: `${title || ''}`,
             description: `${shortDescription}`,
             images: '/apple-touch-icon.png'
-        }
+        },
+        alternates: {
+            canonical: url,
+        },
     }
 }
 

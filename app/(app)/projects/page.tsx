@@ -9,6 +9,17 @@ import Section, { SectionSubtitle } from '@/components/layout/Section';
 import BaseBreadcrumb from '@/components/ui/Breadcrumb';
 import { HOME_PAGE_PROJECTS_QUERY } from '@/sanity/lib/queries/project.query';
 
+export async function generateMetadata() {
+
+    const url = `https://artmarketprint.by/projects`;
+
+    return {
+        alternates: {
+            canonical: url,
+        },
+    }
+}
+
 export default async function ProjectsPage() {
 	const data: any = (await getSanityDocuments(HOME_PAGE_PROJECTS_QUERY)) || {};
 	const projects = await getSanityDocuments(PROJECTS_QUERY, { limit: 12 });

@@ -21,6 +21,8 @@ export const generateMetadata = async ({ params }: { params: Promise<Props> }) =
     const { slug } = await params;
     const product = await getProductBySlug(slug);
 
+    const url = `https://artmarketprint.by/products/${slug}`;
+
     return {
         title: product.product[0]['_'],
         description: product.general_description[0],
@@ -42,6 +44,9 @@ export const generateMetadata = async ({ params }: { params: Promise<Props> }) =
             creator: '@artmarketprint',
             site: '@artmarketprint',
             url: `https://artmarketprint.by/products/${slug}`,
+        },
+        alternates: {
+            canonical: url,
         },
     }
 }

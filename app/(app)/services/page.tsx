@@ -9,6 +9,17 @@ import { NAVIGATION_QUERY, SERVICES_QUERY } from '@/sanity/lib/queries';
 import Section from '@/components/layout/Section';
 import { ServiceListItems } from '@/components/shared/service';
 
+export async function generateMetadata() {
+
+    const url = `https://artmarketprint.by/services`;
+
+    return {
+        alternates: {
+            canonical: url,
+        },
+    }
+}
+
 export default async function ServicesPage() {
 	const services = await getSanityDocuments(SERVICES_QUERY);
 	const breadcrumbs = (await client.fetch(NAVIGATION_QUERY))[0].links;
