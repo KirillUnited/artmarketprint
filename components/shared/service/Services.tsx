@@ -16,7 +16,7 @@ import Section, {
 } from '@/components/layout/Section';
 import { SanityDocument } from 'next-sanity';
 import { Alert } from '@heroui/alert';
-import PriceTable from '../PriceTable';
+import { PriceTable } from '@/components/ui/table';
 
 /**
  * A function that renders a section with a list of services and a button to view all services.
