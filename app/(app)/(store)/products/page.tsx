@@ -9,6 +9,17 @@ import ProductsView from '@/components/shared/product/ProductsView';
 import { getAllProductCategories } from '@/sanity/lib/product/getAllProductCategories';
 import { getAllProductsFromSanity } from '@/sanity/lib/product/getAllProductsFromSanity';
 
+export async function generateMetadata() {
+
+    const url = `https://artmarketprint.by/products`;
+
+    return {
+        alternates: {
+            canonical: url,
+        },
+    }
+}
+
 export default async function ProductsPage(
     {
         searchParams,

@@ -17,6 +17,18 @@ import { getAllProductsByCategory } from "@/sanity/lib/product/getAllProductsByC
 export interface Props {
     slug: string,
 }
+export async function generateMetadata({ params }: { params: Promise<Props> }) {
+    const { slug } = await params;
+
+    const url = `https://artmarketprint.by/categories/${slug}`;
+
+    return {
+        alternates: {
+            canonical: url,
+        },
+    }
+}
+
 const ctaButtonList = [
     {
         _key: "1",
