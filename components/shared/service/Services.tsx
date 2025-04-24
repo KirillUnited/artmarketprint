@@ -16,6 +16,7 @@ import Section, {
 } from '@/components/layout/Section';
 import { SanityDocument } from 'next-sanity';
 import { Alert } from '@heroui/alert';
+import PriceTable from '../PriceTable';
 
 /**
  * A function that renders a section with a list of services and a button to view all services.
@@ -65,7 +66,7 @@ export const Services = async (props: {
 	);
 };
 
-export const ServiceDetails = ({ name, description, image, price, advantages, layoutRequirements, children }: ServiceDetailsProps) => (
+export const ServiceDetails = ({ name, description, image, price, advantages, layoutRequirements, priceTable, children }: ServiceDetailsProps) => (
 	<article className="flex flex-col gap-8 md:gap-16">
 		<div className="flex flex-col gap-4 md:gap-6">
 			<div className="flex flex-col gap-2">
@@ -97,6 +98,11 @@ export const ServiceDetails = ({ name, description, image, price, advantages, la
 					<p className="font-semibold text-secondary text-4xl">{price}</p>
 				</div>
 			)}
+			{
+				priceTable && (
+					<PriceTable items={priceTable} />
+				)
+			}
 		</div>
 		<footer className="flex flex-wrap gap-2 md:gap-4">
 			<BrandModalOffer id={name} />
