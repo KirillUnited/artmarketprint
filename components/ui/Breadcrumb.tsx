@@ -4,8 +4,9 @@ import { BreadcrumbItem, Breadcrumbs } from '@heroui/breadcrumbs';
 import { usePathname } from 'next/navigation';
 import { HomeIcon } from 'lucide-react';
 import clsx from 'clsx';
+import { BreadcrumbListJsonLd } from '../ServiceJsonLd';
 
-export default function BaseBreadcrumb({ items, section }: { items: any, section?: string }): JSX.Element {
+export default function BaseBreadcrumb({ items, section, withJsonLd }: { items: any, section?: string, withJsonLd?: boolean }): JSX.Element {
 	const pathname = usePathname();
 	const pathSegments = pathname.split('/').filter(Boolean);
 	const [navigation, setNavigation] = useState<any>({});
@@ -31,33 +32,36 @@ export default function BaseBreadcrumb({ items, section }: { items: any, section
 	}, []);
 
 	return (
-		<Breadcrumbs variant='bordered'>
-			<BreadcrumbItem className="font-semibold text-primary" href="/">
-				<HomeIcon size={18} aria-label='Home' />
-			</BreadcrumbItem>
-			{
-				pathSegments.length > 0 && pathSegments.map((segment: any, index: number) => {
-					const href = '/' + pathSegments.slice(0, index + 1).join('/');
-					const isLast = index === pathSegments.length - 1;
-					const title = navigation[`${pathSegments[index]}`] || decodeURIComponent(pathSegments[index]);
-
-					return (
-						<BreadcrumbItem key={href} className={clsx(
-							'font-semibold',
-							'max-w-60'
-						)} classNames={{
-							separator: 'text-primary',
-							item: 'inline truncate',
-						}}
-						href={`${href}`}
-						isDisabled={isLast}
-						title={title}>
-							{title}
-						</BreadcrumbItem>
+		<>
+            {withJsonLd && <BreadcrumbListJsonLd name={navigation[`${pathSegments[pathSegments.length - 1]}`]} />}
+			<Breadcrumbs variant='bordered'>
+				<BreadcrumbItem className="font-semibold text-primary" href="/">
+					<HomeIcon size={18} aria-label='Home' />
+				</BreadcrumbItem>
+				{
+					pathSegments.length > 0 && pathSegments.map((segment: any, index: number) => {
+						const href = '/' + pathSegments.slice(0, index + 1).join('/');
+						const isLast = index === pathSegments.length - 1;
+						const title = navigation[`${pathSegments[index]}`] || decodeURIComponent(pathSegments[index]);
+	
+						return (
+							<BreadcrumbItem key={href} className={clsx(
+								'font-semibold',
+								'max-w-60'
+							)} classNames={{
+								separator: 'text-primary',
+								item: 'inline truncate',
+							}}
+							href={`${href}`}
+							isDisabled={isLast}
+							title={title}>
+								{title}
+							</BreadcrumbItem>
+						)
+					}
 					)
 				}
-				)
-			}
-		</Breadcrumbs>
+			</Breadcrumbs>
+		</>
 	);
 }
