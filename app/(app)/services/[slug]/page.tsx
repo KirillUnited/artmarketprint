@@ -18,6 +18,7 @@ import { clsx } from 'clsx';
 import { FAQSection } from '@/components/shared/faq';
 import { SECTION_FIELDS } from '@/sanity/lib/queries/page.query';
 import ServiceJsonLd from '@/components/ServiceJsonLd';
+import { BreadcrumbListJsonLd } from '@/components/ServiceJsonLd';
 
 type Props = {
     slug: string
@@ -67,20 +68,26 @@ export async function generateMetadata({ params }: { params: Promise<Props> }) {
 
 export default async function ServicePage({ params }: { params: Promise<Props> }) {
     const { slug } = await params;
-    const service = await client.fetch<SanityDocument>(SERVICE_QUERY, await params, options);
-    const breadcrumbs = (await client.fetch(NAVIGATION_QUERY))[0].links;
-    const faq = await client.fetch<SanityDocument>(FAQ_QUERY, {}, options);
+    // Fetch data in parallel for better performance
+    const [service, navigationData, faq, relatedProjects] = await Promise.all([
+        client.fetch<SanityDocument>(SERVICE_QUERY, await params, options),
+        client.fetch(NAVIGATION_QUERY),
+        client.fetch<SanityDocument>(FAQ_QUERY, {}, options),
+        client.fetch<SanityDocument>(PROJECTS_BY_SERVICE_QUERY, await params, options)
+    ]);
+
+    const breadcrumbs = navigationData[0].links;
     const serviceImageUrl = service.image
         ? urlFor(service.image)?.width(1200).height(400).url()
         : null;
-
-    const relatedProjects = await client.fetch<SanityDocument>(PROJECTS_BY_SERVICE_QUERY, await params, options);
     const relatedProjectsArray = Array.isArray(relatedProjects) ? relatedProjects : [relatedProjects];
 
     return (
         <>
+            {/* Hero section with background image and gradient overlay */}
             <section
                 className="py-12 md:py-24 relative after:absolute after:inset-0 after:bg-gradient-to-t after:from-black after:to-transparent">
+                {/* Background service image */}
                 {serviceImageUrl && (
                     <Image
                         priority
@@ -91,6 +98,7 @@ export default async function ServicePage({ params }: { params: Promise<Props> }
                         width={1920}
                     />
                 )}
+                {/* Hero content */}
                 <div className="container flex flex-col gap-10 max-w-2xl relative z-10">
                     <div className="text-center">
                         <h1 className="text-4xl font-extrabold text-background sm:text-5xl">
@@ -104,23 +112,38 @@ export default async function ServicePage({ params }: { params: Promise<Props> }
                     <BrandButton as={Link} className={'self-center'} href={'#serviceDetails'} state="primary">Подробнее</BrandButton>
                 </div>
             </section>
+
+            {/* Main content wrapper */}
             <div className='max-w-3xl mx-auto'>
+                {/* Breadcrumb navigation */}
                 <section>
                     <div className="container">
                         <div className="mt-10 mb-6">
-                            <BaseBreadcrumb items={breadcrumbs} section="services" />
+                            <BaseBreadcrumb items={breadcrumbs} section="services" withJsonLd />
                         </div>
                     </div>
                 </section>
+
+                {/* Service details section */}
                 <Section id="serviceDetails" innerClassname='pt-6 md:pt-6'>
-                    <ServiceDetails advantages={service.advantages} image={getUrlFor(service.image)} name={service.title} price={service.price}
-                        layoutRequirements={service.layoutRequirements && <PortableText value={service.layoutRequirements} onMissingComponent={false} />}
+                    <ServiceDetails 
+                        advantages={service.advantages} 
+                        image={getUrlFor(service.image)} 
+                        name={service.title} 
+                        price={service.price}
+                        layoutRequirements={service.layoutRequirements && 
+                            <PortableText value={service.layoutRequirements} onMissingComponent={false} />
+                        }
                         priceTable={service.priceTable}
                     >
-                        {Array.isArray(service.body) && <PortableText value={service.body} onMissingComponent={false} />}
+                        {Array.isArray(service.body) && 
+                            <PortableText value={service.body} onMissingComponent={false} />
+                        }
                     </ServiceDetails>
                 </Section>
             </div>
+
+            {/* Portfolio section */}
             <Section className="bg-[#F9F9F9]">
                 <div className='max-w-3xl w-full mx-auto flex flex-col gap-6 px-4'>
                     <SectionHeading className='items-center text-center mx-auto'>
@@ -131,15 +154,20 @@ export default async function ServicePage({ params }: { params: Promise<Props> }
 
                     <ProjectList bentoGrid={false} projectList={relatedProjectsArray} />
 
+                    {/* Mobile-only projects button */}
                     <SectionButton className='lg:hidden flex' href={'/projects'} label="Все проекты" />
                 </div>
-            </Section >
+            </Section>
+
+            {/* FAQ section */}
             <FAQSection className='bg-[#F9F9F9]' {...faq.homePage.content[0]} />
+
+            {/* Contact form section */}
             <Section id="contacts" className='max-w-3xl mx-auto'>
                 <SectionHeading className='items-center text-center mx-auto'>
                     <SectionSubtitle>{'обратная связь'}</SectionSubtitle>
                     <SectionTitle>{'Оставить заявку'}</SectionTitle>
-                    <SectionDescription>{'Оставьте заявку и мы свяжемся с Вами в ближайшее время'}</SectionDescription>
+                    <SectionDescription>{'Оставьте заявку и мы свяжемся с Вами в ближайшее время'}</SectionDescription>
                 </SectionHeading>
                 <Card className={clsx(
                     'flex flex-col gap-6',
@@ -149,7 +177,12 @@ export default async function ServicePage({ params }: { params: Promise<Props> }
                 </Card>
             </Section>
 
-            <ServiceJsonLd name={service.title} url={`https://artmarketprint.by/services/${slug}`} description={service.description} />
+            {/* Structured data for service */}
+            <ServiceJsonLd 
+                name={service.title} 
+                url={`https://artmarketprint.by/services/${slug}`} 
+                description={service.description} 
+            />
         </>
     );
 }
