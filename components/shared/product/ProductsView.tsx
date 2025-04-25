@@ -1,48 +1,30 @@
 'use client';
-import React, { Suspense } from 'react'
-import ProductsFilter, { FilterButton, FilterDrawer, getCategory } from './ProductsFilter'
+import React from 'react'
+import ProductsFilter, { FilterButton, FilterDrawer } from './ProductsFilter'
 import Pagination from '@/components/ui/Pagination'
 import ProductSearchForm from './ProductSearchForm';
 import clsx from 'clsx';
 import { useDisclosure } from '@heroui/modal';
-import Loader from '@/components/ui/Loader';
-import { scrollTo } from '@/lib/scrollTo';
-
-const ITEMS_PER_PAGE = 20;
-
 import ProductGrid from './ProductGrid';
 import { Chip } from '@heroui/chip';
 import { DeleteIcon } from 'lucide-react';
 import { SortFilter } from '@/components/ui/filter/SortFilter';
+import { useProductsFilter } from '@/hooks/useProductsFilter';
+
+const ITEMS_PER_PAGE = 20;
 
 export default function ProductsView({ products, categories, totalItemsView = ITEMS_PER_PAGE, showFilter = true }: any) {
-    const [sortOrder, setSortOrder] = React.useState('');
-    const [selectedCategory, setSelectedCategory] = React.useState('');
-    const [currentPage, setCurrentPage] = React.useState(1);
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
-
-    const filteredProducts = React.useMemo(() => {
-        const result = products?.filter((product: any) => !selectedCategory || product?.category === selectedCategory) || [];
-
-        return sortOrder === 'asc'
-            ? result.sort((a: any, b: any) => a.price - b.price)
-            : result.sort((a: any, b: any) => b.price - a.price);
-    }, [products, selectedCategory, sortOrder]);
-    const totalPages = Math.ceil(filteredProducts.length / totalItemsView);
-    const paginatedItems = filteredProducts.slice(
-        (currentPage - 1) * totalItemsView,
-        currentPage * totalItemsView
-    );
-    const handleFilterChange = (newSortOrder: string, newCategory: string) => {
-        setSortOrder(newSortOrder);
-        setSelectedCategory(newCategory);
-        setCurrentPage(1);
-        scrollTo('products');
-    };
-    const handlePageChange = (newPage: number) => {
-        setCurrentPage(newPage);
-        scrollTo('products');
-    };
+    const {
+        sortOrder,
+        selectedCategory,
+        currentPage,
+        filteredProducts,
+        paginatedItems,
+        totalPages,
+        handleFilterChange,
+        handlePageChange
+    } = useProductsFilter({ products, totalItemsView });
 
     return (
         <>
