@@ -8,6 +8,7 @@ import Section from '@/components/layout/Section';
 import ProductsView from '@/components/shared/product/ProductsView';
 import { getAllProductCategories } from '@/sanity/lib/product/getAllProductCategories';
 import { getAllProductsFromSanity } from '@/sanity/lib/product/getAllProductsFromSanity';
+import { prepareCatalog } from '@/lib/catalog-utils';
 
 export async function generateMetadata() {
 
@@ -36,6 +37,7 @@ export default async function ProductsPage(
         getSanityDocuments(NAVIGATION_QUERY),
         getAllProductsFromSanity(),
     ]);
+    const parsedProducts = prepareCatalog(products);
 
     return (
         <>
@@ -69,7 +71,7 @@ export default async function ProductsPage(
                 </div>
             </section>
             <Section id="products" innerClassname='pt-6 md:pt-6'>
-                <ProductsView products={products} categories={categories} />
+                <ProductsView products={parsedProducts} categories={categories} />
             </Section>
         </>
     );
