@@ -38,6 +38,7 @@ export default async function ProductsPage(
         getAllProductsFromSanity(),
     ]);
     const parsedProducts = prepareCatalog(products);
+    console.log('parsedProducts', parsedProducts);
 
     return (
         <>

@@ -2,7 +2,7 @@ import { Card, CardBody, CardFooter } from '@heroui/card';
 import { SanityDocument } from 'next-sanity';
 
 import Section from '@/components/layout/Section';
-import { ProductCarousel } from '@/components/shared/product';
+import { ProductCarousel, ProductDetails } from '@/components/shared/product';
 import RelatedProducts from '@/components/shared/product/RelatedProducts';
 import BaseBreadcrumb from '@/components/ui/Breadcrumb';
 import { getProductBySlug } from '@/lib/actions/product.actions';
@@ -66,6 +66,8 @@ export default async function ProductPage({ params }: { params: Promise<Props> }
     } = product || {};
     const productImages = product?.images_urls[0].split(',');
 
+    console.log('Product page', product);
+
     return (
         <>
             <Section>
@@ -87,10 +89,23 @@ export default async function ProductPage({ params }: { params: Promise<Props> }
                                     <ProductPrice price={getPrice(price[0], 1.1)} productId={product.id[0]['_']} />
                                 </p>
                             </CardBody>
-                            <CardFooter>
+                            <CardBody>
+                                <ProductDetails />
+                            </CardBody>
+                            <CardFooter className='relative'>
                                 <AddToBasketButton product={product} />
                             </CardFooter>
                         </Card>
+                        {/* <div className="mb-2">
+                            <span className="text-gray-700 font-medium">Варианты:</span>
+                            <ul className="mt-2 space-y-1">
+                                {product.variations.map((variation: { color: string; size?: string }, idx: number) => (
+                                    <li key={idx} className="text-gray-500">
+                                        {variation.color} {variation.size && `- ${variation.size}`}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div> */}
                         <article className="prose" dangerouslySetInnerHTML={{ __html: variation_description[0] }} />
                     </div>
                 </div>
