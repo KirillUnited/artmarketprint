@@ -62,7 +62,7 @@ const QuantityControls: React.FC<QuantityControlsProps> = ({ itemCount, onDecrea
                 isIconOnly
                 className="bg-default-100 hover:bg-default-200"
                 radius="sm"
-                size="md"
+                size="lg"
                 onPress={() => {
                     onDecrease();
                     toast.info('Количество товара обновлено');
@@ -77,7 +77,7 @@ const QuantityControls: React.FC<QuantityControlsProps> = ({ itemCount, onDecrea
                     input: 'text-center min-w-12'
                 }}
                 min={1}
-                size="md"
+                size="lg"
                 onChange={handleInputChange}
                 onBlur={handleInputBlur}
                 onKeyDown={(e) => {
@@ -90,7 +90,7 @@ const QuantityControls: React.FC<QuantityControlsProps> = ({ itemCount, onDecrea
                 isIconOnly
                 className="bg-default-100 hover:bg-default-200"
                 radius="sm"
-                size="md"
+                size="lg"
                 onPress={() => {
                     onIncrease();
                     toast.success('Количество товара обновлено');
@@ -104,7 +104,7 @@ const QuantityControls: React.FC<QuantityControlsProps> = ({ itemCount, onDecrea
 
 const ViewBasketButton: React.FC = () => (
     <div className='flex flex-col flex-grow basis-40'>
-        {getCTAButton('view-basket', 'secondary', 'В корзине', '/cart', 'md')}
+        {getCTAButton('view-basket', 'secondary', 'В корзине', '/cart', 'lg')}
     </div>
 );
 
@@ -149,10 +149,10 @@ const AddToBasketButton: React.FC<AddToBasketButtonProps> = ({ product }) => {
                 <Button
                     className="bg-brand-gradient font-semibold flex-grow basis-40 uppercase text-primary-foreground group"
                     radius="sm"
-                    size="md"
+                    size="lg"
                     onPress={handleAddItem}
                 >
-                    <ShoppingCartIcon size={18}
+                    <ShoppingCartIcon size={20}
                         className='group-hover:scale-110 transition-transform duration-300' />
                     <span>В корзину</span>
                 </Button>

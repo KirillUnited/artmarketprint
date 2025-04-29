@@ -25,7 +25,9 @@ export const ProductDetails: React.FC<{ children?: React.ReactNode }> = () => {
         <div className='flex flex-col gap-4'>
             {/* Color picker */}
             <fieldset aria-label="Choose a color">
-                <RadioGroup label="Цвет" orientation='horizontal' defaultValue={selectedColor.name}>
+                <RadioGroup label="Цвет" orientation='horizontal' defaultValue={selectedColor.name} classNames={{
+                    label: 'text-foreground'
+                }}>
                     {colors.map((color) => (
                         <Radio
                             key={color.name}
@@ -33,7 +35,7 @@ export const ProductDetails: React.FC<{ children?: React.ReactNode }> = () => {
                             aria-label={color.name}
                             classNames={{
                                 base: 'data-[disabled=true]:cursor-not-allowed',
-                                wrapper: clsx(color.bgColor, 'size-8 rounded-full border-3', `group-data-[hover-unselected=true]:${color.bgColor}`),
+                                wrapper: clsx(color.bgColor, 'size-8 rounded-full group-data-[selected=true]:ring-2 ring-offset-2 ring-primary', `group-data-[hover-unselected=true]:${color.bgColor}`),
                                 control: clsx('hidden'),
                                 hiddenInput: 'disabled:cursor-not-allowed',
                             }}
@@ -49,25 +51,33 @@ export const ProductDetails: React.FC<{ children?: React.ReactNode }> = () => {
                     label="Размер"
                     orientation='horizontal'
                     defaultValue={selectedSize.name}
+                    classNames={{
+                        wrapper: 'grid grid-cols-3 gap-3 sm:grid-cols-6',
+                        label: 'text-foreground'
+                    }}
                 >
                     {sizes.map((size) => (
                         <Radio
                             key={size.name}
                             value={size.name}
                             isDisabled={!size.inStock}
+                            size='lg'
                             classNames={{
                                 base: clsx(
-                                    'data-[selected=true]:border-primary data-[selected=true]:bg-primary data-[selected=true]:text-white border-gray-400 border-1 data-[disabled=true]:cursor-not-allowed pointer-events-auto',
-                                    "inline-flex m-0 items-center justify-between",
-                                    "max-w-[300px] cursor-pointer rounded-small gap-4 p-4",
+                                    'data-[selected=true]:border-primary data-[selected=true]:ring-2 ring-offset-2 ring-primary data-[selected=true]:bg-primary data-[selected=true]:text-white border-gray-300 border-1 data-[disabled=true]:cursor-not-allowed pointer-events-auto',
+                                    "inline-flex m-0 items-center justify-center",
+                                    "max-w-[300px] cursor-pointer rounded-small gap-4 p-3",
                                     'uppercase text-sm',
                                 ),
                                 hiddenInput: 'disabled:cursor-not-allowed',
                                 label: clsx(
-                                    'group-data-[selected=true]:text-white'
+                                    'group-data-[selected=true]:text-white text-sm'
                                 ),
-                                control: clsx(
+                                wrapper: clsx(
                                     'hidden'
+                                ),
+                                labelWrapper: clsx(
+                                    'ml-0'
                                 )
                             }}
                         >
