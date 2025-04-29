@@ -22,6 +22,7 @@ const ProductThumb: FC<ProductThumbProps> = ({ item, ...props }) => {
     const price = getPrice(item.price, 1.1);
     const name = item.name;
     const image = item.image;
+    console.log('ProductThumb', item)
 
     return (
         <Card
