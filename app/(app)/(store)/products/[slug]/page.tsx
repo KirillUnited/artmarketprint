@@ -92,7 +92,7 @@ export default async function ProductPage({ params }: { params: Promise<Props> }
                             <CardBody>
                                 <ProductDetails />
                             </CardBody>
-                            <CardFooter>
+                            <CardFooter className='relative'>
                                 <AddToBasketButton product={product} />
                             </CardFooter>
                         </Card>

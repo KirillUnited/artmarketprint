@@ -9,6 +9,7 @@ import { MinusIcon, PlusIcon, ShoppingCartIcon } from 'lucide-react';
 import React, { useEffect } from 'react';
 import { getCTAButton } from './BrandButton';
 import { toast } from 'sonner';
+import Loader from './Loader';
 
 // Types
 interface QuantityControlsProps {
@@ -119,7 +120,7 @@ const AddToBasketButton: React.FC<AddToBasketButtonProps> = ({ product }) => {
         setIsClient(true);
     }, []);
 
-    if (!isClient) return null;
+    if (!isClient) return <Loader className='relative top-auto left-auto mx-auto' />;
 
     const handleAddItem = () => {
         addItem(productData);

@@ -1,8 +1,9 @@
 'use client';
 
+import Loader from '@/components/ui/Loader';
 import { Radio, RadioGroup } from '@heroui/radio';
 import clsx from 'clsx';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 const colors = [
     { name: 'Black', bgColor: 'bg-gray-900', selectedColor: 'ring-gray-900' },
@@ -20,6 +21,14 @@ const sizes = [
 export const ProductDetails: React.FC<{ children?: React.ReactNode }> = () => {
     const [selectedColor, setSelectedColor] = useState(colors[0])
     const [selectedSize, setSelectedSize] = useState(sizes[2])
+    const [isClient, setIsClient] = React.useState(false);
+
+    useEffect(() => {
+        setIsClient(true);
+    }, []);
+
+    if (!isClient) return <Loader className='relative top-auto left-auto mx-auto' />;
+
 
     return (
         <div className='flex flex-col gap-4'>
@@ -71,13 +80,13 @@ export const ProductDetails: React.FC<{ children?: React.ReactNode }> = () => {
                                 ),
                                 hiddenInput: 'disabled:cursor-not-allowed',
                                 label: clsx(
-                                    'group-data-[selected=true]:text-white text-sm'
+                                    'group-data-[selected=true]:text-white text-sm font-semibold',
                                 ),
                                 wrapper: clsx(
                                     'hidden'
                                 ),
                                 labelWrapper: clsx(
-                                    'ml-0'
+                                    'ms-0'
                                 )
                             }}
                         >
