@@ -30,7 +30,7 @@ export function parseProducts(products: RawProduct[]): (RawProduct & ProductVari
 
     const [namePart, ...restParts] = originalName.split(",");
 
-    const sizeMatch = originalName.match(/\b(\d{1,2}?XL|XXL|XL|XS|S|M|L|XXXL)\b/i);
+    const sizeMatch = originalName.match(/\s+(\d{1,2}?XL|XXL|XL|XS|S|M|L|XXXL)\s+/i);
     const size = sizeMatch ? sizeMatch[0] : "";
 
     let color = restParts.join(",").replace(size, "").trim();
