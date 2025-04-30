@@ -66,8 +66,6 @@ export default async function ProductPage({ params }: { params: Promise<Props> }
     } = product || {};
     const productImages = product?.images_urls[0].split(',');
 
-    console.log('Product page', product);
-
     return (
         <>
             <Section>
