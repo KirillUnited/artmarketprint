@@ -23,60 +23,52 @@ export interface CatalogProduct extends Omit<RawProduct, 'name'> {
   variations: ProductVariation[];
 }
 
-// Парсит товары (разбивает имя, но сохраняет остальные поля)
-export function parseProducts(products: RawProduct[]): (RawProduct & ProductVariation & { cleanName: string })[] {
-  return products.map((product) => {
-    const originalName = product.name || "";
+/**
+ * Группировка товаров по "чистому" названию без цвета и размера
+ * @param {Array} products - исходный массив товаров
+ * @returns {Array} - сгруппированный массив товаров
+ */
+export function groupProductsByCleanName(products: any[]) {
+  const grouped: Record<string, any> = {};
 
-    const [namePart, ...restParts] = originalName.split(",");
+  products.forEach(product => {
+    // Получаем исходное название
+    const rawName = product.product?.[0]?._?.trim() || 'Без названия';
 
-    const sizeMatch = originalName.match(/\s+(\d{1,2}?XL|XXL|XL|XS|S|M|L|XXXL)\s+/i);
-    const size = sizeMatch ? sizeMatch[0] : "";
+    // Удаляем цвет и размер после последней запятой (например: "Ланъярд из полиэстера HOST, Черный XL." -> "Ланъярд из полиэстера HOST")
+    const cleanName = rawName.split(',')[0].trim();
 
-    let color = restParts.join(",").replace(size, "").trim();
-    let cleanName = namePart.replace(size, "").trim();
-
-    return {
-      ...product,
-      cleanName,
-      color,
-      size
-    };
-  });
-}
-
-// Группировка товаров
-export function groupProducts(products: (RawProduct & ProductVariation & { cleanName: string })[]): CatalogProduct[] {
-  const grouped: Record<string, { baseProduct: RawProduct; variations: ProductVariation[] }> = {};
-
-  products.forEach((product) => {
-    const { cleanName, color, size, ...baseProduct } = product;
+    const color = product.vcolor?.[0]?.trim();
+    const size = product.size_range?.[0]?.trim();
 
     if (!grouped[cleanName]) {
       grouped[cleanName] = {
-        baseProduct,
-        variations: []
+        _id: product?.id[0]?._ || '',
+        id: product.id[0]._,
+        name: cleanName,
+        colors: new Set(),
+        sizes: new Set(),
+        items: [],
+        price: product.price?.[0],
+        url: product.url?.[0],
+        image: product.images_urls[0]?.split(',')[0],
+        images_urls: product.images_urls?.[0],
+        description: product.general_description?.[0],
+        variation_description: product.variation_description?.[0],
+        category: product.category[0].split('|')[0],
       };
     }
 
-    grouped[cleanName].variations.push({ color, size });
+    if (color) grouped[cleanName].colors.add(color);
+    if (size) grouped[cleanName].sizes.add(size);
+
+    grouped[cleanName].items.push(product);
   });
 
-  // Преобразуем в массив
-  return Object.keys(grouped).map((name) => {
-    const { baseProduct, variations } = grouped[name];
-
-    return {
-      ...baseProduct,
-      name,
-      variations
-    };
-  });
-}
-
-// Полная функция подготовки каталога
-export function prepareCatalog(products: RawProduct[]): CatalogProduct[] {
-  const parsed = parseProducts(products);
-  const grouped = groupProducts(parsed);
-  return grouped;
+  // Преобразуем Set в массивы
+  return Object.values(grouped).map(entry => ({
+    ...entry,
+    colors: Array.from(entry.colors),
+    sizes: Array.from(entry.sizes),
+  }));
 }
