@@ -21,4 +21,6 @@ export interface Product {
     general_description: string[];
     variation_description: string[];
     category: string[];
+    vcolor: string[];
+    size_range: string[];
 }

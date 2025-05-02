@@ -12,5 +12,7 @@ export const extractProductData = (product: Product): ProductData => ({
     description: product.general_description[0],
     variation_description: product.variation_description?.[0],
     category: product.category[0].split('|')[0],
+    colors: product.vcolor,
+    sizes: product.size_range,
     quantity: 1
 });

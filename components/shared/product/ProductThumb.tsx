@@ -45,14 +45,31 @@ const ProductThumb: FC<ProductThumbProps> = ({ item, ...props }) => {
                         item.colors?.length > 0
                         && <div className='flex flex-col'>
                             <span className='font-semibold'>Цвета:</span>
-                            {item.colors.map((color: any) => color).join(', ')}
+                            <ul className='flex gap-2 flex-wrap'>
+                                {
+                                    item.colors.map((color: any) => color).join(', ')
+                                    // item.items?.map((item: any)=>{
+                                    //     return (
+                                    //         <NextImage
+                                    //             alt={item.product[0]._}
+                                    //             key={item._id}
+                                    //             src={item.images_urls[0]?.split(',')[0] || item.image} width={36} height={36} 
+                                    //             className="object-contain aspect-square"
+                                    //             quality={10}
+                                    //         />
+                                    //     )
+                                    // })
+                                }
+                            </ul>
                         </div>
                     }
                     {
                         item.sizes?.length > 0
-                        && <div className='flex flex-col'>
+                        && <div className='flex flex-col gap-1'>
                             <span className='font-semibold'>Размеры:</span>
-                            {item.sizes.map((size: any) => size).join(', ')}
+                            <ul className='flex flex-wrap gap-y-2'>
+                                {item.sizes.map((size: any) => <li key={size} className='border-l border-gray-950 px-2 last:border-r'>{size}</li>)}
+                            </ul>
                         </div>
                     }
                 </CardFooter>
