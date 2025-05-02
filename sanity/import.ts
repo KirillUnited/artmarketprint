@@ -1,5 +1,5 @@
 import { extractProductData } from "@/lib/extract-product-data";
-import { Product } from "@/types/product.types";
+import { Product } from "@/components/shared/product/product.types";
 import { client } from "./client";
 import { getProductsByLimit } from "@/lib/actions/product.actions";
 
