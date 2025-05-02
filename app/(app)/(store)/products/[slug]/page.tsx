@@ -56,7 +56,15 @@ export default async function ProductPage({ params }: { params: Promise<Props> }
     const product = await getProductBySlug(slug);
     const breadcrumbs = (await client.fetch<SanityDocument>(NAVIGATION_QUERY))[0].links;
 
-    if (!product) return <div className="text-center text-2xl mt-10 ">Товар не найден</div>
+    if (!product) return (
+        <Section>
+            <div className="min-h-[50vh] flex flex-col items-center justify-center text-center gap-4">
+                <div className="w-16 h-16 border-4 border-indigo-200 border-t-indigo-500 rounded-full animate-spin"></div>
+                <h2 className="text-2xl font-medium text-gray-600">Товар не найден</h2>
+                <p className="text-gray-500">Товар, который вы ищете, не существует или был удален.</p>
+            </div>
+        </Section>
+    )
 
     const {
         product: productTitle,
