@@ -8,7 +8,8 @@ import Section from '@/components/layout/Section';
 import ProductsView from '@/components/shared/product/ProductsView';
 import { getAllProductCategories } from '@/sanity/lib/product/getAllProductCategories';
 import { getAllProductsFromSanity } from '@/sanity/lib/product/getAllProductsFromSanity';
-import { prepareCatalog } from '@/lib/catalog-utils';
+import { groupProductsByCleanName, } from '@/lib/catalog-utils';
+import { getProductsByLimit } from '@/lib/actions/product.actions';
 
 export async function generateMetadata() {
 
@@ -35,10 +36,9 @@ export default async function ProductsPage(
     const [categories, breadcrumbs, products] = await Promise.all([
         getAllProductCategories(),
         getSanityDocuments(NAVIGATION_QUERY),
-        getAllProductsFromSanity(),
+        getProductsByLimit(8000),
     ]);
-    const parsedProducts = prepareCatalog(products);
-    console.log('parsedProducts', parsedProducts);
+    const parsedProducts = groupProductsByCleanName(products);
 
     return (
         <>

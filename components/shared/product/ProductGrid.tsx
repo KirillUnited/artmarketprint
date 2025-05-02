@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 import ProductThumb from "./ProductThumb";
-import { ProductData } from "@/types/product.types";
+import { ProductData } from "@/components/shared/product/product.types";
 import { useEffect, useState } from "react";
 import Loader from "@/components/ui/Loader";
 import { Card, CardBody } from "@heroui/card";
