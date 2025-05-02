@@ -8,6 +8,8 @@ export interface ProductData {
     description: string;
     variation_description: string;
     category: string;
+    colors: string[];
+    sizes: string[];
     quantity: number;
 }
 

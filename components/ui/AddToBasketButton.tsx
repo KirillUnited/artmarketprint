@@ -2,7 +2,7 @@
 
 import { extractProductData } from '@/lib/extract-product-data';
 import useBasketStore from '@/store/store';
-import { Product } from '@/types/product.types';
+import { Product } from '@/components/shared/product/product.types';
 import { Button } from '@heroui/button';
 import { Input } from '@heroui/input';
 import { MinusIcon, PlusIcon, ShoppingCartIcon } from 'lucide-react';

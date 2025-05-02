@@ -1,4 +1,4 @@
-import { Product, ProductData } from '@/types/product.types';
+import { Product, ProductData } from '@/components/shared/product/product.types';
 import { getPrice } from '@/lib/getPrice';
 
 // Product helper functions
