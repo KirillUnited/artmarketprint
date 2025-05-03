@@ -7,7 +7,6 @@ import { getRelatedProductsByCategory } from '@/lib/actions/product.actions';
 
 export default async function RelatedProducts({ product }: any) {
     const relatedProducts = await getRelatedProductsByCategory(product?.category, product?.id);
-    console.log(product)
 
     if (!Array.isArray(relatedProducts) || relatedProducts.length === 0) return null;
 

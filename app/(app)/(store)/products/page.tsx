@@ -36,9 +36,8 @@ export default async function ProductsPage(
     const [categories, breadcrumbs, products] = await Promise.all([
         getAllProductCategories(),
         getSanityDocuments(NAVIGATION_QUERY),
-        getProductsByLimit(8000),
+        getAllProductsFromSanity(),
     ]);
-    const parsedProducts = groupProductsByCleanName(products);
 
     return (
         <>
@@ -72,7 +71,7 @@ export default async function ProductsPage(
                 </div>
             </section>
             <Section id="products" innerClassname='pt-6 md:pt-6'>
-                <ProductsView products={parsedProducts} categories={categories} />
+                <ProductsView products={products} categories={categories} />
             </Section>
         </>
     );

@@ -13,6 +13,7 @@ import { SanityDocument } from "next-sanity";
 import Image from "next/image";
 import Link from "next/link";
 import { getAllProductsByCategory } from "@/sanity/lib/product/getAllProductsByCategory";
+import { ProductsNotFound } from "@/components/shared/product";
 
 export interface Props {
     slug: string,
@@ -53,7 +54,11 @@ export default async function CategoryPage({ params }: { params: Promise<Props> 
         ? getUrlFor(category.image)
         : null;
 
-    if (!Array.isArray(products) || products.length === 0) return <div className="text-center text-2xl my-10 ">Товары не найдены</div>
+    if (!Array.isArray(products) || products.length === 0) {
+        return (
+            <ProductsNotFound />
+        );
+    }
 
     return (
         <>

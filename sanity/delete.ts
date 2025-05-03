@@ -2,8 +2,8 @@ import { client } from './client';
 
 const DOC_TYPE = 'product'; // Replace with the type you want to delete
 
-async function deleteAll() {
-  await client.delete({ query: `*[_type == $product]`, params: { product: DOC_TYPE } });
+async function deleteAll(type = DOC_TYPE) {
+  await client.delete({ query: `*[_type == $product]`, params: { product: type } });
   console.log('All documents deleted successfully!');
 }
 
@@ -36,4 +36,4 @@ async function deleteAllOfType() {
   }
 }
 
-deleteAllOfType();
+deleteAll();

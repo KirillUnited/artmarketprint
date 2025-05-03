@@ -2,29 +2,34 @@ import { extractProductData } from "@/lib/extract-product-data";
 import { Product } from "@/components/shared/product/product.types";
 import { client } from "./client";
 import { getProductsByLimit } from "@/lib/actions/product.actions";
+import { groupProductsByCleanName } from "@/lib/catalog-utils";
 
 const jsonFilePath = '../_data/products.json';
 
 const CHUNK_SIZE = 50; // Process 50 products at a time
 
 function transform(external: Product) {
-    const { id, name, price, category, description, image } = extractProductData(external);
     return {
-        _id: `${id}`, // use the id of the record from the external source (we happen to know the API only return unique values for `id`)
         _type: 'product',
-        name,
-        price,
-        category,
-        description,
-        image,
-        images_urls: external.images_urls[0],
-    }
+        _id: external._id,
+        id: external.id,
+        name: external.name,
+        colors: external.colors,
+        sizes: external.sizes,
+        price: external.price,
+        image: external.image,
+        images_urls: external.images_urls,
+        description: external.description,
+        variation_description: external.variation_description,
+        category: external.category,
+    };
 }
 
 export async function importDataToSanity() {
     try {
         const AllProducts = await getProductsByLimit(8000);
-        const documents = AllProducts.map(transform);
+        const parsedProducts = groupProductsByCleanName(AllProducts);
+        const documents = parsedProducts.map(transform);
 
         // Split documents into chunks
         for (let i = 0; i < documents.length; i += CHUNK_SIZE) {

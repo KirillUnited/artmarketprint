@@ -4,7 +4,7 @@ import Section from '@/components/layout/Section';
 import { ProductCarousel, ProductDetails } from '@/components/shared/product';
 import RelatedProducts from '@/components/shared/product/RelatedProducts';
 import BaseBreadcrumb from '@/components/ui/Breadcrumb';
-import { getProductBySlug } from '@/lib/actions/product.actions';
+import getProductBySlug from '@/sanity/lib/product/getProductBySlug';
 import { getPrice } from '@/lib/getPrice';
 import { NAVIGATION_QUERY } from '@/sanity/lib/queries';
 import AddToBasketButton from '@/components/ui/AddToBasketButton';
@@ -18,7 +18,7 @@ export interface Props {
 
 export const generateMetadata = async ({ params }: { params: Promise<Props> }) => {
     const { slug } = await params;
-    const product = await getProductBySlug(slug);
+    const product: any = await getProductBySlug(slug);
 
     const url = `https://artmarketprint.by/products/${slug}`;
 
@@ -52,8 +52,6 @@ export const generateMetadata = async ({ params }: { params: Promise<Props> }) =
 
 export default async function ProductPage({ params }: { params: Promise<Props> }) {
     const { slug } = await params;
-    // const product = await getProductBySlug(slug);
-    // const breadcrumbs = (await client.fetch<SanityDocument>(NAVIGATION_QUERY))[0].links;
     const [breadcrumbs, product] = await Promise.all([
         getSanityDocuments(NAVIGATION_QUERY),
         getProductBySlug(slug),
@@ -70,12 +68,15 @@ export default async function ProductPage({ params }: { params: Promise<Props> }
     )
 
     const {
-        name: productTitle,
-        description: general_description,
-        variation_description,
-        price
-    } = product || {};
-    const productImages = product?.images_urls.split(',') || [];
+        id,
+        name: productTitle = '',
+        description: general_description = '',
+        variation_description = '',
+        price = [],
+        colors,
+        sizes,
+    } = product as any || {};
+    const productImages = (product as any)?.images_urls?.split(',') || [];
 
     return (
         <>
@@ -95,14 +96,14 @@ export default async function ProductPage({ params }: { params: Promise<Props> }
                             <CardBody>
                                 <p className="my-0">
                                     Стоимость:
-                                    <ProductPrice price={getPrice(price[0], 1.1)} productId={product.id} />
+                                    <ProductPrice price={getPrice(price[0], 1.1)} productId={id} />
                                 </p>
                             </CardBody>
                             <CardBody>
-                                <ProductDetails colors={product.colors} sizes={product.sizes} />
+                                <ProductDetails colors={colors} sizes={sizes} />
                             </CardBody>
                             <CardFooter className='relative'>
-                                <AddToBasketButton product={product} />
+                                <AddToBasketButton product={product as any} />
                             </CardFooter>
                         </Card>
                         <article className="prose" dangerouslySetInnerHTML={{ __html: variation_description }} />
