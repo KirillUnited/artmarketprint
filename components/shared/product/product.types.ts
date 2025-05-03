@@ -14,15 +14,17 @@ export interface ProductData {
 }
 
 export interface Product {
+    _id: string;
     id: Array<{ '_': string }>;
     product: Array<{ '_': string }>;
     name: string;
     price: string[];
+    image: string;
     images_urls: string[];
     general_description: string[];
     description: string;
     variation_description: string[];
     category: string[];
-    vcolor: string[];
-    size_range: string[];
+    colors: string[];
+    sizes: string[];
 }

@@ -38,6 +38,20 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var client_1 = require("./client");
 var DOC_TYPE = 'product'; // Replace with the type you want to delete
+function deleteAll() {
+    return __awaiter(this, arguments, void 0, function (type) {
+        if (type === void 0) { type = DOC_TYPE; }
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, client_1.client.delete({ query: "*[_type == $product]", params: { product: type } })];
+                case 1:
+                    _a.sent();
+                    console.log('All documents deleted successfully!');
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
 function deleteAllOfType() {
     return __awaiter(this, void 0, void 0, function () {
         var docs, batchSize, i, batch, ids, err_1;
@@ -82,4 +96,4 @@ function deleteAllOfType() {
         });
     });
 }
-deleteAllOfType();
+deleteAll();

@@ -36,4 +36,4 @@ async function deleteAllOfType() {
   }
 }
 
-deleteAllOfType();
+deleteAll();
