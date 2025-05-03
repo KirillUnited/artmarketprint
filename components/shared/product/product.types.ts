@@ -16,9 +16,11 @@ export interface ProductData {
 export interface Product {
     id: Array<{ '_': string }>;
     product: Array<{ '_': string }>;
+    name: string;
     price: string[];
     images_urls: string[];
     general_description: string[];
+    description: string;
     variation_description: string[];
     category: string[];
     vcolor: string[];
