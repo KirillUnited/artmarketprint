@@ -5,22 +5,21 @@ import { Radio, RadioGroup } from '@heroui/radio';
 import clsx from 'clsx';
 import React, { useEffect, useState } from 'react'
 
-const colors = [
-    { name: 'Black', bgColor: 'bg-gray-900', selectedColor: 'ring-gray-900' },
-    { name: 'Heather Grey', bgColor: 'bg-gray-400', selectedColor: 'ring-gray-400' },
-];
-const sizes = [
-    { name: 'XXS', inStock: true },
-    { name: 'XS', inStock: true },
-    { name: 'S', inStock: true },
-    { name: 'M', inStock: true },
-    { name: 'L', inStock: true },
-    { name: 'XL', inStock: false },
-];
-
-export const ProductDetails: React.FC<{ children?: React.ReactNode }> = () => {
-    const [selectedColor, setSelectedColor] = useState(colors[0])
-    const [selectedSize, setSelectedSize] = useState(sizes[2])
+/**
+ * A component to display product details.
+ *
+ * @param {Object} props - Component props
+ * @param {string[]} props.colors - Array of color names
+ * @param {string[]} props.sizes - Array of size names
+ *
+ * @returns {ReactElement} The component
+ */
+export const ProductDetails: React.FC<{
+    colors: string[],
+    sizes: string[]
+}> = ({ colors, sizes }) => {
+    const [selectedColor, setSelectedColor] = useState<string>(colors[0])
+    const [selectedSize, setSelectedSize] = useState<string>(sizes[2])
     const [isClient, setIsClient] = React.useState(false);
 
     useEffect(() => {
@@ -33,68 +32,84 @@ export const ProductDetails: React.FC<{ children?: React.ReactNode }> = () => {
     return (
         <div className='flex flex-col gap-4'>
             {/* Color picker */}
-            <fieldset aria-label="Choose a color">
-                <RadioGroup label="Цвет" orientation='horizontal' defaultValue={selectedColor.name} classNames={{
-                    label: 'text-foreground'
-                }}>
-                    {colors.map((color) => (
-                        <Radio
-                            key={color.name}
-                            value={color.name}
-                            aria-label={color.name}
+            {
+                Array.isArray(colors) && colors.length > 0 && (
+                    <fieldset aria-label="Choose a color">
+                        <RadioGroup
+                            label="Цвет"
+                            orientation="horizontal"
+                            defaultValue={selectedColor}
                             classNames={{
-                                base: 'data-[disabled=true]:cursor-not-allowed',
-                                wrapper: clsx(color.bgColor, 'size-8 rounded-full group-data-[selected=true]:ring-2 ring-offset-2 ring-primary', `group-data-[hover-unselected=true]:${color.bgColor}`),
-                                control: clsx('hidden'),
-                                hiddenInput: 'disabled:cursor-not-allowed',
+                                label: "text-foreground font-semibold text-sm"
                             }}
                         >
-                        </Radio>
-                    ))}
-                </RadioGroup>
-            </fieldset>
+                            {colors.map((color) => (
+                                <Radio
+                                    key={color}
+                                    value={color}
+                                    aria-label={color}
+                                    name={color}
+                                    classNames={{
+                                        base: "data-[disabled=true]:cursor-not-allowed",
+                                        control: clsx("hidden"),
+                                        hiddenInput: "disabled:cursor-not-allowed"
+                                    }}
+                                >
+                                    {color}
+                                </Radio>
+                            ))}
+                        </RadioGroup>
+                    </fieldset>
+                )
+            }
 
             {/* Size picker */}
-            <fieldset aria-label="Choose a size">
-                <RadioGroup
-                    label="Размер"
-                    orientation='horizontal'
-                    defaultValue={selectedSize.name}
-                    classNames={{
-                        wrapper: 'grid grid-cols-3 gap-3 sm:grid-cols-6',
-                        label: 'text-foreground'
-                    }}
-                >
-                    {sizes.map((size) => (
-                        <Radio
-                            key={size.name}
-                            value={size.name}
-                            isDisabled={!size.inStock}
-                            size='lg'
+            {
+                Array.isArray(sizes) && sizes.length > 0 && (
+                    <fieldset aria-label="Choose a size">
+                        <RadioGroup
+                            label="Размер"
+                            orientation='horizontal'
+                            defaultValue={selectedSize}
                             classNames={{
-                                base: clsx(
-                                    'data-[selected=true]:border-primary data-[selected=true]:ring-2 ring-offset-2 ring-primary data-[selected=true]:bg-primary data-[selected=true]:text-white border-gray-300 border-1 data-[disabled=true]:cursor-not-allowed pointer-events-auto',
-                                    "inline-flex m-0 items-center justify-center",
-                                    "max-w-[300px] cursor-pointer rounded-small gap-4 p-3",
-                                    'uppercase text-sm',
-                                ),
-                                hiddenInput: 'disabled:cursor-not-allowed',
-                                label: clsx(
-                                    'group-data-[selected=true]:text-white text-sm font-semibold',
-                                ),
-                                wrapper: clsx(
-                                    'hidden'
-                                ),
-                                labelWrapper: clsx(
-                                    'ms-0'
-                                )
+                                wrapper: 'grid grid-cols-3 gap-3 sm:grid-cols-6',
+                                label: 'text-foreground font-semibold text-sm'
                             }}
                         >
-                            {size.name}
-                        </Radio>
-                    ))}
-                </RadioGroup>
-            </fieldset>
+                            {sizes.map((size) => (
+                                <Radio
+                                    key={size}
+                                    value={size}
+                                    isDisabled={!size}
+                                    size='lg'
+                                    name={size}
+                                    aria-label={size}
+                                    classNames={{
+                                        base: clsx(
+                                            'data-[selected=true]:border-primary data-[selected=true]:ring-2 ring-offset-2 ring-primary data-[selected=true]:bg-primary data-[selected=true]:text-white border-gray-300 border-1 data-[disabled=true]:cursor-not-allowed pointer-events-auto',
+                                            "inline-flex m-0 items-center justify-center",
+                                            "max-w-[300px] cursor-pointer rounded-small gap-4 p-3",
+                                            'uppercase text-sm',
+                                        ),
+                                        hiddenInput: 'disabled:cursor-not-allowed',
+                                        label: clsx(
+                                            'group-data-[selected=true]:text-white text-sm font-medium',
+                                        ),
+                                        wrapper: clsx(
+                                            'hidden'
+                                        ),
+                                        labelWrapper: clsx(
+                                            'ms-0'
+                                        )
+                                    }}
+                                >
+                                    {size}
+                                </Radio>
+                            ))}
+                        </RadioGroup>
+                    </fieldset>
+                )
+            }
         </div>
     )
 }

@@ -29,15 +29,18 @@ export default function SalesBanner({ isActive, title, description, discountPerc
                   {description}
                 </p>
               </div>
-              <Button as={Link} className="group font-medium whitespace-nowrap text-foreground" href={`/services/${products?.slug?.current}`} radius="sm" size="sm" target="_blank">
-                Заказать
-                <ArrowRightIcon
-                  aria-hidden="true"
-                  className="transition-transform group-hover:translate-x-0.5"
-                  color="currentColor"
-                  size={12}
-                />
-              </Button>
+              {
+                products?.slug?.current &&
+                <Button as={Link} className="group font-medium whitespace-nowrap text-foreground" href={`/services/${products?.slug?.current}`} radius="sm" size="sm" target="_blank">
+                  Заказать
+                  <ArrowRightIcon
+                    aria-hidden="true"
+                    className="transition-transform group-hover:translate-x-0.5"
+                    color="currentColor"
+                    size={12}
+                  />
+                </Button>
+              }
             </div>
           </div>
           <Button

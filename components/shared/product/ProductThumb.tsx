@@ -21,7 +21,6 @@ const ProductThumb: FC<ProductThumbProps> = ({ item, ...props }) => {
     const price = getPrice(item.price, 1.1);
     const name = item.name;
     const image = item.image;
-    console.log('ProductThumb', item)
 
     return (
         <Card
@@ -40,7 +39,7 @@ const ProductThumb: FC<ProductThumbProps> = ({ item, ...props }) => {
             {
                 (item.colors?.length > 0 || item.sizes?.length > 0)
                 &&
-                <CardFooter className='hidden sm:flex text-tiny flex-col items-start gap-2 border-t'>
+                <CardFooter className='text-tiny flex-col items-start gap-2 border-t'>
                     {
                         item.colors?.length > 0
                         && <div className='flex flex-col'>
