@@ -8,16 +8,10 @@ const jsonFilePath = '../_data/products.json';
 const CHUNK_SIZE = 50; // Process 50 products at a time
 
 function transform(external: Product) {
-    const { id, name, price, category, description, image } = extractProductData(external);
+    const extractedData = extractProductData(external);
     return {
-        _id: `${id}`, // use the id of the record from the external source (we happen to know the API only return unique values for `id`)
         _type: 'product',
-        name,
-        price,
-        category,
-        description,
-        image,
-        images_urls: external.images_urls[0],
+        ...extractedData
     }
 }
 
@@ -30,14 +24,14 @@ export async function importDataToSanity() {
         for (let i = 0; i < documents.length; i += CHUNK_SIZE) {
             const chunk = documents.slice(i, i + CHUNK_SIZE);
             let transaction = client.transaction();
-            
+
             chunk.forEach(document => {
                 transaction.createOrReplace(document);
             });
 
             await transaction.commit();
             console.log(`✅ Imported products ${i + 1} to ${Math.min(i + CHUNK_SIZE, documents.length)}`);
-            
+
             // Add a small delay between chunks to prevent rate limiting
             await new Promise(resolve => setTimeout(resolve, 1000));
         }
