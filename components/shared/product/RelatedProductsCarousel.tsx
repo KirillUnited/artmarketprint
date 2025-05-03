@@ -50,12 +50,10 @@ export default function RelatedProductsCarousel({ relatedProducts }: any) {
             slidesPerView={1}
             spaceBetween={10}
         >
-            {products?.map((item: any) => {
-                const formattedItem = extractProductData(item);
-                
+            {products?.map((item: any) => {                
                 return (
-                    <SwiperSlide key={`${item?.id[0]['_']}`} className='lg:min-w-64 h-full'>
-                        <ProductThumb item={formattedItem} />
+                    <SwiperSlide key={`${item?.id}`} className='lg:min-w-64 h-full'>
+                        <ProductThumb item={item} />
                     </SwiperSlide>
                 )
             })}
