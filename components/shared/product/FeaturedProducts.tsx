@@ -19,7 +19,7 @@ export const FeaturedProducts = async () => {
     const data = await getSanityDocuments(FEATURED_PRODUCTS_QUERY);
 
     if (!data || data.length === 0) {
-        console.warn('Нет данных о продуктах');
+        console.warn('No data about FeaturedProducts');
 
         return null;
     }
