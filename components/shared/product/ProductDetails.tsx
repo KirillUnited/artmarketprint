@@ -19,7 +19,7 @@ export const ProductDetails: React.FC<{
     sizes: string[]
 }> = ({ colors, sizes }) => {
     const [selectedColor, setSelectedColor] = useState<string>(colors[0])
-    const [selectedSize, setSelectedSize] = useState<string>(sizes[2])
+    const [selectedSize, setSelectedSize] = useState<string>(sizes[0])
     const [isClient, setIsClient] = React.useState(false);
 
     useEffect(() => {

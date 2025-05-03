@@ -10,6 +10,7 @@ import { NAVIGATION_QUERY } from '@/sanity/lib/queries';
 import AddToBasketButton from '@/components/ui/AddToBasketButton';
 import ProductPrice from '@/components/shared/product/ProductPrice';
 import { getSanityDocuments } from '@/sanity/lib/fetch-sanity-data';
+import { Chip } from '@heroui/chip';
 
 export interface Props {
     slug: string,
@@ -75,28 +76,35 @@ export default async function ProductPage({ params }: { params: Promise<Props> }
         price = [],
         colors,
         sizes,
+        category,
     } = product as any || {};
     const productImages = (product as any)?.images_urls?.split(',') || [];
+    const Heading = () => {
+        return (
+            <>
+                <BaseBreadcrumb items={breadcrumbs[0].links} />
+                <Chip className='self-start' size='sm' radius='sm' color='secondary'>{category}</Chip>
+                <h1 className="text-2xl font-bold">{productTitle}</h1>
+            </>
+        )
+    }
 
     return (
         <>
             <Section>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div className='flex flex-col gap-4 md:hidden'>
-                        <BaseBreadcrumb items={breadcrumbs[0].links} />
-                        <h1 className="text-2xl font-bold">{productTitle}</h1>
+                        <Heading />
                     </div>
                     <ProductCarousel className="md:sticky top-16" items={productImages} />
                     <div className="flex flex-col gap-4">
                         <div className='hidden md:flex flex-col gap-4'>
-                            <BaseBreadcrumb items={breadcrumbs[0].links} />
-                            <h1 className="text-2xl font-bold">{productTitle}</h1>
+                            <Heading />
                         </div>
                         <Card className="bg-indigo-100">
                             <CardBody>
                                 <p className="my-0">
-                                    Стоимость:
-                                    <ProductPrice price={getPrice(price[0], 1.1)} productId={id} />
+                                    <ProductPrice price={getPrice(price, 1.1)} productId={id} />
                                 </p>
                             </CardBody>
                             <CardBody>
@@ -106,6 +114,7 @@ export default async function ProductPage({ params }: { params: Promise<Props> }
                                 <AddToBasketButton product={product as any} />
                             </CardFooter>
                         </Card>
+                        <p className='text-foreground font-semibold text-sm'>Характеристики</p>
                         <article className="prose" dangerouslySetInnerHTML={{ __html: variation_description }} />
                     </div>
                 </div>
