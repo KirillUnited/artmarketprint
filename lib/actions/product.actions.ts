@@ -3,6 +3,7 @@
 import { CATEGORIES_QUERY } from '@/sanity/lib/queries/category.query';
 import { getSanityDocuments } from '../../sanity/lib/fetch-sanity-data';
 import { getJsonFileData } from '../utils';
+import { groupProductsByCleanName } from '../catalog-utils';
 
 /**
  * Fetches all products from the JSON file data.
@@ -85,15 +86,17 @@ export async function getProductsByLimit(limit: number) {
 
 export async function getRelatedProductsByCategory(category: string, id: number, limit = 10) {
   const products = await getAllProducts();
-  const relatedProducts = products.filter((product: any) => product.category[0] === category && product.id[0]['_'] !== id);
+  const relatedProducts = products.filter((product: any) => product.category[0].split('|')[0] === category && product.id[0]['_'] !== id);
 
   return Array.from(relatedProducts).slice(0, limit);
 }
 
 export async function getProductBySlug(slug: string) {
   const products = await getAllProducts();
+  const parsedProducts = groupProductsByCleanName(products);
+  const product = parsedProducts.find((product) => product.id === slug);
 
-  return products.find((product: any) => product.id[0]['_'] === slug);
+  return product;
 }
 
 export async function searchProductsByName(searchParam: string) {
