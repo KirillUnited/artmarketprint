@@ -8,7 +8,7 @@ import { client } from "@/sanity/client";
 import { CATEGORY_QUERY } from "@/sanity/lib/queries/category.query";
 import { NAVIGATION_QUERY } from "@/sanity/lib/queries";
 import { Button } from "@heroui/button";
-import { ArrowLeftIcon, ArrowUpRightIcon } from "lucide-react";
+import { ArrowLeftIcon, ArrowUpRightIcon, PackageIcon, PackageSearchIcon } from "lucide-react";
 import { SanityDocument } from "next-sanity";
 import Image from "next/image";
 import Link from "next/link";
@@ -53,7 +53,20 @@ export default async function CategoryPage({ params }: { params: Promise<Props> 
         ? getUrlFor(category.image)
         : null;
 
-    if (!Array.isArray(products) || products.length === 0) return <div className="text-center text-2xl my-10 ">Товары не найдены</div>
+    if (!Array.isArray(products) || products.length === 0) {
+        return (
+            <div className="flex flex-col items-center justify-center min-h-[400px] bg-gray-50 rounded-lg">
+                <PackageSearchIcon className="w-16 h-16 text-gray-300 mb-4" />
+                <div className="text-3xl font-semibold text-gray-400 mb-4">
+                    Товары не найдены
+                </div>
+                <p className="text-gray-500 flex items-center gap-2">
+                    <PackageIcon className="w-5 h-5" />
+                    В данной категории пока нет товаров
+                </p>
+            </div>
+        );
+    }
 
     return (
         <>
