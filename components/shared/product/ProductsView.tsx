@@ -10,6 +10,7 @@ import { Chip } from '@heroui/chip';
 import { DeleteIcon } from 'lucide-react';
 import { SortFilter } from '@/components/ui/filter/SortFilter';
 import { useProductsFilter } from '@/hooks/useProductsFilter';
+import { ProductsNotFound } from './ProductsNotFound';
 
 const ITEMS_PER_PAGE = 20;
 
@@ -42,9 +43,9 @@ export default function ProductsView({ products, categories, totalItemsView = IT
                                 sortOrder={sortOrder}
                                 onFilterChange={handleFilterChange} />
                         }
-                        <div className='flex flex-col gap-8 relative'>
+                        <div className='flex flex-col gap-8 relative h-full'>
 
-                           <div className='md:hidden'> {SortFilter({ sortOrder, selectedCategory, onFilterChange: handleFilterChange })}</div>
+                            <div className='md:hidden'> {SortFilter({ sortOrder, selectedCategory, onFilterChange: handleFilterChange })}</div>
                             {
                                 showFilter &&
                                 <div className='flex flex-wrap flex-col md:flex-row gap-4 w-full'>
@@ -62,7 +63,8 @@ export default function ProductsView({ products, categories, totalItemsView = IT
                             {
                                 paginatedItems.length ?
                                     <ProductGrid products={paginatedItems} /> :
-                                    <p className="text-center mt-8 text-gray-500">Нет товаров</p>}
+                                    <ProductsNotFound />
+                            }
                             {
                                 filteredProducts.length > totalItemsView &&
                                 <Pagination className='self-center'

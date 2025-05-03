@@ -1,23 +1,8 @@
 import {BrandCard} from '@/components/ui/card';
 import { getPrice } from '@/lib/getPrice';
+import { ProductData } from './product.types';
 
-export interface ProductListProps {
-  items: Array<{
-    id: {
-      '_': string
-    }[]
-    product: {
-      '_': string
-    }[]
-    general_description: {
-      '_': string
-    }[]
-    images_urls: string
-    price: string
-  }>
-}
-
-export default function ProductList({ items }: ProductListProps) {
+export default function ProductList({ items }: { items: ProductData[]}) {
   return (
     <>
       {(Array.isArray(items) && items.length > 0 )? (
@@ -25,14 +10,14 @@ export default function ProductList({ items }: ProductListProps) {
           {
             items.map((item, index: number) => (
               <BrandCard
-                key={item.id[0]['_']}
+                key={item.id}
                 buttonLabel="заказать"
-                description={item.general_description[0]['_']}
-                href={`/products/${item.id[0]['_']}`}
-                image={item.images_urls[0].split(',')[0]}
+                description={item.description}
+                href={`/products/${item.id}`}
+                image={item.image}
                 imageFit="contain"
                 price={`${getPrice(item?.price, 1.1)} BYN`}
-                title={item.product[0]['_']}
+                title={item.name}
                 variant="product"
               />
             ))
