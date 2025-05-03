@@ -2,15 +2,23 @@
 import { Button } from '@heroui/button';
 import { ArrowRightIcon, TicketPercent, XIcon } from 'lucide-react';
 import Link from 'next/link';
-import { useState } from 'react';
+import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 export default function SalesBanner({ isActive, title, description, discountPercentage, products }: any) {
-  const [isVisible, setIsVisible] = useState(isActive);
+  const [isVisible, setIsVisible] = useState(false);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    setIsVisible(isActive);
+  }, [isActive]);
 
   if (!isVisible) return null;
 
+  if (pathname.match(/\/products/)) return null;
+
   return (
-    <div className="bg-brand-gradient text-primary-foreground px-4 py-3">
+    <div className="bg-black text-primary-foreground px-4 py-3">
       <div className="container">
         <div className="flex gap-3 md:items-center">
           <div className="flex flex-1 md:items-center gap-3">
@@ -52,7 +60,7 @@ export default function SalesBanner({ isActive, title, description, discountPerc
           >
             <XIcon
               aria-hidden="true"
-              className="opacity-60 transition-opacity group-hover:opacity-100"
+              className="text-primary-foreground text-opacity-60 transition-opacity group-hover:opacity-100 group-hover:text-black"
               size={16}
             />
           </Button>
