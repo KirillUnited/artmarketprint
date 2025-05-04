@@ -6,6 +6,7 @@ import NextImage from 'next/image';
 import { getPrice } from '@/lib/getPrice';
 import clsx from 'clsx';
 import { ProductData } from '@/components/shared/product/product.types';
+import { Chip } from '@heroui/chip';
 
 interface ProductThumbProps extends React.HTMLAttributes<HTMLDivElement> {
     item: ProductData;
@@ -66,8 +67,10 @@ const ProductThumb: FC<ProductThumbProps> = ({ item, ...props }) => {
                         item.sizes?.length > 0
                         && <div className='flex flex-col gap-1'>
                             <span className='font-semibold'>Размеры:</span>
-                            <ul className='flex flex-wrap gap-y-2'>
-                                {item.sizes.map((size: any) => <li key={size} className='border-l border-gray-950 px-2 last:border-r'>{size}</li>)}
+                            <ul className='flex flex-wrap gap-1'>
+                                {
+                                    item.sizes.map((size: any) => <li className='border-1 rounded-small px-2 py-1 min-w-7 grid place-content-center' key={size} >{size}</li>)
+                                }
                             </ul>
                         </div>
                     }
