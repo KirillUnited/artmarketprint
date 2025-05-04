@@ -11,7 +11,6 @@ import styles from './product.module.css';
 import ProductThumb from './ProductThumb';
 
 import Loader from '@/components/ui/Loader';
-import { extractProductData } from '@/lib/extract-product-data';
 
 export default function RelatedProductsCarousel({ relatedProducts }: any) {
     const [products, setProducts] = React.useState([]);
