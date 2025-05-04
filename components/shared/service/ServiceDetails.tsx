@@ -73,7 +73,7 @@ export const ServiceDetails: FC<ServiceDetailsProps> = memo(({
                 {price && <ServicePrice price={price} />}
 
                 {priceTable && <PriceTable items={priceTable} />}
-                <Alert color="warning" icon="warning" title="Работаем только с юридическими лицами по безналичному расчету." description="Минимальный тираж: 50 экземпляров" className='border-1 border-warning-300 shadow-md text-pretty' radius='sm' />
+                <Alert color="warning" icon="warning" title="Работаем только с юридическими лицами по безналичному расчету." description="Минимальный тираж: 50 единиц" className='border-1 border-warning-300 shadow-md text-pretty' radius='sm' />
             </div>
 
             <footer className="flex flex-wrap gap-2 md:gap-4">
