@@ -7,7 +7,6 @@ import getRelatedProductsByCategory from '@/sanity/lib/product/getRelatedProduct
 
 export default async function RelatedProducts({ product }: any) {
     const relatedProducts = await getRelatedProductsByCategory(product?.category, product?.id);
-    console.log(relatedProducts);
 
     if (!Array.isArray(relatedProducts) || relatedProducts.length === 0) return null;
 
