@@ -5,6 +5,7 @@ import { Table, TableHeader, TableBody, TableColumn, TableRow, TableCell, getKey
 import { Spinner } from '@heroui/spinner';
 import { PriceTableProps, TableRowProps } from './table.props';
 import { createColumns, transformPriceData } from './lib';
+import { Alert } from '@heroui/alert';
 
 /**
  * PriceTable component displays pricing information in a tabular format
@@ -27,6 +28,7 @@ export default function PriceTable({ items }: { items: PriceTableProps }) {
 				aria-label="Price table with dynamic content"
 				radius='sm'
 				isStriped
+				className='border-1 border-gray-300 rounded-small'
 			>
 				<TableHeader columns={columns} className='rounded-small'>
 					{(column) => (
@@ -60,15 +62,15 @@ export default function PriceTable({ items }: { items: PriceTableProps }) {
 
 			{/* Render additional notes if available */}
 			{(Array.isArray(items.additionalNotes) && items.additionalNotes?.length > 0) && (
-				<div className="prose max-w-full bg-content2 p-2 border border-gray-300 rounded-small shadow-md">
-					<ul className='text-sm'>
+				<Alert color="primary" icon="warning" className='border-1 border-primary-300 shadow-md text-pretty' radius='sm'>
+					<ul className='text-sm mt-0'>
 						{items.additionalNotes.map((note: string, index: number) => (
 							<li key={index}>
-								<span className="font-bold mr-2">{note}</span>
+								<span>{note}</span>
 							</li>
 						))}
 					</ul>
-				</div>
+				</Alert>
 			)}
 		</div>
 	);
