@@ -7,6 +7,8 @@ import { getPrice } from '@/lib/getPrice';
 import clsx from 'clsx';
 import { ProductData } from '@/components/shared/product/product.types';
 import { Chip } from '@heroui/chip';
+import { ProductColors } from './ProductColors';
+import { ProductSizes } from './ProductSizes';
 
 interface ProductThumbProps extends React.HTMLAttributes<HTMLDivElement> {
     item: ProductData;
@@ -42,37 +44,15 @@ const ProductThumb: FC<ProductThumbProps> = ({ item, ...props }) => {
                 &&
                 <CardFooter className='text-tiny flex-col items-start gap-2 border-t'>
                     {
-                        item.colors?.length > 0
-                        && <div className='flex flex-col'>
-                            <span className='font-semibold'>Цвета:</span>
-                            <ul className='flex gap-2 flex-wrap'>
-                                {
-                                    item.colors.map((color: any) => color).join(', ')
-                                    // item.items?.map((item: any)=>{
-                                    //     return (
-                                    //         <NextImage
-                                    //             alt={item.product[0]._}
-                                    //             key={item._id}
-                                    //             src={item.images_urls[0]?.split(',')[0] || item.image} width={36} height={36} 
-                                    //             className="object-contain aspect-square"
-                                    //             quality={10}
-                                    //         />
-                                    //     )
-                                    // })
-                                }
-                            </ul>
-                        </div>
+                        item.colors?.length > 0 && (
+                            <ProductColors list={item.colors} />
+                        )
                     }
                     {
                         item.sizes?.length > 0
-                        && <div className='flex flex-col gap-1'>
-                            <span className='font-semibold'>Размеры:</span>
-                            <ul className='flex flex-wrap gap-1'>
-                                {
-                                    item.sizes.map((size: any) => <li className='border-1 rounded-small px-2 py-1 min-w-7 grid place-content-center' key={size} >{size}</li>)
-                                }
-                            </ul>
-                        </div>
+                        && (
+                            <ProductSizes list={item.sizes} />
+                        )
                     }
                 </CardFooter>
             }
