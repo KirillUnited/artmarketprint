@@ -38,6 +38,9 @@ export default async function ProductsPage(
         getSanityDocuments(NAVIGATION_QUERY),
         getAllProductsFromSanity(),
     ]);
+    const p = await getProductsByLimit(1000)
+    const PR = groupProductsByCleanName(p);
+    console.log('PR', PR);
 
     return (
         <>

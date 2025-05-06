@@ -11,6 +11,7 @@ export interface ProductData {
     colors: string[];
     sizes: string[];
     quantity: number;
+    items: any
 }
 
 export interface Product {
@@ -27,4 +28,5 @@ export interface Product {
     category: string[];
     colors: string[];
     sizes: string[];
+    items: any
 }

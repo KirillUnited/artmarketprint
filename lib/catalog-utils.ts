@@ -41,6 +41,9 @@ export function groupProductsByCleanName(products: any[]) {
     const color = product.vcolor?.[0]?.trim();
     const size = product.size_range?.[0]?.trim();
 
+    // Create unique key for product variation
+    const variationKey = `${color || ''}:${size || ''}`;
+
     if (!grouped[cleanName]) {
       grouped[cleanName] = {
         _id: product?.id[0]?._ || '',
@@ -48,7 +51,7 @@ export function groupProductsByCleanName(products: any[]) {
         name: cleanName,
         colors: new Set(),
         sizes: new Set(),
-        items: [],
+        items: new Map<string, { id: string, images_urls: string }>(), // Map to store only id and images_urls
         price: product.price?.[0],
         url: product.url?.[0],
         image: product.images_urls[0]?.split(',')[0],
@@ -62,13 +65,23 @@ export function groupProductsByCleanName(products: any[]) {
     if (color) grouped[cleanName].colors.add(color);
     if (size) grouped[cleanName].sizes.add(size);
 
-    grouped[cleanName].items.push(product);
+    // Only store unique variations
+    if (!grouped[cleanName].items.has(variationKey)) {
+      const { id, images_urls } = product;
+      const vars = {
+        id: id[0]._,
+        cover: images_urls[0].split(',')[0]
+      };
+      
+      grouped[cleanName].items.set(variationKey, vars);
+    }
   });
 
-  // Преобразуем Set в массивы
+  // Transform the grouped data
   return Object.values(grouped).map(entry => ({
     ...entry,
     colors: Array.from(entry.colors),
     sizes: Array.from(entry.sizes),
+    items: Array.from(entry.items.values()), // Convert Map values to array
   }));
 }

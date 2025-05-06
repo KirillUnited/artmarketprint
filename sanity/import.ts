@@ -1,4 +1,3 @@
-import { extractProductData } from "@/lib/extract-product-data";
 import { Product } from "@/components/shared/product/product.types";
 import { client } from "./client";
 import { getProductsByLimit } from "@/lib/actions/product.actions";
@@ -8,7 +7,7 @@ const jsonFilePath = '../_data/products.json';
 
 const CHUNK_SIZE = 50; // Process 50 products at a time
 
-function transform(external: Product) {
+export function transform(external: Product) {
     return {
         _type: 'product',
         _id: external._id,
