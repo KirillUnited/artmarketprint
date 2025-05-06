@@ -77,6 +77,7 @@ export default async function ProductPage({ params }: { params: Promise<Props> }
         colors,
         sizes,
         category,
+        items
     } = product as any || {};
     const productImages = (product as any)?.images_urls?.split(',') || [];
     const Heading = () => {
@@ -108,7 +109,7 @@ export default async function ProductPage({ params }: { params: Promise<Props> }
                                 </p>
                             </CardBody>
                             <CardBody>
-                                <ProductDetails colors={colors} sizes={sizes} />
+                                <ProductDetails items={items} sizes={sizes} />
                             </CardBody>
                             <CardFooter className='relative'>
                                 <AddToBasketButton product={product as any} />
