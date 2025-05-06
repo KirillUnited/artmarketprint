@@ -21,6 +21,7 @@ export function transform(external: Product) {
         description: external.description,
         variation_description: external.variation_description,
         category: external.category,
+        items: external.items,
     };
 }
 

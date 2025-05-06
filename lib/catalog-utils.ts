@@ -67,12 +67,13 @@ export function groupProductsByCleanName(products: any[]) {
 
     // Only store unique variations
     if (!grouped[cleanName].items.has(variationKey)) {
-      const { id, images_urls } = product;
+      const { id, images_urls, vcolor } = product;
       const vars = {
         id: id[0]._,
-        cover: images_urls[0].split(',')[0]
+        cover: images_urls[0].split(',')[0],
+        color: vcolor[0],
       };
-      
+
       grouped[cleanName].items.set(variationKey, vars);
     }
   });
