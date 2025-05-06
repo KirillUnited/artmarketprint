@@ -6,7 +6,6 @@ import NextImage from 'next/image';
 import { getPrice } from '@/lib/getPrice';
 import clsx from 'clsx';
 import { ProductData } from '@/components/shared/product/product.types';
-import { Chip } from '@heroui/chip';
 import { ProductColors } from './ProductColors';
 import { ProductSizes } from './ProductSizes';
 

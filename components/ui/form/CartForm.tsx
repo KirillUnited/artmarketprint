@@ -72,7 +72,7 @@ export default function CartForm() {
                 <div className="mt-4 rounded-small border border-gray-200 bg-white shadow-sm">
                     <h3 className="sr-only">Товары в корзине</h3>
                     <ul className="divide-y divide-gray-200">
-                        {isLoading ? <Loader /> : items.map((product) => (
+                        {isLoading ? <Loader /> : items.map((product: any) => (
                             <li key={product.id} className="flex flex-wrap gap-4 px-4 py-6 sm:px-6">
                                 <div className="w-16">
                                     <Image as={NextImage} className='object-contain' src={product.image} alt={product.name} width={64} height={64} />
