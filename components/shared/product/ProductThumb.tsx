@@ -45,7 +45,7 @@ const ProductThumb: FC<ProductThumbProps> = ({ item, ...props }) => {
                 <CardFooter className='text-tiny flex-col items-start gap-2 border-t'>
                     {
                         item.colors?.length > 0 && (
-                            <ProductColors list={item.colors} />
+                            <ProductColors list={item.items} />
                         )
                     }
                     {
