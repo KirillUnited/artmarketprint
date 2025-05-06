@@ -6,7 +6,7 @@ import { filterItemsByColor } from './lib';
 const ColorListItem = ({ item }: { item: ColorItemProps }) => (
     <li key={item.id}>
         <NextImage
-            alt={"color"}
+            alt={item.color || "color"}
             src={item.cover}
             width={36}
             height={36}
@@ -38,7 +38,7 @@ const computedItems = (list: ColorItemProps[]) => filterItemsByColor(list);
 
 const ProductColors = ({ list }: { list: ColorItemProps[] }) => {
     if (!Array.isArray(list) || list.length === 0) return null;
-    
+
     return (
         <ProductColorsWrapper>
             <ColorList items={computedItems(list)} />
