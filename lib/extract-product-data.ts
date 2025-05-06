@@ -14,5 +14,6 @@ export const extractProductData = (product: Product): ProductData => ({
     category: product.category[0].split('|')[0],
     colors: product.colors,
     sizes: product.sizes,
-    quantity: 1
+    quantity: 1,
+    items: product.items
 });
