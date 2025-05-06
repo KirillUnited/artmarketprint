@@ -5,6 +5,7 @@ import { Radio, RadioGroup } from '@heroui/radio';
 import clsx from 'clsx';
 import NextImage from 'next/image';
 import { useEffect, useState } from 'react';
+import { ColorList, ColorListItem, computedItems } from './ProductColors';
 
 /**
  * A component to display product details.
@@ -19,8 +20,6 @@ export const ProductDetails: React.FC<{
     items: Array<{ id: string, color: string, cover: string }>,
     sizes: string[]
 }> = ({ items, sizes }) => {
-    const [selectedColor, setSelectedColor] = useState<{ id: string, color: string, cover: string }>(items[0])
-    const [selectedSize, setSelectedSize] = useState<string>(sizes[0])
     const [isClient, setIsClient] = useState(false);
 
     useEffect(() => {
@@ -28,7 +27,6 @@ export const ProductDetails: React.FC<{
     }, []);
 
     if (!isClient) return <Loader className='relative top-auto left-auto mx-auto' />;
-
 
     return (
         <div className='flex flex-col gap-4'>
@@ -39,42 +37,31 @@ export const ProductDetails: React.FC<{
                         <RadioGroup
                             label="Цвет"
                             orientation="horizontal"
-                            defaultValue={selectedColor.color}
+                            defaultValue={items[0].color}
                             classNames={{
                                 label: "text-foreground font-semibold text-sm"
                             }}
                         >
-                            {items.map((color) => (
-                                <Radio
-                                    key={color.id}
-                                    value={color.color}
-                                    aria-label={color.color}
-                                    name={color.color}
-                                    classNames={{
-                                        base: "data-[disabled=true]:cursor-not-allowed",
-                                        control: clsx("hidden"),
-                                        hiddenInput: "disabled:cursor-not-allowed"
-                                    }}
-                                >
-                                    <ul  className='flex gap-2 flex-wrap'>
-                                        {
-                                            items?.map((item: any) => {
-                                                return (
-                                                    <li key={item.id}>
-                                                        <NextImage
-                                                            alt={item.color}
-                                                            src={item.cover} width={36} height={36}
-                                                            className="object-contain aspect-square"
-                                                            quality={10}
-                                                            title={item.color}
-                                                        />
-                                                    </li>
-                                                )
-                                            })
-                                        }
-                                    </ul>
-                                </Radio>
-                            ))}
+                            {
+                                (Array.isArray(items) && items.length > 0) && (
+                                    computedItems(items).map((color) => (
+                                        <Radio
+                                            key={color.id}
+                                            value={color.color}
+                                            aria-label={color.color}
+                                            name={color.color}
+                                            classNames={{
+                                                base: "data-[disabled=true]:cursor-not-allowed data-[selected=true]:border-primary data-[selected=true]:ring-2 ring-offset-2 ring-primary data-[selected=true]:bg-primary data-[selected=true]:text-white border-gray-300 border-1 pointer-events-auto",
+                                                control: clsx("hidden"),
+                                                hiddenInput: "disabled:cursor-not-allowed",
+                                                wrapper: "hidden"
+                                            }}
+                                        >
+                                            <ColorListItem item={color} />
+                                        </Radio>
+                                    ))
+                                )
+                            }
                         </RadioGroup>
                     </fieldset>
                 )
@@ -87,7 +74,7 @@ export const ProductDetails: React.FC<{
                         <RadioGroup
                             label="Размер"
                             orientation='horizontal'
-                            defaultValue={selectedSize}
+                            defaultValue={sizes[0]}
                             classNames={{
                                 wrapper: 'grid grid-cols-3 gap-3 sm:grid-cols-6',
                                 label: 'text-foreground font-semibold text-sm'

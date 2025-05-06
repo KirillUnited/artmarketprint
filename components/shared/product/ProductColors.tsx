@@ -1,16 +1,12 @@
 import React from 'react'
 import NextImage from 'next/image'
+import { ColorItemProps } from './product.types';
+import { filterItemsByColor } from './lib';
 
-interface ColorItem {
-    id: string;
-    color: string;
-    cover: string;
-}
-
-const ColorListItem = ({ item }: { item: ColorItem }) => (
+const ColorListItem = ({ item }: { item: ColorItemProps }) => (
     <li key={item.id}>
         <NextImage
-            alt={item.color}
+            alt={"color"}
             src={item.cover}
             width={36}
             height={36}
@@ -21,13 +17,15 @@ const ColorListItem = ({ item }: { item: ColorItem }) => (
     </li>
 );
 
-const ColorList = ({ items }: { items: ColorItem[] }) => (
-    <ul className='flex gap-2 flex-wrap'>
-        {items?.map((item) => (
-            <ColorListItem key={item.id} item={item} />
-        ))}
-    </ul>
-);
+const ColorList = ({ items }: { items: ColorItemProps[] }) => {
+    return (
+        <ul className='flex gap-2 flex-wrap'>
+            {items?.map((item) => (
+                <ColorListItem key={item.id} item={item} />
+            ))}
+        </ul>
+    )
+};
 
 const ProductColorsWrapper = ({ children }: { children: React.ReactNode }) => (
     <div className='flex flex-col gap-1'>
@@ -36,10 +34,23 @@ const ProductColorsWrapper = ({ children }: { children: React.ReactNode }) => (
     </div>
 );
 
-export const ProductColors = ({ list }: { list: ColorItem[] }) => {
+const computedItems = (list: ColorItemProps[]) => filterItemsByColor(list);
+
+const ProductColors = ({ list }: { list: ColorItemProps[] }) => {
+    if (!Array.isArray(list) || list.length === 0) return null;
+    
     return (
         <ProductColorsWrapper>
-            <ColorList items={list} />
+            <ColorList items={computedItems(list)} />
         </ProductColorsWrapper>
     );
 };
+
+export {
+    ProductColors,
+    ProductColorsWrapper,
+    ColorList,
+    ColorListItem,
+    computedItems,
+}
+export type { ColorItemProps }

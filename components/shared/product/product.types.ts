@@ -30,3 +30,9 @@ export interface Product {
     sizes: string[];
     items: any
 }
+
+export interface ColorItemProps {
+    id: string;
+    color: string;
+    cover: string;
+}
