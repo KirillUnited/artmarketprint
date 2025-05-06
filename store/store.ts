@@ -9,6 +9,11 @@ export interface BasketItem {
     description: string;
     category: string;
     quantity: number;
+    items: {
+        id: string;
+        color: string;
+        image: string;
+    }
 }
 
 interface BasketState {
