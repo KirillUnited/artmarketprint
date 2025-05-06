@@ -15,10 +15,10 @@ import React, { useEffect, useState } from 'react'
  * @returns {ReactElement} The component
  */
 export const ProductDetails: React.FC<{
-    colors: string[],
+    items: Array<{ id: string, color: string, cover: string }>,
     sizes: string[]
-}> = ({ colors, sizes }) => {
-    const [selectedColor, setSelectedColor] = useState<string>(colors[0])
+}> = ({ items, sizes }) => {
+    const [selectedColor, setSelectedColor] = useState<{ id: string, color: string, cover: string }>(items[0])
     const [selectedSize, setSelectedSize] = useState<string>(sizes[0])
     const [isClient, setIsClient] = React.useState(false);
 
@@ -33,29 +33,29 @@ export const ProductDetails: React.FC<{
         <div className='flex flex-col gap-4'>
             {/* Color picker */}
             {
-                Array.isArray(colors) && colors.length > 0 && (
+                Array.isArray(items) && items.length > 0 && (
                     <fieldset aria-label="Choose a color">
                         <RadioGroup
                             label="Цвет"
                             orientation="horizontal"
-                            defaultValue={selectedColor}
+                            defaultValue={selectedColor.color}
                             classNames={{
                                 label: "text-foreground font-semibold text-sm"
                             }}
                         >
-                            {colors.map((color) => (
+                            {items.map((color) => (
                                 <Radio
-                                    key={color}
-                                    value={color}
-                                    aria-label={color}
-                                    name={color}
+                                    key={color.id}
+                                    value={color.color}
+                                    aria-label={color.color}
+                                    name={color.color}
                                     classNames={{
                                         base: "data-[disabled=true]:cursor-not-allowed",
                                         control: clsx("hidden"),
                                         hiddenInput: "disabled:cursor-not-allowed"
                                     }}
                                 >
-                                    {color}
+                                    {color.color}
                                 </Radio>
                             ))}
                         </RadioGroup>
