@@ -6,6 +6,12 @@ import clsx from 'clsx';
 import NextImage from 'next/image';
 import { useEffect, useState } from 'react';
 import { ColorList, ColorListItem, computedItems } from './ProductColors';
+import { Tooltip } from '@heroui/tooltip';
+
+/**
+ * A component to display a product thumbnail.
+ *
+ * @param {Object} props - Component props
 
 /**
  * A component to display product details.
@@ -35,30 +41,36 @@ export const ProductDetails: React.FC<{
                 Array.isArray(items) && items.length > 0 && (
                     <fieldset aria-label="Choose a color">
                         <RadioGroup
-                            label="Цвет"
+                            label="Варианты"
                             orientation="horizontal"
                             defaultValue={items[0].color}
                             classNames={{
-                                label: "text-foreground font-semibold text-sm"
+                                label: "text-foreground font-semibold text-sm",
+                                base: "list-none"
                             }}
                         >
                             {
                                 (Array.isArray(items) && items.length > 0) && (
                                     computedItems(items).map((color) => (
-                                        <Radio
-                                            key={color.id}
-                                            value={color.color}
-                                            aria-label={color.color}
-                                            name={color.color}
-                                            classNames={{
-                                                base: "data-[disabled=true]:cursor-not-allowed data-[selected=true]:border-primary data-[selected=true]:ring-2 ring-offset-2 ring-primary data-[selected=true]:bg-primary data-[selected=true]:text-white border-gray-300 border-1 pointer-events-auto",
-                                                control: clsx("hidden"),
-                                                hiddenInput: "disabled:cursor-not-allowed",
-                                                wrapper: "hidden"
-                                            }}
-                                        >
-                                            <ColorListItem item={color} />
-                                        </Radio>
+                                        <Tooltip content={color.color} key={color.id} radius='sm'>
+                                            <Radio
+                                                value={color.color}
+                                                aria-label={color.color}
+                                                name={color.color}
+                                                title={color.color}
+                                                classNames={{
+                                                    base: "data-[disabled=true]:cursor-not-allowed data-[selected=true]:border-primary data-[selected=true]:ring-2 ring-offset-2 ring-primary list-none pointer-events-auto",
+                                                    control: clsx("hidden"),
+                                                    hiddenInput: "disabled:cursor-not-allowed",
+                                                    wrapper: "hidden"
+                                                }}
+                                            >
+                                                <ColorListItem item={color} />
+                                            </Radio>
+                                        </Tooltip>
+                                        // <Link key={color.id} href={`/product/${color.id}`}>
+
+                                        // </Link>
                                     ))
                                 )
                             }
