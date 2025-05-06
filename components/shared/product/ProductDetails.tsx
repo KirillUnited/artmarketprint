@@ -3,7 +3,8 @@
 import Loader from '@/components/ui/Loader';
 import { Radio, RadioGroup } from '@heroui/radio';
 import clsx from 'clsx';
-import React, { useEffect, useState } from 'react'
+import NextImage from 'next/image';
+import { useEffect, useState } from 'react';
 
 /**
  * A component to display product details.
@@ -20,7 +21,7 @@ export const ProductDetails: React.FC<{
 }> = ({ items, sizes }) => {
     const [selectedColor, setSelectedColor] = useState<{ id: string, color: string, cover: string }>(items[0])
     const [selectedSize, setSelectedSize] = useState<string>(sizes[0])
-    const [isClient, setIsClient] = React.useState(false);
+    const [isClient, setIsClient] = useState(false);
 
     useEffect(() => {
         setIsClient(true);
@@ -55,7 +56,23 @@ export const ProductDetails: React.FC<{
                                         hiddenInput: "disabled:cursor-not-allowed"
                                     }}
                                 >
-                                    {color.color}
+                                    <ul  className='flex gap-2 flex-wrap'>
+                                        {
+                                            items?.map((item: any) => {
+                                                return (
+                                                    <li key={item.id}>
+                                                        <NextImage
+                                                            alt={item.color}
+                                                            src={item.cover} width={36} height={36}
+                                                            className="object-contain aspect-square"
+                                                            quality={10}
+                                                            title={item.color}
+                                                        />
+                                                    </li>
+                                                )
+                                            })
+                                        }
+                                    </ul>
                                 </Radio>
                             ))}
                         </RadioGroup>
