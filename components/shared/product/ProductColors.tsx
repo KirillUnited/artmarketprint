@@ -1,7 +1,10 @@
+'use client'
+
 import React from 'react'
 import NextImage from 'next/image'
 import { ColorItemProps } from './product.types';
 import { filterItemsByColor } from './lib';
+import Loader from '@/components/ui/Loader';
 
 const ColorListItem = ({ item }: { item: ColorItemProps }) => (
     <li key={item.id}>
@@ -37,6 +40,13 @@ const ProductColorsWrapper = ({ children }: { children: React.ReactNode }) => (
 const computedItems = (list: ColorItemProps[]) => filterItemsByColor(list);
 
 const ProductColors = ({ list }: { list: ColorItemProps[] }) => {
+    const [isMounted, setIsMounted] = React.useState(false);
+
+    React.useEffect(() => {
+        setIsMounted(true);
+    }, []);
+
+    if (!isMounted) return <Loader className='relative top-auto left-auto mx-auto' />
     if (!Array.isArray(list) || list.length === 0) return null;
 
     return (
