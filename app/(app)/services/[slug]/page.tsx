@@ -87,7 +87,7 @@ export default async function ServicePage({ params }: { params: Promise<Props> }
         <>
             {/* Hero section with background image and gradient overlay */}
             <section
-                className="py-12 md:py-24 relative after:absolute after:inset-0 after:bg-gradient-to-t after:from-black after:to-transparent overflow-hidden">
+                className="py-12 md:py-24 relative after:absolute after:inset-0 after:bg-gradient-to-t after:from-black after:to-transparent overflow-hidden min-h-screen grid place-content-center">
                 {/* Background service image */}
                 {
                     service.mediaBlock ?

@@ -19,7 +19,7 @@ export const MediaBlock: React.FC<MediaBlockProps> = async ({
                 src={url}
                 controls={false}
                 preload="metadata"
-                className="w-full h-96"
+                className="w-full h-full aspect-video absolute inset-0"
                 autoPlay
                 loop
                 muted
