@@ -82,7 +82,6 @@ export default async function ServicePage({ params }: { params: Promise<Props> }
         ? urlFor(service.image)?.width(1200).height(400).url()
         : null;
     const relatedProjectsArray = Array.isArray(relatedProjects) ? relatedProjects : [relatedProjects];
-    console.log(service)
 
     return (
         <>
@@ -90,16 +89,6 @@ export default async function ServicePage({ params }: { params: Promise<Props> }
             <section
                 className="py-12 md:py-24 relative after:absolute after:inset-0 after:bg-gradient-to-t after:from-black after:to-transparent overflow-hidden">
                 {/* Background service image */}
-                {/* {serviceImageUrl && (
-                    <Image
-                        priority
-                        alt={service.title}
-                        className="absolute inset-0 object-cover w-full h-full"
-                        height={1080}
-                        src={`${serviceImageUrl}`}
-                        width={1920}
-                    />
-                )} */}
                 {
                     service.mediaBlock ?
                         <div className='absolute inset-0'>

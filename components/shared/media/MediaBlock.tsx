@@ -24,7 +24,6 @@ export const MediaBlock: React.FC<MediaBlockProps> = async ({
                 loop
                 muted
                 playsInline
-                webkit-playsinline="true"
                 style={{ objectFit: 'cover' }}
             />
         ) : (
