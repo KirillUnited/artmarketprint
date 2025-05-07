@@ -19,6 +19,7 @@ import { FAQSection } from '@/components/shared/faq';
 import { SECTION_FIELDS } from '@/sanity/lib/queries/page.query';
 import ServiceJsonLd from '@/components/ServiceJsonLd';
 import { BreadcrumbListJsonLd } from '@/components/ServiceJsonLd';
+import { MediaBlock } from '@/components/shared/media';
 
 type Props = {
     slug: string
@@ -86,18 +87,24 @@ export default async function ServicePage({ params }: { params: Promise<Props> }
         <>
             {/* Hero section with background image and gradient overlay */}
             <section
-                className="py-12 md:py-24 relative after:absolute after:inset-0 after:bg-gradient-to-t after:from-black after:to-transparent">
+                className="py-12 md:py-24 relative after:absolute after:inset-0 after:bg-gradient-to-t after:from-black after:to-transparent overflow-hidden">
                 {/* Background service image */}
-                {serviceImageUrl && (
-                    <Image
-                        priority
-                        alt={service.title}
-                        className="absolute inset-0 object-cover w-full h-full"
-                        height={1080}
-                        src={`${serviceImageUrl}`}
-                        width={1920}
-                    />
-                )}
+                {
+                    service.mediaBlock ?
+                        <div className='absolute inset-0'>
+                            <MediaBlock
+                                {...service.mediaBlock}
+                            />
+                        </div> :
+                        <Image
+                            priority
+                            alt={service.title}
+                            className="absolute inset-0 object-cover w-full h-full"
+                            height={1080}
+                            src={`${serviceImageUrl}`}
+                            width={1920}
+                        />
+                }
                 {/* Hero content */}
                 <div className="container flex flex-col gap-10 max-w-2xl relative z-10">
                     <div className="text-center">
@@ -126,17 +133,17 @@ export default async function ServicePage({ params }: { params: Promise<Props> }
 
                 {/* Service details section */}
                 <Section id="serviceDetails" innerClassname='pt-6 md:pt-6'>
-                    <ServiceDetails 
-                        advantages={service.advantages} 
-                        image={getUrlFor(service.image)} 
-                        name={service.title} 
+                    <ServiceDetails
+                        advantages={service.advantages}
+                        image={getUrlFor(service.image)}
+                        name={service.title}
                         price={service.price}
-                        layoutRequirements={service.layoutRequirements && 
+                        layoutRequirements={service.layoutRequirements &&
                             <PortableText value={service.layoutRequirements} onMissingComponent={false} />
                         }
                         priceTable={service.priceTable}
                     >
-                        {Array.isArray(service.body) && 
+                        {Array.isArray(service.body) &&
                             <PortableText value={service.body} onMissingComponent={false} />
                         }
                     </ServiceDetails>
@@ -178,10 +185,10 @@ export default async function ServicePage({ params }: { params: Promise<Props> }
             </Section>
 
             {/* Structured data for service */}
-            <ServiceJsonLd 
-                name={service.title} 
-                url={`https://artmarketprint.by/services/${slug}`} 
-                description={service.description} 
+            <ServiceJsonLd
+                name={service.title}
+                url={`https://artmarketprint.by/services/${slug}`}
+                description={service.description}
             />
         </>
     );
