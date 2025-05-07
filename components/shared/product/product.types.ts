@@ -16,8 +16,7 @@ export interface ProductData {
 
 export interface Product {
     _id: string;
-    id: Array<{ '_': string }>;
-    product: Array<{ '_': string }>;
+    id: string;
     name: string;
     price: string[];
     image: string;

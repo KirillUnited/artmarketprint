@@ -1,6 +1,5 @@
 'use client'
 
-import { extractProductData } from '@/lib/extract-product-data';
 import useBasketStore from '@/store/store';
 import { Product } from '@/components/shared/product/product.types';
 import { Button } from '@heroui/button';
@@ -113,8 +112,7 @@ const AddToBasketButton: React.FC<AddToBasketButtonProps> = ({ product }) => {
     const { addItem, removeItem, getItemCount } = useBasketStore();
     const [isClient, setIsClient] = React.useState(false);
     
-    const productData = extractProductData(product);
-    const itemCount = getItemCount(productData.id);
+    const itemCount = getItemCount(product.id);
 
     useEffect(() => {
         setIsClient(true);
@@ -123,13 +121,13 @@ const AddToBasketButton: React.FC<AddToBasketButtonProps> = ({ product }) => {
     if (!isClient) return <Loader className='relative top-auto left-auto mx-auto' />;
 
     const handleAddItem = () => {
-        addItem(productData);
+        addItem(product as any);
         if (itemCount === 0) {
             toast.success('Товар добавлен в корзину');
         }
     };
     const handleRemoveItem = () => {
-        removeItem(productData.id);
+        removeItem(product.id);
         if (itemCount === 1) {
             toast.info('Товар удален из корзины');
         }
