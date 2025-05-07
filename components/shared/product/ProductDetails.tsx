@@ -3,9 +3,8 @@
 import Loader from '@/components/ui/Loader';
 import { Radio, RadioGroup } from '@heroui/radio';
 import clsx from 'clsx';
-import NextImage from 'next/image';
 import { useEffect, useState } from 'react';
-import { ColorList, ColorListItem, computedItems } from './ProductColors';
+import { ColorListItem, computedItems } from './ProductColors';
 import { Tooltip } from '@heroui/tooltip';
 
 /**
@@ -68,9 +67,6 @@ export const ProductDetails: React.FC<{
                                                 <ColorListItem item={color} />
                                             </Radio>
                                         </Tooltip>
-                                        // <Link key={color.id} href={`/product/${color.id}`}>
-
-                                        // </Link>
                                     ))
                                 )
                             }
