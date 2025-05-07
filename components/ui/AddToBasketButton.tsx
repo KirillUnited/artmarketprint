@@ -1,6 +1,5 @@
 'use client'
 
-import { extractProductData } from '@/lib/extract-product-data';
 import useBasketStore from '@/store/store';
 import { Product } from '@/components/shared/product/product.types';
 import { Button } from '@heroui/button';
@@ -113,7 +112,6 @@ const AddToBasketButton: React.FC<AddToBasketButtonProps> = ({ product }) => {
     const { addItem, removeItem, getItemCount } = useBasketStore();
     const [isClient, setIsClient] = React.useState(false);
     
-    // const productData = extractProductData(product);
     const itemCount = getItemCount(product.id);
 
     useEffect(() => {
