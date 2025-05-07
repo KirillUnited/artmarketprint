@@ -87,6 +87,12 @@ export default function CartForm() {
                                                 </div>
                                             </h4>
                                             <p className="mt-1 text-sm text-gray-500 line-clamp-2">{product.description}</p>
+                                            {product.size && (
+                                                <p className="mt-1 text-sm text-gray-500">{product.size}</p>
+                                            )}
+                                            {product.color && (
+                                                <p className="mt-1 text-sm text-gray-500">{product.color}</p>
+                                            )}
                                         </div>
 
                                         <div className="flow-root shrink-0">
