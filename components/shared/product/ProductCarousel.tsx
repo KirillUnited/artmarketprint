@@ -32,9 +32,10 @@ export const ProductCarousel = ({ items, className }: ProductCarouselProps) => {
         setIsClient(true);
     }, []);
 
-    if (!Array.isArray(productImages) || productImages.length === 0) return null;
-    
     if (!isClient) return <Loader className='relative top-auto left-auto mx-auto' />;
+
+    if (!Array.isArray(productImages) || productImages.length === 0) return null;
+
     const getFilteredImages = () => {
         if (!items?.items || !selectedColor) return productImages;
         
@@ -48,8 +49,6 @@ export const ProductCarousel = ({ items, className }: ProductCarouselProps) => {
             selectedVariant.cover,
             ...(selectedVariant.images_urls[0].split(',') || [])
         ].filter(Boolean);
-
-        console.log(selectedVariant)
         
         return variantImages.length > 0 ? variantImages : productImages;
     };
