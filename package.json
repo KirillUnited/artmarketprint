@@ -34,6 +34,7 @@
   "@heroui/switch": "^2.2.14",
   "@heroui/system": "2.4.11",
   "@heroui/table": "^2.2.15",
+  "@heroui/tabs": "^2.2.16",
   "@heroui/theme": "2.4.11",
   "@heroui/tooltip": "^2.2.16",
   "@react-aria/ssr": "3.9.7",
