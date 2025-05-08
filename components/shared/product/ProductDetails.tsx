@@ -6,6 +6,7 @@ import clsx from 'clsx';
 import { useEffect, useState } from 'react';
 import { ColorListItem, computedItems } from './ProductColors';
 import { Tooltip } from '@heroui/tooltip';
+import { useProductStore } from '@/store/product';
 
 /**
  * A component to display a product thumbnail.
@@ -31,13 +32,16 @@ export const ProductDetails: React.FC<{
     // onSizeChange: (size: string) => void,
 }> = ({ items, sizes, colors, color, size }) => {
     const [isClient, setIsClient] = useState(false);
-    const [selectedColor, setSelectedColor] = useState<any>(colors[0]);
-    const [selectedSize, setSelectedSize] = useState<any>(sizes[0]);
+    // const [selectedColor, setSelectedColor] = useState<any>(colors[0]);
+    // const [selectedSize, setSelectedSize] = useState<any>(sizes[0]);
+    const { selectedColor, selectedSize, setSelectedColor, setSelectedSize } = useProductStore();
     console.log('selectedColor', selectedColor);
     console.log('selectedSize', selectedSize);
 
     useEffect(() => {
         setIsClient(true);
+        if (colors[0]) setSelectedColor(colors[0]);
+        if (sizes[0]) setSelectedSize(sizes[0]);
     }, []);
 
     if (!isClient) return <Loader className='relative top-auto left-auto mx-auto' />;
@@ -56,9 +60,9 @@ export const ProductDetails: React.FC<{
                                 label: "text-foreground font-semibold text-sm",
                                 base: "list-none"
                             }}
+                            value={selectedColor}
                             onChange={(value) => {
                                 setSelectedColor(value.target.value)
-                                // onColorChange(value.target.value)
                             }}
                         >
                             {
@@ -100,9 +104,9 @@ export const ProductDetails: React.FC<{
                                 wrapper: 'grid grid-cols-3 gap-3 sm:grid-cols-6',
                                 label: 'text-foreground font-semibold text-sm'
                             }}
+                            value={selectedSize}
                             onChange={(value) => {
                                 setSelectedSize(value.target.value)
-                                // onSizeChange(value.target.value)
                             }}
                         >
                             {sizes.map((size) => (

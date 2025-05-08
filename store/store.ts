@@ -9,8 +9,8 @@ export interface BasketItem {
     description: string;
     category: string;
     quantity: number;
-    size: string;
-    color: string;
+    selectedSize: string;
+    selectedColor: string;
     items: {
         id: string;
         color: string;

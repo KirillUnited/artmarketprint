@@ -9,6 +9,7 @@ import React, { useEffect } from 'react';
 import { getCTAButton } from './BrandButton';
 import { toast } from 'sonner';
 import Loader from './Loader';
+import { useProductStore } from '@/store/product';
 
 // Types
 interface QuantityControlsProps {
@@ -110,6 +111,7 @@ const ViewBasketButton: React.FC = () => (
 
 const AddToBasketButton: React.FC<AddToBasketButtonProps> = ({ product }) => {
     const { addItem, removeItem, getItemCount } = useBasketStore();
+    const { selectedColor, selectedSize } = useProductStore();
     const [isClient, setIsClient] = React.useState(false);
     
     const itemCount = getItemCount(product.id);
@@ -121,9 +123,15 @@ const AddToBasketButton: React.FC<AddToBasketButtonProps> = ({ product }) => {
     if (!isClient) return <Loader className='relative top-auto left-auto mx-auto' />;
 
     const handleAddItem = () => {
-        addItem(product as any);
+        const productWithColorAndSize = {
+            ...product,
+            selectedColor: selectedColor,
+            selectedSize: selectedSize,
+        };
+        addItem(productWithColorAndSize as any);
+
         if (itemCount === 0) {
-            console.log(product)
+            console.log(productWithColorAndSize)
             toast.success('Товар добавлен в корзину');
         }
     };

@@ -45,6 +45,8 @@ export default function CartForm() {
         )
     }
 
+    console.log(items); 
+
     return (
         <Form className="lg:grid lg:grid-cols-2 lg:gap-x-12 xl:gap-x-16"
             onSubmit={handleSubmit}
@@ -87,11 +89,11 @@ export default function CartForm() {
                                                 </div>
                                             </h4>
                                             <p className="mt-1 text-sm text-gray-500 line-clamp-2">{product.description}</p>
-                                            {product.size && (
-                                                <p className="mt-1 text-sm text-gray-500">{product.size}</p>
+                                            {product.selectedSize && (
+                                                <p className="mt-1 text-sm text-gray-500">Размер: {product.selectedSize}</p>
                                             )}
-                                            {product.color && (
-                                                <p className="mt-1 text-sm text-gray-500">{product.color}</p>
+                                            {product.selectedColor && (
+                                                <p className="mt-1 text-sm text-gray-500">Цвет: {product.selectedColor}</p>
                                             )}
                                         </div>
 
