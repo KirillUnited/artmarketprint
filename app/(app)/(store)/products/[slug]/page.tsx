@@ -79,7 +79,6 @@ export default async function ProductPage({ params }: { params: Promise<Props> }
         category,
         items
     } = product as any || {};
-    const productImages = (product as any)?.images_urls?.split(',') || [];
     const Heading = () => {
         return (
             <>
@@ -97,7 +96,7 @@ export default async function ProductPage({ params }: { params: Promise<Props> }
                     <div className='flex flex-col gap-4 md:hidden'>
                         <Heading />
                     </div>
-                    <ProductCarousel className="md:sticky top-16" items={productImages} />
+                    <ProductCarousel className="md:sticky top-16" items={product} />
                     <div className="flex flex-col gap-4">
                         <div className='hidden md:flex flex-col gap-4'>
                             <Heading />
