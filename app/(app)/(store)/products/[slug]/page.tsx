@@ -11,6 +11,7 @@ import AddToBasketButton from '@/components/ui/AddToBasketButton';
 import ProductPrice from '@/components/shared/product/ProductPrice';
 import { getSanityDocuments } from '@/sanity/lib/fetch-sanity-data';
 import { Chip } from '@heroui/chip';
+import { ProductTabs } from '@/components/shared/product/ProductTabs';
 
 export interface Props {
     slug: string,
@@ -79,7 +80,6 @@ export default async function ProductPage({ params }: { params: Promise<Props> }
         category,
         items
     } = product as any || {};
-    const productImages = (product as any)?.images_urls?.split(',') || [];
     const Heading = () => {
         return (
             <>
@@ -97,7 +97,7 @@ export default async function ProductPage({ params }: { params: Promise<Props> }
                     <div className='flex flex-col gap-4 md:hidden'>
                         <Heading />
                     </div>
-                    <ProductCarousel className="md:sticky top-16" items={productImages} />
+                    <ProductCarousel className="md:sticky top-16" items={product} />
                     <div className="flex flex-col gap-4">
                         <div className='hidden md:flex flex-col gap-4'>
                             <Heading />
@@ -109,11 +109,11 @@ export default async function ProductPage({ params }: { params: Promise<Props> }
                                 </p>
                             </CardBody>
                             <CardBody>
-                                <ProductDetails 
-                                    items={items} 
+                                <ProductDetails
+                                    items={items}
                                     sizes={sizes}
                                     colors={colors}
-                                    color={items?.[0]?.color || ''} 
+                                    color={items?.[0]?.color || ''}
                                     size={sizes?.[0] || ''}
                                 />
                             </CardBody>
@@ -121,16 +121,11 @@ export default async function ProductPage({ params }: { params: Promise<Props> }
                                 <AddToBasketButton product={product as any} />
                             </CardFooter>
                         </Card>
-                        <p className='text-foreground font-semibold text-sm'>Характеристики</p>
-                        <article className="prose" dangerouslySetInnerHTML={{ __html: variation_description }} />
                     </div>
                 </div>
-                <article className="prose mt-8 max-w-full">
-                    <h2>Описание</h2>
-                    <p>
-                        {general_description}
-                    </p>
-                </article>
+                
+                <ProductTabs description={general_description} options={variation_description}/>
+
             </Section>
             <RelatedProducts product={product} />
         </>
