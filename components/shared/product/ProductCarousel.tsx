@@ -28,12 +28,12 @@ export const ProductCarousel = ({ items, className }: ProductCarouselProps) => {
     const [isClient, setIsClient] = useState(false)
     const productImages = (items as any)?.images_urls?.split(',') || [];
 
-    if (!Array.isArray(productImages) || productImages.length === 0) return null;
-
     useEffect(() => {
         setIsClient(true);
     }, []);
 
+    if (!Array.isArray(productImages) || productImages.length === 0) return null;
+    
     if (!isClient) return <Loader className='relative top-auto left-auto mx-auto' />;
     const getFilteredImages = () => {
         if (!items?.items || !selectedColor) return productImages;
