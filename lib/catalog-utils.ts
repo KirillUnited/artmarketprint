@@ -71,6 +71,7 @@ export function groupProductsByCleanName(products: any[]) {
       const vars = {
         id: id[0]._,
         cover: images_urls[0].split(',')[0],
+        images_urls,
         color: vcolor[0],
       };
 
