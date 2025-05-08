@@ -69,10 +69,11 @@ export const ProductDetails: React.FC<{
                                                 name={'color'}
                                                 title={color.color}
                                                 classNames={{
-                                                    base: "data-[disabled=true]:cursor-not-allowed data-[selected=true]:border-primary data-[selected=true]:ring-2 ring-offset-2 ring-primary list-none pointer-events-auto",
+                                                    base: "data-[disabled=true]:cursor-not-allowed data-[selected=true]:border-primary border-2 list-none pointer-events-auto -m-0 rounded-small p-1",
                                                     control: clsx("hidden"),
                                                     hiddenInput: "disabled:cursor-not-allowed",
-                                                    wrapper: "hidden"
+                                                    wrapper: "hidden",
+                                                    labelWrapper: "ms-0"
                                                 }}
                                             >
                                                 <ColorListItem item={color} />
