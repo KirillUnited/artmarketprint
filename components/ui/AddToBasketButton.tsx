@@ -113,7 +113,7 @@ const AddToBasketButton: React.FC<AddToBasketButtonProps> = ({ product }) => {
     const { addItem, removeItem, getItemCount } = useBasketStore();
     const { selectedColor, selectedSize } = useProductStore();
     const [isClient, setIsClient] = React.useState(false);
-    
+
     const itemCount = getItemCount(product.id);
 
     useEffect(() => {
@@ -122,11 +122,38 @@ const AddToBasketButton: React.FC<AddToBasketButtonProps> = ({ product }) => {
 
     if (!isClient) return <Loader className='relative top-auto left-auto mx-auto' />;
 
+    // Helper to get image for selected color
+    const getImageForSelectedColor = () => {
+        if (product.items && selectedColor) {
+            const variant = product.items.find((item: any) => item.color === selectedColor);
+            if (variant) {
+                // Prefer cover, fallback to first image in images_urls
+                if (variant.cover) return variant.cover;
+                if (variant.images_urls && Array.isArray(variant.images_urls) && variant.images_urls.length > 0) {
+                    return variant.images_urls[0];
+                }
+                if (typeof variant.images_urls === 'string') {
+                    // If images_urls is a string, split by comma
+                    return variant.images_urls.split(',')[0];
+                }
+            }
+        }
+        // Fallback to main product image
+        if (product.image) return product.image;
+        if (product.images_urls) {
+            if (Array.isArray(product.images_urls) && product.images_urls.length > 0) {
+                return product.images_urls[0];
+            }
+        }
+        return '';
+    };
+
     const handleAddItem = () => {
         const productWithColorAndSize = {
             ...product,
             selectedColor: selectedColor,
             selectedSize: selectedSize,
+            image: getImageForSelectedColor(),
         };
         addItem(productWithColorAndSize as any);
 
