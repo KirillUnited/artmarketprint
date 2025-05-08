@@ -38,14 +38,36 @@ export default function CartForm() {
 
     if (items.length === 0) {
         return (
-            <div className='flex flex-col gap-4 items-center justify-center h-full'>
-                <p className='text-large font-medium'>Корзина пуста</p>
-                <p className='text-small text-foreground/80'>Добавьте товары в корзину</p>
+            <div className="min-h-[50vh] w-full flex items-center justify-center px-4 sm:px-6 lg:px-8">
+                <div className="max-w-md w-full space-y-6 text-center">
+                    <div className="flex flex-col items-center space-y-4">
+                        <svg 
+                            className="w-24 h-24 text-gray-300"
+                            xmlns="http://www.w3.org/2000/svg" 
+                            fill="none" 
+                            viewBox="0 0 24 24" 
+                            stroke="currentColor"
+                        >
+                            <path 
+                                strokeLinecap="round" 
+                                strokeLinejoin="round" 
+                                strokeWidth={1.5} 
+                                d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+                            />
+                        </svg>
+                        <div className="space-y-2">
+                            <h2 className="text-2xl font-semibold tracking-tight text-gray-900 sm:text-3xl">
+                                Корзина пуста
+                            </h2>
+                            <p className="text-base text-gray-500 sm:text-lg">
+                                Добавьте товары в корзину
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
         )
-    }
-
-    console.log(items); 
+    } 
 
     return (
         <Form className="lg:grid lg:grid-cols-2 lg:gap-x-12 xl:gap-x-16"
