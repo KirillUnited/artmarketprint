@@ -28,15 +28,9 @@ export const ProductDetails: React.FC<{
     sizes: string[],
     color: string,
     size: string,
-    // onColorChange: (color: string) => void,
-    // onSizeChange: (size: string) => void,
 }> = ({ items, sizes, colors, color, size }) => {
     const [isClient, setIsClient] = useState(false);
-    // const [selectedColor, setSelectedColor] = useState<any>(colors[0]);
-    // const [selectedSize, setSelectedSize] = useState<any>(sizes[0]);
     const { selectedColor, selectedSize, setSelectedColor, setSelectedSize } = useProductStore();
-    console.log('selectedColor', selectedColor);
-    console.log('selectedSize', selectedSize);
 
     useEffect(() => {
         setIsClient(true);
@@ -72,7 +66,7 @@ export const ProductDetails: React.FC<{
                                             <Radio
                                                 value={color.color}
                                                 aria-label={color.color}
-                                                name={color.color}
+                                                name={'color'}
                                                 title={color.color}
                                                 classNames={{
                                                     base: "data-[disabled=true]:cursor-not-allowed data-[selected=true]:border-primary data-[selected=true]:ring-2 ring-offset-2 ring-primary list-none pointer-events-auto",
@@ -115,7 +109,7 @@ export const ProductDetails: React.FC<{
                                     value={size}
                                     isDisabled={!size}
                                     size='lg'
-                                    name={size}
+                                    name={'size'}
                                     aria-label={size}
                                     classNames={{
                                         base: clsx(
