@@ -109,7 +109,13 @@ export default async function ProductPage({ params }: { params: Promise<Props> }
                                 </p>
                             </CardBody>
                             <CardBody>
-                                <ProductDetails items={items} sizes={sizes} />
+                                <ProductDetails 
+                                    items={items} 
+                                    sizes={sizes}
+                                    colors={colors}
+                                    color={items?.[0]?.color || ''} 
+                                    size={sizes?.[0] || ''}
+                                />
                             </CardBody>
                             <CardFooter className='relative'>
                                 <AddToBasketButton product={product as any} />

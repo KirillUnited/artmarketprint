@@ -75,7 +75,7 @@ export default function CartForm() {
                         {isLoading ? <Loader /> : items.map((product: any) => (
                             <li key={product.id} className="flex flex-wrap gap-4 px-4 py-6 sm:px-6">
                                 <div className="w-16">
-                                    <Image as={NextImage} className='object-contain' src={product.image} alt={product.name} width={64} height={64} />
+                                    <Image as={NextImage} className='object-contain' src={product.image} alt={product.name} width={64} height={64} fallbackSrc={`/images/empty-product.jpg`} />
                                 </div>
 
                                 <div className="flex flex-col flex-1 ">

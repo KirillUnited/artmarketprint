@@ -38,6 +38,7 @@ export interface ServiceDetailsProps {
 	price?: string;
 	priceTable?: any;
 	layoutRequirements?: any;
+	paymentMethods?: any;
 	children?: React.ReactNode;
 }
 
