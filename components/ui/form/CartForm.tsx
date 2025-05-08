@@ -43,9 +43,7 @@ export default function CartForm() {
                 <p className='text-small text-foreground/80'>Добавьте товары в корзину</p>
             </div>
         )
-    }
-
-    console.log(items); 
+    } 
 
     return (
         <Form className="lg:grid lg:grid-cols-2 lg:gap-x-12 xl:gap-x-16"
