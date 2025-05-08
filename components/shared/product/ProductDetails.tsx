@@ -6,6 +6,7 @@ import clsx from 'clsx';
 import { useEffect, useState } from 'react';
 import { ColorListItem, computedItems } from './ProductColors';
 import { Tooltip } from '@heroui/tooltip';
+import { useProductStore } from '@/store/product';
 
 /**
  * A component to display a product thumbnail.
@@ -29,13 +30,12 @@ export const ProductDetails: React.FC<{
     size: string,
 }> = ({ items, sizes, colors, color, size }) => {
     const [isClient, setIsClient] = useState(false);
-    const [selectedColor, setSelectedColor] = useState<any>(colors[0]);
-    const [selectedSize, setSelectedSize] = useState<any>(sizes[0]);
-    console.log('selectedColor', selectedColor);
-    console.log('selectedSize', selectedSize);
+    const { selectedColor, selectedSize, setSelectedColor, setSelectedSize } = useProductStore();
 
     useEffect(() => {
         setIsClient(true);
+        if (colors[0]) setSelectedColor(colors[0]);
+        if (sizes[0]) setSelectedSize(sizes[0]);
     }, []);
 
     if (!isClient) return <Loader className='relative top-auto left-auto mx-auto' />;
@@ -54,7 +54,10 @@ export const ProductDetails: React.FC<{
                                 label: "text-foreground font-semibold text-sm",
                                 base: "list-none"
                             }}
-                            onChange={(value) => setSelectedColor(value.target.value)}
+                            value={selectedColor}
+                            onChange={(value) => {
+                                setSelectedColor(value.target.value)
+                            }}
                         >
                             {
                                 (Array.isArray(items) && items.length > 0) && (
@@ -63,7 +66,7 @@ export const ProductDetails: React.FC<{
                                             <Radio
                                                 value={color.color}
                                                 aria-label={color.color}
-                                                name={color.color}
+                                                name={'color'}
                                                 title={color.color}
                                                 classNames={{
                                                     base: "data-[disabled=true]:cursor-not-allowed data-[selected=true]:border-primary data-[selected=true]:ring-2 ring-offset-2 ring-primary list-none pointer-events-auto",
@@ -95,7 +98,10 @@ export const ProductDetails: React.FC<{
                                 wrapper: 'grid grid-cols-3 gap-3 sm:grid-cols-6',
                                 label: 'text-foreground font-semibold text-sm'
                             }}
-                            onChange={(value) => setSelectedSize(value.target.value)}
+                            value={selectedSize}
+                            onChange={(value) => {
+                                setSelectedSize(value.target.value)
+                            }}
                         >
                             {sizes.map((size) => (
                                 <Radio
@@ -103,7 +109,7 @@ export const ProductDetails: React.FC<{
                                     value={size}
                                     isDisabled={!size}
                                     size='lg'
-                                    name={size}
+                                    name={'size'}
                                     aria-label={size}
                                     classNames={{
                                         base: clsx(

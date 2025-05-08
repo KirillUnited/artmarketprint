@@ -63,6 +63,8 @@ ${items.map((item: any) => `
 - ${item.name}
   Номер: ${item.id}
   Цена: ${item.price} BYN
+  Цвет: ${item.color}
+  Размер: ${item.size}
   Количество: ${item.quantity}
   Сумма: ${(item.price * item.quantity).toFixed(2)} BYN
 `).join('\n')}
