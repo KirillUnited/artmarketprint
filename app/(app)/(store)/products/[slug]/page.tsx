@@ -115,6 +115,8 @@ export default async function ProductPage({ params }: { params: Promise<Props> }
                                     colors={colors}
                                     color={items?.[0]?.color || ''} 
                                     size={sizes?.[0] || ''}
+                                    // onColorChange={() => {}}
+                                    // onSizeChange={() => {}}
                                 />
                             </CardBody>
                             <CardFooter className='relative'>

@@ -27,6 +27,8 @@ export const ProductDetails: React.FC<{
     sizes: string[],
     color: string,
     size: string,
+    // onColorChange: (color: string) => void,
+    // onSizeChange: (size: string) => void,
 }> = ({ items, sizes, colors, color, size }) => {
     const [isClient, setIsClient] = useState(false);
     const [selectedColor, setSelectedColor] = useState<any>(colors[0]);
@@ -54,7 +56,10 @@ export const ProductDetails: React.FC<{
                                 label: "text-foreground font-semibold text-sm",
                                 base: "list-none"
                             }}
-                            onChange={(value) => setSelectedColor(value.target.value)}
+                            onChange={(value) => {
+                                setSelectedColor(value.target.value)
+                                // onColorChange(value.target.value)
+                            }}
                         >
                             {
                                 (Array.isArray(items) && items.length > 0) && (
@@ -95,7 +100,10 @@ export const ProductDetails: React.FC<{
                                 wrapper: 'grid grid-cols-3 gap-3 sm:grid-cols-6',
                                 label: 'text-foreground font-semibold text-sm'
                             }}
-                            onChange={(value) => setSelectedSize(value.target.value)}
+                            onChange={(value) => {
+                                setSelectedSize(value.target.value)
+                                // onSizeChange(value.target.value)
+                            }}
                         >
                             {sizes.map((size) => (
                                 <Radio
