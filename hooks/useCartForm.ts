@@ -55,6 +55,8 @@ export function useCartForm() {
             id: item.id,
             name: item.name,
             price: item.price,
+            color: item.selectedColor,
+            size: item.selectedSize,
             quantity: item.quantity,
             total: item.price * item.quantity
         }));
