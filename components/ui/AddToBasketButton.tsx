@@ -123,6 +123,7 @@ const AddToBasketButton: React.FC<AddToBasketButtonProps> = ({ product }) => {
     const handleAddItem = () => {
         addItem(product as any);
         if (itemCount === 0) {
+            console.log(product)
             toast.success('Товар добавлен в корзину');
         }
     };

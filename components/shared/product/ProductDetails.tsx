@@ -3,9 +3,8 @@
 import Loader from '@/components/ui/Loader';
 import { Radio, RadioGroup } from '@heroui/radio';
 import clsx from 'clsx';
-import NextImage from 'next/image';
 import { useEffect, useState } from 'react';
-import { ColorList, ColorListItem, computedItems } from './ProductColors';
+import { ColorListItem, computedItems } from './ProductColors';
 import { Tooltip } from '@heroui/tooltip';
 
 /**
@@ -24,9 +23,16 @@ import { Tooltip } from '@heroui/tooltip';
  */
 export const ProductDetails: React.FC<{
     items: Array<{ id: string, color: string, cover: string }>,
-    sizes: string[]
-}> = ({ items, sizes }) => {
+    colors: string[],
+    sizes: string[],
+    color: string,
+    size: string,
+}> = ({ items, sizes, colors, color, size }) => {
     const [isClient, setIsClient] = useState(false);
+    const [selectedColor, setSelectedColor] = useState<any>(colors[0]);
+    const [selectedSize, setSelectedSize] = useState<any>(sizes[0]);
+    console.log('selectedColor', selectedColor);
+    console.log('selectedSize', selectedSize);
 
     useEffect(() => {
         setIsClient(true);
@@ -48,6 +54,7 @@ export const ProductDetails: React.FC<{
                                 label: "text-foreground font-semibold text-sm",
                                 base: "list-none"
                             }}
+                            onChange={(value) => setSelectedColor(value.target.value)}
                         >
                             {
                                 (Array.isArray(items) && items.length > 0) && (
@@ -68,9 +75,6 @@ export const ProductDetails: React.FC<{
                                                 <ColorListItem item={color} />
                                             </Radio>
                                         </Tooltip>
-                                        // <Link key={color.id} href={`/product/${color.id}`}>
-
-                                        // </Link>
                                     ))
                                 )
                             }
@@ -91,6 +95,7 @@ export const ProductDetails: React.FC<{
                                 wrapper: 'grid grid-cols-3 gap-3 sm:grid-cols-6',
                                 label: 'text-foreground font-semibold text-sm'
                             }}
+                            onChange={(value) => setSelectedSize(value.target.value)}
                         >
                             {sizes.map((size) => (
                                 <Radio

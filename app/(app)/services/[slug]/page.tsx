@@ -142,6 +142,7 @@ export default async function ServicePage({ params }: { params: Promise<Props> }
                             <PortableText value={service.layoutRequirements} onMissingComponent={false} />
                         }
                         priceTable={service.priceTable}
+                        paymentMethods={service.paymentOptions}
                     >
                         {Array.isArray(service.body) &&
                             <PortableText value={service.body} onMissingComponent={false} />
