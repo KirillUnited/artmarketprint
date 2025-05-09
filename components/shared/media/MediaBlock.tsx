@@ -19,12 +19,11 @@ export const MediaBlock: React.FC<MediaBlockProps> = async ({
                 src={url}
                 controls={false}
                 preload="metadata"
-                className="w-full h-full aspect-video absolute inset-0"
+                className="w-full h-full aspect-video absolute inset-0 object-contain"
                 autoPlay
                 loop
                 muted
                 playsInline
-                style={{ objectFit: 'cover' }}
             />
         ) : (
             <p className="text-red-500">Uploaded video not found</p>
