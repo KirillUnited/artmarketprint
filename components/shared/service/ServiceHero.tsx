@@ -45,7 +45,7 @@ export const ServiceHero: React.FC<ServiceHeroProps> = ({ title, description, me
                     <h1 className="text-4xl font-extrabold text-background sm:text-5xl uppercase">
                         {title}
                     </h1>
-                    <p className="mt-4 text-xl text-white text-balance">
+                    <p className="mt-4 md:text-lg text-white text-balance">
                         {description}
                     </p>
                 </div>
