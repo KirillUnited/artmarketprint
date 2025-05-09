@@ -15,18 +15,24 @@ export const MediaBlock: React.FC<MediaBlockProps> = async ({
     if (mediaType === 'videoUpload' && videoFile?.asset?._ref) {
         const url = await getSanityFileUrl(videoFile.asset._ref);
         content = url ? (
-            <video
-                src={url}
-                controls={false}
-                preload="metadata"
-                className="w-full h-full aspect-video absolute inset-0 object-contain"
-                autoPlay
-                loop
-                muted
-                playsInline
-            />
+            <div className="relative w-full h-full">
+                <video
+                    src={url}
+                    controls={false}
+                    preload="metadata"
+                    className="w-full h-full aspect-video absolute inset-0 object-contain"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    // Improve performance by informing the browser about content type
+                    typeof="video/mp4"
+                    // Add poster attribute if you have a thumbnail
+                    poster={`${image?.asset?._ref && (await getSanityImageUrl(image?.asset?._ref as string))}`}
+                />
+            </div>
         ) : (
-            <p className="text-red-500">Uploaded video not found</p>
+            <p className="text-red-500" role="alert">Uploaded video not found</p>
         );
     } else if (mediaType === 'videoEmbed' && videoUrl) {
         content = (
