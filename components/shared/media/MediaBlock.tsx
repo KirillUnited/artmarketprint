@@ -25,9 +25,6 @@ export const MediaBlock: React.FC<MediaBlockProps> = async ({
                     loop
                     muted
                     playsInline
-                    // Improve performance by informing the browser about content type
-                    typeof="video/mp4"
-                    // Add poster attribute if you have a thumbnail
                     poster={`${image?.asset?._ref && (await getSanityImageUrl(image?.asset?._ref as string))}`}
                 />
             </div>
