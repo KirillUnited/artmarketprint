@@ -14,7 +14,7 @@ import { ServiceHeroProps } from './service.props';
 export const ServiceHero: React.FC<ServiceHeroProps> = ({ title, description, mediaBlock, image, ...props }): JSX.Element => {
     return (
         <section
-            className="py-12 md:py-24 relative after:absolute after:inset-0 after:bg-gradient-to-t after:from-black after:to-transparent overflow-hidden min-h-[calc(100vh-64px)] grid place-content-center">
+            className="py-12 md:py-24 relative after:absolute after:inset-0 after:bg-gradient-to-t after:from-black after:to-black/20 overflow-hidden min-h-[calc(100vh-128px)] grid place-items-end">
             {/* Background service image */}
             {
                 mediaBlock ?
@@ -42,10 +42,10 @@ export const ServiceHero: React.FC<ServiceHeroProps> = ({ title, description, me
             {/* Hero content */}
             <div className="container flex flex-col gap-10 max-w-2xl relative z-10">
                 <div className="text-center">
-                    <h1 className="text-4xl font-extrabold text-background sm:text-5xl">
+                    <h1 className="text-4xl font-extrabold text-background sm:text-5xl uppercase">
                         {title}
                     </h1>
-                    <p className="mt-4 text-xl text-white text-balance">
+                    <p className="mt-4 md:text-lg text-white text-balance">
                         {description}
                     </p>
                 </div>
