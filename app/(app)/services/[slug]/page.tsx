@@ -1,12 +1,9 @@
-import Image from 'next/image';
 import { SanityImageSource } from '@sanity/image-url/lib/types/types';
-import Link from 'next/link';
 import imageUrlBuilder from '@sanity/image-url';
 import { defineQuery, PortableText, SanityDocument } from 'next-sanity';
 
 import BaseBreadcrumb from '@/components/ui/Breadcrumb';
-import BrandButton from '@/components/ui/BrandButton';
-import { ServiceDetails } from '@/components/shared/service';
+import { ServiceDetails, ServiceHero } from '@/components/shared/service';
 import { client } from '@/sanity/client';
 import { getUrlFor } from '@/lib/utils';
 import { ProjectList, ProjectsHeading } from '@/components/shared/project';
@@ -18,8 +15,6 @@ import { clsx } from 'clsx';
 import { FAQSection } from '@/components/shared/faq';
 import { SECTION_FIELDS } from '@/sanity/lib/queries/page.query';
 import ServiceJsonLd from '@/components/ServiceJsonLd';
-import { BreadcrumbListJsonLd } from '@/components/ServiceJsonLd';
-import { MediaBlock } from '@/components/shared/media';
 
 type Props = {
     slug: string
@@ -86,39 +81,12 @@ export default async function ServicePage({ params }: { params: Promise<Props> }
     return (
         <>
             {/* Hero section with background image and gradient overlay */}
-            <section
-                className="py-12 md:py-24 relative after:absolute after:inset-0 after:bg-gradient-to-t after:from-black after:to-transparent overflow-hidden min-h-screen grid place-content-center">
-                {/* Background service image */}
-                {
-                    service.mediaBlock ?
-                        <div className='absolute inset-0'>
-                            <MediaBlock
-                                {...service.mediaBlock}
-                            />
-                        </div> :
-                        <Image
-                            priority
-                            alt={service.title}
-                            className="absolute inset-0 object-cover w-full h-full"
-                            height={1080}
-                            src={`${serviceImageUrl}`}
-                            width={1920}
-                        />
-                }
-                {/* Hero content */}
-                <div className="container flex flex-col gap-10 max-w-2xl relative z-10">
-                    <div className="text-center">
-                        <h1 className="text-4xl font-extrabold text-background sm:text-5xl">
-                            {service.title}
-                        </h1>
-                        <p className="mt-4 text-xl text-white text-balance">
-                            {service.description}
-                        </p>
-                    </div>
-
-                    <BrandButton as={Link} className={'self-center'} href={'#serviceDetails'} state="primary">Подробнее</BrandButton>
-                </div>
-            </section>
+            <ServiceHero
+                image={serviceImageUrl || ''}
+                title={service.title}
+                description={service.description}
+                mediaBlock={service.mediaBlock}
+            />
 
             {/* Main content wrapper */}
             <div className='max-w-3xl mx-auto'>
