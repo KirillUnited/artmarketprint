@@ -11,3 +11,4 @@ export const filterItemsByColor = (items: ColorItemProps[]): ColorItemProps[] =>
         }
     });
 };
+export const formattedOptions = (options: string) => options?.replace(/<\/?p>/g, '').replace(/<li>Цвет:.*?<\/li>/g, '').replace(/<li>Размер товара:.*?<\/li>/g, '');

@@ -1,10 +1,9 @@
 'use client'
 import { Tabs, Tab } from '@heroui/tabs';
+import { formattedOptions } from './lib';
 
 export const ProductTabs: React.FC<{ description: string, options: string }> = ({ description, options }) => {
     if (!description && !options) return null;
-
-    const formattedOptions = options?.replace(/<\/?p>/g, '').replace(/<li>Цвет:.*?<\/li>/g, '').replace(/<li>Размер товара:.*?<\/li>/g, '');
     
     return (
         <article className="flex w-full flex-col prose mt-8 max-w-full">
@@ -37,7 +36,7 @@ export const ProductTabs: React.FC<{ description: string, options: string }> = (
                             </div>
                         }
                     >
-                        <p dangerouslySetInnerHTML={{ __html: formattedOptions }} />
+                        <p dangerouslySetInnerHTML={{ __html: formattedOptions(options) }} />
                     </Tab>
                 )}
             </Tabs>
