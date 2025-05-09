@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import { getEmbedUrl, getSanityFileUrl, getSanityImageUrl } from './lib';
+import { getEmbedUrl, getSanityFileUrl, getSanityImageUrl } from '@/sanity/lib/utils';
 import { MediaBlockProps } from './media.props';
 
 export const MediaBlock: React.FC<MediaBlockProps> = async ({
@@ -51,7 +51,8 @@ export const MediaBlock: React.FC<MediaBlockProps> = async ({
                 alt={image.alt || 'Uploaded image'}
                 width={1280}
                 height={720}
-                className="w-full h-auto rounded-xl shadow-lg"
+                className="w-full h-full aspect-video object-cover absolute inset-0"
+                priority
             />
         ) : (
             <p className="text-red-500">Image not found</p>
@@ -61,7 +62,7 @@ export const MediaBlock: React.FC<MediaBlockProps> = async ({
     }
 
     return (
-        <div className='max-h-full'>
+        <div className='h-full'>
             {content}
             {/* {caption && <p className="mt-2 text-sm text-center text-gray-500">{caption}</p>} */}
         </div>
