@@ -8,8 +8,6 @@ import Section from '@/components/layout/Section';
 import ProductsView from '@/components/shared/product/ProductsView';
 import { getAllProductCategories } from '@/sanity/lib/product/getAllProductCategories';
 import { getAllProductsFromSanity } from '@/sanity/lib/product/getAllProductsFromSanity';
-import { groupProductsByCleanName, } from '@/lib/catalog-utils';
-import { getProductsByLimit } from '@/lib/actions/product.actions';
 
 export async function generateMetadata() {
 

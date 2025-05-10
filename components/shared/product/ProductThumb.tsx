@@ -35,16 +35,13 @@ const ProductThumb: FC<ProductThumbProps> = ({ item, ...props }) => {
             radius="sm"
         >
             <CardBody className='items-stretch gap-4'>
-                <Image 
-                    as={NextImage} 
-                    alt={name} 
-                    fallbackSrc={'/images/product-no-image.jpg'}
-                    className="object-contain aspect-square mx-auto" 
-                    classNames={{ wrapper: 'bg-cover' }}
+                <NextImage
+                    alt={name}
+                    className="object-contain aspect-square w-full mx-auto max-w-56 max-h-80" 
                     loading="lazy" 
                     src={image} 
                     width={220} 
-                    height={220} 
+                    height={320} 
                     quality={50}
                 />
                 <div>
