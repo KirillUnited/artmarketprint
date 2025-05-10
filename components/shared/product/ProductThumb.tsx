@@ -8,6 +8,7 @@ import clsx from 'clsx';
 import { ProductData } from '@/components/shared/product/product.types';
 import { ProductColors } from './ProductColors';
 import { ProductSizes } from './ProductSizes';
+import { Image } from '@heroui/image';
 
 interface ProductThumbProps extends React.HTMLAttributes<HTMLDivElement> {
     item: ProductData;
@@ -33,10 +34,20 @@ const ProductThumb: FC<ProductThumbProps> = ({ item, ...props }) => {
             )}
             radius="sm"
         >
-            <CardBody className='items-stretch'>
-                <NextImage alt={name} className="object-contain aspect-square mx-auto mb-4" loading="lazy" src={image} width={220} height={220} quality={50} />
-                <span className="text-xl font-semibold self-start text-foreground">{`${price} BYN`}</span>
-                <p className="text-gray-900 line-clamp-2 text-xs sm:text-sm">{name}</p>
+            <CardBody className='items-stretch gap-4'>
+                <NextImage
+                    alt={name}
+                    className="object-contain aspect-square w-full mx-auto max-w-56 max-h-80" 
+                    loading="lazy" 
+                    src={image} 
+                    width={220} 
+                    height={320} 
+                    quality={50}
+                />
+                <div>
+                    <span className="text-xl font-semibold self-start text-foreground">{`${price} BYN`}</span>
+                    <p className="text-gray-900 line-clamp-2 text-xs sm:text-sm">{name}</p>
+                </div>
             </CardBody>
             {
                 (item.colors?.length > 0 || item.sizes?.length > 0)
