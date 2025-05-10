@@ -2,6 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import { getEmbedUrl, getSanityFileUrl, getSanityImageUrl } from '@/sanity/lib/utils';
 import { MediaBlockProps } from './media.props';
+import { VideoPlayer } from './VideoPlayer';
 
 export const MediaBlock: React.FC<MediaBlockProps> = async ({
     mediaType,
@@ -14,18 +15,21 @@ export const MediaBlock: React.FC<MediaBlockProps> = async ({
 
     if (mediaType === 'videoUpload' && videoFile?.asset?._ref) {
         const url = await getSanityFileUrl(videoFile.asset._ref);
+        const posterUrl = image?.asset?._ref ? (await getSanityImageUrl(image.asset._ref) as string): undefined;
+
         content = url ? (
             <div className="relative w-full h-full">
-                <video
-                    src={url}
-                    controls={false}
-                    preload="metadata"
+                {/* Background blurred video for visual effect */}
+                {/* <VideoPlayer
+                    url={url}
+                    posterUrl={posterUrl}
+                    className="w-full h-full aspect-video absolute inset-0 object-cover blur"
+                /> */}
+                {/* Main video player */}
+                <VideoPlayer
+                    url={url}
+                    posterUrl={posterUrl}
                     className="w-full h-full aspect-video absolute inset-0 object-contain"
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    poster={`${image?.asset?._ref && (await getSanityImageUrl(image?.asset?._ref as string))}`}
                 />
             </div>
         ) : (
