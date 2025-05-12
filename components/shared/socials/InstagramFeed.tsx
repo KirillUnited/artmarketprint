@@ -1,4 +1,3 @@
-'use client'
 import clsx from 'clsx';
 import Script from 'next/script';
 import Link from 'next/link';
@@ -7,7 +6,6 @@ import Section, { SectionDescription, SectionHeading, SectionSubtitle, SectionTi
 import { SectionProps } from '@/types';
 
 import styles from './style.module.css';
-import { useEffect, useState } from 'react';
 
 export default function InstagramFeed({ className }: React.HTMLAttributes<HTMLDivElement>) {
     return (
@@ -17,25 +15,13 @@ export default function InstagramFeed({ className }: React.HTMLAttributes<HTMLDi
             )
         }>
             <Script src="https://cdn.lightwidget.com/widgets/lightwidget.js"></Script>
-            <iframe title='Instagram Feed' src="https://cdn.lightwidget.com/widgets/9182bf37593d50c0a994202f51247340.html" scrolling="no" className="lightwidget-widget" style={{width: '100%', border: 0, overflow: 'hidden'}} />
+            <iframe title='Instagram Feed' src="https://cdn.lightwidget.com/widgets/9182bf37593d50c0a994202f51247340.html" scrolling="no" className="lightwidget-widget" style={{ width: '100%', border: 0, overflow: 'hidden' }} />
 
         </div>
     )
 }
 
 export const InstagramFeedOld = ({ className }: SectionProps) => {
-    const [isLoaded, setIsLoaded] = useState(true);
-
-    useEffect(() => {
-        setTimeout(() => {
-            const insta = document.querySelectorAll('.elfsight-app-066c23ef-c819-421b-a4f2-60acfc8ea266 > a');
-            insta?.forEach((item) => {
-                item.remove();
-            });
-        }, 5000);
-        setIsLoaded(false);
-    });
-
     return (
         <div className={
             clsx(
@@ -66,7 +52,7 @@ export const InstagramFeedSection = ({ className }: SectionProps) => {
                     </SectionDescription>
                 </SectionHeading>
             </div>
-            {/* <InstagramFeedOld /> */}
+            <InstagramFeedOld />
         </Section>
     )
 }
