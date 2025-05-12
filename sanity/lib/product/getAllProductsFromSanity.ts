@@ -1,5 +1,5 @@
 import { defineQuery } from 'next-sanity';
-import { getSanityDocuments } from '../fetch-sanity-data';
+import { sanityFetch } from '../live';
 
 /**
  * Fetches all products from Sanity.
@@ -16,7 +16,7 @@ export async function getAllProductsFromSanity(): Promise<any[]> {
 
     try {
         // Fetch the products from Sanity using the client.fetch() method
-        const products = await getSanityDocuments(ALL_PRODUCTS_QUERY);
+        const {data: products} = await sanityFetch({query: ALL_PRODUCTS_QUERY});
 
         // Return the list of products or an empty array if not available
         return products ?? [];

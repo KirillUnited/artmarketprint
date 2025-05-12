@@ -1,10 +1,10 @@
 import { defineQuery } from "next-sanity";
-import { getSanityDocuments } from "../fetch-sanity-data";
+import { sanityFetch } from "../live";
 
 export async function getAllProductsByCategory(category: string) {
     const ALL_PRODUCTS_BY_CATEGORY_QUERY = defineQuery(`*[_type == "product" && category == $category]`);
     try {
-        const products = await getSanityDocuments(ALL_PRODUCTS_BY_CATEGORY_QUERY, { category });
+        const {data: products} = await sanityFetch({query: ALL_PRODUCTS_BY_CATEGORY_QUERY, params: { category }});
 
         return products ?? [];
     } catch (error) {

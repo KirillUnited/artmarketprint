@@ -46,7 +46,6 @@ export const ProductCarousel = ({ items, className }: ProductCarouselProps) => {
         if (!selectedVariant) return productImages;
         
         const variantImages = [
-            selectedVariant.cover,
             ...(selectedVariant.images_urls[0].split(',') || [])
         ].filter(Boolean);
         

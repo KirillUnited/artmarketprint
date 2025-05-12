@@ -1,10 +1,10 @@
 import { defineQuery } from "next-sanity";
-import { getSanityDocuments } from "../fetch-sanity-data";
+import { sanityFetch } from "../live";
 
 export default async function getProductBySlug(slug: string) {
     const PRODUCT_BY_SLUG = defineQuery(`*[_type == "product" && _id == $slug]`);
     try {
-        const product = await getSanityDocuments(PRODUCT_BY_SLUG, { slug });
+        const {data: product} = await sanityFetch({query: PRODUCT_BY_SLUG, params: { slug }});
 
         return product[0] ?? [];
     } catch (error) {

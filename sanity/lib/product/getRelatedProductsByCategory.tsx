@@ -1,5 +1,5 @@
 import { defineQuery } from "next-sanity";
-import { getSanityDocuments } from "../fetch-sanity-data";
+import { sanityFetch } from "../live";
 
 export default async function getRelatedProductsByCategory(category: string, currentProductId: string, limit: number = 9) {
     const RELATED_PRODUCTS_QUERY = defineQuery(`*[
@@ -9,10 +9,9 @@ export default async function getRelatedProductsByCategory(category: string, cur
     ][0...$limit]`);
 
     try {
-        const relatedProducts = await getSanityDocuments(RELATED_PRODUCTS_QUERY, { 
-            category,
-            currentProductId,
-            limit: limit - 1 // Adjust limit to account for 0-based array indexing
+        const { data: relatedProducts } = await sanityFetch({
+            query: RELATED_PRODUCTS_QUERY,
+            params: { category, currentProductId, limit: limit - 1 }
         });
 
         return relatedProducts ?? [];
