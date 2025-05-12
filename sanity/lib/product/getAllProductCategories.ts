@@ -1,5 +1,5 @@
 import { CATEGORIES_QUERY } from "../queries/category.query";
-import { getSanityDocuments } from "../fetch-sanity-data";
+import { sanityFetch } from "../live";
 
 /**
  * Retrieves a list of unique product categories from the available products.
@@ -9,10 +9,10 @@ import { getSanityDocuments } from "../fetch-sanity-data";
 export async function getAllProductCategories(): Promise<string[]> {
     try {
         // Fetch all categories from Sanity
-        const categories = await getSanityDocuments(CATEGORIES_QUERY);
+        const {data: categories} = await sanityFetch({ query: CATEGORIES_QUERY });
 
         // Return an array of category names
-        return categories.map((category) => category.title);
+        return categories.map((category: any) => category.title);
     } catch (error) {
         // Log any errors that occur while fetching the categories to the console
         console.error('Error fetching categories:', error);
