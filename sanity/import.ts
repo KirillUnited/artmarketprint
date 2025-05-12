@@ -27,7 +27,7 @@ export function transform(external: Product) {
 
 export async function importDataToSanity() {
     try {
-        const AllProducts = await getProductsByLimit(8000);
+        const AllProducts = await getProductsByLimit(10000);
         const parsedProducts = groupProductsByCleanName(AllProducts);
         const documents = parsedProducts.map(transform);
 
