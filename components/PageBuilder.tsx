@@ -56,7 +56,6 @@ export function PageBuilder({ content }: PageBuilderProps) {
 						return (
 							<Fragment key={block._key}>
 								<ContactUs className="bg-background" id="contacts" />
-								<MapFrame />
 							</Fragment>
 						);
 					default:
