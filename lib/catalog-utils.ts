@@ -59,6 +59,7 @@ export function groupProductsByCleanName(products: any[]) {
         description: product.general_description?.[0],
         variation_description: product.variation_description?.[0],
         category: product.category[0].split('|')[0],
+        subcategory: product.category[0].split('|')[1],
       };
     }
 
