@@ -1,6 +1,6 @@
 import { Product } from "@/components/shared/product/product.types";
 import { client } from "./client";
-import { getProductsByLimit } from "@/lib/actions/product.actions";
+import { getAllProducts } from "@/lib/actions/product.actions";
 import { groupProductsByCleanName } from "@/lib/catalog-utils";
 
 const jsonFilePath = '../_data/products.json';
@@ -21,13 +21,14 @@ export function transform(external: Product) {
         description: external.description,
         variation_description: external.variation_description,
         category: external.category,
+        subcategory: external.subcategory,
         items: external.items,
     };
 }
 
 export async function importDataToSanity() {
     try {
-        const AllProducts = await getProductsByLimit(10000);
+        const AllProducts = await getAllProducts();
         const parsedProducts = groupProductsByCleanName(AllProducts);
         const documents = parsedProducts.map(transform);
 
