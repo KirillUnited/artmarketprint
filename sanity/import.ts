@@ -1,7 +1,7 @@
 import { Product } from "@/components/shared/product/product.types";
 import { client } from "./client";
 import { getAllProducts } from "@/lib/actions/product.actions";
-import { groupProductsByCleanName } from "@/lib/catalog-utils";
+import { groupProductsByCleanName } from "@/lib/products/catalog-utils";
 
 const jsonFilePath = '../_data/products.json';
 
