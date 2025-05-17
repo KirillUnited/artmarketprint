@@ -16,6 +16,7 @@ const ColorListItem = ({ item }: { item: ColorItemProps }) => (
             width={36}
             height={36}
             className="object-contain aspect-square"
+            classNames={{ wrapper: 'bg-cover' }}
             quality={10}
             title={item.color}
             radius='sm'

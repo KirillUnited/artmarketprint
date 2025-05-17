@@ -3,15 +3,14 @@ import { Card, CardBody, CardFooter } from '@heroui/card';
 import Section from '@/components/layout/Section';
 import { ProductCarousel, ProductDetails } from '@/components/shared/product';
 import RelatedProducts from '@/components/shared/product/RelatedProducts';
-import BaseBreadcrumb from '@/components/ui/Breadcrumb';
 import getProductBySlug from '@/sanity/lib/product/getProductBySlug';
 import { getPrice } from '@/lib/getPrice';
 import { NAVIGATION_QUERY } from '@/sanity/lib/queries';
 import AddToBasketButton from '@/components/ui/AddToBasketButton';
 import ProductPrice from '@/components/shared/product/ProductPrice';
 import { getSanityDocuments } from '@/sanity/lib/fetch-sanity-data';
-import { Chip } from '@heroui/chip';
 import { ProductTabs } from '@/components/shared/product/ProductTabs';
+import { ProductBreadcrumb } from '@/components/ui/Breadcrumb';
 
 export interface Props {
     slug: string,
@@ -83,8 +82,8 @@ export default async function ProductPage({ params }: { params: Promise<Props> }
     const Heading = () => {
         return (
             <>
-                <BaseBreadcrumb items={breadcrumbs[0].links} />
-                <Chip className='self-start' size='sm' radius='sm' color='secondary'>{category}</Chip>
+                <ProductBreadcrumb category={category} title={productTitle} slug={slug} items={breadcrumbs[0].links} />
+                
                 <h1 className="text-2xl font-bold">{productTitle}</h1>
             </>
         )
@@ -123,8 +122,8 @@ export default async function ProductPage({ params }: { params: Promise<Props> }
                         </Card>
                     </div>
                 </div>
-                
-                <ProductTabs description={general_description} options={variation_description}/>
+
+                <ProductTabs description={general_description} options={variation_description} />
 
             </Section>
             <RelatedProducts product={product} />

@@ -64,8 +64,9 @@ export const ProductCarousel = ({ items, className }: ProductCarouselProps) => {
             >
                 {filteredImages.map((item: string, index: number) => (
                     <SwiperSlide key={index} className={styles['swiper-slide']}>
-                        <picture className='h-full'>
-                            <Image priority as={NextImage} quality={60} removeWrapper alt={'image'} className={'w-full aspect-square max-h-full'} width={500} height={500} src={item} radius='sm' />
+                        <picture className='h-full rounded-small'>
+                            <Image priority as={NextImage} quality={60} removeWrapper alt={'image'} className={'w-full aspect-square max-h-full'} 
+                            classNames={{ wrapper: 'bg-cover' }} width={500} height={500} src={item} radius='sm' fallbackSrc={`/images/product-no-image.jpg`} />
                         </picture>
                     </SwiperSlide>
                 ))}
@@ -82,7 +83,8 @@ export const ProductCarousel = ({ items, className }: ProductCarouselProps) => {
                 {filteredImages.map((item: string, index: number) => (
                     <SwiperSlide key={index} className={styles['swiper-slide']} >
                         <picture className='h-full border-slate-300 border p-3'>
-                            <Image as={NextImage} removeWrapper alt={'image'} className={'w-full aspect-square max-h-full'} src={item} width={104} height={104} radius='sm' />
+                            <Image as={NextImage} alt={'image'} className={'w-full aspect-square max-h-full'}
+                            classNames={{ wrapper: 'bg-cover' }} src={item || '/images/product-no-image.jpg'} width={104} height={104} radius='sm' fallbackSrc={`/images/product-no-image.jpg`} />
                         </picture>
                     </SwiperSlide>
                 ))}
