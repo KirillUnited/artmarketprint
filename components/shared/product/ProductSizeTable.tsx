@@ -1,6 +1,6 @@
 import React from 'react';
 import { Table, TableHeader, TableBody, TableColumn, TableRow, TableCell } from '@heroui/table';
-import { maleSizes, femaleSizes } from '../../../config/productSizeDataConfig';
+import { MALE_SIZES, FEMALE_SIZES } from '../../../config/productSizeDataConfig';
 
 interface SizeData {
   international: string;
@@ -15,7 +15,7 @@ interface ProductSizeTableProps {
 }
 
 const ProductSizeTable: React.FC<ProductSizeTableProps> = ({ gender }) => {
-  const sizes = gender === 'male' ? maleSizes : femaleSizes;
+  const sizes: SizeData[] = gender === 'male' ? MALE_SIZES : FEMALE_SIZES;
 
   return (
     <Table aria-label="Product Size Table" radius='sm' className='border-1 border-gray-300 rounded-small min-w-fit'>

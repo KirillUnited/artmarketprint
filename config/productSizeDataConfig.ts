@@ -1,4 +1,4 @@
-export const maleSizes = [
+export const MALE_SIZES = [
   { international: 'XS', russian: 44, chest: '86-89', waist: '74-77', hips: '90-93' },
   { international: 'S', russian: 46, chest: '90-93', waist: '78-81', hips: '94-97' },
   { international: 'M', russian: 48, chest: '94-97', waist: '82-85', hips: '98-101' },
@@ -9,7 +9,7 @@ export const maleSizes = [
   { international: '4XL', russian: 58, chest: '114-117', waist: '105-109', hips: '118-121' }
 ];
 
-export const femaleSizes = [
+export const FEMALE_SIZES = [
   { international: 'XS', russian: 40, chest: '76-80', waist: '58-62', hips: '84-88' },
   { international: 'S', russian: 42, chest: '80-84', waist: '62-66', hips: '88-92' },
   { international: 'S/M', russian: 44, chest: '84-88', waist: '66-70', hips: '92-96' },
