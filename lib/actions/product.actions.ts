@@ -1,9 +1,7 @@
 'use server';
 
-import { CATEGORIES_QUERY } from '@/sanity/lib/queries/category.query';
-import { getSanityDocuments } from '../../sanity/lib/fetch-sanity-data';
 import { getJsonFileData } from '../utils';
-import { groupProductsByCleanName } from '../catalog-utils';
+import { groupProductsByCleanName } from '../products/catalog-utils';
 
 /**
  * Fetches all products from the JSON file data.

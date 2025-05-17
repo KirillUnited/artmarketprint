@@ -2,20 +2,24 @@
 
 import React from 'react'
 import NextImage from 'next/image'
+import { Image as HeroImage } from '@heroui/image'
 import { ColorItemProps } from './product.types';
 import { filterItemsByColor } from './lib';
 import Loader from '@/components/ui/Loader';
 
 const ColorListItem = ({ item }: { item: ColorItemProps }) => (
     <li key={item.id}>
-        <NextImage
+        <HeroImage
+            as={NextImage}
             alt={item.color || "color"}
-            src={item.cover}
+            src={item.cover || "/images/product-no-image.jpg"}
             width={36}
             height={36}
             className="object-contain aspect-square"
             quality={10}
             title={item.color}
+            radius='sm'
+            fallbackSrc="/images/product-no-image.jpg"
         />
     </li>
 );
