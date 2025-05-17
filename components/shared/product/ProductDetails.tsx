@@ -7,6 +7,9 @@ import { useEffect, useState } from 'react';
 import { ColorListItem, computedItems } from './ProductColors';
 import { Tooltip } from '@heroui/tooltip';
 import { useProductStore } from '@/store/product';
+import ProductSizeTable from './ProductSizeTable';
+import { Modal, ModalBody, ModalContent, ModalHeader, useDisclosure } from '@heroui/modal';
+import { Button } from '@heroui/button';
 
 /**
  * A component to display a product thumbnail.
@@ -31,6 +34,7 @@ export const ProductDetails: React.FC<{
 }> = ({ items, sizes, colors, color, size }) => {
     const [isClient, setIsClient] = useState(false);
     const { selectedColor, selectedSize, setSelectedColor, setSelectedSize } = useProductStore();
+    const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
     useEffect(() => {
         setIsClient(true);
@@ -135,6 +139,16 @@ export const ProductDetails: React.FC<{
                                 </Radio>
                             ))}
                         </RadioGroup>
+                        <Button variant='bordered' className='mt-4 border-1' size='sm' radius='sm' onPress={onOpen}>Размерная таблица</Button>
+                        <Modal className='bg-background max-w-fit' isOpen={isOpen} placement="top-center" onOpenChange={onOpenChange} title='Size Table' radius='sm'>
+                            <ModalContent>
+                                <ModalHeader className="flex flex-col gap-1 text-2xl">Размерная таблица</ModalHeader>
+                                <ModalBody className='min-w-fit'>
+                                    <ProductSizeTable gender={'male'} />
+                                    <ProductSizeTable gender={'female'} />
+                                </ModalBody>
+                            </ModalContent>
+                        </Modal>
                     </fieldset>
                 )
             }
