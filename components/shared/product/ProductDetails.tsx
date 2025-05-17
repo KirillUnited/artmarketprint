@@ -152,8 +152,8 @@ export const ProductDetails: React.FC<{
                     </fieldset>
                 )
             }
-            {selectedColor && <p className='text-foreground font-semibold text-sm'>Выбранный вариант: {selectedColor}</p>}
-            {selectedSize && <p className='text-foreground font-semibold text-sm'>Выбранный размер: {selectedSize}</p>}
+            {/* {selectedColor && <p className='text-foreground font-semibold text-sm'>Выбранный вариант: {selectedColor}</p>}
+            {selectedSize && <p className='text-foreground font-semibold text-sm'>Выбранный размер: {selectedSize}</p>} */}
         </div>
     )
 }
