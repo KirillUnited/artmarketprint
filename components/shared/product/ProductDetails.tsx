@@ -144,7 +144,9 @@ export const ProductDetails: React.FC<{
                             <ModalContent>
                                 <ModalHeader className="flex flex-col gap-1 text-2xl">Размерная таблица</ModalHeader>
                                 <ModalBody className='min-w-fit'>
+                                    <p className='text-foreground font-semibold text-sm'>👕 Мужской размерный ряд (Беларусь / Россия)</p>
                                     <ProductSizeTable gender={'male'} />
+                                    <p className='text-foreground font-semibold text-sm mt-4'>👗 Женский размерный ряд (Беларусь / Россия)</p>
                                     <ProductSizeTable gender={'female'} />
                                 </ModalBody>
                             </ModalContent>
