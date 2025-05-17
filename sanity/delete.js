@@ -43,10 +43,15 @@ function deleteAll() {
         if (type === void 0) { type = DOC_TYPE; }
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, client_1.client.delete({ query: "*[_type == $product]", params: { product: type } })];
+                case 0: return [4 /*yield*/, client_1.client.delete({ query: "*[_type == $product]", params: { product: type } })
+                        .then(function (res) {
+                        console.log(res, 'All documents deleted successfully!');
+                    })
+                        .catch(function (err) {
+                        console.error(err);
+                    })];
                 case 1:
                     _a.sent();
-                    console.log('All documents deleted successfully!');
                     return [2 /*return*/];
             }
         });
