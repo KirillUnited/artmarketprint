@@ -2,7 +2,7 @@ import { SanityImageSource } from '@sanity/image-url/lib/types/types';
 import imageUrlBuilder from '@sanity/image-url';
 import { defineQuery, PortableText, SanityDocument } from 'next-sanity';
 
-import BaseBreadcrumb from '@/components/ui/Breadcrumb';
+import BaseBreadcrumb, { ServiceBreadcrumb } from '@/components/ui/Breadcrumb';
 import { ServiceDetails, ServiceHero } from '@/components/shared/service';
 import { client } from '@/sanity/client';
 import { getUrlFor } from '@/lib/utils';
@@ -14,7 +14,7 @@ import { Card } from '@heroui/card';
 import { clsx } from 'clsx';
 import { FAQSection } from '@/components/shared/faq';
 import { SECTION_FIELDS } from '@/sanity/lib/queries/page.query';
-import ServiceJsonLd from '@/components/ServiceJsonLd';
+import ServiceJsonLd, { BreadcrumbListJsonLd } from '@/components/ServiceJsonLd';
 
 type Props = {
     slug: string
@@ -94,7 +94,8 @@ export default async function ServicePage({ params }: { params: Promise<Props> }
                 <section>
                     <div className="container">
                         <div className="mt-10 mb-6">
-                            <BaseBreadcrumb items={breadcrumbs} section="services" withJsonLd />
+                            <BreadcrumbListJsonLd name={service.title} />
+                            <ServiceBreadcrumb items={breadcrumbs} title={service.title} />
                         </div>
                     </div>
                 </section>
