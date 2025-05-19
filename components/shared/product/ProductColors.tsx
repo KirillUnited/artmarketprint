@@ -6,16 +6,19 @@ import { Image as HeroImage } from '@heroui/image'
 import { ColorItemProps } from './product.types';
 import { filterItemsByColor } from './lib';
 import Loader from '@/components/ui/Loader';
+import { Button } from '@heroui/button';
+import { PlusIcon } from 'lucide-react';
 
 const ColorListItem = ({ item }: { item: ColorItemProps }) => (
     <li key={item.id}>
         <HeroImage
             as={NextImage}
             alt={item.color || "color"}
-            src={item.cover || "/images/product-no-image.jpg"}
+            src={item.cover}
             width={36}
             height={36}
             className="object-contain aspect-square"
+            classNames={{ wrapper: 'bg-cover' }}
             quality={10}
             title={item.color}
             radius='sm'
@@ -24,10 +27,43 @@ const ColorListItem = ({ item }: { item: ColorItemProps }) => (
     </li>
 );
 
-const ColorList = ({ items }: { items: ColorItemProps[] }) => {
+export const MoreButton = ({ onClick }: { onClick: () => void }) => (
+    <li className='text-center'>
+        <Button
+            size='sm'
+            isIconOnly
+            className='h-full'
+            onPress={onClick}
+        >
+            <PlusIcon />
+        </Button>
+    </li>
+);
+
+const ColorList = ({
+    items,
+    limit = 6,
+}: {
+    items: ColorItemProps[];
+    limit?: number;
+}) => {
+    const [showAll, setShowAll] = React.useState(false);
+    const firstItems = items?.slice(0, limit);
+    const otherItems = items?.slice(limit);
+
     return (
-        <ul className='flex gap-2 flex-wrap'>
-            {items?.map((item) => (
+        <ul
+            className='flex gap-2 flex-wrap hover:tailwind-effect'
+            onMouseEnter={() => setShowAll(true)}
+            onMouseLeave={() => setShowAll(false)}
+        >
+            {firstItems?.map((item) => (
+                <ColorListItem key={item.id} item={item} />
+            ))}
+            {(otherItems?.length > 0 && !showAll) && (
+                <MoreButton onClick={() => setShowAll(true)} />
+            )}
+            {showAll && otherItems?.map((item) => (
                 <ColorListItem key={item.id} item={item} />
             ))}
         </ul>
