@@ -35,14 +35,17 @@ const ProductThumb: FC<ProductThumbProps> = ({ item, ...props }) => {
             radius="sm"
         >
             <CardBody className='items-stretch gap-4'>
-                <NextImage
+                <Image
+                    as={NextImage}
                     alt={name}
                     className="object-contain aspect-square w-full mx-auto max-w-56 max-h-80" 
+                    classNames={{ wrapper: 'w-full bg-contain bg-center bg-no-repeat mx-auto' }}
                     loading="lazy" 
                     src={image} 
                     width={220} 
                     height={320} 
                     quality={50}
+                    fallbackSrc="/images/no-image-icon.png"
                 />
                 <div>
                     <span className="text-xl font-semibold self-start text-foreground">{`${price} BYN`}</span>

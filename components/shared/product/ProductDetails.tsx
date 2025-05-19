@@ -4,9 +4,12 @@ import Loader from '@/components/ui/Loader';
 import { Radio, RadioGroup } from '@heroui/radio';
 import clsx from 'clsx';
 import { useEffect, useState } from 'react';
-import { ColorListItem, computedItems } from './ProductColors';
+import { ColorListItem, computedItems, MoreButton } from './ProductColors';
 import { Tooltip } from '@heroui/tooltip';
 import { useProductStore } from '@/store/product';
+import ProductSizeTable from './ProductSizeTable';
+import { Modal, ModalBody, ModalContent, ModalHeader, useDisclosure } from '@heroui/modal';
+import { Button } from '@heroui/button';
 
 /**
  * A component to display a product thumbnail.
@@ -31,6 +34,9 @@ export const ProductDetails: React.FC<{
 }> = ({ items, sizes, colors, color, size }) => {
     const [isClient, setIsClient] = useState(false);
     const { selectedColor, selectedSize, setSelectedColor, setSelectedSize } = useProductStore();
+    const [showAllColors, setShowAllColors] = useState(false);
+    const { isOpen, onOpen, onOpenChange } = useDisclosure();
+    const computedItemsByColor = computedItems(items);
 
     useEffect(() => {
         setIsClient(true);
@@ -61,25 +67,29 @@ export const ProductDetails: React.FC<{
                         >
                             {
                                 (Array.isArray(items) && items.length > 0) && (
-                                    computedItems(items).map((color) => (
-                                        <Tooltip content={color.color} key={color.id} radius='sm'>
-                                            <Radio
-                                                value={color.color}
-                                                aria-label={color.color}
-                                                name={'color'}
-                                                title={color.color}
-                                                classNames={{
-                                                    base: "data-[disabled=true]:cursor-not-allowed data-[selected=true]:border-primary border-2 list-none pointer-events-auto -m-0 rounded-small p-1",
-                                                    control: clsx("hidden"),
-                                                    hiddenInput: "disabled:cursor-not-allowed",
-                                                    wrapper: "hidden",
-                                                    labelWrapper: "ms-0"
-                                                }}
-                                            >
-                                                <ColorListItem item={color} />
-                                            </Radio>
-                                        </Tooltip>
-                                    ))
+                                    <>
+                                        {computedItemsByColor.slice(0, showAllColors ? items.length : 6).map((color) => (
+                                            <Tooltip content={color.color} key={color.id} radius='sm'>
+                                                <Radio
+                                                    value={color.color}
+                                                    aria-label={color.color}
+                                                    name={'color'}
+                                                    title={color.color}
+                                                    classNames={{
+                                                        base: "data-[disabled=true]:cursor-not-allowed data-[selected=true]:border-primary border-2 list-none pointer-events-auto -m-0 rounded-small p-1",
+                                                        control: clsx("hidden"),
+                                                        hiddenInput: "disabled:cursor-not-allowed",
+                                                        wrapper: "hidden",
+                                                        labelWrapper: "ms-0"
+                                                    }}
+                                                >
+                                                    <ColorListItem item={color} />
+                                                </Radio>
+                                            </Tooltip>
+                                        ))
+                                        }
+                                        {(computedItemsByColor.length > 6 && !showAllColors) && <MoreButton onClick={() => setShowAllColors(!showAllColors)} />}
+                                    </>
                                 )
                             }
                         </RadioGroup>
@@ -135,11 +145,23 @@ export const ProductDetails: React.FC<{
                                 </Radio>
                             ))}
                         </RadioGroup>
+                        <Button variant='bordered' className='mt-4 border-1' size='sm' radius='sm' onPress={onOpen}>Размерная таблица</Button>
+                        <Modal className='bg-background max-w-fit' isOpen={isOpen} placement="top-center" onOpenChange={onOpenChange} title='Size Table' radius='sm'>
+                            <ModalContent>
+                                <ModalHeader className="flex flex-col gap-1 text-2xl">Размерная таблица</ModalHeader>
+                                <ModalBody className='min-w-fit'>
+                                    <p className='text-foreground font-semibold text-sm'>👕 Мужской размерный ряд (Беларусь / Россия)</p>
+                                    <ProductSizeTable gender={'male'} />
+                                    <p className='text-foreground font-semibold text-sm mt-4'>👗 Женский размерный ряд (Беларусь / Россия)</p>
+                                    <ProductSizeTable gender={'female'} />
+                                </ModalBody>
+                            </ModalContent>
+                        </Modal>
                     </fieldset>
                 )
             }
-            {selectedColor && <p className='text-foreground font-semibold text-sm'>Выбранный вариант: {selectedColor}</p>}
-            {selectedSize && <p className='text-foreground font-semibold text-sm'>Выбранный размер: {selectedSize}</p>}
+            {/* {selectedColor && <p className='text-foreground font-semibold text-sm'>Выбранный вариант: {selectedColor}</p>}
+            {selectedSize && <p className='text-foreground font-semibold text-sm'>Выбранный размер: {selectedSize}</p>} */}
         </div>
     )
 }

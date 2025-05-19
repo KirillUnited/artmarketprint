@@ -2,19 +2,19 @@ import { SanityImageSource } from '@sanity/image-url/lib/types/types';
 import imageUrlBuilder from '@sanity/image-url';
 import { defineQuery, PortableText, SanityDocument } from 'next-sanity';
 
-import BaseBreadcrumb from '@/components/ui/Breadcrumb';
+import { ServiceBreadcrumb } from '@/components/ui/Breadcrumb';
 import { ServiceDetails, ServiceHero } from '@/components/shared/service';
 import { client } from '@/sanity/client';
 import { getUrlFor } from '@/lib/utils';
-import { ProjectList, ProjectsHeading } from '@/components/shared/project';
-import { NAVIGATION_QUERY, PROJECTS_BY_SERVICE_QUERY } from '@/sanity/lib/queries';
+import { ProjectList } from '@/components/shared/project';
+import { PROJECTS_BY_SERVICE_QUERY } from '@/sanity/lib/queries';
 import Section, { SectionButton, SectionDescription, SectionHeading, SectionSubtitle, SectionTitle } from '@/components/layout/Section';
 import { OrderForm } from '@/components/ui/form';
 import { Card } from '@heroui/card';
 import { clsx } from 'clsx';
 import { FAQSection } from '@/components/shared/faq';
 import { SECTION_FIELDS } from '@/sanity/lib/queries/page.query';
-import ServiceJsonLd from '@/components/ServiceJsonLd';
+import ServiceJsonLd, { BreadcrumbListJsonLd } from '@/components/ServiceJsonLd';
 
 type Props = {
     slug: string
@@ -65,14 +65,11 @@ export async function generateMetadata({ params }: { params: Promise<Props> }) {
 export default async function ServicePage({ params }: { params: Promise<Props> }) {
     const { slug } = await params;
     // Fetch data in parallel for better performance
-    const [service, navigationData, faq, relatedProjects] = await Promise.all([
+    const [service, faq, relatedProjects] = await Promise.all([
         client.fetch<SanityDocument>(SERVICE_QUERY, await params, options),
-        client.fetch(NAVIGATION_QUERY),
         client.fetch<SanityDocument>(FAQ_QUERY, {}, options),
         client.fetch<SanityDocument>(PROJECTS_BY_SERVICE_QUERY, await params, options)
     ]);
-
-    const breadcrumbs = navigationData[0].links;
     const serviceImageUrl = service.image
         ? urlFor(service.image)?.width(1200).height(400).url()
         : null;
@@ -94,7 +91,8 @@ export default async function ServicePage({ params }: { params: Promise<Props> }
                 <section>
                     <div className="container">
                         <div className="mt-10 mb-6">
-                            <BaseBreadcrumb items={breadcrumbs} section="services" withJsonLd />
+                            <BreadcrumbListJsonLd name={service.title} />
+                            <ServiceBreadcrumb title={service.title} service='Услуги' serviceSlug='services'  />
                         </div>
                     </div>
                 </section>
