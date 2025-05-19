@@ -4,7 +4,7 @@ import Loader from '@/components/ui/Loader';
 import { Radio, RadioGroup } from '@heroui/radio';
 import clsx from 'clsx';
 import { useEffect, useState } from 'react';
-import { ColorListItem, computedItems } from './ProductColors';
+import { ColorListItem, computedItems, MoreButton } from './ProductColors';
 import { Tooltip } from '@heroui/tooltip';
 import { useProductStore } from '@/store/product';
 import ProductSizeTable from './ProductSizeTable';
@@ -34,7 +34,9 @@ export const ProductDetails: React.FC<{
 }> = ({ items, sizes, colors, color, size }) => {
     const [isClient, setIsClient] = useState(false);
     const { selectedColor, selectedSize, setSelectedColor, setSelectedSize } = useProductStore();
+    const [showAllColors, setShowAllColors] = useState(false);
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
+    const computedItemsByColor = computedItems(items);
 
     useEffect(() => {
         setIsClient(true);
@@ -65,25 +67,29 @@ export const ProductDetails: React.FC<{
                         >
                             {
                                 (Array.isArray(items) && items.length > 0) && (
-                                    computedItems(items).map((color) => (
-                                        <Tooltip content={color.color} key={color.id} radius='sm'>
-                                            <Radio
-                                                value={color.color}
-                                                aria-label={color.color}
-                                                name={'color'}
-                                                title={color.color}
-                                                classNames={{
-                                                    base: "data-[disabled=true]:cursor-not-allowed data-[selected=true]:border-primary border-2 list-none pointer-events-auto -m-0 rounded-small p-1",
-                                                    control: clsx("hidden"),
-                                                    hiddenInput: "disabled:cursor-not-allowed",
-                                                    wrapper: "hidden",
-                                                    labelWrapper: "ms-0"
-                                                }}
-                                            >
-                                                <ColorListItem item={color} />
-                                            </Radio>
-                                        </Tooltip>
-                                    ))
+                                    <>
+                                        {computedItemsByColor.slice(0, showAllColors ? items.length : 6).map((color) => (
+                                            <Tooltip content={color.color} key={color.id} radius='sm'>
+                                                <Radio
+                                                    value={color.color}
+                                                    aria-label={color.color}
+                                                    name={'color'}
+                                                    title={color.color}
+                                                    classNames={{
+                                                        base: "data-[disabled=true]:cursor-not-allowed data-[selected=true]:border-primary border-2 list-none pointer-events-auto -m-0 rounded-small p-1",
+                                                        control: clsx("hidden"),
+                                                        hiddenInput: "disabled:cursor-not-allowed",
+                                                        wrapper: "hidden",
+                                                        labelWrapper: "ms-0"
+                                                    }}
+                                                >
+                                                    <ColorListItem item={color} />
+                                                </Radio>
+                                            </Tooltip>
+                                        ))
+                                        }
+                                        {(computedItemsByColor.length > 6 && !showAllColors) && <MoreButton onClick={() => setShowAllColors(!showAllColors)} />}
+                                    </>
                                 )
                             }
                         </RadioGroup>
