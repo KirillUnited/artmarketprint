@@ -7,6 +7,19 @@ import clsx from 'clsx';
 import { BreadcrumbListJsonLd } from '../ServiceJsonLd';
 import { fetchNavigation, getCategorySlugFromNavMap } from '@/lib/fetchNavigation';
 
+export const BreadcrumbWrapper = ({ children }: { children: React.ReactNode }) => {
+	return (
+		<Breadcrumbs variant='bordered' classNames={{
+			list: 'border-1'
+		}}>
+			<BreadcrumbItem className="font-semibold text-primary" href="/" title={`Главная`}>
+				<HomeIcon size={18} aria-label='Home' />
+			</BreadcrumbItem>
+			{children}
+		</Breadcrumbs>
+	)
+};
+
 export default function BaseBreadcrumb({ items, section, withJsonLd }: { items: any, section?: string, withJsonLd?: boolean }): JSX.Element {
 	const pathname = usePathname();
 	const pathSegments = pathname.split('/').filter(Boolean);
@@ -72,10 +85,7 @@ export const ProductBreadcrumb: React.FC<ProductBreadcrumbProps> = (
 	const categorySlug = getCategorySlugFromNavMap(navMap, category);
 
 	return (
-		<Breadcrumbs variant='bordered'>
-			<BreadcrumbItem className="font-semibold text-primary" href="/" title={`Главная`}>
-				<HomeIcon size={18} aria-label='Home' />
-			</BreadcrumbItem>
+		<BreadcrumbWrapper>
 			<BreadcrumbItem className={clsx(
 				'font-semibold',
 				'max-w-60'
@@ -111,6 +121,48 @@ export const ProductBreadcrumb: React.FC<ProductBreadcrumbProps> = (
 			>
 				{title}
 			</BreadcrumbItem>
-		</Breadcrumbs>
+		</BreadcrumbWrapper>
+	)
+}
+export interface ServiceBreadcrumbProps {
+	title: string;
+	service: string;
+	serviceSlug: string;
+}
+
+export const ServiceBreadcrumb: React.FC<ServiceBreadcrumbProps> = (
+	{
+		title,
+		service,
+		serviceSlug
+	}
+) => {
+	return (
+		<BreadcrumbWrapper>
+			<BreadcrumbItem className={clsx(
+				'font-semibold',
+				'max-w-60'
+			)} classNames={{
+				separator: 'text-primary',
+				item: 'inline truncate',
+			}}
+				href={`/${serviceSlug}`}
+				title={service}>
+				{service}
+			</BreadcrumbItem>
+			<BreadcrumbItem className={clsx(
+				'font-semibold',
+				'max-w-60'
+			)} classNames={{
+				separator: 'text-primary',
+				item: 'inline truncate',
+			}}
+				href={`/services/${serviceSlug}`}
+				title={`${title}`}
+				isDisabled={true}
+			>
+				{title}
+			</BreadcrumbItem>
+		</BreadcrumbWrapper>
 	)
 }

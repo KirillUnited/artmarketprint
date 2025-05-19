@@ -4,14 +4,13 @@ import { PortableText, SanityDocument } from 'next-sanity';
 import { ArrowDownCircle } from 'lucide-react';
 import clsx from 'clsx';
 
-import BaseBreadcrumb from '@/components/ui/Breadcrumb';
+import { ServiceBreadcrumb } from '@/components/ui/Breadcrumb';
 import BrandButton from '@/components/ui/BrandButton';
 import { ServiceDetails } from '@/components/shared/service';
 import { getSanityDocuments } from '@/sanity/lib/fetch-sanity-data';
-import { NAVIGATION_QUERY, PROJECT_QUERY, PROJECT_SLUGS_QUERY } from '@/sanity/lib/queries';
+import { PROJECT_QUERY, PROJECT_SLUGS_QUERY } from '@/sanity/lib/queries';
 import Section, { SectionButton } from '@/components/layout/Section';
 import { ProjectList, ProjectsHeading, ProjectTagList } from '@/components/shared/project';
-import { client } from '@/sanity/client';
 import ProjectGallery from '@/components/shared/project/ProjectGallery';
 import { RELATED_PROJECTS_QUERY } from '@/sanity/lib/queries/project.query';
 
@@ -58,7 +57,6 @@ export async function generateMetadata({ params }: { params: Promise<Props> }) {
 
 export default async function ProjectPage({ params }: { params: Promise<Props> }) {
     const data = await getSanityDocuments(PROJECT_QUERY, await params);
-    const breadcrumbs = (await client.fetch(NAVIGATION_QUERY))[0].links;
     const project = data?.[0] || {};
     const relatedProjects = await getSanityDocuments(RELATED_PROJECTS_QUERY, { id: project._id, limit: 4 });
     const hasGallery = Array.isArray(project?.gallery) && project?.gallery.length > 0;
@@ -107,7 +105,8 @@ export default async function ProjectPage({ params }: { params: Promise<Props> }
             <section>
                 <div className="container">
                     <div className="mt-10 mb-6">
-                        <BaseBreadcrumb items={breadcrumbs} section='services' />
+
+                        <ServiceBreadcrumb title={project.title} service='Проекты' serviceSlug='projects' />
                     </div>
                 </div>
             </section>
