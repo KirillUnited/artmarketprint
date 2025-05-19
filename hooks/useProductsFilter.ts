@@ -18,7 +18,7 @@ interface UseProductsFilterReturn {
 }
 
 export function useProductsFilter({ products, totalItemsView = 20 }: UseProductsFilterProps): UseProductsFilterReturn {
-    const [sortOrder, setSortOrder] = useState('');
+    const [sortOrder, setSortOrder] = useState('asc');
     const [selectedCategory, setSelectedCategory] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
 
