@@ -17,7 +17,7 @@ export const ServiceHero: React.FC<ServiceHeroProps> = ({ title, description, me
             className="py-12 md:py-24 relative after:absolute after:inset-0 after:bg-gradient-to-t after:from-black/90 after:to-black/20 overflow-hidden min-h-[calc(100vh-128px)] grid place-items-end">
             {/* Background service image */}
             {
-                mediaBlock ?
+                mediaBlock?.mediaType ? (
                     <div className='absolute inset-0'>
                         <Image
                             alt={title}
@@ -29,7 +29,8 @@ export const ServiceHero: React.FC<ServiceHeroProps> = ({ title, description, me
                         <MediaBlock
                             {...mediaBlock}
                         />
-                    </div> :
+                    </div>
+                ) : (
                     <Image
                         priority
                         alt={title}
@@ -38,6 +39,7 @@ export const ServiceHero: React.FC<ServiceHeroProps> = ({ title, description, me
                         src={`${image}`}
                         width={1920}
                     />
+                )
             }
             {/* Hero content */}
             <div className="container flex flex-col gap-10 max-w-2xl relative z-10">
