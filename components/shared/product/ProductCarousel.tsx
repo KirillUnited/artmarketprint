@@ -16,6 +16,7 @@ import clsx from 'clsx';
 import styles from './product.module.css';
 import { useProductStore } from '@/store/product';
 import Loader from '@/components/ui/Loader';
+import { getVariantImages } from './lib';
 
 interface ProductCarouselProps {
     items?: any;
@@ -36,22 +37,7 @@ export const ProductCarousel = ({ items, className }: ProductCarouselProps) => {
 
     if (!Array.isArray(productImages) || productImages.length === 0) return null;
 
-    const getFilteredImages = () => {
-        if (!items?.items || !selectedColor) return productImages;
-        
-        const selectedVariant = items.items.find((item: any) => 
-            item.color === selectedColor
-        );
-        
-        if (!selectedVariant) return productImages;
-        
-        const variantImages = [
-            ...(selectedVariant.images_urls[0].split(',') || [])
-        ].filter(Boolean);
-        
-        return variantImages.length > 0 ? variantImages : productImages;
-    };
-    const filteredImages = getFilteredImages();
+    const filteredImages = getVariantImages(items, productImages, selectedColor);
 
     return (
         <div className={clsx(styles['swiper-container'], className)}>
@@ -65,8 +51,8 @@ export const ProductCarousel = ({ items, className }: ProductCarouselProps) => {
                 {filteredImages.map((item: string, index: number) => (
                     <SwiperSlide key={index} className={styles['swiper-slide']}>
                         <picture className='h-full rounded-small'>
-                            <Image priority as={NextImage} quality={60} removeWrapper alt={'image'} className={'w-full aspect-square max-h-full'} 
-                            classNames={{ wrapper: 'bg-cover' }} width={500} height={500} src={item} radius='sm' fallbackSrc={`/images/product-no-image.jpg`} />
+                            <Image priority as={NextImage} quality={60} removeWrapper alt={'image'} className={'w-full aspect-square max-h-full'}
+                                classNames={{ wrapper: 'bg-cover' }} width={500} height={500} src={item} radius='sm' fallbackSrc={`/images/product-no-image.jpg`} />
                         </picture>
                     </SwiperSlide>
                 ))}
@@ -84,7 +70,7 @@ export const ProductCarousel = ({ items, className }: ProductCarouselProps) => {
                     <SwiperSlide key={index} className={styles['swiper-slide']} >
                         <picture className='h-full border-slate-300 border p-3'>
                             <Image as={NextImage} alt={'image'} className={'w-full aspect-square max-h-full'}
-                            classNames={{ wrapper: 'bg-cover' }} src={item || '/images/product-no-image.jpg'} width={104} height={104} radius='sm' fallbackSrc={`/images/product-no-image.jpg`} />
+                                classNames={{ wrapper: 'bg-cover' }} src={item || '/images/product-no-image.jpg'} width={104} height={104} radius='sm' fallbackSrc={`/images/product-no-image.jpg`} />
                         </picture>
                     </SwiperSlide>
                 ))}
