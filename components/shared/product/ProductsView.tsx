@@ -2,7 +2,6 @@
 import React from 'react'
 import ProductsFilter, { FilterButton, FilterDrawer } from './ProductsFilter'
 import Pagination from '@/components/ui/Pagination'
-import ProductSearchForm from './ProductSearchForm';
 import clsx from 'clsx';
 import { useDisclosure } from '@heroui/modal';
 import ProductGrid from './ProductGrid';
@@ -51,7 +50,6 @@ export default function ProductsView({ products, categories, totalItemsView = IT
                                 <div className='flex flex-wrap flex-col md:flex-row gap-4 w-full'>
                                     <FilterButton onOpen={onOpen} />
                                     <FilterDrawer isOpen={isOpen} onOpenChange={onOpenChange} onFilterChange={handleFilterChange} categories={categories} sortOrder={sortOrder} selectedCategory={selectedCategory} />
-                                    <ProductSearchForm />
                                 </div>
                             }
                             {

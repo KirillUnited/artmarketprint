@@ -13,7 +13,12 @@ export async function searchProductsByName(searchParam: string): Promise<any[]> 
          * The `name match` operator is used to search for products that start with the search parameter.
          * The `*` character is used as a wildcard to match any characters after the search parameter.
          */
-        `*[_type == "product" && name match "${searchParam}*"]`
+        `*[_type == "product" && (
+            name match "${searchParam}*" ||
+            description match "${searchParam}*" ||
+            variation_description match "${searchParam}*" ||
+            category match "${searchParam}*"
+        )]`
     );
 
     try {
