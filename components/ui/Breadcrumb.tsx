@@ -85,10 +85,7 @@ export const ProductBreadcrumb: React.FC<ProductBreadcrumbProps> = (
 	const categorySlug = getCategorySlugFromNavMap(navMap, category);
 
 	return (
-		<Breadcrumbs variant='bordered'>
-			<BreadcrumbItem className="font-semibold text-primary" href="/" title={`Главная`}>
-				<HomeIcon size={18} aria-label='Home' />
-			</BreadcrumbItem>
+		<BreadcrumbWrapper>
 			<BreadcrumbItem className={clsx(
 				'font-semibold',
 				'max-w-60'
@@ -124,23 +121,22 @@ export const ProductBreadcrumb: React.FC<ProductBreadcrumbProps> = (
 			>
 				{title}
 			</BreadcrumbItem>
-		</Breadcrumbs>
+		</BreadcrumbWrapper>
 	)
 }
 export interface ServiceBreadcrumbProps {
 	title: string;
-	items: any;
+	service: string;
+	serviceSlug: string;
 }
 
 export const ServiceBreadcrumb: React.FC<ServiceBreadcrumbProps> = (
 	{
 		title,
-		items
+		service,
+		serviceSlug
 	}
 ) => {
-	const navMap = fetchNavigation(items);
-	const serviceSlug = getCategorySlugFromNavMap(navMap, title);
-
 	return (
 		<BreadcrumbWrapper>
 			<BreadcrumbItem className={clsx(
@@ -150,9 +146,9 @@ export const ServiceBreadcrumb: React.FC<ServiceBreadcrumbProps> = (
 				separator: 'text-primary',
 				item: 'inline truncate',
 			}}
-				href={`/services`}
-				title={`Услуги`}>
-				Услуги
+				href={`/${serviceSlug}`}
+				title={service}>
+				{service}
 			</BreadcrumbItem>
 			<BreadcrumbItem className={clsx(
 				'font-semibold',
