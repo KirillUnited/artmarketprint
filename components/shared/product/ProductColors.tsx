@@ -52,18 +52,20 @@ const ColorList = ({
     const otherItems = items?.slice(limit);
 
     return (
-        <ul className='flex gap-2 flex-wrap'>
+        <ul
+            className='flex gap-2 flex-wrap hover:tailwind-effect'
+            onMouseEnter={() => setShowAll(true)}
+            onMouseLeave={() => setShowAll(false)}
+        >
             {firstItems?.map((item) => (
                 <ColorListItem key={item.id} item={item} />
             ))}
-
+            {(otherItems?.length > 0 && !showAll) && (
+                <MoreButton onClick={() => setShowAll(true)} />
+            )}
             {showAll && otherItems?.map((item) => (
                 <ColorListItem key={item.id} item={item} />
             ))}
-
-            {(otherItems?.length > 0 && !showAll) && (
-                <MoreButton onClick={() => setShowAll(!showAll)} />
-            )}
         </ul>
     )
 };
