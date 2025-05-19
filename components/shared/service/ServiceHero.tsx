@@ -25,6 +25,7 @@ export const ServiceHero: React.FC<ServiceHeroProps> = ({ title, description, me
                             height={1080}
                             src={`${image}`}
                             width={1920}
+                            quality={50}
                         />
                         <MediaBlock
                             {...mediaBlock}
