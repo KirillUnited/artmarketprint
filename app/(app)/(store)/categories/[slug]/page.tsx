@@ -14,6 +14,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { getAllProductsByCategory } from "@/sanity/lib/product/getAllProductsByCategory";
 import { ProductsNotFound } from "@/components/shared/product";
+import ProductSearchForm from "@/components/shared/product/ProductSearchForm";
 
 export interface Props {
     slug: string,
@@ -98,9 +99,12 @@ export default async function CategoryPage({ params }: { params: Promise<Props> 
             <Section id="products" innerClassname="pt-0 md:pt-0">
                 <SectionHeading>
                     <SectionTitle>{categoryTitle}</SectionTitle>
-                    <Link className="flex items-center gap-2 text-primary" href="/products">
-                        <ArrowLeftIcon className="w-6 h-6" />
-                        <span>В каталог</span></Link>
+                    <div className="grid items-center gap-4 md:gap-8 md:grid-cols-[auto_1fr] w-full">
+                        <Link className="flex items-center gap-2 text-primary" href="/products">
+                            <ArrowLeftIcon className="w-6 h-6" />
+                            <span>В каталог</span></Link>
+                        <ProductSearchForm />
+                    </div>
                 </SectionHeading>
 
                 <ProductsView products={products} />
