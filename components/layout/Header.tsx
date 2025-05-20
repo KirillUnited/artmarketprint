@@ -1,5 +1,5 @@
 import React from 'react';
-import Navbar from '@/components/shared/Navbar';
+import Navbar from '@/components/shared/navbar/Navbar';
 import { client } from '@/sanity/client';
 import { NAVIGATION_QUERY } from '@/sanity/lib/queries';
 import { getSanityDocuments } from '@/sanity/lib/fetch-sanity-data';

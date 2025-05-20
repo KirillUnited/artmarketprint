@@ -6,3 +6,5 @@ export const SERVICES_QUERY = `*[
       image, 
       price,
       "currentSlug": slug.current}`;
+
+export const SERVICE_QUERY = '*[_type == "service" && slug.current == $slug][0]';

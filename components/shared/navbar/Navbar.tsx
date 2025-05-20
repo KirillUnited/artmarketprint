@@ -1,35 +1,27 @@
 'use client';
 import React from 'react';
-import { Button } from '@heroui/button';
 import { Navbar as BaseNavbar, NavbarBrand, NavbarContent, NavbarItem } from '@heroui/navbar';
 import { Link } from '@heroui/link';
-import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@heroui/dropdown';
-import { ChevronDownIcon, Settings, ShoppingBagIcon, TagsIcon } from 'lucide-react';
+import { ShoppingBagIcon } from 'lucide-react';
 
-import { TelegramIcon, ViberIcon } from '../icons';
-import BrandLogo from '../ui/BrandLogo';
-import { HeroModalOffer } from '../ui/BrandModalOffer';
-import Drawer from '../ui/Drawer';
+import { TelegramIcon, ViberIcon } from '../../icons';
+import BrandLogo from '../../ui/BrandLogo';
+import { HeroModalOffer } from '../../ui/BrandModalOffer';
+import Drawer from '../../ui/Drawer';
 
-import { SalesBanner } from './banner';
+import { SalesBanner } from '../banner';
 
 import { siteConfig } from '@/config/site';
 import { PhoneListDropdown } from '@/components/ui/PhoneListDropdown';
 import useBasketStore from '@/store/store';
+import { NavbarDropdownMenu } from '@/components/ui/dropdown';
 
-type HeaderDropdownMenuProps = {
-	triggerLabel: string;
-	items: {
-		title: string; url?: string; description?: string;
-		services?: any;
-	}[];
-};
 
 export const CartLinkButton = (itemsCount: number) => {
 	return (
-		<Link 
-			href='/cart' 
-			target='_blank' 
+		<Link
+			href='/cart'
+			target='_blank'
 			className='relative'
 			aria-label={`Shopping cart${itemsCount > 0 ? `, ${itemsCount} items` : ''}`}
 		>
@@ -100,60 +92,10 @@ export default function Navbar({ navigation, sales, siteSettings }: any) {
 						<div className="hidden lg:block">
 							<HeroModalOffer id='Консультация' />
 						</div>
-						<Drawer className="xl:hidden h-6 w-auto min-w-min" navigation={navigation} siteSettings={siteSettings}  />
+						<Drawer className="xl:hidden h-6 w-auto min-w-min" navigation={navigation} siteSettings={siteSettings} />
 					</div>
 				</div>
 			</BaseNavbar>
 		</>
 	);
 }
-
-const NavbarDropdownMenu = ({ triggerLabel, items }: HeaderDropdownMenuProps) => {
-	return (
-		<Dropdown
-			classNames={{
-				content: 'rounded-md',
-			}}
-		>
-			<NavbarItem>
-				<DropdownTrigger>
-					<Button
-						disableRipple
-						className="p-0 bg-transparent data-[hover=true]:bg-transparent leading-normal font-semibold hover:underline hover:text-primary transition gap-1"
-						endContent={<ChevronDownIcon className="text-primary" size={20} />}
-						radius="sm"
-						size="md"
-						variant="light"
-					>
-						{triggerLabel}
-					</Button>
-				</DropdownTrigger>
-			</NavbarItem>
-			<DropdownMenu
-				aria-label="Услуги"
-				className="w-[320px]"
-				itemClasses={{
-					base: 'gap-4 rounded-md data-[hover=true]:bg-brand-gradient data-[hover=true]:text-fill-transparent',
-					title: 'font-semibold truncate max-w-full',
-				}}
-			>
-				<DropdownItem
-					key={items[0].title}
-					classNames={{
-						title: 'font-light'
-					}} href={items[0].url} startContent={triggerLabel === 'Услуги' ? <Settings /> : <TagsIcon />}>
-					{items[0].title}
-				</DropdownItem>
-				{items[0]?.services?.map((item: any) => (
-					<DropdownItem
-						key={item.title}
-						description={item.description}
-						href={`${items[0].url}/${item.url}`}
-					>
-						{item.title}
-					</DropdownItem>
-				))}
-			</DropdownMenu>
-		</Dropdown>
-	);
-};

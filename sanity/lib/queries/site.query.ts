@@ -21,7 +21,8 @@ export const NAVIGATION_QUERY = defineQuery(`*[_type == "navigation"] {
         services[]->{
             title,
             description,
-            "url": slug.current
+            "url": slug.current,
+            image
         }
       }
     }
