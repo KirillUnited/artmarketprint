@@ -1,9 +1,10 @@
-import { urlFor } from "@/sanity/lib/image";
-import { Button } from "@heroui/button";
-import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@heroui/dropdown";
-import { NavbarItem } from "@heroui/navbar";
-import { ChevronDownIcon, SettingsIcon, TagsIcon } from "lucide-react";
-import Image from "next/image";
+import { Button } from '@heroui/button';
+import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@heroui/dropdown';
+import { NavbarItem } from '@heroui/navbar';
+import { ChevronDownIcon, SettingsIcon, TagsIcon } from 'lucide-react';
+import Image from 'next/image';
+
+import { urlFor } from '@/sanity/lib/image';
 
 type HeaderDropdownMenuProps = {
     triggerLabel: string;
@@ -14,7 +15,8 @@ type HeaderDropdownMenuProps = {
 };
 
 export const NavbarDropdownMenu = ({ triggerLabel, items }: HeaderDropdownMenuProps) => {
-    console.log(items);
+    if (!items) return null;
+
     return (
         <Dropdown
             classNames={{
@@ -52,7 +54,7 @@ export const NavbarDropdownMenu = ({ triggerLabel, items }: HeaderDropdownMenuPr
                         key={item.title}
                         description={item.description}
                         href={`${items[0].url}/${item.url}`}
-                        startContent={<Image src={urlFor(item.image?.asset).url()} className="object-contain aspect-square" alt={item.title} width={64} height={64} quality={10} />}
+                        startContent={<Image alt={item.title} className="object-cover aspect-square rounded-small" height={64} quality={10} src={urlFor(item.image?.asset).url()} width={64} />}
                     >
                         {item.title}
                     </DropdownItem>
