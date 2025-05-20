@@ -1,6 +1,6 @@
 import { HomeIcon, ListIcon, PackageSearchIcon, TagsIcon } from 'lucide-react'
 import Link from 'next/link'
-import React from 'react'
+import React, { FC } from 'react'
 
 export const ProductsNotFound = () => {
     return (
@@ -12,20 +12,31 @@ export const ProductsNotFound = () => {
             <p className="text-gray-600 flex items-center gap-2">
                 Попробуйте изменить параметры поиска или фильтрации
             </p>
-            <div className="mt-6 flex flex-wrap gap-4">
+            <ProductsNotFoundMenu />
+        </div>
+    )
+}
+export const ProductsNotFoundMenu: FC<{}> = () => {
+    return (
+        <ul className="mt-6 flex flex-col md:flex-row flex-wrap gap-4">
+            <li>
                 <Link href="/" className="flex items-center text-primary-600 hover:text-primary-700 hover:underline gap-1">
                     <HomeIcon className="w-4 h-4" />
                     Главная страница
                 </Link>
+            </li>
+            <li>
                 <Link href="/products" className="flex items-center text-primary-600 hover:text-primary-700 hover:underline gap-1">
                     <ListIcon className="w-4 h-4" />
                     Каталог
                 </Link>
+            </li>
+            <li>
                 <Link href="/categories" className="flex items-center text-primary-600 hover:text-primary-700 hover:underline gap-1">
                     <TagsIcon className="w-4 h-4" />
                     Категории
                 </Link>
-            </div>
-        </div>
+            </li>
+        </ul>
     )
 }
