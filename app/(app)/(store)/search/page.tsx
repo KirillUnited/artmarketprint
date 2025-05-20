@@ -7,6 +7,7 @@ import ProductsView from '@/components/shared/product/ProductsView';
 import { searchProductsByName } from '@/sanity/lib/product/searchProductsByName';
 import { Button } from '@heroui/button';
 import { FeaturedProducts } from '@/components/shared/product/FeaturedProducts';
+import ProductSearchForm from '@/components/shared/product/ProductSearchForm';
 
 type Props = {
     slug: string
@@ -43,9 +44,12 @@ export default async function SearchPage({
                     Array.isArray(products) && products.length > 0 ?
                         <>
                             <SectionTitle>{`Результаты поиска для "${query}" (${products.length} найдено)`}</SectionTitle>
-                            <Link className="flex items-center gap-2 text-primary" href="/products">
-                                <ArrowLeftIcon className="w-6 h-6" />
-                                <span>Вернуться в каталог</span></Link>
+                            <div className="grid items-center gap-4 md:gap-8 md:grid-cols-[auto_1fr]">
+                                <Link className="flex items-center gap-2 text-primary" href="/products">
+                                    <ArrowLeftIcon className="w-6 h-6" />
+                                    <span>В каталог</span></Link>
+                                    <ProductSearchForm />
+                            </div>
                             <ProductsView products={products} totalItemsView={8} showFilter={true} />
                         </> :
                         <div className="flex flex-col items-center gap-8">
