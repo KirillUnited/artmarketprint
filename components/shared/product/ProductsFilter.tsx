@@ -89,26 +89,24 @@ export const FilterDrawer: FC<FilterDrawerProps> = ({ isOpen, onOpenChange, onFi
           <>
             <DrawerHeader className="flex flex-col gap-1">Фильтры по товарам</DrawerHeader>
             <Form className='w-full items-stretch'>
-              <DrawerBody>
+              <DrawerBody className='pb-20'>
                 <Accordion aria-label='Select category' selectionMode='multiple' title='Категории'>
                   {/* Accordion item for category filter */}
                   {categoriesSet}
-                  {/* Accordion item for price sort filter */}
-                  <AccordionItem classNames={{ title: 'font-semibold', trigger: 'font-semibold' }} title={'Цены'}>
-                    {SortFilter({ sortOrder, selectedCategory, onFilterChange })}
-                  </AccordionItem>
                 </Accordion>
               </DrawerBody>
-              <DrawerFooter>
-                {/* Reset button to clear filters */}
-                <Button color="danger" radius='sm' variant="light" type='reset' onPress={() => onFilterChange('asc', '')}>
-                  Сбросить
-                </Button>
-                {/* Apply button to close the drawer */}
-                <Button color="primary" radius='sm' variant="solid" onPress={onClose}>
-                  Применить
-                </Button>
-              </DrawerFooter>
+              {selectedCategory && (
+                <DrawerFooter className='fixed bottom-0 w-full bg-background border-t-1'>
+                  {/* Reset button to clear filters */}
+                  <Button color="danger" radius='sm' variant="light" type='reset' onPress={() => onFilterChange('asc', '')}>
+                    Сбросить
+                  </Button>
+                  {/* Apply button to close the drawer */}
+                  <Button color="primary" radius='sm' variant="solid" onPress={onClose}>
+                    Применить
+                  </Button>
+                </DrawerFooter>
+              )}
             </Form>
           </>
         )}

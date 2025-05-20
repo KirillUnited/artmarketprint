@@ -63,12 +63,22 @@ export const ProductCarousel = ({ items, className }: ProductCarouselProps) => {
                 spaceBetween={10}
                 watchSlidesProgress={true}
                 onSwiper={(swiper) => setThumbsSwiper(swiper)}
+                breakpoints={{
+                    320: {
+                        slidesPerView: 2,
+                        spaceBetween: 10,
+                    },
+                    1024: {
+                        slidesPerView: 4,
+                        spaceBetween: 10,
+                    },
+                }}
             >
                 {filteredImages.map((item: string, index: number) => (
                     <SwiperSlide key={index} className={styles['swiper-slide']} >
                         <picture className='h-full border-slate-300 border p-3'>
-                            <Image as={NextImage} alt={'image'} className={'w-full aspect-square max-h-full'}
-                                classNames={{ wrapper: 'bg-cover' }} src={item || '/images/product-no-image.jpg'} width={104} height={104} radius='sm' fallbackSrc={`/images/product-no-image.jpg`} />
+                            <Image as={NextImage} alt={'image'} className={'w-full aspect-square max-h-full object-contain'}
+                                classNames={{ wrapper: 'bg-cover' }} src={item} width={104} height={104} radius='sm' fallbackSrc={`/images/product-no-image.jpg`} />
                         </picture>
                     </SwiperSlide>
                 ))}

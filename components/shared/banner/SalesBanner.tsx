@@ -31,8 +31,11 @@ export default function SalesBanner({ isActive, title, description, discountPerc
             <div className="flex grow flex-col md:flex-row md:items-center justify-between gap-3">
               <div className="flex flex-1 flex-col gap-1">
                 <p className="text-sm font-medium leading-none">
-                  {title} - <span className="text-lg font-bold leading-none">{discountPercentage}%</span>
+                  {title}
                 </p>
+                {discountPercentage && (
+                  <p className="text-sm font-medium leading-none">Скидка <span className="text-lg font-bold leading-none">- {discountPercentage}%</span></p>
+                )}
                 <p className="text-xs font-extralight text-slate-100">
                   {description}
                 </p>
