@@ -1,10 +1,19 @@
-import { defineQuery } from "next-sanity";
-import { sanityFetch } from "../live";
+import { defineQuery } from 'next-sanity';
 
+import { sanityFetch } from '@/sanity/client';
+
+/**
+ * Fetches a product by its slug from Sanity.
+ *
+ * @param {string} slug - The slug of the product to fetch.
+ *
+ * @returns {Promise<any>} A promise that resolves to the product document if available, or an empty array if not.
+ */
 export default async function getProductBySlug(slug: string) {
-    const PRODUCT_BY_SLUG = defineQuery(`*[_type == "product" && _id == $slug]`);
+    const PRODUCT_BY_SLUG = defineQuery('*[_type == "product" && _id == $slug]');
+
     try {
-        const {data: product} = await sanityFetch({query: PRODUCT_BY_SLUG, params: { slug }});
+        const product = await sanityFetch({query: PRODUCT_BY_SLUG, params: { slug }});
 
         return product[0] ?? [];
     } catch (error) {

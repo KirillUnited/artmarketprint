@@ -1,26 +1,26 @@
 import { SanityImageSource } from '@sanity/image-url/lib/types/types';
 import imageUrlBuilder from '@sanity/image-url';
-import { defineQuery, PortableText, SanityDocument } from 'next-sanity';
+import { defineQuery, PortableText } from 'next-sanity';
+import { Card } from '@heroui/card';
+import { clsx } from 'clsx';
 
 import { ServiceBreadcrumb } from '@/components/ui/Breadcrumb';
 import { ServiceDetails, ServiceHero } from '@/components/shared/service';
-import { client } from '@/sanity/client';
+import { client, sanityFetch } from '@/sanity/client';
 import { getUrlFor } from '@/lib/utils';
 import { ProjectList } from '@/components/shared/project';
 import { PROJECTS_BY_SERVICE_QUERY } from '@/sanity/lib/queries';
 import Section, { SectionButton, SectionDescription, SectionHeading, SectionSubtitle, SectionTitle } from '@/components/layout/Section';
 import { OrderForm } from '@/components/ui/form';
-import { Card } from '@heroui/card';
-import { clsx } from 'clsx';
 import { FAQSection } from '@/components/shared/faq';
 import { SECTION_FIELDS } from '@/sanity/lib/queries/page.query';
 import ServiceJsonLd, { BreadcrumbListJsonLd } from '@/components/ServiceJsonLd';
+import { SERVICE_QUERY } from '@/sanity/lib/queries/service.query';
 
 type Props = {
     slug: string
 }
 
-const SERVICE_QUERY = '*[_type == "service" && slug.current == $slug][0]';
 const FAQ_QUERY = defineQuery(`*[_id == "siteSettings"][0]{
     homePage->{
       content[][_type == "faqs"] {
@@ -38,11 +38,10 @@ const urlFor = (source: SanityImageSource) =>
         ? imageUrlBuilder({ projectId, dataset }).image(source)
         : null;
 
-const options = { next: { revalidate: 30 } };
 
 export async function generateMetadata({ params }: { params: Promise<Props> }) {
     const { slug } = await params;
-    const service = await client.fetch<SanityDocument>(SERVICE_QUERY, await params, options);
+    const service = await sanityFetch({query: SERVICE_QUERY, params: await params});
     const { title = '', description = '' } = service || {};
 
     const url = `https://artmarketprint.by/services/${slug}`;
@@ -66,9 +65,9 @@ export default async function ServicePage({ params }: { params: Promise<Props> }
     const { slug } = await params;
     // Fetch data in parallel for better performance
     const [service, faq, relatedProjects] = await Promise.all([
-        client.fetch<SanityDocument>(SERVICE_QUERY, await params, options),
-        client.fetch<SanityDocument>(FAQ_QUERY, {}, options),
-        client.fetch<SanityDocument>(PROJECTS_BY_SERVICE_QUERY, await params, options)
+        sanityFetch({query: SERVICE_QUERY, params: await params}),
+        sanityFetch({query: FAQ_QUERY}),
+        sanityFetch({query: PROJECTS_BY_SERVICE_QUERY, params: await params})
     ]);
     const serviceImageUrl = service.image
         ? urlFor(service.image)?.width(1200).height(400).url()
@@ -79,10 +78,10 @@ export default async function ServicePage({ params }: { params: Promise<Props> }
         <>
             {/* Hero section with background image and gradient overlay */}
             <ServiceHero
-                image={serviceImageUrl || ''}
-                title={service.title}
                 description={service.description}
+                image={serviceImageUrl || ''}
                 mediaBlock={service.mediaBlock}
+                title={service.title}
             />
 
             {/* Main content wrapper */}
@@ -92,7 +91,7 @@ export default async function ServicePage({ params }: { params: Promise<Props> }
                     <div className="container">
                         <div className="mt-10 mb-6">
                             <BreadcrumbListJsonLd name={service.title} />
-                            <ServiceBreadcrumb title={service.title} service='Услуги' serviceSlug='services'  />
+                            <ServiceBreadcrumb service='Услуги' serviceSlug='services' title={service.title}  />
                         </div>
                     </div>
                 </section>
@@ -102,13 +101,13 @@ export default async function ServicePage({ params }: { params: Promise<Props> }
                     <ServiceDetails
                         advantages={service.advantages}
                         image={getUrlFor(service.image)}
-                        name={service.title}
-                        price={service.price}
                         layoutRequirements={service.layoutRequirements &&
                             <PortableText value={service.layoutRequirements} onMissingComponent={false} />
                         }
-                        priceTable={service.priceTable}
+                        name={service.title}
                         paymentMethods={service.paymentOptions}
+                        price={service.price}
+                        priceTable={service.priceTable}
                     >
                         {Array.isArray(service.body) &&
                             <PortableText value={service.body} onMissingComponent={false} />
@@ -137,7 +136,7 @@ export default async function ServicePage({ params }: { params: Promise<Props> }
             <FAQSection className='bg-[#F9F9F9]' {...faq.homePage.content[0]} />
 
             {/* Contact form section */}
-            <Section id="contacts" className='max-w-3xl mx-auto'>
+            <Section className='max-w-3xl mx-auto' id="contacts">
                 <SectionHeading className='items-center text-center mx-auto'>
                     <SectionSubtitle>{'обратная связь'}</SectionSubtitle>
                     <SectionTitle>{'Оставить заявку'}</SectionTitle>
@@ -153,9 +152,9 @@ export default async function ServicePage({ params }: { params: Promise<Props> }
 
             {/* Structured data for service */}
             <ServiceJsonLd
+                description={service.description}
                 name={service.title}
                 url={`https://artmarketprint.by/services/${slug}`}
-                description={service.description}
             />
         </>
     );

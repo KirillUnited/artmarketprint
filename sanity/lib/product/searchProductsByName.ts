@@ -1,5 +1,6 @@
-import { defineQuery } from "next-sanity";
-import { getSanityDocuments } from "../fetch-sanity-data";
+import { defineQuery } from 'next-sanity';
+
+import { sanityFetch } from '@/sanity/client';
 
 /**
  * Searches for products by name and returns the result.
@@ -23,7 +24,11 @@ export async function searchProductsByName(searchParam: string): Promise<any[]> 
 
     try {
         // Fetch the products from Sanity using the client.fetch() method
-        const products = await getSanityDocuments(PRODUCT_SEARCH_QUERY, { searchParam });
+        const products = await sanityFetch({query: PRODUCT_SEARCH_QUERY,
+        params: {
+            searchParam
+        }
+    });
 
         // Return the list of products or an empty array if not available
         return products ?? [];
