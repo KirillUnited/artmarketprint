@@ -4,10 +4,10 @@ import { defineQuery, PortableText, SanityDocument } from 'next-sanity';
 
 import { ServiceBreadcrumb } from '@/components/ui/Breadcrumb';
 import { ServiceDetails, ServiceHero } from '@/components/shared/service';
-import { client } from '@/sanity/client';
+import { client, sanityFetch } from '@/sanity/client';
 import { getUrlFor } from '@/lib/utils';
 import { ProjectList } from '@/components/shared/project';
-import { PROJECTS_BY_SERVICE_QUERY } from '@/sanity/lib/queries';
+import { PROJECTS_BY_SERVICE_QUERY, SERVICES_QUERY } from '@/sanity/lib/queries';
 import Section, { SectionButton, SectionDescription, SectionHeading, SectionSubtitle, SectionTitle } from '@/components/layout/Section';
 import { OrderForm } from '@/components/ui/form';
 import { Card } from '@heroui/card';
@@ -15,12 +15,12 @@ import { clsx } from 'clsx';
 import { FAQSection } from '@/components/shared/faq';
 import { SECTION_FIELDS } from '@/sanity/lib/queries/page.query';
 import ServiceJsonLd, { BreadcrumbListJsonLd } from '@/components/ServiceJsonLd';
+import { SERVICE_QUERY } from '@/sanity/lib/queries/service.query';
 
 type Props = {
     slug: string
 }
 
-const SERVICE_QUERY = '*[_type == "service" && slug.current == $slug][0]';
 const FAQ_QUERY = defineQuery(`*[_id == "siteSettings"][0]{
     homePage->{
       content[][_type == "faqs"] {
@@ -64,9 +64,10 @@ export async function generateMetadata({ params }: { params: Promise<Props> }) {
 
 export default async function ServicePage({ params }: { params: Promise<Props> }) {
     const { slug } = await params;
+    const serviceData = {query: SERVICE_QUERY, params: await params};
     // Fetch data in parallel for better performance
     const [service, faq, relatedProjects] = await Promise.all([
-        client.fetch<SanityDocument>(SERVICE_QUERY, await params, options),
+        sanityFetch(serviceData),
         client.fetch<SanityDocument>(FAQ_QUERY, {}, options),
         client.fetch<SanityDocument>(PROJECTS_BY_SERVICE_QUERY, await params, options)
     ]);
