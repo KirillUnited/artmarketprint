@@ -3,7 +3,7 @@
 import NextImage from 'next/image';
 import Loader from '@/components/ui/Loader';
 import { QuantityControls } from '@/components/ui/AddToBasketButton';
-import { TrashIcon } from 'lucide-react';
+import { HomeIcon, ListIcon, TagsIcon, TrashIcon } from 'lucide-react';
 import { Button } from '@heroui/button';
 import { Form } from '@heroui/form';
 import { Image } from '@heroui/image';
@@ -12,6 +12,8 @@ import useBasketStore from '@/store/store';
 import { useCartForm } from '@/hooks/useCartForm';
 import FormContactFields from './FormContactFields';
 import FormPaymentFields from './FormPaymentFields';
+import Link from 'next/link';
+import { ProductsNotFoundMenu } from '@/components/shared/product/ProductsNotFound';
 
 const deliveryMethods = [
     { id: 1, name: 'Самовывоз', title: 'Самовывоз', turnaround: 'Бесплатно', price: 0 },
@@ -41,17 +43,17 @@ export default function CartForm() {
             <div className="min-h-[50vh] w-full flex items-center justify-center px-4 sm:px-6 lg:px-8">
                 <div className="max-w-md w-full space-y-6 text-center">
                     <div className="flex flex-col items-center space-y-4">
-                        <svg 
+                        <svg
                             className="w-24 h-24 text-gray-300"
-                            xmlns="http://www.w3.org/2000/svg" 
-                            fill="none" 
-                            viewBox="0 0 24 24" 
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
                             stroke="currentColor"
                         >
-                            <path 
-                                strokeLinecap="round" 
-                                strokeLinejoin="round" 
-                                strokeWidth={1.5} 
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={1.5}
                                 d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
                             />
                         </svg>
@@ -63,11 +65,12 @@ export default function CartForm() {
                                 Добавьте товары в корзину
                             </p>
                         </div>
+                        <ProductsNotFoundMenu />
                     </div>
                 </div>
             </div>
         )
-    } 
+    }
 
     return (
         <Form className="lg:grid lg:grid-cols-2 lg:gap-x-12 xl:gap-x-16"
