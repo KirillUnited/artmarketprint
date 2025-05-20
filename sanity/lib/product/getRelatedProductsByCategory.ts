@@ -1,6 +1,6 @@
 import { defineQuery } from 'next-sanity';
 
-import { sanityFetch } from '@/sanity/client';
+import { sanityFetch } from '@/sanity/lib/sanityFetch';
 
 /**
  * Fetches a list of related products from Sanity that belong to the same category
