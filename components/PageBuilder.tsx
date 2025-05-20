@@ -9,7 +9,7 @@ import About from '@/components/shared/About';
 import { Projects } from '@/components/shared/project/Projects';
 import { InstagramFeedSection } from '@/components/shared/socials/InstagramFeed';
 import { FAQSection } from '@/components/shared/faq';
-import ContactUs, { MapFrame } from '@/components/shared/ContactUs';
+import ContactUs from '@/components/shared/ContactUs';
 import { FeaturedCategories } from './shared/category';
 
 interface PageBuilderProps {
