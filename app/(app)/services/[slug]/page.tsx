@@ -6,7 +6,8 @@ import { clsx } from 'clsx';
 
 import { ServiceBreadcrumb } from '@/components/ui/Breadcrumb';
 import { ServiceDetails, ServiceHero } from '@/components/shared/service';
-import { client, sanityFetch } from '@/sanity/client';
+import { client } from '@/sanity/client';
+import { sanityFetch } from "@/sanity/lib/sanityFetch";
 import { getUrlFor } from '@/lib/utils';
 import { ProjectList } from '@/components/shared/project';
 import { PROJECTS_BY_SERVICE_QUERY } from '@/sanity/lib/queries';
