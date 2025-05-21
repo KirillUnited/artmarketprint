@@ -54,7 +54,7 @@ export const NavbarDropdownMenu = ({ triggerLabel, items }: HeaderDropdownMenuPr
                         key={item.title}
                         description={item.description}
                         href={`${items[0].url}/${item.url}`}
-                        startContent={<Image alt={item.title} className="object-cover aspect-square rounded-small" height={64} quality={10} src={urlFor(item.image?.asset).url()} width={64} />}
+                        startContent={<Image alt={item.title} className="object-cover aspect-square rounded-small w-16 h-16" height={64} quality={10} src={urlFor(item.image?.asset).width(64).height(64).url()} width={64} />}
                     >
                         {item.title}
                     </DropdownItem>

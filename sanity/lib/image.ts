@@ -5,5 +5,5 @@ import { SanityImageSource } from "@sanity/image-url/lib/types/types";
 const builder = createImageUrlBuilder({ projectId: 'p5q8f9ac', dataset: 'production' })
 
 export const urlFor = (source: SanityImageSource) => {
-    return builder.image(source)
+    return builder.image(source).format('webp').fit('crop')
 }
