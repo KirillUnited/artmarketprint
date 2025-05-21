@@ -43,9 +43,9 @@ const ProductThumb: FC<ProductThumbProps> = ({ item, ...props }) => {
                     loading="lazy" 
                     src={image} 
                     width={220} 
-                    height={320} 
+                    height={220} 
                     quality={50}
-                    fallbackSrc="/images/no-image-icon.png"
+                    // fallbackSrc="/images/product-no-image.jpg"
                 />
                 <div>
                     <span className="text-xl font-semibold self-start text-foreground">{`${price} BYN`}</span>
