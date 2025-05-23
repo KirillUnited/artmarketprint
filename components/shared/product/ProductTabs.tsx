@@ -28,10 +28,10 @@ export const ProductTabs: React.FC<{ description: string, options: string }> = (
                 }
                 {options && (
                     <Tab
-                        key="Харектеристики"
+                        key="Характеристики"
                         title={
                             <div className="flex items-center space-x-2">
-                                <span>Харектеристики</span>
+                                <span>Характеристики</span>
 
                             </div>
                         }
