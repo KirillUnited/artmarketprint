@@ -18,7 +18,7 @@ export default function SalesBanner({ isActive, title, description, discountPerc
   if (pathname.match(/\/products/)) return null;
 
   return (
-    <div className="bg-black text-primary-foreground py-3">
+    <aside className="bg-black text-primary-foreground py-3">
       <div className="container">
         <div className="flex gap-3 md:items-center">
           <div className="flex flex-1 md:items-center gap-3">
@@ -69,6 +69,6 @@ export default function SalesBanner({ isActive, title, description, discountPerc
           </Button>
         </div>
       </div>
-    </div>
+    </aside>
   );
 }
