@@ -3,6 +3,10 @@ export const PROJECT_FIELDS = `
     title,
     "currentSlug": slug.current,
     shortDescription,
+    seo {
+      title,
+      description
+    },
     "imageUrl": image.asset->url,
     altText,
     "gallery": gallery[] {

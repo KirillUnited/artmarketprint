@@ -48,6 +48,10 @@ export const SECTION_FIELDS = `
 `;
 export const HOME_PAGE_QUERY = defineQuery(`*[_id == "siteSettings"][0]{
     homePage->{
+      seo {
+        title,
+        description,
+      },
       content[] {
         _type == "hero" => {
           _key,

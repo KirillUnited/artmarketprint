@@ -1,3 +1,5 @@
+import { defineQuery } from "next-sanity";
+
 export const SERVICES_QUERY = `*[
     _type == "service"
     && defined(slug.current)
@@ -7,4 +9,10 @@ export const SERVICES_QUERY = `*[
       price,
       "currentSlug": slug.current}`;
 
-export const SERVICE_QUERY = '*[_type == "service" && slug.current == $slug][0]';
+export const SERVICE_QUERY = defineQuery(`*[_type == "service" && slug.current == $slug][0]{
+  ...,  
+  seo {
+    title,
+    description,
+  }
+}`);

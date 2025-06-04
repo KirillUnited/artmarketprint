@@ -37,16 +37,16 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<Props> }) {
     const { slug } = await params;
     const data = await getSanityDocuments(PROJECT_QUERY, await params);
-    const { title = '', shortDescription = '', keywords = '' } = data?.[0] || {};
+    const { title = '', description = '', keywords = '' } = data?.[0].seo || {};
     const url = `https://artmarketprint.by/projects/${slug}`;
 
     return {
         title: `${title || ''}`,
-        description: `${shortDescription}`,
+        description: `${description}`,
         keywords: `${keywords}`,
         openGraph: {
             title: `${title || ''}`,
-            description: `${shortDescription}`,
+            description: `${description}`,
             images: '/apple-touch-icon.png'
         },
         alternates: {
