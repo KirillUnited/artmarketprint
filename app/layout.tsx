@@ -82,6 +82,8 @@ export default function RootLayout({
         />
         {/* Google Search Console Verification */}
         <meta name="google-site-verification" content="8YlcgzL83D40BFHx5ZMIaLjwHnFMG_kQ9XU_GJa4AaI" />
+        {/* Yandex.Metrika counter */}
+        <meta name="yandex-verification" content="ab836662e7e48a90" />
       </head>
       <body
         className={clsx(
@@ -112,6 +114,19 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(LocalBusinessJsonLd) }}
         />
+        {/* <!-- Google tag (gtag.js) --> */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-RB8S8ECQ97"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-RB8S8ECQ97');
+          `}
+        </Script>
       </body>
     </html>
   );
