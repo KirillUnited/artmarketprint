@@ -4,7 +4,16 @@ import CartForm from '@/components/ui/form/CartForm';
 export const metadata = {
     title: 'Корзина',
     description: 'Оформление заказа',
-    keywords: 'Корзина, оформление заказа', 
+    keywords: 'Корзина, оформление заказа',
+    openGraph: {
+        title: 'Корзина',
+        description: 'Оформление заказа',
+        images: '/apple-touch-icon.png'
+    },
+    robots: {
+        index: false,
+        follow: false
+    },
 }
 
 const CartPage = () => {
