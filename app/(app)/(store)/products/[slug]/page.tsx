@@ -92,15 +92,12 @@ export default async function ProductPage({ params }: { params: Promise<Props> }
     return (
         <>
             <Section>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div className='flex flex-col gap-4 md:hidden'>
+                    <div className='flex flex-col gap-4'>
                         <Heading />
                     </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <ProductCarousel className="md:sticky top-16" items={product} />
                     <div className="flex flex-col gap-4">
-                        <div className='hidden md:flex flex-col gap-4'>
-                            <Heading />
-                        </div>
                         <Card className="bg-indigo-100">
                             <CardBody>
                                 <p className="my-0">
