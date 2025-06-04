@@ -15,16 +15,26 @@ import Link from "next/link";
 import { getAllProductsByCategory } from "@/sanity/lib/product/getAllProductsByCategory";
 import { ProductsNotFound } from "@/components/shared/product";
 import ProductSearchForm from "@/components/shared/product/ProductSearchForm";
+import { sanityFetch } from "@/sanity/lib/sanityFetch";
 
 export interface Props {
     slug: string,
 }
 export async function generateMetadata({ params }: { params: Promise<Props> }) {
     const { slug } = await params;
+    const category = await sanityFetch({ query: CATEGORY_QUERY, params: { slug } });
+    const { title = '', description = '' } = category?.seo || {};
 
     const url = `https://artmarketprint.by/categories/${slug}`;
 
     return {
+        title: `${title || ''}`,
+        description: `${description}`,
+        openGraph: {
+            title: `${title || ''}`,
+            description: `${description}`,
+            images: '/apple-touch-icon.png'
+        },
         alternates: {
             canonical: url,
         },

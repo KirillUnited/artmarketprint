@@ -43,7 +43,7 @@ const urlFor = (source: SanityImageSource) =>
 export async function generateMetadata({ params }: { params: Promise<Props> }) {
     const { slug } = await params;
     const service = await sanityFetch({query: SERVICE_QUERY, params: await params});
-    const { title = '', description = '' } = service || {};
+    const { title = '', description = '' } = service?.seo || {};
 
     const url = `https://artmarketprint.by/services/${slug}`;
 
