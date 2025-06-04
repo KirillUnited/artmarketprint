@@ -42,6 +42,10 @@ export const metadata: Metadata = {
   alternates: {
     canonical: 'https://artmarketprint.by',
   },
+  verification: {
+    google: '8YlcgzL83D40BFHx5ZMIaLjwHnFMG_kQ9XU_GJa4AaI',
+    yandex: 'ab836662e7e48a90',
+  },
 };
 
 export const viewport: Viewport = {
@@ -80,10 +84,6 @@ export default function RootLayout({
             `,
           }}
         />
-        {/* Google Search Console Verification */}
-        <meta name="google-site-verification" content="8YlcgzL83D40BFHx5ZMIaLjwHnFMG_kQ9XU_GJa4AaI" />
-        {/* Yandex.Metrika counter */}
-        <meta name="yandex-verification" content="ab836662e7e48a90" />
       </head>
       <body
         className={clsx(
