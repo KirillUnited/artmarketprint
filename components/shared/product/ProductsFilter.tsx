@@ -77,9 +77,7 @@ interface FilterDrawerProps {
 export const FilterDrawer: FC<FilterDrawerProps> = ({ isOpen, onOpenChange, onFilterChange, categories, sortOrder, selectedCategory }) => {
   const categoriesSet = categories
     ?
-    <AccordionItem classNames={{ title: 'font-semibold', trigger: 'font-semibold' }} title={'Категории'}>
-      {CatFilter({ sortOrder, onFilterChange, categories })}
-    </AccordionItem>
+    CatFilter({ sortOrder, onFilterChange, categories })
     : null;
 
   return (
@@ -90,10 +88,7 @@ export const FilterDrawer: FC<FilterDrawerProps> = ({ isOpen, onOpenChange, onFi
             <DrawerHeader className="flex flex-col gap-1">Фильтры по товарам</DrawerHeader>
             <Form className='w-full items-stretch'>
               <DrawerBody className='pb-20'>
-                <Accordion aria-label='Select category' selectionMode='multiple' title='Категории'>
-                  {/* Accordion item for category filter */}
-                  {categoriesSet}
-                </Accordion>
+                {categoriesSet}
               </DrawerBody>
               {selectedCategory && (
                 <DrawerFooter className='fixed bottom-0 w-full bg-background border-t-1'>

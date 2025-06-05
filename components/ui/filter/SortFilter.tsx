@@ -19,8 +19,8 @@ export const SortFilter: FC<{
         <div className='flex gap-4'>
             <RadioGroup
                 classNames={{ label: 'font-semibold text-foreground' }}
-                label='Сортировать цены'
-                title='Сортировать цены'
+                label='Цены'
+                title='Цены'
             >
                 {/* Radio button for descending order */}
                 <Radio

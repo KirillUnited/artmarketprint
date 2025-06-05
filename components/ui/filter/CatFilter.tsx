@@ -16,7 +16,7 @@ interface CatFilterProps {
 export const CatFilter: FC<CatFilterProps> = ({ sortOrder, onFilterChange, categories }) => {
     return (
         <div className='flex gap-4 flex-1'>
-            <RadioGroup classNames={{ label: 'font-semibold text-foreground' }} label='Фильтр по категориям' title='Фильтр по категориям'>
+            <RadioGroup classNames={{ label: 'font-semibold text-foreground' }} label='Категории' title='Фильтр по категориям'>
                 {
                     categories ? categories.map((category: string) => (
                         <Radio key={category} value={category} onChange={(e) => onFilterChange(sortOrder, e.target.value)}>
