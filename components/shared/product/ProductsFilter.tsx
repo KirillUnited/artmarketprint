@@ -32,7 +32,7 @@ export const FilterGroup: FC<FilterGroupProps> = ({ sortOrder, selectedCategory,
       {/* Render sort filter */}
       {SortFilter({ sortOrder, selectedCategory, onFilterChange })}
       {/* Reset button to clear filters */}
-      <Button color="danger" radius='sm' variant="light" type='reset' onPress={() => onFilterChange('asc', '')}>
+      <Button color="default" radius='sm' variant="solid" type='reset' onPress={() => onFilterChange('asc', '')}>
         Сбросить
       </Button>
     </Form>
