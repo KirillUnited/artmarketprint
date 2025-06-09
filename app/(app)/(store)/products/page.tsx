@@ -9,6 +9,7 @@ import ProductsView from '@/components/shared/product/ProductsView';
 import { getAllProductCategories } from '@/sanity/lib/product/getAllProductCategories';
 import { getAllProductsFromSanity } from '@/sanity/lib/product/getAllProductsFromSanity';
 import ProductSearchForm from '@/components/shared/product/ProductSearchForm';
+import { collectCategoriesAndSubcategories } from '@/lib/products/collectCategories';
 
 export async function generateMetadata() {
 
@@ -37,6 +38,9 @@ export default async function ProductsPage(
         getSanityDocuments(NAVIGATION_QUERY),
         getAllProductsFromSanity(),
     ]);
+    const categoriesWithSubcategories = collectCategoriesAndSubcategories(products);
+    console.log('categoriesWithSubcategories', categoriesWithSubcategories);
+
 
     return (
         <>
@@ -71,7 +75,7 @@ export default async function ProductsPage(
                 </div>
             </section>
             <Section id="products" innerClassname='pt-6 md:pt-6'>
-                <ProductsView products={products} categories={categories} />
+                <ProductsView products={products} categories={categoriesWithSubcategories} />
             </Section>
         </>
     );

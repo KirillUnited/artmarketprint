@@ -1,5 +1,4 @@
 'use client';
-import { Accordion, AccordionItem } from '@heroui/accordion';
 import { Button } from '@heroui/button';
 import { Drawer, DrawerBody, DrawerContent, DrawerFooter, DrawerHeader } from '@heroui/drawer';
 import { FilterIcon } from 'lucide-react';
@@ -7,7 +6,7 @@ import React from 'react';
 import { Form } from '@heroui/form';
 
 import { FC } from 'react';
-import { CatFilter } from '@/components/ui/filter/CatFilter';
+import { CategoryProps, CatFilter } from '@/components/ui/filter/CatFilter';
 import { SortFilter } from '@/components/ui/filter/SortFilter';
 
 export const getCategory = (category: string) => category[0].split('|').shift();
@@ -15,7 +14,7 @@ export const getCategory = (category: string) => category[0].split('|').shift();
 interface FilterGroupProps {
   sortOrder: string;
   selectedCategory: string;
-  categories: string[];
+  categories: CategoryProps[];
   onFilterChange: (sortOrder: string, category: string) => void;
 }
 
@@ -33,7 +32,7 @@ export const FilterGroup: FC<FilterGroupProps> = ({ sortOrder, selectedCategory,
       {/* Render sort filter */}
       {SortFilter({ sortOrder, selectedCategory, onFilterChange })}
       {/* Reset button to clear filters */}
-      <Button color="danger" radius='sm' variant="light" type='reset' onPress={() => onFilterChange('asc', '')}>
+      <Button color="default" radius='sm' variant="solid" type='reset' onPress={() => onFilterChange('asc', '')}>
         Сбросить
       </Button>
     </Form>
@@ -52,7 +51,7 @@ interface FilterButtonProps {
  */
 export const FilterButton: FC<FilterButtonProps> = ({ onOpen }) => {
   return (
-    <Button className='flex-grow min-w-max md:hidden border-1' radius='sm' color='primary' onPress={onOpen}>
+    <Button className='flex-grow min-w-max md:hidden border-1 sticky top-20' radius='sm' color='default' variant='bordered' onPress={onOpen}>
       <FilterIcon size={16} />
       <span className='text-sm'>Фильтры по товарам</span>
     </Button>
@@ -63,7 +62,7 @@ interface FilterDrawerProps {
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
   onFilterChange: (sortOrder: string, category: string) => void;
-  categories: string[];
+  categories: CategoryProps[];
   sortOrder: string;
   selectedCategory: string;
 }
@@ -93,7 +92,7 @@ export const FilterDrawer: FC<FilterDrawerProps> = ({ isOpen, onOpenChange, onFi
               {selectedCategory && (
                 <DrawerFooter className='fixed bottom-0 w-full bg-background border-t-1'>
                   {/* Reset button to clear filters */}
-                  <Button color="danger" radius='sm' variant="light" type='reset' onPress={() => onFilterChange('asc', '')}>
+                  <Button color="default" radius='sm' variant="solid" type='reset' onPress={() => onFilterChange('asc', '')}>
                     Сбросить
                   </Button>
                   {/* Apply button to close the drawer */}
@@ -114,7 +113,7 @@ interface ProductsFilterProps {
   sortOrder: string;
   selectedCategory: string;
   onFilterChange: (sortOrder: string, category: string) => void;
-  categories: string[];
+  categories: CategoryProps[];
 }
 
 /**
