@@ -25,7 +25,7 @@ export function useProductsFilter({ products, totalItemsView = 20 }: UseProducts
     // Memoized filtered and sorted products
     const filteredProducts = useMemo(() => {
         const result = products?.filter((product: any) => 
-            !selectedCategory || product?.category === selectedCategory
+            !selectedCategory || (product?.category === selectedCategory || product?.subcategory?.includes(selectedCategory))
         ) || [];
 
         return sortOrder === 'asc'
