@@ -1,5 +1,4 @@
 'use client';
-import { Accordion, AccordionItem } from '@heroui/accordion';
 import { Button } from '@heroui/button';
 import { Drawer, DrawerBody, DrawerContent, DrawerFooter, DrawerHeader } from '@heroui/drawer';
 import { FilterIcon } from 'lucide-react';
@@ -7,7 +6,7 @@ import React from 'react';
 import { Form } from '@heroui/form';
 
 import { FC } from 'react';
-import { CatFilter } from '@/components/ui/filter/CatFilter';
+import { CategoryProps, CatFilter } from '@/components/ui/filter/CatFilter';
 import { SortFilter } from '@/components/ui/filter/SortFilter';
 
 export const getCategory = (category: string) => category[0].split('|').shift();
@@ -15,7 +14,7 @@ export const getCategory = (category: string) => category[0].split('|').shift();
 interface FilterGroupProps {
   sortOrder: string;
   selectedCategory: string;
-  categories: string[];
+  categories: CategoryProps[];
   onFilterChange: (sortOrder: string, category: string) => void;
 }
 
@@ -63,7 +62,7 @@ interface FilterDrawerProps {
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
   onFilterChange: (sortOrder: string, category: string) => void;
-  categories: string[];
+  categories: CategoryProps[];
   sortOrder: string;
   selectedCategory: string;
 }
@@ -114,7 +113,7 @@ interface ProductsFilterProps {
   sortOrder: string;
   selectedCategory: string;
   onFilterChange: (sortOrder: string, category: string) => void;
-  categories: string[];
+  categories: CategoryProps[];
 }
 
 /**

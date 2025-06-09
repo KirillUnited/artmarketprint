@@ -32,7 +32,7 @@ export default function ProductsView({ products, categories, totalItemsView = IT
                 <div className='flex flex-col gap-8'>
                     <div className={clsx(
                         'grid items-start gap-4 md:gap-8', {
-                        ['md:grid-cols-[auto_1fr]']: showFilter
+                        ['md:grid-cols-[320px_1fr]']: showFilter
                     }
                     )}>
                         {
