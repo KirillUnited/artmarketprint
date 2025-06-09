@@ -51,7 +51,7 @@ interface FilterButtonProps {
  */
 export const FilterButton: FC<FilterButtonProps> = ({ onOpen }) => {
   return (
-    <Button className='flex-grow min-w-max md:hidden border-1' radius='sm' color='primary' onPress={onOpen}>
+    <Button className='flex-grow min-w-max md:hidden border-1 sticky top-20' radius='sm' color='default' variant='bordered' onPress={onOpen}>
       <FilterIcon size={16} />
       <span className='text-sm'>Фильтры по товарам</span>
     </Button>
@@ -92,7 +92,7 @@ export const FilterDrawer: FC<FilterDrawerProps> = ({ isOpen, onOpenChange, onFi
               {selectedCategory && (
                 <DrawerFooter className='fixed bottom-0 w-full bg-background border-t-1'>
                   {/* Reset button to clear filters */}
-                  <Button color="danger" radius='sm' variant="light" type='reset' onPress={() => onFilterChange('asc', '')}>
+                  <Button color="default" radius='sm' variant="solid" type='reset' onPress={() => onFilterChange('asc', '')}>
                     Сбросить
                   </Button>
                   {/* Apply button to close the drawer */}
