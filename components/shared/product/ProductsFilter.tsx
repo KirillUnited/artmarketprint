@@ -27,10 +27,10 @@ interface FilterGroupProps {
 export const FilterGroup: FC<FilterGroupProps> = ({ sortOrder, selectedCategory, categories, onFilterChange }) => {
   return (
     <Form className='flex flex-col gap-4'>
-      {/* Render category filter */}
-      {categories && CatFilter({ sortOrder, onFilterChange, categories })}
       {/* Render sort filter */}
       {SortFilter({ sortOrder, selectedCategory, onFilterChange })}
+      {/* Render category filter */}
+      {categories && CatFilter({ sortOrder, onFilterChange, categories })}
       {/* Reset button to clear filters */}
       <Button color="default" radius='sm' variant="solid" type='reset' onPress={() => onFilterChange('asc', '')}>
         Сбросить
@@ -51,7 +51,7 @@ interface FilterButtonProps {
  */
 export const FilterButton: FC<FilterButtonProps> = ({ onOpen }) => {
   return (
-    <Button className='flex-grow min-w-max md:hidden border-1 sticky top-20' radius='sm' color='default' variant='bordered' onPress={onOpen}>
+    <Button className='flex-grow min-w-max border-1 sticky top-20' radius='sm' color='default' variant='bordered' onPress={onOpen}>
       <FilterIcon size={16} />
       <span className='text-sm'>Фильтры по товарам</span>
     </Button>

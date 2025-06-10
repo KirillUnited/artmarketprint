@@ -42,19 +42,19 @@ export default function ProductsView({ products, categories, totalItemsView = IT
                                 sortOrder={sortOrder}
                                 onFilterChange={handleFilterChange} />
                         }
-                        <div className='flex flex-col gap-8 relative h-full'>
+                        <div className='flex flex-col gap-4 md:gap-8 relative h-full'>
 
                             <div className='md:hidden'> {SortFilter({ sortOrder, selectedCategory, onFilterChange: handleFilterChange })}</div>
                             {
                                 showFilter &&
-                                <div className='flex flex-wrap flex-col md:flex-row gap-4 w-full'>
+                                <div className='flex md:hidden flex-wrap flex-col md:flex-row gap-4 w-full'>
                                     <FilterButton onOpen={onOpen} />
                                     <FilterDrawer isOpen={isOpen} onOpenChange={onOpenChange} onFilterChange={handleFilterChange} categories={categories} sortOrder={sortOrder} selectedCategory={selectedCategory} />
                                 </div>
                             }
                             {
                                 selectedCategory && <Chip color='primary' radius='sm' classNames={{
-                                    base: 'md:hidden',
+                                    base: '',
                                     content: 'flex items-center gap-2'
                                 }}>{selectedCategory} <DeleteIcon className='cursor-pointer' onClick={() => handleFilterChange(sortOrder, '')} /></Chip>
                             }
