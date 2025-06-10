@@ -1,4 +1,5 @@
 import { Radio, RadioGroup } from "@heroui/radio";
+import { Select, SelectItem } from "@heroui/select";
 import { FC } from "react";
 
 /**
@@ -16,27 +17,9 @@ export const SortFilter: FC<{
     onFilterChange: (sortOrder: string, category: string) => void;
 }> = ({ sortOrder, selectedCategory, onFilterChange }) => {
     return (
-        <div className='flex gap-4'>
-            <RadioGroup
-                classNames={{ label: 'font-semibold text-foreground' }}
-                label='Цены'
-                title='Цены'
-            >
-                {/* Radio button for descending order */}
-                <Radio
-                    value="desc"
-                    onChange={(e) => onFilterChange(e.target.value, selectedCategory)}
-                >
-                    По убыванию
-                </Radio>
-                {/* Radio button for ascending order */}
-                <Radio
-                    value="asc"
-                    onChange={(e) => onFilterChange(e.target.value, selectedCategory)}
-                >
-                    По возрастанию
-                </Radio>
-            </RadioGroup>
-        </div>
+        <Select size="sm" radius="sm" label="Цены" placeholder="Цены" defaultSelectedKeys={[sortOrder]} onChange={(e) => onFilterChange(e.target.value, selectedCategory)}>
+            <SelectItem textValue="По убыванию" key={"desc"}>По убыванию</SelectItem>
+            <SelectItem textValue="По возрастанию" key={"asc"}>По возрастанию</SelectItem>
+        </Select>
     );
 };

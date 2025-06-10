@@ -39,8 +39,6 @@ export default async function ProductsPage(
         getAllProductsFromSanity(),
     ]);
     const categoriesWithSubcategories = collectCategoriesAndSubcategories(products);
-    console.log('categoriesWithSubcategories', categoriesWithSubcategories);
-
 
     return (
         <>
