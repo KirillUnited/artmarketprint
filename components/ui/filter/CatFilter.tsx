@@ -21,7 +21,7 @@ interface CatFilterProps {
 export const CatFilter: FC<CatFilterProps> = ({ sortOrder, onFilterChange, categories }) => {
     return (
         <div className='flex gap-4 w-full'>
-            <Accordion selectionMode="multiple" itemClasses={{ trigger: 'py-2' }}>
+            <Accordion itemClasses={{ trigger: 'py-2' }}>
                 {
                     categories && categories.map(({ category, subcategories }: CategoryProps) => (
                         <AccordionItem key={category} title={category}>
