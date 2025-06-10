@@ -28,40 +28,51 @@ export default async function Footer() {
                         <div className='self-start'><BrandLogo alt="ArtMarketPrint" /></div>
                         <ContactsList items={contacts} className='text-[#eeeeee]' />
                     </div>
-                    <div className="flex flex-col gap-8 divide-y divide-background">
+                    <div className="flex flex-col gap-8">
                         <Socials items={socials} />
 
-                        <ul className="flex flex-col gap-1 pt-8">
-                            {
-                                siteConfig?.navItems?.map((link) => (
-                                    <li key={link.href}>
-                                        <Link className="text-[#eeeeee] text-left font-text-small-link-font-family text-text-small-link-font-size leading-text-small-link-line-height font-text-small-link-font-weight relative self-stretch hover:text-primary transition" href={link.href}>
-                                            {link.label}
-                                        </Link>
-                                    </li>
-                                ))
-                            }
-                        </ul>
+                        <div className="flex flex-col gap-2">
+                            <p className='text-[#eeeeee] font-light'>Карта сайта</p>
+
+                            <ul className="flex flex-col gap-1">
+                                {
+                                    siteConfig?.navItems?.map((link) => (
+                                        <li key={link.href}>
+                                            <Link className="text-[#eeeeee] text-left font-medium self-stretch hover:text-primary transition" href={link.href}>
+                                                {link.label}
+                                            </Link>
+                                        </li>
+                                    ))
+                                }
+                            </ul>
+                        </div>
+                        <div className="flex flex-col gap-2">
+                            <p className='text-[#eeeeee] font-light'>Информация</p>
+
+                            <ul className="flex flex-col gap-1">
+                                <li>
+                                    <Link className="text-[#eeeeee] text-left font-medium self-stretch hover:text-primary transition" href={'/posts/privacy'}>
+                                        Политика конфиденциальности
+                                    </Link>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div className="container">
                 <div
-                    className="flex flex-col gap-8 items-start justify-start self-stretch shrink-0 relative"
+                    className="flex flex-col gap-8"
                 >
                     <div
                         className="bg-[#eeeeee] border-solid border-[#eeeeee] border self-stretch shrink-0 h-px relative"
                     />
-                    <div
-                        className="flex flex-row items-start justify-between self-stretch shrink-0 relative"
+                    <p
+                        className="text-[#eeeeee] text-center"
                     >
-                        <div
-                            className="text-[#eeeeee] text-left font-text-small-normal-font-family text-text-small-normal-font-size leading-text-small-normal-line-height font-text-small-normal-font-weight relative"
-                        >
-                            © {new Date().getFullYear()}. Все права защищены.
-                        </div>
-                    </div>
+                        © {new Date().getFullYear()}. Все права защищены. УНП 193816889. Инспекция МНС по Фрунзенскому району г. Минска № 2
+                    </p>
                 </div>А
             </div>
         </footer>

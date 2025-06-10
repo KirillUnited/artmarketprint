@@ -44,7 +44,7 @@ export const ModalOfferForm = ({ id, onClose }: { id: string, onClose?: () => vo
 				<UserPhoneInput countries={countries} country={country} handlePhoneValueChange={handlePhoneValueChange} inputRef={inputRef} inputValue={inputValue} setCountry={setCountry} validPhone={setPhoneValid} />
 
 				<Checkbox className="w-full" classNames={{ label: 'text-sm' }} radius='sm' name="layout_image_terms" id="layout_image_terms" isRequired >
-					Ознакомлен с <Link href={'/posts/layout-image-terms'} target='_blank' className='relative z-10 underline text-primary'>Требованиями к макетам</Link>
+					Ознакомлен с <Link href={'/posts/layout-image-terms'} target='_blank' className='relative z-10 underline text-primary'>Требованиями к макетам</Link> и <Link href={'/posts/privacy'} target='_blank' className='relative z-10 underline text-primary'>Политикой конфиденциальности</Link>
 				</Checkbox>
 			</ModalBody>
 			<ModalFooter className="w-full">
