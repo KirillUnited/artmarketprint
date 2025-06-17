@@ -47,7 +47,7 @@ export function PageBuilder({ content }: PageBuilderProps) {
 						return (
 							<Fragment key={block._key}	>
 								<Projects {...block} className='bg-[#F1F4FA]' />
-								{/* <InstagramFeedSection id="instagram" /> */}
+								<InstagramFeedSection id="instagram" />
 							</Fragment>
 						);
 					case 'faqs':
