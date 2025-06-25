@@ -67,7 +67,7 @@ export const ServiceDetails: FC<ServiceDetailsProps> = memo(({
 
                 {(Array.isArray(advantages) && advantages?.length > 0) && <ServiceAdvantages advantages={advantages} />}
 
-                <div className="prose max-w-3xl">{children}</div>
+                <div className="prose max-w-full">{children}</div>
 
                 {layoutRequirements && <ServiceRequirements layoutRequirements={layoutRequirements} />}
 

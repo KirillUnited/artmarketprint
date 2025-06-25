@@ -17,6 +17,7 @@ import { FAQSection } from '@/components/shared/faq';
 import { SECTION_FIELDS } from '@/sanity/lib/queries/page.query';
 import ServiceJsonLd, { BreadcrumbListJsonLd } from '@/components/ServiceJsonLd';
 import { SERVICE_QUERY } from '@/sanity/lib/queries/service.query';
+import {urlFor} from "@/sanity/lib/image";
 
 type Props = {
     slug: string
@@ -33,11 +34,11 @@ const FAQ_QUERY = defineQuery(`*[_id == "siteSettings"][0]{
     }
   }`);
 
-const { projectId, dataset } = client.config();
-const urlFor = (source: SanityImageSource) =>
-    projectId && dataset
-        ? imageUrlBuilder({ projectId, dataset }).image(source)
-        : null;
+// const { projectId, dataset } = client.config();
+// const urlFor = (source: SanityImageSource) =>
+//     projectId && dataset
+//         ? imageUrlBuilder({ projectId, dataset }).image(source)
+//         : null;
 
 
 export async function generateMetadata({ params }: { params: Promise<Props> }) {
@@ -86,7 +87,7 @@ export default async function ServicePage({ params }: { params: Promise<Props> }
             />
 
             {/* Main content wrapper */}
-            <div className='max-w-3xl mx-auto'>
+            <div className='max-w-6xl mx-auto'>
                 {/* Breadcrumb navigation */}
                 <section>
                     <div className="container">
