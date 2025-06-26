@@ -1,0 +1,49 @@
+.swiper-container {
+    width: 100%;
+    height: 500px;
+}
+
+.swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+
+    /* Center slide text vertically */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mySwiper2 {
+    height: 70%;
+    width: 100%;
+}
+
+.mySwiper2 .swiper-slide img {
+    object-fit: contain;
+    height: 100%;
+}
+
+.mySwiper .swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.mySwiper {
+    height: 30%;
+    box-sizing: border-box;
+    padding: 10px 0;
+}
+
+.mySwiper .swiper-slide:not(:global(.swiper-slide-thumb-active)) {
+    width: 25%;
+    height: 100%;
+    opacity: 0.4;
+}
+
+.RelatedProductsSwiper {
+    @apply max-w-full;
+    @apply pb-11;
+}

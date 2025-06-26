@@ -17,6 +17,7 @@ import { FAQSection } from '@/components/shared/faq';
 import { SECTION_FIELDS } from '@/sanity/lib/queries/page.query';
 import ServiceJsonLd, { BreadcrumbListJsonLd } from '@/components/ServiceJsonLd';
 import { SERVICE_QUERY } from '@/sanity/lib/queries/service.query';
+import {urlFor} from "@/sanity/lib/image";
 
 type Props = {
     slug: string
@@ -32,13 +33,6 @@ const FAQ_QUERY = defineQuery(`*[_id == "siteSettings"][0]{
       }
     }
   }`);
-
-const { projectId, dataset } = client.config();
-const urlFor = (source: SanityImageSource) =>
-    projectId && dataset
-        ? imageUrlBuilder({ projectId, dataset }).image(source)
-        : null;
-
 
 export async function generateMetadata({ params }: { params: Promise<Props> }) {
     const { slug } = await params;
@@ -86,7 +80,7 @@ export default async function ServicePage({ params }: { params: Promise<Props> }
             />
 
             {/* Main content wrapper */}
-            <div className='max-w-3xl mx-auto'>
+            <div className=''>
                 {/* Breadcrumb navigation */}
                 <section>
                     <div className="container">
@@ -101,6 +95,7 @@ export default async function ServicePage({ params }: { params: Promise<Props> }
                 <Section id="serviceDetails" innerClassname='pt-6 md:pt-6'>
                     <ServiceDetails
                         advantages={service.advantages}
+                        gallery={service.gallery}
                         image={getUrlFor(service.image)}
                         layoutRequirements={service.layoutRequirements &&
                             <PortableText value={service.layoutRequirements} onMissingComponent={false} />
@@ -119,7 +114,7 @@ export default async function ServicePage({ params }: { params: Promise<Props> }
 
             {/* Portfolio section */}
             <Section className="bg-[#F9F9F9]">
-                <div className='max-w-3xl w-full mx-auto flex flex-col gap-6 px-4'>
+                <div className='flex flex-col gap-6 px-4'>
                     <SectionHeading className='items-center text-center mx-auto'>
                         <SectionSubtitle>{'галерея'}</SectionSubtitle>
                         <SectionTitle>{'Примеры работ'}</SectionTitle>
@@ -134,7 +129,7 @@ export default async function ServicePage({ params }: { params: Promise<Props> }
             </Section>
 
             {/* FAQ section */}
-            <FAQSection className='bg-[#F9F9F9]' {...faq.homePage.content[0]} />
+            <FAQSection className='bg-[#F9F9F9]' {...faq.homePage.content[0]} faqs={service.faqs ? service.faqs : faq.homePage.content[0].faqs} />
 
             {/* Contact form section */}
             <Section className='max-w-3xl mx-auto' id="contacts">
