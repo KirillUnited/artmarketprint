@@ -129,7 +129,7 @@ export default async function ServicePage({ params }: { params: Promise<Props> }
             </Section>
 
             {/* FAQ section */}
-            <FAQSection className='bg-[#F9F9F9]' {...faq.homePage.content[0]} />
+            <FAQSection className='bg-[#F9F9F9]' {...faq.homePage.content[0]} faqs={service.faqs ? service.faqs : faq.homePage.content[0].faqs} />
 
             {/* Contact form section */}
             <Section className='max-w-3xl mx-auto' id="contacts">
