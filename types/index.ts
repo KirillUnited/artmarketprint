@@ -34,6 +34,7 @@ export interface ServiceDetailsProps {
 	name: string;
 	description?: string;
 	image?: string;
+	gallery?: string[];
 	advantages?: string[];
 	price?: string;
 	priceTable?: any;

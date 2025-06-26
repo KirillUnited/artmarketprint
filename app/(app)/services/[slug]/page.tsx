@@ -34,13 +34,6 @@ const FAQ_QUERY = defineQuery(`*[_id == "siteSettings"][0]{
     }
   }`);
 
-// const { projectId, dataset } = client.config();
-// const urlFor = (source: SanityImageSource) =>
-//     projectId && dataset
-//         ? imageUrlBuilder({ projectId, dataset }).image(source)
-//         : null;
-
-
 export async function generateMetadata({ params }: { params: Promise<Props> }) {
     const { slug } = await params;
     const service = await sanityFetch({query: SERVICE_QUERY, params: await params});
@@ -87,7 +80,7 @@ export default async function ServicePage({ params }: { params: Promise<Props> }
             />
 
             {/* Main content wrapper */}
-            <div className='max-w-6xl mx-auto'>
+            <div className=''>
                 {/* Breadcrumb navigation */}
                 <section>
                     <div className="container">
@@ -102,6 +95,7 @@ export default async function ServicePage({ params }: { params: Promise<Props> }
                 <Section id="serviceDetails" innerClassname='pt-6 md:pt-6'>
                     <ServiceDetails
                         advantages={service.advantages}
+                        gallery={service.gallery}
                         image={getUrlFor(service.image)}
                         layoutRequirements={service.layoutRequirements &&
                             <PortableText value={service.layoutRequirements} onMissingComponent={false} />
@@ -120,7 +114,7 @@ export default async function ServicePage({ params }: { params: Promise<Props> }
 
             {/* Portfolio section */}
             <Section className="bg-[#F9F9F9]">
-                <div className='max-w-3xl w-full mx-auto flex flex-col gap-6 px-4'>
+                <div className='flex flex-col gap-6 px-4'>
                     <SectionHeading className='items-center text-center mx-auto'>
                         <SectionSubtitle>{'галерея'}</SectionSubtitle>
                         <SectionTitle>{'Примеры работ'}</SectionTitle>
