@@ -7,6 +7,8 @@ import BrandModalOffer from '../../ui/BrandModalOffer';
 import { ServiceDetailsProps } from '@/types';
 import { memo } from 'react';
 import { FC } from 'react';
+import {ServiceCarousel} from "@/components/shared/service/ServiceCarousel";
+import clsx from "clsx";
 
 const ServiceAdvantages: FC<{ advantages: string[] }> = memo(({ advantages }) => (
     <div className="flex flex-col gap-4">
@@ -44,6 +46,7 @@ export const ServiceDetails: FC<ServiceDetailsProps> = memo(({
     name,
     description,
     image,
+	gallery,
     price,
     advantages,
     layoutRequirements,
@@ -51,49 +54,54 @@ export const ServiceDetails: FC<ServiceDetailsProps> = memo(({
     paymentMethods,
     children
 }) => {
+	const hasGallery = Array.isArray(gallery) && gallery?.length > 0;
+
     return (
-        <article className="flex flex-col gap-8 md:gap-16">
-            <div className="flex flex-col gap-4 md:gap-6">
-                <div className="flex flex-col gap-2">
-                    <span className="text-gray-600">О услуге</span>
-                    <h2 className="text-3xl md:text-4xl font-bold break-words">{name}</h2>
-                </div>
+		<article className="flex flex-col gap-8 md:gap-16">
+			<div className="flex flex-col gap-4 md:gap-6">
+				<div className="flex flex-col gap-2">
+					<span className="text-gray-600">О услуге</span>
+					<h2 className="text-3xl md:text-4xl font-bold break-words">{name}</h2>
+				</div>
+				<div
+					className={clsx('grid grid-cols-1 gap-8 items-start', {
+						['lg:grid-cols-2']: hasGallery,
+					})}
+				>
+					<div className="flex flex-col gap-4 md:gap-6">
+						{description && <p className="text-foreground/70 text-balance leading-normal font-light">{description}</p>}
 
-                {description && (
-                    <p className="text-foreground/70 text-balance leading-normal font-light">
-                        {description}
-                    </p>
-                )}
+						{Array.isArray(advantages) && advantages?.length > 0 && <ServiceAdvantages advantages={advantages} />}
 
-                {(Array.isArray(advantages) && advantages?.length > 0) && <ServiceAdvantages advantages={advantages} />}
+						<div className="prose max-w-full">{children}</div>
+					</div>
+					{hasGallery && <ServiceCarousel items={gallery} className={`sticky top-20`} />}
+				</div>
 
-                <div className="prose max-w-3xl">{children}</div>
+				{layoutRequirements && <ServiceRequirements layoutRequirements={layoutRequirements} />}
 
-                {layoutRequirements && <ServiceRequirements layoutRequirements={layoutRequirements} />}
+				{price && <ServicePrice price={price} />}
 
-                {price && <ServicePrice price={price} />}
+				{priceTable && <PriceTable items={priceTable} />}
+				{paymentMethods && (
+					<Alert
+						color="warning"
+						icon="warning"
+						title={`${paymentMethods.title}`}
+						description={`${paymentMethods.description}`}
+						className="border-1 border-warning-300 shadow-md text-pretty"
+						radius="sm"
+					/>
+				)}
+			</div>
 
-                {priceTable && <PriceTable items={priceTable} />}
-                {paymentMethods && (
-                    <Alert color="warning" icon="warning" title={`${paymentMethods.title}`} description={`${paymentMethods.description}`} className='border-1 border-warning-300 shadow-md text-pretty' radius='sm' />
-                )}
-            </div>
-
-            <footer className="flex flex-wrap gap-2 md:gap-4">
-                <BrandModalOffer id={name} />
-                <Button
-                    as={Link}
-                    className="bg-brand-gradient text-fill-transparent font-semibold flex-1 min-w-40"
-                    color="secondary"
-                    href="#contacts"
-                    radius="sm"
-                    size="md"
-                    variant="ghost"
-                >
-                    КОНСУЛЬТАЦИЯ
-                </Button>
-            </footer>
-        </article>
-    );
+			<footer className="flex flex-wrap gap-2 md:gap-4">
+				<BrandModalOffer id={name} />
+				<Button as={Link} className="bg-brand-gradient text-fill-transparent font-semibold flex-1 min-w-40" color="secondary" href="#contacts" radius="sm" size="md" variant="ghost">
+					КОНСУЛЬТАЦИЯ
+				</Button>
+			</footer>
+		</article>
+	);
 });
 ServiceDetails.displayName = 'ServiceDetails';
