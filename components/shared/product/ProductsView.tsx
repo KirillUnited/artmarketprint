@@ -36,7 +36,6 @@ export default function ProductsView({ products, categories, totalItemsView = IT
     const enrichedCategories = useMemo(() => {
         return enrichCategoriesWithCounts(categories, categoryCounts);
     }, [categories, categoryCounts]);
-    console.log(categories)
 
     return (
         <>
@@ -63,7 +62,7 @@ export default function ProductsView({ products, categories, totalItemsView = IT
                                 showFilter &&
                                 <div className='flex md:hidden flex-wrap flex-col md:flex-row gap-4 w-full'>
                                     <FilterButton onOpen={onOpen} />
-                                    <FilterDrawer isOpen={isOpen} onOpenChange={onOpenChange} onFilterChange={handleFilterChange} categories={categories} sortOrder={sortOrder} selectedCategory={selectedCategory} />
+                                    <FilterDrawer isOpen={isOpen} onOpenChange={onOpenChange} onFilterChange={handleFilterChange} categories={enrichedCategories} sortOrder={sortOrder} selectedCategory={selectedCategory} />
                                 </div>
                             }
                             {
