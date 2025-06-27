@@ -4,6 +4,8 @@ import { ArrowRightIcon, TicketPercent, XIcon } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import styles from './styles.module.css';
+import clsx from "clsx";
 
 export default function SalesBanner({ isActive, title, description, discountPercentage, products }: any) {
   const [isVisible, setIsVisible] = useState(false);
@@ -18,7 +20,7 @@ export default function SalesBanner({ isActive, title, description, discountPerc
   if (pathname.match(/\/products/)) return null;
 
   return (
-    <aside className="bg-black text-primary-foreground py-3">
+    <aside className={clsx(styles.banner)}>
       <div className="container">
         <div className="flex gap-3 md:items-center">
           <div className="flex flex-1 md:items-center gap-3">

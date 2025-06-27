@@ -1,7 +1,7 @@
 'use client';
-import React from 'react'
-import ProductsFilter, { FilterButton, FilterDrawer } from './ProductsFilter'
-import Pagination from '@/components/ui/Pagination'
+import React, { useMemo } from 'react';
+import ProductsFilter, { FilterButton, FilterDrawer } from './ProductsFilter';
+import Pagination from '@/components/ui/Pagination';
 import clsx from 'clsx';
 import { useDisclosure } from '@heroui/modal';
 import ProductGrid from './ProductGrid';
@@ -10,6 +10,7 @@ import { DeleteIcon } from 'lucide-react';
 import { SortFilter } from '@/components/ui/filter/SortFilter';
 import { useProductsFilter } from '@/hooks/useProductsFilter';
 import { ProductsNotFound } from './ProductsNotFound';
+import { countProductsByCategory, enrichCategoriesWithCounts } from '@/lib/products/categoryCounts';
 
 const ITEMS_PER_PAGE = 20;
 
@@ -26,6 +27,17 @@ export default function ProductsView({ products, categories, totalItemsView = IT
         handlePageChange
     } = useProductsFilter({ products, totalItemsView });
 
+    // Calculate product counts by category and subcategory
+    const categoryCounts = useMemo(() => {
+        return countProductsByCategory(products);
+    }, [products]);
+
+    // Enrich categories with their product counts
+    const enrichedCategories = useMemo(() => {
+        return enrichCategoriesWithCounts(categories, categoryCounts);
+    }, [categories, categoryCounts]);
+    console.log(categories)
+
     return (
         <>
             {
@@ -37,10 +49,12 @@ export default function ProductsView({ products, categories, totalItemsView = IT
                     )}>
                         {
                             showFilter &&
-                            <ProductsFilter categories={categories}
+                            <ProductsFilter 
+                                categories={enrichedCategories}
                                 selectedCategory={selectedCategory}
                                 sortOrder={sortOrder}
-                                onFilterChange={handleFilterChange} />
+                                onFilterChange={handleFilterChange} 
+                            />
                         }
                         <div className='flex flex-col gap-4 md:gap-8 relative h-full'>
 

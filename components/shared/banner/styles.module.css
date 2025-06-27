@@ -1,0 +1,12 @@
+.banner {
+    @apply relative bg-brand-gradient text-primary-foreground py-3;
+}
+
+@keyframes slide {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 300% 0;
+    }
+}

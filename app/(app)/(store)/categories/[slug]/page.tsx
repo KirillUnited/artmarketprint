@@ -16,6 +16,7 @@ import { getAllProductsByCategory } from "@/sanity/lib/product/getAllProductsByC
 import { ProductsNotFound } from "@/components/shared/product";
 import ProductSearchForm from "@/components/shared/product/ProductSearchForm";
 import { sanityFetch } from "@/sanity/lib/sanityFetch";
+import {collectCategoriesAndSubcategories} from "@/lib/products/collectCategories";
 
 export interface Props {
     slug: string,
@@ -71,6 +72,9 @@ export default async function CategoryPage({ params }: { params: Promise<Props> 
         );
     }
 
+    const categoriesWithSubcategories = collectCategoriesAndSubcategories(products);
+    console.log(categoriesWithSubcategories);
+
     return (
         <>
             <section className="py-12 md:py-24 relative after:absolute after:inset-0 after:bg-gradient-to-t after:from-black after:to-transparent">
@@ -117,7 +121,7 @@ export default async function CategoryPage({ params }: { params: Promise<Props> 
                     </div>
                 </SectionHeading>
 
-                <ProductsView products={products} />
+                <ProductsView products={products} categories={categoriesWithSubcategories} />
             </Section>
         </>
     )
