@@ -23,6 +23,8 @@ export function transform(external: Product) {
         category: external.category,
         subcategory: external.subcategory,
         items: external.items,
+        stock: external.stock,
+        sku: external.sku
     };
 }
 
@@ -36,14 +38,14 @@ export async function importDataToSanity() {
         for (let i = 0; i < documents.length; i += CHUNK_SIZE) {
             const chunk = documents.slice(i, i + CHUNK_SIZE);
             let transaction = client.transaction();
-            
+
             chunk.forEach(document => {
                 transaction.createOrReplace(document);
             });
 
             await transaction.commit();
             console.log(`✅ Imported products ${i + 1} to ${Math.min(i + CHUNK_SIZE, documents.length)}`);
-            
+
             // Add a small delay between chunks to prevent rate limiting
             await new Promise(resolve => setTimeout(resolve, 1000));
         }
