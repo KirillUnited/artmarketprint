@@ -37,7 +37,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<Props> }) {
     const { slug } = await params;
     const data = await getSanityDocuments(PROJECT_QUERY, await params);
-    const { title = '', description = '', keywords = '' } = data?.[0].seo || {};
+    const { title = '', description = '', keywords = '' } = data?.[0]?.seo || {};
     const url = `https://artmarketprint.by/projects/${slug}`;
 
     return {

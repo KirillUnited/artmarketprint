@@ -20,7 +20,7 @@ export default function ProductGrid({ products }: ProductGridProps): React.React
     useEffect(() => {
         setIsMounted(true);
     }, [])
-console.log(products)
+
     return (
         <ul className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 sm:gap-4 min-h-40 relative">
             <AnimatePresence>
