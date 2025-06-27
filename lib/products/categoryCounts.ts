@@ -60,9 +60,12 @@ export function enrichCategoriesWithCounts(
   return categories.map(({ category, subcategories = [] }) => ({
     category,
     count: counts[category]?.count || 0,
-    subcategories: subcategories.map((subcategory) => ({
-      name: subcategory,
-      count: counts[category]?.subcategories[subcategory] || 0,
-    })),
+    subcategories: subcategories.map((subcategory) => {
+      const name = typeof subcategory === "string" ? subcategory : subcategory.name;
+      return {
+        name,
+        count: counts[category]?.subcategories[name] || 0,
+      };
+    }),
   }));
 }
