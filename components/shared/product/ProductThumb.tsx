@@ -24,6 +24,7 @@ const ProductThumb: FC<ProductThumbProps> = ({ item, ...props }) => {
     const price = getPrice(item.price, 1.1);
     const name = item.name;
     const image = item.image;
+    const stock = item.stock;
 
     return (
         <Card
@@ -38,18 +39,22 @@ const ProductThumb: FC<ProductThumbProps> = ({ item, ...props }) => {
                 <Image
                     as={NextImage}
                     alt={name}
-                    className="object-contain aspect-square w-full mx-auto max-w-56 max-h-80" 
-                    classNames={{ wrapper: 'w-full bg-contain bg-center bg-no-repeat mx-auto' }}
-                    loading="lazy" 
-                    src={image} 
-                    width={220} 
-                    height={220} 
+                    className={clsx(
+                        "object-contain aspect-square w-full mx-auto max-w-56 max-h-80"
+                        )}
+                    classNames={{
+                        wrapper: clsx('relative w-full bg-contain bg-center bg-no-repeat mx-auto')
+                    }}
+                    loading="lazy"
+                    src={image}
+                    width={220}
+                    height={220}
                     quality={50}
-                    // fallbackSrc="/images/product-no-image.jpg"
                 />
                 <div>
                     <span className="text-xl font-semibold self-start text-foreground">{`${price} BYN`}</span>
                     <p className="text-gray-900 line-clamp-2 text-xs sm:text-sm">{name}</p>
+                    <span className="text-gray-500 font-light text-xs truncate w-full">{Number(stock) > 0 ? `В наличии (${stock})` : <span className="text-red-500">Нет в наличии</span>}</span>
                 </div>
             </CardBody>
             {
