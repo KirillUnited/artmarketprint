@@ -64,10 +64,14 @@ export default function ProductsView({ products, categories, totalItemsView = IT
                                     <ProductsNotFound />
                             }
                             {
-                                filteredProducts.length > totalItemsView &&
-                                <Pagination className='self-center'
-                                    total={totalPages}
-                                    onChange={handlePageChange} page={currentPage} />
+                                filteredProducts.length > totalItemsView && (
+									<Pagination
+										className='self-center'
+										page={currentPage}
+										total={totalPages}
+										onChange={handlePageChange}
+									/>
+								)
                             }
                         </div>
                     </div>
