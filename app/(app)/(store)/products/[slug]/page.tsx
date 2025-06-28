@@ -1,7 +1,7 @@
 import {Card, CardBody, CardFooter} from '@heroui/card';
 
 import Section from '@/components/layout/Section';
-import {ProductCarousel, ProductDetails} from '@/components/shared/product';
+import {ProductCarousel, ProductDetails, ProductStock} from '@/components/shared/product';
 import RelatedProducts from '@/components/shared/product/RelatedProducts';
 import getProductBySlug from '@/sanity/lib/product/getProductBySlug';
 import {getPrice} from '@/lib/getPrice';
@@ -69,26 +69,19 @@ export default async function ProductPage({params}: {params: Promise<Props>}) {
 		);
 
 	const {id, name: productTitle = '', description: general_description = '', variation_description = '', price = [], colors, sizes, category, items, stock, sku} = (product as any) || {};
-	const Heading = () => {
-		return (
-			<>
-				<ProductBreadcrumb category={category} title={productTitle} slug={slug} items={breadcrumbs[0].links} />
-
-				<h1 className="text-2xl font-bold">
-					{productTitle}
-					{/*{sku && (*/}
-					{/*    <span className="text-sm text-gray-600 ml-2 font-light">арт. {sku}</span>*/}
-					{/*)}*/}
-				</h1>
-			</>
-		);
-	};
 
 	return (
 		<>
 			<Section>
 				<div className="flex flex-col gap-4">
-					<Heading />
+					<ProductBreadcrumb category={category} title={productTitle} slug={slug} items={breadcrumbs[0].links} />
+
+					<h1 className="text-2xl font-bold">
+						{productTitle}
+						{/*{sku && (*/}
+						{/*    <span className="text-sm text-gray-600 ml-2 font-light">арт. {sku}</span>*/}
+						{/*)}*/}
+					</h1>
 				</div>
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 					<ProductCarousel className="md:sticky top-16" items={product} />
@@ -98,10 +91,22 @@ export default async function ProductPage({params}: {params: Promise<Props>}) {
 								<p className="my-0">
 									<ProductPrice price={getPrice(price, 1.1)} productId={id} />
 								</p>
-								<p className="text-sm text-gray-600">{Number(stock) > 0 ? `В наличии ${stock} шт.` : <span className="text-red-600">Нет в наличии</span>}</p>
+								<ProductStock items={items} />
 							</CardBody>
 							<CardBody>
-								<ProductDetails items={items} sizes={sizes} colors={colors} color={items?.[0]?.color || ''} size={sizes?.[0] || ''} />
+								<ProductDetails 
+									items={items?.map((item: any) => ({
+										id: item.id || item._id,
+										color: item.color,
+										cover: item.cover || '',
+										// Use item.stock if available, otherwise fallback to the global stock
+										stock: item.stock !== undefined ? Number(item.stock) : Number(stock)
+									})) || []} 
+									sizes={sizes || []} 
+									colors={colors || []} 
+									color={items?.[0]?.color || ''} 
+									size={sizes?.[0] || ''} 
+								/>
 							</CardBody>
 							{Number(stock) > 0 && (
 								<CardFooter className="relative">

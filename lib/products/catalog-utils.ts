@@ -51,7 +51,7 @@ export function groupProductsByCleanName(products: any[]) {
         name: cleanName,
         colors: new Set(),
         sizes: new Set(),
-        items: new Map<string, { id: string, images_urls: string, color: string, cover: string }>(), // Map to store unique variations
+        items: new Map<string, { id: string, images_urls: string, color: string, cover: string, stock: string, sku: string }>(), // Map to store unique variations
         price: product.price?.[0],
         url: product.url?.[0],
         image: product.images_urls[0]?.split(',')[0],
@@ -76,6 +76,8 @@ export function groupProductsByCleanName(products: any[]) {
         cover: images_urls[0].split(',')[0],
         images_urls,
         color: vcolor[0],
+        stock: product.stock?.[0],
+        sku: product.sku?.[0]
       };
 
       grouped[cleanName].items.set(variationKey, vars);
