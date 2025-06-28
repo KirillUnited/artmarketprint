@@ -40,4 +40,5 @@ export interface ColorItemProps {
     id: string;
     color: string;
     cover: string;
+    stock?: number;
 }
