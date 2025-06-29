@@ -9,12 +9,11 @@ export const ProductStock = ({ items }: { items: any[] }) => {
 	const stockForSelectedColor = useMemo(() => {
 		return getStockForSelectedColor(selectedColor, items);
 	}, [selectedColor, items]);
-console.log(items);
 
     // Format stock display text
     const stockDisplayText = useMemo(() => {
 		if (stockForSelectedColor === null) return '';
-		if (stockForSelectedColor === 0) return <span className="text-red-600">Нет в наличии</span>;
+		if (stockForSelectedColor == 0) return <span className="text-sm text-red-600">Нет в наличии</span>;
 
 		return <p className="text-sm text-gray-600">{`В наличии ${stockForSelectedColor} шт.`}</p>;
 	}, [stockForSelectedColor]);

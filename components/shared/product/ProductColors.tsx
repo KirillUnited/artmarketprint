@@ -7,7 +7,7 @@ import { ColorItemProps } from './product.types';
 import { filterItemsByColor } from './lib';
 import Loader from '@/components/ui/Loader';
 import { Button } from '@heroui/button';
-import { PlusIcon } from 'lucide-react';
+import {ArrowDownIcon, ChevronDownIcon, PlusIcon} from 'lucide-react';
 
 const ColorListItem = ({ item }: { item: ColorItemProps }) => (
     <li key={item.id}>
@@ -32,10 +32,10 @@ export const MoreButton = ({ onClick }: { onClick: () => void }) => (
         <Button
             size='sm'
             isIconOnly
-            className='h-full'
+            variant='light'
             onPress={onClick}
         >
-            <PlusIcon />
+            <ChevronDownIcon size={16} />
         </Button>
     </li>
 );

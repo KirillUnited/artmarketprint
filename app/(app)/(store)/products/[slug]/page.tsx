@@ -13,6 +13,7 @@ import {ProductTabs} from '@/components/shared/product/ProductTabs';
 import {ProductBreadcrumb} from '@/components/ui/Breadcrumb';
 import {OrderForm} from '@/components/ui/form';
 import clsx from 'clsx';
+import {getTotalStock} from "@/components/shared/product/lib";
 
 export interface Props {
 	slug: string;
@@ -69,6 +70,7 @@ export default async function ProductPage({params}: {params: Promise<Props>}) {
 		);
 
 	const {id, name: productTitle = '', description: general_description = '', variation_description = '', price = [], colors, sizes, category, items, stock, sku} = (product as any) || {};
+	const totalStock = getTotalStock(items);
 
 	return (
 		<>
@@ -108,13 +110,13 @@ export default async function ProductPage({params}: {params: Promise<Props>}) {
 									size={sizes?.[0] || ''} 
 								/>
 							</CardBody>
-							{Number(stock) > 0 && (
+							{Number(totalStock()) > 0 && (
 								<CardFooter className="relative">
 									<AddToBasketButton product={product as any} />
 								</CardFooter>
 							)}
 						</Card>
-						{Number(stock) === 0 && (
+						{Number(totalStock()) === 0 && (
 							<Card className={clsx('flex flex-col gap-6', 'p-4 bg-background')} radius="sm" shadow="sm">
 								<div className="flex flex-col gap-2">
 									<h3 className="text-2xl md:text-3xl leading-[120%] font-bold">Оставить заявку</h3>
