@@ -1,6 +1,3 @@
-// ***
-// Uncomment this code to get XML data from art24.by
-// ***
 import {parseStringPromise} from 'xml2js';
 
 export async function getXmlDataJSON(url: string) {
