@@ -1,31 +1,18 @@
 'use client';
 
-import { useEffect } from 'react';
+import {useEffect} from 'react';
+import {Button} from '@heroui/button';
 
-export default function Error({
-  error,
-  reset,
-}: {
-  error: Error;
-  reset: () => void;
-}) {
-  useEffect(() => {
-    // Log the error to an error reporting service
-    /* eslint-disable no-console */
-    console.error(error);
-  }, [error]);
+export default function GlobalError({error, reset}: {error: Error & {digest?: string}; reset: () => void}) {
+	useEffect(() => {
+		console.error('App Error:', error);
+	}, [error]);
 
-  return (
-    <div>
-      <h2>Something went wrong!</h2>
-      <button
-        onClick={
-          // Attempt to recover by trying to re-render the segment
-          () => reset()
-        }
-      >
-        Try again
-      </button>
-    </div>
-  );
+	return (
+		<div className="text-center">
+			<h1 className="text-6xl font-bold text-red-600">Что-то пошло не так</h1>
+			<p className="mt-4 text-gray-700">{error.message || 'Произошла непредвиденная ошибка. Попробуйте еще раз.'}</p>
+			<Button onPress={reset}>Try again</Button>
+		</div>
+	);
 }
