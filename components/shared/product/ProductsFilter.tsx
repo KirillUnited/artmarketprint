@@ -9,8 +9,6 @@ import { FC } from 'react';
 import { CategoryProps, CatFilter } from '@/components/ui/filter/CatFilter';
 import { SortFilter } from '@/components/ui/filter/SortFilter';
 
-export const getCategory = (category: string) => category[0].split('|').shift();
-
 interface FilterGroupProps {
   sortOrder: string;
   selectedCategory: string;

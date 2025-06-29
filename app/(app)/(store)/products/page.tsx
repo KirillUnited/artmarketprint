@@ -6,7 +6,6 @@ import { getSanityDocuments } from '@/sanity/lib/fetch-sanity-data';
 import { NAVIGATION_QUERY } from '@/sanity/lib/queries';
 import Section from '@/components/layout/Section';
 import ProductsView from '@/components/shared/product/ProductsView';
-import { getAllProductCategories } from '@/sanity/lib/product/getAllProductCategories';
 import { getAllProductsFromSanity } from '@/sanity/lib/product/getAllProductsFromSanity';
 import ProductSearchForm from '@/components/shared/product/ProductSearchForm';
 import { collectCategoriesAndSubcategories } from '@/lib/products/collectCategories';
@@ -33,8 +32,7 @@ export default async function ProductsPage(
     }
 ) {
     // Fetch data in parallel using Promise.all for better performance
-    const [categories, breadcrumbs, products] = await Promise.all([
-        getAllProductCategories(),
+    const [breadcrumbs, products] = await Promise.all([
         getSanityDocuments(NAVIGATION_QUERY),
         getAllProductsFromSanity(),
     ]);

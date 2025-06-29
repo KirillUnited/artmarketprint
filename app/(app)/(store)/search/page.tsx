@@ -8,6 +8,7 @@ import { searchProductsByName } from '@/sanity/lib/product/searchProductsByName'
 import { Button } from '@heroui/button';
 import { FeaturedProducts } from '@/components/shared/product/FeaturedProducts';
 import ProductSearchForm from '@/components/shared/product/ProductSearchForm';
+import {collectCategoriesAndSubcategories} from "@/lib/products/collectCategories";
 
 type Props = {
     slug: string
@@ -37,6 +38,7 @@ export default async function SearchPage({
 
     try {
         const products = await searchProductsByName(query);
+        const categoriesWithSubcategories = collectCategoriesAndSubcategories(products);
 
         return (
             <Section>
@@ -50,7 +52,7 @@ export default async function SearchPage({
                                     <span>В каталог</span></Link>
                                     <ProductSearchForm />
                             </div>
-                            <ProductsView products={products} totalItemsView={8} showFilter={true} />
+                            <ProductsView products={products} categories={categoriesWithSubcategories} totalItemsView={8} showFilter={true} />
                         </> :
                         <div className="flex flex-col items-center gap-8">
                             <Card className="lg:flex-row gap-8 self-stretch items-center p-4 w-fit mx-auto">

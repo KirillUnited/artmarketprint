@@ -3,8 +3,8 @@
 import Loader from '@/components/ui/Loader';
 import { Radio, RadioGroup } from '@heroui/radio';
 import clsx from 'clsx';
-import { useEffect, useState } from 'react';
-import { ColorListItem, computedItems, MoreButton } from './ProductColors';
+import { useEffect, useState, useMemo } from 'react';
+import {ColorItemProps, ColorListItem, computedItems, MoreButton} from './ProductColors';
 import { Tooltip } from '@heroui/tooltip';
 import { useProductStore } from '@/store/product';
 import ProductSizeTable from './ProductSizeTable';
@@ -25,13 +25,15 @@ import { Button } from '@heroui/button';
  *
  * @returns {ReactElement} The component
  */
-export const ProductDetails: React.FC<{
-    items: Array<{ id: string, color: string, cover: string }>,
-    colors: string[],
-    sizes: string[],
-    color: string,
-    size: string,
-}> = ({ items, sizes, colors, color, size }) => {
+interface ProductDetailsProps {
+    items: ColorItemProps[];
+    sizes: string[];
+    colors: string[];
+    color: string;
+    size: string;
+}
+
+export const ProductDetails: React.FC<ProductDetailsProps> = ({ items, sizes, colors, color, size }) => {
     const [isClient, setIsClient] = useState(false);
     const { selectedColor, selectedSize, setSelectedColor, setSelectedSize } = useProductStore();
     const [showAllColors, setShowAllColors] = useState(false);
@@ -101,19 +103,18 @@ export const ProductDetails: React.FC<{
             {
                 Array.isArray(sizes) && sizes.length > 0 && (
                     <fieldset aria-label="Choose a size">
-                        <RadioGroup
-                            label="Размер"
-                            orientation='horizontal'
-                            defaultValue={sizes[0]}
-                            classNames={{
-                                wrapper: 'grid grid-cols-3 gap-3 sm:grid-cols-6',
-                                label: 'text-foreground font-semibold text-sm'
-                            }}
-                            value={selectedSize}
-                            onChange={(value) => {
-                                setSelectedSize(value.target.value)
-                            }}
-                        >
+                        <div className="flex flex-col gap-2">
+                            <RadioGroup
+                                orientation='horizontal'
+                                defaultValue={sizes[0]}
+                                classNames={{
+                                    wrapper: 'grid grid-cols-3 gap-3 sm:grid-cols-6',
+                                }}
+                                value={selectedSize}
+                                onChange={(value) => {
+                                    setSelectedSize(value.target.value)
+                                }}
+                            >
                             {sizes.map((size) => (
                                 <Radio
                                     key={size}
@@ -144,8 +145,9 @@ export const ProductDetails: React.FC<{
                                     {size}
                                 </Radio>
                             ))}
-                        </RadioGroup>
-                        <Button variant='bordered' className='mt-4 border-1' size='sm' radius='sm' onPress={onOpen}>Размерная таблица</Button>
+                            </RadioGroup>
+                            <Button variant='bordered' className='mt-4 border-1' size='sm' radius='sm' onPress={onOpen}>Размерная таблица</Button>
+                        </div>
                         <Modal className='bg-background max-w-fit' isOpen={isOpen} placement="top-center" onOpenChange={onOpenChange} title='Size Table' radius='sm'>
                             <ModalContent>
                                 <ModalHeader className="flex flex-col gap-1 text-2xl">Размерная таблица</ModalHeader>

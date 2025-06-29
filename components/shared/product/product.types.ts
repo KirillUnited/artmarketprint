@@ -12,7 +12,9 @@ export interface ProductData {
     colors: string[];
     sizes: string[];
     quantity: number;
-    items: any
+    items: any;
+    stock: string;
+    sku: string;
 }
 
 export interface Product {
@@ -29,11 +31,14 @@ export interface Product {
     subcategory: string[];
     colors: string[];
     sizes: string[];
-    items: any
+    items: any;
+    stock: string;
+    sku: string;
 }
 
 export interface ColorItemProps {
     id: string;
     color: string;
     cover: string;
+    stock?: number;
 }
