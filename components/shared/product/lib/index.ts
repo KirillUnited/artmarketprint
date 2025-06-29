@@ -1,5 +1,4 @@
 import { ColorItemProps } from "../product.types";
-import {useMemo} from "react";
 
 export const filterItemsByColor = (items: ColorItemProps[]): ColorItemProps[] => {
     const uniqueColors = new Set<string>();
