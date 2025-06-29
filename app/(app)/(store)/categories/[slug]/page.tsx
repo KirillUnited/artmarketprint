@@ -73,7 +73,6 @@ export default async function CategoryPage({ params }: { params: Promise<Props> 
     }
 
     const categoriesWithSubcategories = collectCategoriesAndSubcategories(products);
-    console.log(categoriesWithSubcategories);
 
     return (
         <>

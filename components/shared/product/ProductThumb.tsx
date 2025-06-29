@@ -2,13 +2,15 @@ import { FC } from 'react';
 import { Card, CardBody, CardFooter } from '@heroui/card';
 import { Link } from '@heroui/link';
 import NextImage from 'next/image';
-
-import { getPrice } from '@/lib/getPrice';
 import clsx from 'clsx';
-import { ProductData } from '@/components/shared/product/product.types';
+import { Image } from '@heroui/image';
+
 import { ProductColors } from './ProductColors';
 import { ProductSizes } from './ProductSizes';
-import { Image } from '@heroui/image';
+
+import { getPrice } from '@/lib/getPrice';
+import { ProductData } from '@/components/shared/product/product.types';
+import {getTotalStock} from '@/components/shared/product/lib';
 
 interface ProductThumbProps extends React.HTMLAttributes<HTMLDivElement> {
     item: ProductData;
@@ -24,37 +26,37 @@ const ProductThumb: FC<ProductThumbProps> = ({ item, ...props }) => {
     const price = getPrice(item.price, 1.1);
     const name = item.name;
     const image = item.image;
-    const stock = item.stock;
+    const totalStock = getTotalStock(item.items);
 
     return (
         <Card
-            as={Link} href={`/products/${id}`}
-            className={clsx(
-                "h-full group relative max-w-full shadow-small hover:shadow-large transition-shadow",
+            as={Link} className={clsx(
+                'h-full group relative max-w-full shadow-small hover:shadow-large transition-shadow',
                 props.className
             )}
+            href={`/products/${id}`}
             radius="sm"
         >
             <CardBody className='items-stretch gap-4'>
                 <Image
-                    as={NextImage}
                     alt={name}
+                    as={NextImage}
                     className={clsx(
-                        "object-contain aspect-square w-full mx-auto max-w-56 max-h-80"
+                        'object-contain aspect-square w-full mx-auto max-w-56 max-h-80'
                         )}
                     classNames={{
                         wrapper: clsx('relative w-full bg-contain bg-center bg-no-repeat mx-auto')
                     }}
+                    height={220}
                     loading="lazy"
+                    quality={50}
                     src={image}
                     width={220}
-                    height={220}
-                    quality={50}
                 />
                 <div>
                     <span className="text-xl font-semibold self-start text-foreground">{`${price} BYN`}</span>
                     <p className="text-gray-900 line-clamp-2 text-xs sm:text-sm">{name}</p>
-                    <span className="text-gray-500 font-light text-xs truncate w-full">{Number(stock) > 0 ? `В наличии (${stock})` : <span className="text-red-500">Нет в наличии</span>}</span>
+                    <span className="text-gray-500 font-light text-xs truncate w-full">{Number(totalStock()) > 0 ? `В наличии (${totalStock()})` : <span className="text-red-500">Нет в наличии</span>}</span>
                 </div>
             </CardBody>
             {
@@ -67,8 +69,7 @@ const ProductThumb: FC<ProductThumbProps> = ({ item, ...props }) => {
                         )
                     }
                     {
-                        item.sizes?.length > 0
-                        && (
+                        item.sizes?.length > 0 && (
                             <ProductSizes list={item.sizes} />
                         )
                     }

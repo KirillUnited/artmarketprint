@@ -1,4 +1,5 @@
 import { ColorItemProps } from "../product.types";
+import {useMemo} from "react";
 
 export const filterItemsByColor = (items: ColorItemProps[]): ColorItemProps[] => {
     const uniqueColors = new Set<string>();
@@ -29,3 +30,13 @@ export const getVariantImages = (items: any, selectedColor: string) => {
 
     return variantImages.length > 0 ? variantImages : productImages;
 };
+
+// Calculate stock for the selected color
+export const getStockForSelectedColor = (selectedColor: string, items: any) => {
+    if (!selectedColor) return null;
+    const selectedItem = items.find(item => item.color === selectedColor);
+
+    return selectedItem?.stock ?? null;
+};
+// Calculate total stock
+export const getTotalStock = (items: any[]) => () => items.reduce((total, item) => total + Number(item.stock), 0);

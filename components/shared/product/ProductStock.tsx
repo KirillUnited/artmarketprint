@@ -2,17 +2,14 @@
 
 import {useMemo} from "react";
 import {useProductStore} from "@/store/product";
+import {getStockForSelectedColor} from "@/components/shared/product/lib";
 
 export const ProductStock = ({ items }: { items: any[] }) => {
 	const { selectedColor } = useProductStore();
-
-	// Calculate stock for the selected color
-    const stockForSelectedColor = useMemo(() => {
-        if (!selectedColor) return null;
-        const selectedItem = items.find(item => item.color === selectedColor);
-
-        return selectedItem?.stock ?? null;
-    }, [selectedColor, items]);
+	const stockForSelectedColor = useMemo(() => {
+		return getStockForSelectedColor(selectedColor, items);
+	}, [selectedColor, items]);
+console.log(items);
 
     // Format stock display text
     const stockDisplayText = useMemo(() => {
