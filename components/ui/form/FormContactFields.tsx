@@ -26,37 +26,6 @@ const FormContactFields = ({ setPhoneValid }: { setPhoneValid: (valid: boolean) 
                     name='last-name'
                     placeholder='Напишите Вашу фамилию'
                 />
-
-                <div className="sm:col-span-2">
-                    <FormInput
-                        label="Компания"
-                        id="company"
-                        name="company"
-                        type="text"
-                        placeholder='Напишите название компании'
-                    />
-                </div>
-
-                <div className="sm:col-span-2">
-                    <FormInput
-                        label='Адрес'
-                        id="address"
-                        name="address"
-                        type="text"
-                        placeholder='Напишите адрес'
-                    />
-                </div>
-
-                <div className="sm:col-span-2">
-                    <FormInput
-                        label='Квартира, офис и т.д.'
-                        id="apartment"
-                        name="apartment"
-                        type="text"
-                        placeholder='Напишите номер квартиры, офиса и т.д.'
-                    />
-                </div>
-
                 <div>
                     <FormInput
                         isRequired
