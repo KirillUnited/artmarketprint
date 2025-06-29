@@ -4,7 +4,7 @@ import Section from '@/components/layout/Section';
 import { ProductCarousel, ProductDetails, ProductStock } from '@/components/shared/product';
 import RelatedProducts from '@/components/shared/product/RelatedProducts';
 import getProductBySlug from '@/sanity/lib/product/getProductBySlug';
-import { getPrice } from '@/lib/getPrice';
+import {getPrice, priceTransform} from '@/lib/getPrice';
 import { NAVIGATION_QUERY } from '@/sanity/lib/queries';
 import AddToBasketButton from '@/components/ui/AddToBasketButton';
 import ProductPrice from '@/components/shared/product/ProductPrice';
@@ -14,6 +14,7 @@ import { ProductBreadcrumb } from '@/components/ui/Breadcrumb';
 import { OrderForm } from '@/components/ui/form';
 import clsx from 'clsx';
 import { getTotalStock } from "@/components/shared/product/lib";
+import {Companies} from "@/lib/products/companies";
 
 export interface Props {
 	slug: string;
@@ -91,7 +92,7 @@ export default async function ProductPage({ params }: { params: Promise<Props> }
 						<Card className="bg-indigo-100">
 							<CardBody>
 								<p className="my-0">
-									<ProductPrice price={getPrice(price, 1.1)} productId={id} />
+									<ProductPrice price={getPrice(price, (1 - priceTransform(Companies.ARTE.discount)))} productId={id} />
 								</p>
 								<ProductStock items={items} />
 							</CardBody>
