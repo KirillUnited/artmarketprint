@@ -34,7 +34,7 @@ export const getVariantImages = (items: any, selectedColor: string) => {
 // Calculate stock for the selected color
 export const getStockForSelectedColor = (selectedColor: string, items: any) => {
     if (!selectedColor) return null;
-    const selectedItem = items.find(item => item.color === selectedColor);
+    const selectedItem = items.find((item: any) => item.color === selectedColor);
 
     return selectedItem?.stock ?? null;
 };
