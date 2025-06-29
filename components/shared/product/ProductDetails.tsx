@@ -39,20 +39,6 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({ items, sizes, co
     const [showAllColors, setShowAllColors] = useState(false);
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const computedItemsByColor = computedItems(items);
-    
-    // Calculate stock for the selected color
-    const stockForSelectedColor = useMemo(() => {
-        if (!selectedColor) return null;
-        const selectedItem = items.find(item => item.color === selectedColor);
-        return selectedItem?.stock ?? null;
-    }, [selectedColor, items]);
-    
-    // Format stock display text
-    const stockDisplayText = useMemo(() => {
-        if (stockForSelectedColor === null) return '';
-        if (stockForSelectedColor === 0) return 'Нет в наличии';
-        return `В наличии: ${stockForSelectedColor} шт.`;
-    }, [stockForSelectedColor]);
 
     useEffect(() => {
         setIsClient(true);
