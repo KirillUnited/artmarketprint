@@ -1,27 +1,27 @@
-import {Card, CardBody, CardFooter} from '@heroui/card';
+import { Card, CardBody, CardFooter } from '@heroui/card';
 
 import Section from '@/components/layout/Section';
-import {ProductCarousel, ProductDetails, ProductStock} from '@/components/shared/product';
+import { ProductCarousel, ProductDetails, ProductStock } from '@/components/shared/product';
 import RelatedProducts from '@/components/shared/product/RelatedProducts';
 import getProductBySlug from '@/sanity/lib/product/getProductBySlug';
-import {getPrice} from '@/lib/getPrice';
-import {NAVIGATION_QUERY} from '@/sanity/lib/queries';
+import { getPrice } from '@/lib/getPrice';
+import { NAVIGATION_QUERY } from '@/sanity/lib/queries';
 import AddToBasketButton from '@/components/ui/AddToBasketButton';
 import ProductPrice from '@/components/shared/product/ProductPrice';
-import {getSanityDocuments} from '@/sanity/lib/fetch-sanity-data';
-import {ProductTabs} from '@/components/shared/product/ProductTabs';
-import {ProductBreadcrumb} from '@/components/ui/Breadcrumb';
-import {OrderForm} from '@/components/ui/form';
+import { getSanityDocuments } from '@/sanity/lib/fetch-sanity-data';
+import { ProductTabs } from '@/components/shared/product/ProductTabs';
+import { ProductBreadcrumb } from '@/components/ui/Breadcrumb';
+import { OrderForm } from '@/components/ui/form';
 import clsx from 'clsx';
-import {getTotalStock} from "@/components/shared/product/lib";
+import { getTotalStock } from "@/components/shared/product/lib";
 
 export interface Props {
 	slug: string;
 	id?: number;
 }
 
-export const generateMetadata = async ({params}: {params: Promise<Props>}) => {
-	const {slug} = await params;
+export const generateMetadata = async ({ params }: { params: Promise<Props> }) => {
+	const { slug } = await params;
 	const product: any = await getProductBySlug(slug);
 
 	const url = `https://artmarketprint.by/products/${slug}`;
@@ -54,8 +54,8 @@ export const generateMetadata = async ({params}: {params: Promise<Props>}) => {
 	};
 };
 
-export default async function ProductPage({params}: {params: Promise<Props>}) {
-	const {slug} = await params;
+export default async function ProductPage({ params }: { params: Promise<Props> }) {
+	const { slug } = await params;
 	const [breadcrumbs, product] = await Promise.all([getSanityDocuments(NAVIGATION_QUERY), getProductBySlug(slug)]);
 
 	if (!product)
@@ -69,7 +69,7 @@ export default async function ProductPage({params}: {params: Promise<Props>}) {
 			</Section>
 		);
 
-	const {id, name: productTitle = '', description: general_description = '', variation_description = '', price = [], colors, sizes, category, items, stock, sku} = (product as any) || {};
+	const { id, name: productTitle = '', description: general_description = '', variation_description = '', price = [], colors, sizes, category, items, stock, sku } = (product as any) || {};
 	const totalStock = getTotalStock(items);
 
 	return (
@@ -80,9 +80,9 @@ export default async function ProductPage({params}: {params: Promise<Props>}) {
 
 					<h1 className="text-2xl font-bold">
 						{productTitle}
-						{/*{sku && (*/}
-						{/*    <span className="text-sm text-gray-600 ml-2 font-light">арт. {sku}</span>*/}
-						{/*)}*/}
+						{sku && (
+							<span className="text-sm text-gray-600 ml-2 font-light">арт. {sku}</span>
+						)}
 					</h1>
 				</div>
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -96,18 +96,18 @@ export default async function ProductPage({params}: {params: Promise<Props>}) {
 								<ProductStock items={items} />
 							</CardBody>
 							<CardBody>
-								<ProductDetails 
+								<ProductDetails
 									items={items?.map((item: any) => ({
 										id: item.id || item._id,
 										color: item.color,
 										cover: item.cover || '',
 										// Use item.stock if available, otherwise fallback to the global stock
 										stock: item.stock !== undefined ? Number(item.stock) : Number(stock)
-									})) || []} 
-									sizes={sizes || []} 
-									colors={colors || []} 
-									color={items?.[0]?.color || ''} 
-									size={sizes?.[0] || ''} 
+									})) || []}
+									sizes={sizes || []}
+									colors={colors || []}
+									color={items?.[0]?.color || ''}
+									size={sizes?.[0] || ''}
 								/>
 							</CardBody>
 							{Number(totalStock()) > 0 && (
