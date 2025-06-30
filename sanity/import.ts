@@ -3,8 +3,6 @@ import { client } from "./client";
 import { getAllProducts } from "@/lib/actions/product.actions";
 import { groupProductsByCleanName } from "@/lib/products/catalog-utils";
 
-const jsonFilePath = '../_data/products.json';
-
 const CHUNK_SIZE = 50; // Process 50 products at a time
 
 export function transform(external: Product) {
