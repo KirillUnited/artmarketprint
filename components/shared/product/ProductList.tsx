@@ -1,7 +1,5 @@
 import {BrandCard} from '@/components/ui/card';
-import {getPrice, priceTransform} from '@/lib/getPrice';
 import { ProductData } from './product.types';
-import {Companies} from "@/lib/products/companies";
 
 export default function ProductList({ items }: { items: ProductData[]}) {
   return (
@@ -17,7 +15,7 @@ export default function ProductList({ items }: { items: ProductData[]}) {
                 href={`/products/${item.id}`}
                 image={item.image}
                 imageFit="contain"
-                price={`${getPrice(item?.price, (1 - priceTransform(Companies.ARTE.discount)))} BYN`}
+                price={`${item?.price} BYN`}
                 title={item.name}
                 variant="product"
               />
