@@ -8,10 +8,8 @@ import { Image } from '@heroui/image';
 import { ProductColors } from './ProductColors';
 import { ProductSizes } from './ProductSizes';
 
-import {getPrice, priceTransform} from '@/lib/getPrice';
 import { ProductData } from '@/components/shared/product/product.types';
 import {getTotalStock} from '@/components/shared/product/lib';
-import {Companies} from "@/lib/products/companies";
 
 interface ProductThumbProps extends React.HTMLAttributes<HTMLDivElement> {
     item: ProductData;
@@ -24,7 +22,7 @@ interface ProductThumbProps extends React.HTMLAttributes<HTMLDivElement> {
  */
 const ProductThumb: FC<ProductThumbProps> = ({ item, ...props }) => {
     const id = item._id;
-    const price = getPrice(item.price, (1 - priceTransform(Companies.ARTE.discount)));
+    const price = item.price;
     const name = item.name;
     const image = item.image;
     const totalStock = getTotalStock(item.items);

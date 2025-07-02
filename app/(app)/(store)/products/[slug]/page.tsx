@@ -4,7 +4,6 @@ import Section from '@/components/layout/Section';
 import { ProductCarousel, ProductDetails, ProductStock } from '@/components/shared/product';
 import RelatedProducts from '@/components/shared/product/RelatedProducts';
 import getProductBySlug from '@/sanity/lib/product/getProductBySlug';
-import {getPrice, priceTransform} from '@/lib/getPrice';
 import { NAVIGATION_QUERY } from '@/sanity/lib/queries';
 import AddToBasketButton from '@/components/ui/AddToBasketButton';
 import ProductPrice from '@/components/shared/product/ProductPrice';
@@ -14,7 +13,6 @@ import { ProductBreadcrumb } from '@/components/ui/Breadcrumb';
 import { OrderForm } from '@/components/ui/form';
 import clsx from 'clsx';
 import { getTotalStock } from "@/components/shared/product/lib";
-import {Companies} from "@/lib/products/companies";
 
 export interface Props {
 	slug: string;
@@ -72,6 +70,7 @@ export default async function ProductPage({ params }: { params: Promise<Props> }
 
 	const { id, name: productTitle = '', description: general_description = '', variation_description = '', price = [], colors, sizes, category, items, stock, sku } = (product as any) || {};
 	const totalStock = getTotalStock(items);
+	const productPrice = price;
 
 	return (
 		<>
@@ -82,7 +81,7 @@ export default async function ProductPage({ params }: { params: Promise<Props> }
 					<h1 className="text-2xl font-bold">
 						{productTitle}
 						{sku && (
-							<span className="text-sm text-gray-600 ml-2 font-light">арт. {sku}</span>
+							<span className="text-sm text-gray-600 ml-2 font-light truncate">арт. {sku}</span>
 						)}
 					</h1>
 				</div>
@@ -92,7 +91,7 @@ export default async function ProductPage({ params }: { params: Promise<Props> }
 						<Card className="bg-indigo-100">
 							<CardBody>
 								<p className="my-0">
-									<ProductPrice price={getPrice(price, (1 - priceTransform(Companies.ARTE.discount)))} productId={id} />
+									<ProductPrice price={productPrice} productId={id} />
 								</p>
 								<ProductStock items={items} />
 							</CardBody>
