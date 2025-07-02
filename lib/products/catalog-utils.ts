@@ -1,3 +1,6 @@
+import { getPrice, priceTransform } from "../getPrice";
+import { Companies } from "./companies";
+
 // Типы товара
 export interface RawProduct {
   _id: string;
@@ -52,7 +55,7 @@ export function groupProductsByCleanName(products: any[]) {
         colors: new Set(),
         sizes: new Set(),
         items: new Map<string, { id: string, images_urls: string, color: string, cover: string, stock: string, sku: string }>(), // Map to store unique variations
-        price: product.price?.[0],
+        price: getPrice(product.price?.[0], (1 - priceTransform(Companies.ARTE.discount))),
         url: product.url?.[0],
         image: product.images_urls[0]?.split(',')[0],
         images_urls: product.images_urls?.[0],
