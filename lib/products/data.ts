@@ -1,19 +1,167 @@
-import {parseStringPromise} from 'xml2js';
+import { parseStringPromise } from 'xml2js';
+import { Companies } from './companies';
+
+export interface XmlCategory {
+  _: string;
+  $: {
+    id: string;
+    parentId?: string;
+  };
+}
+
+export interface XmlProduct {
+  $: {
+    id: string;
+    available: string;
+  };
+  categoryId: string[];
+  currencyId: string[];
+  description: string[];
+  name: string[];
+  param: Array<{ _: string; $: { name: string } }>;
+  picture: string[];
+  price: string[];
+  stock_minsk: string[];
+  stock_shipper: string[];
+  url: string[];
+  vendorCode: string[];
+}
+
+export interface ProcessedProduct {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  currency: string;
+  stock: number;
+  images: string[];
+  url: string;
+  sku: string;
+  category: string;
+  subcategory: string;
+  brand: string;
+  parameters: Record<string, string>;
+}
 
 export async function getXmlDataJSON(url: string) {
-    try {
-        const response = await fetch(url, {
-            cache: 'no-store'
-        });
+  try {
+    const response = await fetch(url, {
+      cache: 'no-store',
+    });
 
-        if (!response.ok) throw new Error(`Ошибка запроса: ${response.status}`);
+    if (!response.ok) throw new Error(`Request error: ${response.status}`);
 
-        const xmlText = await response.text();
+    const xmlText = await response.text();
 
-        return await parseStringPromise(xmlText);
-    } catch (error) {
-        console.error('Ошибка при загрузке XML:', error);
+    return await parseStringPromise(xmlText);
+  } catch (error) {
+    console.error('Error loading XML:', error);
 
-        return null;
+    return null;
+  }
+}
+
+export function buildCategoryMap(categories: XmlCategory[]): Record<string, string> {
+  const categoryMap: Record<string, string> = {};
+  
+  categories.forEach(cat => {
+    categoryMap[cat.$.id] = cat._;
+  });
+  
+  return categoryMap;
+}
+
+export function getBrandFromUrl(url: string): string {
+  const company = Object.values(Companies).find(company => 
+    url.includes(company.name.toLowerCase().replace(/\s+/g, '-'))
+  );
+  
+  return company ? company.name : 'Unknown Brand';
+}
+
+export function processProduct(
+  product: XmlProduct, 
+  categoryMap: Record<string, string>,
+  brand: string
+): ProcessedProduct | null {
+  try {
+    const categoryId = product.categoryId?.[0];
+    const categoryName = categoryMap[categoryId] || 'Uncategorized';
+    
+    // Extract parameters
+    const parameters: Record<string, string> = {};
+    if (Array.isArray(product.param)) {
+      product.param.forEach(param => {
+        if (param.$.name && param._) {
+          parameters[param.$.name] = param._;
+        }
+      });
     }
+    
+    // Determine if we should use a subcategory (this is a simple example)
+    // You might need to adjust this based on your actual category structure
+    let category = 'Other';
+    let subcategory = 'Other';
+    
+    if (categoryName.includes('>')) {
+      const parts = categoryName.split('>').map(part => part.trim());
+
+      category = parts[0];
+      subcategory = parts[1] || 'Other';
+    } else {
+      category = categoryName;
+    }
+    
+    return {
+      id: product.$.id,
+      name: product.name?.[0] || 'Unnamed Product',
+      description: product.description?.[0] || '',
+      price: parseFloat(product.price?.[0] || '0'),
+      currency: product.currencyId?.[0] || 'BYN',
+      stock: parseInt(product.stock_minsk?.[0] || '0') + parseInt(product.stock_shipper?.[0] || '0'),
+      images: product.picture || [],
+      url: product.url?.[0] || '',
+      sku: product.vendorCode?.[0] || '',
+      category,
+      subcategory,
+      brand,
+      parameters,
+    };
+  } catch (error) {
+    console.error('Error processing product:', error);
+
+    return null;
+  }
+}
+
+export async function fetchAndProcessProducts(companyId: keyof typeof Companies): Promise<ProcessedProduct[]> {
+  const company = Companies[companyId];
+
+  if (!company) {
+    throw new Error(`Company with ID ${companyId} not found`);
+  }
+  
+  const data = await getXmlDataJSON(company.product_data_url);
+
+  console.log('Fetched data from:', company.name);
+
+  if (!data) {
+    return [];
+  }
+  
+  const categories = data.xml_catalog?.shop?.[0]?.categories?.[0]?.category || [];
+  const categoryMap = buildCategoryMap(categories);
+  
+  const products = data.xml_catalog?.shop?.[0]?.offers?.[0]?.offer || [];
+  const processedProducts: ProcessedProduct[] = [];
+  
+  for (const product of products) {
+    const processed = processProduct(product, categoryMap, company.name);
+
+    if (processed) {
+      processedProducts.push(processed);
+    }
+  }
+  
+  return processedProducts;
 }
