@@ -9,6 +9,7 @@ import ProductsView from '@/components/shared/product/ProductsView';
 import { getAllProductsFromSanity } from '@/sanity/lib/product/getAllProductsFromSanity';
 import ProductSearchForm from '@/components/shared/product/ProductSearchForm';
 import { collectCategoriesAndSubcategories } from '@/lib/products/collectCategories';
+import {fetchAndProcessProducts} from "@/lib/products/data";
 
 export async function generateMetadata() {
 
@@ -34,7 +35,8 @@ export default async function ProductsPage(
     // Fetch data in parallel using Promise.all for better performance
     const [breadcrumbs, products] = await Promise.all([
         getSanityDocuments(NAVIGATION_QUERY),
-        getAllProductsFromSanity(),
+        // getAllProductsFromSanity(),
+        fetchAndProcessProducts('MARKLI')
     ]);
     const categoriesWithSubcategories = collectCategoriesAndSubcategories(products);
 

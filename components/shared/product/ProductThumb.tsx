@@ -25,7 +25,7 @@ const ProductThumb: FC<ProductThumbProps> = ({ item, ...props }) => {
     const price = item.price;
     const name = item.name;
     const image = item.image;
-    const totalStock = getTotalStock(item.items);
+    // const totalStock = getTotalStock(item.items) || 0;
 
     return (
         <Card
@@ -55,7 +55,7 @@ const ProductThumb: FC<ProductThumbProps> = ({ item, ...props }) => {
                 <div>
                     <span className="text-xl font-semibold self-start text-foreground">{`${price} BYN`}</span>
                     <p className="text-gray-900 line-clamp-2 text-xs sm:text-sm">{name}</p>
-                    <span className="text-gray-500 font-light text-xs truncate w-full">{Number(totalStock()) > 0 ? `В наличии (${totalStock()})` : <span className="text-red-500">Нет в наличии</span>}</span>
+                    {/*<span className="text-gray-500 font-light text-xs truncate w-full">{Number(totalStock()) > 0 ? `В наличии (${totalStock()})` : <span className="text-red-500">Нет в наличии</span>}</span>*/}
                 </div>
             </CardBody>
             {
