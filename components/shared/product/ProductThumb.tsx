@@ -21,11 +21,11 @@ interface ProductThumbProps extends React.HTMLAttributes<HTMLDivElement> {
  * @returns {JSX.Element} The JSX element representing the product thumbnail card.
  */
 const ProductThumb: FC<ProductThumbProps> = ({ item, ...props }) => {
-    const id = item._id;
+    const id = item.id;
     const price = item.price;
     const name = item.name;
-    const image = item.image;
-    // const totalStock = getTotalStock(item.items) || 0;
+    const image = item?.images[0]?.split(',')[0];
+    // const totalStock = getTotalStock(item.items);
 
     return (
         <Card

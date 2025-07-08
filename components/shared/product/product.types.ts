@@ -4,6 +4,7 @@ export interface ProductData {
     name: string;
     price: number;
     image: string;
+    images: string[];
     images_urls: string;
     description: string;
     variation_description: string;
@@ -23,6 +24,7 @@ export interface Product {
     name: string;
     price: string[];
     image: string;
+    images: string[];
     images_urls: string[];
     general_description: string[];
     description: string;

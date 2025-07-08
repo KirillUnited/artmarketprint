@@ -143,7 +143,7 @@ export async function fetchAndProcessProducts(companyId: keyof typeof Companies)
   
   const data = await getXmlDataJSON(company.product_data_url);
 
-  console.log('Fetched data from:', company.name);
+  console.log('Fetched data from:', company.name, data);
 
   if (!data) {
     return [];

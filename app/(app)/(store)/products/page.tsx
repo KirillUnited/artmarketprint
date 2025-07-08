@@ -10,6 +10,7 @@ import { getAllProductsFromSanity } from '@/sanity/lib/product/getAllProductsFro
 import ProductSearchForm from '@/components/shared/product/ProductSearchForm';
 import { collectCategoriesAndSubcategories } from '@/lib/products/collectCategories';
 import {fetchAndProcessProducts} from "@/lib/products/data";
+import {groupProductsByCleanName} from "@/lib/products/catalog-utils";
 
 export async function generateMetadata() {
 
@@ -39,6 +40,9 @@ export default async function ProductsPage(
         fetchAndProcessProducts('MARKLI')
     ]);
     const categoriesWithSubcategories = collectCategoriesAndSubcategories(products);
+    const parsedProducts = groupProductsByCleanName(products);
+    
+    console.log('Parsed products:', parsedProducts);
 
     return (
         <>
