@@ -42,12 +42,12 @@ export function groupProductsByCleanName(products: any[], categories: any[], bra
 	products.forEach((product) => {
 		// Получаем исходное название
 		// const rawName = product.product?.[0]?._?.trim() || 'Без названия';
-		const rawName = product.name?.[0]?.trim() || 'Без названия';
+		const rawName = product.product?.[0]?._?.trim() || product.name?.[0]?.trim() || 'Без названия';
 
 		// Удаляем цвет и размер после последней запятой (например: "Ланъярд из полиэстера HOST, Черный XL." -> "Ланъярд из полиэстера HOST")
 		const cleanName = rawName.split(',')[0].trim();
 
-		const color = product.vcolor?.[0]?.trim() || getColorsFromParams(product)[0] || '';
+		const color = product.vcolor?.[0]?.trim() || getColorsFromParams(product)[0]?.trim() || '';
 		const size = product.size_range?.[0]?.trim() || '';
 		// Get full category path
 		const categoryPath = getFullCategoryPath(product.categoryId?.[0], categoryMap);
@@ -56,10 +56,8 @@ export function groupProductsByCleanName(products: any[], categories: any[], bra
 
 		if (!grouped[cleanName]) {
 			grouped[cleanName] = {
-				// _id: product?.id[0]?._ || '',
-				_id: product?.$?.id || '',
-				// id: product.id[0]._,
-				id: product?.$?.id,
+				_id: product?.id?.[0]?._ || product?.$?.id || '',
+				id: product?.id?.[0]?._ || product?.$?.id,
 				name: cleanName,
 				colors: new Set(),
 				sizes: new Set(),
@@ -76,20 +74,14 @@ export function groupProductsByCleanName(products: any[], categories: any[], bra
 				>(), // Map to store unique variations
 				price: getPrice(product.price?.[0], 1 - priceTransform(Companies.ARTE.discount)),
 				url: product.url?.[0] || '',
-				// image: product.images_urls[0]?.split(',')[0],
-				image: product.picture?.[0]?.split(',')[0] || '',
-				// images_urls: product.images_urls?.[0],
-				images_urls: product.picture?.[0] || '',
-				// description: product.general_description?.[0],
-				description: product.description?.[0] || '',
-				// variation_description: product.variation_description?.[0],
-				variation_description: product.param?.[0] || '',
-				category: categoryPath[0],
-				subcategory: categoryPath[1],
-				// stock: product.stock?.[0],
-				stock: parseInt(product.stock_minsk?.[0] || '0') + parseInt(product.stock_shipper?.[0] || '0'),
-				// sku: product.sku?.[0]
-				sku: product.vendorCode?.[0] || '',
+				image: product.images_urls?.[0]?.split(',')[0] || product.picture?.[0]?.split(',')[0] || '',
+				images_urls: product.images_urls?.[0] || product.picture?.[0] || '',
+				description: product.general_description?.[0] || product.description?.[0] || '',
+				variation_description: product.variation_description?.[0] || product.param?.[0] || '',
+				category: product.category?.[0]?.split('|')[0] || categoryPath[0] || '',
+				subcategory: product.category?.[0]?.split('|')[0] || categoryPath[1] || '',
+				stock: product.stock?.[0] || parseInt(product.stock_minsk?.[0] || '0') + parseInt(product.stock_shipper?.[0] || '0'),
+				sku: product.sku?.[0] || product.vendorCode?.[0] || '',
 				brand,
 			};
 		}
@@ -101,16 +93,13 @@ export function groupProductsByCleanName(products: any[], categories: any[], bra
 		if (!grouped[cleanName].items.has(variationKey)) {
 			const {picture} = product;
 			const vars = {
-				// id: id[0]._,
-				id: product.$?.id,
+				id: product?.id?.[0]?._ || product.$?.id || '',
 				cover: picture?.[0]?.split(',')[0] || '',
 				images_urls: picture?.[0] || '',
 				color,
 				size,
-				// stock: product.stock?.[0],
-				// sku: product.sku?.[0],
-				stock: parseInt(product.stock_minsk?.[0] || '0') + parseInt(product.stock_shipper?.[0] || '0'),
-				sku: product.vendorCode?.[0] || '',
+				stock: product.stock?.[0] || parseInt(product.stock_minsk?.[0] || '0') + parseInt(product.stock_shipper?.[0] || '0'),
+				sku: product.sku?.[0] || product.vendorCode?.[0] || '',
 				brand,
 			};
 

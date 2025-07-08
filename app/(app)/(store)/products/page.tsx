@@ -8,7 +8,7 @@ import Section from '@/components/layout/Section';
 import ProductsView from '@/components/shared/product/ProductsView';
 import ProductSearchForm from '@/components/shared/product/ProductSearchForm';
 import { collectCategoriesAndSubcategories } from '@/lib/products/collectCategories';
-import {fetchAndProcessProducts, fetchProductsData} from "@/lib/products/data";
+import {fetchProductsData} from "@/lib/products/data";
 
 export async function generateMetadata() {
 
