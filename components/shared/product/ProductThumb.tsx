@@ -55,9 +55,9 @@ const ProductThumb: FC<ProductThumbProps> = ({ item, ...props }) => {
                 />
                 <div className='flex flex-col gap-2'>
                     <span className="text-xl font-semibold self-start text-foreground">{`${price} Br`}</span>
-                    <p className="flex flex-col text-foreground/90 line-clamp-2 text-xs sm:text-sm">
+                    <p className="flex flex-col text-foreground/90 text-xs sm:text-sm" title={name}>
                         <span className='text-xs'>{brand}</span>
-                        <span>{name}</span>
+                        <span className='line-clamp-2'>{name}</span>
                     </p>
                     <span className="text-gray-500 font-light text-xs truncate w-full">{Number(totalStock()) > 0 ? `В наличии (${totalStock()})` : <span className="text-red-500">Нет в наличии</span>}</span>
                 </div>
