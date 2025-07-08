@@ -39,8 +39,6 @@ export default async function ProductsPage(
     ]);
     const categoriesWithSubcategories = collectCategoriesAndSubcategories(products);
 
-    console.log('Fetched products:', products);
-
     return (
         <>
             <section className="py-12 md:py-24 relative after:absolute after:inset-0 after:bg-gradient-to-t after:from-black after:to-transparent">

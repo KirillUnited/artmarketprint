@@ -1,5 +1,6 @@
 import {getPrice, priceTransform} from '../getPrice';
 import {Companies} from './companies';
+import {buildCategoryMap, getFullCategoryPath} from "@/lib/products/data";
 
 // Типы товара
 export interface RawProduct {
@@ -30,11 +31,13 @@ export interface CatalogProduct extends Omit<RawProduct, 'name'> {
 /**
  * Группировка товаров по "чистому" названию без цвета и размера
  * @param {Array} products - исходный массив товаров
+ * @param categories - массив категорий
  * @param brand - название бренда
  * @returns {Array} - сгруппированный массив товаров
  */
-export function groupProductsByCleanName(products: any[], brand = '') {
+export function groupProductsByCleanName(products: any[], categories: any[], brand = '') {
 	const grouped: Record<string, any> = {};
+	const categoryMap = buildCategoryMap(categories);
 
 	products.forEach((product) => {
 		// Получаем исходное название
@@ -46,7 +49,8 @@ export function groupProductsByCleanName(products: any[], brand = '') {
 
 		const color = product.vcolor?.[0]?.trim() || getColorsFromParams(product)[0] || '';
 		const size = product.size_range?.[0]?.trim() || '';
-
+		// Get full category path
+		const categoryPath = getFullCategoryPath(product.categoryId?.[0], categoryMap);
 		// Create unique key for product variation
 		const variationKey = `${color || ''}:${size || ''}`;
 
@@ -80,8 +84,8 @@ export function groupProductsByCleanName(products: any[], brand = '') {
 				description: product.description?.[0] || '',
 				// variation_description: product.variation_description?.[0],
 				variation_description: product.param?.[0] || '',
-				// category: product.category[0].split('|')[0],
-				// subcategory: product.category[0].split('|')[1],
+				category: categoryPath[0],
+				subcategory: categoryPath[1],
 				// stock: product.stock?.[0],
 				stock: parseInt(product.stock_minsk?.[0] || '0') + parseInt(product.stock_shipper?.[0] || '0'),
 				// sku: product.sku?.[0]

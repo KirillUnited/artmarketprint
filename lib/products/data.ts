@@ -62,14 +62,32 @@ export async function getXmlDataJSON(url: string) {
 	}
 }
 
-export function buildCategoryMap(categories: XmlCategory[]): Record<string, string> {
-	const categoryMap: Record<string, string> = {};
+export function buildCategoryMap(categories: XmlCategory[]): Record<string, { name: string; parentId?: string }> {
+	const categoryMap: Record<string, { name: string; parentId?: string }> = {};
 
 	categories.forEach((cat) => {
-		categoryMap[cat.$.id] = cat._;
+		categoryMap[cat.$.id] = {
+			name: cat._,
+			parentId: cat.$.parentId
+		};
 	});
 
 	return categoryMap;
+}
+
+/**
+ * Gets the full category path including all parent categories
+ */
+export function getFullCategoryPath(categoryId: string, categoryMap: ReturnType<typeof buildCategoryMap>): string[] {
+	const path: string[] = [];
+	let currentId: string | undefined = categoryId;
+
+	while (currentId && categoryMap[currentId]) {
+		path.unshift(categoryMap[currentId].name);
+		currentId = categoryMap[currentId].parentId;
+	}
+
+	return path;
 }
 
 export function getBrandFromUrl(url: string): string {
@@ -85,6 +103,7 @@ export function processProduct(product: XmlProduct, categoryMap: Record<string, 
 
 		// Extract parameters
 		const parameters: Record<string, string> = {};
+
 		if (Array.isArray(product.param)) {
 			product.param.forEach((param) => {
 				if (param.$.name && param._) {
@@ -170,15 +189,14 @@ export async function fetchProductsData(companyId): Promise<any[]> {
 
 	const data = await getXmlDataJSON(company.product_data_url);
 
-	console.log('Fetched data from:', company.name, data);
+	console.log('Fetch data from:', company.name);
 
 	if (!data) {
 		return [];
 	}
 
 	const products = data.xml_catalog?.shop?.[0]?.offers?.[0]?.offer || [];
+	const categories = data.xml_catalog?.shop?.[0]?.categories?.[0]?.category || [];
 
-    console.log('Fetched products:', products);
-
-	return groupProductsByCleanName(products, company.name);
+	return groupProductsByCleanName(products, categories, company.name);
 }
