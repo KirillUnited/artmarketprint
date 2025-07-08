@@ -6,11 +6,9 @@ import { getSanityDocuments } from '@/sanity/lib/fetch-sanity-data';
 import { NAVIGATION_QUERY } from '@/sanity/lib/queries';
 import Section from '@/components/layout/Section';
 import ProductsView from '@/components/shared/product/ProductsView';
-import { getAllProductsFromSanity } from '@/sanity/lib/product/getAllProductsFromSanity';
 import ProductSearchForm from '@/components/shared/product/ProductSearchForm';
 import { collectCategoriesAndSubcategories } from '@/lib/products/collectCategories';
-import {fetchAndProcessProducts} from "@/lib/products/data";
-import {groupProductsByCleanName} from "@/lib/products/catalog-utils";
+import {fetchAndProcessProducts, fetchProductsData} from "@/lib/products/data";
 
 export async function generateMetadata() {
 
@@ -37,12 +35,11 @@ export default async function ProductsPage(
     const [breadcrumbs, products] = await Promise.all([
         getSanityDocuments(NAVIGATION_QUERY),
         // getAllProductsFromSanity(),
-        fetchAndProcessProducts('MARKLI')
+        fetchProductsData('MARKLI')
     ]);
     const categoriesWithSubcategories = collectCategoriesAndSubcategories(products);
-    const parsedProducts = groupProductsByCleanName(products);
-    
-    console.log('Parsed products:', parsedProducts);
+
+    console.log('Fetched products:', products);
 
     return (
         <>

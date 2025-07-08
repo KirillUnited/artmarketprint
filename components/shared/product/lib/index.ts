@@ -38,4 +38,6 @@ export const getStockForSelectedColor = (selectedColor: string, items: any) => {
     return selectedItem?.stock ?? null;
 };
 // Calculate total stock
-export const getTotalStock = (items: any[]) => () => items.reduce((total, item) => total + Number(item.stock), 0);
+export const getTotalStock = (items: any[]) => () => {
+    return items.reduce((total, item) => total + Number(item.stock), 0);
+};

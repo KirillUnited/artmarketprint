@@ -16,6 +16,7 @@ export interface ProductData {
     items: any;
     stock: string;
     sku: string;
+    brand?: string;
 }
 
 export interface Product {
@@ -36,6 +37,7 @@ export interface Product {
     items: any;
     stock: string;
     sku: string;
+    brand?: string;
 }
 
 export interface ColorItemProps {

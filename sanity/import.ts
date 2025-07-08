@@ -22,7 +22,8 @@ export function transform(external: Product) {
         subcategory: external.subcategory,
         items: external.items,
         stock: external.stock,
-        sku: external.sku
+        sku: external.sku,
+        brand: external.brand
     };
 }
 

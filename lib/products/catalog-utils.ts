@@ -14,6 +14,7 @@ export interface RawProduct {
   images_urls: string;
   name: string;
   price: number;
+  brand?: string;
 }
 
 export interface ProductVariation {
@@ -29,14 +30,16 @@ export interface CatalogProduct extends Omit<RawProduct, 'name'> {
 /**
  * Группировка товаров по "чистому" названию без цвета и размера
  * @param {Array} products - исходный массив товаров
+ * @param brand - название бренда
  * @returns {Array} - сгруппированный массив товаров
  */
-export function groupProductsByCleanName(products: any[]) {
+export function groupProductsByCleanName(products: any[], brand='') {
   const grouped: Record<string, any> = {};
 
   products.forEach(product => {
     // Получаем исходное название
-    const rawName = product.product?.[0]?._?.trim() || 'Без названия';
+    // const rawName = product.product?.[0]?._?.trim() || 'Без названия';
+    const rawName = product.name?.[0]?.trim() || 'Без названия';
 
     // Удаляем цвет и размер после последней запятой (например: "Ланъярд из полиэстера HOST, Черный XL." -> "Ланъярд из полиэстера HOST")
     const cleanName = rawName.split(',')[0].trim();
@@ -49,22 +52,31 @@ export function groupProductsByCleanName(products: any[]) {
 
     if (!grouped[cleanName]) {
       grouped[cleanName] = {
-        _id: product?.id[0]?._ || '',
-        id: product.id[0]._,
+        // _id: product?.id[0]?._ || '',
+        _id: product?.$?.id || '',
+        // id: product.id[0]._,
+        id: product?.$?.id,
         name: cleanName,
         colors: new Set(),
         sizes: new Set(),
         items: new Map<string, { id: string, images_urls: string, color: string, cover: string, stock: string, sku: string }>(), // Map to store unique variations
         price: getPrice(product.price?.[0], (1 - priceTransform(Companies.ARTE.discount))),
-        url: product.url?.[0],
-        image: product.images_urls[0]?.split(',')[0],
-        images_urls: product.images_urls?.[0],
-        description: product.general_description?.[0],
-        variation_description: product.variation_description?.[0],
-        category: product.category[0].split('|')[0],
-        subcategory: product.category[0].split('|')[1],
-        stock: product.stock?.[0],
-        sku: product.sku?.[0]
+        url: product.url?.[0] || '',
+        // image: product.images_urls[0]?.split(',')[0],
+        image: product.picture?.[0]?.split(',')[0] || '',
+        // images_urls: product.images_urls?.[0],
+        images_urls: product.picture?.[0] || '',
+        // description: product.general_description?.[0],
+        description: product.description?.[0] || '',
+        // variation_description: product.variation_description?.[0],
+        variation_description: product.param?.[0] || '',
+        // category: product.category[0].split('|')[0],
+        // subcategory: product.category[0].split('|')[1],
+        // stock: product.stock?.[0],
+        stock: parseInt(product.stock_minsk?.[0] || '0') + parseInt(product.stock_shipper?.[0] || '0'),
+        // sku: product.sku?.[0]
+        sku: product.vendorCode?.[0] || '',
+        brand
       };
     }
 
@@ -73,14 +85,18 @@ export function groupProductsByCleanName(products: any[]) {
 
     // Only store unique variations
     if (!grouped[cleanName].items.has(variationKey)) {
-      const { id, images_urls, vcolor } = product;
+      const { picture } = product;
       const vars = {
-        id: id[0]._,
-        cover: images_urls[0].split(',')[0],
-        images_urls,
-        color: vcolor[0],
-        stock: product.stock?.[0],
-        sku: product.sku?.[0]
+        // id: id[0]._,
+        id: product.$?.id,
+        cover: picture?.[0]?.split(',')[0] || '',
+        images_urls: picture?.[0] || '',
+        color: product.vcolor?.[0] || '',
+        // stock: product.stock?.[0],
+        // sku: product.sku?.[0],
+        stock: parseInt(product.stock_minsk?.[0] || '0') + parseInt(product.stock_shipper?.[0] || '0'),
+        sku: product.vendorCode?.[0] || '',
+        brand
       };
 
       grouped[cleanName].items.set(variationKey, vars);

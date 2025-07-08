@@ -21,11 +21,12 @@ interface ProductThumbProps extends React.HTMLAttributes<HTMLDivElement> {
  * @returns {JSX.Element} The JSX element representing the product thumbnail card.
  */
 const ProductThumb: FC<ProductThumbProps> = ({ item, ...props }) => {
-    const id = item.id;
-    const price = item.price;
-    const name = item.name;
-    const image = item?.images[0]?.split(',')[0];
-    // const totalStock = getTotalStock(item.items);
+    const id = item.id || item._id || '';
+    const price = item.price || 0;
+    const name = item.name || '';
+    const image = item?.image || '/images/product-no-image.jpg';
+    const totalStock = getTotalStock(item.items);
+    const brand = item.brand || '';
 
     return (
         <Card
@@ -52,10 +53,13 @@ const ProductThumb: FC<ProductThumbProps> = ({ item, ...props }) => {
                     src={image}
                     width={220}
                 />
-                <div>
-                    <span className="text-xl font-semibold self-start text-foreground">{`${price} BYN`}</span>
-                    <p className="text-gray-900 line-clamp-2 text-xs sm:text-sm">{name}</p>
-                    {/*<span className="text-gray-500 font-light text-xs truncate w-full">{Number(totalStock()) > 0 ? `В наличии (${totalStock()})` : <span className="text-red-500">Нет в наличии</span>}</span>*/}
+                <div className='flex flex-col gap-2'>
+                    <span className="text-xl font-semibold self-start text-foreground">{`${price} Br`}</span>
+                    <p className="flex flex-col text-foreground/90 line-clamp-2 text-xs sm:text-sm">
+                        <span className='text-xs'>{brand}</span>
+                        <span>{name}</span>
+                    </p>
+                    <span className="text-gray-500 font-light text-xs truncate w-full">{Number(totalStock()) > 0 ? `В наличии (${totalStock()})` : <span className="text-red-500">Нет в наличии</span>}</span>
                 </div>
             </CardBody>
             {
