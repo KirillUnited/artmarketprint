@@ -35,9 +35,13 @@ export interface CatalogProduct extends Omit<RawProduct, 'name'> {
  * @param brand - название бренда
  * @returns {Array} - сгруппированный массив товаров
  */
-export function groupProductsByCleanName(products: any[], categories: any[], brand = '') {
+export function groupProductsByCleanName(products: any[], categories = [], brand = '') {
 	const grouped: Record<string, any> = {};
 	const categoryMap = buildCategoryMap(categories);
+
+	if (!Array.isArray(products) || products.length === 0) {
+		return [];
+	}
 
 	products.forEach((product) => {
 		// Получаем исходное название
