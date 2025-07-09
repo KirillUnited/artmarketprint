@@ -7,14 +7,14 @@ import { ColorItemProps } from './product.types';
 import { filterItemsByColor } from './lib';
 import Loader from '@/components/ui/Loader';
 import { Button } from '@heroui/button';
-import {ArrowDownIcon, ChevronDownIcon, PlusIcon} from 'lucide-react';
+import { ChevronDownIcon } from 'lucide-react';
 
 const ColorListItem = ({ item }: { item: ColorItemProps }) => (
     <li key={item.id}>
         <HeroImage
             as={NextImage}
             alt={item.color || "color"}
-            src={item.cover}
+            src={item.cover || "/images/product-no-image.jpg"}
             width={36}
             height={36}
             className="object-contain aspect-square"

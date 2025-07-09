@@ -35,7 +35,8 @@ export const CatFilter: FC<CatFilterProps> = ({ sortOrder, onFilterChange, categ
             >
                 {categories && categories.map(({ category, count, subcategories = [] }, index) => (
                     <AccordionItem 
-                        key={index} 
+                        key={index}
+                        textValue={category}
                         title={
                             <div className="flex justify-between items-center w-full">
                                 <span>{category}</span>
