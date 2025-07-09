@@ -196,7 +196,7 @@ export function getFullCategoryPath(categoryId: string, categoryMap: ReturnType<
 // 	return processedProducts;
 // }
 
-export async function fetchProductsData(companyId): Promise<any[]> {
+export async function fetchProductsData(companyId: keyof typeof Companies): Promise<any[]> {
 	const company = Companies[companyId];
 
 	if (!company) {

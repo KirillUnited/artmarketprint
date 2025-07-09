@@ -32,11 +32,13 @@ export default async function ProductsPage(
     }
 ) {
     // Fetch data in parallel using Promise.all for better performance
-    const [breadcrumbs, products] = await Promise.all([
+    const [breadcrumbs, ...productsArrays] = await Promise.all([
         getSanityDocuments(NAVIGATION_QUERY),
-        // getAllProductsFromSanity(),
-        fetchProductsData('MARKLI')
+        fetchProductsData('MARKLI'),
+        fetchProductsData('OASIS'),
     ]);
+
+    const products = productsArrays.flat(); // Combine all products into a single array
     const categoriesWithSubcategories = collectCategoriesAndSubcategories(products);
 
     return (

@@ -1,6 +1,6 @@
 import {getPrice, priceTransform} from '../getPrice';
 import {Companies} from './companies';
-import {buildCategoryMap, getFullCategoryPath} from "@/lib/products/data";
+import {buildCategoryMap, getFullCategoryPath} from '@/lib/products/data';
 
 // Типы товара
 export interface RawProduct {
@@ -29,11 +29,11 @@ export interface CatalogProduct extends Omit<RawProduct, 'name'> {
 }
 
 /**
- * Группировка товаров по "чистому" названию без цвета и размера
- * @param {Array} products - исходный массив товаров
- * @param categories - массив категорий
- * @param brand - название бренда
- * @returns {Array} - сгруппированный массив товаров
+ * Group products by "clean" name without color and size
+ * @param {Array} products - source array of products
+ * @param categories - array of categories
+ * @param brand - brand name
+ * @returns {Array} - grouped array of products
  */
 export function groupProductsByCleanName(products: any[], categories = [], brand = '') {
 	const grouped: Record<string, any> = {};
@@ -44,24 +44,41 @@ export function groupProductsByCleanName(products: any[], categories = [], brand
 	}
 
 	products.forEach((product) => {
-		// Получаем исходное название
-		// const rawName = product.product?.[0]?._?.trim() || 'Без названия';
-		const rawName = product.product?.[0]?._?.trim() || product.name?.[0]?.trim() || 'Без названия';
+		const stock = product.stock?.[0] || parseInt(product.stock_minsk?.[0] || '0') + parseInt(product.stock_shipper?.[0] || '0') || 0;
 
-		// Удаляем цвет и размер после последней запятой (например: "Ланъярд из полиэстера HOST, Черный XL." -> "Ланъярд из полиэстера HOST")
+		// Not add product if stock is zero
+		if (stock == 0) {
+			return;
+		}
+
+		// Get original name
+		const rawName = product.product?.[0]?._?.trim() || product.name?.[0]?.trim() || 'Unnamed';
+		// Remove color and size after last comma (for example: "Lanyard from polyester HOST, Black XL." -> "Lanyard from polyester HOST")
 		const cleanName = rawName.split(',')[0].trim();
-
+		// Get color and size
 		const color = product.vcolor?.[0]?.trim() || getColorsFromParams(product)[0]?.trim() || '';
 		const size = product.size_range?.[0]?.trim() || '';
-		// Get full category path
-		const categoryPath = getFullCategoryPath(product.categoryId?.[0], categoryMap);
 		// Create unique key for product variation
 		const variationKey = `${color || ''}:${size || ''}`;
+		// Get full category path
+		const categoryPath = getFullCategoryPath(product.categoryId?.[0], categoryMap);
+		// Get category and subcategory
+		const category = product.category?.[0]?.split('|')[0] || categoryPath[0] || '';
+		const subcategory = product.category?.[0]?.split('|')[0] || categoryPath[1] || '';
+		// Get product properties
+		const productId = product?.id?.[0]?._ || product?.$?.id || '';
+		const sku = product.sku?.[0] || product.vendorCode?.[0] || '';
+		const gallery = product.images_urls?.[0] || product.picture?.[0] || '';
+		const thumbnailImage = gallery?.split(',')[0] || gallery?.split(',')[0] || '';
+		const price = getPrice(product.price?.[0], 1 - priceTransform(Companies.ARTE.discount));
+		const description = product.general_description?.[0] || product.description?.[0] || '';
+		const variation_description = product.variation_description?.[0] || product.param?.[0] || '';
+		const url = product.url?.[0] || '';
 
 		if (!grouped[cleanName]) {
 			grouped[cleanName] = {
-				_id: product?.id?.[0]?._ || product?.$?.id || '',
-				id: product?.id?.[0]?._ || product?.$?.id,
+				_id: productId,
+				id: productId,
 				name: cleanName,
 				colors: new Set(),
 				sizes: new Set(),
@@ -76,16 +93,16 @@ export function groupProductsByCleanName(products: any[], categories = [], brand
 						sku: string;
 					}
 				>(), // Map to store unique variations
-				price: getPrice(product.price?.[0], 1 - priceTransform(Companies.ARTE.discount)),
-				url: product.url?.[0] || '',
-				image: product.images_urls?.[0]?.split(',')[0] || product.picture?.[0]?.split(',')[0] || '',
-				images_urls: product.images_urls?.[0] || product.picture?.[0] || '',
-				description: product.general_description?.[0] || product.description?.[0] || '',
-				variation_description: product.variation_description?.[0] || product.param?.[0] || '',
-				category: product.category?.[0]?.split('|')[0] || categoryPath[0] || '',
-				subcategory: product.category?.[0]?.split('|')[0] || categoryPath[1] || '',
-				stock: product.stock?.[0] || parseInt(product.stock_minsk?.[0] || '0') + parseInt(product.stock_shipper?.[0] || '0'),
-				sku: product.sku?.[0] || product.vendorCode?.[0] || '',
+				price,
+				url,
+				image: thumbnailImage,
+				images_urls: gallery,
+				description,
+				variation_description,
+				category,
+				subcategory,
+				stock,
+				sku,
 				brand,
 			};
 		}
@@ -95,15 +112,14 @@ export function groupProductsByCleanName(products: any[], categories = [], brand
 
 		// Only store unique variations
 		if (!grouped[cleanName].items.has(variationKey)) {
-			const {picture} = product;
 			const vars = {
-				id: product?.id?.[0]?._ || product.$?.id || '',
-				cover: picture?.[0]?.split(',')[0] || '',
-				images_urls: picture?.[0] || '',
+				id: productId,
+				cover: thumbnailImage,
+				images_urls: gallery,
 				color,
 				size,
-				stock: product.stock?.[0] || parseInt(product.stock_minsk?.[0] || '0') + parseInt(product.stock_shipper?.[0] || '0'),
-				sku: product.sku?.[0] || product.vendorCode?.[0] || '',
+				stock,
+				sku,
 				brand,
 			};
 
