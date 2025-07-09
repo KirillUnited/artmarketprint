@@ -1,9 +1,7 @@
 import { importDataToSanity } from "@/sanity/import";
-import { getXmlData } from "./fetch-artegifts-data";
-import {getAllProducts} from "@/lib/actions/product.actions";
+import {fetchAllProductsData} from "@/lib/products/data";
 
 export async function updateProducts() {
-    // const jsonData = await getXmlData();
-    // const AllProducts = await getAllProducts();
-    const importedData = await importDataToSanity();
+    const products = await fetchAllProductsData();
+    const importedData = await importDataToSanity(products);
 }
