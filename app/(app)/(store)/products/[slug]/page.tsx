@@ -67,10 +67,8 @@ export default async function ProductPage({ params }: { params: Promise<Props> }
 				</div>
 			</Section>
 		);
-
 	const { id, name: productTitle = '', description: general_description = '', variation_description = '', price = [], colors, sizes, category, items, stock, sku } = (product as any) || {};
 	const totalStock = getTotalStock(items);
-	const productPrice = price;
 
 	return (
 		<>
@@ -91,7 +89,7 @@ export default async function ProductPage({ params }: { params: Promise<Props> }
 						<Card className="bg-indigo-100">
 							<CardBody>
 								<p className="my-0">
-									<ProductPrice price={productPrice} productId={id} />
+									<ProductPrice price={price} productId={id} />
 								</p>
 								<ProductStock items={items} />
 							</CardBody>
