@@ -23,8 +23,7 @@ export async function getAllProductsFromSanity(): Promise<any[]> {
         name,
         price,
         image,
-        items,
-        "total": count(*[_type == "product"])
+        items
         }`);
 
     try {
