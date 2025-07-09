@@ -214,7 +214,7 @@ export async function fetchProductsData(companyId: keyof typeof Companies): Prom
 	const products = data.xml_catalog?.shop?.[0]?.offers?.[0]?.offer || [];
 	const categories = data.xml_catalog?.shop?.[0]?.categories?.[0]?.category || [];
 
-	return groupProductsByCleanName(products, categories, company.name);
+	return groupProductsByCleanName(products, categories, company.abbr);
 }
 
 export async function fetchAllProductsData() {

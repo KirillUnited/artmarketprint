@@ -29,7 +29,7 @@ export async function importDataToSanity(products: Product[]) {
 	try {
 		const documents = products.map(transform);
 
-		console.log(documents.length);
+		console.log('🚀 Importing total products', documents.length);
 
 		// Split documents into chunks
 		for (let i = 0; i < documents.length; i += CHUNK_SIZE) {
