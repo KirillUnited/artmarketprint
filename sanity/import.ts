@@ -1,10 +1,5 @@
 import {Product} from '@/components/shared/product/product.types';
 import {client} from './client';
-import {getAllProducts} from '@/lib/actions/product.actions';
-import {groupProductsByCleanName} from '@/lib/products/catalog-utils';
-import {getSanityDocuments} from "@/sanity/lib/fetch-sanity-data";
-import {NAVIGATION_QUERY} from "@/sanity/lib/queries";
-import {fetchProductsData} from "@/lib/products/data";
 
 const CHUNK_SIZE = 50; // Process 50 products at a time
 
@@ -30,14 +25,10 @@ export function transform(external: Product) {
 	};
 }
 
-export async function importDataToSanity() {
+export async function importDataToSanity(products: Product[]) {
 	try {
-		// const AllProducts = await getAllProducts();
-		const [...productsArrays] = await Promise.all([
-			fetchProductsData('MARKLI'),
-		]);
-		const parsedProducts = productsArrays.flat();
-		const documents = parsedProducts.map(transform);
+		const documents = products.map(transform);
+
 		console.log(documents.length);
 
 		// Split documents into chunks
