@@ -40,6 +40,8 @@ export function groupProductsByCleanName(products: any[], categories = [], brand
 	const categoryMap = buildCategoryMap(categories);
 
 	if (!Array.isArray(products) || products.length === 0) {
+		console.error('groupProductsByCleanName: products is not an array or is empty');
+
 		return [];
 	}
 
@@ -61,7 +63,8 @@ export function groupProductsByCleanName(products: any[], categories = [], brand
 		// Create unique key for product variation
 		const variationKey = `${color || ''}:${size || ''}`;
 		// Get full category path
-		const categoryPath = getFullCategoryPath(product.categoryId?.[0], categoryMap);
+		const categoryId = product.categoryId?.[0];
+		const categoryPath = categoryId ? getFullCategoryPath(categoryId, categoryMap) : [];
 		// Get category and subcategory
 		const category = product.category?.[0]?.split('|')[0] || categoryPath[0] || '';
 		const subcategory = product.category?.[0]?.split('|')[0] || categoryPath[1] || '';
@@ -72,7 +75,7 @@ export function groupProductsByCleanName(products: any[], categories = [], brand
 		const thumbnailImage = gallery?.split(',')[0] || gallery?.split(',')[0] || '';
 		const price = getPrice(product.price?.[0], 1 - priceTransform(Companies.ARTE.discount));
 		const description = product.general_description?.[0] || product.description?.[0] || '';
-		const variation_description = product.variation_description?.[0] || product.param?.[0] || '';
+		// const variation_description = product.variation_description?.[0] || product.param?.[0] || '';
 		const url = product.url?.[0] || '';
 
 		if (!grouped[cleanName]) {
@@ -98,7 +101,7 @@ export function groupProductsByCleanName(products: any[], categories = [], brand
 				image: thumbnailImage,
 				images_urls: gallery,
 				description,
-				variation_description,
+				// variation_description,
 				category,
 				subcategory,
 				stock,

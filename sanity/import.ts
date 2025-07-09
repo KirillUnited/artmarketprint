@@ -1,55 +1,64 @@
-import { Product } from "@/components/shared/product/product.types";
-import { client } from "./client";
-import { getAllProducts } from "@/lib/actions/product.actions";
-import { groupProductsByCleanName } from "@/lib/products/catalog-utils";
+import {Product} from '@/components/shared/product/product.types';
+import {client} from './client';
+import {getAllProducts} from '@/lib/actions/product.actions';
+import {groupProductsByCleanName} from '@/lib/products/catalog-utils';
+import {getSanityDocuments} from "@/sanity/lib/fetch-sanity-data";
+import {NAVIGATION_QUERY} from "@/sanity/lib/queries";
+import {fetchProductsData} from "@/lib/products/data";
 
 const CHUNK_SIZE = 50; // Process 50 products at a time
 
 export function transform(external: Product) {
-    return {
-        _type: 'product',
-        _id: external._id,
-        id: external.id,
-        name: external.name,
-        colors: external.colors,
-        sizes: external.sizes,
-        price: external.price,
-        image: external.image,
-        images_urls: external.images_urls,
-        description: external.description,
-        variation_description: external.variation_description,
-        category: external.category,
-        subcategory: external.subcategory,
-        items: external.items,
-        stock: external.stock,
-        sku: external.sku,
-        brand: external.brand
-    };
+	return {
+		_type: 'product',
+		_id: external._id,
+		id: external.id,
+		name: external.name,
+		colors: external.colors,
+		sizes: external.sizes,
+		price: external.price,
+		image: external.image,
+		images_urls: external.images_urls,
+		description: external.description,
+		variation_description: external.variation_description,
+		category: external.category,
+		subcategory: external.subcategory,
+		items: external.items,
+		stock: external.stock,
+		sku: external.sku,
+		brand: external.brand,
+	};
 }
 
-export async function importDataToSanity(data: any) {
-    try {
-        const parsedProducts = groupProductsByCleanName(data);
-        const documents = parsedProducts.map(transform);
+export async function importDataToSanity() {
+	try {
+		// const AllProducts = await getAllProducts();
+		const [...productsArrays] = await Promise.all([
+			fetchProductsData('MARKLI'),
+		]);
+		const parsedProducts = productsArrays.flat();
+		const documents = parsedProducts.map(transform);
+		console.log(documents.length);
 
-        // Split documents into chunks
-        for (let i = 0; i < documents.length; i += CHUNK_SIZE) {
-            const chunk = documents.slice(i, i + CHUNK_SIZE);
-            let transaction = client.transaction();
+		// Split documents into chunks
+		for (let i = 0; i < documents.length; i += CHUNK_SIZE) {
+			const chunk = documents.slice(i, i + CHUNK_SIZE);
+			let transaction = client.transaction();
 
-            chunk.forEach(document => {
-                transaction.createOrReplace(document);
-            });
+			chunk.forEach((document) => {
+				transaction.createOrReplace(document);
+			});
 
-            await transaction.commit();
-            console.log(`✅ Imported products ${i + 1} to ${Math.min(i + CHUNK_SIZE, documents.length)}`);
+			await transaction.commit();
+			console.log(`✅ Imported products ${i + 1} to ${Math.min(i + CHUNK_SIZE, documents.length)}`);
 
-            // Add a small delay between chunks to prevent rate limiting
-            await new Promise(resolve => setTimeout(resolve, 1000));
-        }
+			// Add a small delay between chunks to prevent rate limiting
+			await new Promise((resolve) => setTimeout(resolve, 1000));
+		}
 
-        console.log('✅ All products imported successfully!');
-    } catch (error) {
-        console.error('❌ Import failed:');
-    }
+		console.log('✅ All products imported successfully!');
+	} catch (error) {
+		console.error(error);
+		console.error('❌ Import failed:');
+	}
 }
