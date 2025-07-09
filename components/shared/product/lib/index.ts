@@ -23,9 +23,11 @@ export const getVariantImages = (items: any, selectedColor: string) => {
 
     if (!selectedVariant) return productImages;
 
-    const variantImages = [
-        ...(selectedVariant.images_urls[0].split(',') || [])
-    ].filter(Boolean);
+    const variantImages = Array.isArray(selectedVariant.images_urls)
+        ? selectedVariant.images_urls[0].split(',').filter(Boolean)
+        : selectedVariant.images_urls
+            ? selectedVariant.images_urls.split(',').filter(Boolean)
+            : [];
 
     return variantImages.length > 0 ? variantImages : productImages;
 };
