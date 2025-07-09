@@ -27,10 +27,9 @@ export function transform(external: Product) {
     };
 }
 
-export async function importDataToSanity() {
+export async function importDataToSanity(data: any) {
     try {
-        const AllProducts = await getAllProducts();
-        const parsedProducts = groupProductsByCleanName(AllProducts);
+        const parsedProducts = groupProductsByCleanName(data);
         const documents = parsedProducts.map(transform);
 
         // Split documents into chunks
