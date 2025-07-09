@@ -1,97 +1,160 @@
-import { getPrice, priceTransform } from "../getPrice";
-import { Companies } from "./companies";
+import {getPrice, priceTransform} from '../getPrice';
+import {Companies} from './companies';
+import {buildCategoryMap, getFullCategoryPath} from '@/lib/products/data';
 
 // Типы товара
 export interface RawProduct {
-  _id: string;
-  _type: string;
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  category: string;
-  description: string;
-  image: string;
-  images_urls: string;
-  name: string;
-  price: number;
+	_id: string;
+	_type: string;
+	_createdAt: string;
+	_updatedAt: string;
+	_rev: string;
+	category: string;
+	description: string;
+	image: string;
+	images_urls: string;
+	name: string;
+	price: number;
+	brand?: string;
 }
 
 export interface ProductVariation {
-  color: string;
-  size: string;
+	color: string;
+	size: string;
 }
 
 export interface CatalogProduct extends Omit<RawProduct, 'name'> {
-  name: string; // Очищенное название без цвета и размера
-  variations: ProductVariation[];
+	name: string; // Очищенное название без цвета и размера
+	variations: ProductVariation[];
 }
 
 /**
- * Группировка товаров по "чистому" названию без цвета и размера
- * @param {Array} products - исходный массив товаров
- * @returns {Array} - сгруппированный массив товаров
+ * Group products by "clean" name without color and size
+ * @param {Array} products - source array of products
+ * @param categories - array of categories
+ * @param brand - brand name
+ * @returns {Array} - grouped array of products
  */
-export function groupProductsByCleanName(products: any[]) {
-  const grouped: Record<string, any> = {};
+export function groupProductsByCleanName(products: any[], categories = [], brand = '') {
+	const grouped: Record<string, any> = {};
+	const categoryMap = buildCategoryMap(categories);
 
-  products.forEach(product => {
-    // Получаем исходное название
-    const rawName = product.product?.[0]?._?.trim() || 'Без названия';
+	if (!Array.isArray(products) || products.length === 0) {
+		console.error('groupProductsByCleanName: products is not an array or is empty');
 
-    // Удаляем цвет и размер после последней запятой (например: "Ланъярд из полиэстера HOST, Черный XL." -> "Ланъярд из полиэстера HOST")
-    const cleanName = rawName.split(',')[0].trim();
+		return [];
+	}
 
-    const color = product.vcolor?.[0]?.trim();
-    const size = product.size_range?.[0]?.trim();
+	products.forEach((product) => {
+		const stock = product.stock?.[0] || parseInt(product.stock_minsk?.[0] || '0') + parseInt(product.stock_shipper?.[0] || '0') || 0;
 
-    // Create unique key for product variation
-    const variationKey = `${color || ''}:${size || ''}`;
+		// Not add product if stock is zero
+		if (stock == 0) {
+			return;
+		}
 
-    if (!grouped[cleanName]) {
-      grouped[cleanName] = {
-        _id: product?.id[0]?._ || '',
-        id: product.id[0]._,
-        name: cleanName,
-        colors: new Set(),
-        sizes: new Set(),
-        items: new Map<string, { id: string, images_urls: string, color: string, cover: string, stock: string, sku: string }>(), // Map to store unique variations
-        price: getPrice(product.price?.[0], (1 - priceTransform(Companies.ARTE.discount))),
-        url: product.url?.[0],
-        image: product.images_urls[0]?.split(',')[0],
-        images_urls: product.images_urls?.[0],
-        description: product.general_description?.[0],
-        variation_description: product.variation_description?.[0],
-        category: product.category[0].split('|')[0],
-        subcategory: product.category[0].split('|')[1],
-        stock: product.stock?.[0],
-        sku: product.sku?.[0]
-      };
-    }
+		// Get original name
+		const rawName = product.product?.[0]?._?.trim() || product.name?.[0]?.trim() || 'Unnamed';
+		// Remove color and size after last comma (for example: "Lanyard from polyester HOST, Black XL." -> "Lanyard from polyester HOST")
+		const cleanName = rawName.split(',')[0].trim();
+		// Get color and size
+		const color = product.vcolor?.[0]?.trim() || getColorsFromParams(product)[0]?.trim() || '';
+		const size = product.size_range?.[0]?.trim() || '';
+		// Create unique key for product variation
+		const variationKey = `${color || ''}:${size || ''}`;
+		// Get full category path
+		const categoryId = product.categoryId?.[0];
+		const categoryPath = categoryId ? getFullCategoryPath(categoryId, categoryMap) : [];
+		// Get category and subcategory
+		const category = product.category?.[0]?.split('|')[0] || categoryPath[0] || '';
+		const subcategory = product.category?.[0]?.split('|')[0] || categoryPath[1] || '';
+		// Get product properties
+		const productId = product?.id?.[0]?._ || product?.$?.id || '';
+		const sku = product.sku?.[0] || product.vendorCode?.[0] || '';
+		const gallery = product.images_urls?.[0] || product.picture?.[0] || '';
+		const thumbnailImage = gallery?.split(',')[0] || gallery?.split(',')[0] || '';
+		const price = getPrice(product.price?.[0], 1 - priceTransform(Companies.ARTE.discount));
+		const description = product.general_description?.[0] || product.description?.[0] || '';
+		// const variation_description = product.variation_description?.[0] || product.param?.[0] || '';
+		const url = product.url?.[0] || '';
 
-    if (color) grouped[cleanName].colors.add(color);
-    if (size) grouped[cleanName].sizes.add(size);
+		if (!grouped[cleanName]) {
+			grouped[cleanName] = {
+				_id: productId,
+				id: productId,
+				name: cleanName,
+				colors: new Set(),
+				sizes: new Set(),
+				items: new Map<
+					string,
+					{
+						id: string;
+						images_urls: string;
+						color: string;
+						cover: string;
+						stock: string;
+						sku: string;
+					}
+				>(), // Map to store unique variations
+				price,
+				url,
+				image: thumbnailImage,
+				images_urls: gallery,
+				description,
+				// variation_description,
+				category,
+				subcategory,
+				stock,
+				sku,
+				brand,
+			};
+		}
 
-    // Only store unique variations
-    if (!grouped[cleanName].items.has(variationKey)) {
-      const { id, images_urls, vcolor } = product;
-      const vars = {
-        id: id[0]._,
-        cover: images_urls[0].split(',')[0],
-        images_urls,
-        color: vcolor[0],
-        stock: product.stock?.[0],
-        sku: product.sku?.[0]
-      };
+		if (color) grouped[cleanName].colors.add(color);
+		if (size) grouped[cleanName].sizes.add(size);
 
-      grouped[cleanName].items.set(variationKey, vars);
-    }
-  });
+		// Only store unique variations
+		if (!grouped[cleanName].items.has(variationKey)) {
+			const vars = {
+				id: productId,
+				cover: thumbnailImage,
+				images_urls: gallery,
+				color,
+				size,
+				stock,
+				sku,
+				brand,
+			};
 
-  // Transform the grouped data
-  return Object.values(grouped).map(entry => ({
-    ...entry,
-    colors: Array.from(entry.colors),
-    sizes: Array.from(entry.sizes),
-    items: Array.from(entry.items.values()), // Convert Map values to array
-  }));
+			grouped[cleanName].items.set(variationKey, vars);
+		}
+	});
+
+	// Transform the grouped data
+	return Object.values(grouped).map((entry) => ({
+		...entry,
+		colors: Array.from(entry.colors),
+		sizes: Array.from(entry.sizes),
+		items: Array.from(entry.items.values()), // Convert Map values to array
+	}));
+}
+
+export function formatParams(params: any[]) {
+	return params.map((param) => ({
+		name: param.$.name,
+		value: param._,
+	}));
+}
+
+export function getColorsFromParams(product: any) {
+	const params = formatParams(product.param) || [];
+	const colors = new Set<string>();
+
+	params.forEach((param) => {
+		if (param.name === 'Цвет') {
+			colors.add(param.value);
+		}
+	});
+
+	return Array.from(colors);
 }

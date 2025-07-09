@@ -23,9 +23,11 @@ export const getVariantImages = (items: any, selectedColor: string) => {
 
     if (!selectedVariant) return productImages;
 
-    const variantImages = [
-        ...(selectedVariant.images_urls[0].split(',') || [])
-    ].filter(Boolean);
+    const variantImages = Array.isArray(selectedVariant.images_urls)
+        ? selectedVariant.images_urls[0].split(',').filter(Boolean)
+        : selectedVariant.images_urls
+            ? selectedVariant.images_urls.split(',').filter(Boolean)
+            : [];
 
     return variantImages.length > 0 ? variantImages : productImages;
 };
@@ -38,4 +40,6 @@ export const getStockForSelectedColor = (selectedColor: string, items: any) => {
     return selectedItem?.stock ?? null;
 };
 // Calculate total stock
-export const getTotalStock = (items: any[]) => () => items.reduce((total, item) => total + Number(item.stock), 0);
+export const getTotalStock = (items: any[]) => () => {
+    return items.reduce((total, item) => total + Number(item.stock), 0);
+};

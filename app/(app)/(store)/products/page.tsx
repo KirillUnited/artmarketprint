@@ -6,9 +6,9 @@ import { getSanityDocuments } from '@/sanity/lib/fetch-sanity-data';
 import { NAVIGATION_QUERY } from '@/sanity/lib/queries';
 import Section from '@/components/layout/Section';
 import ProductsView from '@/components/shared/product/ProductsView';
-import { getAllProductsFromSanity } from '@/sanity/lib/product/getAllProductsFromSanity';
 import ProductSearchForm from '@/components/shared/product/ProductSearchForm';
 import { collectCategoriesAndSubcategories } from '@/lib/products/collectCategories';
+import {getAllProductsFromSanity} from "@/sanity/lib/product/getAllProductsFromSanity";
 
 export async function generateMetadata() {
 
@@ -34,7 +34,7 @@ export default async function ProductsPage(
     // Fetch data in parallel using Promise.all for better performance
     const [breadcrumbs, products] = await Promise.all([
         getSanityDocuments(NAVIGATION_QUERY),
-        getAllProductsFromSanity(),
+        getAllProductsFromSanity()
     ]);
     const categoriesWithSubcategories = collectCategoriesAndSubcategories(products);
 
