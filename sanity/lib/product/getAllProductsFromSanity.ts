@@ -13,7 +13,19 @@ export async function getAllProductsFromSanity(): Promise<any[]> {
      * The `*[_type == "product"]` syntax tells Sanity to fetch all documents of type `product`.
      * The `| order(name asc)` syntax tells Sanity to order the results by the `name` field in ascending order.
      */
-    const ALL_PRODUCTS_QUERY = defineQuery('*[_type == "product"] | order(name asc)');
+    const ALL_PRODUCTS_QUERY = defineQuery(`*[_type == "product" && stock > 30]{
+        id,
+        brand,
+        category,
+        subcategory,
+        colors,
+        sizes,
+        name,
+        price,
+        image,
+        items,
+        "total": count(*[_type == "product"])
+        }`);
 
     try {
         // Fetch the products from Sanity using the client.fetch() method
