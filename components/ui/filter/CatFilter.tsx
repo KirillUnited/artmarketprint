@@ -26,12 +26,12 @@ export const CatFilter: FC<CatFilterProps> = ({ sortOrder, onFilterChange, categ
         <div className='flex gap-4 w-full'>
             <Accordion
                 className="px-0 overflow-hidden shadow-small rounded-small bg-content1"
+                defaultExpandedKeys={categories.length === 1 ? ['0'] : []}
                 itemClasses={{
                     trigger: 'px-3 py-2 hover:bg-primary transition-colors group',
                     title: 'group-hover:text-primary-foreground transition-colors',
                 }}
-                selectionMode="multiple"
-                defaultExpandedKeys={categories.length === 1 ? ['0'] : []}
+                selectionMode="single"
             >
                 {categories && categories.map(({ category, count, subcategories = [] }, index) => (
                     <AccordionItem 
