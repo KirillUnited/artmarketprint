@@ -25,11 +25,8 @@ interface FilterGroupProps {
 export const FilterGroup: FC<FilterGroupProps> = ({ sortOrder, selectedCategory, categories, onFilterChange }) => {
   return (
     <Form className='flex flex-col gap-4'>
-      {/* Render sort filter */}
       {SortFilter({ sortOrder, selectedCategory, onFilterChange })}
-      {/* Render category filter */}
       {categories && CatFilter({ sortOrder, onFilterChange, categories })}
-      {/* Reset button to clear filters */}
       <Button color="default" radius='sm' variant="solid" type='reset' onPress={() => onFilterChange('asc', '')}>
         Сбросить
       </Button>

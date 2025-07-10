@@ -1,6 +1,6 @@
 'use client';
 import { Form } from '@heroui/form'
-import React from 'react'
+import React, {JSX} from 'react'
 import clsx from 'clsx'
 
 import BrandButton from '@/components/ui/BrandButton';
