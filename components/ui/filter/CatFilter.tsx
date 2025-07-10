@@ -2,7 +2,7 @@
 import { Accordion, AccordionItem } from "@heroui/accordion";
 import { Radio, RadioGroup } from "@heroui/radio";
 import { ScrollShadow } from "@heroui/scroll-shadow";
-import { FC } from "react";
+import {FC, JSX} from "react";
 
 export interface CategoryProps {
     category: string;
@@ -22,7 +22,11 @@ interface CatFilterProps {
  * @param {CatFilterProps} props - The properties for the CatFilter component.
  * @returns {JSX.Element} The rendered CatFilter component.
  */
-export const CatFilter: FC<CatFilterProps> = ({ sortOrder, onFilterChange, categories }) => {
+export const CatFilter: ({sortOrder, onFilterChange, categories}: {
+    sortOrder: any;
+    onFilterChange: any;
+    categories: any
+}) => JSX.Element = ({ sortOrder, onFilterChange, categories }) => {
     return (
         <div className='flex gap-4 w-full'>
             <ScrollShadow className="w-full max-h-[calc(100vh-340px)]" size={50} hideScrollBar>
@@ -35,7 +39,7 @@ export const CatFilter: FC<CatFilterProps> = ({ sortOrder, onFilterChange, categ
                     }}
                     selectionMode="single"
                 >
-                    {categories && categories.map(({ category, count, subcategories = [] }, index) => (
+                    {categories && categories.map(({ category, count, subcategories = [] }: CategoryProps, index: number) => (
                         <AccordionItem
                             key={index}
                             textValue={category}

@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Section, { SectionDescription, SectionHeading, SectionSubtitle, SectionTitle } from '@/components/layout/Section';
 import { PortableText, PortableTextComponents } from 'next-sanity';
 import { ContentCTA } from './ContentCTA';
+import {JSX} from "react";
 
 const components: PortableTextComponents = {
 	marks: {

@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import React from 'react'
+import React, {JSX} from 'react'
 
 import LogoIcon from '../../public/images/logo.png';
 

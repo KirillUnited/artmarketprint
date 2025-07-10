@@ -3,6 +3,7 @@ import Link from 'next/link';
 import clsx from 'clsx';
 import { FAQItem, FAQList } from './faqList';
 import Section, { SectionDescription, SectionHeading, SectionSubtitle, SectionTitle } from '@/components/layout/Section';
+import {JSX} from "react";
 
 /**
  * A function that renders a FAQ section with a heading, list of FAQs, and a call-to-action button.

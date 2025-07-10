@@ -1,7 +1,14 @@
 'use client';
 import { useState, FormEvent } from 'react';
 import { PhoneNumberUtil } from 'google-libphonenumber';
-import { CountryData, defaultCountries, parseCountry, usePhoneInput } from 'react-international-phone';
+import {
+    CountryData,
+    CountryIso2,
+    defaultCountries,
+    parseCountry,
+    ParsedCountry,
+    usePhoneInput
+} from 'react-international-phone';
 import { toast } from 'sonner';
 
 import { sendOrder } from '@/lib/actions/order.actions';
@@ -28,7 +35,17 @@ interface UseFormReturn {
     handleSubmit: (event: FormEvent<HTMLFormElement>) => Promise<void>;
 }
 
-const useForm = (onClose: () => void): UseFormReturn => {
+const useForm = (onClose: () => void): {
+    validPhone: boolean;
+    country: ParsedCountry;
+    setCountry: (countryIso2: CountryIso2, options?: { focusOnInput: boolean }) => void;
+    handleSubmit: (event: React.FormEvent<HTMLFormElement>) => Promise<void>;
+    handlePhoneValueChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => string;
+    inputRef: React.MutableRefObject<unknown>;
+    inputValue: string;
+    countries: CountryData[];
+    isPending: boolean
+} => {
     const [isPending, setIsPending] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
     const [phone, setPhone] = useState('');

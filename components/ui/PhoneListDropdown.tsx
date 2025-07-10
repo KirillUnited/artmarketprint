@@ -3,7 +3,7 @@ import {Dropdown, DropdownItem, DropdownMenu, DropdownTrigger} from '@heroui/dro
 import {Button} from '@heroui/button';
 import {ChevronDownIcon} from 'lucide-react';
 import {Link} from '@heroui/link';
-import React from 'react';
+import React, {JSX} from 'react';
 import {PhoneIcon} from '@/components/icons';
 
 /**

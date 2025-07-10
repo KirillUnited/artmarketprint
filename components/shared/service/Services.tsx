@@ -8,6 +8,7 @@ import Section, {
 	SectionTitle
 } from '@/components/layout/Section';
 import { SanityDocument } from 'next-sanity';
+import {JSX} from "react";
 
 /**
  * A function that renders a section with a list of services and a button to view all services.
