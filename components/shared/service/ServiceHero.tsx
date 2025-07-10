@@ -3,6 +3,7 @@ import { MediaBlock } from '../media';
 import BrandButton from '@/components/ui/BrandButton';
 import Link from 'next/link';
 import { ServiceHeroProps } from './service.props';
+import {JSX} from "react";
 
 /**
  * A strongly typed function that renders a hero section for a service.

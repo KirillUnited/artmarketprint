@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useState } from 'react'
+import React, {JSX, useEffect, useState} from 'react'
 import { BreadcrumbItem, Breadcrumbs } from '@heroui/breadcrumbs';
 import { usePathname } from 'next/navigation';
 import { HomeIcon } from 'lucide-react';

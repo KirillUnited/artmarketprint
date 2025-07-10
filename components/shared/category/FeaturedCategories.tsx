@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {JSX} from 'react'
 import Section, { SectionButton, SectionDescription, SectionHeading, SectionSubtitle, SectionTitle } from '../../layout/Section';
 import { Card, CardFooter } from '@heroui/card';
 import clsx from 'clsx';
