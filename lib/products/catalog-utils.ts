@@ -75,7 +75,7 @@ export function groupProductsByCleanName(products: any[], categories = [], brand
 		const thumbnailImage = gallery?.split(',')[0] || gallery?.split(',')[0] || '';
 		const price = getPrice(product.price?.[0], 1 - priceTransform(Companies.ARTE.discount));
 		const description = product.general_description?.[0] || product.description?.[0] || '';
-		// const variation_description = product.variation_description?.[0] || product.param?.[0] || '';
+		const variation_description = product.param ? extractParamsToHtmlList(product.param) : '';
 		const url = product.url?.[0] || '';
 
 		if (!grouped[cleanName]) {
@@ -101,7 +101,7 @@ export function groupProductsByCleanName(products: any[], categories = [], brand
 				image: thumbnailImage,
 				images_urls: gallery,
 				description,
-				// variation_description,
+				variation_description,
 				category,
 				subcategory,
 				stock,
@@ -157,4 +157,15 @@ export function getColorsFromParams(product: any) {
 	});
 
 	return Array.from(colors);
+}
+
+export function extractParamsToHtmlList(params: any[]): string {
+	const listItems = params.map((param) => {
+		if (param.$.name && param._) {
+			return `<li><strong>${param.$.name}:</strong> ${param._}</li>`;
+		}
+		return '';
+	}).join('');
+
+	return `<ul>${listItems}</ul>`;
 }

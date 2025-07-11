@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import ProductThumb from "./ProductThumb";
 import { ProductData } from "@/components/shared/product/product.types";
-import { useEffect, useState } from "react";
+import {JSX, useEffect, useState} from "react";
 import Loader from "@/components/ui/Loader";
 import { Card, CardBody } from "@heroui/card";
 
@@ -14,7 +14,7 @@ export interface ProductGridProps {
     products: ProductData[]
 }
 
-export default function ProductGrid({ products }: ProductGridProps): React.ReactElement {
+export default function ProductGrid({ products }: ProductGridProps): JSX.Element {
     const [isMounted, setIsMounted] = useState(false);
 
     useEffect(() => {
