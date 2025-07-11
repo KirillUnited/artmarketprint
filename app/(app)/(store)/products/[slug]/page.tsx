@@ -88,11 +88,11 @@ export default async function ProductPage({ params }: { params: Promise<Props> }
 					<div className="flex flex-col gap-4">
 						<Card className="bg-indigo-100">
 							<CardBody>
+								{brand && <p className="font-semibold">{brand}</p>}
 								<p className="my-0">
 									<ProductPrice price={price} productId={id} />
 								</p>
 								<ProductStock items={items} />
-								{brand && <p className="my-0">Бренд: {brand}</p>}
 							</CardBody>
 							<CardBody>
 								<ProductDetails
