@@ -85,7 +85,7 @@ export const FilterDrawer: FC<FilterDrawerProps> = ({ isOpen, onOpenChange, onFi
                 {categoriesSet}
               </DrawerBody>
               {selectedCategory && (
-                <DrawerFooter className='left-0 right-0 bottom-0 w-full bg-background border-t-1'>
+                <DrawerFooter className='absolute left-0 right-0 bottom-0 w-full bg-background border-t-1'>
                   {/* Reset button to clear filters */}
                   <Button color="default" radius='sm' variant="solid" type='reset' onPress={() => onFilterChange('asc', '')}>
                     Сбросить

@@ -29,7 +29,7 @@ export const CatFilter: ({sortOrder, onFilterChange, categories}: {
 }) => JSX.Element = ({ sortOrder, onFilterChange, categories }) => {
     return (
         <div className='flex gap-4 w-full'>
-            <ScrollShadow className="w-full max-h-[calc(100vh-340px)]" size={50} hideScrollBar>
+            <ScrollShadow className="w-full max-h-[calc(85vh-128px)]" size={50} hideScrollBar>
                 <Accordion
                     className="px-0 shadow-small rounded-small bg-content1 overflow-x-hidden"
                     defaultExpandedKeys={categories.length === 1 ? ['0'] : []}
