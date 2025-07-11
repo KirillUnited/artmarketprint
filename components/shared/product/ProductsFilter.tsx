@@ -80,12 +80,12 @@ export const FilterDrawer: FC<FilterDrawerProps> = ({ isOpen, onOpenChange, onFi
         {(onClose) => (
           <>
             <DrawerHeader className="flex flex-col gap-1">Фильтры по товарам</DrawerHeader>
-            <Form className='w-full items-stretch'>
+            <Form className='left-0w-full items-stretch'>
               <DrawerBody className='pb-20'>
                 {categoriesSet}
               </DrawerBody>
               {selectedCategory && (
-                <DrawerFooter className='fixed bottom-0 w-full bg-background border-t-1'>
+                <DrawerFooter className='left-0 right-0 bottom-0 w-full bg-background border-t-1'>
                   {/* Reset button to clear filters */}
                   <Button color="default" radius='sm' variant="solid" type='reset' onPress={() => onFilterChange('asc', '')}>
                     Сбросить

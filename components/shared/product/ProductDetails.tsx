@@ -3,7 +3,7 @@
 import Loader from '@/components/ui/Loader';
 import { Radio, RadioGroup } from '@heroui/radio';
 import clsx from 'clsx';
-import { useEffect, useState, useMemo } from 'react';
+import {useEffect, useState, useMemo, JSX} from 'react';
 import {ColorItemProps, ColorListItem, computedItems, MoreButton} from './ProductColors';
 import { Tooltip } from '@heroui/tooltip';
 import { useProductStore } from '@/store/product';
@@ -33,7 +33,13 @@ interface ProductDetailsProps {
     size: string;
 }
 
-export const ProductDetails: React.FC<ProductDetailsProps> = ({ items, sizes, colors, color, size }) => {
+export const ProductDetails: ({items, sizes, colors, color, size}: {
+    items: any;
+    sizes: any;
+    colors: any;
+    color: any;
+    size: any
+}) => (JSX.Element) = ({ items, sizes, colors, color, size }) => {
     const [isClient, setIsClient] = useState(false);
     const { selectedColor, selectedSize, setSelectedColor, setSelectedSize } = useProductStore();
     const [showAllColors, setShowAllColors] = useState(false);
