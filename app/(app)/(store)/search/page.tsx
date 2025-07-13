@@ -9,6 +9,7 @@ import { Button } from '@heroui/button';
 import { FeaturedProducts } from '@/components/shared/product/FeaturedProducts';
 import ProductSearchForm from '@/components/shared/product/ProductSearchForm';
 import {collectCategoriesAndSubcategories} from "@/lib/products/collectCategories";
+import {JSX} from "react";
 
 type Props = {
     slug: string
@@ -33,7 +34,7 @@ export default async function SearchPage({
     searchParams: Promise<{
         query: string
     }>
-}) {
+}) : Promise<JSX.Element> {
     const { query } = await searchParams;
 
     try {

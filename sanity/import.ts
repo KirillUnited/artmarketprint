@@ -53,3 +53,74 @@ export async function importDataToSanity(products: Product[]) {
 		console.error('❌ Import failed:');
 	}
 }
+
+// This function is no longer used but kept for backward compatibility
+export function transformCategory(external: Product) {
+	const categoryName = typeof external.category === 'string' 
+		? external.category 
+		: external.category?.title || '';
+	
+	return {
+		_type: 'category',
+		_id: categoryName.toLowerCase().replace(/\s+/g, '-'),
+		title: categoryName,
+	};
+}
+
+export function getUniqueCategories(products: Product[]) {
+	// Create a map to store unique categories by title
+	const categoriesMap = new Map<string, string>();
+
+	products.forEach(product => {
+		const categoryId = product?.categoryId;
+		const categoryTitle = product?.category;
+
+		if (categoryId && categoryTitle) {
+			if (typeof categoryTitle === "string") {
+				categoriesMap.set(categoryTitle, categoryId);
+			}
+		}
+	});
+
+	// Convert map to array of objects with id and title
+	return Array.from(categoriesMap.entries()).map(([title, id]) => ({
+		title,
+		id
+	}));
+}
+
+export async function importCategoriesToSanity(products: Product[]) {
+	try {
+		const categories = getUniqueCategories(products);
+		console.log(categories)
+		const documents = categories.map(category => ({
+			_type: 'category',
+			_id: category.id,
+			id: category.id,
+			title: category.title,
+		}));
+
+		console.log('🚀 Importing total categories', documents.length);
+
+		// Split documents into chunks
+		for (let i = 0; i < documents.length; i += CHUNK_SIZE) {
+			const chunk = documents.slice(i, i + CHUNK_SIZE);
+			let transaction = client.transaction();
+
+			chunk.forEach((document) => {
+				transaction.createOrReplace(document);
+			});
+
+			await transaction.commit();
+			console.log(`✅ Imported categories ${i + 1} to ${Math.min(i + CHUNK_SIZE, documents.length)}`);
+
+			// Add a small delay between chunks to prevent rate limiting
+			await new Promise((resolve) => setTimeout(resolve, 1000));
+		}
+
+		console.log('✅ All categories imported successfully!');
+	} catch (error) {
+		console.error(error);
+		console.error('❌ Import failed:');
+	}
+}
