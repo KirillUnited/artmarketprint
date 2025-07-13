@@ -2,7 +2,7 @@
 import { Accordion, AccordionItem } from "@heroui/accordion";
 import { Radio, RadioGroup } from "@heroui/radio";
 import { ScrollShadow } from "@heroui/scroll-shadow";
-import React, {FC, useState} from "react";
+import React, {FC} from "react";
 
 export interface CategoryProps {
     category: string;
@@ -24,7 +24,7 @@ interface CatFilterProps {
  * @returns {JSX.Element} The rendered CatFilter component.
  */
 export const CatFilter: FC<CatFilterProps> = ({ sortOrder, onFilterChange, categories, selectedCategory }) => {
-    const [selectedKeys, setSelectedKeys] = React.useState<Set<React.Key>>(new Set());
+    const [selectedKeys, setSelectedKeys] = React.useState<Set<string>>(new Set());
     
     // Reset accordion state when selectedCategory is cleared
     React.useEffect(() => {
@@ -38,8 +38,8 @@ export const CatFilter: FC<CatFilterProps> = ({ sortOrder, onFilterChange, categ
         <div className='flex gap-4 w-full'>
             <ScrollShadow className="w-full max-h-[calc(85vh-128px)]" size={50} hideScrollBar>
                 <Accordion
-                    selectedKeys={selectedKeys || new Set()}
-                    onSelectionChange={(keys) => setSelectedKeys(keys as Set<React.Key>)}
+                    selectedKeys={selectedKeys}
+                    onSelectionChange={(keys) => setSelectedKeys(keys as Set<string>)}
                     className="px-0 shadow-small rounded-small bg-content1 overflow-x-hidden"
                     defaultExpandedKeys={categories.length === 1 ? ['0'] : []}
                     itemClasses={{

@@ -25,8 +25,8 @@ interface FilterGroupProps {
 export const FilterGroup: FC<FilterGroupProps> = ({sortOrder, selectedCategory, categories, onFilterChange}) => {
 	return (
 		<Form className="flex flex-col gap-4">
-			{SortFilter({sortOrder, selectedCategory, onFilterChange})}
-			{categories && CatFilter({sortOrder, onFilterChange, categories, selectedCategory})}
+			<SortFilter sortOrder={sortOrder} selectedCategory={selectedCategory} onFilterChange={onFilterChange} />
+			{categories && <CatFilter sortOrder={sortOrder} onFilterChange={onFilterChange} categories={categories} selectedCategory={selectedCategory} />}
 			<Button color="default" radius="sm" variant="solid" type="reset" onPress={() => onFilterChange('asc', '')}>
 				Сбросить
 			</Button>
@@ -69,7 +69,14 @@ interface FilterDrawerProps {
  * @returns {JSX.Element} The rendered FilterDrawer component.
  */
 export const FilterDrawer: FC<FilterDrawerProps> = ({isOpen, onOpenChange, onFilterChange, categories, sortOrder, selectedCategory}) => {
-	const categoriesSet = categories ? CatFilter({sortOrder, onFilterChange, categories, selectedCategory}) : null;
+	const categoriesSet = categories ? (
+		<CatFilter 
+			sortOrder={sortOrder} 
+			onFilterChange={onFilterChange} 
+			categories={categories} 
+			selectedCategory={selectedCategory} 
+		/>
+	) : null;
 
 	return (
 		<Drawer isOpen={isOpen} onOpenChange={onOpenChange} radius="none">
