@@ -20,6 +20,7 @@ export interface ProductData {
 }
 
 export interface Product {
+    categoryId: string;
     _id: string;
     id: string;
     name: string;
@@ -30,7 +31,7 @@ export interface Product {
     general_description: string[];
     description: string;
     variation_description: string[];
-    category: string[];
+    category: string[] | string;
     subcategory: string[];
     colors: string[];
     sizes: string[];

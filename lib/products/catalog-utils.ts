@@ -102,6 +102,7 @@ export function groupProductsByCleanName(products: any[], categories = [], brand
 				images_urls: gallery,
 				description,
 				variation_description,
+				categoryId,
 				category,
 				subcategory,
 				stock,
