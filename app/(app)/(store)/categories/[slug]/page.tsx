@@ -93,7 +93,7 @@ export default async function CategoryPage({ params }: { params: Promise<Props> 
                         <footer className="flex flex-col md:flex-row gap-4">
                             {
                                 getCTAButton(ctaButtonList[0]._key, ctaButtonList[0].buttonType as 'cta' | 'secondary' | 'ctaModal', ctaButtonList[0].text, '', 'md', category.title)}
-                            <Button as={Link} href={ctaButtonList[1].link} className="uppercase" color="default" size="md" radius="sm">
+                            <Button as={Link} href={ctaButtonList[1].link} className="uppercase" color="default" size="md" radius="sm" target="_blank">
                                 {ctaButtonList[1].text}
                                 <ArrowUpRightIcon className="text-secondary group-hover:translate-x-1 transition-transform" size={18} />
                             </Button>
@@ -117,9 +117,9 @@ export default async function CategoryPage({ params }: { params: Promise<Props> 
             <Section id="products" innerClassname="pt-0 md:pt-0">
                 <>
                     <SectionTitle><span className='font-normal'>Товары в категории</span><br/>{categoryTitle}</SectionTitle>
-                    <div className="flex flex-col md:flex-row gap-2 w-full">
+                    <div className="flex flex-col gap-2 w-full">
                         <ProductSearchForm />
-                        <Button className='border-1' as={Link} href="/products" radius='sm' variant='bordered'>
+                        <Button className='border-1 md:self-start' as={Link} href="/products" radius='sm' variant='bordered'>
                             <ShoppingCartIcon size='18' />
                             <span>Все товары</span>
                         </Button>
