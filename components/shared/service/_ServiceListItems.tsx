@@ -68,7 +68,7 @@ export default function ServiceListItems({services}: ServiceListItemsProps): JSX
 					disableOnInteraction: false,
 					pauseOnMouseEnter: true
 				}}
-				speed={700}
+				speed={500}
 				loop={true}
 				breakpoints={{
 					320: {
