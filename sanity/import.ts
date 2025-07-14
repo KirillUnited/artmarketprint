@@ -96,7 +96,6 @@ export async function importCategoriesToSanity(products: Product[]) {
 		const documents = categories.map(category => ({
 			_type: 'category',
 			_id: category.id,
-			id: category.id,
 			title: category.title,
 		}));
 
