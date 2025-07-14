@@ -64,10 +64,12 @@ export default function ServiceListItems({services}: ServiceListItemsProps): JSX
 				}}
 				className="w-full !pb-10 md:!pb-0 relative"
 				autoplay={{
-					delay: 5000,
+					delay: 2500,
 					disableOnInteraction: false,
 					pauseOnMouseEnter: true
 				}}
+				speed={700}
+				loop={true}
 				breakpoints={{
 					320: {
 						slidesPerView: 'auto',
@@ -82,7 +84,7 @@ export default function ServiceListItems({services}: ServiceListItemsProps): JSX
 				}}
 			>
 				{services?.map((service: any) => (
-					<SwiperSlide key={service.title} className={isMobile ? 'w-auto' : 'w-full'}>
+					<SwiperSlide key={service.title} className={isMobile ? '!w-60' : 'w-full'}>
 						<ServicePreview service={service} />
 					</SwiperSlide>
 				))}
