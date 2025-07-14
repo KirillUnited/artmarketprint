@@ -11,7 +11,7 @@ export const filterItemsByColor = (items: ColorItemProps[]): ColorItemProps[] =>
         }
     });
 };
-export const formattedOptions = (options: string) => options?.replace(/<\/?p>/g, '').replace(/<li><strong>Бренд:<\/strong>.*?<\/li>/g, '').replace(/<li><strong>Поставщик:<\/strong>.*?<\/li>/g, '').replace(/<li><strong>Картинки:<\/strong>.*?<\/li>/g, '');
+export const formattedOptions = (options: string) => options?.replace(/<\/?p>/g, '').replace(/<li><strong>Бренд:<\/strong>.*?<\/li>/g, '').replace(/<li><strong>Поставщик:<\/strong>.*?<\/li>/g, '').replace(/<li><strong>Картинки:<\/strong>.*?<\/li>/g, '').replace(/<li><strong>Макет товара:<\/strong>.*?<\/li>/g, '').replace(/<li><strong>Цвет:<\/strong>.*?<\/li>/g, '');
 export const getVariantImages = (items: any, selectedColor: string) => {    
     const productImages = (items as any)?.images_urls?.split(',') || [];
 

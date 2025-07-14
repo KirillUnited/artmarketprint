@@ -113,20 +113,22 @@ export default async function ServicePage({ params }: { params: Promise<Props> }
             </div>
 
             {/* Portfolio section */}
-            <Section className="bg-[#F9F9F9]">
-                <div className='flex flex-col gap-6 px-4'>
-                    <SectionHeading className='items-center text-center mx-auto'>
-                        <SectionSubtitle>{'галерея'}</SectionSubtitle>
-                        <SectionTitle>{'Примеры работ'}</SectionTitle>
-                        <SectionDescription>{'Портфолио выполненных работ'}</SectionDescription>
-                    </SectionHeading>
+            {relatedProjectsArray.length > 0 && (
+                <Section className="bg-[#F9F9F9]">
+                    <div className='flex flex-col gap-6 px-4'>
+                        <SectionHeading className='items-center text-center mx-auto'>
+                            <SectionSubtitle>{'галерея'}</SectionSubtitle>
+                            <SectionTitle>{'Примеры работ'}</SectionTitle>
+                            <SectionDescription>{'Портфолио выполненных работ'}</SectionDescription>
+                        </SectionHeading>
 
-                    <ProjectList bentoGrid={false} projectList={relatedProjectsArray} />
+                        <ProjectList bentoGrid={false} projectList={relatedProjectsArray} />
 
-                    {/* Mobile-only projects button */}
-                    <SectionButton className='lg:hidden flex' href={'/projects'} label="Все проекты" />
-                </div>
-            </Section>
+                        {/* Mobile-only projects button */}
+                        <SectionButton className='lg:hidden flex' href={'/projects'} label="Все проекты" />
+                    </div>
+                </Section>
+            )}
 
             {/* FAQ section */}
             <FAQSection className='bg-[#F9F9F9]' {...faq.homePage.content[0]} faqs={service.faqs ? service.faqs : faq.homePage.content[0].faqs} />

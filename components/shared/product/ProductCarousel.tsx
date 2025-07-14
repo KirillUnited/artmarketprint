@@ -41,8 +41,6 @@ export const ProductCarousel = ({items, className}: ProductCarouselProps) => {
 		<div className={clsx(styles['swiper-container'], className)}>
 			<Swiper className={clsx(styles['swiper'], styles['mySwiper2'])} modules={[FreeMode, Navigation, Thumbs]} navigation={true} spaceBetween={10} thumbs={{swiper: thumbsSwiper}}>
 				{filteredImages.map((item: string, index: number) => {
-					if (!item) return null;
-
 					return (
 						<SwiperSlide key={index} className={styles['swiper-slide']}>
 							<picture className="h-full rounded-small">
@@ -55,7 +53,7 @@ export const ProductCarousel = ({items, className}: ProductCarouselProps) => {
 									classNames={{wrapper: 'bg-cover'}}
 									width={500}
 									height={500}
-									src={item}
+									src={item ? item : '/images/product-no-image.jpg'}
 									radius="sm"
 									fallbackSrc={`/images/product-no-image.jpg`}
 								/>
@@ -84,8 +82,6 @@ export const ProductCarousel = ({items, className}: ProductCarouselProps) => {
 				}}
 			>
 				{filteredImages.map((item: string, index: number) => {
-					if (!item) return null;
-
 					return (
 						<SwiperSlide key={index} className={styles['swiper-slide']}>
 							<picture className="h-full border-slate-300 border p-3">
@@ -94,7 +90,7 @@ export const ProductCarousel = ({items, className}: ProductCarouselProps) => {
 									alt={'image'}
 									className={'w-full aspect-square max-h-full object-contain'}
 									classNames={{wrapper: 'bg-cover'}}
-									src={item}
+									src={item ? item : '/images/product-no-image.jpg'}
 									width={104}
 									height={104}
 									radius="sm"
