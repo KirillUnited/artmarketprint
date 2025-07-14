@@ -2,7 +2,7 @@
 // Uncomment this code to get XML data from art24.by
 // ***
 import { parseStringPromise } from 'xml2js';
-import { saveJsonToFile } from '@/lib/utils';
+// import { saveJsonToFile } from '@/lib/utils';
 
 const PRODUCT_DESCRIPTION_URL = 'https://art24.by/capi_v100_xmls/products_description_xml_cdata001.xml';
 const MINSKSTOCKS_URL = 'https://art24.by/capi_v100_xmls/minskstocks.xml';
@@ -22,7 +22,7 @@ export async function getXmlData(url=PRODUCT_DESCRIPTION_URL) {
 
         const xmlText = await response.text();
         const jsonData = await parseStringPromise(xmlText);
-        await saveJsonToFile(ARTE_PRODUCTS_FILE_PATH, jsonData);
+        // await saveJsonToFile(ARTE_PRODUCTS_FILE_PATH, jsonData);
         return jsonData;
     } catch (error) {
         console.error('Ошибка при загрузке XML:', error);

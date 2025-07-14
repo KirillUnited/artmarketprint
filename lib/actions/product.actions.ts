@@ -1,20 +1,20 @@
 'use server';
 
-import { getJsonFileData } from '../utils';
-import { groupProductsByCleanName } from '../products/catalog-utils';
+// import { getJsonFileData } from '../utils';
+// import { groupProductsByCleanName } from '../products/catalog-utils';
 
 /**
  * Fetches all products from the JSON file data.
  *
  * @return {Promise<any[]>} A promise that resolves to an array of products.
  */
-export async function getAllProducts(): Promise<any[]> {
-  // Retrieve JSON file data using the utility function
-  const products = await getJsonFileData();
-
-  // Return the list of products or an empty array if not available
-  return products?.data?.item ?? [];
-}
+// export async function getAllProducts(): Promise<any[]> {
+//   // Retrieve JSON file data using the utility function
+//   const products = await getJsonFileData();
+//
+//   // Return the list of products or an empty array if not available
+//   return products?.data?.item ?? [];
+// }
 
 /**
  * Retrieves a list of unique product categories from the available products.
@@ -77,42 +77,42 @@ export async function getAllProducts(): Promise<any[]> {
 //   return Array.from(categories);
 // }
 
-export async function getProductsByLimit(limit: number) {
-  // Use a more efficient way to get a subset of the products array
-  return (await getAllProducts()).slice(0, limit);
-}
-
-export async function getRelatedProductsByCategory(category: string, id: number, limit = 10) {
-  const products = await getAllProducts();
-  const relatedProducts = products.filter((product: any) => product.category[0].split('|')[0] === category && product.id[0]['_'] !== id);
-
-  return Array.from(relatedProducts).slice(0, limit);
-}
-
-export async function getProductBySlug(slug: string) {
-  const products = await getAllProducts();
-  const parsedProducts = groupProductsByCleanName(products);
-  const product = parsedProducts.find((product) => product.id === slug);
-
-  return product;
-}
-
-export async function searchProductsByName(searchParam: string) {
-  const products = await getAllProducts();
-
-  return products.filter((product: any) => product.product[0]['_'].toLowerCase().includes(searchParam.toLowerCase()));
-}
-
-export async function getProductsByCategory(category: string) {
-  const products = await getAllProducts();
-
-  return products.filter((product: any) => {
-    return (product.category[0].split('|')[0] === category);
-  });
-}
-
-export async function getProductsByCategoryTitle(categoryTitle: string) {
-  const products = await getAllProducts();
-
-  return products.filter((product: any) => product.category[0] === categoryTitle);
-}
+// export async function getProductsByLimit(limit: number) {
+//   // Use a more efficient way to get a subset of the products array
+//   return (await getAllProducts()).slice(0, limit);
+// }
+//
+// export async function getRelatedProductsByCategory(category: string, id: number, limit = 10) {
+//   const products = await getAllProducts();
+//   const relatedProducts = products.filter((product: any) => product.category[0].split('|')[0] === category && product.id[0]['_'] !== id);
+//
+//   return Array.from(relatedProducts).slice(0, limit);
+// }
+//
+// export async function getProductBySlug(slug: string) {
+//   const products = await getAllProducts();
+//   const parsedProducts = groupProductsByCleanName(products);
+//   const product = parsedProducts.find((product) => product.id === slug);
+//
+//   return product;
+// }
+//
+// export async function searchProductsByName(searchParam: string) {
+//   const products = await getAllProducts();
+//
+//   return products.filter((product: any) => product.product[0]['_'].toLowerCase().includes(searchParam.toLowerCase()));
+// }
+//
+// export async function getProductsByCategory(category: string) {
+//   const products = await getAllProducts();
+//
+//   return products.filter((product: any) => {
+//     return (product.category[0].split('|')[0] === category);
+//   });
+// }
+//
+// export async function getProductsByCategoryTitle(categoryTitle: string) {
+//   const products = await getAllProducts();
+//
+//   return products.filter((product: any) => product.category[0] === categoryTitle);
+// }
