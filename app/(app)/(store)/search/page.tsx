@@ -9,6 +9,7 @@ import { Button } from '@heroui/button';
 import { FeaturedProducts } from '@/components/shared/product/FeaturedProducts';
 import ProductSearchForm from '@/components/shared/product/ProductSearchForm';
 import {collectCategoriesAndSubcategories} from "@/lib/products/collectCategories";
+import {JSX} from "react";
 
 type Props = {
     slug: string
@@ -33,7 +34,7 @@ export default async function SearchPage({
     searchParams: Promise<{
         query: string
     }>
-}) {
+}) : Promise<JSX.Element> {
     const { query } = await searchParams;
 
     try {
@@ -91,6 +92,16 @@ export default async function SearchPage({
     } catch (error) {
         console.error('Error fetching products:', error);
 
-        return [];
+        return (
+            <Section>
+                <div className="text-center py-10">
+                    <h2 className="text-2xl font-bold mb-4">Произошла ошибка при загрузке результатов поиска</h2>
+                    <p className="text-slate-500 mb-6">Пожалуйста, попробуйте обновить страницу или повторить попытку позже.</p>
+                    <Button as={Link} href="/" color="primary" radius="sm" className="bg-brand-gradient uppercase font-semibold">
+                        На главную
+                    </Button>
+                </div>
+            </Section>
+        );
     }
 }

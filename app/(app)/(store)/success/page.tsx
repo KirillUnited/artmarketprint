@@ -1,18 +1,9 @@
-'use client';
-
 import Section from '@/components/layout/Section';
-import useBasketStore from '@/store/store';
 import { Button } from '@heroui/button'
 import Link from 'next/link'
 import React from 'react'
 
 export default function SuccessPage() {
-    const clearBasket = useBasketStore((state) => state.clearBasket);
-
-    React.useEffect(() => {
-        clearBasket();
-    }, [clearBasket])
-
     return (
         <Section className="bg-gray-50" innerClassname='items-center justify-center'>
             <div className="max-w-md w-full bg-white rounded-small shadow-lg p-8 text-center">

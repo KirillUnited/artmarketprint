@@ -103,11 +103,13 @@ export default function RootLayout({
         </Providers>
         <noscript>
           <div>
-            <img
-              src="https://mc.yandex.ru/watch/101251200"
-              style={{ position: 'absolute', left: '-9999px' }}
-              alt=""
-            />
+            {typeof window !== 'undefined' && (
+              <img
+                src="https://mc.yandex.ru/watch/101251200"
+                style={{ position: 'absolute', left: '-9999px' }}
+                alt=""
+              />
+            )}
           </div>
         </noscript>
         <script
