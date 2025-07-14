@@ -25,7 +25,7 @@ export default async function CategoriesPage() {
 
     return (
         <>
-            <section className="py-12 md:py-24 relative after:absolute after:inset-0 after:bg-gradient-to-t after:from-black after:to-transparent">
+            <section className="py-12 md:py-24 relative after:absolute after:inset-0 after:bg-black/70">
                 <NextImage
                     priority
                     alt={siteConfig.catalogSection.title}
@@ -39,7 +39,7 @@ export default async function CategoriesPage() {
                         <h1 className="text-4xl font-extrabold text-background sm:text-5xl">
                             {siteConfig.catalogSection.title}
                         </h1>
-                        <p className="mt-4 text-xl text-white">
+                        <p className="mt-4 text-lg text-white">
                             {siteConfig.catalogSection.description}
                         </p>
 

@@ -68,7 +68,6 @@ interface FeaturedCategoryThumbProps {
 }
 
 export const FeaturedCategoryThumb = ({item}: FeaturedCategoryThumbProps) => {
-	console.log(item);
 	return (
 		<Card isFooterBlurred as={Link} className="h-full group relative" href={`/categories/${item?.slug?.current || item.currentSlug}`} radius="sm">
 			<Image
