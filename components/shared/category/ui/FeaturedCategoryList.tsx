@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { FreeMode, Navigation, Pagination } from 'swiper/modules';
+import {Autoplay, FreeMode, Navigation, Pagination} from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper';
 import { ChevronLeft, ChevronRight, LoaderIcon } from 'lucide-react';
 import { Button } from '@heroui/button';
@@ -56,7 +56,7 @@ export const FeaturedCategoryList = ({ items }: FeaturedCategoryListProps) => {
                 slidesPerView={isMobile ? 'auto' : 4}
                 spaceBetween={16}
                 freeMode={isMobile}
-                modules={[FreeMode, Navigation, Pagination]}
+                modules={[FreeMode, Navigation, Pagination, Autoplay]}
                 navigation={false}
                 pagination={{
                     clickable: true,
@@ -65,6 +65,12 @@ export const FeaturedCategoryList = ({ items }: FeaturedCategoryListProps) => {
                 }}
                 className="w-full !pb-10 md:!pb-0 relative"
                 speed={500}
+                autoplay={{
+                    delay: 2500,
+                    disableOnInteraction: false,
+                    pauseOnMouseEnter: true
+                }}
+                loop={true}
                 breakpoints={{
                     320: {
                         slidesPerView: 'auto',
@@ -73,7 +79,7 @@ export const FeaturedCategoryList = ({ items }: FeaturedCategoryListProps) => {
                     },
                     768: {
                         slidesPerView: 4,
-                        spaceBetween: 16,
+                        spaceBetween: 32,
                         freeMode: false,
                     },
                 }}
