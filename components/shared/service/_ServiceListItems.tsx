@@ -1,50 +1,114 @@
-import { Image } from '@heroui/image';
-import NextImage from 'next/image';
-import { Card, CardFooter } from '@heroui/card';
-import { Link } from '@heroui/link';
-import clsx from 'clsx';
+'use client';
+import {useCallback, useEffect, useState} from 'react';
+import {Swiper, SwiperSlide} from 'swiper/react';
+import {Autoplay, FreeMode, Navigation, Pagination} from 'swiper/modules';
+import type {Swiper as SwiperType} from 'swiper';
+import {SanityDocument} from 'next-sanity';
+import {JSX} from 'react';
 
-import { ProjectTagList } from '@/components/shared/project';
-import { urlFor } from '@/sanity/lib/image';
+import 'swiper/css';
+import 'swiper/css/free-mode';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/autoplay';
+import {ChevronLeft, ChevronRight, LoaderIcon} from "lucide-react";
+import {ServicePreview} from "@/components/shared/service/ServicePreview";
+import {Button} from "@heroui/button";
+import {cn} from "@/lib/utils";
 
-export default function ServiceListItems({ services }: any) {
-    return (
-        <ul className="grid grid-cols-[var(--grid-template-columns)] gap-8">
-            {services?.map((service: any) => (
-                <li key={service.title}>
-                    <Card isFooterBlurred as={Link} className="h-full group relative" href={`/services/${service.currentSlug || service.slug?.current}`} radius="sm">
-                        <div className="absolute top-3 left-3 z-10 flex flex-wrap gap-2">
-                            {service?.service_tags?.length > 0 && <ProjectTagList color='primary' tags={service.service_tags} />}
-                            {service?.category_tags?.length > 0 && <ProjectTagList color='secondary' tags={service.category_tags} />}
-                        </div>
-                        <Image as={NextImage} removeWrapper alt={service.title} className="z-0 w-full h-full object-cover aspect-square" radius="sm" src={service.imageUrl ? service.imageUrl : urlFor(service.image).width(320).height(320).url()} width={220} height={220} />
-                        <CardFooter className={clsx(
-                            'absolute bg-white/75 bottom-0 w-full z-10 p-0 backdrop-blur-lg',
-                        )}>
-                            <div className="flex flex-col gap-2 p-3 w-full">
-                                <div className="flex flex-col gap-2">
-                                    <p className="flex flex-col gap-2 font-semibold line-clamp-2 leading-tight" title={service.title}>
-                                        {service.title}
-                                        <span className='text-primary text-xl font-bold'>{service.price}</span>
-                                    </p>
-                                    <p
-                                        className={clsx(
-                                            'text-xs',
-                                            'grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-all duration-500 overflow-hidden'
-                                        )}
-                                        title={service.description}>
-                                        <span className="line-clamp-4">{service.description}</span>
-                                    </p>
-                                </div>
-                                {/* <Button as={'span'} className="group/button self-start" color="secondary" radius="sm" role="presentation" size="sm">
-                                    <span>Подробнее</span>
-                                    <ArrowUpRightIcon className="group-hover/button:translate-x-1 transition-transform" size={18} />
-                                </Button> */}
-                            </div>
-                        </CardFooter>
-                    </Card>
-                </li>
-            ))}
-        </ul>
-    )
+interface ServiceListItemsProps {
+	services?: SanityDocument[];
+}
+
+export default function ServiceListItems({services}: ServiceListItemsProps): JSX.Element {
+	const [isMounted, setIsMounted] = useState(false);
+	const [isMobile, setIsMobile] = useState(false);
+	const [swiper, setSwiper] = useState<SwiperType | null>(null);
+
+	const handlePrev = useCallback(() => {
+		swiper?.slidePrev();
+	}, [swiper]);
+
+	const handleNext = useCallback(() => {
+		swiper?.slideNext();
+	}, [swiper]);
+
+	useEffect(() => {
+		setIsMounted(true);
+		const handleResize = () => {
+			setIsMobile(window.innerWidth < 768);
+		};
+
+		// Set initial value
+		handleResize();
+
+		window.addEventListener('resize', handleResize);
+		return () => window.removeEventListener('resize', handleResize);
+	}, []);
+
+	if (!isMounted) return <LoaderIcon className="relative top-auto left-auto mx-auto animate-spin text-primary" />;
+
+	return (
+		<div className="w-full relative">
+			<Swiper
+				onSwiper={setSwiper}
+				slidesPerView={isMobile ? 'auto' : 4}
+				spaceBetween={16}
+				freeMode={isMobile}
+				modules={[FreeMode, Navigation, Pagination, Autoplay]}
+				navigation={false}
+				pagination={{
+					clickable: true,
+					enabled: isMobile,
+					dynamicBullets: true
+				}}
+				className="w-full !pb-10 md:!pb-0 relative"
+				autoplay={{
+					delay: 2500,
+					disableOnInteraction: false,
+					pauseOnMouseEnter: true
+				}}
+				speed={500}
+				loop={true}
+				breakpoints={{
+					320: {
+						slidesPerView: 'auto',
+						spaceBetween: 16,
+						freeMode: true,
+					},
+					768: {
+						slidesPerView: 4,
+						spaceBetween: 16,
+						freeMode: false,
+					},
+				}}
+			>
+				{services?.map((service: any) => (
+					<SwiperSlide key={service.title} className={isMobile ? '!w-60' : 'w-full'}>
+						<ServicePreview service={service} />
+					</SwiperSlide>
+				))}
+			</Swiper>
+			{!isMobile && (
+				<>
+					<Button
+						size="sm"
+						isIconOnly
+						onPress={handlePrev}
+						className="absolute left-0 top-1/2 z-10 -translate-y-1/2 rounded-full bg-brand-gradient text-white shadow-lg transition-all hover:scale-110"
+					>
+						<ChevronLeft className="h-6 w-6" />
+					</Button>
+					<Button
+						size="sm"
+						isIconOnly
+						onPress={handleNext}
+						className="absolute right-0 top-1/2 z-10 -translate-y-1/2 rounded-full bg-brand-gradient text-white shadow-lg transition-all hover:scale-110"
+					>
+						<ChevronRight className="h-6 w-6" />
+					</Button>
+				</>
+			)}
+		</div>
+	);
 }
