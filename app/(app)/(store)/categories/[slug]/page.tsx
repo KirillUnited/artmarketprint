@@ -8,8 +8,8 @@ import { client } from "@/sanity/client";
 import { CATEGORY_QUERY } from "@/sanity/lib/queries/category.query";
 import { NAVIGATION_QUERY } from "@/sanity/lib/queries";
 import { Button } from "@heroui/button";
-import { ArrowLeftIcon, ArrowUpRightIcon } from "lucide-react";
-import { SanityDocument } from "next-sanity";
+import {ArrowLeftIcon, ArrowUpRightIcon, ShoppingCartIcon} from "lucide-react";
+import {PortableText, SanityDocument} from "next-sanity";
 import Image from "next/image";
 import Link from "next/link";
 import { getAllProductsByCategory } from "@/sanity/lib/product/getAllProductsByCategory";
@@ -76,7 +76,7 @@ export default async function CategoryPage({ params }: { params: Promise<Props> 
 
     return (
         <>
-            <section className="py-12 md:py-24 relative after:absolute after:inset-0 after:bg-gradient-to-t after:from-black after:to-transparent">
+            <section className="py-12 md:py-24 relative after:absolute after:inset-0 after:bg-black/70">
                 {
                     categoryImageUrl && (
                         <Image priority alt={category.title} className="absolute inset-0 object-cover w-full h-full" height={1080} src={`${categoryImageUrl}`} width={1920} />
@@ -85,7 +85,7 @@ export default async function CategoryPage({ params }: { params: Promise<Props> 
                 <div className="container flex flex-col gap-10 max-w-4xl relative z-10">
                     <article className="text-center">
                         <h1 className="text-4xl font-extrabold text-background sm:text-6xl">{category.title}</h1>
-                        <p className="mt-4 text-xl text-white">{category.description}</p>
+                        <p className="mt-4 text-lg text-white text-pretty">{category.description}</p>
                     </article>
                     {
                         ctaButtonList.length > 0
@@ -109,14 +109,20 @@ export default async function CategoryPage({ params }: { params: Promise<Props> 
                     </div>
                 </div>
             </section>
+            {category.body && (
+                <Section innerClassname='pt-0 md:pt-0'>
+                    <div className='prose max-w-full'><PortableText value={category.body}/></div>
+                </Section>
+            )}
             <Section id="products" innerClassname="pt-0 md:pt-0">
                 <SectionHeading>
-                    <SectionTitle>{categoryTitle}</SectionTitle>
-                    <div className="grid items-center gap-4 md:gap-8 md:grid-cols-[auto_1fr] w-full">
-                        <Link className="flex items-center gap-2 text-primary" href="/products">
-                            <ArrowLeftIcon className="w-6 h-6" />
-                            <span>В каталог</span></Link>
+                    <SectionTitle><span className='font-normal'>Товары в категории</span> {categoryTitle}</SectionTitle>
+                    <div className="flex flex-col md:flex-row gap-2 w-full mt-6">
                         <ProductSearchForm />
+                        <Button className='border-1' as={Link} href="/products" radius='sm' variant='bordered' color='primary'>
+                            <ShoppingCartIcon size='18' />
+                            <span>Все товары</span>
+                        </Button>
                     </div>
                 </SectionHeading>
 
