@@ -12,6 +12,7 @@ export function useCartForm() {
     const [fileUploaded, setFileUploaded] = useState(false);
     const [fileUploadedName, setFileUploadedName] = useState('');
     const items = useBasketStore((state) => state.items);
+    const clearBasket = useBasketStore((state) => state.clearBasket);
     const router = useRouter();
 
     // Handle PDF file upload
@@ -72,6 +73,7 @@ export function useCartForm() {
             ]);
 
             if (orderResult.ok) {
+                clearBasket();
                 router.push('/success');
             }
         } catch (error) {

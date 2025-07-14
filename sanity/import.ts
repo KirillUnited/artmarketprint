@@ -54,19 +54,6 @@ export async function importDataToSanity(products: Product[]) {
 	}
 }
 
-// This function is no longer used but kept for backward compatibility
-export function transformCategory(external: Product) {
-	const categoryName = typeof external.category === 'string' 
-		? external.category 
-		: external.category?.title || '';
-	
-	return {
-		_type: 'category',
-		_id: categoryName.toLowerCase().replace(/\s+/g, '-'),
-		title: categoryName,
-	};
-}
-
 export function getUniqueCategories(products: Product[]) {
 	// Create a map to store unique categories by title
 	const categoriesMap = new Map<string, string>();
