@@ -115,16 +115,16 @@ export default async function CategoryPage({ params }: { params: Promise<Props> 
                 </Section>
             )}
             <Section id="products" innerClassname="pt-0 md:pt-0">
-                <SectionHeading>
-                    <SectionTitle><span className='font-normal'>Товары в категории</span> {categoryTitle}</SectionTitle>
-                    <div className="flex flex-col md:flex-row gap-2 w-full mt-6">
+                <>
+                    <SectionTitle><span className='font-normal'>Товары в категории</span><br/>{categoryTitle}</SectionTitle>
+                    <div className="flex flex-col md:flex-row gap-2 w-full">
                         <ProductSearchForm />
-                        <Button className='border-1' as={Link} href="/products" radius='sm' variant='bordered' color='primary'>
+                        <Button className='border-1' as={Link} href="/products" radius='sm' variant='bordered'>
                             <ShoppingCartIcon size='18' />
                             <span>Все товары</span>
                         </Button>
                     </div>
-                </SectionHeading>
+                </>
 
                 <ProductsView products={products} categories={categoriesWithSubcategories} />
             </Section>
