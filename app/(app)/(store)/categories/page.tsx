@@ -6,7 +6,7 @@ import { NAVIGATION_QUERY } from '@/sanity/lib/queries';
 import NextImage from 'next/image';
 import React from 'react';
 import Section from '@/components/layout/Section';
-import { FeaturedCategoryList } from '@/components/shared/category';
+import { FeaturedCategoryList } from '@/components/shared/category/ui';
 
 export async function generateMetadata() {
 
