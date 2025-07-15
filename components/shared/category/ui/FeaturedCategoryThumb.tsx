@@ -26,6 +26,7 @@ export const FeaturedCategoryThumb = ({item}: FeaturedCategoryThumbProps) => {
                 width={220}
                 height={220}
                 fallbackSrc="/images/product-no-image.jpg"
+                quality={90}
             />
             <CardFooter className={clsx('absolute bg-black/40 bottom-0 w-full z-10 p-0')}>
                 <div className="flex flex-col gap-2 p-3 w-full">
