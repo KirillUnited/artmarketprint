@@ -14,6 +14,8 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/autoplay';
 
+const ITEMS_PER_SLIDE: number = 4;
+
 interface FeaturedCategoryCarouselProps {
     items?: any[];
 }
@@ -47,13 +49,13 @@ export const FeaturedCategoryCarousel = ({ items }: FeaturedCategoryCarouselProp
     if (!isMounted) return <LoaderIcon className="relative top-auto left-auto mx-auto animate-spin text-primary" />;
 
     // Hide navigation if items are less than or equal to slides per view on desktop
-    const shouldShowNavigation = !isMobile && items && items.length > 4;
+    const shouldShowNavigation = !isMobile && items && items.length > ITEMS_PER_SLIDE;
 
     return (
         <div className="w-full relative">
             <Swiper
                 onSwiper={setSwiper}
-                slidesPerView={isMobile ? 'auto' : 4}
+                slidesPerView={isMobile ? 'auto' : ITEMS_PER_SLIDE}
                 spaceBetween={16}
                 freeMode={isMobile}
                 modules={[FreeMode, Navigation, Pagination, Autoplay]}
@@ -78,7 +80,7 @@ export const FeaturedCategoryCarousel = ({ items }: FeaturedCategoryCarouselProp
                         freeMode: true,
                     },
                     768: {
-                        slidesPerView: 4,
+                        slidesPerView: ITEMS_PER_SLIDE,
                         spaceBetween: 32,
                         freeMode: false,
                     },
