@@ -64,11 +64,11 @@ export default function ServiceListItems({services}: ServiceListItemsProps): JSX
 				}}
 				className="w-full !pb-10 md:!pb-0 relative"
 				autoplay={{
-					delay: 2500,
+					delay: 5000,
 					disableOnInteraction: false,
 					pauseOnMouseEnter: true
 				}}
-				speed={500}
+				speed={1000}
 				loop={true}
 				breakpoints={{
 					320: {
