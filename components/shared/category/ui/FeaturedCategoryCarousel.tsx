@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import {Autoplay, FreeMode, Navigation, Pagination} from 'swiper/modules';
+import { Autoplay, FreeMode, Navigation, Pagination } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper';
 import { ChevronLeft, ChevronRight, LoaderIcon } from 'lucide-react';
 import { Button } from '@heroui/button';
@@ -54,6 +54,8 @@ export const FeaturedCategoryCarousel = ({ items }: FeaturedCategoryCarouselProp
     return (
         <div className="w-full relative">
             <Swiper
+                threshold={40}
+                touchStartPreventDefault={false}
                 onSwiper={setSwiper}
                 slidesPerView={isMobile ? 'auto' : ITEMS_PER_SLIDE}
                 spaceBetween={16}
