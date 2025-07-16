@@ -54,7 +54,7 @@ export const FeaturedCategoryCarousel = ({ items }: FeaturedCategoryCarouselProp
     return (
         <div className="w-full relative">
             <Swiper
-                threshold={40}
+                threshold={100}
                 touchStartPreventDefault={false}
                 onSwiper={setSwiper}
                 slidesPerView={isMobile ? 'auto' : ITEMS_PER_SLIDE}
