@@ -17,7 +17,6 @@
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     scroll-behavior: smooth;
-    scroll-padding: 0 1rem;
     scrollbar-width: none; /* Hide scrollbar for Firefox */
     -ms-overflow-style: none; /* Hide scrollbar for IE/Edge */
 }
@@ -27,7 +26,7 @@
 }
 
 .carouselTrack {
-    @apply flex gap-4 w-max px-4 py-2;
+    @apply flex gap-4 w-max p-4;
 }
 
 .carouselSlide {
