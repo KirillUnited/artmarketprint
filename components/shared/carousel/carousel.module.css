@@ -1,7 +1,36 @@
-.swiper {
-    @apply w-full pb-10 md:pb-0;
+.carousel {
+    @apply w-full relative;
 }
 
-.swiper-navigation {
-    @apply absolute top-1/2 z-10 -translate-y-1/2 rounded-full bg-brand-gradient text-white shadow-lg transition-all hover:scale-110;
+/* Swiper styles */
+.swiper {
+    @apply w-full pb-10;
+}
+
+.swiperNavigation {
+    @apply absolute top-1/2 z-10 -translate-y-1/2 rounded-full bg-brand-gradient text-white shadow-lg transition-all hover:scale-110 p-2;
+}
+
+/* Native carousel styles */
+.nativeCarousel {
+    @apply w-full overflow-x-auto pb-6 md:hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    scroll-padding: 0 1rem;
+    scrollbar-width: none; /* Hide scrollbar for Firefox */
+    -ms-overflow-style: none; /* Hide scrollbar for IE/Edge */
+}
+
+.nativeCarousel::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for Webkit browsers */
+}
+
+.carouselTrack {
+    @apply flex gap-4 w-max px-4 py-2;
+}
+
+.carouselSlide {
+    @apply w-60 flex-shrink-0 transition-transform duration-200 hover:scale-[1.02];
+    scroll-snap-align: start;
 }
