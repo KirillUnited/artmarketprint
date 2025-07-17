@@ -1,5 +1,3 @@
-import ServiceListItems from './_ServiceListItems';
-
 import Section, {
 	SectionButton,
 	SectionDescription,
@@ -9,6 +7,7 @@ import Section, {
 } from '@/components/layout/Section';
 import { SanityDocument } from 'next-sanity';
 import {JSX} from "react";
+import {Carousel} from "@/components/shared/carousel";
 
 /**
  * A function that renders a section with a list of services and a button to view all services.
@@ -50,7 +49,7 @@ export const Services = async (props: {
 			</div>
 
 			{/* Render the list of services. */}
-			<ServiceListItems services={services} />
+			<Carousel items={services} type='service' />
 
 			{/* Render the button to view all services if present. */}
 			{props.link && <SectionButton className='self-start' href={`${props.link?.link}`} label={props.link?.text} />}
