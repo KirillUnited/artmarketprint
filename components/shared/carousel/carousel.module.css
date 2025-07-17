@@ -1,0 +1,7 @@
+.swiper {
+    @apply w-full pb-10 md:pb-0;
+}
+
+.swiper-navigation {
+    @apply absolute top-1/2 z-10 -translate-y-1/2 rounded-full bg-brand-gradient text-white shadow-lg transition-all hover:scale-110;
+}

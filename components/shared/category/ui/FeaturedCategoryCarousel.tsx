@@ -55,7 +55,7 @@ export const FeaturedCategoryCarousel = ({ items }: FeaturedCategoryCarouselProp
         <div className="w-full relative">
             <Swiper
                 threshold={100}
-                touchStartPreventDefault={false}
+                touchStartPreventDefault={true}
                 onSwiper={setSwiper}
                 slidesPerView={isMobile ? 'auto' : ITEMS_PER_SLIDE}
                 spaceBetween={16}
@@ -80,11 +80,13 @@ export const FeaturedCategoryCarousel = ({ items }: FeaturedCategoryCarouselProp
                         slidesPerView: 'auto',
                         spaceBetween: 16,
                         freeMode: true,
+                        autoplay: false,
                     },
                     768: {
                         slidesPerView: ITEMS_PER_SLIDE,
                         spaceBetween: 32,
                         freeMode: false,
+                        autoplay: true,
                     },
                 }}
             >
