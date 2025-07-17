@@ -43,8 +43,6 @@ export const Carousel = ({ items, type, className }: CarouselProps) => {
 	const [isMobile, setIsMobile] = useState(false);
 	const [swiper, setSwiper] = useState<SwiperType | null>(null);
 
-	if (!Array.isArray(items) || items.length === 0) return null;
-
 	useEffect(() => {
 		setIsMounted(true);
 		const handleResize = () => {
@@ -56,7 +54,7 @@ export const Carousel = ({ items, type, className }: CarouselProps) => {
 		return () => window.removeEventListener('resize', handleResize);
 	}, []);
 
-	if (!isMounted) {
+	if (!isMounted || !Array.isArray(items) || items.length === 0) {
 		return <LoaderIcon className="relative top-auto left-auto mx-auto animate-spin text-primary" />;
 	}
 
@@ -67,7 +65,7 @@ export const Carousel = ({ items, type, className }: CarouselProps) => {
 			{isMobile ? (
 				<div className={styles.nativeCarousel}>
 					<div className={styles.carouselTrack}>
-						{items.map((item) => (
+						{items?.map((item) => (
 							<div key={item.title} className={styles.carouselSlide}>
 								{renderItem(item, type)}
 							</div>
