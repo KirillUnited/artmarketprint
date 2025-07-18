@@ -60,7 +60,6 @@ export const ServiceDetails: FC<ServiceDetailsProps> = memo(({
 		<article className="flex flex-col gap-8 md:gap-16">
 			<div className="flex flex-col gap-4 md:gap-6">
 				<div className="flex flex-col gap-2">
-					<span className="text-gray-600">О услуге</span>
 					<h2 className="text-3xl md:text-4xl font-bold break-words">{name}</h2>
 				</div>
 				<div
