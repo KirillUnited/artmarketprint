@@ -20,6 +20,7 @@ import Footer from '@/components/layout/Footer';
 import {Toaster} from '@/components/ui/sonner';
 import Script from 'next/script';
 import {LocalBusinessJsonLd} from '@/config/ld-json';
+import { CalculatorButton } from '@/components/shared/сalculator/ui';
 
 export const metadata: Metadata = {
 	metadataBase: new URL('https://artmarketprint.by'),
@@ -113,6 +114,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
 						<main className="flex-grow">{children}</main>
 						<Footer />
 					</div>
+					<CalculatorButton />
 					<Toaster richColors position="top-center" />
 				</Providers>
 				<noscript>
