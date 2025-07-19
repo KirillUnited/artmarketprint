@@ -1,4 +1,4 @@
-import PackageCalculator from '@/components/PackageCalculator';
+import {PackageCalculator} from '@/components/shared/сalculator';
 
 export const metadata = {
   title: 'Калькулятор стоимости пакетов | ArtMarketPrint',
