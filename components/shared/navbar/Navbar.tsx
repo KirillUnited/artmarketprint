@@ -2,7 +2,7 @@
 import React from 'react';
 import { Navbar as BaseNavbar, NavbarBrand, NavbarContent, NavbarItem } from '@heroui/navbar';
 import { Link } from '@heroui/link';
-import { ShoppingBagIcon } from 'lucide-react';
+import {Calculator, ShoppingBagIcon} from 'lucide-react';
 
 import { TelegramIcon, ViberIcon } from '../../icons';
 import BrandLogo from '../../ui/BrandLogo';
@@ -15,6 +15,8 @@ import { siteConfig } from '@/config/site';
 import { PhoneListDropdown } from '@/components/ui/PhoneListDropdown';
 import useBasketStore from '@/store/store';
 import { NavbarDropdownMenu } from '@/components/ui/dropdown';
+import {Tooltip} from "@heroui/tooltip";
+import {Button} from "@heroui/button";
 
 
 export const CartLinkButton = (itemsCount: number) => {
@@ -71,6 +73,12 @@ export default function Navbar({ navigation, sales, siteSettings }: any) {
 						})}
 					</NavbarContent>
 					<div className="flex flex-row gap-8 items-center shrink-0">
+						{/*Calculator page link*/}
+						<Tooltip content="Калькулятор стоимости пакетов" placement="bottom">
+							<Button as={Link} href="/calculator" isIconOnly color='primary' size="sm" className="bg-brand-gradient rounded-full shadow-large hover:scale-105 transition-transform duration-200" aria-label="Calculator">
+								<Calculator size={18} />
+							</Button>
+						</Tooltip>
 						{/* <SearchIcon /> */}
 						<div className="hidden md:flex gap-2">
 							<Link
