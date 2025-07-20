@@ -125,6 +125,10 @@ export const siteConfig = {
       label: 'Контакты',
       href: '/#contacts',
     },
+    {
+      label: 'Online калькулятор',
+      href: '/calculator',
+    },
   ],
   navMenuItems: [
     {
