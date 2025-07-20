@@ -4,6 +4,7 @@ import {useState, useEffect} from 'react';
 import {motion, AnimatePresence} from 'framer-motion';
 import {Button} from '@heroui/button';
 import {colors, DISCOUNT_PERCENTAGE, materials, MIN_QUANTITY, printOptions, quantityDiscounts, sizes} from '@/components/shared/сalculator/mock-data';
+import {getAvailableColors, getAvailableSizes} from '@/components/shared/сalculator/lib/utils';
 import Image from 'next/image';
 import {Select, SelectItem} from '@heroui/select';
 import {UsernameInput, UserPhoneInput} from '@/components/ui/form';
@@ -14,6 +15,7 @@ const PackageCalculator = () => {
 	const [step, setStep] = useState(1);
 	const [formData, setFormData] = useState({
 		material: '',
+		materialId: '',
 		color: '',
 		size: '',
 		printColor: '',
@@ -25,16 +27,31 @@ const PackageCalculator = () => {
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [formMessage, setFormMessage] = useState<{type: 'success' | 'error'; message: string} | null>(null);
 
+	// Reset color and size when material changes
+	useEffect(() => {
+		if (formData.materialId) {
+			setFormData(prev => ({
+				...prev,
+				color: '',
+				size: ''
+			}));
+		}
+	}, [formData.materialId]);
+
 	// Calculate price whenever form data changes
 	useEffect(() => {
 		calculatePrice();
 	}, [formData]);
 
+	// Get available colors and sizes based on selected material
+	const availableColors = formData.materialId ? getAvailableColors(formData.materialId) : [];
+	const availableSizes = formData.materialId ? getAvailableSizes(formData.materialId) : [];
+
 	const calculatePrice = () => {
-		const selectedMaterial = materials.find((m) => m.name === formData.material);
+		const selectedMaterial = materials.find((m) => m.id === formData.materialId);
 		if (!selectedMaterial) return;
 
-		const selectedSize = sizes.find((s) => s.name === formData.size);
+		const selectedSize = availableSizes.find((s) => s.name === formData.size);
 		const selectedPrint = printOptions.find((p) => p.name === formData.printColor);
 
 		let basePrice = selectedMaterial.price;
@@ -114,10 +131,24 @@ const PackageCalculator = () => {
 	const prevStep = () => setStep((prev) => Math.max(prev - 1, 1));
 
 	const handleChange = (field: string, value: string | number) => {
-		setFormData((prev) => ({
-			...prev,
-			[field]: value,
-		}));
+		setFormData((prev) => {
+			// If changing material, also update materialId
+			if (field === 'material') {
+				const selectedMaterial = materials.find(m => m.name === value);
+				return {
+					...prev,
+					material: value as string,
+					materialId: selectedMaterial?.id || '',
+					// Reset color and size when material changes
+					color: '',
+					size: ''
+				};
+			}
+			return {
+				...prev,
+				[field]: value,
+			};
+		});
 	};
 
 	const renderStep = () => {
@@ -132,6 +163,7 @@ const PackageCalculator = () => {
 									key={material.id}
 									onClick={() => {
 										handleChange('material', material.name);
+										handleChange('materialId', material.id);
 										nextStep();
 									}}
 									className="flex flex-col gap-4 p-4 border rounded-lg hover:bg-gray-50 transition-colors text-left"
@@ -150,41 +182,65 @@ const PackageCalculator = () => {
 				return (
 					<div className="space-y-4">
 						<h3 className="text-xl font-semibold mb-4">Цвет пакета</h3>
-						<div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-							{colors.map((color) => (
-								<button
-									key={color.id}
-									onClick={() => {
-										handleChange('color', color.name);
-										nextStep();
-									}}
-									className="p-4 border rounded-lg hover:shadow-md transition-all flex flex-col items-center"
-									style={{backgroundColor: color.value}}
-								>
-									<span className="mt-2 text-sm">{color.name}</span>
-								</button>
-							))}
-						</div>
+						{!formData.materialId ? (
+							<div className="text-center py-8 text-gray-500">
+								Пожалуйста, сначала выберите материал пакета
+							</div>
+						) : availableColors.length === 0 ? (
+							<div className="text-center py-8 text-gray-500">
+								Нет доступных цветов для выбранного материала
+							</div>
+						) : (
+							<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+								{availableColors.map((color) => (
+									<button
+										key={color.id}
+										onClick={() => {
+											handleChange('color', color.name);
+											nextStep();
+										}}
+										className="p-4 border rounded-lg hover:shadow-md transition-all flex gap-4 items-center"
+										title={color.name}
+									>
+										<span 
+											className="block basis-8 shrink-0 w-8 h-8 border rounded-full"
+											style={{backgroundColor: color.value}}
+										/>
+										<span className="text-sm flex-1 line-clamp-1 truncate text-left">{color.name}</span>
+									</button>
+								))}
+							</div>
+						)}
 					</div>
 				);
 			case 3:
 				return (
 					<div className="space-y-4">
 						<h3 className="text-xl font-semibold mb-4">Выберите размер пакета</h3>
-						<div className="space-y-3">
-							{sizes.map((size) => (
-								<button
-									key={size.id}
-									onClick={() => {
-										handleChange('size', size.name);
-										nextStep();
-									}}
-									className="w-full p-4 border rounded-lg hover:bg-gray-50 transition-colors text-left"
-								>
-									{size.name}
-								</button>
-							))}
-						</div>
+						{!formData.materialId ? (
+							<div className="text-center py-8 text-gray-500">
+								Пожалуйста, сначала выберите материал пакета
+							</div>
+						) : availableSizes.length === 0 ? (
+							<div className="text-center py-8 text-gray-500">
+								Нет доступных размеров для выбранного материала
+							</div>
+						) : (
+							<div className="space-y-3">
+								{availableSizes.map((size) => (
+									<button
+										key={size.id}
+										onClick={() => {
+											handleChange('size', size.name);
+											nextStep();
+										}}
+										className="w-full p-4 border rounded-lg hover:bg-gray-50 transition-colors text-left"
+									>
+										{size.name}
+									</button>
+								))}
+							</div>
+						)}
 					</div>
 				);
 			case 4:
