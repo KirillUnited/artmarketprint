@@ -63,7 +63,7 @@ const PackageCalculator = () => {
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 
-		const form = e.currentTarget;
+		const form = e.currentTarget as HTMLFormElement;
 		const _formData = new FormData(form);
 
 		if (step === 5) {
@@ -138,7 +138,7 @@ const PackageCalculator = () => {
 								>
 									<div className="flex flex-col">
 										<h4 className="font-medium">{material.name}</h4>
-										<p className="text-sm text-gray-500">от {material.price - (material.price * (DISCOUNT_PERCENTAGE / 100)).toFixed(2)} руб.</p>
+										<p className="text-sm text-gray-500">от {material.price} руб.</p>
 									</div>
 									{material.image && <Image className="w-16 h-16 object-contain" src={material.image} alt={material.name} width={100} height={100} quality={50} />}
 								</button>
@@ -224,7 +224,7 @@ const PackageCalculator = () => {
 								defaultSelectedKeys={['50']}
 							>
 								{Array.from({length: 20}).map((_, i) => (
-									<SelectItem key={i * 50 + MIN_QUANTITY} textValue={i * 50 + MIN_QUANTITY}>
+									<SelectItem key={i * 50 + MIN_QUANTITY} textValue={String(i * 50 + MIN_QUANTITY)}>
 										{i * 50 + MIN_QUANTITY} шт.
 									</SelectItem>
 								))}
@@ -250,7 +250,7 @@ const PackageCalculator = () => {
 									</ul>
 								</div>
 
-								<Form className='items-stretch' id="calc-order-form" name="calc-order-form" onSubmit={handleSubmit} validationBehavior='native'>
+								<Form className='items-stretch' id="calc-order-form" onSubmit={handleSubmit} validationBehavior='native'>
 									<h4 className="font-medium mb-4">Отправить выбранное в типографию</h4>
 									<div className="flex flex-col gap-3">
 										<UsernameInput />

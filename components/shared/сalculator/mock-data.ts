@@ -1,6 +1,6 @@
 // Mock data - in a real app, this would come from Sanity
-export const MIN_QUANTITY = 50;
-export const DISCOUNT_PERCENTAGE = 5;
+export const MIN_QUANTITY: number = 50 as const;
+export const DISCOUNT_PERCENTAGE: number = 5 as const;
 export const materials = [
     {id: 'pvd', name: 'ПВД', price: 1.56, image: '/images/calc/dark-blue.png'},
     {id: 'flat-handles-kraft', name: 'Крафт с плоской ручкой', price: 1.61, image: '/images/calc/flat-handles-kraft.png'},
