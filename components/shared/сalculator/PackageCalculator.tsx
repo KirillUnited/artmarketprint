@@ -2,7 +2,13 @@
 
 import {useState, useEffect} from 'react';
 import {motion, AnimatePresence} from 'framer-motion';
-import {Button} from "@heroui/button";
+import {Button} from '@heroui/button';
+import {colors, DISCOUNT_PERCENTAGE, materials, MIN_QUANTITY, printOptions, quantityDiscounts, sizes} from '@/components/shared/сalculator/mock-data';
+import Image from 'next/image';
+import {Select, SelectItem} from '@heroui/select';
+import {UsernameInput, UserPhoneInput} from '@/components/ui/form';
+import {sendCalculatorDetails} from './lib';
+import {Form} from "@heroui/form";
 
 const PackageCalculator = () => {
 	const [step, setStep] = useState(1);
@@ -11,45 +17,13 @@ const PackageCalculator = () => {
 		color: '',
 		size: '',
 		printColor: '',
-		quantity: 1000, // Default quantity
+		quantity: MIN_QUANTITY, // Default quantity
 	});
-
+	const [phoneValid, setPhoneValid] = useState(false);
 	const [price, setPrice] = useState(0);
 	const [pricePerBag, setPricePerBag] = useState(0);
-
-	// Mock data - in a real app, this would come from Sanity
-	const materials = [
-		{id: 'kraft', name: 'Крафт-бумага', price: 10},
-		{id: 'white', name: 'Белая бумага', price: 12},
-		{id: 'recycled', name: 'Переработанная бумага', price: 15},
-	];
-
-	const colors = [
-		{id: 'natural', name: 'Натуральный', value: '#D2B48C'},
-		{id: 'white', name: 'Белый', value: '#FFFFFF'},
-		{id: 'black', name: 'Черный', value: '#000000'},
-		{id: 'brown', name: 'Коричневый', value: '#8B4513'},
-	];
-
-	const sizes = [
-		{id: 'small', name: 'Маленький (20x10x30 см)', multiplier: 1},
-		{id: 'medium', name: 'Средний (30x15x40 см)', multiplier: 1.3},
-		{id: 'large', name: 'Большой (40x20x50 см)', multiplier: 1.7},
-	];
-
-	const printOptions = [
-		{id: '1-0', name: '1+0 (Одна краска с одной стороны)', multiplier: 1},
-		{id: '1-1', name: '1+1 (Одна краска с двух сторон)', multiplier: 1.5},
-		{id: '2-0', name: '2+0 (Две краски с одной стороны)', multiplier: 1.8},
-		{id: '2-2', name: '2+2 (Две краски с двух сторон)', multiplier: 2.2},
-	];
-
-	const quantityDiscounts = [
-		{min: 1000, discount: 0},
-		{min: 2000, discount: 0.05},
-		{min: 5000, discount: 0.1},
-		{min: 10000, discount: 0.15},
-	];
+	const [isSubmitting, setIsSubmitting] = useState(false);
+	const [formMessage, setFormMessage] = useState<{type: 'success' | 'error'; message: string} | null>(null);
 
 	// Calculate price whenever form data changes
 	useEffect(() => {
@@ -57,11 +31,11 @@ const PackageCalculator = () => {
 	}, [formData]);
 
 	const calculatePrice = () => {
-		const selectedMaterial = materials.find((m) => m.id === formData.material);
+		const selectedMaterial = materials.find((m) => m.name === formData.material);
 		if (!selectedMaterial) return;
 
-		const selectedSize = sizes.find((s) => s.id === formData.size);
-		const selectedPrint = printOptions.find((p) => p.id === formData.printColor);
+		const selectedSize = sizes.find((s) => s.name === formData.size);
+		const selectedPrint = printOptions.find((p) => p.name === formData.printColor);
 
 		let basePrice = selectedMaterial.price;
 
@@ -76,7 +50,7 @@ const PackageCalculator = () => {
 		}
 
 		// Apply quantity discount
-		const quantity = formData.quantity || 1000;
+		const quantity = formData.quantity || MIN_QUANTITY;
 		const discountTier = [...quantityDiscounts].sort((a, b) => b.min - a.min).find((tier) => quantity >= tier.min);
 
 		const discount = discountTier ? discountTier.discount : 0;
@@ -84,6 +58,56 @@ const PackageCalculator = () => {
 
 		setPrice(priceAfterDiscount * quantity);
 		setPricePerBag(priceAfterDiscount);
+	};
+
+	const handleSubmit = async (e: React.FormEvent) => {
+		e.preventDefault();
+
+		const form = e.currentTarget as HTMLFormElement;
+		const _formData = new FormData(form);
+
+		if (step === 5) {
+			setIsSubmitting(true);
+			setFormMessage(null);
+
+			try {
+				await sendCalculatorDetails({
+					material: formData.material,
+					color: formData.color,
+					size: formData.size,
+					printColor: formData.printColor,
+					quantity: formData.quantity,
+					price,
+					pricePerBag,
+					user_name: _formData.get('user_name') as string,
+					user_phone: _formData.get('user_phone') as string,
+					comment: _formData.get('user_comment')?.toString() || 'Нет',
+				});
+
+				setFormMessage({
+					type: 'success',
+					message: 'Спасибо! Ваша заявка отправлена. Мы свяжемся с вами в ближайшее время.',
+				});
+				form.reset();
+				setFormData({
+					material: '',
+					color: '',
+					size: '',
+					printColor: '',
+					quantity: MIN_QUANTITY,
+				});
+				setStep(step + 1);
+			} catch (error) {
+				setFormMessage({
+					type: 'error',
+					message: 'Произошла ошибка при отправке заявки. Пожалуйста, попробуйте еще раз.',
+				});
+			} finally {
+				setIsSubmitting(false);
+			}
+		} else {
+			setStep(step + 1);
+		}
 	};
 
 	const nextStep = () => setStep((prev) => Math.min(prev + 1, 6));
@@ -107,13 +131,16 @@ const PackageCalculator = () => {
 								<button
 									key={material.id}
 									onClick={() => {
-										handleChange('material', material.id);
+										handleChange('material', material.name);
 										nextStep();
 									}}
-									className="p-4 border rounded-lg hover:bg-gray-50 transition-colors text-left"
+									className="flex flex-col gap-4 p-4 border rounded-lg hover:bg-gray-50 transition-colors text-left"
 								>
-									<h4 className="font-medium">{material.name}</h4>
-									<p className="text-sm text-gray-500">от {material.price} руб.</p>
+									<div className="flex flex-col">
+										<h4 className="font-medium">{material.name}</h4>
+										<p className="text-sm text-gray-500">от {material.price} руб.</p>
+									</div>
+									{material.image && <Image className="w-16 h-16 object-contain" src={material.image} alt={material.name} width={100} height={100} quality={50} />}
 								</button>
 							))}
 						</div>
@@ -128,7 +155,7 @@ const PackageCalculator = () => {
 								<button
 									key={color.id}
 									onClick={() => {
-										handleChange('color', color.id);
+										handleChange('color', color.name);
 										nextStep();
 									}}
 									className="p-4 border rounded-lg hover:shadow-md transition-all flex flex-col items-center"
@@ -149,7 +176,7 @@ const PackageCalculator = () => {
 								<button
 									key={size.id}
 									onClick={() => {
-										handleChange('size', size.id);
+										handleChange('size', size.name);
 										nextStep();
 									}}
 									className="w-full p-4 border rounded-lg hover:bg-gray-50 transition-colors text-left"
@@ -169,7 +196,7 @@ const PackageCalculator = () => {
 								<button
 									key={option.id}
 									onClick={() => {
-										handleChange('printColor', option.id);
+										handleChange('printColor', option.name);
 										nextStep();
 									}}
 									className="w-full p-4 border rounded-lg hover:bg-gray-50 transition-colors text-left"
@@ -185,34 +212,51 @@ const PackageCalculator = () => {
 					<div className="space-y-6">
 						<h3 className="text-xl font-semibold mb-4">Количество пакетов</h3>
 						<p className="text-sm text-gray-600">* - примерная цена, может измениться в зависимости от объема заказа</p>
-						<div className="space-y-4">
-							<input type="range" min="1000" max="20000" step="100" value={formData.quantity} onChange={(e) => handleChange('quantity', parseInt(e.target.value))} className="w-full" />
-							<div className="flex justify-between text-sm text-gray-500">
-								<span>1 000 шт.</span>
-								<span>20 000 шт.</span>
-							</div>
-							<div className="flex items-center justify-center space-x-2">
-								<span className="text-2xl font-bold">{formData.quantity.toLocaleString()}</span>
-								<span className="text-gray-500">шт.</span>
-							</div>
+						<div className="space-y-6">
+							<Select
+								aria-label="Количество пакетов"
+								value={formData.quantity}
+								onChange={(e) => handleChange('quantity', parseInt(e.target.value))}
+								classNames={{
+									trigger: 'border-1 bg-background',
+								}}
+								radius="sm"
+								defaultSelectedKeys={['50']}
+							>
+								{Array.from({length: 20}).map((_, i) => (
+									<SelectItem key={i * 50 + MIN_QUANTITY} textValue={String(i * 50 + MIN_QUANTITY)}>
+										{i * 50 + MIN_QUANTITY} шт.
+									</SelectItem>
+								))}
+							</Select>
 
 							<div className="mt-8 p-4 bg-gray-50 rounded-lg">
 								<div className="flex justify-between items-center">
 									<span>Стоимость:</span>
-									<span className="text-xl font-bold">{Math.round(price).toLocaleString()} Br</span>
+									<span className="text-xl font-bold">{price.toFixed(2).toLocaleString()} Br</span>
 								</div>
 								<div className="text-sm text-gray-500 mt-1">за 1 пакет: {pricePerBag.toFixed(2)} Br</div>
 							</div>
+							<div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+								<div className="bg-gray-50 p-4 rounded-lg text-left">
+									<h4 className="font-medium mb-2">Детали заказа:</h4>
+									<ul className="space-y-1 text-sm text-gray-600">
+										<li>Материал: {materials.find((m) => m.name === formData.material)?.name || 'Не выбран'}</li>
+										<li>Цвет: {colors.find((c) => c.name === formData.color)?.name || 'Не выбран'}</li>
+										<li>Размер: {sizes.find((s) => s.name === formData.size)?.name || 'Не выбран'}</li>
+										<li>Цветность: {printOptions.find((p) => p.name === formData.printColor)?.name || 'Не выбрана'}</li>
+										<li>Количество: {formData.quantity.toLocaleString()} шт.</li>
+										<li className="font-medium mt-2">Итого: {price.toFixed(2).toLocaleString()} Br</li>
+									</ul>
+								</div>
 
-							<div className="mt-4">
-								<h4 className="font-medium mb-2">Ваша скидка:</h4>
-								<div className="w-full bg-gray-200 rounded-full h-2.5">
-									<div className="bg-blue-600 h-2.5 rounded-full" style={{width: `${(formData.quantity / 20000) * 100}%`}}></div>
-								</div>
-								<div className="flex justify-between text-sm text-gray-500 mt-1">
-									<span>0%</span>
-									<span>15%</span>
-								</div>
+								<Form className='items-stretch' id="calc-order-form" onSubmit={handleSubmit} validationBehavior='native'>
+									<h4 className="font-medium mb-4">Отправить выбранное в типографию</h4>
+									<div className="flex flex-col gap-3">
+										<UsernameInput />
+										<UserPhoneInput validPhone={setPhoneValid} />
+									</div>
+								</Form>
 							</div>
 						</div>
 					</div>
@@ -227,20 +271,9 @@ const PackageCalculator = () => {
 						</div>
 						<h3 className="text-xl font-semibold mb-2">Готово!</h3>
 						<p className="text-gray-600 mb-6">Мы получили ваш запрос и свяжемся с вами в ближайшее время для уточнения деталей.</p>
-						<div className="bg-gray-50 p-4 rounded-lg text-left mb-6">
-							<h4 className="font-medium mb-2">Детали заказа:</h4>
-							<ul className="space-y-1 text-sm text-gray-600">
-								<li>Материал: {materials.find((m) => m.id === formData.material)?.name || 'Не выбран'}</li>
-								<li>Цвет: {colors.find((c) => c.id === formData.color)?.name || 'Не выбран'}</li>
-								<li>Размер: {sizes.find((s) => s.id === formData.size)?.name || 'Не выбран'}</li>
-								<li>Цветность: {printOptions.find((p) => p.id === formData.printColor)?.name || 'Не выбрана'}</li>
-								<li>Количество: {formData.quantity.toLocaleString()} шт.</li>
-								<li className="font-medium mt-2">Итого: {Math.round(price).toLocaleString()} Br</li>
-							</ul>
-						</div>
-						<button onClick={() => setStep(1)} className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+						<Button onPress={() => setStep(1)} color="primary" radius="sm">
 							Создать новый расчет
-						</button>
+						</Button>
 					</div>
 				);
 			default:
@@ -249,7 +282,7 @@ const PackageCalculator = () => {
 	};
 
 	return (
-		<div className="max-w-4xl mx-auto p-6 bg-white rounded-xl shadow-md">
+		<div className="max-w-4xl mx-auto p-6 bg-white rounded-xl shadow-md items-stretch">
 			<h2 className="text-2xl font-bold text-center mb-8">Калькулятор стоимости пакетов</h2>
 
 			{/* Progress bar */}
@@ -291,13 +324,15 @@ const PackageCalculator = () => {
 					{step < 5 ? (
 						<Button
 							onPress={nextStep}
-							disabled={(!formData.material && step === 1) || (!formData.color && step === 2) || (!formData.size && step === 3) || (!formData.printColor && step === 4)}
-							color='primary'
+							isDisabled={(!formData.material && step === 1) || (!formData.color && step === 2) || (!formData.size && step === 3) || (!formData.printColor && step === 4)}
+							color="primary"
+							radius="sm"
+							type='button'
 						>
 							Далее
 						</Button>
 					) : (
-						<Button onPress={nextStep} color='success'>
+						<Button type="submit" isLoading={isSubmitting} isDisabled={!phoneValid || isSubmitting} form="calc-order-form" color="primary" className="bg-brand-gradient" radius="sm">
 							Отправить заявку
 						</Button>
 					)}
