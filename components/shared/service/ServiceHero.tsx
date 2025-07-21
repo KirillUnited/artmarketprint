@@ -4,6 +4,8 @@ import BrandButton from '@/components/ui/BrandButton';
 import Link from 'next/link';
 import { ServiceHeroProps } from './service.props';
 import {JSX} from "react";
+import {Button} from "@heroui/button";
+import {Calculator} from "lucide-react";
 
 /**
  * A strongly typed function that renders a hero section for a service.
@@ -58,7 +60,14 @@ export const ServiceHero: React.FC<ServiceHeroProps> = ({ title, description, me
                     </p>
                 </div>
 
-                <BrandButton as={Link} className={'self-center'} href={'#serviceDetails'} state="primary">Подробнее</BrandButton>
+                <div className='flex flex-col gap-2 md:flex-row self-center'>
+                    <BrandButton as={Link} href={'#serviceDetails'} state="primary"
+                                size='md'>Подробнее</BrandButton>
+                    <Button as={Link} href={'/calculator'} radius='sm'>
+                        <Calculator size={18}/>
+                        Online-калькулятор
+                    </Button>
+                </div>
             </div>
         </section>
     )
