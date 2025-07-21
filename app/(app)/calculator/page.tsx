@@ -13,10 +13,12 @@ export default async function CalculatorPage() {
   return (
     <main className="min-h-screen py-12 bg-gray-50">
       <div className="container mx-auto px-4">
-        <h1 className="text-3xl font-bold text-center mb-2">Калькулятор стоимости пакетов ArtMarketPrint</h1>
-        <p className="text-center text-gray-600 mb-8 max-w-2xl mx-auto">
-          Заполните параметры и получите расчет стоимости вашего заказа. Минимальный тираж - 50 штук.
+        <h1 className="text-3xl font-bold text-center mb-2">{data?.title}</h1>
+        {data?.description && (
+          <p className="text-center text-gray-600 mb-8 max-w-2xl mx-auto">
+          {data.description}
         </p>
+      )}
         
         <PackageCalculator />
         
