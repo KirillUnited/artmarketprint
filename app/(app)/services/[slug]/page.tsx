@@ -1,12 +1,9 @@
-import { SanityImageSource } from '@sanity/image-url/lib/types/types';
-import imageUrlBuilder from '@sanity/image-url';
 import { defineQuery, PortableText } from 'next-sanity';
 import { Card } from '@heroui/card';
 import { clsx } from 'clsx';
 
 import { ServiceBreadcrumb } from '@/components/ui/Breadcrumb';
 import { ServiceDetails, ServiceHero } from '@/components/shared/service';
-import { client } from '@/sanity/client';
 import { sanityFetch } from "@/sanity/lib/sanityFetch";
 import { getUrlFor } from '@/lib/utils';
 import { ProjectList } from '@/components/shared/project';
