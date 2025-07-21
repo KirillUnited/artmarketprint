@@ -1,11 +1,15 @@
 import {PackageCalculator} from '@/components/shared/сalculator';
+import {getCalculatorByTitle} from "@/components/shared/сalculator/lib/calculatorQueries";
 
 export const metadata = {
   title: 'Калькулятор стоимости пакетов | ArtMarketPrint',
   description: 'Рассчитайте стоимость заказа пакетов с логотипом онлайн. Выберите параметры и получите расчет за несколько кликов.',
 };
 
-export default function CalculatorPage() {
+export default async function CalculatorPage() {
+  const data = await getCalculatorByTitle('Калькулятор пакетов');
+  console.log(data);
+
   return (
     <main className="min-h-screen py-12 bg-gray-50">
       <div className="container mx-auto px-4">
