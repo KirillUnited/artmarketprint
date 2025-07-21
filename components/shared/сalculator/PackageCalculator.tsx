@@ -167,11 +167,11 @@ const PackageCalculator = () => {
 										handleChange('materialId', material.id);
 										nextStep();
 									}}
-									className="flex flex-col gap-4 p-4 border rounded-lg hover:bg-gray-50 transition-colors text-left"
+									className="group flex flex-col gap-4 p-4 border rounded-lg hover:bg-primary hover:text-white transition-colors text-left"
 								>
 									<div className="flex flex-col">
 										<h4 className="font-medium">{material.name}</h4>
-										<p className="text-sm text-gray-500">от {material.price} руб.</p>
+										<p className="text-sm text-gray-500 group-hover:text-white transition-colors">от {material.price} руб.</p>
 									</div>
 									{material.image && <Image className="w-16 h-16 object-contain" src={material.image} alt={material.name} width={100} height={100} quality={50} />}
 								</button>
@@ -200,7 +200,7 @@ const PackageCalculator = () => {
 											handleChange('color', color.name);
 											nextStep();
 										}}
-										className="p-4 border rounded-lg hover:shadow-md transition-all flex gap-4 items-center"
+										className="p-4 border rounded-lg hover:shadow-md hover:bg-primary hover:text-white transition-all flex gap-4 items-center"
 										title={color.name}
 									>
 										<span 
@@ -235,7 +235,7 @@ const PackageCalculator = () => {
 											handleChange('size', size.name);
 											nextStep();
 										}}
-										className="w-full p-4 border rounded-lg hover:bg-gray-50 transition-colors text-left"
+										className="w-full p-4 border rounded-lg hover:bg-primary hover:text-white transition-colors text-left"
 									>
 										{size.name}
 									</button>
@@ -256,7 +256,7 @@ const PackageCalculator = () => {
 										handleChange('printColor', option.name);
 										nextStep();
 									}}
-									className="w-full p-4 border rounded-lg hover:bg-gray-50 transition-colors text-left"
+									className="w-full p-4 border rounded-lg hover:bg-primary hover:text-white transition-colors text-left"
 								>
 									{option.name}
 								</button>
@@ -278,7 +278,7 @@ const PackageCalculator = () => {
 									trigger: 'border-1 bg-background',
 								}}
 								radius="sm"
-								defaultSelectedKeys={['50']}
+								defaultSelectedKeys={[`${MIN_QUANTITY}`]}
 							>
 								{Array.from({length: 20}).map((_, i) => (
 									<SelectItem key={i * 50 + MIN_QUANTITY} textValue={String(i * 50 + MIN_QUANTITY)}>

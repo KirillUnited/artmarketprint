@@ -1,5 +1,5 @@
 // Mock data - in a real app, this would come from Sanity
-export const MIN_QUANTITY: number = 50 as const;
+export const MIN_QUANTITY: number = 100 as const;
 export const DISCOUNT_PERCENTAGE: number = 5 as const;
 
 // Define color and size types for type safety
@@ -60,7 +60,27 @@ export const materials: Material[] = [
         name: 'ПВД',
         price: 1.56,
         image: '/images/calc/dark-blue.png',
-        availableColors: ['white', 'black', 'blue', 'red', 'green', 'yellow', 'pink', 'purple', 'transparent'],
+        availableColors: [
+            'white',
+            'black',
+            'blue',
+            'red',
+            'green',
+            'yellow',
+            'pink',
+            'purple',
+            'transparent',
+            'matte',
+            'dark-blue',
+            'dark-green',
+            'gold',
+            'salad',
+            'silver',
+            'beige',
+            'brown',
+            'orange',
+            'dark-blue',
+        ],
         availableSizes: ['small', 'medium', 'large']
     },
     {
@@ -76,7 +96,17 @@ export const materials: Material[] = [
         name: 'Крафт с крученой ручкой',
         price: 2.1,
         image: '/images/calc/twisted-handles-kraft.png',
-        availableColors: ['natural', 'brown', 'beige', 'black'],
+        availableColors: [
+            'natural',
+            'brown',
+            'beige',
+            'black',
+            'white',
+            'green',
+            'brown',
+            'red',
+            'gold',
+        ],
         availableSizes: ['240x140x280', '280x150x320']
     },
 ];
