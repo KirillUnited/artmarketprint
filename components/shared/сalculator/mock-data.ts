@@ -1,5 +1,5 @@
 // Mock data - in a real app, this would come from Sanity
-export const MIN_QUANTITY: number = 50 as const;
+export const MIN_QUANTITY: number = 100 as const;
 export const DISCOUNT_PERCENTAGE: number = 5 as const;
 
 // Define color and size types for type safety

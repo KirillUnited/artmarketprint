@@ -278,7 +278,7 @@ const PackageCalculator = () => {
 									trigger: 'border-1 bg-background',
 								}}
 								radius="sm"
-								defaultSelectedKeys={['50']}
+								defaultSelectedKeys={[`${MIN_QUANTITY}`]}
 							>
 								{Array.from({length: 20}).map((_, i) => (
 									<SelectItem key={i * 50 + MIN_QUANTITY} textValue={String(i * 50 + MIN_QUANTITY)}>
