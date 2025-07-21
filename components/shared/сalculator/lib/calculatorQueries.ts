@@ -94,7 +94,7 @@ export interface CalculatorListItem {
  */
 export async function getCalculatorByTitle(title: string): Promise<CalculatorData | null> {
 	try {
-		const calculator = await sanityFetch<CalculatorData>({
+		const calculator = await sanityFetch({
 			query: getCalculatorByTitleQuery,
 			params: {
 				title,
@@ -112,7 +112,7 @@ export async function getCalculatorByTitle(title: string): Promise<CalculatorDat
  */
 export async function getAllCalculators(): Promise<CalculatorListItem[]> {
 	try {
-		const calculators = await sanityFetch<CalculatorListItem[]>({query: getAllCalculatorsQuery});
+		const calculators = await sanityFetch({query: getAllCalculatorsQuery});
 		return calculators || [];
 	} catch (error) {
 		console.error('Error fetching calculators:', error);
