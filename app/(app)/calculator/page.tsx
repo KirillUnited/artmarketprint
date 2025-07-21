@@ -7,7 +7,7 @@ export const metadata = {
 };
 
 export default async function CalculatorPage() {
-  const data = await getCalculatorByTitle('Калькулятор пакетов');
+  const data = await getCalculatorByTitle('Калькулятор стоимости пакетов ArtMarketPrint');
   console.log(data);
 
   return (
