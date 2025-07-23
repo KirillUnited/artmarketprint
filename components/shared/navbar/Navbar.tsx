@@ -17,6 +17,7 @@ import useBasketStore from '@/store/store';
 import { NavbarDropdownMenu } from '@/components/ui/dropdown';
 import {Tooltip} from "@heroui/tooltip";
 import {Button} from "@heroui/button";
+import { PhoneIcon } from '@/components/icons';
 
 
 export const CartLinkButton = (itemsCount: number) => {
@@ -92,9 +93,12 @@ export default function Navbar({ navigation, sales, siteSettings }: any) {
 								<ViberIcon />
 							</Link>
 						</div>
-						{
+						{/* {
 							phones.length > 0 && <PhoneListDropdown items={phones} />
-						}
+						} */}
+						<Link className="text-sm hover:text-primary" color={'primary'} href={`tel:${phones[0]?.link}`}>                            
+                			<PhoneIcon />
+                        </Link>
 						{CartLinkButton(itemsCount)}
 
 						<div className="hidden lg:block">
