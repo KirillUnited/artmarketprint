@@ -171,7 +171,7 @@ const PackageCalculator = () => {
 								>
 									<div className="flex flex-col">
 										<h4 className="font-medium">{material.name}</h4>
-										<p className="text-sm text-gray-500 group-hover:text-white transition-colors">от {material.price} руб.</p>
+										{/* <p className="text-sm text-gray-500 group-hover:text-white transition-colors">от {material.price} руб.</p> */}
 									</div>
 									{material.image && <Image className="w-16 h-16 object-contain" src={material.image} alt={material.name} width={100} height={100} quality={50} />}
 								</button>
