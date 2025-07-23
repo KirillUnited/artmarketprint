@@ -1,15 +1,15 @@
 'use client';
 
-import {useState, useEffect} from 'react';
-import {motion, AnimatePresence} from 'framer-motion';
-import {Button} from '@heroui/button';
-import {colors, DISCOUNT_PERCENTAGE, materials, MIN_QUANTITY, printOptions, quantityDiscounts, sizes} from '@/components/shared/сalculator/mock-data';
-import {getAvailableColors, getAvailableSizes} from '@/components/shared/сalculator/lib/utils';
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Button } from '@heroui/button';
+import { colors, DISCOUNT_PERCENTAGE, materials, MIN_QUANTITY, printOptions, quantityDiscounts, sizes } from '@/components/shared/сalculator/mock-data';
+import { getAvailableColors, getAvailableSizes } from '@/components/shared/сalculator/lib/utils';
 import Image from 'next/image';
-import {Select, SelectItem} from '@heroui/select';
-import {UsernameInput, UserPhoneInput} from '@/components/ui/form';
-import {sendCalculatorDetails} from './lib';
-import {Form} from "@heroui/form";
+import { Select, SelectItem } from '@heroui/select';
+import { UsernameInput, UserPhoneInput } from '@/components/ui/form';
+import { sendCalculatorDetails } from './lib';
+import { Form } from "@heroui/form";
 
 const PackageCalculator = () => {
 	const [step, setStep] = useState(1);
@@ -25,7 +25,7 @@ const PackageCalculator = () => {
 	const [price, setPrice] = useState(0);
 	const [pricePerBag, setPricePerBag] = useState(0);
 	const [isSubmitting, setIsSubmitting] = useState(false);
-	const [formMessage, setFormMessage] = useState<{type: 'success' | 'error'; message: string} | null>(null);
+	const [formMessage, setFormMessage] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
 
 	// Reset color and size when material changes
 	useEffect(() => {
@@ -171,7 +171,7 @@ const PackageCalculator = () => {
 								>
 									<div className="flex flex-col">
 										<h4 className="font-medium">{material.name}</h4>
-										<p className="text-sm text-gray-500 group-hover:text-white transition-colors">от {material.price} руб.</p>
+										{/* <p className="text-sm text-gray-500 group-hover:text-white transition-colors">от {material.price} руб.</p> */}
 									</div>
 									{material.image && <Image className="w-16 h-16 object-contain" src={material.image} alt={material.name} width={100} height={100} quality={50} />}
 								</button>
@@ -203,9 +203,9 @@ const PackageCalculator = () => {
 										className="p-4 border rounded-lg hover:shadow-md hover:bg-primary hover:text-white transition-all flex gap-4 items-center"
 										title={color.name}
 									>
-										<span 
+										<span
 											className="block basis-8 shrink-0 w-8 h-8 border rounded-full"
-											style={{backgroundColor: color.value}}
+											style={{ backgroundColor: color.value }}
 										/>
 										<span className="text-sm flex-1 line-clamp-1 truncate text-left">{color.name}</span>
 									</button>
@@ -279,8 +279,11 @@ const PackageCalculator = () => {
 								}}
 								radius="sm"
 								defaultSelectedKeys={[`${MIN_QUANTITY}`]}
+								scrollShadowProps={{
+									isEnabled: false,
+								}}
 							>
-								{Array.from({length: 20}).map((_, i) => (
+								{Array.from({ length: 19 }).map((_, i) => (
 									<SelectItem key={i * 50 + MIN_QUANTITY} textValue={String(i * 50 + MIN_QUANTITY)}>
 										{i * 50 + MIN_QUANTITY} шт.
 									</SelectItem>
@@ -357,7 +360,7 @@ const PackageCalculator = () => {
 						))}
 					</div>
 					<div className="w-full bg-gray-200 rounded-full h-2.5">
-						<div className="bg-blue-600 h-2.5 rounded-full transition-all duration-300" style={{width: `${((step - 1) / 4) * 100}%`}}></div>
+						<div className="bg-blue-600 h-2.5 rounded-full transition-all duration-300" style={{ width: `${((step - 1) / 4) * 100}%` }}></div>
 					</div>
 				</div>
 			)}
@@ -365,7 +368,7 @@ const PackageCalculator = () => {
 			{/* Form content */}
 			<div className="min-h-[400px]">
 				<AnimatePresence mode="wait">
-					<motion.div key={step} initial={{opacity: 0, x: 20}} animate={{opacity: 1, x: 0}} exit={{opacity: 0, x: -20}} transition={{duration: 0.3}}>
+					<motion.div key={step} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.3 }}>
 						{renderStep()}
 					</motion.div>
 				</AnimatePresence>
