@@ -268,7 +268,6 @@ const PackageCalculator = () => {
 				return (
 					<div className="space-y-6">
 						<h3 className="text-xl font-semibold mb-4">Количество пакетов</h3>
-						<p className="text-sm text-gray-600">* - примерная цена, может измениться в зависимости от объема заказа</p>
 						<div className="space-y-6">
 							<Select
 								aria-label="Количество пакетов"
@@ -296,6 +295,8 @@ const PackageCalculator = () => {
 									<span className="text-xl font-bold">{price.toFixed(2).toLocaleString()} Br</span>
 								</div>
 								<div className="text-sm text-gray-500 mt-1">за 1 пакет: {pricePerBag.toFixed(2)} Br</div>
+
+								<p className="text-sm text-gray-600 mt-6">* - примерная цена, может измениться в зависимости от объема заказа</p>
 							</div>
 							<div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
 								<div className="bg-gray-50 p-4 rounded-lg text-left">
