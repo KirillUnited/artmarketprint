@@ -1,5 +1,5 @@
 import {PackageCalculator} from '@/components/shared/сalculator';
-import {getCalculatorByTitle} from "@/components/shared/сalculator/lib/calculatorQueries";
+import {getCalculatorByType} from "@/components/shared/сalculator/lib/calculatorQueries";
 
 export const metadata = {
   title: 'Калькулятор стоимости пакетов | ArtMarketPrint',
@@ -7,7 +7,7 @@ export const metadata = {
 };
 
 export default async function CalculatorPage() {
-  const data = await getCalculatorByTitle('Калькулятор стоимости пакетов ArtMarketPrint');
+  const data = await getCalculatorByType('package-calc');
   console.log(data);
 
   return (
