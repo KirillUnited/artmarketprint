@@ -1,8 +1,8 @@
 // GROQ Query to fetch calculator by ID
 import {sanityFetch} from '@/sanity/lib/sanityFetch';
 
-export const getCalculatorByTitleQuery = `
-  *[_type == "calculator" && title == $title][0] {
+export const getCalculatorByTypeQuery = `
+  *[_type == "calculator" && type == $type][0] {
     _id,
     title,
     description,
@@ -92,12 +92,12 @@ export interface CalculatorListItem {
 /**
  * Fetches a single calculator by its ID with all related data
  */
-export async function getCalculatorByTitle(title: string): Promise<CalculatorData | null> {
+export async function getCalculatorByType(type: string): Promise<CalculatorData | null> {
 	try {
 		const calculator = await sanityFetch({
-			query: getCalculatorByTitleQuery,
+			query: getCalculatorByTypeQuery,
 			params: {
-				title,
+				type,
 			},
 		});
 		return calculator || null;

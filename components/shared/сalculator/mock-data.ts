@@ -47,9 +47,9 @@ export const colors: Color[] = [
 ];
 
 export const sizes: Size[] = [
-    {id: 'small', name: 'Маленький (20x10x30 см)', multiplier: 1},
-    {id: 'medium', name: 'Средний (30x15x40 см)', multiplier: 1.3},
-    {id: 'large', name: 'Большой (40x20x50 см)', multiplier: 1.7},
+    {id: 'small', name: 'Маленький (20x30 см)', multiplier: 1},
+    {id: 'medium', name: 'Средний (30x40 см)', multiplier: 1.31},
+    {id: 'large', name: 'Большой (40x50 см)', multiplier: 1.47},
     {id: '240x140x280', name: '240x140x280', multiplier: 1.7},
     {id: '280x150x320', name: '280x150x320', multiplier: 1.7},
 ];
@@ -58,7 +58,7 @@ export const materials: Material[] = [
     {
         id: 'pvd',
         name: 'ПВД',
-        price: 1.56,
+        price: 1,
         image: '/images/calc/dark-blue.png',
         availableColors: [
             'white',
@@ -113,14 +113,15 @@ export const materials: Material[] = [
 
 export const printOptions = [
     {id: '1-0', name: '1+0 (Одна краска с одной стороны)', multiplier: 1},
-    {id: '1-1', name: '1+1 (Одна краска с двух сторон)', multiplier: 1.5},
-    {id: '2-0', name: '2+0 (Две краски с одной стороны)', multiplier: 1.8},
-    {id: '2-2', name: '2+2 (Две краски с двух сторон)', multiplier: 2.2},
+    {id: '2-0', name: '2+0 (Две краски с одной стороны)', multiplier: 1.7},
+    {id: '3-0', name: '3+0 (Три краски с одной стороны)', multiplier: 2.2},
+    {id: '4-0', name: '4+0 (Четыре краски с одной стороны)', multiplier: 2.5},
+    {id: '1-1', name: '1+1 (Одна краска с двух сторон)', multiplier: 1.47},
+    {id: '2-2', name: '2+2 (Две краски с двух сторон)', multiplier: 2.85},
 ];
 
 export const quantityDiscounts = [
-    {min: MIN_QUANTITY, discount: DISCOUNT_PERCENTAGE / 100},
-    {min: 2000, discount: 0.05},
-    {min: 5000, discount: 0.1},
-    {min: 10000, discount: 0.15},
+    {min: MIN_QUANTITY, discount: 0},
+    {min: 450, discount: 0.15},
+    {min: 900, discount: 0.3},
 ];
