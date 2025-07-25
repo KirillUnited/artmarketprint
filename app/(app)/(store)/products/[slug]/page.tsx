@@ -133,7 +133,7 @@ export default async function ProductPage({ params }: { params: Promise<Props> }
 			<RelatedProducts product={product} />
 			<PushToDataLayer data={{
 				event: 'view_item',
-				value: price?.[0]?.value || 0,
+				value: price || 0,
 				currency: 'BYN',
 				items: [
 					{
@@ -145,7 +145,7 @@ export default async function ProductPage({ params }: { params: Promise<Props> }
 						item_category3: '',
 						item_category4: '',
 						item_category5: '',
-						price: price?.[0]?.value || 0,
+						price: price || 0,
 						quantity: 1
 					}
 				],
