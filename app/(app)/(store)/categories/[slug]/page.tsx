@@ -17,6 +17,7 @@ import { ProductsNotFound } from "@/components/shared/product";
 import ProductSearchForm from "@/components/shared/product/ProductSearchForm";
 import { sanityFetch } from "@/sanity/lib/sanityFetch";
 import {collectCategoriesAndSubcategories} from "@/lib/products/collectCategories";
+import {PushToDataLayer} from "@/components/shared/gtm";
 
 export interface Props {
     slug: string,
@@ -128,6 +129,30 @@ export default async function CategoryPage({ params }: { params: Promise<Props> 
 
                 <ProductsView products={products} categories={categoriesWithSubcategories} />
             </Section>
+            <PushToDataLayer data={{
+                event: 'view_item_list',
+                value: products.reduce((sum, p) => sum + (p.price?.[0]?.value || 0), 0),
+                items: products.map(p => ({
+                    id: p.id,
+                    google_business_vertical: 'retail'
+                })),
+                ecommerce: {
+                    currency: 'BYN',
+                    value: products.reduce((sum, p) => sum + (p.price?.[0]?.value || 0), 0),
+                    items: products.map(p => ({
+                        item_id: p.id,
+                        item_name: p.name,
+                        item_brand: p.brand || 'Без бренда',
+                        item_category: p.category?.name || category?.title || 'Без категории',
+                        item_category2: p.category?.parent?.name || '',
+                        item_category3: '',
+                        item_category4: '',
+                        item_category5: '',
+                        price: p.price?.[0]?.value || 0,
+                        quantity: 1
+                    }))
+                }
+            }} />
         </>
     )
 }

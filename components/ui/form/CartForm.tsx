@@ -3,7 +3,7 @@
 import NextImage from 'next/image';
 import Loader from '@/components/ui/Loader';
 import { QuantityControls } from '@/components/ui/AddToBasketButton';
-import { HomeIcon, ListIcon, TagsIcon, TrashIcon } from 'lucide-react';
+import { TrashIcon } from 'lucide-react';
 import { Button } from '@heroui/button';
 import { Form } from '@heroui/form';
 import { Image } from '@heroui/image';
@@ -12,8 +12,8 @@ import useBasketStore from '@/store/store';
 import { useCartForm } from '@/hooks/useCartForm';
 import FormContactFields from './FormContactFields';
 import FormPaymentFields from './FormPaymentFields';
-import Link from 'next/link';
 import { ProductsNotFoundMenu } from '@/components/shared/product/ProductsNotFound';
+import { PushToDataLayer } from '@/components/shared/gtm';
 
 const deliveryMethods = [
     { id: 1, name: 'Самовывоз', title: 'Самовывоз', turnaround: 'Бесплатно', price: 0 },
@@ -29,6 +29,7 @@ export default function CartForm() {
     const [isClient, setIsClient] = useState(false);
     const [phoneValid, setPhoneValid] = useState(false);
     const { isLoading, setIsLoading, isPending, handleFileChange, handleSubmit, fileUploaded, fileUploadedName } = useCartForm();
+    const [orderSubmitted, setOrderSubmitted] = useState(false);
 
     // This is a workaround to prevent the component from rendering on the server
     useEffect(() => {
@@ -72,9 +73,36 @@ export default function CartForm() {
         )
     }
 
+    const handleFormSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        try {
+            await handleSubmit(e as React.FormEvent<HTMLFormElement>);
+            // If form submission is successful, set orderSubmitted to true
+            setOrderSubmitted(true);
+        } catch (error) {
+            console.error('Error submitting form:', error);
+        }
+    };
+
+    const totalValue = items.reduce(
+        (sum, item) => sum + (item.price || 0) * (item.quantity || 1),
+        0
+    )
+
+    const totalItems = items.map((item) => ({
+        item_id: item.id,
+        item_name: item.name,
+        item_category: item.category || 'Без категории',
+        item_category3: '',
+        item_category4: '',
+        item_category5: '',
+        price: item.price || 0,
+        quantity: item.quantity || 1
+    }))
+
     return (
         <Form className="lg:grid lg:grid-cols-2 lg:gap-x-12 xl:gap-x-16"
-            onSubmit={handleSubmit}
+            onSubmit={handleFormSubmit}
             validationBehavior='native'
         >
             {
@@ -180,6 +208,34 @@ export default function CartForm() {
                     </div>
                 </div>
             </div>
+            {orderSubmitted ? (
+                <PushToDataLayer
+                    data={{
+                        event: 'purchase',
+                        value: totalValue,
+                        items: items.map(item => ({
+                            id: item.id,
+                            google_business_vertical: 'retail'
+                        })),
+                        ecommerce: {
+                            transaction_id: `T_${Date.now()}`,
+                            value: totalValue,
+                            currency: 'BYN',
+                            items: items.map(item => ({
+                                item_id: item.id,
+                                item_name: item.name,
+                                item_category: item.category || 'Без категории',
+                                item_category2: '',
+                                item_category3: '',
+                                item_category4: '',
+                                item_category5: '',
+                                price: item.price || 0,
+                                quantity: item.quantity || 1
+                            }))
+                        }
+                    }}
+                />
+            ): null}
         </Form>
     )
 }
