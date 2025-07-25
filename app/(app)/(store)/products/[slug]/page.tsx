@@ -13,6 +13,7 @@ import { ProductBreadcrumb } from '@/components/ui/Breadcrumb';
 import { OrderForm } from '@/components/ui/form';
 import clsx from 'clsx';
 import { getTotalStock } from "@/components/shared/product/lib";
+import {PushToDataLayer} from "@/components/shared/gtm";
 
 export interface Props {
 	slug: string;
@@ -130,6 +131,26 @@ export default async function ProductPage({ params }: { params: Promise<Props> }
 				<ProductTabs description={general_description} options={variation_description} />
 			</Section>
 			<RelatedProducts product={product} />
+			<PushToDataLayer data={{
+				event: 'view_item',
+				value: price || 0,
+				currency: 'BYN',
+				items: [
+					{
+						item_id: id,
+						item_name: productTitle,
+						item_brand: brand || 'Без бренда',
+						item_category: category?.name || 'Без категории',
+						item_category2: category?.parent?.name || '',
+						item_category3: '',
+						item_category4: '',
+						item_category5: '',
+						price: price || 0,
+						quantity: 1
+					}
+				],
+				google_business_vertical: 'retail'
+			}} />
 		</>
 	);
 }
