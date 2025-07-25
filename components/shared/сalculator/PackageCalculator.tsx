@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@heroui/button';
-import { colors, DISCOUNT_PERCENTAGE, materials, MIN_QUANTITY, printOptions, quantityDiscounts, sizes } from '@/components/shared/сalculator/mock-data';
+import { colors, DISCOUNT_PERCENTAGE, materials, MIN_QUANTITY, printOptions, pvdPriceTable, quantityDiscounts, sizes } from '@/components/shared/сalculator/mock-data';
 import { getAvailableColors, getAvailableSizes } from '@/components/shared/сalculator/lib/utils';
 import Image from 'next/image';
 import { Select, SelectItem } from '@heroui/select';
@@ -54,27 +54,72 @@ const PackageCalculator = () => {
 		const selectedSize = availableSizes.find((s) => s.name === formData.size);
 		const selectedPrint = printOptions.find((p) => p.name === formData.printColor);
 
-		let basePrice = selectedMaterial.price;
-
-		// Apply size multiplier if size is selected
-		if (selectedSize) {
-			basePrice *= selectedSize.multiplier;
-		}
-
-		// Apply print multiplier if print option is selected
-		if (selectedPrint) {
-			basePrice *= selectedPrint.multiplier;
-		}
-
-		// Apply quantity discount
+		let pricePerBagValue = 0;
+		let totalPriceValue = 0;
 		const quantity = formData.quantity || MIN_QUANTITY;
-		const discountTier = [...quantityDiscounts].sort((a, b) => b.min - a.min).find((tier) => quantity >= tier.min);
 
-		const discount = discountTier ? discountTier.discount : 0;
-		const priceAfterDiscount = basePrice * (1 - discount);
+		// If it's a PVD material, use the price table
+		if (selectedMaterial.id === 'pvd' && selectedSize && selectedPrint) {
+			// Extract size ID from the selected size
+			const sizeId = selectedSize.id;
+			// Extract print option ID from the selected print option
+			const printId = selectedPrint.id;
 
-		setPrice(priceAfterDiscount * quantity);
-		setPricePerBag(priceAfterDiscount);
+			// Find the price entry for the selected size
+			const priceEntry = pvdPriceTable.find(entry => entry.size === sizeId);
+
+			if (priceEntry && priceEntry.prices[printId]) {
+				// Determine if we should use the regular or discounted price based on quantity
+				const useDiscountedPrice = quantity >= 1000;
+				pricePerBagValue = useDiscountedPrice 
+					? priceEntry.prices[printId].discounted 
+					: priceEntry.prices[printId].regular;
+				
+				// Calculate total price (price per bag * quantity)
+				totalPriceValue = pricePerBagValue * quantity / 100; // Price is per 100 packages
+			} else {
+				// Fallback to the old calculation method if price not found in table
+				let basePrice = selectedMaterial.price;
+
+				// Apply size multiplier if size is selected
+				if (selectedSize) {
+					basePrice *= selectedSize.multiplier;
+				}
+
+				// Apply print multiplier if print option is selected
+				if (selectedPrint) {
+					basePrice *= selectedPrint.multiplier;
+				}
+
+				// Apply quantity discount
+				const discountTier = [...quantityDiscounts].sort((a, b) => b.min - a.min).find((tier) => quantity >= tier.min);
+				const discount = discountTier ? discountTier.discount : 0;
+				pricePerBagValue = basePrice * (1 - discount);
+				totalPriceValue = pricePerBagValue * quantity;
+			}
+		} else {
+			// For other materials, use the original calculation method
+			let basePrice = selectedMaterial.price;
+
+			// Apply size multiplier if size is selected
+			if (selectedSize) {
+				basePrice *= selectedSize.multiplier;
+			}
+
+			// Apply print multiplier if print option is selected
+			if (selectedPrint) {
+				basePrice *= selectedPrint.multiplier;
+			}
+
+			// Apply quantity discount
+			const discountTier = [...quantityDiscounts].sort((a, b) => b.min - a.min).find((tier) => quantity >= tier.min);
+			const discount = discountTier ? discountTier.discount : 0;
+			pricePerBagValue = basePrice * (1 - discount);
+			totalPriceValue = pricePerBagValue * quantity;
+		}
+
+		setPrice(totalPriceValue);
+		setPricePerBag(pricePerBagValue);
 	};
 
 	const handleSubmit = async (e: React.FormEvent) => {
@@ -295,6 +340,7 @@ const PackageCalculator = () => {
 									<span className="text-xl font-bold">{price.toFixed(2).toLocaleString()} Br</span>
 								</div>
 								<div className="text-sm text-gray-500 mt-1">за 1 пакет: {pricePerBag.toFixed(2)} Br</div>
+								<div className="text-sm text-gray-500 mt-1">Расчет на 100 пакетов: {(pricePerBag * 100).toFixed(2)} Br</div>
 
 								<p className="text-sm text-gray-600 mt-6">* - окончательную стоимость уточняйте у менеджера.</p>
 							</div>
