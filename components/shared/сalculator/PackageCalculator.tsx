@@ -340,7 +340,6 @@ const PackageCalculator = () => {
 									<span className="text-xl font-bold">{price.toFixed(2).toLocaleString()} Br</span>
 								</div>
 								<div className="text-sm text-gray-500 mt-1">за 1 пакет: {pricePerBag.toFixed(2)} Br</div>
-								<div className="text-sm text-gray-500 mt-1">Расчет на 100 пакетов: {(pricePerBag * 100).toFixed(2)} Br</div>
 
 								<p className="text-sm text-gray-600 mt-6">* - окончательную стоимость уточняйте у менеджера.</p>
 							</div>
