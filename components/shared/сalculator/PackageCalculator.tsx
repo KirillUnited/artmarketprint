@@ -70,13 +70,13 @@ const PackageCalculator = () => {
 
 			if (priceEntry && priceEntry.prices[printId]) {
 				// Determine if we should use the regular or discounted price based on quantity
-				const useDiscountedPrice = quantity >= 1000;
+				const useDiscountedPrice = quantity >= 500;
 				pricePerBagValue = useDiscountedPrice 
 					? priceEntry.prices[printId].discounted 
 					: priceEntry.prices[printId].regular;
 				
 				// Calculate total price (price per bag * quantity)
-				totalPriceValue = pricePerBagValue * quantity / 100; // Price is per 100 packages
+				totalPriceValue = pricePerBagValue * quantity / 1; // Price is per 100 packages
 			} else {
 				// Fallback to the old calculation method if price not found in table
 				let basePrice = selectedMaterial.price;
