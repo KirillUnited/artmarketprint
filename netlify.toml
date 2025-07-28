@@ -1,11 +1,15 @@
-[[redirects]]
-from = "https://develop--artmarketprint.netlify.app/*"
-to = "https://artmarketprint.by/:splat"
-status = 301
-force = true
+# Production (основной сайт)
+[context.production]
+  [[redirects]]
+    from = "/*"
+    to = "https://artmarketprint.by/:splat"
+    status = 301
+    force = true
 
-[[redirects]]
-from = "https://artmarketprint.netlify.app/*"
-to = "https://artmarketprint.by/:splat"
-status = 301
-force = true
+# Для develop-ветки
+[context.deploy-preview]
+  [[redirects]]
+    from = "/*"
+    to = "https://artmarketprint.by/:splat"
+    status = 301
+    force = true
