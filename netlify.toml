@@ -1,5 +1,5 @@
 [[redirects]]
-  from = "https://*.netlify.app/*"
-  to = "https://artmarketprint.by/:splat"
-  status = 301
-  force = true
+from = "https://*.netlify.app/*"
+to = "https://artmarketprint.by/:splat"
+status = 301
+force = true
