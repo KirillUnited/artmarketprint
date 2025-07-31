@@ -30,6 +30,30 @@ export default function CartForm() {
     const [phoneValid, setPhoneValid] = useState(false);
     const { isLoading, setIsLoading, isPending, handleFileChange, handleSubmit, fileUploaded, fileUploadedName } = useCartForm();
     const [orderSubmitted, setOrderSubmitted] = useState(false);
+    const totalItems = items.map((item) => ({
+        item_id: item.id,
+        item_name: item.name,
+        item_category: item.category || 'Без категории',
+        item_category3: '',
+        item_category4: '',
+        item_category5: '',
+        price: item.price || 0,
+        quantity: item.quantity || 1
+    }));
+    const purchaseData = {
+        event: 'purchase',
+        value: getTotalPrice().toFixed(2),
+        items: items.map(item => ({
+            id: item.id,
+            google_business_vertical: 'retail'
+        })),
+        ecommerce: {
+            transaction_id: `T_${Date.now()}`,
+            value: getTotalPrice().toFixed(2),
+            currency: 'BYN',
+            items: totalItems
+        }
+    }
 
     // This is a workaround to prevent the component from rendering on the server
     useEffect(() => {
@@ -76,6 +100,9 @@ export default function CartForm() {
     const handleFormSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
+            // GTM push: purchase
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push(purchaseData);
             await handleSubmit(e as React.FormEvent<HTMLFormElement>);
             // If form submission is successful, set orderSubmitted to true
             setOrderSubmitted(true);
@@ -83,22 +110,6 @@ export default function CartForm() {
             console.error('Error submitting form:', error);
         }
     };
-
-    const totalValue = items.reduce(
-        (sum, item) => sum + (item.price || 0) * (item.quantity || 1),
-        0
-    )
-
-    const totalItems = items.map((item) => ({
-        item_id: item.id,
-        item_name: item.name,
-        item_category: item.category || 'Без категории',
-        item_category3: '',
-        item_category4: '',
-        item_category5: '',
-        price: item.price || 0,
-        quantity: item.quantity || 1
-    }))
 
     return (
         <Form className="lg:grid lg:grid-cols-2 lg:gap-x-12 xl:gap-x-16"
@@ -208,34 +219,6 @@ export default function CartForm() {
                     </div>
                 </div>
             </div>
-            {orderSubmitted ? (
-                <PushToDataLayer
-                    data={{
-                        event: 'purchase',
-                        value: totalValue,
-                        items: items.map(item => ({
-                            id: item.id,
-                            google_business_vertical: 'retail'
-                        })),
-                        ecommerce: {
-                            transaction_id: `T_${Date.now()}`,
-                            value: totalValue,
-                            currency: 'BYN',
-                            items: items.map(item => ({
-                                item_id: item.id,
-                                item_name: item.name,
-                                item_category: item.category || 'Без категории',
-                                item_category2: '',
-                                item_category3: '',
-                                item_category4: '',
-                                item_category5: '',
-                                price: item.price || 0,
-                                quantity: item.quantity || 1
-                            }))
-                        }
-                    }}
-                />
-            ): null}
         </Form>
     )
 }
