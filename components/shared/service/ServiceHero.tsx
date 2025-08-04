@@ -63,10 +63,6 @@ export const ServiceHero: React.FC<ServiceHeroProps> = ({ title, description, me
                 <div className='flex flex-col gap-2 md:flex-row self-center'>
                     <BrandButton as={Link} href={'#serviceDetails'} state="primary"
                                 size='md'>Подробнее</BrandButton>
-                    <Button as={Link} href={'/calculator'} radius='sm'>
-                        <Calculator size={18}/>
-                        Online-калькулятор
-                    </Button>
                 </div>
             </div>
         </section>
