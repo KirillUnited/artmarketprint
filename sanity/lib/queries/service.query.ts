@@ -10,7 +10,13 @@ export const SERVICES_QUERY = `*[
       "currentSlug": slug.current}`;
 
 export const SERVICE_QUERY = defineQuery(`*[_type == "service" && slug.current == $slug][0]{
-  ...,  
+  ...,
+  calculator -> {
+      title,
+      description,
+      type
+  }
+  ,
   seo {
     title,
     description,

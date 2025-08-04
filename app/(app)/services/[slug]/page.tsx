@@ -15,6 +15,8 @@ import { SECTION_FIELDS } from '@/sanity/lib/queries/page.query';
 import ServiceJsonLd, { BreadcrumbListJsonLd } from '@/components/ServiceJsonLd';
 import { SERVICE_QUERY } from '@/sanity/lib/queries/service.query';
 import {urlFor} from "@/sanity/lib/image";
+import {PackageCalculator} from "@/components/shared/сalculator";
+import {JSX} from "react";
 
 type Props = {
     slug: string
@@ -53,7 +55,7 @@ export async function generateMetadata({ params }: { params: Promise<Props> }) {
     }
 }
 
-export default async function ServicePage({ params }: { params: Promise<Props> }) {
+export default async function ServicePage({ params }: { params: Promise<Props> }): Promise<JSX.Element> {
     const { slug } = await params;
     // Fetch data in parallel for better performance
     const [service, faq, relatedProjects] = await Promise.all([
@@ -65,92 +67,88 @@ export default async function ServicePage({ params }: { params: Promise<Props> }
         ? urlFor(service.image)?.width(1200).height(400).url()
         : null;
     const relatedProjectsArray = Array.isArray(relatedProjects) ? relatedProjects : [relatedProjects];
+    console.log(service.calculator)
 
     return (
-        <>
-            {/* Hero section with background image and gradient overlay */}
-            <ServiceHero
-                description={service.description}
-                image={serviceImageUrl || ''}
-                mediaBlock={service.mediaBlock}
-                title={service.title}
-            />
+		<>
+			{/* Hero section with background image and gradient overlay */}
+			<ServiceHero description={service.description} image={serviceImageUrl || ''} mediaBlock={service.mediaBlock} title={service.title} />
 
-            {/* Main content wrapper */}
-            <div className=''>
-                {/* Breadcrumb navigation */}
-                <section>
-                    <div className="container">
-                        <div className="mt-10 mb-6">
-                            <BreadcrumbListJsonLd name={service.title} />
-                            <ServiceBreadcrumb service='Услуги' serviceSlug='services' title={service.title}  />
-                        </div>
-                    </div>
-                </section>
+			{/* Main content wrapper */}
+			<div className="">
+				{/* Breadcrumb navigation */}
+				<section>
+					<div className="container">
+						<div className="mt-10 mb-6">
+							<BreadcrumbListJsonLd name={service.title} />
+							<ServiceBreadcrumb service="Услуги" serviceSlug="services" title={service.title} />
+						</div>
+					</div>
+				</section>
 
-                {/* Service details section */}
-                <Section id="serviceDetails" innerClassname='pt-6 md:pt-6'>
-                    <ServiceDetails
-                        advantages={service.advantages}
-                        gallery={service.gallery}
-                        image={getUrlFor(service.image)}
-                        layoutRequirements={service.layoutRequirements &&
-                            <PortableText value={service.layoutRequirements} onMissingComponent={false} />
-                        }
-                        name={service.title}
-                        paymentMethods={service.paymentOptions}
-                        price={service.price}
-                        priceTable={service.priceTable}
-                    >
-                        {Array.isArray(service.body) &&
-                            <PortableText value={service.body} onMissingComponent={false} />
-                        }
-                    </ServiceDetails>
-                </Section>
-            </div>
+				{/* Service details section */}
+				<Section id="serviceDetails" innerClassname="pt-6 md:pt-6">
+					<ServiceDetails
+						advantages={service.advantages}
+						gallery={service.gallery}
+						image={getUrlFor(service.image)}
+						layoutRequirements={service.layoutRequirements && <PortableText value={service.layoutRequirements} onMissingComponent={false} />}
+						name={service.title}
+						paymentMethods={service.paymentOptions}
+						price={service.price}
+						priceTable={service.priceTable}
+					>
+						{Array.isArray(service.body) && <PortableText value={service.body} onMissingComponent={false} />}
+					</ServiceDetails>
+				</Section>
+			</div>
+			{/*Calculator section*/}
+			{service.calculator && (
+				<Section id="calculator" innerClassname="pt-6 md:pt-6">
+					<SectionHeading className="items-center text-center mx-auto">
+						<SectionSubtitle>Рассчитайте стоимость</SectionSubtitle>
+						{service.calculator.title && <SectionTitle>{service.calculator.title}</SectionTitle>}
+						{service.calculator.description && <SectionDescription>{service.calculator.description}</SectionDescription>}
+					</SectionHeading>
+					<PackageCalculator />
+				</Section>
+			)}
 
-            {/* Portfolio section */}
-            {relatedProjectsArray.length > 0 && (
-                <Section className="bg-[#F9F9F9]">
-                    <div className='flex flex-col gap-6 px-4'>
-                        <SectionHeading className='items-center text-center mx-auto'>
-                            <SectionSubtitle>{'галерея'}</SectionSubtitle>
-                            <SectionTitle>{'Примеры работ'}</SectionTitle>
-                            <SectionDescription>{'Портфолио выполненных работ'}</SectionDescription>
-                        </SectionHeading>
+			{/* Portfolio section */}
+			{relatedProjectsArray.length > 0 && (
+				<Section className="bg-[#F9F9F9]">
+					<div className="flex flex-col gap-6 px-4">
+						<SectionHeading className="items-center text-center mx-auto">
+							<SectionSubtitle>{'галерея'}</SectionSubtitle>
+							<SectionTitle>{'Примеры работ'}</SectionTitle>
+							<SectionDescription>{'Портфолио выполненных работ'}</SectionDescription>
+						</SectionHeading>
 
-                        <ProjectList bentoGrid={false} projectList={relatedProjectsArray} />
+						<ProjectList bentoGrid={false} projectList={relatedProjectsArray} />
 
-                        {/* Mobile-only projects button */}
-                        <SectionButton className='lg:hidden flex' href={'/projects'} label="Все проекты" />
-                    </div>
-                </Section>
-            )}
+						{/* Mobile-only projects button */}
+						<SectionButton className="lg:hidden flex" href={'/projects'} label="Все проекты" />
+					</div>
+				</Section>
+			)}
 
-            {/* FAQ section */}
-            <FAQSection className='bg-[#F9F9F9]' {...faq.homePage.content[0]} faqs={service.faqs ? service.faqs : faq.homePage.content[0].faqs} />
+			{/* FAQ section */}
+			<FAQSection className="bg-[#F9F9F9]" {...faq.homePage.content[0]} faqs={service.faqs ? service.faqs : faq.homePage.content[0].faqs} />
 
-            {/* Contact form section */}
-            <Section className='max-w-3xl mx-auto' id="contacts">
-                <SectionHeading className='items-center text-center mx-auto'>
-                    <SectionSubtitle>{'обратная связь'}</SectionSubtitle>
-                    <SectionTitle>{'Оставить заявку'}</SectionTitle>
-                    <SectionDescription>{'Оставьте заявку и мы свяжемся с Вами в ближайшее время'}</SectionDescription>
-                </SectionHeading>
-                <Card className={clsx(
-                    'flex flex-col gap-6',
-                    'p-4 bg-background sticky top-16'
-                )} radius='sm' shadow='sm'>
-                    <OrderForm className="w-full" />
-                </Card>
-            </Section>
+			{/* Contact form section */}
+			<Section className="max-w-3xl mx-auto" id="contacts">
+				<SectionHeading className="items-center text-center mx-auto">
+					<SectionSubtitle>{'обратная связь'}</SectionSubtitle>
+					<SectionTitle>{'Оставить заявку'}</SectionTitle>
+					<SectionDescription>{'Оставьте заявку и мы свяжемся с Вами в ближайшее время'}</SectionDescription>
+				</SectionHeading>
+				<Card className={clsx('flex flex-col gap-6', 'p-4 bg-background sticky top-16')} radius="sm" shadow="sm">
+					<OrderForm className="w-full" />
+				</Card>
+			</Section>
 
-            {/* Structured data for service */}
-            <ServiceJsonLd
-                description={service.description}
-                name={service.title}
-                url={`https://artmarketprint.by/services/${slug}`}
-            />
-        </>
-    );
+			{/* Structured data for service */}
+			<ServiceJsonLd description={service.description} name={service.title} url={`https://artmarketprint.by/services/${slug}`} />
+		</>
+	);
 }
