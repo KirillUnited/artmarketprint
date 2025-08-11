@@ -121,7 +121,7 @@ export const ProductDetails: ({items, sizes, colors, color, size}: {
                                     setSelectedSize(value.target.value)
                                 }}
                             >
-                            {sizes.map((size) => (
+                            {sizes.sort((a: any, b: any) => a.localeCompare(b)).map((size) => (
                                 <Radio
                                     key={size}
                                     value={size}
