@@ -59,7 +59,7 @@ export function groupProductsByCleanName(products: any[], categories = [], brand
 		const cleanName = rawName.split(',')[0].trim();
 		// Get color and size
 		const color = product.vcolor?.[0]?.trim() || getColorsFromParams(product)[0]?.trim() || '';
-		const size = product.size_range?.[0]?.trim() || '';
+		const size = product.size_range?.[0]?.trim() || getSizesFromParams(product)[0]?.trim() || '';
 		// Create unique key for product variation
 		const variationKey = `${color || ''}:${size || ''}`;
 		// Get full category path
@@ -147,17 +147,20 @@ export function formatParams(params: any[]) {
 	}));
 }
 
+export function getParamsValueByName(params: any[], name: string) {
+	return params
+		.filter((param) => param.name === name)
+		.map((param) => param.value);
+}
+
 export function getColorsFromParams(product: any) {
-	const params = formatParams(product.param) || [];
-	const colors = new Set<string>();
+	return getParamsValueByName(formatParams(product.param) || [], 'Цвет');
+}
 
-	params.forEach((param) => {
-		if (param.name === 'Цвет') {
-			colors.add(param.value);
-		}
-	});
-
-	return Array.from(colors);
+export function getSizesFromParams(product: any) {
+	return getParamsValueByName(formatParams(product.param) || [], 'Размер')
+		.filter((size) => size !== 'one_size')
+		.sort((a, b) => a.localeCompare(b));
 }
 
 export function extractParamsToHtmlList(params: any[]): string {

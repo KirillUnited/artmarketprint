@@ -1,6 +1,6 @@
 import React from 'react';
 import { Table, TableHeader, TableBody, TableColumn, TableRow, TableCell } from '@heroui/table';
-import { MALE_SIZES, FEMALE_SIZES } from '../../../config/productSizeDataConfig';
+import { MALE_SIZES, FEMALE_SIZES } from '@/config/productSizeDataConfig';
 
 interface SizeData {
   international: string;
