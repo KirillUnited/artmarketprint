@@ -221,7 +221,6 @@ export async function fetchAllProductsData() {
 	const [...productsArrays] = await Promise.all(
 		Object.values(Companies).map((company) => fetchProductsData(company.id))
 	);
-	const products = productsArrays.flat();
 
-	return products;
+	return productsArrays.flat();
 }

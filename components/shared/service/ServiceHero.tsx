@@ -4,8 +4,6 @@ import BrandButton from '@/components/ui/BrandButton';
 import Link from 'next/link';
 import { ServiceHeroProps } from './service.props';
 import {JSX} from "react";
-import {Button} from "@heroui/button";
-import {Calculator} from "lucide-react";
 
 /**
  * A strongly typed function that renders a hero section for a service.

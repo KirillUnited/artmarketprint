@@ -6,7 +6,7 @@ export const ProductSizes = ({list}: any) => {
             <span className='font-semibold'>Размеры:</span>
             <ul className='flex flex-wrap gap-1'>
                 {
-                    list.map((size: any) => <li className='border-1 rounded-small p-1 min-w-7 grid place-content-center' key={size} >{size}</li>)
+                    list.sort((a: any, b: any) => a.localeCompare(b)).map((size: any) => <li className='border-1 rounded-small p-1 min-w-7 grid place-content-center' key={size} >{size}</li>)
                 }
             </ul>
         </div>

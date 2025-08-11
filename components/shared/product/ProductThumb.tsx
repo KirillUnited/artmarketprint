@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import {FC, JSX} from 'react';
 import { Card, CardBody, CardFooter } from '@heroui/card';
 import { Link } from '@heroui/link';
 import NextImage from 'next/image';
@@ -20,7 +20,7 @@ interface ProductThumbProps extends React.HTMLAttributes<HTMLDivElement> {
  * 
  * @returns {JSX.Element} The JSX element representing the product thumbnail card.
  */
-const ProductThumb: FC<ProductThumbProps> = ({ item, ...props }) => {
+const ProductThumb: FC<ProductThumbProps> = ({ item, ...props }): JSX.Element => {
     const id = item.id || item._id || '';
     const price = item.price || 0;
     const name = item.name || '';
