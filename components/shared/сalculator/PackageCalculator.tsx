@@ -8,7 +8,7 @@ import { getAvailableColors, getAvailableSizes } from '@/components/shared/сalc
 import Image from 'next/image';
 import { Select, SelectItem } from '@heroui/select';
 import { UsernameInput, UserPhoneInput } from '@/components/ui/form';
-import { sendCalculatorDetails } from './lib';
+import { sendCalculatorDetails } from './lib/messenger';
 import { Form } from "@heroui/form";
 
 const PackageCalculator = () => {
