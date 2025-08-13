@@ -114,14 +114,14 @@ export const materials: Material[] = [
 ];
 
 export const printOptions = [
-    {id: '1+0', name: '1+0 (Одна краска с одной стороны)', multiplier: 1},
-    {id: '2+0', name: '2+0 (Две краски с одной стороны)', multiplier: 1.7},
-    {id: '3+0', name: '3+0 (Три краски с одной стороны)', multiplier: 2.2},
-    {id: '4+0', name: '4+0 (Четыре краски с одной стороны)', multiplier: 2.5},
-    {id: '1+1', name: '1+1 (Одна краска с двух сторон)', multiplier: 1.47},
-    {id: '2+2', name: '2+2 (Две краски с двух сторон)', multiplier: 2.85},
-    {id: '3+3', name: '3+3 (Три краски с двух сторон)', multiplier: 3.25},
-    {id: '4+4', name: '4+4 (Четыре краски с двух сторон)', multiplier: 3.5},
+    {id: '1+0', name: '1+0 (Один цвет с одной стороны)', multiplier: 1},
+    {id: '2+0', name: '2+0 (Два цвета с одной стороны)', multiplier: 1.7},
+    {id: '3+0', name: '3+0 (Три цвета с одной стороны)', multiplier: 2.2},
+    {id: '4+0', name: '4+0 (Четыре цвета с одной стороны)', multiplier: 2.5},
+    {id: '1+1', name: '1+1 (Один цвет с двух сторон)', multiplier: 1.47},
+    {id: '2+2', name: '2+2 (Два цвета с двух сторон)', multiplier: 2.85},
+    {id: '3+3', name: '3+3 (Три цвета с двух сторон)', multiplier: 3.25},
+    {id: '4+4', name: '4+4 (Четыре цвета с двух сторон)', multiplier: 3.5},
 ];
 
 // Define price table type for PVD packages
