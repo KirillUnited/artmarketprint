@@ -154,9 +154,9 @@ export const pvdPriceTable: PriceTableEntry[] = [
         size: '30x40',
         prices: {
             '1+0': { regular: 1.31, discounted: 0.87 },
-            '2+0': { regular: 2.14, discounted: 1.28 },
+            '2+0': { regular: 2.01, discounted: 1.28 },
             '3+0': { regular: 2.50, discounted: 1.65 },
-            '4+0': { regular: 3.30, discounted: 1.95 },
+            '4+0': { regular: 3.25, discounted: 1.95 },
             '1+1': { regular: 1.72, discounted: 1.30 },
             '2+2': { regular: 2.75, discounted: 2.14 },
             '3+3': { regular: 3.40, discounted: 2.50 },
@@ -167,9 +167,9 @@ export const pvdPriceTable: PriceTableEntry[] = [
         size: '40x50',
         prices: {
             '1+0': { regular: 1.47, discounted: 1.10 },
-            '2+0': { regular: 2.01, discounted: 1.50 },
+            '2+0': { regular: 2.14, discounted: 1.50 },
             '3+0': { regular: 2.79, discounted: 1.90 },
-            '4+0': { regular: 3.25, discounted: 2.45 },
+            '4+0': { regular: 3.30, discounted: 2.45 },
             '1+1': { regular: 1.85, discounted: 1.57 },
             '2+2': { regular: 3.25, discounted: 2.40 },
             '3+3': { regular: 3.60, discounted: 2.70 },
