@@ -35,9 +35,9 @@ export function ServicePreview({service}: {service: SanityDocument}): JSX.Elemen
                     <div className="flex flex-col gap-2">
                         <p className="flex flex-col gap-2 font-semibold line-clamp-2 leading-tight" title={service.title}>
                             {service.title}
-                            <span className="text-primary text-xl font-bold">{service.price}</span>
+                            <span className="text-primary text-xl font-bold line-clamp-1">{service.price}</span>
                         </p>
-                        <p className={clsx('text-xs', 'grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-all duration-500 overflow-hidden')} title={service.description}>
+                        <p className={clsx('text-xs line-clamp-2', 'grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-all duration-500 overflow-hidden')} title={service.description}>
                             <span className="line-clamp-4">{service.description}</span>
                         </p>
                     </div>
