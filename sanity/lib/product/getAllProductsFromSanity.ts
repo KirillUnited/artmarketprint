@@ -20,6 +20,7 @@ export async function getAllProductsFromSanity(): Promise<any[]> {
         subcategory,
         colors,
         sizes,
+        materials,
         name,
         price,
         image,

@@ -57,9 +57,10 @@ export function groupProductsByCleanName(products: any[], categories = [], brand
 		const rawName = product.product?.[0]?._?.trim() || product.name?.[0]?.trim() || 'Unnamed';
 		// Remove color and size after last comma (for example: "Lanyard from polyester HOST, Black XL." -> "Lanyard from polyester HOST")
 		const cleanName = rawName.split(',')[0].trim();
-		// Get color and size
+		// Get color and size and material
 		const color = product.vcolor?.[0]?.trim() || getColorsFromParams(product)[0]?.trim() || '';
 		const size = product.size_range?.[0]?.trim() || getSizesFromParams(product)[0]?.trim() || '';
+		const material = product.material?.[0]?.trim() || getMaterialsFromParams(product)[0]?.trim() || '';
 		// Create unique key for product variation
 		const variationKey = `${color || ''}:${size || ''}`;
 		// Get full category path
@@ -85,6 +86,7 @@ export function groupProductsByCleanName(products: any[], categories = [], brand
 				name: cleanName,
 				colors: new Set(),
 				sizes: new Set(),
+				materials: new Set(),
 				items: new Map<
 					string,
 					{
@@ -94,6 +96,7 @@ export function groupProductsByCleanName(products: any[], categories = [], brand
 						cover: string;
 						stock: string;
 						sku: string;
+						material: string;
 					}
 				>(), // Map to store unique variations
 				price,
@@ -113,6 +116,7 @@ export function groupProductsByCleanName(products: any[], categories = [], brand
 
 		if (color) grouped[cleanName].colors.add(color);
 		if (size) grouped[cleanName].sizes.add(size);
+		if (material) grouped[cleanName].materials.add(material);
 
 		// Only store unique variations
 		if (!grouped[cleanName].items.has(variationKey)) {
@@ -125,6 +129,7 @@ export function groupProductsByCleanName(products: any[], categories = [], brand
 				stock,
 				sku,
 				brand,
+				material,
 			};
 
 			grouped[cleanName].items.set(variationKey, vars);
@@ -136,6 +141,7 @@ export function groupProductsByCleanName(products: any[], categories = [], brand
 		...entry,
 		colors: Array.from(entry.colors),
 		sizes: Array.from(entry.sizes),
+		materials: Array.from(entry.materials),
 		items: Array.from(entry.items.values()), // Convert Map values to array
 	}));
 }
@@ -155,6 +161,10 @@ export function getParamsValueByName(params: any[], name: string) {
 
 export function getColorsFromParams(product: any) {
 	return getParamsValueByName(formatParams(product.param) || [], 'Цвет');
+}
+
+export function getMaterialsFromParams(product: any) {
+	return getParamsValueByName(formatParams(product.param) || [], 'Материал');
 }
 
 export function getSizesFromParams(product: any) {

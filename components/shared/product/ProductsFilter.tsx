@@ -1,19 +1,22 @@
 'use client';
-import {Button} from '@heroui/button';
-import {Drawer, DrawerBody, DrawerContent, DrawerFooter, DrawerHeader} from '@heroui/drawer';
-import {FilterIcon} from 'lucide-react';
+import { Button } from '@heroui/button';
+import { Drawer, DrawerBody, DrawerContent, DrawerFooter, DrawerHeader } from '@heroui/drawer';
+import { FilterIcon } from 'lucide-react';
 import React from 'react';
-import {Form} from '@heroui/form';
+import { Form } from '@heroui/form';
 
-import {FC} from 'react';
-import {CategoryProps, CatFilter} from '@/components/ui/filter/CatFilter';
-import {SortFilter} from '@/components/ui/filter/SortFilter';
+import { FC } from 'react';
+import { CategoryProps, CatFilter } from '@/components/ui/filter/CatFilter';
+import { SortFilter } from '@/components/ui/filter/SortFilter';
+import { MaterialFilter } from '@/components/ui/filter/MaterialFilter';
 
 interface FilterGroupProps {
 	sortOrder: string;
 	selectedCategory: string;
+	selectedMaterial: string;
 	categories: CategoryProps[];
-	onFilterChange: (sortOrder: string, category: string) => void;
+	materials: Array<{ material: string; count: number }>;
+	onFilterChange: (sortOrder: string, category: string, material?: string) => void;
 }
 
 /**
@@ -22,12 +25,21 @@ interface FilterGroupProps {
  * @param {FilterGroupProps} props - The properties for the FilterGroup component.
  * @returns {JSX.Element} The rendered FilterGroup component.
  */
-export const FilterGroup: FC<FilterGroupProps> = ({sortOrder, selectedCategory, categories, onFilterChange}) => {
+export const FilterGroup: FC<FilterGroupProps> = ({ sortOrder, selectedCategory, selectedMaterial, categories, materials, onFilterChange }) => {
 	return (
 		<Form className="flex flex-col gap-4">
-			<SortFilter sortOrder={sortOrder} selectedCategory={selectedCategory} onFilterChange={onFilterChange} />
-			{categories && <CatFilter sortOrder={sortOrder} onFilterChange={onFilterChange} categories={categories} selectedCategory={selectedCategory} />}
-			<Button color="default" radius="sm" variant="solid" type="reset" onPress={() => onFilterChange('asc', '')}>
+			<SortFilter sortOrder={sortOrder} selectedCategory={selectedCategory} onFilterChange={(sort: string, cat: string) => onFilterChange(sort, cat)} />
+
+			{materials && materials.length > 0 && (
+				<MaterialFilter
+					sortOrder={sortOrder}
+					selectedMaterial={selectedMaterial}
+					materials={materials}
+					onFilterChange={(sort, cat, material) => onFilterChange(sort, cat, material)}
+				/>
+			)}
+			{categories && <CatFilter sortOrder={sortOrder} onFilterChange={(sort, cat) => onFilterChange(sort, cat)} categories={categories} selectedCategory={selectedCategory} />}
+			<Button color="default" radius="sm" variant="solid" type="reset" onPress={() => onFilterChange('asc', '', '')}>
 				Сбросить
 			</Button>
 		</Form>
@@ -44,7 +56,7 @@ interface FilterButtonProps {
  * @param {FilterButtonProps} props - The properties for the FilterButton component.
  * @returns {JSX.Element} The rendered FilterButton component.
  */
-export const FilterButton: FC<FilterButtonProps> = ({onOpen}) => {
+export const FilterButton: FC<FilterButtonProps> = ({ onOpen }) => {
 	return (
 		<Button className="flex-grow min-w-max border-1 sticky top-20" radius="sm" color="primary" variant="bordered" onPress={onOpen}>
 			<FilterIcon size={16} />
@@ -56,10 +68,12 @@ export const FilterButton: FC<FilterButtonProps> = ({onOpen}) => {
 interface FilterDrawerProps {
 	isOpen: boolean;
 	onOpenChange: (isOpen: boolean) => void;
-	onFilterChange: (sortOrder: string, category: string) => void;
+	onFilterChange: (sortOrder: string, category: string, material?: string) => void;
 	categories: CategoryProps[];
+	materials?: Array<{ material: string; count: number }>;
 	sortOrder: string;
 	selectedCategory: string;
+	selectedMaterial: string;
 }
 
 /**
@@ -68,13 +82,22 @@ interface FilterDrawerProps {
  * @param {FilterDrawerProps} props - The properties for the FilterDrawer component.
  * @returns {JSX.Element} The rendered FilterDrawer component.
  */
-export const FilterDrawer: FC<FilterDrawerProps> = ({isOpen, onOpenChange, onFilterChange, categories, sortOrder, selectedCategory}) => {
+export const FilterDrawer: FC<FilterDrawerProps> = ({ isOpen, onOpenChange, onFilterChange, categories, materials, sortOrder, selectedCategory, selectedMaterial }) => {
 	const categoriesSet = categories ? (
-		<CatFilter 
-			sortOrder={sortOrder} 
-			onFilterChange={onFilterChange} 
-			categories={categories} 
-			selectedCategory={selectedCategory} 
+		<CatFilter
+			sortOrder={sortOrder}
+			onFilterChange={(sort, cat) => onFilterChange(sort, cat)}
+			categories={categories}
+			selectedCategory={selectedCategory}
+		/>
+	) : null;
+
+	const materialsSet = materials && materials.length > 0 ? (
+		<MaterialFilter
+			sortOrder={sortOrder}
+			selectedMaterial={selectedMaterial}
+			materials={materials}
+			onFilterChange={(sort, cat, material) => onFilterChange(sort, cat, material)}
 		/>
 	) : null;
 
@@ -89,7 +112,7 @@ export const FilterDrawer: FC<FilterDrawerProps> = ({isOpen, onOpenChange, onFil
 							{selectedCategory && (
 								<DrawerFooter className="absolute left-0 right-0 bottom-0 w-full bg-background border-t-1">
 									{/* Reset button to clear filters */}
-									<Button color="default" radius="sm" variant="solid" type="reset" onPress={() => onFilterChange('asc', '')}>
+									<Button color="default" radius="sm" variant="solid" type="reset" onPress={() => onFilterChange('asc', '', '')}>
 										Сбросить
 									</Button>
 									{/* Apply button to close the drawer */}
@@ -111,6 +134,8 @@ interface ProductsFilterProps {
 	selectedCategory: string;
 	onFilterChange: (sortOrder: string, category: string) => void;
 	categories: CategoryProps[];
+	materials?: Array<{ material: string; count: number }>;
+	selectedMaterial: string;
 }
 
 /**
@@ -119,10 +144,11 @@ interface ProductsFilterProps {
  * @param {ProductsFilterProps} props - The properties for the ProductsFilter component.
  * @returns {JSX.Element} The rendered ProductsFilter component.
  */
-const ProductsFilter: FC<ProductsFilterProps> = ({sortOrder, selectedCategory, onFilterChange, categories}) => {
+const ProductsFilter: FC<ProductsFilterProps> = ({ sortOrder, selectedCategory, onFilterChange, categories, materials=[], selectedMaterial }) => {
 	return (
 		<div className="hidden md:flex flex-col gap-4 sticky top-20 z-30 bg-background">
-			<FilterGroup categories={categories} selectedCategory={selectedCategory} sortOrder={sortOrder} onFilterChange={onFilterChange} />
+			<FilterGroup categories={categories} selectedCategory={selectedCategory} sortOrder={sortOrder} onFilterChange={onFilterChange} materials={materials} selectedMaterial={selectedMaterial} />
+
 		</div>
 	);
 };
