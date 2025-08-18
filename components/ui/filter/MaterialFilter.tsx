@@ -1,4 +1,5 @@
 import { Select, SelectItem } from "@heroui/select";
+import { k } from "framer-motion/dist/types.d-D0HXPxHm";
 import { JSX } from "react";
 
 /**
@@ -19,7 +20,7 @@ export const MaterialFilter: ({
 }: {
   selectedMaterial: string;
   sortOrder: string;
-  materials: Array<{ material: string; count: number }>;
+  materials: any;
   onFilterChange: (sortOrder: string, category: string, material: string) => void;
 }) => JSX.Element = ({ selectedMaterial, sortOrder, materials, onFilterChange }) => {
   return (
@@ -30,11 +31,12 @@ export const MaterialFilter: ({
       placeholder="Выберите материал"
       defaultSelectedKeys={selectedMaterial ? [selectedMaterial] : []}
       onChange={(e) => onFilterChange(sortOrder, '', e.target.value)}
+      items={materials}
     >
-      <SelectItem textValue="Все материалы" key="">
+      <SelectItem textValue="Все материалы" key="Все материалы">
         Все материалы
       </SelectItem>
-      {materials?.map((item): JSX.Element => (
+      {materials?.map((item: { material: string; count: number }) => (
         <SelectItem
           className="capitalize"
           key={item.material}

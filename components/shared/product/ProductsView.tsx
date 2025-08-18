@@ -65,7 +65,7 @@ export default function ProductsView({ products, categories, totalItemsView = IT
                         }
                         <div className='flex flex-col gap-4 md:gap-8 relative h-full'>
 
-                            <div className='md:hidden'> {SortFilter({ sortOrder, selectedCategory, onFilterChange: (sort, cat) => handleFilterChange(sort, cat) })}</div>
+                            <div className='md:hidden'> {SortFilter({ sortOrder, selectedCategory, onFilterChange: (sort: string, cat: string) => handleFilterChange(sort, cat) })}</div>
                             <div className='md:hidden'> {MaterialFilter({ selectedMaterial, sortOrder, materials, onFilterChange: (sort, cat, mat) => handleFilterChange(sort, cat, mat) })}</div>
 
                             {
