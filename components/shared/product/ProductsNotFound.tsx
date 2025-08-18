@@ -1,42 +1,59 @@
+import { Button } from '@heroui/button';
 import { HomeIcon, ListIcon, PackageSearchIcon, TagsIcon } from 'lucide-react'
 import Link from 'next/link'
 import React, { FC } from 'react'
 
 export const ProductsNotFound = () => {
     return (
-        <div className="flex flex-col items-center justify-center text-center min-h-[400px] bg-gray-50 rounded-small p-4">
-            <PackageSearchIcon className="w-16 h-16 text-gray-300 mb-4" />
-            <div className="text-3xl font-semibold text-gray-800 mb-4">
-                Товары не найдены
+        <div className="flex flex-col items-center justify-center py-12 px-4 text-center">
+            <div className="mb-6 bg-gray-50 p-6 rounded-full">
+                <PackageSearchIcon size={64} className="text-gray-400" />
             </div>
-            <p className="text-gray-600 flex items-center gap-2">
+            <h2 className="text-2xl font-bold mb-2">Товары не найдены</h2>
+            <p className="text-gray-500 mb-8 max-w-md">
                 Попробуйте изменить параметры поиска или фильтрации
             </p>
+            
             <ProductsNotFoundMenu />
         </div>
-    )
+    );
 }
 export const ProductsNotFoundMenu: FC<{}> = () => {
     return (
-        <ul className="mt-6 flex flex-col md:flex-row flex-wrap gap-4">
-            <li>
-                <Link href="/" className="flex items-center text-primary-600 hover:text-primary-700 hover:underline gap-1">
-                    <HomeIcon className="w-4 h-4" />
-                    Главная страница
-                </Link>
-            </li>
-            <li>
-                <Link href="/products" className="flex items-center text-primary-600 hover:text-primary-700 hover:underline gap-1">
-                    <ListIcon className="w-4 h-4" />
-                    Каталог
-                </Link>
-            </li>
-            <li>
-                <Link href="/categories" className="flex items-center text-primary-600 hover:text-primary-700 hover:underline gap-1">
-                    <TagsIcon className="w-4 h-4" />
-                    Категории
-                </Link>
-            </li>
-        </ul>
+        <div className="flex flex-wrap gap-4 justify-center mt-8">
+            <Button 
+                as={Link} 
+                href="/" 
+                color="default" 
+                variant="flat" 
+                radius="sm"
+                className="transition-transform hover:scale-105"
+                startContent={<HomeIcon className="w-4 h-4" />}
+            >
+                На главную
+            </Button>
+            <Button 
+                as={Link} 
+                href="/products" 
+                color="primary" 
+                variant="solid" 
+                radius="sm"
+                className="transition-transform hover:scale-105"
+                startContent={<ListIcon className="w-4 h-4" />}
+            >
+                Все товары
+            </Button>
+            <Button 
+                as={Link} 
+                href="/categories" 
+                color="default" 
+                variant="bordered" 
+                radius="sm"
+                className="transition-transform hover:scale-105"
+                startContent={<TagsIcon className="w-4 h-4" />}
+            >
+                Категории товаров
+            </Button>
+        </div>
     )
 }

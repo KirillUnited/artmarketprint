@@ -27,20 +27,46 @@ interface FilterGroupProps {
  */
 export const FilterGroup: FC<FilterGroupProps> = ({ sortOrder, selectedCategory, selectedMaterial, categories, materials, onFilterChange }) => {
 	return (
-		<Form className="flex flex-col gap-4">
-			<SortFilter sortOrder={sortOrder} selectedCategory={selectedCategory} onFilterChange={(sort: string, cat: string) => onFilterChange(sort, cat)} />
+		<Form className="flex flex-col gap-6">
+			<div className="space-y-4">
+				<div className="pb-4 border-b border-gray-100">
+					<h3 className="text-md font-medium mb-3">Сортировать</h3>
+					<SortFilter sortOrder={sortOrder} selectedCategory={selectedCategory} onFilterChange={(sort: string, cat: string) => onFilterChange(sort, cat)} />
+				</div>
 
-			{materials && materials.length > 0 && (
-				<MaterialFilter
-					sortOrder={sortOrder}
-					selectedMaterial={selectedMaterial}
-					materials={materials}
-					onFilterChange={(sort, cat, material) => onFilterChange(sort, cat, material)}
-				/>
-			)}
-			{categories && <CatFilter sortOrder={sortOrder} onFilterChange={(sort, cat) => onFilterChange(sort, cat)} categories={categories} selectedCategory={selectedCategory} />}
-			<Button color="default" radius="sm" variant="solid" type="reset" onPress={() => onFilterChange('asc', '', '')}>
-				Сбросить
+				{materials && materials.length > 0 && (
+					<div className="pb-4 border-b border-gray-100">
+						<MaterialFilter
+							sortOrder={sortOrder}
+							selectedMaterial={selectedMaterial}
+							materials={materials}
+							onFilterChange={(sort, cat, material) => onFilterChange(sort, cat, material)}
+						/>
+					</div>
+				)}
+				
+				{categories && (
+					<div className="pb-4">
+						<h3 className="text-md font-medium mb-3">Категории</h3>
+						<CatFilter 
+							sortOrder={sortOrder} 
+							onFilterChange={(sort, cat) => onFilterChange(sort, cat)} 
+							categories={categories} 
+							selectedCategory={selectedCategory} 
+						/>
+					</div>
+				)}
+			</div>
+			
+			<Button 
+				color="default" 
+				radius="sm" 
+				variant="solid" 
+				type="reset" 
+				className="w-full mt-2"
+				onPress={() => onFilterChange('asc', '', '')}
+			>
+				Сбросить фильтры
 			</Button>
 		</Form>
 	);

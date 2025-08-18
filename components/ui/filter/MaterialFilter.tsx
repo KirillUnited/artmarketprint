@@ -1,5 +1,4 @@
 import { Select, SelectItem } from "@heroui/select";
-import { k } from "framer-motion/dist/types.d-D0HXPxHm";
 import { JSX } from "react";
 
 /**
