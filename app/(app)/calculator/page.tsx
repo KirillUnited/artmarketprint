@@ -8,7 +8,6 @@ export const metadata = {
 
 export default async function CalculatorPage() {
 	const data = await getCalculatorByType('package-calc');
-	console.log(data);
 
 	return (
 		<main className="min-h-screen py-12 bg-gray-50">

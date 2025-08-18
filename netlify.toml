@@ -3,3 +3,6 @@ from = "https://develop--artmarketprint.netlify.app/*"
 to = "https://artmarketprint.by/:splat"
 status = 301
 force = true
+
+[build.environment]
+  NPM_FLAGS = "--legacy-peer-deps"
