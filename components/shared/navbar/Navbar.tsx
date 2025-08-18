@@ -12,7 +12,6 @@ import Drawer from '../../ui/Drawer';
 import { SalesBanner } from '../banner';
 
 import { siteConfig } from '@/config/site';
-import { PhoneListDropdown } from '@/components/ui/PhoneListDropdown';
 import useBasketStore from '@/store/store';
 import { NavbarDropdownMenu } from '@/components/ui/dropdown';
 import {Tooltip} from "@heroui/tooltip";
