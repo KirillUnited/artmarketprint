@@ -1,6 +1,5 @@
-import { Radio, RadioGroup } from "@heroui/radio";
 import { Select, SelectItem } from "@heroui/select";
-import {FC, JSX} from "react";
+import {JSX} from "react";
 
 /**
  * Component for sorting products by price.
