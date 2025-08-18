@@ -1,5 +1,5 @@
 import {Card, CardBody, CardFooter, CardHeader} from '@heroui/card';
-import {ArrowLeftIcon, PanelRightOpenIcon, SearchXIcon, ShoppingCart, ShoppingCartIcon} from 'lucide-react';
+import {PanelRightOpenIcon, SearchXIcon, ShoppingCart, ShoppingCartIcon} from 'lucide-react';
 import Link from 'next/link';
 
 import Section, {SectionTitle} from '@/components/layout/Section';
@@ -52,7 +52,7 @@ export default async function SearchPage({
 								<span>Все товары</span>
 							</Button>
 						</div>
-						<ProductsView products={products} categories={categoriesWithSubcategories} totalItemsView={8} showFilter={true} />
+						<ProductsView products={products} categories={categoriesWithSubcategories} totalItemsView={20} showFilter={true} />
 					</>
 				) : (
 					<div className="flex flex-col items-center gap-8">
