@@ -18,17 +18,15 @@ export async function searchProductsByName(searchParam: string): Promise<any[]> 
             name match $searchParam + "*" ||
             description match $searchParam + "*" ||
             category match $searchParam + "*" ||
-            subcategory match $searchParam + "*" ||
-            tags[]->name match $searchParam + "*"
+            subcategory match $searchParam + "*"
         )] | score(
-            name match $searchParam + "*" ||
-            description match $searchParam + "*" ||
-            category match $searchParam + "*" ||
-            subcategory match $searchParam + "*" ||
-            tags[]->name match $searchParam + "*"
+            name match $searchParam + "*",
+            description match $searchParam + "*",
+            category match $searchParam + "*",
+            subcategory match $searchParam + "*"
         ) | order(_score desc) {
             ...,
-            "currentSlug": slug.current
+            _score
         }`
     );
 
