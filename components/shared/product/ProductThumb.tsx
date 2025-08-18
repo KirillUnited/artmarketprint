@@ -46,7 +46,7 @@ const ProductThumb: FC<ProductThumbProps> = ({ item, ...props }): JSX.Element =>
 						width={220}
 						placeholder="blur"
 						blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjIyMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjFmMWYxIi8+PC9zdmc+"
-						onLoadingComplete={(img) => {
+						onLoadingComplete={(img: HTMLImageElement) => {
 							// Add fade-in animation when image loads
 							img.classList.add('animate-fadeIn');
 						}}
