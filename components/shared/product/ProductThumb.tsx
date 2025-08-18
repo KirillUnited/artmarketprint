@@ -29,21 +29,34 @@ const ProductThumb: FC<ProductThumbProps> = ({ item, ...props }): JSX.Element =>
     const brand = item.brand || '';
 
     return (
-		<Card as={Link} className={clsx('h-full group relative max-w-full shadow-small hover:shadow-large transition-shadow', props.className)} href={`/products/${id}`} radius="sm">
-			<CardBody className="items-stretch gap-4">
-				<Image
-					alt={name}
-					as={NextImage}
-					className={clsx('object-contain aspect-square w-full mx-auto max-w-56 max-h-80')}
-					classNames={{
-						wrapper: clsx('relative w-full bg-contain bg-center bg-no-repeat mx-auto'),
-					}}
-					height={220}
-					loading="lazy"
-					quality={50}
-					src={image}
-					width={220}
-				/>
+		<Card as={Link} className={clsx('h-full group relative max-w-full shadow-small hover:shadow-large transition-all duration-300', props.className)} href={`/products/${id}`} radius="sm">
+			<CardBody className="items-stretch gap-4 p-4">
+				<div className="relative overflow-hidden rounded-lg group">
+					<Image
+						alt={name}
+						as={NextImage}
+						className={clsx('object-contain aspect-square w-full mx-auto max-w-56 max-h-80 group-hover:scale-105 transition-transform duration-300')}
+						classNames={{
+							wrapper: clsx('relative w-full bg-contain bg-center bg-no-repeat mx-auto'),
+						}}
+						height={220}
+						loading="lazy"
+						quality={75}
+						src={image}
+						width={220}
+						placeholder="blur"
+						blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjIyMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjFmMWYxIi8+PC9zdmc+"
+						onLoadingComplete={(img: HTMLImageElement) => {
+							// Add fade-in animation when image loads
+							img.classList.add('animate-fadeIn');
+						}}
+					/>
+					{Number(totalStock()) === 0 && (
+						<div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+							<span className="text-white font-medium px-3 py-1 bg-red-500 rounded-full text-sm">Нет в наличии</span>
+						</div>
+					)}
+				</div>
 				<div className="flex flex-col gap-2">
 					<span className="text-xl font-semibold self-start text-foreground">{`${price} Br`}</span>
 					{name && (
@@ -58,7 +71,7 @@ const ProductThumb: FC<ProductThumbProps> = ({ item, ...props }): JSX.Element =>
 				</div>
 			</CardBody>
 			{(item.colors?.length > 0 || item.sizes?.length > 0) && (
-				<CardFooter className="text-tiny flex-col items-start gap-2 border-t">
+				<CardFooter className="text-tiny flex-col items-start gap-2 border-t p-4 pt-2">
 					{item.colors?.length > 0 && <ProductColors list={item.items} />}
 					{item.sizes?.length > 0 && <ProductSizes list={item.sizes} />}
 				</CardFooter>
