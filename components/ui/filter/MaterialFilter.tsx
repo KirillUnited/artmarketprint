@@ -33,7 +33,7 @@ export const MaterialFilter: ({
       onChange={(e) => onFilterChange(sortOrder, '', e.target.value)}
       items={materials}
     >
-      <SelectItem textValue="Все материалы" key="Все материалы">
+      <SelectItem textValue="Все материалы" key="">
         Все материалы
       </SelectItem>
       {materials?.map((item: { material: string; count: number }) => (
