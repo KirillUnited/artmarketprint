@@ -41,8 +41,6 @@ export default function ProductsView({ products, categories, totalItemsView = IT
     // Collect materials
     const materials = useMemo(() => collectMaterials(products), [products]);
 
-    console.log('materials', materials);
-
     return (
         <>
             {
