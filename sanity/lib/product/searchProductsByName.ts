@@ -17,7 +17,6 @@ export async function searchProductsByName(searchParam: string): Promise<any[]> 
         `*[_type == "product" && (
             name match "${searchParam}*" ||
             description match "${searchParam}*" ||
-            variation_description match "${searchParam}*" ||
             category match "${searchParam}*"
         )]`
     );
