@@ -35,6 +35,7 @@ export interface Product {
     subcategory: string[];
     colors: string[];
     sizes: string[];
+    materials: string[];
     items: any;
     stock: string;
     sku: string;

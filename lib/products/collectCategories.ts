@@ -21,3 +21,23 @@ export function collectCategoriesAndSubcategories(products: any[]) {
         subcategories: Array.from(subcategories)
     }));
 }
+export function collectMaterials(products: any[]) {
+    const map = new Map();
+
+    products.forEach(product => {
+        const material = product.materials?.[0]?.trim();
+
+        if (!material) return;
+
+        if (!map.has(material)) {
+            map.set(material, 0);
+        }
+
+        map.set(material, map.get(material) + 1);
+    });
+
+    return Array.from(map.entries()).map(([material, count]) => ({
+        material,
+        count
+    }));
+}

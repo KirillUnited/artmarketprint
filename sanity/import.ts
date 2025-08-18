@@ -11,6 +11,7 @@ export function transform(external: Product) {
 		name: external.name,
 		colors: external.colors,
 		sizes: external.sizes,
+		materials: external.materials,
 		price: external.price,
 		image: external.image,
 		images_urls: external.images_urls,

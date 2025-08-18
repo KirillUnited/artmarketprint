@@ -11,7 +11,8 @@ import { SortFilter } from '@/components/ui/filter/SortFilter';
 import { useProductsFilter } from '@/hooks/useProductsFilter';
 import { ProductsNotFound } from './ProductsNotFound';
 import { countProductsByCategory, enrichCategoriesWithCounts } from '@/lib/products/categoryCounts';
-
+import { collectMaterials } from '@/lib/products/collectCategories';
+import { MaterialFilter } from '@/components/ui/filter/MaterialFilter';
 const ITEMS_PER_PAGE = 20;
 
 export default function ProductsView({ products, categories, totalItemsView = ITEMS_PER_PAGE, showFilter = true }: any) {
@@ -19,6 +20,7 @@ export default function ProductsView({ products, categories, totalItemsView = IT
     const {
         sortOrder,
         selectedCategory,
+        selectedMaterial,
         currentPage,
         filteredProducts,
         paginatedItems,
@@ -36,6 +38,10 @@ export default function ProductsView({ products, categories, totalItemsView = IT
     const enrichedCategories = useMemo(() => {
         return enrichCategoriesWithCounts(categories, categoryCounts);
     }, [categories, categoryCounts]);
+    // Collect materials
+    const materials = useMemo(() => collectMaterials(products), [products]);
+
+    console.log('materials', materials);
 
     return (
         <>
@@ -48,21 +54,34 @@ export default function ProductsView({ products, categories, totalItemsView = IT
                     )}>
                         {
                             showFilter &&
-                            <ProductsFilter 
+                            <ProductsFilter
                                 categories={enrichedCategories}
+                                materials={materials}
                                 selectedCategory={selectedCategory}
+                                selectedMaterial={selectedMaterial}
                                 sortOrder={sortOrder}
-                                onFilterChange={handleFilterChange} 
+                                onFilterChange={handleFilterChange}
                             />
                         }
                         <div className='flex flex-col gap-4 md:gap-8 relative h-full'>
 
-                            <div className='md:hidden'> {SortFilter({ sortOrder, selectedCategory, onFilterChange: handleFilterChange })}</div>
+                            <div className='md:hidden'> {SortFilter({ sortOrder, selectedCategory, onFilterChange: (sort: string, cat: string) => handleFilterChange(sort, cat) })}</div>
+                            <div className='md:hidden'> {MaterialFilter({ selectedMaterial, sortOrder, materials, onFilterChange: (sort, cat, mat) => handleFilterChange(sort, cat, mat) })}</div>
+
                             {
                                 showFilter &&
                                 <div className='flex md:hidden flex-wrap flex-col md:flex-row gap-4 w-full'>
                                     <FilterButton onOpen={onOpen} />
-                                    <FilterDrawer isOpen={isOpen} onOpenChange={onOpenChange} onFilterChange={handleFilterChange} categories={enrichedCategories} sortOrder={sortOrder} selectedCategory={selectedCategory} />
+                                    <FilterDrawer
+                                        isOpen={isOpen}
+                                        onOpenChange={onOpenChange}
+                                        onFilterChange={handleFilterChange}
+                                        categories={enrichedCategories}
+                                        materials={materials}
+                                        sortOrder={sortOrder}
+                                        selectedCategory={selectedCategory}
+                                        selectedMaterial={selectedMaterial}
+                                    />
                                 </div>
                             }
                             {
@@ -78,13 +97,13 @@ export default function ProductsView({ products, categories, totalItemsView = IT
                             }
                             {
                                 filteredProducts.length > totalItemsView && (
-									<Pagination
-										className='self-center'
-										page={currentPage}
-										total={totalPages}
-										onChange={handlePageChange}
-									/>
-								)
+                                    <Pagination
+                                        className='self-center'
+                                        page={currentPage}
+                                        total={totalPages}
+                                        onChange={handlePageChange}
+                                    />
+                                )
                             }
                         </div>
                     </div>
