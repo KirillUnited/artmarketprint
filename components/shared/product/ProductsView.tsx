@@ -85,9 +85,9 @@ export default function ProductsView({ products, categories, totalItemsView = IT
         <>
             <div className='flex flex-col gap-8'>
                 <div className={clsx(
-                    'grid items-start gap-4 md:gap-8', {
+                    'grid items-start gap-4 md:gap-8 grid-cols-1', {
                     ['md:grid-cols-[320px_1fr]']: showFilter && !isLoading,
-                    ['grid-cols-1']: !showFilter || isLoading
+                    ['md:grid-cols-1']: !showFilter || isLoading
                 }
                 )}>
                     {
