@@ -45,30 +45,32 @@ export const FilterGroup: FC<FilterGroupProps> = ({ sortOrder, selectedCategory,
 						/>
 					</div>
 				)}
-				
+
 				{categories && (
 					<div className="pb-4">
 						<h3 className="text-md font-medium mb-3">Категории</h3>
-						<CatFilter 
-							sortOrder={sortOrder} 
-							onFilterChange={(sort, cat) => onFilterChange(sort, cat)} 
-							categories={categories} 
-							selectedCategory={selectedCategory} 
+						<CatFilter
+							sortOrder={sortOrder}
+							onFilterChange={(sort, cat) => onFilterChange(sort, cat)}
+							categories={categories}
+							selectedCategory={selectedCategory}
 						/>
 					</div>
 				)}
 			</div>
-			
-			<Button 
-				color="default" 
-				radius="sm" 
-				variant="solid" 
-				type="reset" 
-				className="w-full mt-2"
-				onPress={() => onFilterChange('asc', '', '')}
-			>
-				Сбросить фильтры
-			</Button>
+
+			{(selectedCategory || selectedMaterial) && (
+				<Button
+					color="primary"
+					radius="sm"
+					type="reset"
+					size='sm'
+					className="w-full mt-2 sticky bottom-4 z-30"
+					onPress={() => onFilterChange('asc', '', '')}
+				>
+					Сбросить фильтры
+				</Button>
+			)}
 		</Form>
 	);
 };
@@ -172,7 +174,7 @@ interface ProductsFilterProps {
  * @param {ProductsFilterProps} props - The properties for the ProductsFilter component.
  * @returns {JSX.Element} The rendered ProductsFilter component.
  */
-const ProductsFilter: FC<ProductsFilterProps> = ({ sortOrder, selectedCategory, onFilterChange, categories, materials=[], selectedMaterial }) => {
+const ProductsFilter: FC<ProductsFilterProps> = ({ sortOrder, selectedCategory, onFilterChange, categories, materials = [], selectedMaterial }) => {
 	return (
 		<div className="hidden md:flex flex-col gap-4 sticky top-20 z-30 bg-background">
 			<FilterGroup categories={categories} selectedCategory={selectedCategory} sortOrder={sortOrder} onFilterChange={onFilterChange} materials={materials} selectedMaterial={selectedMaterial} />
