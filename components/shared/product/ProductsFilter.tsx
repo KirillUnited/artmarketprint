@@ -39,6 +39,7 @@ export const FilterGroup: FC<FilterGroupProps> = ({ sortOrder, selectedCategory,
 						<MaterialFilter
 							sortOrder={sortOrder}
 							selectedMaterial={selectedMaterial}
+							selectedCategory={selectedCategory}
 							materials={materials}
 							onFilterChange={(sort, cat, material) => onFilterChange(sort, cat, material)}
 						/>
@@ -122,6 +123,7 @@ export const FilterDrawer: FC<FilterDrawerProps> = ({ isOpen, onOpenChange, onFi
 		<MaterialFilter
 			sortOrder={sortOrder}
 			selectedMaterial={selectedMaterial}
+			selectedCategory={selectedCategory}
 			materials={materials}
 			onFilterChange={(sort, cat, material) => onFilterChange(sort, cat, material)}
 		/>

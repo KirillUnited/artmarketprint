@@ -114,6 +114,7 @@ export default function ProductsView({ products, categories, totalItemsView = IT
                                 <div className='md:hidden'> 
                                     {MaterialFilter({ 
                                         selectedMaterial, 
+                                        selectedCategory,
                                         sortOrder, 
                                         materials, 
                                         onFilterChange: (sort, cat, mat) => handleFilterChange(sort, cat, mat) 

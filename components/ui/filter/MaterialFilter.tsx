@@ -13,15 +13,17 @@ import { JSX } from "react";
  */
 export const MaterialFilter: ({
   selectedMaterial,
+  selectedCategory,
   sortOrder,
   materials,
   onFilterChange
 }: {
   selectedMaterial: string;
+  selectedCategory: string;
   sortOrder: string;
   materials: any;
   onFilterChange: (sortOrder: string, category: string, material: string) => void;
-}) => JSX.Element = ({ selectedMaterial, sortOrder, materials, onFilterChange }) => {
+}) => JSX.Element = ({ selectedMaterial, selectedCategory, sortOrder, materials, onFilterChange }) => {
   return (
     <Select
       size="sm"
@@ -29,7 +31,7 @@ export const MaterialFilter: ({
       label="Материал"
       placeholder="Выберите материал"
       defaultSelectedKeys={selectedMaterial ? [selectedMaterial] : []}
-      onChange={(e) => onFilterChange(sortOrder, '', e.target.value)}
+      onChange={(e) => onFilterChange(sortOrder, selectedCategory, e.target.value)}
       items={materials}
     >
       <SelectItem textValue="Все материалы" key="">
@@ -40,7 +42,7 @@ export const MaterialFilter: ({
           className="capitalize"
           key={item.material}
           textValue={item.material}
-          description={`${item.count} шт.`}
+          // description={`${item.count} шт.`}
         >
           {item.material}
         </SelectItem>
