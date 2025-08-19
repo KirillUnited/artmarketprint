@@ -28,7 +28,7 @@ interface FilterGroupProps {
 export const FilterGroup: FC<FilterGroupProps> = ({ sortOrder, selectedCategory, selectedMaterial, categories, materials, onFilterChange }) => {
 	return (
 		<Form className="flex flex-col gap-6">
-			<div className="space-y-4">
+			<div className="flex flex-col gap-4 max-w-full">
 				<div className="pb-4 border-b border-gray-100">
 					<h3 className="text-md font-medium mb-3">Сортировать</h3>
 					<SortFilter sortOrder={sortOrder} selectedCategory={selectedCategory} onFilterChange={(sort: string, cat: string) => onFilterChange(sort, cat)} />
@@ -86,7 +86,7 @@ export const FilterButton: FC<FilterButtonProps> = ({ onOpen }) => {
 	return (
 		<Button className="flex-grow min-w-max border-1 sticky top-20" radius="sm" color="primary" variant="bordered" onPress={onOpen}>
 			<FilterIcon size={16} />
-			<span className="text-sm">Фильтры по товарам</span>
+			<span className="text-sm">Фильтр по категориям</span>
 		</Button>
 	);
 };

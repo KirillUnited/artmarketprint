@@ -122,7 +122,7 @@ export default function ProductsView({ products, categories, totalItemsView = IT
 
                                 {
                                     showFilter &&
-                                    <div className='flex md:hidden flex-wrap flex-col md:flex-row gap-4 w-full'>
+                                    <div className='flex md:hidden flex-wrap flex-col md:flex-row gap-4 w-full mb-4'>
                                         <FilterButton onOpen={onOpen} />
                                         <FilterDrawer
                                             isOpen={isOpen}
