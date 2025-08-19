@@ -8,7 +8,7 @@ import Section from '@/components/layout/Section';
 import ProductsView from '@/components/shared/product/ProductsView';
 import ProductSearchForm from '@/components/shared/product/ProductSearchForm';
 import { collectCategoriesAndSubcategories } from '@/lib/products/collectCategories';
-import {getAllProductsFromSanity} from "@/sanity/lib/product/getAllProductsFromSanity";
+import { getAllProductsFromSanity } from "@/sanity/lib/product/getAllProductsFromSanity";
 
 export async function generateMetadata() {
 

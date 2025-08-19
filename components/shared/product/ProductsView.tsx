@@ -6,7 +6,7 @@ import clsx from 'clsx';
 import { useDisclosure } from '@heroui/modal';
 import ProductGrid from './ProductGrid';
 import { Chip } from '@heroui/chip';
-import { DeleteIcon } from 'lucide-react';
+import { XIcon } from 'lucide-react';
 import { SortFilter } from '@/components/ui/filter/SortFilter';
 import { useProductsFilter } from '@/hooks/useProductsFilter';
 import { ProductsNotFound } from './ProductsNotFound';
@@ -140,18 +140,18 @@ export default function ProductsView({ products, categories, totalItemsView = IT
                                 {
                                     selectedCategory && 
                                     <Chip 
-                                        color='primary' 
+                                        color='default'
+                                        variant='bordered'
                                         radius='sm' 
+                                        size='sm'
                                         classNames={{
-                                            base: '',
+                                            base: 'cursor-pointer border-1',
                                             content: 'flex items-center gap-2'
                                         }}
-                                    >
+                                        onClick={() => handleFilterChange(sortOrder, '')}
+                                        >
                                         {selectedCategory} 
-                                        <DeleteIcon 
-                                            className='cursor-pointer' 
-                                            onClick={() => handleFilterChange(sortOrder, '')} 
-                                        />
+                                        <XIcon size={14}/>
                                     </Chip>
                                 }
                             </>
