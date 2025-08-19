@@ -36,7 +36,7 @@ export const CatFilter: FC<CatFilterProps> = ({ sortOrder, onFilterChange, categ
 
     return (
         <div className='flex gap-4 w-full'>
-            <ScrollShadow className="w-full max-h-[calc(85vh-128px)]" size={50} hideScrollBar>
+            <ScrollShadow className="w-full max-h-[calc(70vh-128px)]" size={50} hideScrollBar>
                 <Accordion
                     selectedKeys={selectedKeys}
                     onSelectionChange={(keys) => setSelectedKeys(keys as Set<string>)}
@@ -44,7 +44,7 @@ export const CatFilter: FC<CatFilterProps> = ({ sortOrder, onFilterChange, categ
                     defaultExpandedKeys={categories.length === 1 ? ['0'] : []}
                     itemClasses={{
                         trigger: 'px-3 py-2 hover:bg-primary transition-colors group',
-                        title: 'group-hover:text-primary-foreground transition-colors',
+                        title: 'text-black group-hover:text-primary-foreground transition-colors',
                     }}
                     selectionMode="single"
                 >
@@ -53,7 +53,7 @@ export const CatFilter: FC<CatFilterProps> = ({ sortOrder, onFilterChange, categ
                             key={index}
                             textValue={category}
                             title={
-                                <div className="flex justify-between items-center w-full">
+                                <div className="flex justify-between items-center w-full text-sm">
                                     <span>{category}</span>
                                     {count !== undefined && (
                                         <span className="text-xs bg-default-100 text-default-600 rounded-full px-2 py-1">
@@ -68,8 +68,8 @@ export const CatFilter: FC<CatFilterProps> = ({ sortOrder, onFilterChange, categ
                                     value={category}
                                     onChange={(e) => onFilterChange(sortOrder, e.target.value)}
                                     classNames={{
-                                        wrapper: 'mr-2',
-                                        label: 'flex items-center justify-between w-full pr-2'
+                                        wrapper: 'mr-1',
+                                        label: 'flex items-center justify-between w-full pr-2 text-sm'
                                     }}
                                 >
                                     <span>Все товары</span>
@@ -84,8 +84,8 @@ export const CatFilter: FC<CatFilterProps> = ({ sortOrder, onFilterChange, categ
                                             value={name}
                                             onChange={(e) => onFilterChange(sortOrder, e.target.value)}
                                             classNames={{
-                                                wrapper: 'mr-2',
-                                                label: 'w-full pr-2'
+                                                wrapper: 'mr-1',
+                                                label: 'w-full pr-2 text-sm'
                                             }}
                                         >
                                             <span>{name}</span>
