@@ -27,7 +27,7 @@ interface FilterGroupProps {
  */
 export const FilterGroup: FC<FilterGroupProps> = ({ sortOrder, selectedCategory, selectedMaterial, categories, materials, onFilterChange }) => {
 	return (
-		<Form className="flex flex-col gap-6">
+		<Form className="flex flex-col">
 			<div className="flex flex-col gap-4 max-w-full">
 				<div className="pb-4 border-b border-gray-100">
 					<h3 className="text-md font-medium mb-3">Сортировать</h3>
