@@ -30,7 +30,7 @@ const ProductThumb: FC<ProductThumbProps> = ({ item, ...props }): JSX.Element =>
 
     return (
 		<Card as={Link} className={clsx('h-full group relative max-w-full shadow-small hover:shadow-large transition-all duration-300', props.className)} href={`/products/${id}`} radius="sm">
-			<CardBody className="items-stretch gap-4 p-4">
+			<CardBody className="items-stretch gap-4 p-2 sm:p-4">
 				<div className="relative overflow-hidden rounded-lg group">
 					<Image
 						alt={name}
@@ -61,7 +61,7 @@ const ProductThumb: FC<ProductThumbProps> = ({ item, ...props }): JSX.Element =>
 					<span className="text-xl font-semibold self-start text-foreground">{`${price} Br`}</span>
 					{name && (
 						<p className="flex flex-col text-foreground/90 text-xs sm:text-sm" title={name}>
-							{brand && <span className="text-xs">{brand}</span>}
+							{brand && <span className="text-xs text-gray-500 font-light">{brand}</span>}
 							<span className="line-clamp-2">{name}</span>
 						</p>
 					)}

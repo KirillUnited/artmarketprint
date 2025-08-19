@@ -46,7 +46,7 @@ export function groupProductsByCleanName(products: any[], categories = [], brand
 	}
 
 	products.forEach((product) => {
-		const stock = product.stock?.[0] || parseInt(product.stock_minsk?.[0] || '0') + parseInt(product.stock_shipper?.[0] || '0') || 0;
+		const stock = product.stock?.[0] || parseInt(product.stock_minsk || '0') + parseInt(product.stock_shipper || '0') || 0;
 
 		// Not add product if stock is zero
 		if (stock == 0) {
@@ -54,7 +54,7 @@ export function groupProductsByCleanName(products: any[], categories = [], brand
 		}
 
 		// Get original name
-		const rawName = product.product?.[0]?._?.trim() || product.name?.[0]?.trim() || 'Unnamed';
+		const rawName = product.product?.[0]?._?.trim() || product.name?.trim() || 'Unnamed';
 		// Remove color and size after last comma (for example: "Lanyard from polyester HOST, Black XL." -> "Lanyard from polyester HOST")
 		const cleanName = rawName.split(',')[0].trim();
 		// Get color and size and material
@@ -64,18 +64,18 @@ export function groupProductsByCleanName(products: any[], categories = [], brand
 		// Create unique key for product variation
 		const variationKey = `${color || ''}:${size || ''}`;
 		// Get full category path
-		const categoryId = product.categoryId?.[0];
+		const categoryId = product.categoryId || '';
 		const categoryPath = categoryId ? getFullCategoryPath(categoryId, categoryMap) : [];
 		// Get category and subcategory
 		const category = product.category?.[0]?.split('|')[0] || categoryPath[0] || '';
 		const subcategory = product.category?.[0]?.split('|')[0] || categoryPath[1] || '';
 		// Get product properties
-		const productId = product?.id?.[0]?._ || product?.$?.id || '';
-		const sku = product.sku?.[0] || product.vendorCode?.[0] || '';
-		const gallery = product.images_urls?.[0] || product.picture?.[0] || '';
+		const productId = product?.id?.[0]?._ || product?.id || '';
+		const sku = product.sku?.[0] || product.vendorCode || '';
+		const gallery = product.images_urls?.[0] || product.picture || '';
 		const thumbnailImage = gallery?.split(',')[0] || gallery?.split(',')[0] || '';
-		const price = getPrice(product.price?.[0], 1 - priceTransform(Companies.ARTE.discount));
-		const description = product.general_description?.[0] || product.description?.[0] || '';
+		const price = getPrice(product.price, 1 - priceTransform(Companies.ARTE.discount));
+		const description = product.general_description?.[0] || product.description || '';
 		const variation_description = product.param ? extractParamsToHtmlList(product.param) : '';
 		const url = product.url?.[0] || '';
 
@@ -148,7 +148,7 @@ export function groupProductsByCleanName(products: any[], categories = [], brand
 
 export function formatParams(params: any[]) {
 	return params.map((param) => ({
-		name: param.$.name,
+		name: param.name,
 		value: param._,
 	}));
 }
@@ -164,7 +164,12 @@ export function getColorsFromParams(product: any) {
 }
 
 export function getMaterialsFromParams(product: any) {
-	return getParamsValueByName(formatParams(product.param) || [], 'Материал');
+	const params = formatParams(product.param) || [];
+	const regex = /Материал\s+\S+/;
+
+	return params
+		.filter((param) => regex.test(param.name))
+		.map((param) => param.value);
 }
 
 export function getSizesFromParams(product: any) {
@@ -175,8 +180,8 @@ export function getSizesFromParams(product: any) {
 
 export function extractParamsToHtmlList(params: any[]): string {
 	const listItems = params.map((param) => {
-		if (param.$.name && param._) {
-			return `<li><strong>${param.$.name}:</strong> ${param._}</li>`;
+		if (param.name && param._) {
+			return `<li><strong>${param.name}:</strong> ${param._}</li>`;
 		}
 		return '';
 	}).join('');
