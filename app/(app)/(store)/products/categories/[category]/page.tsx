@@ -32,7 +32,7 @@ export default async function ProductsCategoryPage({params, searchParams}: Props
 					<ProductCard key={product._id} product={product} />
 				))}
 			</div>
-			<Pagination current={page} total={totalPages} basePath={`/products/${params.category}`} />
+			<Pagination current={page} total={totalPages} basePath={`/products/categories/${params.category}`} />
 		</div>
 	);
 }
