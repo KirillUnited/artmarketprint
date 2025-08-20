@@ -1,6 +1,4 @@
-// app/products/[category]/page.tsx
 import {getProductsQuery, getTotalProductsQuery, getCategoriesQuery} from '@/components/shared/product/lib/queries';
-import {ProductCard} from '@/components/shared/product/ui';
 import {Pagination} from '@/components/shared/product/ui';
 import {CategoryFilter} from '@/components/shared/product/ui';
 import {sanityFetch} from "@/sanity/lib/sanityFetch";
@@ -21,7 +19,6 @@ export default async function ProductsCategoryPage({params, searchParams}: { par
 
 	const [products, total, categories] = await Promise.all([
 		sanityFetch({query: getProductsQuery(categorySlug, pageNumber, PRODUCTS_PER_PAGE), params: {}}),
-
 		sanityFetch({query: getTotalProductsQuery(categorySlug)}),
 		sanityFetch({query: getCategoriesQuery}),
 	]);
