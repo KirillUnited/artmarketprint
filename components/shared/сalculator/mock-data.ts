@@ -153,7 +153,7 @@ export const pvdPriceTable: PriceTableEntry[] = [
     {
         size: '30x40',
         prices: {
-            '1+0': { regular: 1.31, discounted: 0.87 },
+            '1+0': { regular: 1.31, discounted: 0.96 },
             '2+0': { regular: 2.01, discounted: 1.28 },
             '3+0': { regular: 2.50, discounted: 1.65 },
             '4+0': { regular: 3.25, discounted: 1.95 },

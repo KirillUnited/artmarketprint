@@ -70,7 +70,7 @@ const PackageCalculator = () => {
 
 			if (priceEntry && priceEntry.prices[printId]) {
 				// Determine if we should use the regular or discounted price based on quantity
-				const useDiscountedPrice = quantity >= 500;
+				const useDiscountedPrice = quantity >= 200;
 				pricePerBagValue = useDiscountedPrice 
 					? priceEntry.prices[printId].discounted 
 					: priceEntry.prices[printId].regular;
