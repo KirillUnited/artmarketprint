@@ -9,6 +9,9 @@ import ProductsView from '@/components/shared/product/ProductsView';
 import ProductSearchForm from '@/components/shared/product/ProductSearchForm';
 import { collectCategoriesAndSubcategories } from '@/lib/products/collectCategories';
 import { getAllProductsFromSanity } from "@/sanity/lib/product/getAllProductsFromSanity";
+import {ProductsViewSection} from "@/components/shared/product";
+import {JSX, Suspense} from "react";
+import {Loader2Icon} from "lucide-react";
 
 export async function generateMetadata() {
 
@@ -30,13 +33,11 @@ export default async function ProductsPage(
             page?: string,
         }>
     }
-) {
+): Promise<JSX.Element> {
     // Fetch data in parallel using Promise.all for better performance
-    const [breadcrumbs, products] = await Promise.all([
-        getSanityDocuments(NAVIGATION_QUERY),
-        getAllProductsFromSanity()
+    const [breadcrumbs] = await Promise.all([
+        getSanityDocuments(NAVIGATION_QUERY)
     ]);
-    const categoriesWithSubcategories = collectCategoriesAndSubcategories(products);
 
     return (
         <>
@@ -48,6 +49,7 @@ export default async function ProductsPage(
                     height={1080}
                     src="/images/catalog-3.jpg"
                     width={1920}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
                 <div className="container flex flex-col gap-8 max-w-2xl relative z-10">
                     <div className="text-center">
@@ -70,9 +72,10 @@ export default async function ProductsPage(
                     </div>
                 </div>
             </section>
-            <Section id="products" innerClassname='pt-6 md:pt-6'>
-                <ProductsView products={products} categories={categoriesWithSubcategories} />
-            </Section>
+            {/* The section below is where the products will be displayed */}
+            <Suspense fallback={<Loader2Icon className='animate-spin mx-auto text-primary my-6' size={24}/>}>
+                <ProductsViewSection/>
+            </Suspense>
         </>
     );
 }

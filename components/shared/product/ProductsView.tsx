@@ -25,7 +25,7 @@ interface Category {
     subcategories?: Category[];
 }
 
-interface ProductsViewProps {
+export interface ProductsViewProps {
     products: Product[];
     categories: any[];
     totalItemsView?: number;
