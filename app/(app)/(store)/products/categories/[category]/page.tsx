@@ -8,16 +8,19 @@ import {sanityFetch} from "@/sanity/lib/sanityFetch";
 const PRODUCTS_PER_PAGE = 20;
 
 type Props = {
-	params: {category: string};
-	searchParams: {page?: string};
+	category: string;
 };
 
-export default async function ProductsCategoryPage({params, searchParams}: Props) {
-	const page = parseInt(searchParams.page || '1');
-	const categorySlug = params.category === 'all' ? null : params.category;
+export default async function ProductsCategoryPage({params, searchParams}: { params: Promise<Props>, searchParams: Promise<{page?: string}>
+ }) {
+	const {category} = await params;
+	const {page} = await searchParams;
+	const pageNumber = parseInt(page || '1');
+	const categorySlug = category === 'all' ? null : category;
 
 	const [products, total, categories] = await Promise.all([
-		sanityFetch({query: getProductsQuery(categorySlug, page, PRODUCTS_PER_PAGE), params: {}}),
+		sanityFetch({query: getProductsQuery(categorySlug, pageNumber, PRODUCTS_PER_PAGE), params: {}}),
+
 		sanityFetch({query: getTotalProductsQuery(categorySlug)}),
 		sanityFetch({query: getCategoriesQuery}),
 	]);
@@ -26,13 +29,13 @@ export default async function ProductsCategoryPage({params, searchParams}: Props
 
 	return (
 		<div className="p-6 space-y-6">
-			<CategoryFilter categories={categories} active={params.category} />
+			<CategoryFilter categories={categories} active={category} />
 			<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
 				{products.map((product: any) => (
 					<ProductCard key={product._id} product={product} />
 				))}
 			</div>
-			<Pagination current={page} total={totalPages} basePath={`/products/categories/${params.category}`} />
+			<Pagination current={pageNumber} total={totalPages} basePath={`/products/categories/${category}`} />
 		</div>
 	);
 }
