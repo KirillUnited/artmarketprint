@@ -36,7 +36,7 @@ export const CatFilter: FC<CatFilterProps> = ({ sortOrder, onFilterChange, categ
 
     return (
         <div className='flex gap-4 w-full'>
-            <ScrollShadow className="w-full max-h-[calc(70vh-128px)]" size={50} hideScrollBar>
+            <ScrollShadow className="w-full max-h-[calc(85vh-128px)] md:max-h-[calc(70vh-128px)]" size={50} hideScrollBar>
                 <Accordion
                     selectedKeys={selectedKeys}
                     onSelectionChange={(keys) => setSelectedKeys(keys as Set<string>)}
