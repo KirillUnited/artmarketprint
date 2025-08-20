@@ -13,9 +13,8 @@ import { ProductsNotFound } from './ProductsNotFound';
 import { countProductsByCategory, enrichCategoriesWithCounts } from '@/lib/products/categoryCounts';
 import { collectMaterials } from '@/lib/products/collectCategories';
 import { MaterialFilter } from '@/components/ui/filter/MaterialFilter';
-import { Product, ProductData } from './product.types';
+import { Product } from './product.types';
 import { ProductCardSkeleton } from './ProductGrid';
-import { Any } from 'next-sanity';
 
 const ITEMS_PER_PAGE = 20;
 
@@ -36,7 +35,7 @@ interface ProductsViewProps {
 export default function ProductsView({ products, categories, totalItemsView = ITEMS_PER_PAGE, showFilter = true }: ProductsViewProps) {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [isLoading, setIsLoading] = useState(true);
-    
+
     const {
         sortOrder,
         selectedCategory,
@@ -48,13 +47,13 @@ export default function ProductsView({ products, categories, totalItemsView = IT
         handleFilterChange,
         handlePageChange
     } = useProductsFilter({ products, totalItemsView });
-    
+
     // Simulate loading state for better UX
     useEffect(() => {
         const timer = setTimeout(() => {
             setIsLoading(false);
         }, 800);
-        
+
         return () => clearTimeout(timer);
     }, []);
 
@@ -104,22 +103,24 @@ export default function ProductsView({ products, categories, totalItemsView = IT
                     <div className='flex flex-col gap-4 md:gap-8 relative h-full'>
                         {!isLoading && (
                             <>
-                                <div className='md:hidden'> 
-                                    {SortFilter({ 
-                                        sortOrder, 
-                                        selectedCategory, 
-                                        onFilterChange: (sort: string, cat: string) => handleFilterChange(sort, cat) 
-                                    })}
-                                </div>
-                                <div className='md:hidden'> 
-                                    {MaterialFilter({ 
-                                        selectedMaterial, 
+                                <div className='md:hidden'>
+                                    {SortFilter({
+                                        sortOrder,
                                         selectedCategory,
-                                        sortOrder, 
-                                        materials, 
-                                        onFilterChange: (sort, cat, mat) => handleFilterChange(sort, cat, mat) 
+                                        onFilterChange: (sort: string, cat: string) => handleFilterChange(sort, cat)
                                     })}
                                 </div>
+                                {materials && materials.length > 0 && (
+                                    <div className='md:hidden'>
+                                        {MaterialFilter({
+                                            selectedMaterial,
+                                            selectedCategory,
+                                            sortOrder,
+                                            materials,
+                                            onFilterChange: (sort, cat, mat) => handleFilterChange(sort, cat, mat)
+                                        })}
+                                    </div>
+                                )}
 
                                 {
                                     showFilter &&
@@ -138,20 +139,20 @@ export default function ProductsView({ products, categories, totalItemsView = IT
                                     </div>
                                 }
                                 {
-                                    selectedCategory && 
-                                    <Chip 
+                                    selectedCategory &&
+                                    <Chip
                                         color='default'
                                         variant='bordered'
-                                        radius='sm' 
+                                        radius='sm'
                                         size='sm'
                                         classNames={{
                                             base: 'cursor-pointer border-1',
                                             content: 'flex items-center gap-2'
                                         }}
                                         onClick={() => handleFilterChange(sortOrder, '')}
-                                        >
-                                        {selectedCategory} 
-                                        <XIcon size={14}/>
+                                    >
+                                        {selectedCategory}
+                                        <XIcon size={14} />
                                     </Chip>
                                 }
                             </>
@@ -164,7 +165,7 @@ export default function ProductsView({ products, categories, totalItemsView = IT
                         ) : (
                             <ProductsNotFound />
                         )}
-                        
+
                         {!isLoading && filteredProducts.length > totalItemsView && (
                             <Pagination
                                 className='self-center'
