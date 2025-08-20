@@ -12,6 +12,8 @@ export const getProductsQuery = (category: string | null, page: number, limit: n
       image,
       category,
       subcategory,
+      brand,
+      items
     }
   `;
 };

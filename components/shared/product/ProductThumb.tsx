@@ -1,3 +1,4 @@
+'use client';
 import {FC, JSX} from 'react';
 import { Card, CardBody, CardFooter } from '@heroui/card';
 import { Link } from '@heroui/link';
