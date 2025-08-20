@@ -30,7 +30,7 @@ export const MaterialFilter: ({
       radius="sm"
       label="Материал"
       placeholder="Выберите материал"
-      defaultSelectedKeys={selectedMaterial ? [selectedMaterial] : []}
+      selectedKeys={selectedMaterial ? [selectedMaterial] : []}
       onChange={(e) => onFilterChange(sortOrder, selectedCategory, e.target.value)}
     >
       <SelectItem textValue="Все материалы" key="">
