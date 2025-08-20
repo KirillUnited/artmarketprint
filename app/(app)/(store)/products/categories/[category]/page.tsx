@@ -4,6 +4,7 @@ import {ProductCard} from '@/components/shared/product/ui';
 import {Pagination} from '@/components/shared/product/ui';
 import {CategoryFilter} from '@/components/shared/product/ui';
 import {sanityFetch} from "@/sanity/lib/sanityFetch";
+import ProductThumb from "@/components/shared/product/ProductThumb";
 
 const PRODUCTS_PER_PAGE = 20;
 
@@ -32,7 +33,7 @@ export default async function ProductsCategoryPage({params, searchParams}: { par
 			<CategoryFilter categories={categories} active={category} />
 			<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
 				{products.map((product: any) => (
-					<ProductCard key={product._id} product={product} />
+					<ProductThumb key={product._id} item={product} />
 				))}
 			</div>
 			<Pagination current={pageNumber} total={totalPages} basePath={`/products/categories/${category}`} />
