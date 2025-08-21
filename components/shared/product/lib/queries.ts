@@ -1,7 +1,10 @@
 // lib/queries.ts
-export const getProductsQuery = (category: string | null, page: number, limit: number) => {
+import {defineQuery} from "next-sanity";
+
+export const getProductsQuery = (category: any | null, page: number, limit: number) => {
 	const start = (page - 1) * limit;
-	const categoryFilter = category ? `&& category->slug.current == "${category}"` : '';
+	const categoryFilter = category ? `&& category == "${category.title}"` : '';
+
 	return `
     *[_type == "product" ${categoryFilter}] | order(_createdAt desc) [${start}...${start + limit}] {
       _id,
@@ -31,7 +34,14 @@ export const getCategoriesQuery = `
   }
 `;
 
-export const getTotalProductsQuery = (category: string | null) => {
-	const categoryFilter = category ? `&& category->slug.current == "${category}"` : '';
+export const CATEGORY_QUERY = defineQuery(`*[_type == "category" && slug.current == $slug][0] {
+	  _id,
+	  id,
+	  title,
+  }
+`);
+
+export const getTotalProductsQuery = (category: any | null) => {
+	const categoryFilter = category ? `&& category == "${category.title}"` : '';
 	return `count(*[_type == "product" ${categoryFilter}])`;
 };
