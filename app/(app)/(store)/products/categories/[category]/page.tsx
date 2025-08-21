@@ -1,8 +1,10 @@
-import {getProductsQuery, getTotalProductsQuery, getCategoriesQuery} from '@/components/shared/product/lib/queries';
-import {Pagination} from '@/components/shared/product/ui';
+import {getProductsQuery, getTotalProductsQuery, getCategoriesQuery, CATEGORY_QUERY} from '@/components/shared/product/lib/queries';
+// import {Pagination} from '@/components/shared/product/ui';
 import {CategoryFilter} from '@/components/shared/product/ui';
-import {sanityFetch} from "@/sanity/lib/sanityFetch";
-import ProductThumb from "@/components/shared/product/ProductThumb";
+import {sanityFetch} from '@/sanity/lib/sanityFetch';
+import ProductThumb from '@/components/shared/product/ProductThumb';
+import Section from '@/components/layout/Section';
+import {ClientPagination} from "@/components/shared/product/ui/Pagination";
 
 const PRODUCTS_PER_PAGE = 20;
 
@@ -10,12 +12,19 @@ type Props = {
 	category: string;
 };
 
-export default async function ProductsCategoryPage({params, searchParams}: { params: Promise<Props>, searchParams: Promise<{page?: string}>
- }) {
+export default async function ProductsCategoryPage({params, searchParams}: {params: Promise<Props>; searchParams: Promise<{page?: string}>}) {
 	const {category} = await params;
 	const {page} = await searchParams;
+	const categorySlug =
+		category === 'all'
+			? null
+			: await sanityFetch({
+					query: CATEGORY_QUERY,
+					params: {
+						slug: category,
+					},
+				});
 	const pageNumber = parseInt(page || '1');
-	const categorySlug = category === 'all' ? null : category;
 
 	const [products, total, categories] = await Promise.all([
 		sanityFetch({query: getProductsQuery(categorySlug, pageNumber, PRODUCTS_PER_PAGE), params: {}}),
@@ -26,14 +35,15 @@ export default async function ProductsCategoryPage({params, searchParams}: { par
 	const totalPages = Math.ceil(total / PRODUCTS_PER_PAGE);
 
 	return (
-		<div className="p-6 space-y-6">
+		<Section className="space-y-6">
 			<CategoryFilter categories={categories} active={category} />
-			<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+			<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 md:gap-6">
 				{products.map((product: any) => (
 					<ProductThumb key={product._id} item={product} />
 				))}
 			</div>
-			<Pagination current={pageNumber} total={totalPages} basePath={`/products/categories/${category}`} />
-		</div>
+			{/*<Pagination current={pageNumber} total={totalPages} basePath={`/products/categories/${category}`} />*/}
+			<ClientPagination totalPages={totalPages} pageNumber={pageNumber} basePath={`/products/categories/${category}`} />
+		</Section>
 	);
 }
