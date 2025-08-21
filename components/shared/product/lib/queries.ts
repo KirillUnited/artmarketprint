@@ -1,10 +1,10 @@
 // lib/queries.ts
 import {defineQuery} from "next-sanity";
 
-export const getProductsQuery = (category: string | null, page: number, limit: number) => {
+export const getProductsQuery = (category: any | null, page: number, limit: number) => {
 	const start = (page - 1) * limit;
 	const categoryFilter = category ? `&& category == "${category.title}"` : '';
-	console.log(category);
+
 	return `
     *[_type == "product" ${categoryFilter}] | order(_createdAt desc) [${start}...${start + limit}] {
       _id,
