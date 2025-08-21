@@ -1,5 +1,6 @@
 import ProductCard from "./ProductCard";
-import Pagination from "./Pagination";
+import { ClientPagination } from "./Pagination";
+
 import CategoryFilter from "./CategoryFilter";
 
-export { ProductCard, Pagination, CategoryFilter };
+export { ProductCard, ClientPagination, CategoryFilter };
