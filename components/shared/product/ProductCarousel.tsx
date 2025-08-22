@@ -33,7 +33,7 @@ export const ProductCarousel = ({items, className}: ProductCarouselProps) => {
 		setIsClient(true);
 	}, []);
 
-	if (!isClient) return <Loader className="relative top-auto left-auto mx-auto" />;
+	if (!isClient) return <Loader size='md' variant='spinner'  className='static text-primary flex mx-auto' />;
 
 	if (!Array.isArray(filteredImages) || filteredImages.length === 0) return null;
 

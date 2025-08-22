@@ -8,7 +8,7 @@ import 'swiper/css/pagination';
 import { Navigation, Pagination } from 'swiper/modules';
 
 import styles from './product.module.css';
-import ProductThumb from './ProductThumb';
+import ProductThumb from './ui/ProductThumb';
 
 import Loader from '@/components/ui/Loader';
 
@@ -21,7 +21,8 @@ export default function RelatedProductsCarousel({ relatedProducts }: any) {
         setIsLoading(false);
     }, [relatedProducts]);
 
-    if (isLoading) return <Loader />;
+    if (isLoading) return <Loader size='md' variant='spinner' className='static text-primary flex mx-auto' />;
+
 
     return (
         <Swiper

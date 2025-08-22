@@ -6,8 +6,8 @@ import NextImage from 'next/image';
 import clsx from 'clsx';
 import { Image } from '@heroui/image';
 
-import { ProductColors } from './ProductColors';
-import { ProductSizes } from './ProductSizes';
+import { ProductColors } from '../ProductColors';
+import { ProductSizes } from '../ProductSizes';
 
 import { ProductData } from '@/components/shared/product/product.types';
 import {getTotalStock} from '@/components/shared/product/lib';
