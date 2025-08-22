@@ -8,7 +8,7 @@ import 'swiper/css/pagination';
 import { Navigation, Pagination } from 'swiper/modules';
 
 import styles from './product.module.css';
-import ProductThumb from './ProductThumb';
+import ProductThumb from './ui/ProductThumb';
 
 import Loader from '@/components/ui/Loader';
 

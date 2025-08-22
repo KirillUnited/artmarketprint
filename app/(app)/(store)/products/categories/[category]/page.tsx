@@ -1,7 +1,5 @@
 import {getProductsQuery, getTotalProductsQuery, getCategoriesQuery, CATEGORY_QUERY} from '@/components/shared/product/lib/queries';
-import {CategoryFilter} from '@/components/shared/product/ui';
-import {ClientPagination} from "@/components/shared/product/ui";
-import ProductThumb from '@/components/shared/product/ProductThumb';
+import {ProductThumb, CategoryFilter, ClientPagination} from '@/components/shared/product/ui/';
 import Section from '@/components/layout/Section';
 import {sanityFetch} from '@/sanity/lib/sanityFetch';
 
