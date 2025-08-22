@@ -52,7 +52,7 @@ export const ProductDetails: ({items, sizes, colors, color, size}: {
         if (sizes[0]) setSelectedSize(sizes[0]);
     }, []);
 
-    if (!isClient) return <Loader className='relative top-auto left-auto mx-auto' />;
+    if (!isClient) return <Loader size='md' variant='spinner' className='static text-primary flex mx-auto' />;
 
     return (
         <div className='flex flex-col gap-4'>

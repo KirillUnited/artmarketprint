@@ -12,6 +12,7 @@ import { getAllProductsFromSanity } from "@/sanity/lib/product/getAllProductsFro
 import {ProductsViewSection} from "@/components/shared/product";
 import {JSX, Suspense} from "react";
 import {Loader2Icon} from "lucide-react";
+import Loader from '@/components/ui/Loader';
 
 export async function generateMetadata() {
 
@@ -73,7 +74,7 @@ export default async function ProductsPage(
                 </div>
             </section>
             {/* The section below is where the products will be displayed */}
-            <Suspense fallback={<Loader2Icon className='animate-spin mx-auto text-primary my-6' size={24}/>}>
+            <Suspense fallback={<Loader size='md' variant='spinner'  className='static text-primary flex mx-auto py-6' />}>
                 <ProductsViewSection/>
             </Suspense>
         </>

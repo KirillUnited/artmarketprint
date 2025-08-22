@@ -1,10 +1,9 @@
 import {getProductsQuery, getTotalProductsQuery, getCategoriesQuery, CATEGORY_QUERY} from '@/components/shared/product/lib/queries';
-// import {Pagination} from '@/components/shared/product/ui';
 import {CategoryFilter} from '@/components/shared/product/ui';
-import {sanityFetch} from '@/sanity/lib/sanityFetch';
+import {ClientPagination} from "@/components/shared/product/ui";
 import ProductThumb from '@/components/shared/product/ProductThumb';
 import Section from '@/components/layout/Section';
-import {ClientPagination} from "@/components/shared/product/ui/Pagination";
+import {sanityFetch} from '@/sanity/lib/sanityFetch';
 
 const PRODUCTS_PER_PAGE = 20;
 
@@ -42,7 +41,6 @@ export default async function ProductsCategoryPage({params, searchParams}: {para
 					<ProductThumb key={product._id} item={product} />
 				))}
 			</div>
-			{/*<Pagination current={pageNumber} total={totalPages} basePath={`/products/categories/${category}`} />*/}
 			<ClientPagination totalPages={totalPages} pageNumber={pageNumber} basePath={`/products/categories/${category}`} />
 		</Section>
 	);

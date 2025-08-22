@@ -21,7 +21,8 @@ export default function RelatedProductsCarousel({ relatedProducts }: any) {
         setIsLoading(false);
     }, [relatedProducts]);
 
-    if (isLoading) return <Loader />;
+    if (isLoading) return <Loader size='md' variant='spinner' className='static text-primary flex mx-auto' />;
+
 
     return (
         <Swiper
