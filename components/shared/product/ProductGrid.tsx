@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
-import ProductThumb from "./ProductThumb";
+import ProductThumb from "./ui/ProductThumb";
 import { ProductData } from "@/components/shared/product/product.types";
 import { JSX, useEffect, useState, useRef } from "react";
 import Loader from "@/components/ui/Loader";

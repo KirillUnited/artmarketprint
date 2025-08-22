@@ -116,7 +116,7 @@ const AddToBasketButton: React.FC<AddToBasketButtonProps> = ({product}) => {
 		setIsClient(true);
 	}, []);
 
-	if (!isClient) return <Loader className="relative top-auto left-auto mx-auto" />;
+	if (!isClient) return <Loader size='md' variant='spinner' className='static text-primary flex mx-auto' />;
 
 	// Helper to get image for selected color
 	const getImageForSelectedColor = () => {
