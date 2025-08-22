@@ -10,6 +10,12 @@ export function ClientPagination({totalPages, pageNumber, basePath}: {totalPages
 		const params = new URLSearchParams(searchParams.toString());
 		params.set('page', newPage.toString());
 
+		// Scroll to top before navigation
+		window.scrollTo({
+			top: 0,
+			behavior: 'smooth'
+		});
+
 		router.push(`?${params.toString()}`);
 	}
 
