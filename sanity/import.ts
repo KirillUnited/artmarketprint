@@ -55,25 +55,45 @@ export async function importDataToSanity(products: Product[]) {
 	}
 }
 
-export function getUniqueCategories(products: Product[]) {
-	// Create a map to store unique categories by title
-	const categoriesMap = new Map<string, string>();
+export function getUniqueCategories(products: any[]) {
+	// Map of categoryId -> { id, title, subcategories: Map }
+	const categoriesMap = new Map<
+		string,
+		{ id: string; title: string; subcategories: Map<string, string> }
+	>();
 
-	products.forEach(product => {
+	products.forEach((product) => {
 		const categoryId = product?.categoryId;
 		const categoryTitle = product?.category;
+		const subcategoryId = product?.subcategoryId || '';
+		const subcategoryTitle = product?.subcategory;
 
 		if (categoryId && categoryTitle) {
-			if (typeof categoryTitle === "string") {
-				categoriesMap.set(categoryTitle, categoryId);
+			// If category not in map, create it
+			if (!categoriesMap.has(categoryId)) {
+				categoriesMap.set(categoryId, {
+					id: categoryId,
+					title: categoryTitle,
+					subcategories: new Map(),
+				});
+			}
+
+			// Add subcategory if it exists
+			if (subcategoryId && subcategoryTitle) {
+				categoriesMap
+					.get(categoryId)
+					?.subcategories.set(subcategoryId, subcategoryTitle);
 			}
 		}
 	});
 
-	// Convert map to array of objects with id and title
-	return Array.from(categoriesMap.entries()).map(([title, id]) => ({
-		title,
-		id
+	// Convert Map to array and turn subcategories Map into array of { id, title }
+	return Array.from(categoriesMap.values()).map((cat) => ({
+		id: cat.id,
+		title: cat.title,
+		subcategories: Array.from(cat.subcategories.entries()).map(
+			([id, title]) => ({ id, title })
+		),
 	}));
 }
 
@@ -85,6 +105,7 @@ export async function importCategoriesToSanity(products: Product[]) {
 			_type: 'category',
 			_id: category.id,
 			title: category.title,
+			subcategories: category.subcategories
 		}));
 
 		console.log('🚀 Importing total categories', documents.length);
