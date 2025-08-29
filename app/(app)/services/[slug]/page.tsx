@@ -36,23 +36,28 @@ const FAQ_QUERY = defineQuery(`*[_id == "siteSettings"][0]{
 export async function generateMetadata({ params }: { params: Promise<Props> }) {
     const { slug } = await params;
     const service = await sanityFetch({query: SERVICE_QUERY, params: await params});
-    const { title = '', description = '' } = service?.seo || {};
+    const { title = '', description = '', ogImage = '' } = service?.seo || {};
 
     const url = `https://artmarketprint.by/services/${slug}`;
 
     return {
-        title: `${title || ''}`,
-        description: `${description}`,
-        keywords: `${title.split(' ').join(', ')}, ${description.split(' ').join(', ')}`,
-        openGraph: {
-            title: `${title || ''}`,
-            description: `${description}`,
-            images: '/apple-touch-icon.png'
-        },
-        alternates: {
-            canonical: url,
-        },
-    }
+		title: `${title || ''}`,
+		description: `${description}`,
+		keywords: `${title.split(' ').join(', ')}, ${description.split(' ').join(', ')}`,
+		openGraph: {
+			title: `${title || ''}`,
+			description: `${description}`,
+			images: [`${ogImage}` || '/apple-touch-icon.pngTEST'],
+		},
+		twitter: {
+			title: `${title || ''}`,
+			description: `${description}`,
+			images: [`${ogImage}` || '/apple-touch-icon.pngTEST'],
+		},
+		alternates: {
+			canonical: url,
+		},
+	};
 }
 
 export default async function ServicePage({ params }: { params: Promise<Props> }): Promise<JSX.Element> {
@@ -67,7 +72,6 @@ export default async function ServicePage({ params }: { params: Promise<Props> }
         ? urlFor(service.image)?.width(1200).height(400).url()
         : null;
     const relatedProjectsArray = Array.isArray(relatedProjects) ? relatedProjects : [relatedProjects];
-    console.log(service.calculator)
 
     return (
 		<>

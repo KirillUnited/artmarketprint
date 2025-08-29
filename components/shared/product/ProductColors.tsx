@@ -70,7 +70,6 @@ const ColorList = ({
 
 const ProductColorsWrapper = ({ children }: { children: React.ReactNode }) => (
     <div className='flex flex-col gap-1'>
-        <span className='font-semibold'>Варианты:</span>
         {children}
     </div>
 );
