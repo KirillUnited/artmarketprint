@@ -20,5 +20,6 @@ export const SERVICE_QUERY = defineQuery(`*[_type == "service" && slug.current =
   seo {
     title,
     description,
+    "ogImage": image.asset->url
   }
 }`);
