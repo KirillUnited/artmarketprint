@@ -38,8 +38,8 @@ export const metadata: Metadata = {
 		description: `${siteConfig.description}`,
 		images: ['/apple-touch-icon.png'],
 		type: 'website',
-		locale: 'ru',
-		siteName: 'Art Market Print',
+		locale: 'ru_RU',
+		siteName: 'ArtMarketPrint',
 		url: 'https://artmarketprint.by',
 	},
 	twitter: {

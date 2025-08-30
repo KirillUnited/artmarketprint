@@ -50,13 +50,13 @@ const ServiceJsonLd: React.FC<ServiceJsonLdProps> = ({
     name,
     url,
     description,
-    imageUrl = 'https://artmarketprint.by/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Flogo.9b0ef703.png&w=96&q=75',
+    imageUrl = 'https://artmarketprint.by/apple-touch-icon.png',
 }) => {
     const reviewCount = Math.floor(Math.random() * (100 - 30 + 1)) + 30;
     const jsonLd = {
         "@context": "https://schema.org",
         "@type": "Product",
-        image: imageUrl,
+        image: imageUrl ? imageUrl : "https://artmarketprint.by/apple-touch-icon.png",
         url,
         brand: "Артмаркетпринт",
         model: name,
