@@ -9,11 +9,12 @@ interface ProductListProps {
     categorySlug: string;
     pageNumber: number;
     PRODUCTS_PER_PAGE: number;
+    subcategorySlug: string | null;
 }
 
-export default async function ProductList({ categorySlug, pageNumber, PRODUCTS_PER_PAGE }: ProductListProps) {
+export default async function ProductList({ categorySlug, subcategorySlug, pageNumber, PRODUCTS_PER_PAGE }: ProductListProps) {
     const products = await sanityFetch({
-        query: getProductsQuery(categorySlug, pageNumber, PRODUCTS_PER_PAGE),
+        query: getProductsQuery(categorySlug, subcategorySlug, pageNumber, PRODUCTS_PER_PAGE),
         params: {}
     });
 

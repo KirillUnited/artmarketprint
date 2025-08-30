@@ -89,10 +89,11 @@ export function getUniqueCategories(products: any[]) {
 
 	// Convert Map to array and turn subcategories Map into array of { id, title }
 	return Array.from(categoriesMap.values()).map((cat) => ({
+		_id: cat.id,
 		id: cat.id,
 		title: cat.title,
 		subcategories: Array.from(cat.subcategories.entries()).map(
-			([id, title]) => ({ id, title })
+			([id, title]) => ({ _type: 'subcategory', id, title })
 		),
 	}));
 }
