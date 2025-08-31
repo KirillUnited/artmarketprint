@@ -4,6 +4,8 @@ import Section from '@/components/layout/Section';
 import { sanityFetch } from '@/sanity/lib/sanityFetch';
 import { JSX, Suspense } from "react";
 import Loader from "@/components/ui/Loader";
+import Link from 'next/link';
+import clsx from 'clsx';
 
 const PRODUCTS_PER_PAGE = 20;
 
@@ -34,19 +36,30 @@ export default async function ProductsCategoryPage({ params, searchParams }: { p
 	return (
 		<Section className="space-y-6">
 			<CategoryFilter categories={categories} active={category} />
-			<ul>
-				{
-					categorySlug?.subcategories?.map((sub: any) => (
-						<li key={sub.slug}>
-							<a href={`/products/categories/${category}?sub=${sub.slug}`}>{sub.title}</a>
-						</li>
-					))
-				}
-			</ul>
-			<Suspense fallback={<Loader size='lg' variant='spinner' label='Загрузка товаров...' className='static' />}>
-				<ProductList categorySlug={categorySlug} subcategorySlug={activeSubcategory} pageNumber={pageNumber} PRODUCTS_PER_PAGE={PRODUCTS_PER_PAGE} />
-			</Suspense>
-			<ClientPagination totalPages={totalPages} pageNumber={pageNumber} basePath={`/products/categories/${category}`} />
+			<h1 className='text-3xl font-bold'>{categorySlug?.title || 'Каталог'}</h1>
+			<div className='grid md:grid-cols-[270px,1fr] gap-4'>
+				<div className="flex flex-col gap-2">
+					<p className="font-semibold text-lg">Категории</p>
+					<ul>
+						{
+							categorySlug?.subcategories?.map((sub: any) => (
+								<li key={sub.slug}>
+									<Link 
+									className={clsx(
+										'hover:underline hover:text-primary',
+										{ 'font-bold text-primary': activeSubcategory?.slug === sub.slug }
+									)} 
+									href={`/products/categories/${category}?sub=${sub.slug}`}>{sub.title}</Link>
+								</li>
+							))
+						}
+					</ul>
+				</div>
+				<Suspense fallback={<Loader size='lg' variant='spinner' label='Загрузка товаров...' className='static' />}>
+					<ProductList categorySlug={categorySlug} subcategorySlug={activeSubcategory} pageNumber={pageNumber} PRODUCTS_PER_PAGE={PRODUCTS_PER_PAGE} />
+				</Suspense>
+			</div>
+			{totalPages > 1 && <ClientPagination totalPages={totalPages} pageNumber={pageNumber} basePath={`/products/categories/${category}`} />}
 		</Section>
 	);
 }

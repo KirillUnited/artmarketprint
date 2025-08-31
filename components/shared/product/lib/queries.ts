@@ -46,7 +46,7 @@ export const CATEGORY_QUERY = defineQuery(`*[_type == "category" && slug.current
 	  id,
 	  title,
     subcategories[] {
-      _id,
+      _key,
       id,
       title,
       "slug": slug.current
