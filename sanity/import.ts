@@ -55,46 +55,30 @@ export async function importDataToSanity(products: Product[]) {
 	}
 }
 
-export function getUniqueCategories(products: any[]) {
-	// Map of categoryId -> { id, title, subcategories: Map }
-	const categoriesMap = new Map<
-		string,
-		{ id: string; title: string; subcategories: Map<string, string> }
-	>();
+export function getUniqueCategories(products: Product[]) {
+	// Create a map to store unique categories by title
+	const categoriesMap = new Map<string, {id: string, subcategories: Set<string>}>();
 
-	products.forEach((product) => {
+	products.forEach(product => {
 		const categoryId = product?.categoryId;
 		const categoryTitle = product?.category;
-		const subcategoryId = product?.subcategoryId || '';
 		const subcategoryTitle = product?.subcategory;
 
-		if (categoryId && categoryTitle) {
-			// If category not in map, create it
-			if (!categoriesMap.has(categoryId)) {
-				categoriesMap.set(categoryId, {
-					id: categoryId,
-					title: categoryTitle,
-					subcategories: new Map(),
-				});
+		if (categoryId && categoryTitle && typeof categoryTitle === "string") {
+			if (!categoriesMap.has(categoryTitle)) {
+				categoriesMap.set(categoryTitle, {id: categoryId, subcategories: new Set()});
 			}
-
-			// Add subcategory if it exists
-			if (subcategoryId && subcategoryTitle) {
-				categoriesMap
-					.get(categoryId)
-					?.subcategories.set(subcategoryId, subcategoryTitle);
+			if (subcategoryTitle) {
+				categoriesMap.get(categoryTitle)!.subcategories.add(subcategoryTitle);
 			}
 		}
 	});
 
-	// Convert Map to array and turn subcategories Map into array of { id, title }
-	return Array.from(categoriesMap.values()).map((cat) => ({
-		_id: cat.id,
-		id: cat.id,
-		title: cat.title,
-		subcategories: Array.from(cat.subcategories.entries()).map(
-			([id, title]) => ({ _type: 'subcategory', id, title })
-		),
+	// Convert map to array of objects with id and title
+	return Array.from(categoriesMap.entries()).map(([title, {id, subcategories}]) => ({
+		title,
+		id,
+		subcategories: Array.from(subcategories)
 	}));
 }
 
