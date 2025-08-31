@@ -1,5 +1,5 @@
-import {Product} from '@/components/shared/product/product.types';
-import {client} from './client';
+import { Product } from '@/components/shared/product/product.types';
+import { client } from './client';
 
 const CHUNK_SIZE = 50; // Process 50 products at a time
 
@@ -57,7 +57,7 @@ export async function importDataToSanity(products: Product[]) {
 
 export function getUniqueCategories(products: Product[]) {
 	// Create a map to store unique categories by title
-	const categoriesMap = new Map<string, {id: string, subcategories: Set<string>}>();
+	const categoriesMap = new Map<string, { id: string, subcategories: Set<string> }>();
 
 	products.forEach(product => {
 		const categoryId = product?.categoryId;
@@ -66,7 +66,7 @@ export function getUniqueCategories(products: Product[]) {
 
 		if (categoryId && categoryTitle && typeof categoryTitle === "string") {
 			if (!categoriesMap.has(categoryTitle)) {
-				categoriesMap.set(categoryTitle, {id: categoryId, subcategories: new Set()});
+				categoriesMap.set(categoryTitle, { id: categoryId, subcategories: new Set() });
 			}
 			if (subcategoryTitle) {
 				categoriesMap.get(categoryTitle)!.subcategories.add(subcategoryTitle);
@@ -75,7 +75,7 @@ export function getUniqueCategories(products: Product[]) {
 	});
 
 	// Convert map to array of objects with id and title
-	return Array.from(categoriesMap.entries()).map(([title, {id, subcategories}]) => ({
+	return Array.from(categoriesMap.entries()).map(([title, { id, subcategories }]) => ({
 		title,
 		id,
 		subcategories: Array.from(subcategories)
@@ -85,12 +85,14 @@ export function getUniqueCategories(products: Product[]) {
 export async function importCategoriesToSanity(products: Product[]) {
 	try {
 		const categories = getUniqueCategories(products);
-		console.log(categories)
 		const documents = categories.map(category => ({
 			_type: 'category',
 			_id: category.id,
 			title: category.title,
-			subcategories: category.subcategories
+			subcategories: category.subcategories?.map(subcategory => ({
+				_type: 'object',
+				title: subcategory,
+			})) || []
 		}));
 
 		console.log('🚀 Importing total categories', documents.length);

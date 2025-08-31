@@ -4,8 +4,6 @@ import Section from '@/components/layout/Section';
 import { sanityFetch } from '@/sanity/lib/sanityFetch';
 import { JSX, Suspense } from "react";
 import Loader from "@/components/ui/Loader";
-import { fetchAllProductsData } from '@/lib/products/data';
-import { getUniqueCategories } from '@/sanity/import';
 
 const PRODUCTS_PER_PAGE = 20;
 
@@ -32,11 +30,6 @@ export default async function ProductsCategoryPage({ params, searchParams }: { p
 	]);
 	const pageNumber = parseInt(page || '1');
 	const totalPages = Math.ceil(total / PRODUCTS_PER_PAGE);
-	
-    // const products = await fetchAllProductsData();
-	// const uniqCats = await getUniqueCategories(products);
-
-	// console.log('uniqCats', uniqCats);
 
 	return (
 		<Section className="space-y-6">
