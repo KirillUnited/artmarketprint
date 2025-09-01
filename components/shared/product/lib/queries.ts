@@ -1,12 +1,13 @@
 // lib/queries.ts
 import {defineQuery} from "next-sanity";
 
-export const getProductsQuery = (category: any | null, page: number, limit: number) => {
+export const getProductsQuery = (category: any | null, subcategory: any | null, page: number, limit: number) => {
 	const start = (page - 1) * limit;
 	const categoryFilter = category ? `&& category == "${category.title}"` : '';
+  const subcategoryFilter = subcategory ? `&& subcategory == "${subcategory.title}"` : ''
 
 	return `
-    *[_type == "product" ${categoryFilter}] | order(_createdAt desc) [${start}...${start + limit}] {
+    *[_type == "product" ${categoryFilter} ${subcategoryFilter}] | order(_createdAt desc) [${start}...${start + limit}] {
       _id,
       id,
       name,
@@ -30,7 +31,13 @@ export const getCategoriesQuery = `
     description,
     image, 
     price,
-    "currentSlug": slug.current
+    "currentSlug": slug.current,
+    subcategories[]{
+      _key,
+      id,
+      title,
+      "slug": slug.current
+    }
   }
 `;
 
@@ -38,10 +45,18 @@ export const CATEGORY_QUERY = defineQuery(`*[_type == "category" && slug.current
 	  _id,
 	  id,
 	  title,
+	  "currentSlug": slug.current,
+    subcategories[] {
+      _key,
+      id,
+      title,
+      "slug": slug.current
+    }
   }
 `);
 
-export const getTotalProductsQuery = (category: any | null) => {
+export const getTotalProductsQuery = (category: any | null, subcategory: any | null) => {
 	const categoryFilter = category ? `&& category == "${category.title}"` : '';
-	return `count(*[_type == "product" ${categoryFilter}])`;
+  const subcategoryFilter = subcategory ? `&& subcategory == "${subcategory.title}"` : ''
+	return `count(*[_type == "product" ${categoryFilter} ${subcategoryFilter}])`;
 };

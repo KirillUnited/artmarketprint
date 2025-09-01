@@ -32,7 +32,7 @@ export interface Product {
     description: string;
     variation_description: string[];
     category: string[] | string;
-    subcategory: string[];
+    subcategory: string;
     colors: string[];
     sizes: string[];
     materials: string[];
