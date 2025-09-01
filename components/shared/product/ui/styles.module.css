@@ -1,3 +1,18 @@
 .ProductList {
     @apply grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-4;
 }
+
+.CategoryFilter {
+    @apply flex gap-4 overflow-x-auto lg:grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+}
+
+.CategoryFilterItem {
+    @apply hover:text-fill-transparent transition-colors;
+    @apply grid gap-2;
+    grid-template-columns: 2.5rem 1fr;
+}
