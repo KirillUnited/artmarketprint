@@ -16,7 +16,7 @@ export default function CategoryFilter({categories, active, baseUrl}: {categorie
 					key={cat._id}
 					href={`${baseUrl}/${cat.currentSlug}`}
 					className={clsx(active === cat.currentSlug ? 'font-bold' : '',
-						'hover:bg-brand-gradient ',
+						'hover:bg-brand-gradient hover:text-fill-transparent',
 						styles.CategoryFilterItem
 					)}>
 					<Image alt={cat.title} className="object-cover aspect-square rounded-small w-10 h-10" width={40} height={40} quality={10} src={urlFor(cat.image?.asset).width(64).height(64).url()} />

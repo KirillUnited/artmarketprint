@@ -12,7 +12,7 @@
 }
 
 .CategoryFilterItem {
-    @apply hover:text-fill-transparent transition-colors;
+    @apply transition-colors;
     @apply grid gap-2;
     grid-template-columns: 2.5rem 1fr;
 }
