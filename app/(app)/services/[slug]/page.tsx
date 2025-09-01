@@ -48,7 +48,7 @@ export async function generateMetadata({ params }: { params: Promise<Props> }) {
 			title: `${title || ''}`,
 			description: `${description}`,
 			images: [{
-				url: `${ogImage}` || '/apple-touch-icon.png',
+				url: ogImage ? ogImage : '/apple-touch-icon.png',
 				width: 1200,
 				height: 630,
 				alt: `Изображение для сервиса ${title || ''}`,
@@ -57,7 +57,7 @@ export async function generateMetadata({ params }: { params: Promise<Props> }) {
 		twitter: {
 			title: `${title || ''}`,
 			description: `${description}`,
-			images: [`${ogImage}` || '/apple-touch-icon.png'],
+			images: [ogImage ? ogImage : '/apple-touch-icon.png'],
 		},
 		alternates: {
 			canonical: url,
@@ -161,7 +161,7 @@ export default async function ServicePage({ params }: { params: Promise<Props> }
 				description={service.description} 
 				name={service.title} 
 				url={`https://artmarketprint.by/services/${slug}`}
-				imageUrl={service.seo?.ogImage || ''}
+				imageUrl={service.seo?.ogImage}
 			/>
 		</>
 	);
