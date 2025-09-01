@@ -4,10 +4,11 @@ import Section from '@/components/layout/Section';
 import { sanityFetch } from '@/sanity/lib/sanityFetch';
 import { JSX, Suspense } from "react";
 import Loader from "@/components/ui/Loader";
-import Link from 'next/link';
-import clsx from 'clsx';
+import {LightBreadcrumb} from '@/components/ui/Breadcrumb';
+import {SubCategoryFilter} from "@/components/shared/product/ui";
 
 const PRODUCTS_PER_PAGE = 20;
+const BASE_URL = '/products/categories';
 
 type Props = {
 	category: string;
@@ -35,31 +36,18 @@ export default async function ProductsCategoryPage({ params, searchParams }: { p
 
 	return (
 		<Section className="space-y-6">
-			<CategoryFilter categories={categories} active={category} />
+			<CategoryFilter categories={categories} active={category} baseUrl={BASE_URL} />
+
+			<LightBreadcrumb category={categorySlug} subcategory={activeSubcategory} baseUrl={BASE_URL} />
+
 			<h1 className='text-3xl font-bold'>{categorySlug?.title || 'Каталог'}</h1>
 			<div className='grid md:grid-cols-[270px,1fr] gap-4'>
-				<div className="flex flex-col gap-2">
-					<p className="font-semibold text-lg">Категории</p>
-					<ul>
-						{
-							categorySlug?.subcategories?.map((sub: any) => (
-								<li key={sub.slug}>
-									<Link 
-									className={clsx(
-										'hover:underline hover:text-primary',
-										{ 'font-bold text-primary': activeSubcategory?.slug === sub.slug }
-									)} 
-									href={`/products/categories/${category}?sub=${sub.slug}`}>{sub.title}</Link>
-								</li>
-							))
-						}
-					</ul>
-				</div>
+				<SubCategoryFilter category={categorySlug} categorySlug={category} activeSubcategory={activeSubcategory} baseUrl={BASE_URL} />
 				<Suspense fallback={<Loader size='lg' variant='spinner' label='Загрузка товаров...' className='static' />}>
 					<ProductList categorySlug={categorySlug} subcategorySlug={activeSubcategory} pageNumber={pageNumber} PRODUCTS_PER_PAGE={PRODUCTS_PER_PAGE} />
 				</Suspense>
 			</div>
-			{totalPages > 1 && <ClientPagination totalPages={totalPages} pageNumber={pageNumber} basePath={`/products/categories/${category}`} />}
+			{totalPages > 1 && <ClientPagination totalPages={totalPages} pageNumber={pageNumber} basePath={`${BASE_URL}/${category}`} />}
 		</Section>
 	);
 }
