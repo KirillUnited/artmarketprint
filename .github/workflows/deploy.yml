@@ -1,0 +1,25 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.DEPLOY_KEY }}" > ~/.ssh/amp_key
+          chmod 600 ~/.ssh/amp_key
+          echo -e "Host ${{ secrets.DEPLOY_HOST }}\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+
+      - name: Deploy to VPS
+        run: |
+          ssh ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} "cd /home && ./deploy.sh"
