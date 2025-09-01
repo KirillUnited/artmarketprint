@@ -9,6 +9,8 @@ export const CATEGORIES_QUERY = defineQuery(`*[
       description,
       image, 
       price,
-      "currentSlug": slug.current}`);
+      "currentSlug": slug.current,
+      subcategories
+      }`);
 
 export const CATEGORY_QUERY = defineQuery(`*[_type == "category" && slug.current == $slug][0]`);

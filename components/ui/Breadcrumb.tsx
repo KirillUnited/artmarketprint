@@ -2,10 +2,11 @@
 import React, {JSX, useEffect, useState} from 'react'
 import { BreadcrumbItem, Breadcrumbs } from '@heroui/breadcrumbs';
 import { usePathname } from 'next/navigation';
-import { HomeIcon } from 'lucide-react';
+import {ChevronRightIcon, HomeIcon} from 'lucide-react';
 import clsx from 'clsx';
 import { BreadcrumbListJsonLd } from '../ServiceJsonLd';
 import { fetchNavigation, getCategorySlugFromNavMap } from '@/lib/fetchNavigation';
+import Link from "next/link";
 
 export const BreadcrumbWrapper = ({ children }: { children: React.ReactNode }) => {
 	return (
@@ -164,5 +165,48 @@ export const ServiceBreadcrumb: React.FC<ServiceBreadcrumbProps> = (
 				{title}
 			</BreadcrumbItem>
 		</BreadcrumbWrapper>
+	)
+}
+
+export function LightBreadcrumb({
+									   category,
+									   subcategory,
+										baseUrl
+								   }: {
+	category?: { title: string; currentSlug: string }
+	subcategory?: { title: string; slug: string }
+	baseUrl?: string
+}) {
+	return (
+		<nav aria-label="Breadcrumb">
+			<ol className="flex flex-wrap gap-2 text-sm text-gray-600">
+				<li>
+					<Link href="/" className="hover:underline flex items-center gap-1">
+						<HomeIcon className="w-4 h-4 text-gray-400" />
+						Главная
+					</Link>
+				</li>
+				<ChevronRightIcon className="w-4 h-4 text-gray-400" />
+
+				{category && (
+					<>
+						<li>
+							<Link
+								href={`${baseUrl}/${category.currentSlug}`}
+								className="hover:underline"
+							>
+								{category.title}
+							</Link>
+						</li>
+						{subcategory && (
+							<>
+								<ChevronRightIcon className="w-4 h-4 text-gray-400" />
+								<li className="text-gray-900 font-medium">{subcategory.title}</li>
+							</>
+						)}
+					</>
+				)}
+			</ol>
+		</nav>
 	)
 }
