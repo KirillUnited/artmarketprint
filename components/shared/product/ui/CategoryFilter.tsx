@@ -20,7 +20,7 @@ export default function CategoryFilter({categories, active, baseUrl}: {categorie
 						styles.CategoryFilterItem
 					)}>
 					<Image alt={cat.title} className="object-cover aspect-square rounded-small w-10 h-10" width={40} height={40} quality={10} src={urlFor(cat.image?.asset).width(64).height(64).url()} />
-					<span className='flex-1 text-sm py-1'>{cat.title}</span>
+					<span className='flex-1 text-sm'>{cat.title}</span>
 				</Link>
 			))}
 		</div>
