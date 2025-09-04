@@ -6,7 +6,7 @@ import Image from "next/image";
 
 export default function SubCategoryFilter({category, categorySlug, activeSubcategory, baseUrl}: {category: any; categorySlug: string; activeSubcategory: any; baseUrl: string}) {
 	return (
-		<div className="flex flex-col gap-2">
+		<div className="flex flex-col gap-2 sticky top-20 z-30">
 			<p className="font-semibold text-lg">Категории</p>
 			<ul>
 				{
