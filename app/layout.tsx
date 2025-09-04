@@ -20,7 +20,6 @@ import Footer from '@/components/layout/Footer';
 import {Toaster} from '@/components/ui/sonner';
 import Script from 'next/script';
 import {LocalBusinessJsonLd} from '@/config/ld-json';
-import { CalculatorButton } from '@/components/shared/сalculator/ui';
 
 export const metadata: Metadata = {
 	metadataBase: new URL('https://artmarketprint.by'),

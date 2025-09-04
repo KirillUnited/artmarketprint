@@ -34,7 +34,7 @@ export const FeaturedProducts = async () => {
 
             <ProductList items={data as any} />
 
-            <SectionButton className="self-start" href={'/products'} label="Все товары"/>
+            <SectionButton className="self-start" href={'/products/categories/all'} label="Все товары"/>
         </Section>
     );
 };

@@ -34,7 +34,7 @@ export const ProductsNotFoundMenu: FC<{}> = () => {
             </Button>
             <Button 
                 as={Link} 
-                href="/products" 
+                href="/products/categories/all"
                 color="primary" 
                 variant="solid" 
                 radius="sm"
@@ -43,17 +43,17 @@ export const ProductsNotFoundMenu: FC<{}> = () => {
             >
                 Все товары
             </Button>
-            <Button 
-                as={Link} 
-                href="/categories" 
-                color="default" 
-                variant="bordered" 
-                radius="sm"
-                className="transition-transform hover:scale-105"
-                startContent={<TagsIcon className="w-4 h-4" />}
-            >
-                Категории товаров
-            </Button>
+            {/*<Button */}
+            {/*    as={Link} */}
+            {/*    href="/categories" */}
+            {/*    color="default" */}
+            {/*    variant="bordered" */}
+            {/*    radius="sm"*/}
+            {/*    className="transition-transform hover:scale-105"*/}
+            {/*    startContent={<TagsIcon className="w-4 h-4" />}*/}
+            {/*>*/}
+            {/*    Категории товаров*/}
+            {/*</Button>*/}
         </div>
     )
 }

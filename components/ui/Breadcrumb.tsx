@@ -94,7 +94,7 @@ export const ProductBreadcrumb: React.FC<ProductBreadcrumbProps> = (
 				separator: 'text-primary',
 				item: 'inline truncate',
 			}}
-				href={`/products`}
+				href={`/products/categories/all`}
 				title={`Каталог`}>
 				Каталог
 			</BreadcrumbItem>
@@ -105,7 +105,7 @@ export const ProductBreadcrumb: React.FC<ProductBreadcrumbProps> = (
 				separator: 'text-primary',
 				item: 'inline truncate',
 			}}
-				href={`/categories/${categorySlug}`}
+				href={`/products/categories/${categorySlug}`}
 				title={`${category}`}>
 				{category}
 			</BreadcrumbItem>
