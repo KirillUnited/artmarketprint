@@ -70,7 +70,7 @@ export default async function ProductsCategoryPage({
 				<SubCategoryFilter category={categorySlug} categorySlug={category} activeSubcategory={activeSubcategory} baseUrl={BASE_URL} />
 				<div className="space-y-4">
 					<div className={clsx(styles.ProductFilter)}>
-						<SortSelect />
+						{/* <SortSelect /> */}
 						<MaterialFilter materials={allProductMaterials} />
 					</div>
 					<Suspense fallback={<Loader size="lg" variant="spinner" label="Загрузка товаров..." className="static" />}>
