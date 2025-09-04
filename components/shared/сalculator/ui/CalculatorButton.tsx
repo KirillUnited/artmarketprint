@@ -4,8 +4,17 @@ import {Button} from '@heroui/button';
 import {Calculator} from 'lucide-react';
 import Link from 'next/link';
 import {Tooltip} from '@heroui/tooltip';
+import {useEffect, useState} from "react";
 
 export function CalculatorButton() {
+	const [isMounted, setIsMounted] = useState(false);
+
+	useEffect(() => {
+		setIsMounted(true);
+	}, []);
+
+	if (!isMounted) return null;
+
 	return (
 		<div className="fixed right-6 bottom-6 z-50 animate-pulse">
 			<Link href="/calculator" passHref>

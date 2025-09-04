@@ -1,27 +1,28 @@
-import { Card, CardBody, CardFooter } from '@heroui/card';
+import {Card, CardBody, CardFooter} from '@heroui/card';
 
 import Section from '@/components/layout/Section';
-import { ProductCarousel, ProductDetails, ProductStock } from '@/components/shared/product';
+import {ProductCarousel, ProductDetails, ProductStock} from '@/components/shared/product';
 import RelatedProducts from '@/components/shared/product/RelatedProducts';
 import getProductBySlug from '@/sanity/lib/product/getProductBySlug';
-import { NAVIGATION_QUERY } from '@/sanity/lib/queries';
+import {NAVIGATION_QUERY} from '@/sanity/lib/queries';
 import AddToBasketButton from '@/components/ui/AddToBasketButton';
 import ProductPrice from '@/components/shared/product/ProductPrice';
-import { getSanityDocuments } from '@/sanity/lib/fetch-sanity-data';
-import { ProductTabs } from '@/components/shared/product/ProductTabs';
-import { ProductBreadcrumb } from '@/components/ui/Breadcrumb';
-import { OrderForm } from '@/components/ui/form';
+import {getSanityDocuments} from '@/sanity/lib/fetch-sanity-data';
+import {ProductTabs} from '@/components/shared/product/ProductTabs';
+import {ProductBreadcrumb} from '@/components/ui/Breadcrumb';
+import {OrderForm} from '@/components/ui/form';
 import clsx from 'clsx';
-import { getTotalStock } from "@/components/shared/product/lib";
-import {PushToDataLayer} from "@/components/shared/gtm";
+import {getTotalStock} from '@/components/shared/product/lib';
+import {PushToDataLayer} from '@/components/shared/gtm';
+import {ProductsNotFoundMenu} from "@/components/shared/product/ProductsNotFound";
 
 export interface Props {
 	slug: string;
 	id?: number;
 }
 
-export const generateMetadata = async ({ params }: { params: Promise<Props> }) => {
-	const { slug } = await params;
+export const generateMetadata = async ({params}: {params: Promise<Props>}) => {
+	const {slug} = await params;
 	const product: any = await getProductBySlug(slug);
 
 	const url = `https://artmarketprint.by/products/${slug}`;
@@ -33,10 +34,17 @@ export const generateMetadata = async ({ params }: { params: Promise<Props> }) =
 		openGraph: {
 			title: `${product.name}`,
 			description: `${product.description}`,
-			images: [`${product.image}`],
+			images: [
+				{
+					url: `${product.image}`,
+					width: 1200,
+					height: 630,
+					alt: `${product.name}`,
+				},
+			],
 			type: 'website',
-			locale: 'ru',
-			siteName: 'Art Market Print',
+			locale: 'ru_RU',
+			siteName: 'ArtMarketPrint',
 			url: `https://artmarketprint.by/products/${slug}`,
 		},
 		twitter: {
@@ -54,21 +62,22 @@ export const generateMetadata = async ({ params }: { params: Promise<Props> }) =
 	};
 };
 
-export default async function ProductPage({ params }: { params: Promise<Props> }) {
-	const { slug } = await params;
+export default async function ProductPage({params}: {params: Promise<Props>}) {
+	const {slug} = await params;
 	const [breadcrumbs, product] = await Promise.all([getSanityDocuments(NAVIGATION_QUERY), getProductBySlug(slug)]);
 
-	if (!product)
+	if (!product || product.length === 0)
 		return (
 			<Section>
 				<div className="min-h-[50vh] flex flex-col items-center justify-center text-center gap-4">
 					<div className="w-16 h-16 border-4 border-indigo-200 border-t-indigo-500 rounded-full animate-spin" />
 					<h2 className="text-2xl font-medium text-gray-600">Товар не найден</h2>
 					<p className="text-gray-500">Товар, который вы ищете, не существует или был удален.</p>
+					<ProductsNotFoundMenu />
 				</div>
 			</Section>
 		);
-	const { id, name: productTitle = '', description: general_description = '', variation_description = '', price = [], colors, sizes, category, items, stock, sku, brand } = (product as any) || {};
+	const {id, name: productTitle = '', description: general_description = '', variation_description = '', price, colors, sizes, category, items, stock, sku, brand} = (product as any) || {};
 	const totalStock = getTotalStock(items);
 
 	return (
@@ -79,9 +88,7 @@ export default async function ProductPage({ params }: { params: Promise<Props> }
 
 					<h1 className="text-2xl font-bold">
 						{productTitle}
-						{sku && (
-							<span className="text-sm text-gray-600 ml-2 font-light truncate">арт. {sku}</span>
-						)}
+						{sku && <span className="text-sm text-gray-600 ml-2 font-light truncate">арт. {sku}</span>}
 					</h1>
 				</div>
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -90,20 +97,24 @@ export default async function ProductPage({ params }: { params: Promise<Props> }
 						<Card className="bg-indigo-100">
 							<CardBody>
 								{brand && <p className="font-semibold">{brand}</p>}
-								<p className="my-0">
-									<ProductPrice price={price} productId={id} />
-								</p>
+								{price && (
+									<p className="my-0">
+										<ProductPrice price={price} productId={id} />
+									</p>
+								)}
 								<ProductStock items={items} />
 							</CardBody>
 							<CardBody>
 								<ProductDetails
-									items={items?.map((item: any) => ({
-										id: item.id || item._id,
-										color: item.color,
-										cover: item.cover || '',
-										// Use item.stock if available, otherwise fallback to the global stock
-										stock: item.stock !== undefined ? Number(item.stock) : Number(stock)
-									})) || []}
+									items={
+										items?.map((item: any) => ({
+											id: item.id || item._id,
+											color: item.color,
+											cover: item.cover || '',
+											// Use item.stock if available, otherwise fallback to the global stock
+											stock: item.stock !== undefined ? Number(item.stock) : Number(stock),
+										})) || []
+									}
 									sizes={sizes || []}
 									colors={colors || []}
 									color={items?.[0]?.color || ''}
@@ -131,26 +142,28 @@ export default async function ProductPage({ params }: { params: Promise<Props> }
 				<ProductTabs description={general_description} options={variation_description} />
 			</Section>
 			<RelatedProducts product={product} />
-			<PushToDataLayer data={{
-				event: 'view_item',
-				value: price || 0,
-				currency: 'BYN',
-				items: [
-					{
-						item_id: id,
-						item_name: productTitle,
-						item_brand: brand || 'Без бренда',
-						item_category: category?.name || 'Без категории',
-						item_category2: category?.parent?.name || '',
-						item_category3: '',
-						item_category4: '',
-						item_category5: '',
-						price: price || 0,
-						quantity: 1
-					}
-				],
-				google_business_vertical: 'retail'
-			}} />
+			<PushToDataLayer
+				data={{
+					event: 'view_item',
+					value: price || 0,
+					currency: 'BYN',
+					items: [
+						{
+							item_id: id,
+							item_name: productTitle,
+							item_brand: brand || 'Без бренда',
+							item_category: category?.name || 'Без категории',
+							item_category2: category?.parent?.name || '',
+							item_category3: '',
+							item_category4: '',
+							item_category5: '',
+							price: price || 0,
+							quantity: 1,
+						},
+					],
+					google_business_vertical: 'retail',
+				}}
+			/>
 		</>
 	);
 }
