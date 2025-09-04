@@ -4,14 +4,9 @@ import { siteConfig } from '@/config/site';
 import BaseBreadcrumb from '@/components/ui/Breadcrumb';
 import { getSanityDocuments } from '@/sanity/lib/fetch-sanity-data';
 import { NAVIGATION_QUERY } from '@/sanity/lib/queries';
-import Section from '@/components/layout/Section';
-import ProductsView from '@/components/shared/product/ProductsView';
 import ProductSearchForm from '@/components/shared/product/ProductSearchForm';
-import { collectCategoriesAndSubcategories } from '@/lib/products/collectCategories';
-import { getAllProductsFromSanity } from "@/sanity/lib/product/getAllProductsFromSanity";
 import {ProductsViewSection} from "@/components/shared/product";
 import {JSX, Suspense} from "react";
-import {Loader2Icon} from "lucide-react";
 import Loader from '@/components/ui/Loader';
 
 export async function generateMetadata() {
