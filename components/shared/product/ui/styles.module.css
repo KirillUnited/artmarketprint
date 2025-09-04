@@ -22,3 +22,8 @@
         @apply border-primary;
     }
 }
+
+.ProductFilter {
+    @apply grid gap-2 md:gap-4;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
