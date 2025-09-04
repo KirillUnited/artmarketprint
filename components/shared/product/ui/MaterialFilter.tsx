@@ -33,7 +33,7 @@ export default function MaterialFilter({ materials }: { materials: string[] }) {
             <SelectItem textValue="Все материалы" key="">
                 Все материалы
             </SelectItem>
-            {materials?.map((item) => (
+            {(materials as any)?.map((item: string) => (
                 <SelectItem
                     className="capitalize"
                     key={item}
