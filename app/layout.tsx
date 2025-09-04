@@ -114,9 +114,8 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
 						<main className="flex-grow">{children}</main>
 						<Footer />
 					</div>
-					<CalculatorButton />
-					<Toaster richColors position="top-center" />
 				</Providers>
+				<Toaster richColors position="top-center" />
 				<noscript>
 					<div>{typeof window !== 'undefined' && <img src="https://mc.yandex.ru/watch/101251200" style={{position: 'absolute', left: '-9999px'}} alt="" />}</div>
 				</noscript>

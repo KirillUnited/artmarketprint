@@ -4,6 +4,7 @@ import {getProductsQuery} from "@/components/shared/product/lib/queries";
 import { ProductData } from "../product.types";
 
 import styles from "./styles.module.css";
+import ProductSearchForm from "@/components/shared/product/ProductSearchForm";
 
 interface ProductListProps {
     categorySlug: string;
@@ -21,7 +22,7 @@ export default async function ProductList({ categorySlug, subcategorySlug, pageN
     return (
         <div className={styles.ProductList}>
             {products.map((product: ProductData) => (
-                <ProductThumb key={product._id} item={product} />
+                <ProductThumb key={product._id} item={product}/>
             ))}
         </div>
     );
