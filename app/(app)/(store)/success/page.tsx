@@ -29,7 +29,7 @@ export default function SuccessPage() {
                     Мы получили ваш заказ и скоро начнем его обработку. Мы свяжемся с Вами в ближайшее время.
                 </p>
                 <div className="flex flex-col gap-4">
-                    <Button color='primary' as={Link} href={'/products'} size='md' radius='sm'>
+                    <Button color='primary' as={Link} href={'/products/categories/all'} size='md' radius='sm'>
                         Продолжить покупки
                     </Button>
                     <Button color='secondary' variant='bordered' as={Link} href={'/'} size='md' radius='sm'>

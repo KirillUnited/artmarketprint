@@ -17,6 +17,8 @@ import { NavbarDropdownMenu } from '@/components/ui/dropdown';
 import {Tooltip} from "@heroui/tooltip";
 import {Button} from "@heroui/button";
 import { PhoneIcon } from '@/components/icons';
+import {clsx} from "clsx";
+import {usePathname} from "next/navigation";
 
 
 export const CartLinkButton = (itemsCount: number) => {
@@ -41,6 +43,7 @@ export default function Navbar({ navigation, sales, siteSettings }: any) {
 	const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 	const itemsCount = useBasketStore((state) => state.items.length);
 	const phones = siteSettings?.siteContactInfo?.phones ?? [];
+	const pathname = usePathname();
 
 	return (
 		<>
@@ -62,10 +65,22 @@ export default function Navbar({ navigation, sales, siteSettings }: any) {
 					<NavbarContent className="hidden xl:flex gap-8" justify="center">
 						{navigation?.map((navItem: any) => {
 							return navItem?.submenu ? (
-								<NavbarDropdownMenu key={navItem.title} items={navItem.submenu} triggerLabel={navItem.title} />
+								<NavbarDropdownMenu key={navItem.title} items={navItem.submenu} triggerLabel={navItem.title} triggerUrl={navItem.url} />
 							) : (
 								<NavbarItem key={navItem.title}>
-									<Link aria-current="page" className="leading-normal font-semibold hover:underline hover:text-primary transition" color={'foreground'} href={navItem.url} size="sm">
+									<Link
+										aria-current="page"
+										className={clsx(
+											'leading-normal font-semibold hover:underline hover:text-primary transition', {
+												'font-bold text-primary': navItem.url === pathname,
+												'flex gap-2 items-center bg-brand-gradient px-2 py-0.5 rounded-small text-white hover:text-white': navItem.title === 'Каталог',
+											}
+										)}
+										color={'foreground'}
+										href={navItem.url}
+										size="sm"
+									>
+										{navItem.title === 'Каталог' &&	<ShoppingBagIcon size={16} />}
 										{navItem.title}
 									</Link>
 								</NavbarItem>

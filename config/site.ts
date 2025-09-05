@@ -68,7 +68,7 @@ export const siteConfig = {
     },
     {
       label: 'Услуги',
-      href: '/#services',
+      href: '/services',
       menuItems: [
         {
           label: 'УФ-печать',
@@ -94,7 +94,7 @@ export const siteConfig = {
     },
     {
       label: 'Каталог',
-      href: '/#catalog',
+      href: '/products/categories/all',
       menuItems: [
         {
           label: 'Печать на одежде',
@@ -115,7 +115,7 @@ export const siteConfig = {
     },
     {
       label: 'Проекты',
-      href: '/#projects',
+      href: '/projects',
     },
     // {
     //   label: 'Отзывы',
