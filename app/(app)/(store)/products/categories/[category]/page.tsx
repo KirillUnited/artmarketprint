@@ -1,9 +1,4 @@
-import {
-	getTotalProductsQuery,
-	getCategoriesQuery,
-	CATEGORY_QUERY,
-	getAllProductMaterials
-} from '@/components/shared/product/lib/queries';
+import {getTotalProductsQuery, getCategoriesQuery, CATEGORY_QUERY, getAllProductMaterials} from '@/components/shared/product/lib/queries';
 import {CategoryFilter, ClientPagination, MaterialFilter, ProductList} from '@/components/shared/product/ui/';
 import Section from '@/components/layout/Section';
 import {sanityFetch} from '@/sanity/lib/sanityFetch';
@@ -12,8 +7,9 @@ import Loader from '@/components/ui/Loader';
 import {LightBreadcrumb} from '@/components/ui/Breadcrumb';
 import {SortSelect, SubCategoryFilter} from '@/components/shared/product/ui';
 import ProductSearchForm from '@/components/shared/product/ProductSearchForm';
-import {clsx} from "clsx";
-import styles from "@/components/shared/product/ui/styles.module.css";
+import {clsx} from 'clsx';
+import styles from '@/components/shared/product/ui/styles.module.css';
+import { updateProducts } from '@/lib/products/update';
 
 const PRODUCTS_PER_PAGE = 20;
 const BASE_URL = '/products/categories';
@@ -68,9 +64,9 @@ export default async function ProductsCategoryPage({
 			</h1>
 			<div className="grid md:grid-cols-[270px,1fr] gap-4">
 				<SubCategoryFilter category={categorySlug} categorySlug={category} activeSubcategory={activeSubcategory} baseUrl={BASE_URL} />
-				<div className="space-y-4">
+				<div className="flex flex-col gap-4">
 					<div className={clsx(styles.ProductFilter)}>
-						{/* <SortSelect /> */}
+						<SortSelect />
 						<MaterialFilter materials={allProductMaterials} />
 					</div>
 					<Suspense fallback={<Loader size="lg" variant="spinner" label="Загрузка товаров..." className="static" />}>

@@ -38,6 +38,7 @@ export default function MaterialFilter({ materials }: { materials: string[] }) {
                     className="capitalize"
                     key={item}
                     textValue={item}
+                    title={item}
                 >
                     {item}
                 </SelectItem>

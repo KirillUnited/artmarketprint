@@ -22,12 +22,10 @@ export default function SortSelect() {
     }
 
     return (
-        <div className="flex items-center gap-2">
-            <Select size="sm" radius="sm" label="Сортировать цены" selectedKeys={[currentSort]} onChange={handleChange}>
-                <SelectItem textValue="Не выбрано" key="">Не выбрано</SelectItem>
-                <SelectItem textValue="По убыванию" key={"price-desc"}>По убыванию</SelectItem>
-                <SelectItem textValue="По возрастанию" key={"price-asc"}>По возрастанию</SelectItem>
-            </Select>
-        </div>
+        <Select size="sm" radius="sm" label="Сортировать цены" selectedKeys={[currentSort]} onChange={handleChange}>
+            <SelectItem textValue="Не выбрано" key="">Не выбрано</SelectItem>
+            <SelectItem textValue="По убыванию" key={"price-desc"} title='По убыванию'>По убыванию</SelectItem>
+            <SelectItem textValue="По возрастанию" key={"price-asc"} title='По возрастанию'>По возрастанию</SelectItem>
+        </Select>
     )
 }
