@@ -120,7 +120,7 @@ export default async function CategoryPage({ params }: { params: Promise<Props> 
                     <SectionTitle><span className='font-normal'>Товары в категории</span><br/>{categoryTitle}</SectionTitle>
                     <div className="flex flex-col gap-2 w-full">
                         <ProductSearchForm />
-                        <Button className='border-1 md:self-start' as={Link} href="/products" radius='sm' variant='bordered'>
+                        <Button className='border-1 md:self-start' as={Link} href="/products/categories/all" radius='sm' variant='bordered'>
                             <ShoppingCartIcon size='18' />
                             <span>Все товары</span>
                         </Button>

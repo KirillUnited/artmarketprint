@@ -47,7 +47,7 @@ export default async function SearchPage({
 						<SectionTitle>{`Результаты поиска для "${query}" (${products.length} найдено)`}</SectionTitle>
 						<div className="flex flex-col md:flex-row gap-2 w-full">
 							<ProductSearchForm />
-							<Button className="border-1" as={Link} href="/products" radius="sm" variant="bordered">
+							<Button className="border-1" as={Link} href="/products/categories/all" radius="sm" variant="bordered">
 								<ShoppingCartIcon size="18" />
 								<span>Все товары</span>
 							</Button>
@@ -71,14 +71,14 @@ export default async function SearchPage({
 										<li>Попробуйте использовать другие ключевые слова</li>
 										<li>
 											Проверьте наличие товара в{' '}
-											<Link href="/products" className="text-primary">
+											<Link href="/products/categories/all" className="text-primary">
 												каталоге
 											</Link>
 										</li>
 									</ul>
 								</CardBody>
 								<CardFooter className="gap-4 lg:flex-row flex-col items-stretch">
-									<Button as={Link} className="uppercase font-semibold" href="/products" color="primary" variant="ghost" radius="sm">
+									<Button as={Link} className="uppercase font-semibold" href="/products/categories/all" color="primary" variant="ghost" radius="sm">
 										<SearchXIcon className="w-6 h-6" />
 										<span>Очистить поиск</span>
 									</Button>
