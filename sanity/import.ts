@@ -12,7 +12,7 @@ export function transform(external: Product) {
 		colors: external.colors,
 		sizes: external.sizes,
 		materials: external.materials,
-		price: external.price,
+		price: Number(external.price),
 		image: external.image,
 		images_urls: external.images_urls,
 		description: external.description,
