@@ -4,6 +4,7 @@ import { sanityFetch } from '@/sanity/lib/sanityFetch';
 import { Metadata } from 'next';
 import {CalculatorButton} from "@/components/shared/сalculator/ui";
 import React from "react";
+import { updateProducts } from '@/lib/products/update';
 
 export async function generateMetadata(): Promise<Metadata> {
 	const data: any = await sanityFetch({ query: HOME_PAGE_QUERY });
@@ -16,6 +17,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function Home() {
 	const data: any = await sanityFetch({ query: HOME_PAGE_QUERY });
+await updateProducts();
 
 	return (
 		<>
