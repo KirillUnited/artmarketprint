@@ -17,7 +17,6 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function Home() {
 	const data: any = await sanityFetch({ query: HOME_PAGE_QUERY });
-await updateProducts();
 
 	return (
 		<>
