@@ -1,5 +1,7 @@
 // GROQ queries for blog
-export const getAllPostsQuery = `*[_type == "post"]|order(publishDate desc){
+import groq from 'groq';
+
+export const getAllPostsQuery = groq`*[_type == "post"]|order(publishDate desc){
   _id,
   title,
   slug,
@@ -14,7 +16,7 @@ export const getAllPostsQuery = `*[_type == "post"]|order(publishDate desc){
   readingTime
 }`;
 
-export const getPostBySlugQuery = `*[_type == "post" && slug.current == $slug][0]{
+export const getPostBySlugQuery = groq`*[_type == "post" && slug.current == $slug][0]{
   _id,
   title,
   slug,
@@ -29,7 +31,7 @@ export const getPostBySlugQuery = `*[_type == "post" && slug.current == $slug][0
   readingTime
 }`;
 
-export const getPostsByCategoryQuery = `*[_type == "post" && references(^.categoryId)]|order(publishDate desc){
+export const getPostsByCategoryQuery = groq`*[_type == "post" && references(^.categoryId)]|order(publishDate desc){
   _id,
   title,
   slug,
