@@ -3,37 +3,47 @@
  * @param post - Blog post object
  */
 import Link from 'next/link';
-import { ArrowRightIcon, Clock10Icon } from 'lucide-react';
-import Image from 'next/image';
+import { ArrowRightIcon, Calendar1Icon, Clock10Icon } from 'lucide-react';
+import { Image } from '@heroui/image';
+import NextImage from 'next/image';
 
 import { Post } from '../lib/types';
 import { urlFor } from '@/sanity/lib/image';
-import { Card } from '@heroui/card';
+import { Card, CardBody, CardFooter, CardHeader } from '@heroui/card';
+import { Button } from '@heroui/button';
 
 export default function PostCard({ post }: { post: Post }) {
 	return (
-		<Card as={'article'}>
+		<Card as={'article'} isHoverable className='hover:shadow-xl border hover:border-primary-300 transition-all'>
 			{post?.featuredImage && (
-				<Link href={`/blog/${post?.slug?.current || ''}`}>
-					<Image alt={post.title} className="w-full h-48 object-cover" height={220} src={urlFor(post.featuredImage).width(220).format('webp').url()} width={220} />
+				<Link className='overflow-hidden' href={`/blog/${post?.slug?.current || ''}`}>
+					<Image removeWrapper as={NextImage} isZoomed alt={post.title} className="w-full h-48 object-cover" height={220} src={urlFor(post.featuredImage).width(220).format('webp').url()} width={220}
+						fallbackSrc="https://via.placeholder.com/300x200" />
 				</Link>
 			)}
-			<div className="p-6 flex flex-col flex-1">
+			<CardHeader className='pb-0'>
 				<h2 className="text-xl font-semibold mb-2">
-					<Link href={`/blog/${post?.slug?.current || ''}`}>{post.title}</Link>
+					<Link className='block' href={`/blog/${post?.slug?.current || ''}`}>{post.title}</Link>
 				</h2>
-				<p className="text-neutral-600 dark:text-neutral-300 mb-4 flex-1">{post.excerpt}</p>
-				<div className="flex items-center justify-between text-sm text-neutral-500 mt-auto">
+			</CardHeader>
+			<CardBody>
+				<p className="text-neutral-600 dark:text-neutral-300 flex-1 line-clamp-4">{post.excerpt}</p>
+			</CardBody>
+			<CardFooter className='max-xl:flex-col max-xl:items-stretch gap-2 justify-between text-sm text-neutral-500 flex-wrap'>
+				<div className="flex items-center flex-wrap gap-2">
 					<div className="flex items-center gap-2">
 						<Clock10Icon size={16} />
 						<span>{post.readingTime} мин</span>
 					</div>
-					<span>{new Date(post.publishDate).toLocaleDateString()}</span>
-					<Link className="inline-flex items-center gap-1 text-blue-600 hover:underline" href={`/blog/${post?.slug?.current || ''}`}>
-						Читать далее <ArrowRightIcon size={16} />
-					</Link>
+					<div className="flex items-center gap-2">
+						<Calendar1Icon size={16} />
+						<span>{new Date(post.publishDate).toLocaleDateString()}</span>
+					</div>
 				</div>
-			</div>
+				<Button as={Link} size='sm' variant='ghost' className="border-1 inline-flex items-center gap-1 text-blue-600 hover:underline" href={`/blog/${post?.slug?.current || ''}`}>
+					Читать далее <ArrowRightIcon size={16} />
+				</Button>
+			</CardFooter>
 		</Card>
 	);
 }
