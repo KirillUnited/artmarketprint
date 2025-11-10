@@ -6,8 +6,13 @@ import ArticleBody from '@/components/blog/ArticleBody';
 import PostHeader from '@/components/blog/PostHeader';
 import {Comments, ShareButtons, TOC, RelatedPosts} from '@/components/blog/ui';
 
-export async function generateMetadata({params}: {params: {slug: string}}): Promise<Metadata> {
-	const post = await getPostBySlug(params.slug);
+type Props = {
+	slug: string;
+};
+
+export async function generateMetadata({params}: {params: Promise<Props>}): Promise<Metadata> {
+	const {slug} = await params;
+	const post = await getPostBySlug(slug);
 
 	if (!post) return {};
 
@@ -18,8 +23,9 @@ export async function generateMetadata({params}: {params: {slug: string}}): Prom
 	};
 }
 
-export default async function PostDetailPage({params}: {params: {slug: string}}) {
-	const post = await getPostBySlug(params.slug);
+export default async function PostDetailPage({params}: {params: Promise<Props>}) {
+	const {slug} = await params;
+	const post = await getPostBySlug(slug);
 
 	if (!post) return notFound();
 
