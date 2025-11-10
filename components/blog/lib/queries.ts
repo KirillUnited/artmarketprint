@@ -1,7 +1,7 @@
 // GROQ queries for blog
-import groq from 'groq';
+import {defineQuery} from 'next-sanity';
 
-export const getAllPostsQuery = groq`*[_type == "post"]|order(publishDate desc){
+export const ALL_POSTS_QUERY = defineQuery(`*[_type == "post"]|order(publishDate desc){
   _id,
   title,
   slug,
@@ -14,9 +14,9 @@ export const getAllPostsQuery = groq`*[_type == "post"]|order(publishDate desc){
   seo,
   faq,
   readingTime
-}`;
+}`);
 
-export const getPostBySlugQuery = groq`*[_type == "post" && slug.current == $slug][0]{
+export const POST_BY_SLUG_QUERY = defineQuery(`*[_type == "post" && slug.current == $slug][0]{
   _id,
   title,
   slug,
@@ -29,9 +29,9 @@ export const getPostBySlugQuery = groq`*[_type == "post" && slug.current == $slu
   seo,
   faq,
   readingTime
-}`;
+}`);
 
-export const getPostsByCategoryQuery = groq`*[_type == "post" && references(^.categoryId)]|order(publishDate desc){
+export const POSTS_BY_CATEGORY_QUERY = defineQuery(`*[_type == "post" && references(^.categoryId)]|order(publishDate desc){
   _id,
   title,
   slug,
@@ -44,4 +44,4 @@ export const getPostsByCategoryQuery = groq`*[_type == "post" && references(^.ca
   seo,
   faq,
   readingTime
-}`;
+}`);
