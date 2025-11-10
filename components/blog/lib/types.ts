@@ -9,7 +9,9 @@ export interface Post {
 	/** Post title */
 	title: string;
 	/** Slug for routing */
-	slug: string;
+	slug: {
+		current: string;
+	};
 	/** Short summary of the post */
 	excerpt: string;
 	/** Main content body */
@@ -21,13 +23,13 @@ export interface Post {
 	/** List of categories */
 	categories?: Category[];
 	/** Post publication date */
-	date: string;
+	publishDate: string;
 	/** SEO meta fields */
 	seo?: Seo;
 	/** FAQ JSON-LD */
 	faq?: string;
 	/** estimated reading time (minutes) */
-	readTime: number;
+	readingTime: number;
 }
 
 /**

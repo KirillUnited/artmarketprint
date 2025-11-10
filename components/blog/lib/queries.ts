@@ -1,7 +1,7 @@
 // GROQ queries for blog
 import {defineQuery} from 'next-sanity';
 
-export const ALL_POSTS_QUERY = defineQuery(`*[_type == "post"]|order(publishDate desc){
+export const ALL_POSTS_QUERY = defineQuery(`*[_type == "blog.post"]|order(publishDate desc){
   _id,
   title,
   slug,
@@ -16,7 +16,7 @@ export const ALL_POSTS_QUERY = defineQuery(`*[_type == "post"]|order(publishDate
   readingTime
 }`);
 
-export const POST_BY_SLUG_QUERY = defineQuery(`*[_type == "post" && slug.current == $slug][0]{
+export const POST_BY_SLUG_QUERY = defineQuery(`*[_type == "blog.post" && slug.current == $slug][0]{
   _id,
   title,
   slug,
@@ -31,7 +31,7 @@ export const POST_BY_SLUG_QUERY = defineQuery(`*[_type == "post" && slug.current
   readingTime
 }`);
 
-export const POSTS_BY_CATEGORY_QUERY = defineQuery(`*[_type == "post" && references(^.categoryId)]|order(publishDate desc){
+export const POSTS_BY_CATEGORY_QUERY = defineQuery(`*[_type == "blog.post" && references(^.categoryId)]|order(publishDate desc){
   _id,
   title,
   slug,

@@ -1,12 +1,14 @@
-import {sanityFetch} from '@/sanity/lib/sanityFetch';
-import {ALL_POSTS_QUERY, POST_BY_SLUG_QUERY, POSTS_BY_CATEGORY_QUERY} from '@/components/blog/lib/queries';
+import { sanityFetch } from '@/sanity/lib/sanityFetch';
+import { ALL_POSTS_QUERY, POST_BY_SLUG_QUERY, POSTS_BY_CATEGORY_QUERY } from '@/components/blog/lib/queries';
 
 /**
  * Fetch all blog posts ordered by publish date.
  */
 export const getAllPosts = async () => {
 	try {
-		return await sanityFetch({query: ALL_POSTS_QUERY});
+		const posts = await sanityFetch({ query: ALL_POSTS_QUERY });
+
+		return posts || [];
 	} catch (error) {
 		console.error('Error fetching all posts:', error);
 
@@ -20,9 +22,9 @@ export const getAllPosts = async () => {
  */
 export const getPostBySlug = async (slug: string) => {
 	try {
-		const post = await sanityFetch({query: POST_BY_SLUG_QUERY, params: {slug}});
+		const post = await sanityFetch({ query: POST_BY_SLUG_QUERY, params: { slug } });
 
-		return post || null;
+		return post[0] || null;
 	} catch (error) {
 		console.error('Error fetching post by slug:', error);
 
@@ -36,7 +38,9 @@ export const getPostBySlug = async (slug: string) => {
  */
 export const getPostsByCategory = async (categoryId: string) => {
 	try {
-		return await sanityFetch({query: POSTS_BY_CATEGORY_QUERY, params: {categoryId}});
+		const posts = await sanityFetch({ query: POSTS_BY_CATEGORY_QUERY, params: { categoryId } });
+
+		return posts || [];
 	} catch (error) {
 		console.error('Error fetching posts by category:', error);
 
