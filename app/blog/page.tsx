@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default async function BlogPage() {
 	const posts = await getAllPosts();
 
-	console.log(posts);
+	console.log('Blog Page posts', posts);
 
 	return (
 		<main className="container mx-auto py-8">

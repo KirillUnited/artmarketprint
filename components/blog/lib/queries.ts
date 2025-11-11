@@ -26,7 +26,11 @@ export const POST_BY_SLUG_QUERY = defineQuery(`*[_type == "blog.post" && slug.cu
   author->{name, image},
   categories[]->{title, slug},
   publishDate,
-  seo,
+  seo {
+	  title, 
+	  description, 
+	  "ogImage": image.asset->url
+  },
   faq,
   readingTime
 }`);
