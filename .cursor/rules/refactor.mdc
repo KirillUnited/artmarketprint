@@ -1,0 +1,8 @@
+---
+alwaysApply: true
+---
+Use this rule to refactor existing code without changing its behavior.
+This can include improving readability, reducing complexity, or optimizing performance.
+Ensure that the refactored code passes all existing tests to confirm that functionality remains unchanged.
+
+@docs/refactor-guide.md

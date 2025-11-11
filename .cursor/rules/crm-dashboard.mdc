@@ -1,0 +1,7 @@
+---
+alwaysApply: true
+---
+Base requirements description - @docs/crm-dashboard/REQUIREMENTS.md
+Base arch rules - @docs/crm-dashboard/ARCH_RULES.md
+
+When making architecture changes update @docs/crm-dashboard/architecture.md and use it in workflow

@@ -1,0 +1,8 @@
+---
+alwaysApply: true
+---
+
+Проанализируй выбранный component и создай план для реализации Используя Compound Components Pattern и План реализации Compound Components Pattern.
+Дочерние компоненты указаны в {/* Название компонента */}
+
+@docs/compound-components.md

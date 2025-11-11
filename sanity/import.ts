@@ -2,6 +2,7 @@ import { Product } from '@/components/shared/product/product.types';
 import { client } from './client';
 
 const CHUNK_SIZE = 50; // Process 50 products at a time
+const MAX_DOCUMENTS = 8000; // Limit to 8000 documents
 
 export function transform(external: Product) {
 	return {
@@ -29,6 +30,7 @@ export function transform(external: Product) {
 export async function importDataToSanity(products: Product[]) {
 	try {
 		const documents = products.map(transform);
+		let docCount = 0;
 
 		console.log('🚀 Importing total products', documents.length);
 
@@ -36,6 +38,13 @@ export async function importDataToSanity(products: Product[]) {
 		for (let i = 0; i < documents.length; i += CHUNK_SIZE) {
 			const chunk = documents.slice(i, i + CHUNK_SIZE);
 			let transaction = client.transaction();
+
+			docCount += chunk.length;
+			
+			if (docCount > MAX_DOCUMENTS) {
+				console.log(`⚠️ Reached maximum document limit of ${MAX_DOCUMENTS}. Stopping import.`);
+				break;
+			}
 
 			chunk.forEach((document) => {
 				transaction.createOrReplace(document);
