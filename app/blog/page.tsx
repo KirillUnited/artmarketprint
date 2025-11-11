@@ -5,8 +5,8 @@ import {getAllPosts} from '@/components/blog/lib/fetch-data';
 import {PostListing} from '@/components/blog';
 
 export const metadata: Metadata = {
-	title: 'Blog',
-	description: 'Latest posts, news, and insights',
+	title: 'Наш Блог',
+	description: 'Читайте наши последние статьи, новости и статьи от нашей команды',
 };
 
 export default async function BlogPage() {
@@ -16,7 +16,7 @@ export default async function BlogPage() {
 
 	return (
 		<main className="container mx-auto py-8">
-			<h1 className="text-3xl font-bold mb-8">Блог</h1>
+			<h1 className="text-3xl font-bold mb-8">Наш Блог</h1>
 			<PostListing posts={posts} />
 		</main>
 	);

@@ -59,9 +59,9 @@ export default async function PostDetailPage({params}: {params: Promise<Props>})
 
 	return (
 		<section className="py-8">
-			<div className={'container'}>
+			<div className={'container max-w-screen-xl'}>
 				<PostHeader post={post} />
-				<div className="flex flex-col lg:flex-row gap-8">
+				<div className="flex flex-col gap-8">
 					<article className="flex-1">
 						<TOC body={post.body} />
 						<ArticleBody body={post.body} />
