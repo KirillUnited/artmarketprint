@@ -13,8 +13,8 @@ export default function PostHeader({post}: {post: Post}) {
 	return (
 		<header className="flex flex-col gap-4 mb-8">
 			<PostMetadata post={post} />
-			<div className={'space-y-2'}>
-				<h1 className="text-3xl font-bold pb-2 border-b-1">{post.title}</h1>
+			<div className={'space-y-4'}>
+				<h1 className="text-3xl font-bold pb-4 border-b-1">{post.title}</h1>
 				<p className="text-lg text-neutral-700 dark:text-neutral-300">{post.excerpt}</p>
 			</div>
 			<Image

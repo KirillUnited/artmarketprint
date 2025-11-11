@@ -58,18 +58,20 @@ export default async function PostDetailPage({params}: {params: Promise<Props>})
 	if (!post) return notFound();
 
 	return (
-		<main className="container mx-auto py-8">
-			<PostHeader post={post} />
-			<div className="flex flex-col lg:flex-row gap-8">
-				<article className="flex-1">
-					<TOC body={post.body} />
-					<ArticleBody body={post.body} />
-					<ShareButtons post={post} />
-				</article>
-				<aside className="w-full lg:w-80">
-					<RelatedPosts currentPostId={post.id} />
-				</aside>
+		<section className="py-8">
+			<div className={'container'}>
+				<PostHeader post={post} />
+				<div className="flex flex-col lg:flex-row gap-8">
+					<article className="flex-1">
+						<TOC body={post.body} />
+						<ArticleBody body={post.body} />
+						<ShareButtons post={post} />
+					</article>
+					<aside className="w-full lg:w-80">
+						<RelatedPosts currentPostId={post.id} />
+					</aside>
+				</div>
 			</div>
-		</main>
+		</section>
 	);
 }

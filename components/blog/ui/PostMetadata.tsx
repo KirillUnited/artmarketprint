@@ -2,6 +2,7 @@ import {JSX} from 'react';
 import {Calendar1Icon, Clock1Icon, User2Icon} from 'lucide-react';
 
 import {Post} from '@/components/blog/lib/types';
+import CopyButton from '@/components/ui/button/CopyButton';
 
 /**
  * A function that renders post metadata.
@@ -23,6 +24,7 @@ export default function PostMetadata({post}: {post: Post}): JSX.Element {
 				<Clock1Icon size={14} />
 				<span>{post.readingTime || '5'} мин</span>
 			</p>
+			<CopyButton textToCopy={`${process.env.NEXT_PUBLIC_SERVER_URL}/blog/${post.slug?.current}` || ''} />
 		</div>
 	);
 }
