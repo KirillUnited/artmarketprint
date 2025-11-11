@@ -1,0 +1,5 @@
+.PostListing {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--width, 320px), 100%), 1fr));
+    gap: 2rem;
+}

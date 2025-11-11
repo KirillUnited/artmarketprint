@@ -39,3 +39,7 @@ next-env.d.ts
 
 # Imported files
 /_data/*
+
+# IDE
+.idea
+.vscode
