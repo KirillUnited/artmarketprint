@@ -4,7 +4,7 @@ import {notFound} from 'next/navigation';
 import {getPostBySlug} from '@/components/blog/lib/fetch-data';
 import ArticleBody from '@/components/blog/ArticleBody';
 import PostHeader from '@/components/blog/PostHeader';
-import {ShareButtons, TOC, RelatedPosts} from '@/components/blog/ui';
+import {TOC, RelatedPosts} from '@/components/blog/ui';
 
 type Props = {
 	slug: string;
@@ -65,7 +65,6 @@ export default async function PostDetailPage({params}: {params: Promise<Props>})
 					<article className="flex-1">
 						<TOC body={post.body} />
 						<ArticleBody body={post.body} />
-						<ShareButtons post={post} />
 					</article>
 					<aside className="w-full lg:w-80">
 						<RelatedPosts currentPostId={post.id} />
