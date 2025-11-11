@@ -56,7 +56,7 @@ export default function PostCard({post}: {post: Post}) {
 						</div>
 					)}
 				</div>
-				<Button as={Link} className="border-1 inline-flex items-center gap-1 text-blue-600 hover:underline" href={`/blog/${post?.slug?.current || ''}`} size="sm" variant="ghost">
+				<Button as={Link} className="border-1 inline-flex items-center gap-1" color={'primary'} href={`/blog/${post?.slug?.current || ''}`} size="sm" variant="ghost">
 					Читать далее <ArrowRightIcon size={16} />
 				</Button>
 			</CardFooter>
