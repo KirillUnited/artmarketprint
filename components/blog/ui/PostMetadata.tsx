@@ -10,10 +10,10 @@ import {Post} from '@/components/blog/lib/types';
  */
 export default function PostMetadata({post}: {post: Post}): JSX.Element {
 	return (
-		<div className="flex items-center text-xs text-neutral-500 gap-4 mb-2">
+		<div className="flex flex-wrap items-center text-xs text-neutral-500 gap-4 mb-2">
 			<p className={'flex items-center gap-1'}>
 				<Calendar1Icon size={14} />
-				<span>{new Date(post.publishDate).toLocaleDateString('ru', {dateStyle: 'medium'})}</span>
+				<span>{new Date(post?.publishDate || post?._createdAt).toLocaleDateString('ru', {dateStyle: 'medium'})}</span>
 			</p>
 			<p className={'flex items-center gap-1'}>
 				<User2Icon size={14} />

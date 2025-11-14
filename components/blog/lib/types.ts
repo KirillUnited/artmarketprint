@@ -4,6 +4,11 @@ import {OpenGraph} from 'next/dist/lib/metadata/types/opengraph-types';
  * Represents a blog post object.
  */
 export interface Post {
+	_createdAt: string;
+	_updatedAt: string;
+	_rev: string;
+	_type: string;
+	_key: string;
 	/** Unique post identifier */
 	id: string;
 	/** Post title */
