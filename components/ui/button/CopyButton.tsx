@@ -32,7 +32,7 @@ export default function CopyButton({textToCopy, className}: {textToCopy: string;
 			color={copied ? 'success' : 'primary'}
 			size={'sm'}
 			startContent={copied ? <CheckIcon className="w-4 h-4" /> : <CopyIcon className="w-4 h-4" />}
-			title={copied ? 'Ссылка скопирована!' : 'Kопировать'}
+			title={copied ? 'Ссылка скопирована!' : 'Kопировать ссылку'}
 			variant="bordered"
 			onPress={() => handleCopy(textToCopy)}
 		/>
