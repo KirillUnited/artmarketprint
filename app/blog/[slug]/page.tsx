@@ -5,6 +5,8 @@ import {getPostBySlug} from '@/components/blog/lib/fetch-data';
 import ArticleBody from '@/components/blog/ArticleBody';
 import PostHeader from '@/components/blog/PostHeader';
 import {TOC, RelatedPosts} from '@/components/blog/ui';
+import {ServiceBreadcrumb} from '@/components/ui/Breadcrumb';
+import Section from '@/components/layout/Section';
 
 type Props = {
 	slug: string;
@@ -58,8 +60,12 @@ export default async function PostDetailPage({params}: {params: Promise<Props>})
 	if (!post) return notFound();
 
 	return (
-		<section className="py-8">
+		<Section>
 			<div className={'container max-w-screen-xl'}>
+				{/* Breadcrumb navigation */}
+				<div className="mb-10">
+					<ServiceBreadcrumb service="Блог" serviceSlug="blog" title={post.title} />
+				</div>
 				<PostHeader post={post} />
 				<div className="flex flex-col gap-8">
 					<article className="flex-1">
@@ -71,6 +77,6 @@ export default async function PostDetailPage({params}: {params: Promise<Props>})
 					</aside>
 				</div>
 			</div>
-		</section>
+		</Section>
 	);
 }
