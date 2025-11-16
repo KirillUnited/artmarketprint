@@ -16,8 +16,6 @@ export default async function Footer() {
 	const contacts = siteSettings?.siteContactInfo || {};
 	const socials = siteSettings?.siteContactInfo?.socialLinks ?? [];
 
-	console.log(navigation);
-
 	return (
 		<footer className="bg-foreground">
 			<div className="container">
