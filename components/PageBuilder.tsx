@@ -1,22 +1,23 @@
-import { Fragment } from 'react';
+import {Fragment} from 'react';
 
-import { FeaturedProducts } from '@/components/shared/product/FeaturedProducts';
+import {FeaturedCategories} from './shared/category';
 
-import { Hero } from '@/components/shared/hero/Hero';
-import { FeaturesSection } from '@/components/shared/FeaturesSection';
-import { Services } from '@/components/shared/service';
+import {FeaturedProducts} from '@/components/shared/product/FeaturedProducts';
+import {Hero} from '@/components/shared/hero/Hero';
+import {FeaturesSection} from '@/components/shared/FeaturesSection';
+import {Services} from '@/components/shared/service';
 import About from '@/components/shared/About';
-import { Projects } from '@/components/shared/project/Projects';
-import { InstagramFeedSection } from '@/components/shared/socials/InstagramFeed';
-import { FAQSection } from '@/components/shared/faq';
+import {Projects} from '@/components/shared/project/Projects';
+import {InstagramFeedSection} from '@/components/shared/socials/InstagramFeed';
+import {FAQSection} from '@/components/shared/faq';
 import ContactUs from '@/components/shared/ContactUs';
-import { FeaturedCategories } from './shared/category';
+import {BlogSection} from '@/components/blog';
 
 interface PageBuilderProps {
 	content?: any;
 }
 
-export function PageBuilder({ content }: PageBuilderProps) {
+export function PageBuilder({content}: PageBuilderProps) {
 	if (!Array.isArray(content)) {
 		return null;
 	}
@@ -45,17 +46,18 @@ export function PageBuilder({ content }: PageBuilderProps) {
 						return <About key={block._key} {...block} />;
 					case 'projectList':
 						return (
-							<Fragment key={block._key}	>
-								<Projects {...block} className='bg-[#F1F4FA]' />
-								<InstagramFeedSection id="instagram" />
+							<Fragment key={block._key}>
+								<Projects {...block} className="bg-[#F1F4FA]" />
+								<BlogSection />
 							</Fragment>
 						);
 					case 'faqs':
-						return <FAQSection key={block._key} {...block}  className="bg-[#F1F4FA]" />;
+						return <FAQSection key={block._key} {...block} className="bg-[#F1F4FA]" />;
 					case 'contactUsBlock':
 						return (
 							<Fragment key={block._key}>
 								<ContactUs className="bg-background" id="contacts" />
+								<InstagramFeedSection id="instagram" />
 							</Fragment>
 						);
 					default:

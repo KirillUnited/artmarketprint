@@ -1,45 +1,34 @@
 'use client';
 import React from 'react';
-import { Navbar as BaseNavbar, NavbarBrand, NavbarContent, NavbarItem } from '@heroui/navbar';
-import { Link } from '@heroui/link';
+import {Navbar as BaseNavbar, NavbarBrand, NavbarContent, NavbarItem} from '@heroui/navbar';
+import {Link} from '@heroui/link';
 import {Calculator, ShoppingBagIcon} from 'lucide-react';
+import {Tooltip} from '@heroui/tooltip';
+import {Button} from '@heroui/button';
+import {clsx} from 'clsx';
+import {usePathname} from 'next/navigation';
 
-import { TelegramIcon, ViberIcon } from '../../icons';
+import {TelegramIcon, ViberIcon} from '../../icons';
 import BrandLogo from '../../ui/BrandLogo';
-import { HeroModalOffer } from '../../ui/BrandModalOffer';
+import {HeroModalOffer} from '../../ui/BrandModalOffer';
 import Drawer from '../../ui/Drawer';
+import {SalesBanner} from '../banner';
 
-import { SalesBanner } from '../banner';
-
-import { siteConfig } from '@/config/site';
+import {siteConfig} from '@/config/site';
 import useBasketStore from '@/store/store';
-import { NavbarDropdownMenu } from '@/components/ui/dropdown';
-import {Tooltip} from "@heroui/tooltip";
-import {Button} from "@heroui/button";
-import { PhoneIcon } from '@/components/icons';
-import {clsx} from "clsx";
-import {usePathname} from "next/navigation";
-
+import {NavbarDropdownMenu} from '@/components/ui/dropdown';
+import {PhoneIcon} from '@/components/icons';
 
 export const CartLinkButton = (itemsCount: number) => {
 	return (
-		<Link
-			href='/cart'
-			target='_blank'
-			className='relative'
-			aria-label={`Shopping cart${itemsCount > 0 ? `, ${itemsCount} items` : ''}`}
-		>
-			<ShoppingBagIcon size={22} className='text-primary' />
-			{
-				itemsCount > 0 && (
-					<span className='bg-danger text-white rounded-full text-xs text-center px-1 py-1 truncate w-6 h-6 absolute -top-3 -right-3'>{itemsCount}</span>
-				)
-			}
+		<Link aria-label={`Shopping cart${itemsCount > 0 ? `, ${itemsCount} items` : ''}`} className="relative" href="/cart" target="_blank">
+			<ShoppingBagIcon className="text-primary" size={22} />
+			{itemsCount > 0 && <span className="bg-danger text-white rounded-full text-xs text-center px-1 py-1 truncate w-6 h-6 absolute -top-3 -right-3">{itemsCount}</span>}
 		</Link>
-	)
-}
+	);
+};
 
-export default function Navbar({ navigation, sales, siteSettings }: any) {
+export default function Navbar({navigation, sales, siteSettings}: any) {
 	const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 	const itemsCount = useBasketStore((state) => state.items.length);
 	const phones = siteSettings?.siteContactInfo?.phones ?? [];
@@ -62,7 +51,7 @@ export default function Navbar({ navigation, sales, siteSettings }: any) {
 					<NavbarBrand as={Link} className="grow-0 basis-auto" href={'/'}>
 						<BrandLogo alt={'ArtMarketPrint'} />
 					</NavbarBrand>
-					<NavbarContent className="hidden xl:flex gap-8" justify="center">
+					<NavbarContent className="hidden xl:flex gap-4" justify="center">
 						{navigation?.map((navItem: any) => {
 							return navItem?.submenu ? (
 								<NavbarDropdownMenu key={navItem.title} items={navItem.submenu} triggerLabel={navItem.title} triggerUrl={navItem.url} />
@@ -70,17 +59,15 @@ export default function Navbar({ navigation, sales, siteSettings }: any) {
 								<NavbarItem key={navItem.title}>
 									<Link
 										aria-current="page"
-										className={clsx(
-											'leading-normal font-semibold hover:underline hover:text-primary transition', {
-												'font-bold text-primary': navItem.url === pathname,
-												'flex gap-2 items-center bg-brand-gradient px-2 py-0.5 rounded-small text-white hover:text-white': navItem.title === 'Каталог',
-											}
-										)}
+										className={clsx('leading-normal font-semibold hover:underline hover:text-primary transition', {
+											'font-bold text-primary': navItem.url === pathname,
+											'flex gap-2 items-center bg-brand-gradient px-2 py-0.5 rounded-small text-white hover:text-white': navItem.title === 'Каталог',
+										})}
 										color={'foreground'}
 										href={navItem.url}
 										size="sm"
 									>
-										{navItem.title === 'Каталог' &&	<ShoppingBagIcon size={16} />}
+										{navItem.title === 'Каталог' && <ShoppingBagIcon size={16} />}
 										{navItem.title}
 									</Link>
 								</NavbarItem>
@@ -90,7 +77,15 @@ export default function Navbar({ navigation, sales, siteSettings }: any) {
 					<div className="flex flex-row gap-8 items-center shrink-0">
 						{/*Calculator page link*/}
 						<Tooltip content="Калькулятор стоимости пакетов" placement="bottom">
-							<Button as={Link} href="/calculator" isIconOnly color='primary' size="sm" className="bg-brand-gradient rounded-full shadow-large hover:scale-105 transition-transform duration-200" aria-label="Calculator">
+							<Button
+								isIconOnly
+								aria-label="Calculator"
+								as={Link}
+								className="bg-brand-gradient rounded-full shadow-large hover:scale-105 transition-transform duration-200"
+								color="primary"
+								href="/calculator"
+								size="sm"
+							>
 								<Calculator size={18} />
 							</Button>
 						</Tooltip>
@@ -110,13 +105,13 @@ export default function Navbar({ navigation, sales, siteSettings }: any) {
 						{/* {
 							phones.length > 0 && <PhoneListDropdown items={phones} />
 						} */}
-						<Link className="text-sm hover:text-primary" color={'primary'} href={`tel:${phones[0]?.link}`}>                            
-                			<PhoneIcon />
-                        </Link>
+						<Link className="text-sm hover:text-primary" color={'primary'} href={`tel:${phones[0]?.link}`}>
+							<PhoneIcon />
+						</Link>
 						{CartLinkButton(itemsCount)}
 
 						<div className="hidden lg:block">
-							<HeroModalOffer id='Консультация' />
+							<HeroModalOffer id="Консультация" />
 						</div>
 						<Drawer className="xl:hidden h-6 w-auto min-w-min" navigation={navigation} siteSettings={siteSettings} />
 					</div>
