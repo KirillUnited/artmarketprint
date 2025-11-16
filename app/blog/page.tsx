@@ -17,8 +17,6 @@ export default async function BlogPage() {
 	const posts = await getAllPosts();
 	const breadcrumbs = (await getSanityDocuments(NAVIGATION_QUERY))[0].links;
 
-	console.log('Blog Page posts', posts);
-
 	if (!Array.isArray(posts) || posts.length === 0) return <NotFound />;
 
 	return (

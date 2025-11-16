@@ -55,8 +55,6 @@ export default async function PostDetailPage({params}: {params: Promise<Props>})
 	const {slug} = await params;
 	const post = await getPostBySlug(slug);
 
-	console.log('Post Detail Page post', post);
-
 	if (!post) return notFound();
 
 	return (
