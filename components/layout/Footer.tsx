@@ -5,14 +5,18 @@ import BrandLogo from '../ui/BrandLogo';
 
 import Socials from '@/components/shared/Socials';
 import ContactsList from '@/components/shared/ContactsList';
-import {siteConfig} from '@/config/site';
 import {getSanityDocuments} from '@/sanity/lib/fetch-sanity-data';
-import {SITE_SETTINGS_QUERY} from '@/sanity/lib/queries/site.query';
+import {NAVIGATION_QUERY, SITE_SETTINGS_QUERY} from '@/sanity/lib/queries/site.query';
+import {client} from '@/sanity/client';
 
 export default async function Footer() {
 	const siteSettings: any = await getSanityDocuments(SITE_SETTINGS_QUERY);
+	// Fetch navigation data from Sanity
+	const navigation = await client.fetch(NAVIGATION_QUERY);
 	const contacts = siteSettings?.siteContactInfo || {};
 	const socials = siteSettings?.siteContactInfo?.socialLinks ?? [];
+
+	console.log(navigation);
 
 	return (
 		<footer className="bg-foreground">
@@ -31,10 +35,10 @@ export default async function Footer() {
 							<p className="text-[#eeeeee] font-light">Карта сайта</p>
 
 							<ul className="flex flex-col gap-1">
-								{siteConfig?.navItems?.map((link) => (
-									<li key={link.href}>
-										<Link className="text-[#eeeeee] text-left font-medium self-stretch hover:text-primary transition" href={link.href}>
-											{link.label}
+								{navigation[0]?.links?.map((link: any, index: number) => (
+									<li key={index}>
+										<Link className="text-[#eeeeee] text-left font-medium self-stretch hover:text-primary transition" href={link.url}>
+											{link.title}
 										</Link>
 									</li>
 								))}
