@@ -26,7 +26,8 @@ export default function PostCard({post}: {post: Post}) {
 						className="w-full h-48 object-cover"
 						fallbackSrc="https://via.placeholder.com/300x200"
 						height={220}
-						src={urlFor(post.featuredImage).width(220).format('webp').url()}
+						quality={100}
+						src={urlFor(post.featuredImage).format('webp').url()}
 						width={220}
 					/>
 				</Link>
