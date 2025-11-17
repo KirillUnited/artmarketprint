@@ -36,3 +36,6 @@ export const POST_BY_SLUG_QUERY = defineQuery(`*[_type == "blog.post" && slug.cu
 export const POSTS_BY_CATEGORY_QUERY = defineQuery(`*[_type == "blog.post" && references(^.categoryId)]|order(publishDate desc){
   ${POST}
 }`);
+export const RELATED_POSTS_QUERY = defineQuery(`*[_type == 'blog.post' && count(categories[@._ref in ^.categories[]._ref]) > 0 && _id != $categoryId]|order(publishDate desc){
+  ${POST}
+}`);
