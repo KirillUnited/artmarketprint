@@ -7,7 +7,6 @@ import {CalculatorButton} from '@/components/shared/сalculator/ui';
 
 export async function generateMetadata(): Promise<Metadata> {
 	const data: any = await sanityFetch({query: HOME_PAGE_QUERY});
-	console.log(process.env.NEXT_PUBLIC_SANITY_PROJECT_ID);
 
 	return {
 		title: data?.homePage?.seo?.title,
