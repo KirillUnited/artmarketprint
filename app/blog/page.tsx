@@ -7,6 +7,7 @@ import NotFound from '@/app/blog/not-found';
 import BaseBreadcrumb from '@/components/ui/Breadcrumb';
 import {getSanityDocuments} from '@/sanity/lib/fetch-sanity-data';
 import {NAVIGATION_QUERY} from '@/sanity/lib/queries';
+import Section, {SectionHeading} from '@/components/layout/Section';
 
 export const metadata: Metadata = {
 	title: 'Наш Блог',
@@ -20,17 +21,15 @@ export default async function BlogPage() {
 	if (!Array.isArray(posts) || posts.length === 0) return <NotFound />;
 
 	return (
-		<main className="container mx-auto py-8">
-			<h1 className="text-3xl font-bold mb-8">Наш Блог</h1>
-			{/* Breadcrumb navigation */}
-			<section>
-				<div className="container">
-					<div className="mt-10 mb-6">
-						<BaseBreadcrumb items={breadcrumbs} section={'Блог'} />
-					</div>
+		<Section>
+			<SectionHeading>
+				{/* Breadcrumb navigation */}
+				<div>
+					<BaseBreadcrumb items={breadcrumbs} section={'Блог'} />
 				</div>
-			</section>
+				<h1 className="text-3xl font-bold">Наш Блог</h1>
+			</SectionHeading>
 			<PostListing posts={posts} />
-		</main>
+		</Section>
 	);
 }

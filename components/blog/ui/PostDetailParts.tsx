@@ -1,26 +1,23 @@
-import Link from 'next/link';
-
 import {Post} from '@/components/blog/lib/types';
+import {getRelatedPosts} from '@/components/blog/lib/fetch-data';
+import {PostListing} from '@/components/blog';
+import {SectionInner, SectionTitle} from '@/components/layout/Section';
 
 /**
  * RelatedPosts component displays related blog posts.
  * @param {Object} props - Component props
  * @param {string} props.currentPostId - ID of the current post
  */
-export function RelatedPosts({currentPostId}: {currentPostId: string}) {
-	// Placeholder: In production, fetch related posts by category/tag
+export async function RelatedPosts({currentPostId}: {currentPostId: string}) {
+	const relatedPosts = await getRelatedPosts(currentPostId);
+
+	console.log('related posts:', relatedPosts);
+
 	return (
-		<aside className="mb-8">
-			<h3 className="text-lg font-semibold mb-2">Похожие статьи</h3>
-			<ul className="space-y-2">
-				{/* TODO: Dynamically render related posts */}
-				<li>
-					<Link className="text-blue-600 hover:underline" href="#">
-						Статья 1
-					</Link>
-				</li>
-			</ul>
-		</aside>
+		<SectionInner>
+			<SectionTitle>Похожие статьи</SectionTitle>
+			<PostListing posts={relatedPosts} />
+		</SectionInner>
 	);
 }
 

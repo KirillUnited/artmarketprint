@@ -1,19 +1,19 @@
-import { Metadata } from 'next';
-import { notFound } from 'next/navigation';
+import {Metadata} from 'next';
+import {notFound} from 'next/navigation';
 
-import { getPostBySlug } from '@/components/blog/lib/fetch-data';
+import {getPostBySlug} from '@/components/blog/lib/fetch-data';
 import ArticleBody from '@/components/blog/ArticleBody';
 import PostHeader from '@/components/blog/PostHeader';
-import { TOC, RelatedPosts } from '@/components/blog/ui';
-import { ServiceBreadcrumb } from '@/components/ui/Breadcrumb';
+import {TOC, RelatedPosts} from '@/components/blog/ui';
+import {ServiceBreadcrumb} from '@/components/ui/Breadcrumb';
 import Section from '@/components/layout/Section';
 
 type Props = {
 	slug: string;
 };
 
-export async function generateMetadata({ params }: { params: Promise<Props> }): Promise<Metadata> {
-	const { slug } = await params;
+export async function generateMetadata({params}: {params: Promise<Props>}): Promise<Metadata> {
+	const {slug} = await params;
 	const post = await getPostBySlug(slug);
 
 	if (!post) return {};
@@ -51,9 +51,11 @@ export async function generateMetadata({ params }: { params: Promise<Props> }): 
 	};
 }
 
-export default async function PostDetailPage({ params }: { params: Promise<Props> }) {
-	const { slug } = await params;
+export default async function PostDetailPage({params}: {params: Promise<Props>}) {
+	const {slug} = await params;
 	const post = await getPostBySlug(slug);
+
+	console.log(post);
 
 	if (!post) return notFound();
 
@@ -72,8 +74,8 @@ export default async function PostDetailPage({ params }: { params: Promise<Props
 							<ArticleBody body={post.body} />
 						</article>
 					)}
-					<aside className="w-full lg:w-80">
-						<RelatedPosts currentPostId={post.id} />
+					<aside className="w-full">
+						<RelatedPosts currentPostId={post._id} />
 					</aside>
 				</div>
 			</div>
