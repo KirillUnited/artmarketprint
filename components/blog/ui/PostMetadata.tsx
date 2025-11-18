@@ -11,7 +11,6 @@ import { Chip } from '@heroui/chip';
  */
 export default function PostMetadata({post}: {post: Post}): JSX.Element {
 	const categories = post?.categories || [];
-	console.log('categories:', categories);
 	return (
 		<div className="flex flex-wrap items-center text-xs text-neutral-500 gap-4 mb-2">
 			<p className={'flex items-center gap-1'}>
@@ -27,7 +26,7 @@ export default function PostMetadata({post}: {post: Post}): JSX.Element {
 				<span>{post.readingTime || '5'} мин</span>
 			</p>
 			{
-				categories.map((category: Category) => (
+				categories?.map((category: Category) => (
 					<Chip key={category.slug?.current || ''}>{category.title}</Chip>
 				))
 			}
