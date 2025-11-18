@@ -1,5 +1,6 @@
 import {PackageCalculator} from '@/components/shared/сalculator';
 import {getCalculatorByType} from '@/components/shared/сalculator/lib/calculatorQueries';
+import {getMaterialMatrixByMaterialId} from '@/components/shared/сalculator/lib/fetch-data';
 
 export const metadata = {
 	title: 'Калькулятор стоимости пакетов | ArtMarketPrint',
@@ -8,6 +9,9 @@ export const metadata = {
 
 export default async function CalculatorPage() {
 	const data = await getCalculatorByType('package-calc');
+	const matrix = data ? await getMaterialMatrixByMaterialId(data.materials[0]?._id) : [];
+
+	console.log(matrix);
 
 	return (
 		<main className="min-h-screen py-12 bg-gray-50">

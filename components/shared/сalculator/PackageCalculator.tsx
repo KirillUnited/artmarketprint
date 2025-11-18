@@ -1,15 +1,17 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Button } from '@heroui/button';
-import { colors, DISCOUNT_PERCENTAGE, materials, MIN_QUANTITY, printOptions, pvdPriceTable, quantityDiscounts, sizes } from '@/components/shared/сalculator/mock-data';
-import { getAvailableColors, getAvailableSizes } from '@/components/shared/сalculator/lib/utils';
+import {useState, useEffect} from 'react';
+import {motion, AnimatePresence} from 'framer-motion';
+import {Button} from '@heroui/button';
 import Image from 'next/image';
-import { Select, SelectItem } from '@heroui/select';
-import { UsernameInput, UserPhoneInput } from '@/components/ui/form';
-import { sendCalculatorDetails } from './lib/messenger';
-import { Form } from "@heroui/form";
+import {Select, SelectItem} from '@heroui/select';
+import {Form} from '@heroui/form';
+
+import {sendCalculatorDetails} from './lib/messenger';
+
+import {colors, materials, MIN_QUANTITY, printOptions, pvdPriceTable, quantityDiscounts, sizes} from '@/components/shared/сalculator/mock-data';
+import {getAvailableColors, getAvailableSizes} from '@/components/shared/сalculator/lib/utils';
+import {UsernameInput, UserPhoneInput} from '@/components/ui/form';
 
 const PackageCalculator = () => {
 	const [step, setStep] = useState(1);
@@ -25,15 +27,15 @@ const PackageCalculator = () => {
 	const [price, setPrice] = useState(0);
 	const [pricePerBag, setPricePerBag] = useState(0);
 	const [isSubmitting, setIsSubmitting] = useState(false);
-	const [formMessage, setFormMessage] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
+	const [formMessage, setFormMessage] = useState<{type: 'success' | 'error'; message: string} | null>(null);
 
 	// Reset color and size when material changes
 	useEffect(() => {
 		if (formData.materialId) {
-			setFormData(prev => ({
+			setFormData((prev) => ({
 				...prev,
 				color: '',
-				size: ''
+				size: '',
 			}));
 		}
 	}, [formData.materialId]);
@@ -49,6 +51,7 @@ const PackageCalculator = () => {
 
 	const calculatePrice = () => {
 		const selectedMaterial = materials.find((m) => m.id === formData.materialId);
+
 		if (!selectedMaterial) return;
 
 		const selectedSize = availableSizes.find((s) => s.name === formData.size);
@@ -66,17 +69,16 @@ const PackageCalculator = () => {
 			const printId = selectedPrint.id;
 
 			// Find the price entry for the selected size
-			const priceEntry = pvdPriceTable.find(entry => entry.size === sizeId);
+			const priceEntry = pvdPriceTable.find((entry) => entry.size === sizeId);
 
 			if (priceEntry && priceEntry.prices[printId]) {
 				// Determine if we should use the regular or discounted price based on quantity
 				const useDiscountedPrice = quantity >= 200;
-				pricePerBagValue = useDiscountedPrice 
-					? priceEntry.prices[printId].discounted 
-					: priceEntry.prices[printId].regular;
-				
+
+				pricePerBagValue = useDiscountedPrice ? priceEntry.prices[printId].discounted : priceEntry.prices[printId].regular;
+
 				// Calculate total price (price per bag * quantity)
-				totalPriceValue = pricePerBagValue * quantity / 1; // Price is per 100 packages
+				totalPriceValue = (pricePerBagValue * quantity) / 1; // Price is per 100 packages
 			} else {
 				// Fallback to the old calculation method if price not found in table
 				let basePrice = selectedMaterial.price;
@@ -94,6 +96,7 @@ const PackageCalculator = () => {
 				// Apply quantity discount
 				const discountTier = [...quantityDiscounts].sort((a, b) => b.min - a.min).find((tier) => quantity >= tier.min);
 				const discount = discountTier ? discountTier.discount : 0;
+
 				pricePerBagValue = basePrice * (1 - discount);
 				totalPriceValue = pricePerBagValue * quantity;
 			}
@@ -114,6 +117,7 @@ const PackageCalculator = () => {
 			// Apply quantity discount
 			const discountTier = [...quantityDiscounts].sort((a, b) => b.min - a.min).find((tier) => quantity >= tier.min);
 			const discount = discountTier ? discountTier.discount : 0;
+
 			pricePerBagValue = basePrice * (1 - discount);
 			totalPriceValue = pricePerBagValue * quantity;
 		}
@@ -180,16 +184,18 @@ const PackageCalculator = () => {
 		setFormData((prev) => {
 			// If changing material, also update materialId
 			if (field === 'material') {
-				const selectedMaterial = materials.find(m => m.name === value);
+				const selectedMaterial = materials.find((m) => m.name === value);
+
 				return {
 					...prev,
 					material: value as string,
 					materialId: selectedMaterial?.id || '',
 					// Reset color and size when material changes
 					color: '',
-					size: ''
+					size: '',
 				};
 			}
+
 			return {
 				...prev,
 				[field]: value,
@@ -207,18 +213,18 @@ const PackageCalculator = () => {
 							{materials.map((material) => (
 								<button
 									key={material.id}
+									className="group flex flex-col gap-4 p-4 border rounded-lg hover:bg-primary hover:text-white transition-colors text-left"
 									onClick={() => {
 										handleChange('material', material.name);
 										handleChange('materialId', material.id);
 										nextStep();
 									}}
-									className="group flex flex-col gap-4 p-4 border rounded-lg hover:bg-primary hover:text-white transition-colors text-left"
 								>
 									<div className="flex flex-col">
 										<h4 className="font-medium">{material.name}</h4>
 										{/* <p className="text-sm text-gray-500 group-hover:text-white transition-colors">от {material.price} руб.</p> */}
 									</div>
-									{material.image && <Image className="w-16 h-16 object-contain" src={material.image} alt={material.name} width={100} height={100} quality={50} />}
+									{material.image && <Image alt={material.name} className="w-16 h-16 object-contain" height={100} quality={50} src={material.image} width={100} />}
 								</button>
 							))}
 						</div>
@@ -229,29 +235,22 @@ const PackageCalculator = () => {
 					<div className="space-y-4">
 						<h3 className="text-xl font-semibold mb-4">Цвет пакета</h3>
 						{!formData.materialId ? (
-							<div className="text-center py-8 text-gray-500">
-								Пожалуйста, сначала выберите материал пакета
-							</div>
+							<div className="text-center py-8 text-gray-500">Пожалуйста, сначала выберите материал пакета</div>
 						) : availableColors.length === 0 ? (
-							<div className="text-center py-8 text-gray-500">
-								Нет доступных цветов для выбранного материала
-							</div>
+							<div className="text-center py-8 text-gray-500">Нет доступных цветов для выбранного материала</div>
 						) : (
 							<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
 								{availableColors.map((color) => (
 									<button
 										key={color.id}
+										className="p-4 border rounded-lg hover:shadow-md hover:bg-primary hover:text-white transition-all flex gap-4 items-center"
+										title={color.name}
 										onClick={() => {
 											handleChange('color', color.name);
 											nextStep();
 										}}
-										className="p-4 border rounded-lg hover:shadow-md hover:bg-primary hover:text-white transition-all flex gap-4 items-center"
-										title={color.name}
 									>
-										<span
-											className="block basis-8 shrink-0 w-8 h-8 border rounded-full"
-											style={{ backgroundColor: color.value }}
-										/>
+										<span className="block basis-8 shrink-0 w-8 h-8 border rounded-full" style={{backgroundColor: color.value}} />
 										<span className="text-sm flex-1 line-clamp-1 truncate text-left">{color.name}</span>
 									</button>
 								))}
@@ -264,23 +263,19 @@ const PackageCalculator = () => {
 					<div className="space-y-4">
 						<h3 className="text-xl font-semibold mb-4">Выберите размер пакета</h3>
 						{!formData.materialId ? (
-							<div className="text-center py-8 text-gray-500">
-								Пожалуйста, сначала выберите материал пакета
-							</div>
+							<div className="text-center py-8 text-gray-500">Пожалуйста, сначала выберите материал пакета</div>
 						) : availableSizes.length === 0 ? (
-							<div className="text-center py-8 text-gray-500">
-								Нет доступных размеров для выбранного материала
-							</div>
+							<div className="text-center py-8 text-gray-500">Нет доступных размеров для выбранного материала</div>
 						) : (
 							<div className="space-y-3">
 								{availableSizes.map((size) => (
 									<button
 										key={size.id}
+										className="w-full p-4 border rounded-lg hover:bg-primary hover:text-white transition-colors text-left"
 										onClick={() => {
 											handleChange('size', size.name);
 											nextStep();
 										}}
-										className="w-full p-4 border rounded-lg hover:bg-primary hover:text-white transition-colors text-left"
 									>
 										{size.name}
 									</button>
@@ -297,11 +292,11 @@ const PackageCalculator = () => {
 							{printOptions.map((option) => (
 								<button
 									key={option.id}
+									className="w-full p-4 border rounded-lg hover:bg-primary hover:text-white transition-colors text-left"
 									onClick={() => {
 										handleChange('printColor', option.name);
 										nextStep();
 									}}
-									className="w-full p-4 border rounded-lg hover:bg-primary hover:text-white transition-colors text-left"
 								>
 									{option.name}
 								</button>
@@ -316,18 +311,18 @@ const PackageCalculator = () => {
 						<div className="space-y-6">
 							<Select
 								aria-label="Количество пакетов"
-								value={formData.quantity}
-								onChange={(e) => handleChange('quantity', parseInt(e.target.value))}
 								classNames={{
 									trigger: 'border-1 bg-background',
 								}}
-								radius="sm"
 								defaultSelectedKeys={[`${MIN_QUANTITY}`]}
+								radius="sm"
 								scrollShadowProps={{
 									isEnabled: false,
 								}}
+								value={formData.quantity}
+								onChange={(e) => handleChange('quantity', parseInt(e.target.value))}
 							>
-								{Array.from({ length: 19 }).map((_, i) => (
+								{Array.from({length: 19}).map((_, i) => (
 									<SelectItem key={i * 50 + MIN_QUANTITY} textValue={String(i * 50 + MIN_QUANTITY)}>
 										{i * 50 + MIN_QUANTITY} шт.
 									</SelectItem>
@@ -356,7 +351,7 @@ const PackageCalculator = () => {
 									</ul>
 								</div>
 
-								<Form className='items-stretch' id="calc-order-form" onSubmit={handleSubmit} validationBehavior='native'>
+								<Form className="items-stretch" id="calc-order-form" validationBehavior="native" onSubmit={handleSubmit}>
 									<h4 className="font-medium mb-4">Отправить выбранное в типографию</h4>
 									<div className="flex flex-col gap-3">
 										<UsernameInput />
@@ -372,12 +367,12 @@ const PackageCalculator = () => {
 					<div className="text-center py-8">
 						<div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
 							<svg className="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-								<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+								<path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} />
 							</svg>
 						</div>
 						<h3 className="text-xl font-semibold mb-2">Готово!</h3>
 						<p className="text-gray-600 mb-6">Мы получили ваш запрос и свяжемся с вами в ближайшее время для уточнения деталей.</p>
-						<Button onPress={() => setStep(1)} color="primary" radius="sm">
+						<Button color="primary" radius="sm" onPress={() => setStep(1)}>
 							Создать новый расчет
 						</Button>
 					</div>
@@ -406,7 +401,7 @@ const PackageCalculator = () => {
 						))}
 					</div>
 					<div className="w-full bg-gray-200 rounded-full h-2.5">
-						<div className="bg-blue-600 h-2.5 rounded-full transition-all duration-300" style={{ width: `${((step - 1) / 4) * 100}%` }}></div>
+						<div className="bg-blue-600 h-2.5 rounded-full transition-all duration-300" style={{width: `${((step - 1) / 4) * 100}%`}} />
 					</div>
 				</div>
 			)}
@@ -414,7 +409,7 @@ const PackageCalculator = () => {
 			{/* Form content */}
 			<div className="min-h-[400px]">
 				<AnimatePresence mode="wait">
-					<motion.div key={step} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.3 }}>
+					<motion.div key={step} animate={{opacity: 1, x: 0}} exit={{opacity: 0, x: -20}} initial={{opacity: 0, x: 20}} transition={{duration: 0.3}}>
 						{renderStep()}
 					</motion.div>
 				</AnimatePresence>
@@ -423,22 +418,22 @@ const PackageCalculator = () => {
 			{/* Navigation buttons */}
 			{step < 6 && (
 				<div className="flex justify-between mt-8 pt-4 border-t">
-					<button onClick={prevStep} disabled={step === 1} className={`px-4 py-2 rounded-lg ${step === 1 ? 'text-gray-400' : 'text-blue-600 hover:bg-blue-50'}`}>
+					<button className={`px-4 py-2 rounded-lg ${step === 1 ? 'text-gray-400' : 'text-blue-600 hover:bg-blue-50'}`} disabled={step === 1} onClick={prevStep}>
 						Назад
 					</button>
 
 					{step < 5 ? (
 						<Button
-							onPress={nextStep}
-							isDisabled={(!formData.material && step === 1) || (!formData.color && step === 2) || (!formData.size && step === 3) || (!formData.printColor && step === 4)}
 							color="primary"
+							isDisabled={(!formData.material && step === 1) || (!formData.color && step === 2) || (!formData.size && step === 3) || (!formData.printColor && step === 4)}
 							radius="sm"
-							type='button'
+							type="button"
+							onPress={nextStep}
 						>
 							Далее
 						</Button>
 					) : (
-						<Button type="submit" isLoading={isSubmitting} isDisabled={!phoneValid || isSubmitting} form="calc-order-form" color="primary" className="bg-brand-gradient" radius="sm">
+						<Button className="bg-brand-gradient" color="primary" form="calc-order-form" isDisabled={!phoneValid || isSubmitting} isLoading={isSubmitting} radius="sm" type="submit">
 							Отправить заявку
 						</Button>
 					)}
