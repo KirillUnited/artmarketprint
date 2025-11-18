@@ -3,14 +3,14 @@
  * @param post - Blog post object
  */
 import NextImage from 'next/image';
-import {Image} from '@heroui/image';
+import { Image } from '@heroui/image';
 
-import {Post} from '@/components/blog/lib/types';
-import {urlFor} from '@/sanity/lib/image';
-import {PostMetadata} from '@/components/blog/ui';
+import { Post } from '@/components/blog/lib/types';
+import { urlFor } from '@/sanity/lib/image';
+import { PostAvatar, PostMetadata } from '@/components/blog/ui';
 import CopyButton from '@/components/ui/button/CopyButton';
 
-export default function PostHeader({post}: {post: Post}) {
+export default function PostHeader({ post }: { post: Post }) {
 	return (
 		<header className="flex flex-col gap-4 mb-8">
 			<PostMetadata post={post} />
@@ -20,6 +20,7 @@ export default function PostHeader({post}: {post: Post}) {
 					<CopyButton className="ml-2" textToCopy={`${process.env.NEXT_PUBLIC_SERVER_URL}/blog/${post.slug?.current}` || ''} />
 				</h1>
 				<p className="text-lg text-neutral-700 dark:text-neutral-300">{post.excerpt}</p>
+				<PostAvatar post={post} />
 			</div>
 			<Image
 				priority
