@@ -56,7 +56,9 @@ export interface Category {
 	/** Category title */
 	title: string;
 	/** Category slug */
-	slug: string;
+	slug: {
+		current: string;
+	};
 	/** Category description */
 	description?: string;
 }
