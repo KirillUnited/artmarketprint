@@ -11,15 +11,13 @@ export default async function CalculatorPage() {
 	const data = await getCalculatorByType('package-calc');
 	const matrix = data ? await getMaterialMatrixByMaterialId(data.materials[0]?._id) : [];
 
-	console.log(matrix);
-
 	return (
 		<main className="min-h-screen py-12 bg-gray-50">
 			<div className="container mx-auto px-4">
 				<h1 className="text-3xl font-bold text-center mb-2">{data?.title}</h1>
 				{data?.description && <p className="text-center text-gray-600 mb-8 max-w-2xl mx-auto">{data.description}</p>}
 
-				<PackageCalculator />
+				<PackageCalculator matrix={matrix} />
 
 				<div className="mt-12 max-w-3xl mx-auto bg-white p-6 rounded-lg shadow-sm">
 					<h2 className="text-xl font-semibold mb-4">Как работает калькулятор?</h2>

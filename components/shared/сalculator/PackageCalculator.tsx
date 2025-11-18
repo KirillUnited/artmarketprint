@@ -13,7 +13,7 @@ import {colors, materials, MIN_QUANTITY, printOptions, pvdPriceTable, quantityDi
 import {getAvailableColors, getAvailableSizes} from '@/components/shared/сalculator/lib/utils';
 import {UsernameInput, UserPhoneInput} from '@/components/ui/form';
 
-const PackageCalculator = () => {
+const PackageCalculator = ({matrix}: {matrix: any}) => {
 	const [step, setStep] = useState(1);
 	const [formData, setFormData] = useState({
 		material: '',
@@ -50,6 +50,7 @@ const PackageCalculator = () => {
 	const availableSizes = formData.materialId ? getAvailableSizes(formData.materialId) : [];
 
 	const calculatePrice = () => {
+		console.log(matrix);
 		const selectedMaterial = materials.find((m) => m.id === formData.materialId);
 
 		if (!selectedMaterial) return;
