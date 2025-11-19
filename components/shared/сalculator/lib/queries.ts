@@ -41,3 +41,4 @@ export const CALCULATOR_MATERIALS_WITH_MATRICES = groq`
     }
   }
 }
+`
