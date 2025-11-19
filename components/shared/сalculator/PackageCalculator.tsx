@@ -13,7 +13,7 @@ import {colors, materials, MIN_QUANTITY, printOptions, pvdPriceTable, quantityDi
 import {getAvailableColors, getAvailableSizes} from '@/components/shared/сalculator/lib/utils';
 import {UsernameInput, UserPhoneInput} from '@/components/ui/form';
 
-const PackageCalculator = ({matrix}: {matrix: any}) => {
+const PackageCalculator = ({matrix=[]}: {matrix?: any}) => {
 	const [step, setStep] = useState(1);
 	const [formData, setFormData] = useState({
 		material: '',
