@@ -13,9 +13,11 @@ import PostCats from './ui/PostCats';
 
 export default function PostHeader({ post }: { post: Post }) {
 	return (
-		<header className="flex flex-col gap-4 mb-8">
-			<PostMetadata post={post} />
-			<PostCats categories={post?.categories || []} />
+		<header className="flex flex-col gap-8 mb-8">
+			<div className={'flex flex-wrap items-center gap-x-4 gap-y-2'}>
+				<PostMetadata post={post} />
+				<PostCats categories={post?.categories || []} />
+			</div>
 			<div className={'space-y-4'}>
 				<h1 className="text-3xl font-bold pb-4 border-b-1">
 					{post.title}
