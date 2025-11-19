@@ -55,18 +55,15 @@ export default async function PostDetailPage({params}: {params: Promise<Props>})
 	const {slug} = await params;
 	const post = await getPostBySlug(slug);
 
-	console.log(post);
-
 	if (!post) return notFound();
 
 	return (
 		<Section>
-			<div className={'container max-w-screen-xl'}>
-				{/* Breadcrumb navigation */}
-				<div className="mb-10">
+			<div className={'max-w-screen-xl'}>
+				<PostHeader post={post} />
+				<div className="mb-4">
 					<ServiceBreadcrumb service="Блог" serviceSlug="blog" title={post.title} />
 				</div>
-				<PostHeader post={post} />
 				<div className="flex flex-col gap-8">
 					{post?.body && (
 						<article className="flex-1">
