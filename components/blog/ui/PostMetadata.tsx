@@ -1,5 +1,5 @@
 import {JSX} from 'react';
-import {Calendar1Icon, Clock1Icon, User2Icon} from 'lucide-react';
+import {Calendar1Icon, Clock1Icon} from 'lucide-react';
 
 import {Category, Post} from '@/components/blog/lib/types';
 import { Chip } from '@heroui/chip';
@@ -16,10 +16,6 @@ export default function PostMetadata({post}: {post: Post}): JSX.Element {
 			<p className={'flex items-center gap-1'}>
 				<Calendar1Icon size={14} />
 				<span>{new Date(post?.publishDate || post?._createdAt).toLocaleDateString('ru', {dateStyle: 'medium'})}</span>
-			</p>
-			<p className={'flex items-center gap-1'}>
-				<User2Icon size={14} />
-				<span>{post.author?.name || ''}</span>
 			</p>
 			<p className={'flex items-center gap-1'}>
 				<Clock1Icon size={14} />
