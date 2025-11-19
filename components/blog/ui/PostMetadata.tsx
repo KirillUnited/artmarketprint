@@ -1,9 +1,8 @@
 import {JSX} from 'react';
-import {Calendar1Icon, Clock1Icon, User2Icon} from 'lucide-react';
+import {Calendar1Icon, Clock1Icon} from 'lucide-react';
+import {Chip} from '@heroui/chip';
 
 import {Category, Post} from '@/components/blog/lib/types';
-import { Chip } from '@heroui/chip';
-import PostAvatar from './PostAvatar';
 
 /**
  * A function that renders post metadata.
@@ -12,6 +11,7 @@ import PostAvatar from './PostAvatar';
  */
 export default function PostMetadata({post}: {post: Post}): JSX.Element {
 	const categories = post?.categories || [];
+
 	return (
 		<div className="flex flex-wrap items-center text-xs text-neutral-500 gap-4 mb-2">
 			<p className={'flex items-center gap-1'}>
@@ -22,11 +22,9 @@ export default function PostMetadata({post}: {post: Post}): JSX.Element {
 				<Clock1Icon size={14} />
 				<span>{post.readingTime || '5'} мин</span>
 			</p>
-			{
-				categories?.map((category: Category) => (
-					<Chip key={category.slug?.current || ''}>{category.title}</Chip>
-				))
-			}
+			{categories?.map((category: Category) => (
+				<Chip key={category.slug?.current || ''}>{category.title}</Chip>
+			))}
 		</div>
 	);
 }
