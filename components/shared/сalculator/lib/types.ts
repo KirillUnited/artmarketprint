@@ -1,7 +1,8 @@
 export type PriceCell = {
 	printKey: '1+0' | '2+0' | '3+0' | '4+0' | '1+1' | '2+2';
-	per100: number;
-	per1000: number;
+	priceTable: {
+		[key: string]: number;
+	};
 };
 
 export type SizeRef = {
