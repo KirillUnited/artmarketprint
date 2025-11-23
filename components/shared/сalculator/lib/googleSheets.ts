@@ -3,8 +3,10 @@ import Papa from 'papaparse';
 
 import {PriceEntry} from '@/components/shared/сalculator/lib/types';
 
-export async function fetchPriceData(): Promise<PriceEntry[]> {
-	const SHEET_URL = 'https://docs.google.com/spreadsheets/d/1cLq4KtBDIr8PVQlzcvf99t1Iw9vUjhx1/gviz/tq?tqx=out:csv&sheet=%D0%9B%D0%B8%D1%81%D1%82%202';
+export async function fetchPriceData(sheetName: string): Promise<PriceEntry[]> {
+	const BASE_URL = 'https://docs.google.com/spreadsheets/d/1cLq4KtBDIr8PVQlzcvf99t1Iw9vUjhx1/gviz/tq?tqx=out:csv';
+
+	const SHEET_URL = `${BASE_URL}&sheet=${encodeURIComponent(sheetName)}`;
 
 	try {
 		const response = await fetch(SHEET_URL, {
