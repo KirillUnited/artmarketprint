@@ -59,7 +59,7 @@ export default async function PostDetailPage({params}: {params: Promise<Props>})
 
 	return (
 		<Section>
-			<div className={'max-w-screen-xl'}>
+			<div className={'max-w-screen-lg mx-auto'}>
 				<PostHeader post={post} />
 				<div className="mb-4">
 					<ServiceBreadcrumb service="Блог" serviceSlug="blog" title={post.title} />

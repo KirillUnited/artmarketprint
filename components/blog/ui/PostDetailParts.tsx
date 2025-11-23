@@ -15,7 +15,7 @@ export async function RelatedPosts({currentPostId}: {currentPostId: string}) {
 
 	return (
 		<SectionInner>
-			<SectionTitle>Похожие статьи</SectionTitle>
+			<SectionTitle>Ещё статьи</SectionTitle>
 			<PostListing posts={relatedPosts} />
 		</SectionInner>
 	);
