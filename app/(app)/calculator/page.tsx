@@ -11,7 +11,7 @@ export const metadata = {
 export default async function CalculatorPage() {
 	const data = await getCalculatorByType('package-calc');
 	const matrix = data ? await getMaterialMatrixByMaterialId(data.materials[0]?._id) : [];
-	const dataFromGoogleSheet = await Promise.all([fetchPriceData('20х30'), fetchPriceData('30х40'), fetchPriceData('40х50'), fetchPriceData('50х60')]);
+	const dataFromGoogleSheet = await Promise.all([fetchPriceData('20x30'), fetchPriceData('30x40'), fetchPriceData('40x50'), fetchPriceData('50x60')]);
 
 	console.log('Data From Google Sheet', dataFromGoogleSheet);
 
