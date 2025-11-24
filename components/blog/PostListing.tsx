@@ -1,8 +1,11 @@
+'use client';
+
 import styles from './styles.module.css';
 
 import {Post} from '@/components/blog/lib/types';
 import {PostCard} from '@/components/blog/ui';
 import {cn} from '@/lib/utils';
+import {Carousel} from '@/components/shared/carousel';
 
 interface PostListingProps {
 	posts: Post[];
@@ -15,5 +18,7 @@ const PostListing = ({posts}: PostListingProps) => (
 		))}
 	</div>
 );
+const PostListingCarousel = ({posts}: PostListingProps) => <Carousel items={posts} renderProps={(item) => <PostCard key={item.slug.current} post={item} />} />;
 
 export default PostListing;
+export {PostListingCarousel};
