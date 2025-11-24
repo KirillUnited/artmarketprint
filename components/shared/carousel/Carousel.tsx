@@ -1,15 +1,18 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { Swiper, SwiperProps, SwiperSlide } from 'swiper/react';
-import { Autoplay, Navigation, Pagination } from 'swiper/modules';
-import type { Swiper as SwiperType } from 'swiper';
-import { ChevronLeft, ChevronRight, LoaderIcon } from 'lucide-react';
-import { Button } from '@heroui/button';
-import { FeaturedCategoryThumb } from "@/components/shared/category/ui";
-import { ServicePreview } from "@/components/shared/service/ServicePreview";
-import { clsx } from "clsx";
+import type {Swiper as SwiperType} from 'swiper';
+
+import {useEffect, useState} from 'react';
+import {Swiper, SwiperProps, SwiperSlide} from 'swiper/react';
+import {Autoplay, Navigation, Pagination} from 'swiper/modules';
+import {ChevronLeft, ChevronRight, LoaderIcon} from 'lucide-react';
+import {Button} from '@heroui/button';
+import {clsx} from 'clsx';
+
 import styles from './carousel.module.css';
+
+import {FeaturedCategoryThumb} from '@/components/shared/category/ui';
+import {ServicePreview} from '@/components/shared/service/ServicePreview';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -23,6 +26,7 @@ const MOBILE_BREAKPOINT = 768;
 interface CarouselProps extends SwiperProps {
 	items?: any[];
 	type?: 'category' | 'service' | 'product';
+	renderProps?: (item: any) => React.ReactNode;
 }
 
 const renderItem = (item: any, type?: 'category' | 'service' | 'product') => {
@@ -38,7 +42,7 @@ const renderItem = (item: any, type?: 'category' | 'service' | 'product') => {
 	}
 };
 
-export const Carousel = ({ items, type, className }: CarouselProps) => {
+export const Carousel = ({items, type, className, renderProps}: CarouselProps) => {
 	const [isMounted, setIsMounted] = useState(false);
 	const [isMobile, setIsMobile] = useState(false);
 	const [swiper, setSwiper] = useState<SwiperType | null>(null);
@@ -51,6 +55,7 @@ export const Carousel = ({ items, type, className }: CarouselProps) => {
 
 		handleResize();
 		window.addEventListener('resize', handleResize);
+
 		return () => window.removeEventListener('resize', handleResize);
 	}, []);
 
@@ -67,7 +72,7 @@ export const Carousel = ({ items, type, className }: CarouselProps) => {
 					<div className={styles.carouselTrack}>
 						{items?.map((item) => (
 							<div key={item.title} className={styles.carouselSlide}>
-								{renderItem(item, type)}
+								{renderProps ? renderProps(item) : renderItem(item, type)}
 							</div>
 						))}
 					</div>
@@ -75,41 +80,29 @@ export const Carousel = ({ items, type, className }: CarouselProps) => {
 			) : (
 				<>
 					<Swiper
-						onSwiper={setSwiper}
-						slidesPerView={ITEMS_PER_SLIDE}
-						spaceBetween={32}
-						modules={[Navigation, Pagination, Autoplay]}
-						className={clsx(styles.swiper, className || '')}
-						speed={1000}
 						autoplay={{
 							delay: 5000,
 							disableOnInteraction: false,
 							pauseOnMouseEnter: true,
 						}}
+						className={clsx(styles.swiper, className || '')}
 						loop={true}
+						modules={[Navigation, Pagination, Autoplay]}
+						slidesPerView={ITEMS_PER_SLIDE}
+						spaceBetween={32}
+						speed={1000}
+						onSwiper={setSwiper}
 					>
 						{items.map((item) => (
-							<SwiperSlide key={item.title}>
-								{renderItem(item, type)}
-							</SwiperSlide>
+							<SwiperSlide key={item.title}>{renderProps ? renderProps(item) : renderItem(item, type)}</SwiperSlide>
 						))}
 					</Swiper>
 					{shouldShowNavigation && (
 						<>
-							<Button
-								size="sm"
-								isIconOnly
-								onPress={() => swiper?.slidePrev()}
-								className={clsx(styles.swiperNavigation, 'left-0')}
-							>
+							<Button isIconOnly className={clsx(styles.swiperNavigation, 'left-0')} size="sm" onPress={() => swiper?.slidePrev()}>
 								<ChevronLeft className="h-6 w-6" />
 							</Button>
-							<Button
-								size="sm"
-								isIconOnly
-								onPress={() => swiper?.slideNext()}
-								className={clsx(styles.swiperNavigation, 'right-0')}
-							>
+							<Button isIconOnly className={clsx(styles.swiperNavigation, 'right-0')} size="sm" onPress={() => swiper?.slideNext()}>
 								<ChevronRight className="h-6 w-6" />
 							</Button>
 						</>

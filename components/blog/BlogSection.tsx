@@ -3,9 +3,9 @@ import {JSX} from 'react';
 import styles from './styles.module.css';
 
 import Section, {SectionButton, SectionDescription, SectionHeading, SectionSubtitle, SectionTitle} from '@/components/layout/Section';
-import {PostListing} from '@/components/blog/index';
 import {getAllPosts} from '@/components/blog/lib/fetch-data';
 import {cn} from '@/lib/utils';
+import {PostListingCarousel} from '@/components/blog/PostListing';
 
 interface BlogHeaderProps {
 	title?: string;
@@ -38,7 +38,7 @@ export const BlogSection = async () => {
 	return (
 		<Section className="relative" id="blog">
 			<BlogHeader description="Читайте актуальные новости и статьи о современной печати и тенденциях рынка." subtitle="Новости и статьи" title="Блог" />
-			<PostListing posts={posts} />
+			<PostListingCarousel posts={posts} />
 			<SectionButton className="self-start" href={'/blog'} label="Все статьи" />
 		</Section>
 	);
