@@ -11,9 +11,9 @@ export const metadata = {
 export default async function CalculatorPage() {
 	const data = await getCalculatorByType('package-calc');
 	const matrix = data ? await getMaterialMatrixByMaterialId(data.materials[0]?._id) : [];
-	const dataFromGoogle = await fetchPriceData('30х40');
+	const dataFromGoogleSheet = await Promise.all([fetchPriceData('20х30'), fetchPriceData('30х40'), fetchPriceData('40х50'), fetchPriceData('50х60')]);
 
-	console.log('dataFromGoogle', dataFromGoogle);
+	console.log('Data From Google Sheet', dataFromGoogleSheet);
 
 	return (
 		<main className="min-h-screen py-12 bg-gray-50">
