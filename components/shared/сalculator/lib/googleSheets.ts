@@ -1,7 +1,7 @@
 // lib/googleSheets.ts
 import Papa from 'papaparse';
 
-import {PriceEntry} from '@/components/shared/сalculator/lib/types';
+import {PriceEntry, QuantityTiers} from '@/components/shared/сalculator/lib/types';
 
 export async function fetchPriceData(sheetName: string): Promise<PriceEntry[]> {
 	const BASE_URL = 'https://docs.google.com/spreadsheets/d/1cLq4KtBDIr8PVQlzcvf99t1Iw9vUjhx1/gviz/tq?tqx=out:csv';
@@ -122,4 +122,79 @@ export async function fetchPriceData(sheetName: string): Promise<PriceEntry[]> {
 
 		return [];
 	}
+}
+
+export function formatPriceTable(dataFromGoogleSheet: PriceEntry[][]) {
+	return dataFromGoogleSheet.flatMap((sheetData) => {
+		// Group by size
+		const groupedBySize = sheetData.reduce(
+			(acc, item) => {
+				if (!acc[item.size]) {
+					acc[item.size] = [];
+				}
+				acc[item.size].push(item);
+
+				return acc;
+			},
+			{} as Record<string, typeof sheetData>,
+		);
+
+		// Convert to pvdPriceTable format
+		return Object.entries(groupedBySize).map(([size, items]) => {
+			const prices = items.reduce(
+				(acc, item) => {
+					// Convert type to the format used in mock data (e.g., "1+0", "2+0", etc.)
+					const printType = item.type;
+
+					// Map all quantity tiers
+					const quantityTiers = {
+						'100': item.per100,
+						'150': item.per150,
+						'200': item.per200,
+						'250': item.per250,
+						'300': item.per300,
+						'350': item.per350,
+						'400': item.per400,
+						'450': item.per450,
+						'500': item.per500,
+						'550': item.per550,
+						'600': item.per600,
+						'650': item.per650,
+						'700': item.per700,
+						'750': item.per750,
+						'800': item.per800,
+						'850': item.per850,
+						'900': item.per900,
+						'950': item.per950,
+						'1000': item.per1000,
+					};
+
+					// Calculate regular and discounted prices
+					const regularPrice = item.per100 || 0;
+					const discountedPrice = item.per1000 || 0; // or calculate based on your discount logic
+
+					return {
+						...acc,
+						[printType]: {
+							...quantityTiers,
+							regular: regularPrice,
+							discounted: discountedPrice,
+						},
+					};
+				},
+				{} as Record<string, QuantityTiers>,
+			);
+
+			return {
+				size,
+				prices,
+			};
+		});
+	});
+}
+
+export async function getPriceTable() {
+	const dataFromGoogleSheet = await Promise.all([fetchPriceData('20x30'), fetchPriceData('30x40'), fetchPriceData('40x50'), fetchPriceData('50x60')]);
+
+	return formatPriceTable(dataFromGoogleSheet);
 }
