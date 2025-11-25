@@ -17,7 +17,7 @@ export default async function CalculatorPage() {
 				<h1 className="text-3xl font-bold text-center mb-2">{'Калькулятор стоимости пакетов ArtMarketPrint'}</h1>
 				{<p className="text-center text-gray-600 mb-8 max-w-2xl mx-auto">{'Заполните параметры и получите расчет стоимости вашего заказа. Минимальный тираж - 100 штук.'}</p>}
 
-				<PackageCalculator />
+				<PackageCalculator matrix={pvdPriceTable} />
 
 				<div className="mt-12 max-w-3xl mx-auto bg-white p-6 rounded-lg shadow-sm">
 					<h2 className="text-xl font-semibold mb-4">Как работает калькулятор?</h2>
