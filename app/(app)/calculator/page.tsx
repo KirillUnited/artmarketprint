@@ -1,5 +1,5 @@
 import {PackageCalculator} from '@/components/shared/сalculator';
-import {fetchPriceData} from '@/components/shared/сalculator/lib/googleSheets';
+import {getPriceTable} from '@/components/shared/сalculator/lib/googleSheets';
 
 export const metadata = {
 	title: 'Калькулятор стоимости пакетов | ArtMarketPrint',
@@ -7,15 +7,15 @@ export const metadata = {
 };
 
 export default async function CalculatorPage() {
-	// const dataFromGoogleSheet = await Promise.all([fetchPriceData('20x30'), fetchPriceData('30x40'), fetchPriceData('40x50'), fetchPriceData('50x60')]);
+	const pvdPriceTable = await getPriceTable();
 
-	// console.log('Data From Google Sheet', dataFromGoogleSheet);
+	console.log('Transformed Price Table:', pvdPriceTable);
 
 	return (
 		<main className="min-h-screen py-12 bg-gray-50">
 			<div className="container mx-auto px-4">
-				<h1 className="text-3xl font-bold text-center mb-2">{`Калькулятор стоимости пакетов ArtMarketPrint`}</h1>
-				{<p className="text-center text-gray-600 mb-8 max-w-2xl mx-auto">{`Заполните параметры и получите расчет стоимости вашего заказа. Минимальный тираж - 100 штук.`}</p>}
+				<h1 className="text-3xl font-bold text-center mb-2">{'Калькулятор стоимости пакетов ArtMarketPrint'}</h1>
+				{<p className="text-center text-gray-600 mb-8 max-w-2xl mx-auto">{'Заполните параметры и получите расчет стоимости вашего заказа. Минимальный тираж - 100 штук.'}</p>}
 
 				<PackageCalculator />
 
