@@ -2,9 +2,7 @@
 import {Button} from '@heroui/button';
 import {ReactElement, useState} from 'react';
 import {CheckIcon, CopyIcon} from 'lucide-react';
-
-import {cn} from '@/lib/utils'; // Optional icons
-
+import {clsx} from 'clsx';
 /**
  * A button that copies the provided text to the clipboard.
  * @param {string} textToCopy - The text to copy.
@@ -28,7 +26,7 @@ export default function CopyButton({textToCopy, className}: {textToCopy: string;
 	return (
 		<Button
 			isIconOnly
-			className={cn('border-1', className)}
+			className={clsx('border-1', className)}
 			color={copied ? 'success' : 'primary'}
 			size={'sm'}
 			startContent={copied ? <CheckIcon className="w-4 h-4" /> : <CopyIcon className="w-4 h-4" />}

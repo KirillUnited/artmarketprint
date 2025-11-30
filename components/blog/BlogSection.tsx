@@ -1,11 +1,11 @@
 import {JSX} from 'react';
+import {clsx} from 'clsx';
 
 import styles from './styles.module.css';
 
 import Section, {SectionButton, SectionDescription, SectionHeading, SectionSubtitle, SectionTitle} from '@/components/layout/Section';
 import {getAllPosts} from '@/components/blog/lib/fetch-data';
-import {cn} from '@/lib/utils';
-import {PostListingCarousel} from '@/components/blog/PostListing';
+import {PostListingCarousel} from '@/components/blog';
 
 interface BlogHeaderProps {
 	title?: string;
@@ -21,7 +21,7 @@ interface BlogHeaderProps {
  */
 export const BlogHeader = ({title = '', subtitle = '', description = '', className = ''}: BlogHeaderProps): JSX.Element => {
 	return (
-		<header className={cn(styles.BlogHeader, className)}>
+		<header className={clsx(styles.BlogHeader, className)}>
 			<SectionHeading>
 				{subtitle && <SectionSubtitle>{subtitle}</SectionSubtitle>}
 				{title && <SectionTitle>{title}</SectionTitle>}
