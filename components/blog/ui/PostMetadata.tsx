@@ -1,9 +1,10 @@
 import {JSX} from 'react';
 import {Calendar1Icon, Clock1Icon} from 'lucide-react';
+import {clsx} from 'clsx';
 
-import { Post} from '@/components/blog/lib/types';
-import { cn } from '@/lib/utils';
 import styles from './styles.module.css';
+
+import {Post} from '@/components/blog/lib/types';
 
 /**
  * A function that renders post metadata.
@@ -12,7 +13,7 @@ import styles from './styles.module.css';
  */
 export default function PostMetadata({post}: {post: Post}): JSX.Element {
 	return (
-		<div className={cn(styles.PostMetadata)}>
+		<div className={clsx(styles.PostMetadata)}>
 			<p className={'flex items-center gap-1'}>
 				<Calendar1Icon size={14} />
 				<span>{new Date(post?.publishDate || post?._createdAt).toLocaleDateString('ru', {dateStyle: 'medium'})}</span>

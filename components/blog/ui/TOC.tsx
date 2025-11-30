@@ -29,14 +29,7 @@ export default function TOC({body}: {body: PortableTextBlock[]}) {
 		});
 
 	if (headings.length === 0) {
-		return (
-			<nav className="mb-6 p-4 bg-neutral-100 dark:bg-neutral-800 rounded">
-				<span className="font-semibold text-neutral-700 dark:text-neutral-200">Table of Contents</span>
-				<ul className="mt-2 text-sm text-neutral-600 dark:text-neutral-300">
-					<li>(No headings found)</li>
-				</ul>
-			</nav>
-		);
+		return null;
 	}
 
 	return (

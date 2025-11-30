@@ -11,7 +11,7 @@ import {SectionInner, SectionTitle} from '@/components/layout/Section';
 export async function RelatedPosts({currentPostId}: {currentPostId: string}) {
 	const relatedPosts = await getRelatedPosts(currentPostId);
 
-	console.log('related posts:', relatedPosts);
+	if (!relatedPosts) return null;
 
 	return (
 		<SectionInner>
