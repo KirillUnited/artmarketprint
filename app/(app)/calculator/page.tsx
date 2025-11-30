@@ -1,15 +1,15 @@
+import {Metadata} from 'next';
+
 import {PackageCalculator} from '@/components/shared/сalculator';
 import {getPriceTable} from '@/components/shared/сalculator/lib/googleSheets';
 
-export const metadata = {
+export const metadata: Metadata = {
 	title: 'Калькулятор стоимости пакетов | ArtMarketPrint',
 	description: 'Рассчитайте стоимость заказа пакетов с логотипом онлайн. Выберите параметры и получите расчет за несколько кликов.',
 };
 
 export default async function CalculatorPage() {
 	const pvdPriceTable = await getPriceTable();
-
-	console.log('Transformed Price Table:', pvdPriceTable);
 
 	return (
 		<main className="min-h-screen py-12 bg-gray-50">
