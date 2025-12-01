@@ -1,5 +1,5 @@
 // Helper functions to get available options
-import {Color, colors, materials, Size, sizes} from '@/components/shared/сalculator/mock-data';
+import {Color, COLOR_EXTRA_PRICE, colors, materials, Size, sizes} from '@/components/shared/сalculator/mock-data';
 import {QuantityTiers} from '@/components/shared/сalculator/lib/types';
 
 const getAvailableColors = (materialId: string): Color[] => {
@@ -18,7 +18,7 @@ const getAvailableSizes = (materialId: string): Size[] => {
 	return sizes.filter((size) => material.availableSizes.includes(size.id));
 };
 
-const calculatePVDPrice = (priceTable: any, selectedSize: Size, selectedPrint: any, quantity: any) => {
+const calculatePVDPrice = (priceTable: any, selectedSize: Size, selectedPrint: any, selectedColor: any, quantity: any) => {
 	const priceEntry = priceTable.find((entry: any) => {
 		return entry.size === selectedSize.id;
 	});
@@ -41,7 +41,7 @@ const calculatePVDPrice = (priceTable: any, selectedSize: Size, selectedPrint: a
 		}
 	}
 
-	return pricePerBagValue;
+	return selectedColor?.id === 'white' ? pricePerBagValue : pricePerBagValue + COLOR_EXTRA_PRICE.colored;
 };
 
 export {getAvailableColors, getAvailableSizes, calculatePVDPrice};
