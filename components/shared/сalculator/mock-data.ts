@@ -46,6 +46,11 @@ export const colors: Color[] = [
 	{id: 'transparent', name: 'Прозрачный', value: 'transparent'},
 ];
 
+export const COLOR_EXTRA_PRICE = {
+	DEFAULT: 0,
+	colored: 0.08,
+};
+
 export const sizes: Size[] = [
 	{id: '20x30', name: '20x30 см', multiplier: 1},
 	{id: '30x40', name: '30x40 см', multiplier: 1.31},
