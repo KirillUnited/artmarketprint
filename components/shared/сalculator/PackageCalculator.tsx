@@ -56,6 +56,7 @@ const PackageCalculator = ({matrix = []}: {matrix?: any}) => {
 
 		const selectedSize = availableSizes.find((s) => s.name === formData.size);
 		const selectedPrint = printOptions.find((p) => p.name === formData.printColor);
+		const selectedColor = colors.find((c) => c.name === formData.color);
 
 		let pricePerBagValue = 0;
 		let totalPriceValue = 0;
@@ -63,48 +64,8 @@ const PackageCalculator = ({matrix = []}: {matrix?: any}) => {
 
 		// If it's a PVD material, use the price table
 		if (selectedMaterial.id === 'pvd' && selectedSize && selectedPrint) {
-			pricePerBagValue = calculatePVDPrice(matrix, selectedSize, selectedPrint, quantity);
+			pricePerBagValue = calculatePVDPrice(matrix, selectedSize, selectedPrint, selectedColor, quantity);
 			totalPriceValue = pricePerBagValue * quantity;
-
-			console.log('Price per bag:', pricePerBagValue);
-			console.log('Total price:', totalPriceValue);
-			// // Extract size ID from the selected size
-			// const sizeId = selectedSize.id;
-			// // Extract print option ID from the selected print option
-			// const printId = selectedPrint.id;
-			//
-			// // Find the price entry for the selected size
-			// const priceEntry = pvdPriceTable.find((entry) => entry.size === sizeId);
-			//
-			// if (priceEntry && priceEntry.prices[printId]) {
-			// 	// Determine if we should use the regular or discounted price based on quantity
-			// 	const useDiscountedPrice = quantity >= 200;
-			//
-			// 	pricePerBagValue = useDiscountedPrice ? priceEntry.prices[printId].discounted : priceEntry.prices[printId].regular;
-			//
-			// 	// Calculate total price (price per bag * quantity)
-			// 	totalPriceValue = (pricePerBagValue * quantity) / 1; // Price is per 100 packages
-			// } else {
-			// 	// Fallback to the old calculation method if price not found in table
-			// 	let basePrice = selectedMaterial.price;
-			//
-			// 	// Apply size multiplier if size is selected
-			// 	if (selectedSize) {
-			// 		basePrice *= selectedSize.multiplier;
-			// 	}
-			//
-			// 	// Apply print multiplier if print option is selected
-			// 	if (selectedPrint) {
-			// 		basePrice *= selectedPrint.multiplier;
-			// 	}
-			//
-			// 	// Apply quantity discount
-			// 	const discountTier = [...quantityDiscounts].sort((a, b) => b.min - a.min).find((tier) => quantity >= tier.min);
-			// 	const discount = discountTier ? discountTier.discount : 0;
-			//
-			// 	pricePerBagValue = basePrice * (1 - discount);
-			// 	totalPriceValue = pricePerBagValue * quantity;
-			// }
 		} else {
 			// For other materials, use the original calculation method
 			let basePrice = selectedMaterial.price;
