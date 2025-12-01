@@ -89,7 +89,7 @@ export const Carousel = ({items, type, className, renderProps}: CarouselProps) =
 						loop={true}
 						modules={[Navigation, Pagination, Autoplay]}
 						slidesPerView={ITEMS_PER_SLIDE}
-						spaceBetween={32}
+						spaceBetween={16}
 						speed={1000}
 						onSwiper={setSwiper}
 					>
