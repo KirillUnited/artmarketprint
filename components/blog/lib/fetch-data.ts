@@ -1,5 +1,5 @@
 import {sanityFetch} from '@/sanity/lib/sanityFetch';
-import {ALL_POSTS_QUERY, POST_BY_SLUG_QUERY, POSTS_BY_CATEGORY_QUERY, RELATED_POSTS_QUERY} from '@/components/blog/lib/queries';
+import {ALL_POSTS_QUERY, CATEGORIES_QUERY, POST_BY_SLUG_QUERY, POSTS_BY_CATEGORY_QUERY, RELATED_POSTS_QUERY} from '@/components/blog/lib/queries';
 
 /**
  * Fetch all blog posts ordered by publish date.
@@ -59,6 +59,18 @@ export const getRelatedPosts = async (categoryId: string) => {
 		return posts || [];
 	} catch (error) {
 		console.error('Error fetching related posts:', error);
+
+		return [];
+	}
+};
+
+export const getAllCategories = async () => {
+	try {
+		const categories = await sanityFetch({query: CATEGORIES_QUERY});
+
+		return categories || [];
+	} catch (error) {
+		console.error('Error fetching all categories:', error);
 
 		return [];
 	}
