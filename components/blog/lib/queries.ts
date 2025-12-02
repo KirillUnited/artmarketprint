@@ -33,9 +33,31 @@ export const POST_BY_SLUG_QUERY = defineQuery(`*[_type == "blog.post" && slug.cu
   ${POST}
 }`);
 
-export const POSTS_BY_CATEGORY_QUERY = defineQuery(`*[_type == "blog.post" && references(^.categoryId)]|order(publishDate desc){
+export const POSTS_BY_CATEGORY_QUERY = defineQuery(`*[_type == "blog.post" && 
+  $categorySlug in categories[]->slug.current
+] | order(publishDate desc) {
   ${POST}
 }`);
 export const RELATED_POSTS_QUERY = defineQuery(`*[_type == 'blog.post' && count(categories[@._ref in ^.categories[]._ref]) > 0 && _id != $categoryId]|order(publishDate desc){
   ${POST}
+}`);
+export const CATEGORIES_QUERY = defineQuery(`*[_type == "blog.category"]|order(title asc){
+  _id,
+  title,
+  slug,
+  seo {
+    title, 
+    description, 
+    "ogImage": image.asset->url
+  }
+}`);
+export const CATEGORY_BY_SLUG_QUERY = defineQuery(`*[_type == "blog.category" && slug.current == $slug][0]{
+  _id,
+  title,
+  slug,
+  seo {
+    title, 
+    description, 
+    "ogImage": image.asset->url
+  }
 }`);
