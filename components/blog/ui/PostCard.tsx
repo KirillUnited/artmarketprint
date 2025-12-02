@@ -3,15 +3,11 @@
  * @param post - Blog post object
  */
 import Link from 'next/link';
-import {ArrowRightIcon} from 'lucide-react';
 import {Image} from '@heroui/image';
 import NextImage from 'next/image';
 import {Card, CardBody, CardFooter, CardHeader} from '@heroui/card';
-import {Button} from '@heroui/button';
 
 import {Post} from '../lib/types';
-
-import PostMetadata from './PostMetadata';
 
 import {urlFor} from '@/sanity/lib/image';
 
@@ -25,9 +21,10 @@ export const POST_CARD_VARIANTS: Record<PostCardVariant, PostCardVariant> = {
 export type PostCardProps = {
 	post: Post;
 	variant?: PostCardVariant;
+	footerSlot?: React.ReactNode;
 };
 
-export default function PostCard({post, variant = POST_CARD_VARIANTS.default}: PostCardProps) {
+export default function PostCard({post, variant = POST_CARD_VARIANTS.default, footerSlot}: PostCardProps) {
 	return (
 		<Card isHoverable as={'article'} className="hover:shadow-xl border hover:border-primary-300 transition-all">
 			{post?.featuredImage && (
@@ -46,7 +43,7 @@ export default function PostCard({post, variant = POST_CARD_VARIANTS.default}: P
 					/>
 				</Link>
 			)}
-			<CardHeader className="pb-0">
+			<CardHeader>
 				<h2 className="text-xl font-semibold mb-2 leading-none line-clamp-3 text-gray-900 dark:text-gray-100">
 					<Link className="block" href={`/blog/${post?.slug?.current || ''}`}>
 						{post.title}
@@ -58,12 +55,7 @@ export default function PostCard({post, variant = POST_CARD_VARIANTS.default}: P
 					<p className="text-neutral-600 dark:text-neutral-300 line-clamp-4">{post.excerpt}</p>
 				</CardBody>
 			)}
-			<CardFooter className="mt-auto max-xl:flex-col max-xl:items-stretch gap-2 justify-between text-sm text-neutral-500 flex-wrap">
-				<PostMetadata post={post} />
-				<Button as={Link} className="inline-flex items-center gap-1" color={'primary'} href={`/blog/${post?.slug?.current || ''}`} size="md" variant="light">
-					Читать далее <ArrowRightIcon size={16} />
-				</Button>
-			</CardFooter>
+			{footerSlot && <CardFooter className="mt-auto max-xl:flex-col max-xl:items-stretch gap-2 justify-between text-sm text-neutral-500 flex-wrap border-t-1">{footerSlot}</CardFooter>}
 		</Card>
 	);
 }
