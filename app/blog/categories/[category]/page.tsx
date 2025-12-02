@@ -9,7 +9,7 @@ export interface Props {
 
 export default async function BlogCategoryPage({params}: {params: Promise<Props>}) {
 	const {category} = await params;
-	const posts: any = await sanityFetch({query: POSTS_BY_CATEGORY_QUERY, params: {slug: category}});
+	const posts: any = await sanityFetch({query: POSTS_BY_CATEGORY_QUERY, params: {categorySlug: category}});
 
 	console.log(posts);
 

@@ -4,4 +4,6 @@ import TOC from './TOC';
 import PostMetadata from './PostMetadata';
 import PostAvatar from './PostAvatar';
 
-export {PostCard, RelatedPosts, Comments, ShareButtons, TOC, PostMetadata, PostAvatar};
+import PostCatFilter from '@/components/blog/ui/PostFilter';
+
+export {PostCard, RelatedPosts, Comments, ShareButtons, TOC, PostMetadata, PostAvatar, PostCatFilter};

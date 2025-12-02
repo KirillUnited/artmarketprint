@@ -16,6 +16,8 @@ export default async function BlogPage() {
 
 	if (!Array.isArray(posts) || posts.length === 0) return <NotFound />;
 
+	console.log(posts[0].categories);
+
 	return (
 		<Section>
 			<SectionHeading>
