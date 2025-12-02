@@ -1,6 +1,10 @@
 import { client } from './client';
 
-const DOC_TYPE = 'product'; // Replace with the type you want to delete
+export const DOC_TYPE = {
+  product: 'product',
+  category: 'category',
+  post: 'post',
+}; // Replace with the type you want to delete
 
 export async function deleteAllOfType(type: string) {
   await client.delete({ query: `*[_type == $type]`, params: { type } })
