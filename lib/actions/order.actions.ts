@@ -1,48 +1,39 @@
 'use server';
+
 import axios from 'axios';
 
 const telegramBotToken = process.env.TELEGRAM_BOT_TOKEN;
 const chatId = process.env.TELEGRAM_CHAT_ID;
 const BASE_URL = `https://api.telegram.org/bot${telegramBotToken}/sendMessage`;
 
-export async function sendOrder(formData: FormData): Promise<any> {
-	const formId = formData.get('form_id') as string;
-	const name = formData.get('user_name') as string;
-	const phone = formData.get('user_phone') as string;
-	const comment = formData.get('user_comment') as string;
-	const termsChecked = formData.get('layout_image_terms') as string;
-	const message = `📝 Новый заказ для "${formId || '💬 Консультация'}":\n\n👤 Имя: ${name}\n📱 Телефон: ${phone}\n💭 Комментарий: ${comment}\n✅ Ознакомлен с требованиями к макету`;
-
-	return await axios
-		.post(BASE_URL, {
-			chat_id: chatId,
-			text: message,
-		})
-		.then((response) => {
-			console.log('Message sent to Telegram:', response.data);
-			return response.data;
-		})
-		.catch((error) => {
-			console.error('Error sending message to Telegram:', error);
-			throw error;
-		});
-}
+/* -----------------------------------------------------------
+   1. Отправка текстового сообщения (всегда безопасно)
+----------------------------------------------------------- */
 
 export async function createProductCheckoutOrder(formData: FormData): Promise<any> {
-	const email = formData.get('email') as string;
-	const firstName = formData.get('first-name') as string;
-	const lastName = formData.get('last-name') as string;
-	const address = formData.get('address') as string;
-	const city = formData.get('city') as string;
-	const country = formData.get('country') as string;
-	const postalCode = formData.get('postal-code') as string;
-	const phone = formData.get('user_phone') as string;
-	const items = JSON.parse(formData.get('items') as string);
-	const requisites = formData.get('requisites') as string;
-	const requisitesPdf = formData.get('requisites-pdf') as File;
-	const comment = formData.get('comment') as string;
+	try {
+		const email = formData.get('email') as string;
+		const firstName = formData.get('first-name') as string;
+		const lastName = formData.get('last-name') as string;
+		const address = formData.get('address') as string;
+		const city = formData.get('city') as string;
+		const country = formData.get('country') as string;
+		const postalCode = formData.get('postal-code') as string;
+		const phone = formData.get('user_phone') as string;
 
-	const message = `
+		const itemsRaw = formData.get('items');
+		let items: any[] = [];
+
+		try {
+			items = itemsRaw ? JSON.parse(itemsRaw as string) : [];
+		} catch (e) {
+			console.error('Ошибка парсинга items:', e);
+		}
+
+		const requisites = formData.get('requisites') as string;
+		const comment = formData.get('comment') as string;
+
+		const message = `
 🛍️ Новый заказ товаров:
 
 👤 Контактная информация:
@@ -56,10 +47,11 @@ export async function createProductCheckoutOrder(formData: FormData): Promise<an
 Email: ${email}
 
 💳 Реквизиты: ${requisites}
-${requisitesPdf ? '📄 Реквизиты (PDF): Прикреплен файл' : ''}
 
 🛒 Товары:
-${items.map((item: any) => `
+${items
+	.map(
+		(item: any) => `
 - ${item.name}
   Номер: ${item.id}
   Цена: ${item.price} BYN
@@ -67,37 +59,102 @@ ${items.map((item: any) => `
   Размер: ${item.size}
   Количество: ${item.quantity}
   Сумма: ${(item.price * item.quantity).toFixed(2)} BYN
-`).join('\n')}
+`,
+	)
+	.join('\n')}
 
-💰 Сумма заказа: ${(items.reduce((acc: number, item: any) => acc + item.price * item.quantity, 0)).toFixed(2)} BYN
+💰 Сумма заказа: ${items.reduce((acc: number, item: any) => acc + item.price * item.quantity, 0).toFixed(2)} BYN
 
 💬 Комментарий: ${comment}
 `;
 
-	// First, send the message
-	const messageResponse = await axios.post(BASE_URL, {
-		chat_id: chatId,
-		text: message,
-		parse_mode: 'HTML'
-	});
+		const messageResponse = await axios.post(BASE_URL, {
+			chat_id: chatId,
+			text: message,
+			parse_mode: 'HTML',
+		});
 
-	return messageResponse.data;
+		return {ok: true, data: messageResponse.data};
+	} catch (error) {
+		console.error('❌ Ошибка в createProductCheckoutOrder:', error);
+
+		return {ok: false, error: 'Ошибка отправки заказа'};
+	}
 }
 
-export async function sendProductCheckoutFile(formData: FormData): Promise<any> {
-	const requisitesPdf = formData.get('requisites-pdf') as File;
-	
-	// If there's a PDF file, send it as a document
-	if (requisitesPdf && requisitesPdf.size > 0 && chatId) {
-		const pdfBuffer = Buffer.from(await requisitesPdf.arrayBuffer());
-		const formData = new FormData();
-		formData.append('chat_id', chatId);
-		formData.append('document', new Blob([pdfBuffer]), requisitesPdf.name);
+/* -----------------------------------------------------------
+   2. Отправка PDF-файла в Telegram (устойчивая, fail-safe)
+----------------------------------------------------------- */
 
-		await axios.post(`https://api.telegram.org/bot${telegramBotToken}/sendDocument`, formData, {
+export async function sendProductCheckoutFile(formData: FormData): Promise<any> {
+	try {
+		const file = formData.get('requisites-pdf');
+
+		// Защита №1 — PDF отсутствует
+		if (!file) {
+			console.log('ℹ Нет файла для отправки');
+
+			return {ok: true, skipped: true};
+		}
+
+		// Защита №2 — Проверка на тип
+		if (typeof (file as any).arrayBuffer !== 'function') {
+			console.warn('⚠ requisites-pdf не имеет arrayBuffer()');
+
+			return {ok: true, skipped: true};
+		}
+
+		// Защита №3 — Чтение в Buffer
+		const arrayBuffer = await (file as File).arrayBuffer();
+		const pdfBuffer = Buffer.from(arrayBuffer);
+
+		// Формируем FormData для Telegram
+		const tgForm = new FormData();
+
+		tgForm.append('chat_id', chatId!);
+		tgForm.append('document', new Blob([pdfBuffer]), (file as File).name);
+
+		const res = await axios.post(`https://api.telegram.org/bot${telegramBotToken}/sendDocument`, tgForm, {
 			headers: {
 				'Content-Type': 'multipart/form-data',
 			},
 		});
+
+		return {ok: true, data: res.data};
+	} catch (error) {
+		console.error('❌ Ошибка отправки PDF:', error);
+
+		// Ошибка не должна ронять заказ → возвращаем ok:true
+		return {ok: true, error: 'PDF не отправлен'};
+	}
+}
+
+/* -----------------------------------------------------------
+   3. Отправка обычного сообщения (форма лидов)
+----------------------------------------------------------- */
+
+export async function sendOrder(formData: FormData): Promise<any> {
+	try {
+		const formId = formData.get('form_id') as string;
+		const name = formData.get('user_name') as string;
+		const phone = formData.get('user_phone') as string;
+		const comment = formData.get('user_comment') as string;
+
+		const message = `📝 Новый запрос (${formId || 'Консультация'}):
+
+👤 Имя: ${name}
+📱 Телефон: ${phone}
+💬 Комментарий: ${comment}`;
+
+		const response = await axios.post(BASE_URL, {
+			chat_id: chatId,
+			text: message,
+		});
+
+		return {ok: true, data: response.data};
+	} catch (error) {
+		console.error('❌ Ошибка в sendOrder:', error);
+
+		return {ok: false, error: 'Не удалось отправить сообщение'};
 	}
 }
