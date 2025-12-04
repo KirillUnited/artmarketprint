@@ -25,7 +25,7 @@ const CartPage = () => {
 			</SectionHeading>
 
 			<div className="bg-gray-50 rounded-small outline -outline-offset-1 outline-1 outline-gray-200">
-				<div className="mx-auto max-w-2xl px-4 pb-24 pt-16 sm:px-6 lg:max-w-7xl lg:px-8">
+				<div className="mx-auto max-w-2xl px-4 pb-24 pt-16 sm:px-6 lg:max-w-7xl lg:px-8 relative">
 					<h2 className="sr-only">Оформление заказа</h2>
 					<CartForm />
 				</div>
