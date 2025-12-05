@@ -5,7 +5,7 @@ import {FormEvent, useState} from 'react';
 import {toast} from 'sonner';
 
 import useBasketStore from '@/store/store';
-import {createProductCheckoutOrder, sendProductCheckoutFile} from '@/lib/actions/order.actions';
+import {createProductCheckoutOrder} from '@/lib/actions/order.actions';
 
 export function useCartForm() {
 	const [isPending, setIsPending] = useState(false);
@@ -74,12 +74,15 @@ export function useCartForm() {
 		try {
 			// Execute both operations concurrently
 			const formData1 = new FormData(form);
-			const formData2 = new FormData(form);
+			// const formData2 = new FormData(form);
 
 			formData1.append('items', JSON.stringify(cartItems));
-			formData2.append('items', JSON.stringify(cartItems));
+			// formData2.append('items', JSON.stringify(cartItems));
 
-			const [orderResult] = await Promise.all([createProductCheckoutOrder(formData1), sendProductCheckoutFile(formData2)]);
+			const [orderResult] = await Promise.all([
+				createProductCheckoutOrder(formData1),
+				// sendProductCheckoutFile(formData2)
+			]);
 
 			console.log(orderResult);
 
