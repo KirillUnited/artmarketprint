@@ -133,7 +133,7 @@ export async function sendProductCheckoutFile(formData: FormData): Promise<any> 
    3. Отправка обычного сообщения (форма лидов)
 ----------------------------------------------------------- */
 
-export async function sendOrder(formData: FormData): Promise<any> {
+export async function sendOrderAction(formData: FormData): Promise<any> {
 	try {
 		const formId = formData.get('form_id') as string;
 		const name = formData.get('user_name') as string;
