@@ -1,62 +1,52 @@
-import { Alert } from '@heroui/alert';
-import { PriceTable } from '@/components/ui/table';
+'use client';
+import {Alert} from '@heroui/alert';
+import {PriceTable} from '@/components/ui/table';
 import Link from 'next/link';
-import { Button } from '@heroui/button';
+import {Button} from '@heroui/button';
 import Image from 'next/image';
 import BrandModalOffer from '../../ui/BrandModalOffer';
-import { ServiceDetailsProps } from '@/types';
-import { memo } from 'react';
-import { FC } from 'react';
-import {ServiceCarousel} from "@/components/shared/service/ServiceCarousel";
-import clsx from "clsx";
+import {ServiceDetailsProps} from '@/types';
+import {memo} from 'react';
+import {FC} from 'react';
+import {ServiceCarousel} from '@/components/shared/service/ServiceCarousel';
+import clsx from 'clsx';
 
-const ServiceAdvantages: FC<{ advantages: string[] }> = memo(({ advantages }) => (
-    <div className="flex flex-col gap-4">
-        <h3 className="text-xl md:text-2xl font-bold text-gray-900">Преимущества</h3>
-        <ul className="space-y-2 text-gray-600">
-            {advantages.map((advantage) => (
-                <li key={advantage}>
-                    <span className="text-primary font-bold">✔</span> {advantage}
-                </li>
-            ))}
-        </ul>
-    </div>
+const ServiceAdvantages: FC<{advantages: string[]}> = memo(({advantages}) => (
+	<div className="flex flex-col gap-4">
+		<h3 className="text-xl md:text-2xl font-bold text-gray-900">Преимущества</h3>
+		<ul className="space-y-2 text-gray-600">
+			{advantages.map((advantage) => (
+				<li key={advantage}>
+					<span className="text-primary font-bold">✔</span> {advantage}
+				</li>
+			))}
+		</ul>
+	</div>
 ));
 ServiceAdvantages.displayName = 'ServiceAdvantages';
 
-const ServiceRequirements: FC<{ layoutRequirements: string }> = memo(({ layoutRequirements }) => (
-    <div className="flex flex-col gap-4">
-        <h3 className="text-xl md:text-2xl font-bold text-gray-900">Дополнительная информация:</h3>
-        <Alert className="prose flex-col max-w-full" color="default" icon="info">
-            {layoutRequirements}
-        </Alert>
-    </div>
+const ServiceRequirements: FC<{layoutRequirements: string}> = memo(({layoutRequirements}) => (
+	<div className="flex flex-col gap-4">
+		<h3 className="text-xl md:text-2xl font-bold text-gray-900">Дополнительная информация:</h3>
+		<Alert className="prose flex-col max-w-full" color="default" icon="info">
+			{layoutRequirements}
+		</Alert>
+	</div>
 ));
 ServiceRequirements.displayName = 'ServiceRequirements';
 
-const ServicePrice: FC<{ price: string }> = memo(({ price }) => (
-    <div className="flex flex-col gap-4">
-        <h3 className="text-xl md:text-2xl font-bold text-gray-900">Цены</h3>
-        <p className="font-semibold text-secondary text-4xl">{price}</p>
-    </div>
+const ServicePrice: FC<{price: string}> = memo(({price}) => (
+	<div className="flex flex-col gap-4">
+		<h3 className="text-xl md:text-2xl font-bold text-gray-900">Цены</h3>
+		<p className="font-semibold text-secondary text-4xl">{price}</p>
+	</div>
 ));
 ServicePrice.displayName = 'ServicePrice';
 
-export const ServiceDetails: FC<ServiceDetailsProps> = memo(({
-    name,
-    description,
-    image,
-	gallery,
-    price,
-    advantages,
-    layoutRequirements,
-    priceTable,
-    paymentMethods,
-    children
-}) => {
+export const ServiceDetails: FC<ServiceDetailsProps> = memo(({name, description, image, gallery, price, advantages, layoutRequirements, priceTable, paymentMethods, children}) => {
 	const hasGallery = Array.isArray(gallery) && gallery?.length > 0;
 
-    return (
+	return (
 		<article className="flex flex-col gap-8 md:gap-16">
 			<div className="flex flex-col gap-4 md:gap-6">
 				<div className="flex flex-col gap-2">
