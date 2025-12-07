@@ -9,7 +9,6 @@ import {SortSelect, SubCategoryFilter} from '@/components/shared/product/ui';
 import ProductSearchForm from '@/components/shared/product/ProductSearchForm';
 import {clsx} from 'clsx';
 import styles from '@/components/shared/product/ui/styles.module.css';
-import { updateProducts } from '@/lib/products/update';
 
 const PRODUCTS_PER_PAGE = 20;
 const BASE_URL = '/products/categories';

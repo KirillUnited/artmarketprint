@@ -47,10 +47,12 @@ export default async function SearchPage({
 						<SectionTitle>{`Результаты поиска для "${query}" (${products.length} найдено)`}</SectionTitle>
 						<div className="flex flex-col md:flex-row gap-2 w-full">
 							<ProductSearchForm />
-							<Button className="border-1" as={Link} href="/products/categories/all" radius="sm" variant="bordered">
-								<ShoppingCartIcon size="18" />
-								<span>Все товары</span>
-							</Button>
+							<Link href="/products/categories/all">
+								<Button className="border-1" radius="sm" variant="bordered">
+									<ShoppingCartIcon size="18" />
+									<span>Все товары</span>
+								</Button>
+							</Link>
 						</div>
 						<ProductsView products={products} categories={categoriesWithSubcategories} totalItemsView={20} showFilter={true} />
 					</>
@@ -78,14 +80,18 @@ export default async function SearchPage({
 									</ul>
 								</CardBody>
 								<CardFooter className="gap-4 lg:flex-row flex-col items-stretch">
-									<Button as={Link} className="uppercase font-semibold" href="/products/categories/all" color="primary" variant="ghost" radius="sm">
-										<SearchXIcon className="w-6 h-6" />
-										<span>Очистить поиск</span>
-									</Button>
-									<Button as={Link} href="/" color="primary" radius="sm" className="bg-brand-gradient uppercase font-semibold">
-										<PanelRightOpenIcon className="w-6 h-6" />
-										На главную
-									</Button>
+									<Link href="/products/categories/all">
+										<Button className="uppercase font-semibold" color="primary" variant="ghost" radius="sm">
+											<SearchXIcon className="w-6 h-6" />
+											<span>Очистить поиск</span>
+										</Button>
+									</Link>
+									<Link href="/">
+										<Button color="primary" radius="sm" className="bg-brand-gradient uppercase font-semibold">
+											<PanelRightOpenIcon className="w-6 h-6" />
+											На главную
+										</Button>
+									</Link>
 								</CardFooter>
 							</div>
 
@@ -106,9 +112,9 @@ export default async function SearchPage({
 				<div className="text-center py-10">
 					<h2 className="text-2xl font-bold mb-4">Произошла ошибка при загрузке результатов поиска</h2>
 					<p className="text-slate-500 mb-6">Пожалуйста, попробуйте обновить страницу или повторить попытку позже.</p>
-					<Button as={Link} href="/" color="primary" radius="sm" className="bg-brand-gradient uppercase font-semibold">
+					<Link href="/" className="bg-brand-gradient uppercase font-semibold">
 						На главную
-					</Button>
+					</Link>
 				</div>
 			</Section>
 		);

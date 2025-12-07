@@ -78,12 +78,12 @@ export default async function ProjectPage({params}: {params: Promise<Props>}) {
 						<p className="mt-4 text-xl text-white line-clamp-3">{project.shortDescription}</p>
 					</div>
 
-					{hasGallery && (
-						<BrandButton as={Link} className={'group self-center'} href={'#projectGallery'} state="primary">
-							<span>Смотреть результат</span>
-							<ArrowDownCircle className="group-hover:scale-110 scale-100 transition-transform" size={18} />
-						</BrandButton>
-					)}
+					{/*{hasGallery && (*/}
+					{/*	<BrandButton as={Link} className={'group self-center'} href={'#projectGallery'} state="primary">*/}
+					{/*		<span>Смотреть результат</span>*/}
+					{/*		<ArrowDownCircle className="group-hover:scale-110 scale-100 transition-transform" size={18} />*/}
+					{/*	</BrandButton>*/}
+					{/*)}*/}
 				</div>
 			</section>
 			<section>
