@@ -7,9 +7,9 @@ export default function NotFound() {
 		<main className="container mx-auto py-24 text-center">
 			<h1 className="text-5xl font-bold mb-4">404</h1>
 			<p className="text-lg mb-8">Страница не найдена</p>
-			<Button as={Link} href="/">
-				На главную
-			</Button>
+			<Link href="/">
+				<Button>На главную</Button>
+			</Link>
 		</main>
 	);
 }

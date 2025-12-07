@@ -1,26 +1,27 @@
-import { defineQuery, PortableText } from 'next-sanity';
-import { Card } from '@heroui/card';
-import { clsx } from 'clsx';
+import {defineQuery, PortableText} from 'next-sanity';
+import {Card} from '@heroui/card';
+import {clsx} from 'clsx';
 
-import { ServiceBreadcrumb } from '@/components/ui/Breadcrumb';
-import { ServiceDetails, ServiceHero } from '@/components/shared/service';
-import { sanityFetch } from "@/sanity/lib/sanityFetch";
-import { getUrlFor } from '@/lib/utils';
-import { ProjectList } from '@/components/shared/project';
-import { PROJECTS_BY_SERVICE_QUERY } from '@/sanity/lib/queries';
-import Section, { SectionButton, SectionDescription, SectionHeading, SectionSubtitle, SectionTitle } from '@/components/layout/Section';
-import { OrderForm } from '@/components/ui/form';
-import { FAQSection } from '@/components/shared/faq';
-import { SECTION_FIELDS } from '@/sanity/lib/queries/page.query';
-import ServiceJsonLd, { BreadcrumbListJsonLd } from '@/components/ServiceJsonLd';
-import { SERVICE_QUERY } from '@/sanity/lib/queries/service.query';
-import {urlFor} from "@/sanity/lib/image";
-import {PackageCalculator} from "@/components/shared/сalculator";
-import {JSX} from "react";
+import {ServiceBreadcrumb} from '@/components/ui/Breadcrumb';
+import {ServiceDetails, ServiceHero} from '@/components/shared/service';
+import {sanityFetch} from '@/sanity/lib/sanityFetch';
+import {getUrlFor} from '@/lib/utils';
+import {ProjectList} from '@/components/shared/project';
+import {PROJECTS_BY_SERVICE_QUERY} from '@/sanity/lib/queries';
+import Section, {SectionDescription, SectionHeading, SectionSubtitle, SectionTitle} from '@/components/layout/Section';
+import {OrderForm} from '@/components/ui/form';
+import {FAQSection} from '@/components/shared/faq';
+import {SECTION_FIELDS} from '@/sanity/lib/queries/page.query';
+import ServiceJsonLd, {BreadcrumbListJsonLd} from '@/components/ServiceJsonLd';
+import {SERVICE_QUERY} from '@/sanity/lib/queries/service.query';
+import {urlFor} from '@/sanity/lib/image';
+import {PackageCalculator} from '@/components/shared/сalculator';
+import {JSX} from 'react';
+import {SectionButton} from '@/components/layout/SectionButton';
 
 type Props = {
-    slug: string
-}
+	slug: string;
+};
 
 const FAQ_QUERY = defineQuery(`*[_id == "siteSettings"][0]{
     homePage->{
@@ -33,26 +34,28 @@ const FAQ_QUERY = defineQuery(`*[_id == "siteSettings"][0]{
     }
   }`);
 
-export async function generateMetadata({ params }: { params: Promise<Props> }) {
-    const { slug } = await params;
-    const service = await sanityFetch({query: SERVICE_QUERY, params: await params});
-    const { title = '', description = '', ogImage = '' } = service?.seo || {};
+export async function generateMetadata({params}: {params: Promise<Props>}) {
+	const {slug} = await params;
+	const service = await sanityFetch({query: SERVICE_QUERY, params: await params});
+	const {title = '', description = '', ogImage = ''} = service?.seo || {};
 
-    const url = `https://artmarketprint.by/services/${slug}`;
+	const url = `https://artmarketprint.by/services/${slug}`;
 
-    return {
+	return {
 		title: `${title || ''}`,
 		description: `${description}`,
 		keywords: `${title.split(' ').join(', ')}, ${description.split(' ').join(', ')}`,
 		openGraph: {
 			title: `${title || ''}`,
 			description: `${description}`,
-			images: [{
-				url: ogImage ? ogImage : '/apple-touch-icon.png',
-				width: 1200,
-				height: 630,
-				alt: `Изображение для сервиса ${title || ''}`,
-			}],
+			images: [
+				{
+					url: ogImage ? ogImage : '/apple-touch-icon.png',
+					width: 1200,
+					height: 630,
+					alt: `Изображение для сервиса ${title || ''}`,
+				},
+			],
 		},
 		twitter: {
 			title: `${title || ''}`,
@@ -65,20 +68,18 @@ export async function generateMetadata({ params }: { params: Promise<Props> }) {
 	};
 }
 
-export default async function ServicePage({ params }: { params: Promise<Props> }): Promise<JSX.Element> {
-    const { slug } = await params;
-    // Fetch data in parallel for better performance
-    const [service, faq, relatedProjects] = await Promise.all([
-        sanityFetch({query: SERVICE_QUERY, params: await params}),
-        sanityFetch({query: FAQ_QUERY}),
-        sanityFetch({query: PROJECTS_BY_SERVICE_QUERY, params: await params})
-    ]);
-    const serviceImageUrl = service.image
-        ? urlFor(service.image)?.width(1200).height(400).url()
-        : null;
-    const relatedProjectsArray = Array.isArray(relatedProjects) ? relatedProjects : [relatedProjects];
+export default async function ServicePage({params}: {params: Promise<Props>}): Promise<JSX.Element> {
+	const {slug} = await params;
+	// Fetch data in parallel for better performance
+	const [service, faq, relatedProjects] = await Promise.all([
+		sanityFetch({query: SERVICE_QUERY, params: await params}),
+		sanityFetch({query: FAQ_QUERY}),
+		sanityFetch({query: PROJECTS_BY_SERVICE_QUERY, params: await params}),
+	]);
+	const serviceImageUrl = service.image ? urlFor(service.image)?.width(1200).height(400).url() : null;
+	const relatedProjectsArray = Array.isArray(relatedProjects) ? relatedProjects : [relatedProjects];
 
-    return (
+	return (
 		<>
 			{/* Hero section with background image and gradient overlay */}
 			<ServiceHero description={service.description} image={serviceImageUrl || ''} mediaBlock={service.mediaBlock} title={service.title} />
@@ -157,12 +158,7 @@ export default async function ServicePage({ params }: { params: Promise<Props> }
 			</Section>
 
 			{/* Structured data for service */}
-			<ServiceJsonLd 
-				description={service.description} 
-				name={service.title} 
-				url={`https://artmarketprint.by/services/${slug}`}
-				imageUrl={service.seo?.ogImage}
-			/>
+			<ServiceJsonLd description={service.description} name={service.title} url={`https://artmarketprint.by/services/${slug}`} imageUrl={service.seo?.ogImage} />
 		</>
 	);
 }

@@ -3,9 +3,10 @@ import {clsx} from 'clsx';
 
 import styles from './styles.module.css';
 
-import Section, {SectionButton, SectionDescription, SectionHeading, SectionSubtitle, SectionTitle} from '@/components/layout/Section';
+import Section, {SectionDescription, SectionHeading, SectionSubtitle, SectionTitle} from '@/components/layout/Section';
 import {getAllPosts} from '@/components/blog/lib/fetch-data';
 import {PostListingCarousel} from '@/components/blog';
+import {SectionButton} from '@/components/layout/SectionButton';
 
 interface BlogHeaderProps {
 	title?: string;
