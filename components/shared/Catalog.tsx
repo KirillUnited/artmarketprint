@@ -1,20 +1,15 @@
-import { SanityDocument } from 'next-sanity';
+import {SanityDocument} from 'next-sanity';
 
-import { BrandCard } from '../ui/card';
+import {BrandCard} from '../ui/card';
 
-import { siteConfig } from '@/config/site';
-import { getSanityDocuments } from '@/sanity/lib/fetch-sanity-data';
-import Section, {
-	SectionButton,
-	SectionDescription,
-	SectionHeading,
-	SectionSubtitle,
-	SectionTitle
-} from '@/components/layout/Section';
-import { getUrlFor } from '@/lib/utils';
-import { CATEGORIES_QUERY } from '@/sanity/lib/queries/category.query';
+import {siteConfig} from '@/config/site';
+import {getSanityDocuments} from '@/sanity/lib/fetch-sanity-data';
+import Section, {SectionDescription, SectionHeading, SectionSubtitle, SectionTitle} from '@/components/layout/Section';
+import {getUrlFor} from '@/lib/utils';
+import {CATEGORIES_QUERY} from '@/sanity/lib/queries/category.query';
+import {SectionButton} from '@/components/layout/SectionButton';
 
-export const CatalogHeading = ({ categoryItemsCount }: { categoryItemsCount: number }) => (
+export const CatalogHeading = ({categoryItemsCount}: {categoryItemsCount: number}) => (
 	<div className="flex flex-wrap items-end justify-between gap-4">
 		<SectionHeading>
 			<SectionSubtitle>каталог</SectionSubtitle>
@@ -24,7 +19,7 @@ export const CatalogHeading = ({ categoryItemsCount }: { categoryItemsCount: num
 	</div>
 );
 
-export const CategoryList = ({ categories }: { categories: SanityDocument[] }) => (
+export const CategoryList = ({categories}: {categories: SanityDocument[]}) => (
 	<ul className="grid grid-cols-[var(--grid-template-columns)] gap-8">
 		{categories.map((category: SanityDocument) => (
 			<li key={category.title}>

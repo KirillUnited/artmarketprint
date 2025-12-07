@@ -1,3 +1,4 @@
+'use client';
 import {Chip} from '@heroui/chip';
 import React from 'react';
 import Link from 'next/link';
