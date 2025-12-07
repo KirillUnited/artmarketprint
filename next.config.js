@@ -15,7 +15,7 @@ const nextConfig = {
 				hostname: 'markli.by',
 			},
 		],
-		qualities: [50, 75, 85, 100],
+		qualities: [10, 100, 50, 75, 85],
 	},
 	experimental: {
 		serverActions: {

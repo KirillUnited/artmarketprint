@@ -1,7 +1,6 @@
 import { client } from '@/sanity/client';
 
-import imageUrlBuilder from '@sanity/image-url';
-import { SanityImageSource } from '@sanity/image-url/lib/types/types';
+import imageUrlBuilder, { SanityImageSource } from '@sanity/image-url';
 
 // const fs = require('fs').promises;
 
