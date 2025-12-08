@@ -1,118 +1,130 @@
 'use server';
 
-// import { getJsonFileData } from '../utils';
-// import { groupProductsByCleanName } from '../products/catalog-utils';
+import axios from 'axios';
 
-/**
- * Fetches all products from the JSON file data.
- *
- * @return {Promise<any[]>} A promise that resolves to an array of products.
- */
-// export async function getAllProducts(): Promise<any[]> {
-//   // Retrieve JSON file data using the utility function
-//   const products = await getJsonFileData();
-//
-//   // Return the list of products or an empty array if not available
-//   return products?.data?.item ?? [];
-// }
+const telegramBotToken = process.env.TELEGRAM_BOT_TOKEN;
+const chatId = process.env.TELEGRAM_CHAT_ID;
+const BASE_URL = `https://api.telegram.org/bot${telegramBotToken}/sendMessage`;
 
-/**
- * Retrieves a list of unique product categories from the available products.
- *
- * @return {string[]} An array of unique product categories
- */
-// export async function getAllProductCategories(): Promise<string[]> {
-//   const products = await getAllProducts();
+/* -----------------------------------------------------------
+   1. Отправка текстового сообщения (всегда безопасно)
+----------------------------------------------------------- */
 
-//   const categories = new Set<string>();
+export async function createProductCheckoutOrder(formData: FormData): Promise<any> {
+	try {
+		const email = formData.get('email') as string;
+		const firstName = formData.get('first-name') as string;
+		const lastName = formData.get('last-name') as string;
+		const address = formData.get('address') as string;
+		const city = formData.get('city') as string;
+		const country = formData.get('country') as string;
+		const postalCode = formData.get('postal-code') as string;
+		const phone = formData.get('user_phone') as string;
 
-//   // Iterate over products and extract the category name from each product
-//   // The category name is the first part of the category property, separated by '|'
-//   for (const product of products) {
-//     if (!product?.category) continue;
-//     const [categoryName] = product.category[0].split('|');
-//     categories.add(categoryName);
-//   }
+		const itemsRaw = formData.get('items');
+		let items: any[] = [];
 
-//   // Convert the Set to an array and return it
-//   return Array.from(categories);
-// }
+		try {
+			items = itemsRaw ? JSON.parse(itemsRaw as string) : [];
+		} catch (e) {
+			console.error('Ошибка парсинга items:', e);
+		}
 
-// export async function getAllProducts() {
-//   // const DATA_FILE_PATH = path.join(process.cwd(), '_data/products-20-03-25.json');
-//   const DATA_FILE_PATH = '../_data/products-27-03-25.json';
-//   const { data } = await getJsonFileData(DATA_FILE_PATH) ?? {};
+		const requisites = formData.get('requisites') as string;
+		const comment = formData.get('comment') as string;
 
-//   return data?.item ?? [];
-// }
+		const message = `
+🛍️ Новый заказ товаров:
 
-// /**
-//  * Retrieves a list of unique product categories from the available products.
-//  *
-//  * @return {string[]} An array of unique product categories
-//  */
-// export async function getAllProductCategories() {
-//   // Fetch all products
-//   const products = await getAllProducts();
+👤 Контактная информация:
+Имя: ${firstName}
+Фамилия: ${lastName}
+Телефон: ${phone}
+Адрес: ${address}
+Город: ${city}
+Страна: ${country}
+Почтовый индекс: ${postalCode}
+Email: ${email}
 
-//   // Define a function that takes a category string and returns the first part of it
-//   // The category string is in the format "category|subcategory"
-//   const getCategory = (category: string) => {
-//     // Split the category string into an array of two strings
-//     const [categoryName, subcategoryName] = category[0].split('|');
-//     // Return the first string (the category name)
-//     return categoryName;
-//   };
+💳 Реквизиты: ${requisites}
 
-//   // Create a Set to store the unique categories
-//   const categories = new Set();
+🛒 Товары:
+${items
+	.map(
+		(item: any) => `
+- ${item.name}
+  Номер: ${item.id}
+  Цена: ${item.price} BYN
+  Цвет: ${item.color}
+  Размер: ${item.size}
+  Количество: ${item.quantity}
+  Сумма: ${(item.price * item.quantity).toFixed(2)} BYN
+`,
+	)
+	.join('\n')}
 
-//   // Loop through each product and add its category to the Set
-//   products?.map((product: any) => {
-//     const categoryName = getCategory(product.category);
-//     categories.add(categoryName);
-//   });
+💰 Сумма заказа: ${items.reduce((acc: number, item: any) => acc + item.price * item.quantity, 0).toFixed(2)} BYN
 
-//   // Convert the Set to an array and return it
-//   return Array.from(categories);
-// }
+💬 Комментарий: ${comment}
+`;
 
-// export async function getProductsByLimit(limit: number) {
-//   // Use a more efficient way to get a subset of the products array
-//   return (await getAllProducts()).slice(0, limit);
-// }
-//
-// export async function getRelatedProductsByCategory(category: string, id: number, limit = 10) {
-//   const products = await getAllProducts();
-//   const relatedProducts = products.filter((product: any) => product.category[0].split('|')[0] === category && product.id[0]['_'] !== id);
-//
-//   return Array.from(relatedProducts).slice(0, limit);
-// }
-//
-// export async function getProductBySlug(slug: string) {
-//   const products = await getAllProducts();
-//   const parsedProducts = groupProductsByCleanName(products);
-//   const product = parsedProducts.find((product) => product.id === slug);
-//
-//   return product;
-// }
-//
-// export async function searchProductsByName(searchParam: string) {
-//   const products = await getAllProducts();
-//
-//   return products.filter((product: any) => product.product[0]['_'].toLowerCase().includes(searchParam.toLowerCase()));
-// }
-//
-// export async function getProductsByCategory(category: string) {
-//   const products = await getAllProducts();
-//
-//   return products.filter((product: any) => {
-//     return (product.category[0].split('|')[0] === category);
-//   });
-// }
-//
-// export async function getProductsByCategoryTitle(categoryTitle: string) {
-//   const products = await getAllProducts();
-//
-//   return products.filter((product: any) => product.category[0] === categoryTitle);
-// }
+		const messageResponse = await axios.post(BASE_URL, {
+			chat_id: chatId,
+			text: message,
+			parse_mode: 'HTML',
+		});
+
+		return {ok: true, data: messageResponse.data};
+	} catch (error) {
+		console.error('❌ Ошибка в createProductCheckoutOrder:', error);
+
+		return {ok: false, error: 'Ошибка отправки заказа'};
+	}
+}
+
+/* -----------------------------------------------------------
+   2. Отправка PDF-файла в Telegram (устойчивая, fail-safe)
+----------------------------------------------------------- */
+
+export async function sendProductCheckoutFile(formData: FormData): Promise<any> {
+	try {
+		const file = formData.get('requisites-pdf');
+
+		// Защита №1 — PDF отсутствует
+		if (!file) {
+			console.log('ℹ Нет файла для отправки');
+
+			return {ok: true, skipped: true};
+		}
+
+		// Защита №2 — Проверка на тип
+		if (typeof (file as any).arrayBuffer !== 'function') {
+			console.warn('⚠ requisites-pdf не имеет arrayBuffer()');
+
+			return {ok: true, skipped: true};
+		}
+
+		// Защита №3 — Чтение в Buffer
+		const arrayBuffer = await (file as File).arrayBuffer();
+		const pdfBuffer = Buffer.from(arrayBuffer);
+
+		// Формируем FormData для Telegram
+		const tgForm = new FormData();
+
+		tgForm.append('chat_id', chatId!);
+		tgForm.append('document', new Blob([pdfBuffer]), (file as File).name);
+
+		const res = await axios.post(`https://api.telegram.org/bot${telegramBotToken}/sendDocument`, tgForm, {
+			headers: {
+				'Content-Type': 'multipart/form-data',
+			},
+		});
+
+		return {ok: true, data: res.data};
+	} catch (error) {
+		console.error('❌ Ошибка отправки PDF:', error);
+
+		// Ошибка не должна ронять заказ → возвращаем ok:true
+		return {ok: true, error: 'PDF не отправлен'};
+	}
+}
