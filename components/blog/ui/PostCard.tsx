@@ -44,7 +44,7 @@ export default function PostCard({post, variant = POST_CARD_VARIANTS.default, fo
 				</Link>
 			)}
 			<CardHeader>
-				<h2 className="text-xl font-semibold mb-2 leading-none line-clamp-3 text-gray-900 dark:text-gray-100">
+				<h2 className="text-lg font-semibold mb-2 leading-none line-clamp-3 text-gray-900 dark:text-gray-100">
 					<Link className="block" href={`/blog/${post?.slug?.current || ''}`}>
 						{post.title}
 					</Link>
@@ -55,7 +55,7 @@ export default function PostCard({post, variant = POST_CARD_VARIANTS.default, fo
 					<p className="text-neutral-600 dark:text-neutral-300 line-clamp-4">{post.excerpt}</p>
 				</CardBody>
 			)}
-			{footerSlot && <CardFooter className="mt-auto max-xl:flex-col max-xl:items-stretch gap-2 justify-between text-sm text-neutral-500 flex-wrap border-t-1">{footerSlot}</CardFooter>}
+			{footerSlot && <CardFooter className="mt-auto max-xl:items-stretch gap-2 justify-between text-sm text-neutral-500 flex-wrap border-t-1">{footerSlot}</CardFooter>}
 		</Card>
 	);
 }

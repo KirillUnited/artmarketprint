@@ -1,6 +1,4 @@
-'use client';
 import {clsx} from 'clsx';
-import {Button} from '@heroui/button';
 import Link from 'next/link';
 import {ArrowRightIcon} from 'lucide-react';
 
@@ -23,9 +21,9 @@ const PostListing = ({posts}: PostListingProps) => (
 				footerSlot={
 					<>
 						<PostMetadata post={post} />
-						<Button as={Link} className="inline-flex items-center gap-1" color={'primary'} href={`/blog/${post?.slug?.current || ''}`} size="md" variant="light">
+						<Link  className="inline-flex items-center gap-1 text-primary-500 hover:text-primary-600 font-medium" href={`/blog/${post?.slug?.current || ''}`}>
 							Читать далее <ArrowRightIcon size={16} />
-						</Button>
+						</Link>
 					</>
 				}
 				post={post}
