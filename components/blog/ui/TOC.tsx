@@ -2,6 +2,7 @@
 import {PortableTextBlock} from 'next-sanity';
 import React from 'react';
 import {Accordion, AccordionItem} from '@heroui/accordion';
+import Link from 'next/link';
 
 function slugify(text: string) {
 	return text
@@ -38,9 +39,9 @@ export default function TOC({body}: {body: PortableTextBlock[]}) {
 				<AccordionItem as={'ul'} className="font-semibold text-neutral-700 dark:text-neutral-200" title={'Содержание статьи'}>
 					{headings.map((h) => (
 						<li key={h.key} className={'my-4'} style={{paddingLeft: typeof h.style === 'string' && /^h[1-6]$/.test(h.style) ? parseInt(h.style[1]) * 4 : 0}}>
-							<a className={'underline hover:text-primary'} href={`#${h.slug}`}>
+							<Link className={'font-semibold hover:text-primary'} href={`#${h.slug}`}>
 								{h.text}
-							</a>
+							</Link>
 						</li>
 					))}
 				</AccordionItem>

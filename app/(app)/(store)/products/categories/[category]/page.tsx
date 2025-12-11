@@ -43,12 +43,13 @@ export default async function ProductsCategoryPage({
 	]);
 	const pageNumber = parseInt(page || '1');
 	const totalPages = Math.ceil(total / PRODUCTS_PER_PAGE);
+	const activeCategory = activeSubcategory?.title || categorySlug?.title;
 
 	return (
 		<Section className="space-y-6">
 			<div className="space-y-4">
 				<div className="flex items-center justify-between gap-4">
-					<p className="font-semibold text-3xl">Каталог</p>
+					<p className="font-semibold text-lg">Каталог</p>
 
 					<ProductSearchForm className="max-w-sm" />
 				</div>
@@ -58,11 +59,18 @@ export default async function ProductsCategoryPage({
 
 			<LightBreadcrumb category={categorySlug} subcategory={activeSubcategory} baseUrl={BASE_URL} />
 
-			<h1 className="text-3xl font-bold">
-				{activeSubcategory?.title || categorySlug?.title || 'Каталог'} <span className="text-sm font-light text-gray-600 truncate">{`${total} шт.`}</span>
+			<h1 className="text-3xl font-semibold">
+				{activeCategory || 'Все категории'} <span className="text-sm font-light text-gray-600 truncate">{`${total} шт.`}</span>
 			</h1>
-			<div className="grid md:grid-cols-[270px,1fr] gap-4">
-				<SubCategoryFilter category={categorySlug} categorySlug={category} activeSubcategory={activeSubcategory} baseUrl={BASE_URL} />
+			<div className={clsx(
+				"grid gap-4",
+				activeCategory && "md:grid-cols-[270px,1fr]"
+			)}>
+				{
+					activeCategory && (
+						<SubCategoryFilter category={categorySlug} categorySlug={category} activeSubcategory={activeSubcategory} baseUrl={BASE_URL} />						
+					)
+				}
 				<div className="flex flex-col gap-4">
 					<div className={clsx(styles.ProductFilter)}>
 						<SortSelect />
