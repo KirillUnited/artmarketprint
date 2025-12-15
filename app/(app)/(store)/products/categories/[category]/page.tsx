@@ -62,15 +62,8 @@ export default async function ProductsCategoryPage({
 			<h1 className="text-3xl font-semibold">
 				{activeCategory || 'Все категории'} <span className="text-sm font-light text-gray-600 truncate">{`${total} шт.`}</span>
 			</h1>
-			<div className={clsx(
-				"grid gap-4",
-				activeCategory && "md:grid-cols-[270px,1fr]"
-			)}>
-				{
-					activeCategory && (
-						<SubCategoryFilter category={categorySlug} categorySlug={category} activeSubcategory={activeSubcategory} baseUrl={BASE_URL} />						
-					)
-				}
+			<div className={clsx('grid gap-4', activeCategory && 'md:grid-cols-[270px,1fr]')}>
+				{activeCategory && <SubCategoryFilter category={categorySlug} categorySlug={category} activeSubcategory={activeSubcategory} baseUrl={BASE_URL} />}
 				<div className="flex flex-col gap-4">
 					<div className={clsx(styles.ProductFilter)}>
 						<SortSelect />

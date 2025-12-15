@@ -21,8 +21,11 @@ import {Toaster} from '@/components/ui/sonner';
 import Script from 'next/script';
 import {LocalBusinessJsonLd} from '@/config/ld-json';
 
+const SITE_URL = process.env.NEXT_PUBLIC_SERVER_URL || 'https://artmarketprint.by';
+const SITE_LOCALE = process.env.NEXT_PUBLIC_LOCALE || 'ru_BY';
+
 export const metadata: Metadata = {
-	metadataBase: new URL('https://artmarketprint.by'),
+	metadataBase: new URL(SITE_URL),
 	title: {
 		default: `${siteConfig.name} - ArtMarketPrint`,
 		template: `%s | ${siteConfig.name} - ArtMarketPrint`,
@@ -37,9 +40,9 @@ export const metadata: Metadata = {
 		description: `${siteConfig.description}`,
 		images: ['/apple-touch-icon.png'],
 		type: 'website',
-		locale: 'ru_RU',
+		locale: SITE_LOCALE,
 		siteName: 'ArtMarketPrint',
-		url: 'https://artmarketprint.by',
+		url: SITE_URL,
 	},
 	twitter: {
 		card: 'summary_large_image',
@@ -48,7 +51,7 @@ export const metadata: Metadata = {
 		images: ['/apple-touch-icon.png'],
 	},
 	alternates: {
-		canonical: 'https://artmarketprint.by',
+		canonical: SITE_URL,
 	},
 	verification: {
 		google: '8YlcgzL83D40BFHx5ZMIaLjwHnFMG_kQ9XU_GJa4AaI',
