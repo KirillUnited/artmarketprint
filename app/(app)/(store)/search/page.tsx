@@ -16,7 +16,7 @@ type Props = {
 };
 
 export async function generateMetadata({params}: {params: Promise<Props>}) {
-	const url = `https://artmarketprint.by/search`;
+	const url = `${process.env.NEXT_PUBLIC_SERVER_URL}/search`;
 
 	return {
 		title: `Поиск`,
