@@ -18,12 +18,14 @@ export async function searchProductsByName(searchParam: string): Promise<any[]> 
             name match $searchParam + "*" ||
             description match $searchParam + "*" ||
             category match $searchParam + "*" ||
-            subcategory match $searchParam + "*"
+            subcategory match $searchParam + "*" ||
+            sku match $searchParam + "*"
         )] | score(
             name match $searchParam + "*",
             description match $searchParam + "*",
             category match $searchParam + "*",
-            subcategory match $searchParam + "*"
+            subcategory match $searchParam + "*",
+            sku match $searchParam + "*"
         ) | order(_score desc) {
             ...,
             _score
