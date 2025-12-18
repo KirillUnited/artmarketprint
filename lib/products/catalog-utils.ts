@@ -46,7 +46,9 @@ export function groupProductsByCleanName(products: any[], categories = [], brand
 	}
 
 	products.forEach((product) => {
-		const stock = product.stock?.[0] || parseInt(product.stock_minsk || '0') + parseInt(product.stock_shipper || '0') || 0;
+		// For RU stock we use only stock, for BY stock we use stock_minsk, shipper stock need to check
+		// const stock = product.stock?.[0] + parseInt(product.stock_shipper || '0') || 0;
+		const stock = parseInt(product.stock_minsk || '0');
 
 		// Not add product if stock is zero
 		if (stock == 0) {
