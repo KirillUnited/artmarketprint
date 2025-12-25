@@ -52,6 +52,11 @@ export const metadata: Metadata = {
 	},
 	alternates: {
 		canonical: SITE_URL,
+		languages: {
+			'ru-BY': SITE_URL,
+			'ru-RU': 'https://artmarketprint.ru/',
+			'x-default': SITE_URL,
+		},
 	},
 	verification: {
 		google: '8YlcgzL83D40BFHx5ZMIaLjwHnFMG_kQ9XU_GJa4AaI',
