@@ -15,6 +15,7 @@ import {useCartForm} from '@/hooks/useCartForm';
 import {QuantityControls} from '@/components/ui/AddToBasketButton';
 import Loader from '@/components/ui/Loader';
 import {ProductsNotFoundMenu} from '@/components/shared/product/ProductsNotFound';
+import {CURRENCIES_SYMBOLS} from '@/lib/products/companies';
 
 const deliveryMethods = [
 	{id: 1, name: 'Самовывоз', title: 'Самовывоз', turnaround: 'Бесплатно', price: 0},
@@ -150,7 +151,9 @@ export default function CartForm() {
 										</div>
 
 										<div className="flex flex-wrap gap-2 flex-1 items-end justify-between pt-2">
-											<p className="mt-1 text-sm font-medium text-gray-900">{product.price} р.</p>
+											<p className="mt-1 text-sm font-medium text-gray-900">
+												{`${product.price} ${CURRENCIES_SYMBOLS['BYN'] || 'р'}`}
+											</p>
 
 											<div className="basis-20">
 												<QuantityControls itemCount={product.quantity} onDecrease={() => removeItem(product.id)} onIncrease={() => addItem(product)} />
@@ -164,11 +167,15 @@ export default function CartForm() {
 					<dl className="space-y-6 border-t border-gray-200 px-4 py-6 sm:px-6">
 						<div className="flex items-center justify-between">
 							<dt className="text-sm">Сумма</dt>
-							<dd className="text-sm font-medium text-gray-900">{getTotalPrice().toFixed(2)} р.</dd>
+							<dd className="text-sm font-medium text-gray-900">
+								{`${getTotalPrice().toFixed(2)} ${CURRENCIES_SYMBOLS['BYN'] || 'р'}`}
+							</dd>
 						</div>
 						<div className="flex items-center justify-between border-t border-gray-200 pt-6">
 							<dt className="text-lg font-bold">Итого</dt>
-							<dd className="text-lg font-bold text-gray-900">{getTotalPrice().toFixed(2)} р.</dd>
+							<dd className="text-lg font-bold text-gray-900">
+								{`${getTotalPrice().toFixed(2)} ${CURRENCIES_SYMBOLS['BYN'] || 'р'}`}
+							</dd>
 						</div>
 					</dl>
 

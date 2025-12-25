@@ -1,35 +1,36 @@
 'use client';
 import {FC, JSX} from 'react';
-import { Card, CardBody, CardFooter } from '@heroui/card';
-import { Link } from '@heroui/link';
+import {Card, CardBody, CardFooter} from '@heroui/card';
+import {Link} from '@heroui/link';
 import NextImage from 'next/image';
 import clsx from 'clsx';
-import { Image } from '@heroui/image';
+import {Image} from '@heroui/image';
 
-import { ProductColors } from '../ProductColors';
-import { ProductSizes } from '../ProductSizes';
+import {ProductColors} from '../ProductColors';
+import {ProductSizes} from '../ProductSizes';
 
-import { ProductData } from '@/components/shared/product/product.types';
+import {ProductData} from '@/components/shared/product/product.types';
 import {getTotalStock} from '@/components/shared/product/lib';
+import {CURRENCIES_SYMBOLS} from '@/lib/products/companies';
 
 interface ProductThumbProps extends React.HTMLAttributes<HTMLDivElement> {
-    item: ProductData;
+	item: ProductData;
 }
 
 /**
  * Renders a product thumbnail card with an image, title, description, and price.
- * 
+ *
  * @returns {JSX.Element} The JSX element representing the product thumbnail card.
  */
-const ProductThumb: FC<ProductThumbProps> = ({ item, ...props }): JSX.Element => {
-    const id = item.id || item._id || '';
-    const price = item.price || 0;
-    const name = item.name || '';
-    const image = item?.image || '/images/product-no-image.jpg';
-    const totalStock = getTotalStock(item.items);
-    const brand = item.brand || '';
+const ProductThumb: FC<ProductThumbProps> = ({item, ...props}): JSX.Element => {
+	const id = item.id || item._id || '';
+	const price = item.price || 0;
+	const name = item.name || '';
+	const image = item?.image || '/images/product-no-image.jpg';
+	const totalStock = getTotalStock(item.items);
+	const brand = item.brand || '';
 
-    return (
+	return (
 		<Card as={Link} className={clsx('h-full group relative max-w-full shadow-small hover:shadow-large transition-all duration-300', props.className)} href={`/products/${id}`} radius="sm">
 			<CardBody className="items-stretch gap-4 p-2 sm:p-4">
 				<div className="relative overflow-hidden rounded-lg group">
@@ -59,7 +60,7 @@ const ProductThumb: FC<ProductThumbProps> = ({ item, ...props }): JSX.Element =>
 					)}
 				</div>
 				<div className="flex flex-col gap-2">
-					<span className="text-xl font-semibold self-start text-foreground">{`${price} Br`}</span>
+					<span className="text-xl font-semibold self-start text-foreground">{`${price} ${CURRENCIES_SYMBOLS['BYN'] || 'р'}`}</span>
 					{name && (
 						<p className="flex flex-col text-foreground/90 text-xs sm:text-sm" title={name}>
 							{brand && <span className="text-xs text-gray-500 font-light">{brand}</span>}
