@@ -27,7 +27,7 @@ export async function generateMetadata({params}: {params: Promise<Props>}) {
 	const category = await sanityFetch({query: CATEGORY_QUERY, params: {slug}});
 	const {title = '', description = ''} = category?.seo || {};
 
-	const url = `https://artmarketprint.by/categories/${slug}`;
+	const url = `${process.env.NEXT_PUBLIC_SERVER_URL}/categories/${slug}`;
 
 	return {
 		title: `${title || ''}`,
@@ -39,6 +39,11 @@ export async function generateMetadata({params}: {params: Promise<Props>}) {
 		},
 		alternates: {
 			canonical: url,
+			languages: {
+				'ru-BY': url,
+				'ru-RU': `https://artmarketprint.ru/categories/${slug}`,
+				'x-default': url,
+			},
 		},
 	};
 }
