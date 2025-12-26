@@ -64,6 +64,11 @@ export async function generateMetadata({params}: {params: Promise<Props>}) {
 		},
 		alternates: {
 			canonical: url,
+			languages: {
+				'ru-BY': url,
+				'ru-RU': 'https://artmarketprint.ru/services/' + slug,
+				'x-default': url,
+			},
 		},
 	};
 }

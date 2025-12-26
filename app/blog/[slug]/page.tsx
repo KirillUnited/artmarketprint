@@ -15,6 +15,7 @@ type Props = {
 export async function generateMetadata({params}: {params: Promise<Props>}): Promise<Metadata> {
 	const {slug} = await params;
 	const post = await getPostBySlug(slug);
+	const url = `${process.env.NEXT_PUBLIC_SERVER_URL}/blog/${slug}`;
 
 	if (!post) return {};
 
@@ -35,7 +36,7 @@ export async function generateMetadata({params}: {params: Promise<Props>}): Prom
 			type: 'website',
 			locale: 'ru_RU',
 			siteName: 'ArtMarketPrint',
-			url: `https://artmarketprint.by/blog/${slug}`,
+			url: url,
 		},
 		twitter: {
 			card: 'summary_large_image',
@@ -46,7 +47,12 @@ export async function generateMetadata({params}: {params: Promise<Props>}): Prom
 			site: '@artmarketprint',
 		},
 		alternates: {
-			canonical: `https://artmarketprint.by/blog/${slug}`,
+			canonical: url,
+			languages: {
+				'ru-BY': url,
+				'ru-RU': 'https://artmarketprint.ru/blog/' + slug,
+				'x-default': url,
+			},
 		},
 	};
 }

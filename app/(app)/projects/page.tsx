@@ -16,6 +16,11 @@ export async function generateMetadata() {
     return {
         alternates: {
             canonical: url,
+			languages: {
+				'ru-BY': url,
+				'ru-RU': 'https://artmarketprint.ru/projects/',
+				'x-default': url,
+			},
         },
     }
 }

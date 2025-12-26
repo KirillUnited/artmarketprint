@@ -39,7 +39,7 @@ export async function generateMetadata({params}: {params: Promise<Props>}) {
 	const {slug} = await params;
 	const data = await getSanityDocuments(PROJECT_QUERY, await params);
 	const {title = '', description = '', keywords = ''} = data?.[0]?.seo || {};
-	const url = `https://artmarketprint.by/projects/${slug}`;
+	const url = `${process.env.NEXT_PUBLIC_SERVER_URL}/projects/${slug}`;
 
 	return {
 		title: `${title || ''}`,
@@ -52,6 +52,11 @@ export async function generateMetadata({params}: {params: Promise<Props>}) {
 		},
 		alternates: {
 			canonical: url,
+			languages: {
+				'ru-BY': url,
+				'ru-RU': 'https://artmarketprint.ru/projects/' + slug,
+				'x-default': url,
+			},
 		},
 	};
 }
