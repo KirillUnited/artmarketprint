@@ -17,6 +17,34 @@ type Props = {
 	category: string;
 };
 
+export async function generateMetadata({params}: {params: Promise<Props>}) {
+	const {category} = await params;
+	const categorySlug =
+		category === 'all'
+			? null
+			: await sanityFetch({
+					query: CATEGORY_QUERY,
+					params: {
+						slug: category,
+					},
+				});
+	const title = categorySlug?.title || 'Все категории';
+	const description = categorySlug?.description || 'Каталог всех категорий товаров';
+
+	return {
+		title,
+		description,
+		alternates: {
+			canonical: `${process.env.NEXT_PUBLIC_SERVER_URL}${BASE_URL}/${category}`,
+			languages: {
+				'ru-BY': `${process.env.NEXT_PUBLIC_SERVER_URL}${BASE_URL}/${category}`,
+				'ru-RU': `https://artmarketprint.ru${BASE_URL}/${category}`,
+				'x-default': `${process.env.NEXT_PUBLIC_SERVER_URL}${BASE_URL}/${category}`,
+			},
+		},
+	};
+}
+
 export default async function ProductsCategoryPage({
 	params,
 	searchParams,
