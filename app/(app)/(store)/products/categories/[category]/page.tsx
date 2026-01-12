@@ -33,15 +33,7 @@ export async function generateMetadata({params}: {params: Promise<Props>}) {
 
 	return {
 		title,
-		description,
-		alternates: {
-			canonical: `${process.env.NEXT_PUBLIC_SERVER_URL}${BASE_URL}/${category}`,
-			languages: {
-				'ru-BY': `${process.env.NEXT_PUBLIC_SERVER_URL}${BASE_URL}/${category}`,
-				'ru-RU': `https://artmarketprint.ru${BASE_URL}/${category}`,
-				'x-default': `${process.env.NEXT_PUBLIC_SERVER_URL}${BASE_URL}/${category}`,
-			},
-		},
+		description
 	};
 }
 
