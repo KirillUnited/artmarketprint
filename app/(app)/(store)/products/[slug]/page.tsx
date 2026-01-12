@@ -14,7 +14,7 @@ import {OrderForm} from '@/components/ui/form';
 import clsx from 'clsx';
 import {getTotalStock} from '@/components/shared/product/lib';
 import {PushToDataLayer} from '@/components/shared/gtm';
-import {ProductsNotFoundMenu} from "@/components/shared/product/ProductsNotFound";
+import {ProductsNotFoundMenu} from '@/components/shared/product/ProductsNotFound';
 
 export interface Props {
 	slug: string;
@@ -24,16 +24,17 @@ export interface Props {
 export const generateMetadata = async ({params}: {params: Promise<Props>}) => {
 	const {slug} = await params;
 	const product: any = await getProductBySlug(slug);
-
-	const url = `https://artmarketprint.by/products/${slug}`;
+	const name = `${product.name} - купить в Минске`;
+	const description = `${product.name} с возможностью печати и брендирования в Минске, цены. Сувенирная продукция для бизнеса и корпоративных проектов в Беларуси.`;
+	const url = null;
 
 	return {
-		title: product.name,
-		description: product.description,
+		title: name,
+		description: description,
 
 		openGraph: {
-			title: `${product.name}`,
-			description: `${product.description}`,
+			title: name,
+			description: description,
 			images: [
 				{
 					url: `${product.image}`,
@@ -49,8 +50,8 @@ export const generateMetadata = async ({params}: {params: Promise<Props>}) => {
 		},
 		twitter: {
 			card: 'summary_large_image',
-			title: `${product.name}`,
-			description: `${product.description}`,
+			title: `${name}`,
+			description: `${description}`,
 			images: [`${product.image}`],
 			creator: '@artmarketprint',
 			site: '@artmarketprint',
