@@ -4,22 +4,43 @@ import { getPostBySlug } from '@/lib/posts'
 import { getUrlFor } from '@/lib/utils'
 import { PortableText } from 'next-sanity'
 import { CalendarIcon } from 'lucide-react'
+import Section from '@/components/layout/Section'
+import { Metadata } from 'next'
 
 interface PostPageProps {
   slug: string
+}
+
+export async function generateMetadata({ params }: { params: Promise<PostPageProps> }): Promise<Metadata> {
+  const { slug } = await params;
+  const post = await getPostBySlug(slug);
+  const url = `${process.env.NEXT_PUBLIC_SERVER_URL}/posts/${slug}`;
+
+  if (!post) return {};
+
+  return {
+    title: post.seo?.title || `${post.title}`,
+    description: post.seo?.description || `${post.excerpt}`,
+    alternates: {
+      canonical: url,
+      languages: {
+        'ru-BY': url,
+        'ru-RU': 'https://artmarketprint.ru/posts/' + slug,
+        'x-default': url,
+      },
+    },
+  }
 }
 
 export default async function PostPage({ params }: { params: Promise<PostPageProps> }) {
   const { slug } = await params;
   const post = await getPostBySlug(slug);
 
-  if (!post) {
-    notFound()
-  }
+  if (!post) notFound();
 
   return (
-    <article className="min-h-screen container max-w-4xl py-8">
-      <header className="mb-8">
+    <Section>
+      <header className="w-full max-w-4xl mx-auto">
         <h1 className="text-4xl md:text-5xl font-bold mb-4">{post.title}</h1>
         <div className="flex items-center gap-4 text-gray-600">
           <time dateTime={post.publishedAt} className="flex items-center gap-2 text-sm">
@@ -36,37 +57,23 @@ export default async function PostPage({ params }: { params: Promise<PostPagePro
             </address>
           )}
         </div>
+        
+        {post.mainImage && (
+          <figure className="mb-8 mx-auto">
+            <Image
+              src={getUrlFor(post.mainImage)}
+              alt={post.title}
+              width={1200}
+              height={630}
+              className="rounded-lg object-cover w-full"
+              priority
+            />
+          </figure>
+        )}
       </header>
-
-      {post.mainImage && (
-        <figure className="mb-8">
-          <Image
-            src={getUrlFor(post.mainImage)}
-            alt={post.title}
-            width={1200}
-            height={630}
-            className="rounded-lg object-cover w-full"
-            priority
-          />
-        </figure>
-      )}
-
-      <div className="prose max-w-none">
+      <article className="prose mx-auto py-8">
         <PortableText value={post.body} />
-      </div>
-
-      <footer className="mt-12 pt-8 border-t border-gray-200">
-        <div className="flex flex-wrap gap-4">
-          {post.categories?.map(({title}: {title: string}, index: number) => (
-            <span
-              key={index}
-              className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm"
-            >
-              {title}
-            </span>
-          ))}
-        </div>
-      </footer>
-    </article>
+      </article>
+    </Section>
   )
 }
