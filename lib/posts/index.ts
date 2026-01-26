@@ -1,8 +1,8 @@
-import { client } from '../../sanity/client';
+import { defineQuery } from 'next-sanity';
+import { sanityFetch } from '@/sanity/lib/sanityFetch';
 
-export async function getPostBySlug(slug: string) {
-  const query = `*[_type == "post" && slug.current == $slug][0]{
-    seo{
+const POST_BY_SLUG_QUERY = defineQuery(`*[_type == "post" && slug.current == $slug][0]{
+  seo{
       title,
       description,
       ogImage,
@@ -16,11 +16,16 @@ export async function getPostBySlug(slug: string) {
     "author": author->{name, picture},
     publishedAt,
     "categories": categories[]->{ title }
-  }`
+}`);
 
-  const post = await client.fetch(query, { slug })
+export const getPostBySlug = async (slug: string) => {
+  try {
+    const post = await sanityFetch({query: POST_BY_SLUG_QUERY, params: {slug}});
 
-  if (!post) return null;
+    return post ?? null;
+  } catch (error) {
+    console.error('Error fetching post by slug:', error);
 
-  return post
-}
+    return null;
+  }
+};

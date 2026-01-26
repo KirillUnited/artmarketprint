@@ -56,11 +56,11 @@ export const getRelatedPosts = async (categoryId: string) => {
 	try {
 		const posts = await sanityFetch({query: RELATED_POSTS_QUERY, params: {categoryId}});
 
-		return posts || [];
+		return posts || null;
 	} catch (error) {
 		console.error('Error fetching related posts:', error);
 
-		return [];
+		return null;
 	}
 };
 
