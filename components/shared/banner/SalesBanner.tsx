@@ -6,17 +6,20 @@ import {usePathname} from 'next/navigation';
 import {useEffect, useState} from 'react';
 import styles from './styles.module.css';
 import clsx from 'clsx';
+import Loader from '@/components/ui/Loader';
 
 export default function SalesBanner({isActive, title, description, discountPercentage, products}: any) {
-	const [isVisible, setIsVisible] = useState(false);
+	const [isVisible, setIsVisible] = useState(isActive);
+	const [isLoading, setIsLoading] = useState(true);
 	const pathname = usePathname();
 
 	useEffect(() => {
-		setIsVisible(isActive);
-	}, [isActive]);
+		setIsLoading(false);
+	}, []);
 
 	if (!isVisible) return null;
 
+	if (isLoading) return <div className="container py-4"><Loader size='md' variant='spinner' className='static text-primary flex mx-auto' /></div>;
 	if (pathname.match(/\/products/)) return null;
 
 	return (
@@ -35,7 +38,7 @@ export default function SalesBanner({isActive, title, description, discountPerce
 										Скидка <span className="text-lg font-bold leading-none">- {discountPercentage}%</span>
 									</p>
 								)}
-								<p className="text-xs font-extralight text-slate-100">{description}</p>
+								<p className="text-xs">{description}</p>
 							</div>
 							{products?.slug?.current && (
 								<Link href={`/services/${products?.slug?.current}`}>
@@ -48,7 +51,7 @@ export default function SalesBanner({isActive, title, description, discountPerce
 						</div>
 					</div>
 					<Button isIconOnly aria-label="Close banner" className="group size-9 min-w-0 shrink-0 p-0 hover:bg-transparent" variant="ghost" onPress={() => setIsVisible(false)}>
-						<XIcon aria-hidden="true" className="text-primary-foreground text-opacity-60 transition-opacity group-hover:opacity-100 group-hover:text-black" size={16} />
+						<XIcon aria-hidden="true" className="text-gray-800 text-opacity-60 transition-opacity group-hover:opacity-100 group-hover:text-black" size={16} />
 					</Button>
 				</div>
 			</div>

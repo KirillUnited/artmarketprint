@@ -1,5 +1,5 @@
 .banner {
-    @apply relative bg-brand-gradient text-primary-foreground py-3;
+    @apply relative bg-gray-100 text-gray-900 py-3;
 }
 
 @keyframes slide {
