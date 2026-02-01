@@ -24,7 +24,7 @@ export default function SalesBanner({isActive, title, description, discountPerce
 
 	return (
 		<aside className={clsx(styles.banner)}>
-			<div className="container">
+			<div className="container max-w-screen-md">
 				<div className="flex gap-3 md:items-center">
 					<div className="flex flex-1 md:items-center gap-3">
 						<div aria-hidden="true" className="bg-secondary/30 flex size-9 shrink-0 items-center justify-center rounded-full">
