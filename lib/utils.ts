@@ -1,6 +1,6 @@
 import { client } from '@/sanity/client';
 
-import imageUrlBuilder, { SanityImageSource } from '@sanity/image-url';
+import { createImageUrlBuilder, type SanityImageSource } from '@sanity/image-url';
 
 // const fs = require('fs').promises;
 
@@ -14,7 +14,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const getUrlFor = (source: SanityImageSource) => {
-  const builder = imageUrlBuilder(client);
+  const builder = createImageUrlBuilder(client);
 
   return builder.image(source).url();
 }
