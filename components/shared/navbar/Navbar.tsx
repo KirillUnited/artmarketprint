@@ -36,7 +36,7 @@ export default function Navbar({navigation, sales, siteSettings}: any) {
 
 	return (
 		<>
-			<SalesBanner {...sales} />
+			{sales?.isActive && <SalesBanner {...sales} />}
 			<BaseNavbar
 				shouldHideOnScroll
 				classNames={{
