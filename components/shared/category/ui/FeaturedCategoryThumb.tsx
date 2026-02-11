@@ -24,10 +24,11 @@ export const FeaturedCategoryThumb = ({item}: FeaturedCategoryThumbProps) => {
 				className="z-0 w-full h-full object-cover aspect-square"
 				radius="sm"
 				src={item.imageUrl ? item.imageUrl : item.image ? getUrlFor(item.image) : '/images/product-no-image.jpg'}
-				width={220}
-				height={220}
+				width={0}
+				height={0}
+				sizes="100vw"
 				fallbackSrc="/images/product-no-image.jpg"
-				quality={90}
+				quality={50}
 			/>
 			<CardFooter className={clsx('absolute bg-black/40 bottom-0 w-full z-10 p-0')}>
 				<div className="flex flex-col gap-2 p-3 w-full">

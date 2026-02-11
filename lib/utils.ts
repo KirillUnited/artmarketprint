@@ -14,5 +14,5 @@ export function cn(...inputs: ClassValue[]) {
 export const getUrlFor = (source: SanityImageSource) => {
   const builder = createImageUrlBuilder(client);
 
-  return builder.image(source).url();
+  return builder.image(source).format('webp').fit('crop').url();
 }
