@@ -36,10 +36,11 @@ export default function PostCard({post, variant = POST_CARD_VARIANTS.default, fo
 						as={NextImage}
 						className="w-full h-48 object-cover"
 						fallbackSrc="https://via.placeholder.com/300x200"
-						height={220}
-						quality={100}
-						src={urlFor(post.featuredImage).format('webp').url()}
-						width={220}
+						width={0}
+						height={0}
+						sizes="100vw"
+						quality={10}
+						src={urlFor(post.featuredImage).url()}
 					/>
 				</Link>
 			)}
