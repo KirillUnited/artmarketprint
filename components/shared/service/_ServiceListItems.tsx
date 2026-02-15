@@ -1,14 +1,14 @@
 'use client';
-import {Image} from '@heroui/image';
+import { Image } from '@heroui/image';
 import NextImage from 'next/image';
-import {Card, CardFooter} from '@heroui/card';
-import {Link} from '@heroui/link';
+import { Card, CardFooter } from '@heroui/card';
+import { Link } from '@heroui/link';
 import clsx from 'clsx';
 
-import {ProjectTagList} from '@/components/shared/project';
-import {urlFor} from '@/sanity/lib/image';
+import { ProjectTagList } from '@/components/shared/project';
+import { urlFor } from '@/sanity/lib/image';
 
-export default function ServiceListItems({services}: any) {
+export default function ServiceListItems({ services }: any) {
 	return (
 		<ul className="grid grid-cols-[var(--grid-template-columns)] gap-8">
 			{services?.map((service: any) => (
@@ -25,8 +25,10 @@ export default function ServiceListItems({services}: any) {
 							className="z-0 w-full h-full object-cover aspect-square"
 							radius="sm"
 							src={service.imageUrl ? service.imageUrl : urlFor(service.image).width(320).height(320).url()}
-							width={220}
-							height={220}
+							width={0}
+							height={0}
+							sizes="100vw"
+							quality={10}
 						/>
 						<CardFooter className={clsx('absolute bg-white/75 bottom-0 w-full z-10 p-0 backdrop-blur-lg')}>
 							<div className="flex flex-col gap-2 p-3 w-full">
