@@ -64,7 +64,7 @@ export const getRelatedPosts = async (categoryId: string) => {
 	}
 };
 
-export const getAllCategories = async () => {
+export const getAllBlogCategories = async () => {
 	try {
 		const categories = await sanityFetch({query: CATEGORIES_QUERY});
 

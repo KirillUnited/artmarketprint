@@ -5,7 +5,7 @@
 import NextImage from 'next/image';
 import {Image} from '@heroui/image';
 
-import PostCats from './ui/PostCats';
+import PostCatsFilter from './ui/PostCats';
 
 import {Post} from '@/components/blog/lib/types';
 import {urlFor} from '@/sanity/lib/image';
@@ -17,7 +17,7 @@ export default function PostHeader({post}: {post: Post}) {
 		<header className="flex flex-col gap-8 mb-8">
 			<div className={'flex flex-wrap items-center gap-x-4 gap-y-2'}>
 				<PostMetadata post={post} />
-				<PostCats categories={post?.categories || []} />
+				<PostCatsFilter categories={post?.categories || []} />
 			</div>
 			<div className={'space-y-4'}>
 				<h1 className="text-3xl font-bold pb-4 border-b-1">
