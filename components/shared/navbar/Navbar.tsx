@@ -1,38 +1,37 @@
 'use client';
 import React from 'react';
-import {Navbar as BaseNavbar, NavbarBrand, NavbarContent, NavbarItem} from '@heroui/navbar';
-import {Link} from '@heroui/link';
-import {Calculator, ShoppingBagIcon} from 'lucide-react';
-import {Tooltip} from '@heroui/tooltip';
-import {Button} from '@heroui/button';
-import {clsx} from 'clsx';
-import {usePathname} from 'next/navigation';
-
-import {TelegramIcon, ViberIcon} from '../../icons';
+import { Navbar as BaseNavbar, NavbarBrand, NavbarContent, NavbarItem } from '@heroui/navbar';
+import { Link } from '@heroui/link';
+import { Calculator, PhoneOutgoing, ShoppingBagIcon } from 'lucide-react';
+import { Tooltip } from '@heroui/tooltip';
+import { Button } from '@heroui/button';
+import { clsx } from 'clsx';
+import { usePathname } from 'next/navigation';
 import BrandLogo from '../../ui/BrandLogo';
-import {HeroModalOffer} from '../../ui/BrandModalOffer';
+import { HeroModalOffer } from '../../ui/BrandModalOffer';
 import Drawer from '../../ui/Drawer';
-import {SalesBanner} from '../banner';
+import { SalesBanner } from '../banner';
 
-import {siteConfig} from '@/config/site';
 import useBasketStore from '@/store/store';
-import {NavbarDropdownMenu} from '@/components/ui/dropdown';
-import {PhoneIcon} from '@/components/icons';
+import { NavbarDropdownMenu } from '@/components/ui/dropdown';
+import Socials from '../Socials';
 
 export const CartLinkButton = (itemsCount: number) => {
 	return (
 		<Link aria-label={`Shopping cart${itemsCount > 0 ? `, ${itemsCount} items` : ''}`} className="relative" href="/cart" target="_blank">
-			<ShoppingBagIcon className="text-primary" size={22} />
+			<ShoppingBagIcon className="text-primary" size={24} />
 			{itemsCount > 0 && <span className="bg-danger text-white rounded-full text-xs text-center px-1 py-1 truncate w-6 h-6 absolute -top-3 -right-3">{itemsCount}</span>}
 		</Link>
 	);
 };
 
-export default function Navbar({navigation, sales, siteSettings}: any) {
+export default function Navbar({ navigation, sales, siteSettings }: any) {
 	const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 	const itemsCount = useBasketStore((state) => state.items.length);
-	const phones = siteSettings?.siteContactInfo?.phones ?? [];
 	const pathname = usePathname();
+	const phones = siteSettings?.siteContactInfo?.phones ?? [];
+	const socials = siteSettings?.siteContactInfo?.socialLinks ?? [];
+	const navSocials = socials.filter((social: any) => social.showInNav === true);
 
 	return (
 		<>
@@ -90,24 +89,15 @@ export default function Navbar({navigation, sales, siteSettings}: any) {
 							</Button>
 						</Tooltip>
 						{/* <SearchIcon /> */}
-						<div className="hidden md:flex gap-2">
-							<Link
-								className="flex flex-row gap-4 items-center justify-start self-stretch shrink-0 relative"
-								href={`https://t.me/${siteConfig?.contacts?.[0]?.list?.[0]?.href}`}
-								target="_blank"
-							>
-								<TelegramIcon />
-							</Link>
-							<Link href={`https://msng.link/o?${siteConfig?.contacts?.[0].list?.[0]?.href}=vi`} target="_blank">
-								<ViberIcon />
+						<div className="hidden md:flex gap-3">
+							<Socials items={navSocials} />
+							<Link className="text-sm hover:text-primary" color={'primary'} href={`tel:${phones[0]?.link}`}>
+								<PhoneOutgoing size={24} />
 							</Link>
 						</div>
 						{/* {
 							phones.length > 0 && <PhoneListDropdown items={phones} />
 						} */}
-						<Link className="text-sm hover:text-primary" color={'primary'} href={`tel:${phones[0]?.link}`}>
-							<PhoneIcon />
-						</Link>
 						{CartLinkButton(itemsCount)}
 
 						<div className="hidden lg:block">
