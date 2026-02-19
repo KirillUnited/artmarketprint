@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { InstagramIcon, TelegramIcon, ViberIcon, WhatsAppIcon } from '../icons';
+import { InstagramIcon, TelegramIcon, ViberIcon, WhatsAppIcon } from '../../icons';
 
 type SocialPlatform = 'instagram' | 'telegram' | 'viber' | 'whatsapp';
 
