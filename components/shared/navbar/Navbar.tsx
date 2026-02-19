@@ -18,6 +18,7 @@ import {siteConfig} from '@/config/site';
 import useBasketStore from '@/store/store';
 import {NavbarDropdownMenu} from '@/components/ui/dropdown';
 import {PhoneIcon} from '@/components/icons';
+import Socials from '../Socials';
 
 export const CartLinkButton = (itemsCount: number) => {
 	return (
@@ -32,6 +33,7 @@ export default function Navbar({navigation, sales, siteSettings}: any) {
 	const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 	const itemsCount = useBasketStore((state) => state.items.length);
 	const phones = siteSettings?.siteContactInfo?.phones ?? [];
+	const socials = siteSettings?.siteContactInfo?.socialLinks ?? [];
 	const pathname = usePathname();
 
 	return (
@@ -91,7 +93,8 @@ export default function Navbar({navigation, sales, siteSettings}: any) {
 						</Tooltip>
 						{/* <SearchIcon /> */}
 						<div className="hidden md:flex gap-2">
-							<Link
+							<Socials items={socials} />
+							{/* <Link
 								className="flex flex-row gap-4 items-center justify-start self-stretch shrink-0 relative"
 								href={`https://t.me/${siteConfig?.contacts?.[0]?.list?.[0]?.href}`}
 								target="_blank"
@@ -100,7 +103,7 @@ export default function Navbar({navigation, sales, siteSettings}: any) {
 							</Link>
 							<Link href={`https://msng.link/o?${siteConfig?.contacts?.[0].list?.[0]?.href}=vi`} target="_blank">
 								<ViberIcon />
-							</Link>
+							</Link> */}
 						</div>
 						{/* {
 							phones.length > 0 && <PhoneListDropdown items={phones} />
