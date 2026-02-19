@@ -2,7 +2,7 @@ import React from 'react';
 import clsx from 'clsx';
 import { Card } from '@heroui/card';
 
-import Socials from './Socials';
+import {Socials} from '@/components/shared/socials';
 import ContactsList from './ContactsList';
 
 import { SectionProps } from '@/types';

@@ -8,7 +8,7 @@ import {NavbarItem} from '@heroui/navbar';
 import {Link} from '@heroui/link';
 import {SanityDocument} from 'next-sanity';
 
-import Socials from '../shared/Socials';
+import {Socials} from '@/components/shared/socials';
 
 import {HeroModalOffer} from './BrandModalOffer';
 import BrandLogo from './BrandLogo';

@@ -14,7 +14,7 @@ import { SalesBanner } from '../banner';
 
 import useBasketStore from '@/store/store';
 import { NavbarDropdownMenu } from '@/components/ui/dropdown';
-import Socials from '../Socials';
+import {Socials} from '@/components/shared/socials';
 
 export const CartLinkButton = (itemsCount: number) => {
 	return (
