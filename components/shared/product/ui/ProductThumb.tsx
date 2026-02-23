@@ -1,17 +1,17 @@
 'use client';
-import {FC, JSX} from 'react';
-import {Card, CardBody, CardFooter} from '@heroui/card';
-import {Link} from '@heroui/link';
+import { FC, JSX } from 'react';
+import { Card, CardBody, CardFooter } from '@heroui/card';
+import { Link } from '@heroui/link';
 import NextImage from 'next/image';
 import clsx from 'clsx';
-import {Image} from '@heroui/image';
+import { Image } from '@heroui/image';
 
-import {ProductColors} from '../ProductColors';
-import {ProductSizes} from '../ProductSizes';
+import { ProductColors } from '../ProductColors';
+import { ProductSizes } from '../ProductSizes';
 
-import {ProductData} from '@/components/shared/product/product.types';
-import {getTotalStock} from '@/components/shared/product/lib';
-import {CURRENCIES_SYMBOLS} from '@/lib/products/companies';
+import { ProductData } from '@/components/shared/product/product.types';
+import { getTotalStock } from '@/components/shared/product/lib';
+import { CURRENCIES_SYMBOLS } from '@/lib/products/companies';
 
 interface ProductThumbProps extends React.HTMLAttributes<HTMLDivElement> {
 	item: ProductData;
@@ -22,7 +22,7 @@ interface ProductThumbProps extends React.HTMLAttributes<HTMLDivElement> {
  *
  * @returns {JSX.Element} The JSX element representing the product thumbnail card.
  */
-const ProductThumb: FC<ProductThumbProps> = ({item, ...props}): JSX.Element => {
+const ProductThumb: FC<ProductThumbProps> = ({ item, ...props }): JSX.Element => {
 	const id = item.id || item._id || '';
 	const price = item.price || 0;
 	const name = item.name || '';
@@ -41,17 +41,13 @@ const ProductThumb: FC<ProductThumbProps> = ({item, ...props}): JSX.Element => {
 						classNames={{
 							wrapper: clsx('relative w-full bg-contain bg-center bg-no-repeat mx-auto'),
 						}}
-						height={220}
 						loading="lazy"
-						quality={75}
+						width={0}
+						height={0}
+						sizes="100vw"
+						quality={10}
 						src={image}
-						width={220}
-						placeholder="blur"
-						blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjIyMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjFmMWYxIi8+PC9zdmc+"
-						onLoadingComplete={(img: HTMLImageElement) => {
-							// Add fade-in animation when image loads
-							img.classList.add('animate-fadeIn');
-						}}
+						fallbackSrc="/images/product-no-image.jpg"
 					/>
 					{Number(totalStock()) === 0 && (
 						<div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
