@@ -18,7 +18,7 @@ import {Socials} from '@/components/shared/socials';
 
 export const CartLinkButton = (itemsCount: number) => {
 	return (
-		<Link aria-label={`Shopping cart${itemsCount > 0 ? `, ${itemsCount} items` : ''}`} className="relative" href="/cart" target="_blank">
+		<Link aria-label={`Shopping cart${itemsCount > 0 ? `, ${itemsCount} items` : ''}`} className="relative" href="/cart">
 			<ShoppingBagIcon className="text-primary" size={24} />
 			{itemsCount > 0 && <span className="bg-danger text-white rounded-full text-xs text-center px-1 py-1 truncate w-6 h-6 absolute -top-3 -right-3">{itemsCount}</span>}
 		</Link>
