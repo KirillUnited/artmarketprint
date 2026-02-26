@@ -51,7 +51,7 @@ export const PAGINATED_POSTS_BY_CATEGORY_QUERY = defineQuery(`*[_type == "blog.p
   ${POST}
 }`);
 
-export const RELATED_POSTS_QUERY = defineQuery(`*[_type == 'blog.post' && count(categories[@._ref in ^.categories[]._ref]) > 0 && _id != $categoryId]|order(publishDate desc){
+export const RELATED_POSTS_QUERY = defineQuery(`*[_type == 'blog.post' && count(categories[@._ref in ^.categories[]._ref]) > 0 && _id != $categoryId]|order(publishDate desc)[0...3]{
   ${POST}
 }`);
 export const CATEGORIES_QUERY = defineQuery(`*[_type == "blog.category"]|order(title asc){
