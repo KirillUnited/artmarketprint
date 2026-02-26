@@ -44,6 +44,13 @@ export const POSTS_BY_CATEGORY_QUERY = defineQuery(`*[_type == "blog.post" &&
 ] | order(publishDate desc) {
   ${POST}
 }`);
+
+export const TOTAL_POSTS_BY_CATEGORY_COUNT_QUERY = defineQuery(`count(*[_type == "blog.post" && $categorySlug in categories[]->slug.current])`);
+
+export const PAGINATED_POSTS_BY_CATEGORY_QUERY = defineQuery(`*[_type == "blog.post" && $categorySlug in categories[]->slug.current] | order(publishDate desc)[$start...$end]{
+  ${POST}
+}`);
+
 export const RELATED_POSTS_QUERY = defineQuery(`*[_type == 'blog.post' && count(categories[@._ref in ^.categories[]._ref]) > 0 && _id != $categoryId]|order(publishDate desc){
   ${POST}
 }`);
