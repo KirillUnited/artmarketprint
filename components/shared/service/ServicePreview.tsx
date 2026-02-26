@@ -12,7 +12,7 @@ import {SanityDocument} from 'next-sanity';
 
 export function ServicePreview({service}: {service: SanityDocument}): JSX.Element {
 	return (
-		<Card shadow="none" isFooterBlurred as={Link} className="h-full group relative mx-2" href={`/services/${service.currentSlug || service.slug?.current}`} radius="sm">
+		<Card shadow="none" isFooterBlurred as={Link} className="h-full group relative mx-2 w-full" href={`/services/${service.currentSlug || service.slug?.current}`} radius="sm">
 			<div className="absolute top-3 left-3 z-10 flex flex-wrap gap-2">
 				{service?.service_tags?.length > 0 && <ProjectTagList color="primary" tags={service.service_tags} />}
 				{service?.category_tags?.length > 0 && <ProjectTagList color="secondary" tags={service.category_tags} />}
@@ -25,8 +25,10 @@ export function ServicePreview({service}: {service: SanityDocument}): JSX.Elemen
 					className="z-0 w-full h-full object-cover aspect-square"
 					radius="sm"
 					src={urlFor(service.image).width(320).height(320).url()}
-					width={220}
-					height={220}
+					width={0}
+					height={0}
+					sizes="100vw"
+					quality={50}
 					fallbackSrc="/images/product-no-image.jpg"
 				/>
 			) : (

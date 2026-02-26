@@ -1,5 +1,4 @@
 import Section, {SectionTitle} from '@/components/layout/Section';
-import ProductsView from '@/components/shared/product/ProductsView';
 import {getCTAButton} from '@/components/ui/BrandButton';
 import BaseBreadcrumb from '@/components/ui/Breadcrumb';
 import {getSanityDocuments} from '@/sanity/lib/fetch-sanity-data';
@@ -12,12 +11,10 @@ import {ArrowUpRightIcon, ShoppingCartIcon} from 'lucide-react';
 import {PortableText, SanityDocument} from 'next-sanity';
 import Image from 'next/image';
 import Link from 'next/link';
-import {getAllProductsByCategory} from '@/sanity/lib/product/getAllProductsByCategory';
 import {ProductsNotFound} from '@/components/shared/product';
-import ProductSearchForm from '@/components/shared/product/ProductSearchForm';
 import {sanityFetch} from '@/sanity/lib/sanityFetch';
-import {collectCategoriesAndSubcategories} from '@/lib/products/collectCategories';
-import {PushToDataLayer} from '@/components/shared/gtm';
+import RelatedProductsCarousel from '@/components/shared/product/RelatedProductsCarousel';
+import getRelatedProductsByCategory from '@/sanity/lib/product/getRelatedProductsByCategory';
 
 export interface Props {
 	slug: string;
@@ -66,15 +63,10 @@ export default async function CategoryPage({params}: {params: Promise<Props>}) {
 	const {slug} = await params;
 	const category: any = await getSanityDocuments(CATEGORY_QUERY, {slug});
 	const categoryTitle = category?.title;
-	const products = await getAllProductsByCategory(categoryTitle);
+	const relatedProducts = await getRelatedProductsByCategory(categoryTitle, '0');
+
 	const breadcrumbs = (await client.fetch<SanityDocument>(NAVIGATION_QUERY))[0].links;
 	const categoryImageUrl = (await category?.image) ? getUrlFor(category.image) : null;
-
-	if (!Array.isArray(products) || products.length === 0) {
-		return <ProductsNotFound />;
-	}
-
-	const categoriesWithSubcategories = collectCategoriesAndSubcategories(products);
 
 	return (
 		<>
@@ -113,51 +105,54 @@ export default async function CategoryPage({params}: {params: Promise<Props>}) {
 				</Section>
 			)}
 			<Section id="products" innerClassname="pt-0 md:pt-0">
-				<>
-					<SectionTitle>
-						<span className="font-normal">Товары в категории</span>
-						<br />
-						{categoryTitle}
-					</SectionTitle>
-					<div className="flex flex-col gap-2 w-full">
-						<ProductSearchForm />
-						<Link href="/products/categories/all">
-							<Button className="border-1 md:self-start" radius="sm" variant="bordered">
-								<ShoppingCartIcon size="18" />
-								<span>Все товары</span>
-							</Button>
-						</Link>
-					</div>
-				</>
-
-				<ProductsView products={products} categories={categoriesWithSubcategories} />
+				<SectionTitle>
+					<span className="font-normal">Товары в категории</span>
+					<br />
+					{categoryTitle}
+				</SectionTitle>
+				{!Array.isArray(relatedProducts) || relatedProducts.length === 0 ? (
+					<ProductsNotFound />
+				) : (
+					<>
+						<RelatedProductsCarousel relatedProducts={relatedProducts} />
+						<div className="flex flex-col gap-2 w-full">
+							<Link href={`/products/categories/${category.slug.current}`}>
+								<Button className="border-1 md:self-start" radius="sm" variant="bordered">
+									<ShoppingCartIcon size="18" />
+									<span>Все товары</span>
+								</Button>
+							</Link>
+						</div>
+					</>
+				)}
 			</Section>
-			<PushToDataLayer
-				data={{
-					event: 'view_item_list',
-					value: products.reduce((sum, p) => sum + (p.price?.[0]?.value || 0), 0),
-					items: products.map((p) => ({
-						id: p.id,
-						google_business_vertical: 'retail',
-					})),
-					ecommerce: {
-						currency: 'BYN',
-						value: products.reduce((sum, p) => sum + (p.price?.[0]?.value || 0), 0),
-						items: products.map((p) => ({
-							item_id: p.id,
-							item_name: p.name,
-							item_brand: p.brand || 'Без бренда',
-							item_category: p.category?.name || category?.title || 'Без категории',
-							item_category2: p.category?.parent?.name || '',
-							item_category3: '',
-							item_category4: '',
-							item_category5: '',
-							price: p.price?.[0]?.value || 0,
-							quantity: 1,
-						})),
-					},
-				}}
-			/>
+
+			{/*<PushToDataLayer*/}
+			{/*	data={{*/}
+			{/*		event: 'view_item_list',*/}
+			{/*		value: products.reduce((sum, p) => sum + (p.price?.[0]?.value || 0), 0),*/}
+			{/*		items: products.map((p) => ({*/}
+			{/*			id: p.id,*/}
+			{/*			google_business_vertical: 'retail',*/}
+			{/*		})),*/}
+			{/*		ecommerce: {*/}
+			{/*			currency: 'BYN',*/}
+			{/*			value: products.reduce((sum, p) => sum + (p.price?.[0]?.value || 0), 0),*/}
+			{/*			items: products.map((p) => ({*/}
+			{/*				item_id: p.id,*/}
+			{/*				item_name: p.name,*/}
+			{/*				item_brand: p.brand || 'Без бренда',*/}
+			{/*				item_category: p.category?.name || category?.title || 'Без категории',*/}
+			{/*				item_category2: p.category?.parent?.name || '',*/}
+			{/*				item_category3: '',*/}
+			{/*				item_category4: '',*/}
+			{/*				item_category5: '',*/}
+			{/*				price: p.price?.[0]?.value || 0,*/}
+			{/*				quantity: 1,*/}
+			{/*			})),*/}
+			{/*		},*/}
+			{/*	}}*/}
+			{/*/>*/}
 		</>
 	);
 }
