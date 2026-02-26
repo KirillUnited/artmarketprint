@@ -29,6 +29,12 @@ export const ALL_POSTS_QUERY = defineQuery(`*[_type == "blog.post"]|order(publis
   ${POST}
 }`);
 
+export const TOTAL_POSTS_COUNT_QUERY = defineQuery(`count(*[_type == "blog.post"])`);
+
+export const PAGINATED_POSTS_QUERY = defineQuery(`*[_type == "blog.post"] | order(publishDate desc)[$start...$end]{
+  ${POST}
+}`);
+
 export const POST_BY_SLUG_QUERY = defineQuery(`*[_type == "blog.post" && slug.current == $slug][0]{
   ${POST}
 }`);
