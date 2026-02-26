@@ -1,5 +1,15 @@
 import {sanityFetch} from '@/sanity/lib/sanityFetch';
-import {ALL_POSTS_QUERY, CATEGORIES_QUERY, POST_BY_SLUG_QUERY, POSTS_BY_CATEGORY_QUERY, RELATED_POSTS_QUERY} from '@/components/blog/lib/queries';
+import {
+	ALL_POSTS_QUERY,
+	CATEGORIES_QUERY,
+	PAGINATED_POSTS_QUERY,
+	PAGINATED_POSTS_BY_CATEGORY_QUERY,
+	POST_BY_SLUG_QUERY,
+	POSTS_BY_CATEGORY_QUERY,
+	RELATED_POSTS_QUERY,
+	TOTAL_POSTS_BY_CATEGORY_COUNT_QUERY,
+	TOTAL_POSTS_COUNT_QUERY,
+} from '@/components/blog/lib/queries';
 
 /**
  * Fetch all blog posts ordered by publish date.
@@ -13,6 +23,78 @@ export const getAllPosts = async () => {
 		console.error('Error fetching all posts:', error);
 
 		return [];
+	}
+};
+
+/**
+ * Fetch blog posts for a specific page.
+ * @param pageNumber - current page number (1-based)
+ * @param postsPerPage - amount of posts per page
+ */
+export const getPaginatedPosts = async (pageNumber: number, postsPerPage: number) => {
+	try {
+		const safePage = Math.max(1, pageNumber);
+		const start = (safePage - 1) * postsPerPage;
+		const end = start + postsPerPage;
+		const posts = await sanityFetch({query: PAGINATED_POSTS_QUERY, params: {start, end}});
+
+		return posts || [];
+	} catch (error) {
+		console.error('Error fetching paginated posts:', error);
+
+		return [];
+	}
+};
+
+/**
+ * Fetch total amount of blog posts.
+ */
+export const getTotalPostsCount = async () => {
+	try {
+		const total = await sanityFetch({query: TOTAL_POSTS_COUNT_QUERY});
+
+		return typeof total === 'number' ? total : 0;
+	} catch (error) {
+		console.error('Error fetching total posts count:', error);
+
+		return 0;
+	}
+};
+
+/**
+ * Fetch blog posts for a specific category page.
+ * @param categorySlug - category slug
+ * @param pageNumber - current page number (1-based)
+ * @param postsPerPage - amount of posts per page
+ */
+export const getPaginatedPostsByCategory = async (categorySlug: string, pageNumber: number, postsPerPage: number) => {
+	try {
+		const safePage = Math.max(1, pageNumber);
+		const start = (safePage - 1) * postsPerPage;
+		const end = start + postsPerPage;
+		const posts = await sanityFetch({query: PAGINATED_POSTS_BY_CATEGORY_QUERY, params: {categorySlug, start, end}});
+
+		return posts || [];
+	} catch (error) {
+		console.error('Error fetching paginated posts by category:', error);
+
+		return [];
+	}
+};
+
+/**
+ * Fetch total amount of blog posts for a category.
+ * @param categorySlug - category slug
+ */
+export const getTotalPostsCountByCategory = async (categorySlug: string) => {
+	try {
+		const total = await sanityFetch({query: TOTAL_POSTS_BY_CATEGORY_COUNT_QUERY, params: {categorySlug}});
+
+		return typeof total === 'number' ? total : 0;
+	} catch (error) {
+		console.error('Error fetching total posts count by category:', error);
+
+		return 0;
 	}
 };
 
