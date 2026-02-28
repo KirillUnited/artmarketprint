@@ -1,22 +1,30 @@
 import {SectionTitle} from '@/components/layout/Section';
-import ProductsView from '@/components/shared/product/ProductsView';
-import {Product} from '@/components/shared/product/product.types';
+import {ProductData} from '@/components/shared/product/product.types';
+import {ClientPagination} from '@/components/shared/product/ui/Pagination';
+import ProductThumb from '@/components/shared/product/ui/ProductThumb';
+import styles from '@/components/shared/product/ui/styles.module.css';
 
 import {SearchTopActions} from './SearchTopActions';
 
 export type SearchResultsStateProps = {
 	query: string;
-	products: Product[];
-	categories: Array<{category: string; subcategories: string[]}>;
+	products: ProductData[];
+	totalFound: number;
+	currentPage: number;
+	totalPages: number;
 };
 
-export function SearchResultsState({query, products, categories}: SearchResultsStateProps) {
+export function SearchResultsState({query, products, totalFound, currentPage, totalPages}: SearchResultsStateProps) {
 	return (
 		<>
-			<SectionTitle>{`Результаты поиска для "${query}" (${products.length} найдено)`}</SectionTitle>
+			<SectionTitle>{`Результаты поиска для "${query}" (${totalFound} найдено)`}</SectionTitle>
 			<SearchTopActions />
-			<ProductsView products={products} categories={categories} totalItemsView={20} showFilter={true} />
+			<div className={styles.ProductList}>
+				{products.map((product) => (
+					<ProductThumb key={product._id} item={product} />
+				))}
+			</div>
+			{totalPages > 1 && <ClientPagination totalPages={totalPages} pageNumber={currentPage} basePath="/search" />}
 		</>
 	);
 }
-
