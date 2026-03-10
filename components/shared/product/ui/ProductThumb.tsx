@@ -37,15 +37,15 @@ const ProductThumb: FC<ProductThumbProps> = ({ item, ...props }): JSX.Element =>
 					<Image
 						alt={name}
 						as={NextImage}
-						className={clsx('object-contain aspect-square w-full mx-auto max-w-56 max-h-80 group-hover:scale-105 transition-transform duration-300')}
+						className={clsx('object-contain mx-auto max-w-56 max-h-80 group-hover:scale-105 transition-transform duration-300')}
 						classNames={{
 							wrapper: clsx('relative w-full bg-contain bg-center bg-no-repeat mx-auto'),
 						}}
 						loading="lazy"
-						width={0}
-						height={0}
-						sizes="100vw"
-						quality={10}
+						width={220}
+						height={220}
+						sizes='100vw'
+						quality={50}
 						src={image}
 						fallbackSrc="/images/product-no-image.jpg"
 					/>
