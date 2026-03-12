@@ -7,6 +7,38 @@
  * 2. Fetches new product data and imports it to Sanity
  */
 
+// Load environment variables from .env.local when running via Node
+const fs = require('fs');
+const path = require('path');
+
+function loadEnvLocal() {
+  try {
+    const envPath = path.join(__dirname, '.env.local');
+    if (!fs.existsSync(envPath)) return;
+
+    const lines = fs.readFileSync(envPath, 'utf8').split('\n');
+
+    for (const rawLine of lines) {
+      const line = rawLine.trim();
+      if (!line || line.startsWith('#')) continue;
+
+      const eqIndex = line.indexOf('=');
+      if (eqIndex === -1) continue;
+
+      const key = line.slice(0, eqIndex).trim();
+      const value = line.slice(eqIndex + 1).trim();
+
+      if (key && !process.env[key]) {
+        process.env[key] = value;
+      }
+    }
+  } catch (err) {
+    console.error('Failed to load .env.local:', err);
+  }
+}
+
+loadEnvLocal();
+
 // Use dynamic imports for ES modules
 async function runUpdate() {
   try {
