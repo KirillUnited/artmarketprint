@@ -1,10 +1,9 @@
-import { Product } from '../components/shared/product/product.types';
-import { client } from './client';
+import { client } from './client.mjs';
 
 const CHUNK_SIZE = 50; // Process 50 products at a time
 const MAX_DOCUMENTS = 8000; // Limit to 8000 documents
 
-export function transform(external: Product) {
+export function transform(external) {
 	return {
 		_type: 'product',
 		_id: external._id,
@@ -27,7 +26,7 @@ export function transform(external: Product) {
 	};
 }
 
-export async function importDataToSanity(products: Product[]) {
+export async function importDataToSanity(products) {
 	try {
 		const documents = products.map(transform);
 		let docCount = 0;
@@ -40,7 +39,7 @@ export async function importDataToSanity(products: Product[]) {
 			let transaction = client.transaction();
 
 			docCount += chunk.length;
-			
+
 			if (docCount > MAX_DOCUMENTS) {
 				console.log(`⚠️ Reached maximum document limit of ${MAX_DOCUMENTS}. Stopping import.`);
 				break;
@@ -64,9 +63,9 @@ export async function importDataToSanity(products: Product[]) {
 	}
 }
 
-export function getUniqueCategories(products: Product[]) {
+export function getUniqueCategories(products) {
 	// Create a map to store unique categories by title
-	const categoriesMap = new Map<string, { id: string, subcategories: Set<string> }>();
+	const categoriesMap = new Map();
 
 	products.forEach(product => {
 		const categoryId = product?.categoryId;
@@ -78,7 +77,7 @@ export function getUniqueCategories(products: Product[]) {
 				categoriesMap.set(categoryTitle, { id: categoryId, subcategories: new Set() });
 			}
 			if (subcategoryTitle) {
-				categoriesMap.get(categoryTitle)!.subcategories.add(subcategoryTitle);
+				categoriesMap.get(categoryTitle).subcategories.add(subcategoryTitle);
 			}
 		}
 	});
@@ -91,7 +90,7 @@ export function getUniqueCategories(products: Product[]) {
 	}));
 }
 
-export async function importCategoriesToSanity(products: Product[]) {
+export async function importCategoriesToSanity(products) {
 	try {
 		const categories = getUniqueCategories(products);
 		const documents = categories.map(category => ({
