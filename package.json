@@ -6,7 +6,8 @@
   "dev": "next dev --turbopack",
   "build": "next build",
   "start": "next start",
-  "lint": "eslint . --ext .ts,.tsx -c .eslintrc.json --fix"
+  "lint": "eslint . --ext .ts,.tsx -c .eslintrc.json --fix",
+  "update-products": "node update-products.js"
  },
  "dependencies": {
   "@heroui/accordion": "^2.2.29",
@@ -104,6 +105,7 @@
   "prettier": "3.8.1",
   "tailwind-variants": "2.1.0",
   "tailwindcss": "3.4.16",
+  "ts-node": "^10.9.2",
   "typescript": "5.9.3"
  }
 }
