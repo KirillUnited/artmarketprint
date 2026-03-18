@@ -28,7 +28,7 @@ export default function PriceTable({ items }: { items: PriceTableProps }) {
 				aria-label="Price table with dynamic content"
 				radius='sm'
 				isStriped
-				className='border-1 border-gray-300 rounded-small'
+				className='border border-gray-300 rounded-small'
 			>
 				<TableHeader columns={columns} className='rounded-small'>
 					{(column) => (
@@ -62,7 +62,7 @@ export default function PriceTable({ items }: { items: PriceTableProps }) {
 
 			{/* Render additional notes if available */}
 			{(Array.isArray(items.additionalNotes) && items.additionalNotes?.length > 0) && (
-				<Alert color="primary" icon="warning" className='border-1 border-primary-300 shadow-md text-pretty' radius='sm'>
+				<Alert color="primary" icon="warning" className='border border-primary-300 shadow-md text-pretty' radius='sm'>
 					<ul className='text-sm mt-0'>
 						{items.additionalNotes.map((note: string, index: number) => (
 							<li key={index}>

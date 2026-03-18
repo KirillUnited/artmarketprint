@@ -56,7 +56,7 @@ export default function PostCard({post, variant = POST_CARD_VARIANTS.default, fo
 					<p className="text-neutral-600 dark:text-neutral-300 line-clamp-4">{post.excerpt}</p>
 				</CardBody>
 			)}
-			{footerSlot && <CardFooter className="mt-auto max-xl:items-stretch gap-2 justify-between text-sm text-neutral-500 flex-wrap border-t-1">{footerSlot}</CardFooter>}
+			{footerSlot && <CardFooter className="mt-auto max-xl:items-stretch gap-2 justify-between text-sm text-neutral-500 flex-wrap border-t">{footerSlot}</CardFooter>}
 		</Card>
 	);
 }

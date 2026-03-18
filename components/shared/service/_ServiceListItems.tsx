@@ -10,7 +10,7 @@ import { urlFor } from '@/sanity/lib/image';
 
 export default function ServiceListItems({ services }: any) {
 	return (
-		<ul className="grid grid-cols-[var(--grid-template-columns)] gap-8">
+		<ul className="grid grid-cols-(--grid-template-columns) gap-8">
 			{services?.map((service: any) => (
 				<li key={service.title}>
 					<Card isFooterBlurred as={Link} className="h-full group relative" href={`/services/${service.currentSlug || service.slug?.current}`} radius="sm">

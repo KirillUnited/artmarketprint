@@ -25,7 +25,7 @@ export const InstagramFeedOld = ({ className }: SectionProps) => {
     return (
         <div className={
             clsx(
-                'relative after:absolute after:z-[99999] after:left-0 after:bottom-0 after:w-full after:block after:bg-background after:h-12',
+                'relative after:absolute after:z-99999 after:left-0 after:bottom-0 after:w-full after:block after:bg-background after:h-12',
                 styles.instagramFeed,
                 className
             )

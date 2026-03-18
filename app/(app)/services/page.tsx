@@ -31,7 +31,7 @@ export default async function ServicesPage() {
 
 	return (
 		<>
-			<section className="py-12 md:py-24 relative after:absolute after:inset-0 after:bg-gradient-to-t after:from-black after:to-transparent">
+			<section className="py-12 md:py-24 relative after:absolute after:inset-0 after:bg-linear-to-t after:from-black after:to-transparent">
 				<Image priority alt={`${siteConfig?.seo?.title}`} className="absolute inset-0 object-cover w-full h-full" height={1080} src="/images/service-2.jpg" width={1920} />
 				<div className="container flex flex-col gap-8 max-w-2xl relative z-10">
 					<div className="text-center">

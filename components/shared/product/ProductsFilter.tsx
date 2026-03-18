@@ -87,7 +87,7 @@ interface FilterButtonProps {
  */
 export const FilterButton: FC<FilterButtonProps> = ({ onOpen }) => {
 	return (
-		<Button className="flex-grow min-w-max border-1 sticky top-20" radius="sm" color="primary" variant="bordered" onPress={onOpen}>
+		<Button className="grow min-w-max border sticky top-20" radius="sm" color="primary" variant="bordered" onPress={onOpen}>
 			<FilterIcon size={16} />
 			<span className="text-sm">Фильтр по категориям</span>
 		</Button>
@@ -140,7 +140,7 @@ export const FilterDrawer: FC<FilterDrawerProps> = ({ isOpen, onOpenChange, onFi
 						<Form className="left-0w-full items-stretch">
 							<DrawerBody className="pb-20">{categoriesSet}</DrawerBody>
 							{selectedCategory && (
-								<DrawerFooter className="absolute left-0 right-0 bottom-0 w-full bg-background border-t-1">
+								<DrawerFooter className="absolute left-0 right-0 bottom-0 w-full bg-background border-t">
 									{/* Reset button to clear filters */}
 									<Button color="default" radius="sm" variant="solid" type="reset" onPress={() => onFilterChange('asc', '', '')}>
 										Сбросить

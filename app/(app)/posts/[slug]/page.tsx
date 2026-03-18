@@ -36,7 +36,7 @@ export default async function ArticlePage({ params }: {params: Promise<ArticlePa
 
   return (
     <Section>
-      <div className={'max-w-screen-lg mx-auto'}>
+      <div className={'max-w-(--breakpoint-lg) mx-auto'}>
         <div className="flex flex-col gap-8">
           {post?.body && (
             <article className="flex-1">

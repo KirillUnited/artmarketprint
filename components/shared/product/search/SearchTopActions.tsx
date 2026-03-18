@@ -14,7 +14,7 @@ export function SearchTopActions({className}: SearchTopActionsProps) {
 		<div className={clsx('flex flex-col md:flex-row gap-2 w-full', className)}>
 			<ProductSearchForm />
 			<Link href="/products/categories/all">
-				<Button className="border-1" radius="sm" variant="bordered">
+				<Button className="border" radius="sm" variant="bordered">
 					<ShoppingCartIcon size="18" />
 					<span>Все товары</span>
 				</Button>

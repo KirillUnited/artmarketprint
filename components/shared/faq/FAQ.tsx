@@ -58,7 +58,7 @@ export const FAQsFooter = ({title, description}: {title: string; description: st
 			<p className="leading-normal font-normal text-foreground/70 text-balance">{description}</p>
 		</div>
 		<Link href={'/#contacts'}>
-			<Button className="bg-brand-gradient text-fill-transparent font-semibold border-1" color="secondary" radius="sm" size="md" variant="bordered">
+			<Button className="bg-brand-gradient text-fill-transparent font-semibold border" color="secondary" radius="sm" size="md" variant="bordered">
 				КОНСУЛЬТАЦИЯ
 			</Button>
 		</Link>

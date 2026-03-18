@@ -1,14 +1,12 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
 @layer base {
     :root {
         --background: #fff;
         --background-primary: linear-gradient(
             97deg,
-            theme('colors.primary') 0%,
-            theme('colors.secondary') 100%
+            hsl(var(--heroui-primary)) 0%,
+            hsl(var(--heroui-secondary)) 100%
         );
         --foreground: #2B2A28;
         --grid-template-columns: repeat(auto-fill, minmax(min(var(--col-width, 288px), 100%), 1fr));
@@ -37,6 +35,10 @@
 }
 
 @layer utilities {
+    .bg-brand-gradient {
+        background-image: var(--background-primary);
+    }
+
     .text-fill-transparent {
         background-clip: text;
         -webkit-text-fill-color: transparent;
