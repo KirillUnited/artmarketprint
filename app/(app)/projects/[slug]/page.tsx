@@ -75,7 +75,7 @@ export default async function ProjectPage({params}: {params: Promise<Props>}) {
 
 	return (
 		<>
-			<section className="py-12 md:py-24 relative after:absolute after:inset-0 after:bg-gradient-to-t after:from-black after:to-transparent">
+			<section className="py-12 md:py-24 relative after:absolute after:inset-0 after:bg-linear-to-t after:from-black after:to-transparent">
 				{project.imageUrl && <Image priority alt={project.title} className="absolute inset-0 object-cover w-full h-full" height={1080} quality={50} src={`${project.imageUrl}`} width={1920} />}
 				<div className="container flex flex-col gap-10 max-w-4xl relative z-10">
 					<div className="text-center">

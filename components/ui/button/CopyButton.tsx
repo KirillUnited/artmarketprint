@@ -26,7 +26,7 @@ export default function CopyButton({textToCopy, className}: {textToCopy: string;
 	return (
 		<Button
 			isIconOnly
-			className={clsx('border-1', className)}
+			className={clsx('border', className)}
 			color={copied ? 'success' : 'primary'}
 			size={'sm'}
 			startContent={copied ? <CheckIcon className="w-4 h-4" /> : <CopyIcon className="w-4 h-4" />}

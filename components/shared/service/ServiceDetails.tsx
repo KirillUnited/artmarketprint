@@ -50,7 +50,7 @@ export const ServiceDetails: FC<ServiceDetailsProps> = memo(({name, description,
 		<article className="flex flex-col gap-8 md:gap-16">
 			<div className="flex flex-col gap-4 md:gap-6">
 				<div className="flex flex-col gap-2">
-					<h2 className="text-3xl md:text-4xl font-bold break-words">{name}</h2>
+					<h2 className="text-3xl md:text-4xl font-bold wrap-break-word">{name}</h2>
 				</div>
 				<div
 					className={clsx('grid grid-cols-1 gap-8 items-start', {
@@ -78,7 +78,7 @@ export const ServiceDetails: FC<ServiceDetailsProps> = memo(({name, description,
 						icon="warning"
 						title={`${paymentMethods.title}`}
 						description={`${paymentMethods.description}`}
-						className="border-1 border-warning-300 shadow-md text-pretty"
+						className="border border-warning-300 shadow-md text-pretty"
 						radius="sm"
 					/>
 				)}

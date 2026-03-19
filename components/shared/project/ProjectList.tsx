@@ -11,7 +11,7 @@ export const ProjectList = ({ projectList, bentoGrid = true, className }: { proj
             className={clsx(
                 ' gap-8',
                 {
-                    ['grid grid-cols-[var(--grid-template-columns)]']: !bentoGrid,
+                    ['grid grid-cols-(--grid-template-columns)']: !bentoGrid,
                     ['flex flex-col md:grid bento-grid-template [--row-height:320px]']: bentoGrid,
                 },
                 className,

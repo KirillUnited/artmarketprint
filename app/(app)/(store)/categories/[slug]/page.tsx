@@ -117,7 +117,7 @@ export default async function CategoryPage({params}: {params: Promise<Props>}) {
 						<RelatedProductsCarousel relatedProducts={relatedProducts} />
 						<div className="flex flex-col gap-2 w-full">
 							<Link href={`/products/categories/${category.slug.current}`}>
-								<Button className="border-1 md:self-start" radius="sm" variant="bordered">
+								<Button className="border md:self-start" radius="sm" variant="bordered">
 									<ShoppingCartIcon size="18" />
 									<span>Все товары</span>
 								</Button>

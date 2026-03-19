@@ -44,7 +44,7 @@ const FormContactFields = ({ setPhoneValid }: { setPhoneValid: (valid: boolean) 
                         radius='sm'
                         variant="bordered"
                         classNames={{
-                            trigger: 'border-1 bg-background',
+                            trigger: 'border bg-background',
                         }}
                         label="Страна"
                         id="country"

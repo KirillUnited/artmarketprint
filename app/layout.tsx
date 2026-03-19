@@ -121,7 +121,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
 				<Providers themeProps={{attribute: 'class', defaultTheme: 'light'}}>
 					<div className="min-h-screen flex flex-col">
 						<Header />
-						<main className="flex-grow">{children}</main>
+						<main className="grow">{children}</main>
 						<Footer />
 					</div>
 				</Providers>

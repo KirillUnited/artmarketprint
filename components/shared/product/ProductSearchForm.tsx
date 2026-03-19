@@ -15,7 +15,7 @@ export default function ProductSearchForm({ className }: { className?: string })
 		<Form action={'/search'} className={clsx('flex-row flex-1', className)}>
 			<Input
 				className="flex-1"
-				classNames={{inputWrapper: 'border-1 bg-white'}}
+				classNames={{inputWrapper: 'border bg-white'}}
 				labelPlacement="outside"
 				name="query"
 				placeholder="Поиск товара..."

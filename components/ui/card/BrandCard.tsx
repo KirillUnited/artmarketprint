@@ -29,7 +29,7 @@ export const BrandCardFooter = ({variant, href, buttonLabel}: {variant: string; 
 			</div>
 		)} */}
 		{variant === 'product' && (
-			<div className="flex flex-wrap gap-3 items-center justify-center border-t-1 border-foreground/20 pt-6 overflow-hidden">
+			<div className="flex flex-wrap gap-3 items-center justify-center border-t border-foreground/20 pt-6 overflow-hidden">
 				{/* <BrandCardLink href={href} /> */}
 				{/* <BrandModalOffer buttonLabel={buttonLabel || ''} icon={<ShoppingCartIcon size={18} />} /> */}
 				<Button className="bg-brand-gradient font-semibold grow min-w-fit uppercase" size="md" as={Link} href={href} color="primary" radius="sm">

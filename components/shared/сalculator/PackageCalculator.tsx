@@ -278,7 +278,7 @@ const PackageCalculator = ({matrix = []}: {matrix?: any}) => {
 							<Select
 								aria-label="Количество пакетов"
 								classNames={{
-									trigger: 'border-1 bg-background',
+									trigger: 'border bg-background',
 								}}
 								defaultSelectedKeys={[`${MIN_QUANTITY}`]}
 								radius="sm"

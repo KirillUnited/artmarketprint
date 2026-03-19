@@ -9,7 +9,7 @@ export default function FormInput(props: React.ComponentProps<typeof Input>) {
             radius='sm'
             variant="bordered"
             classNames={{
-                inputWrapper: 'border-1 bg-background',
+                inputWrapper: 'border bg-background',
             }}
             {...props}
         />
