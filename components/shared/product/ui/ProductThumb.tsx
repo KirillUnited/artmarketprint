@@ -50,7 +50,7 @@ const ProductThumb: FC<ProductThumbProps> = ({ item, ...props }): JSX.Element =>
 						fallbackSrc="/images/product-no-image.jpg"
 					/>
 					{Number(totalStock()) === 0 && (
-						<div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+						<div className="absolute inset-0 bg-black/50 flex items-center justify-center">
 							<span className="text-white font-medium px-3 py-1 bg-red-500 rounded-full text-sm">Нет в наличии</span>
 						</div>
 					)}

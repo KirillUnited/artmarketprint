@@ -15,13 +15,13 @@
 
 .CategoryFilterItem {
     @apply transition-colors;
-    @apply grid gap-2 rounded-small p-2;
+    @apply grid gap-2 rounded-xs p-2;
     grid-template-columns: 2.5rem 1fr;
     flex-basis: calc(160/16*1rem);
     flex-shrink: 0;
     border: 1px solid #e5e7eb;
     &[class*="active"] {
-        @apply border-primary;
+        @apply border;
     }
 }
 

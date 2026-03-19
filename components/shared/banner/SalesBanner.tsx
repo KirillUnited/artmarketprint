@@ -24,7 +24,7 @@ export default function SalesBanner({isActive, title, description, discountPerce
 
 	return (
 		<aside className={clsx(styles.banner)}>
-			<div className="container max-w-(--breakpoint-md)">
+			<div className="container max-w-screen-md">
 				<div className="flex gap-3 md:items-center">
 					<div className="flex flex-1 md:items-center gap-3">
 						<div aria-hidden="true" className="bg-secondary/30 flex size-9 shrink-0 items-center justify-center rounded-full">
@@ -51,7 +51,7 @@ export default function SalesBanner({isActive, title, description, discountPerce
 						</div>
 					</div>
 					<Button isIconOnly aria-label="Close banner" className="group size-9 min-w-0 shrink-0 p-0 hover:bg-transparent" variant="ghost" onPress={() => setIsVisible(false)}>
-						<XIcon aria-hidden="true" className="text-gray-800 text-opacity-60 transition-opacity group-hover:opacity-100 group-hover:text-black" size={16} />
+						<XIcon aria-hidden="true" className="text-gray-800/60 transition-opacity group-hover:opacity-100 group-hover:text-black" size={16} />
 					</Button>
 				</div>
 			</div>
