@@ -18,7 +18,7 @@ import {JSX} from 'react';
 
 export const ServiceHero: React.FC<ServiceHeroProps> = ({title, description, mediaBlock, image, ...props}): JSX.Element => {
 	return (
-		<section className="py-12 md:py-24 relative after:absolute after:inset-0 after:bg-gradient-to-t after:from-black/90 after:to-black/20 overflow-hidden grid place-items-end">
+		<section className="py-12 md:py-24 relative after:absolute after:inset-0 after:bg-linear-to-t after:from-black/90 after:to-black/20 overflow-hidden grid place-items-end">
 			{/* Background service image */}
 			{mediaBlock?.mediaType ? (
 				<div className="absolute inset-0">

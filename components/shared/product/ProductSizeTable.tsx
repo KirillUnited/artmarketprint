@@ -18,7 +18,7 @@ const ProductSizeTable: React.FC<ProductSizeTableProps> = ({ gender }) => {
   const sizes: SizeData[] = gender === 'male' ? MALE_SIZES : FEMALE_SIZES;
 
   return (
-    <Table aria-label="Product Size Table" radius='sm' className='border-1 border-gray-300 rounded-small min-w-fit'>
+    <Table aria-label="Product Size Table" radius='sm' className='border border-gray-300 rounded-small min-w-fit'>
       <TableHeader>
         <TableColumn>Международный</TableColumn>
         <TableColumn>СНГ</TableColumn>

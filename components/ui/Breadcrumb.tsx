@@ -11,7 +11,7 @@ import Link from "next/link";
 export const BreadcrumbWrapper = ({ children }: { children: React.ReactNode }) => {
 	return (
 		<Breadcrumbs variant='bordered' classNames={{
-			list: 'border-1'
+			list: 'border'
 		}}>
 			<BreadcrumbItem className="font-semibold text-primary" href="/" title={`Главная`}>
 				<HomeIcon size={18} aria-label='Home' />

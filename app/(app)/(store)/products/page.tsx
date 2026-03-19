@@ -37,7 +37,7 @@ export default async function ProductsPage(
 
     return (
         <>
-            <section className="py-12 md:py-24 relative after:absolute after:inset-0 after:bg-gradient-to-t after:from-black after:to-transparent">
+            <section className="py-12 md:py-24 relative after:absolute after:inset-0 after:bg-linear-to-t after:from-black after:to-transparent">
                 <Image
                     priority
                     alt={siteConfig.catalogSection.title}

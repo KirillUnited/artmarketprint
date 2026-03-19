@@ -20,7 +20,7 @@ export const CatalogHeading = ({categoryItemsCount}: {categoryItemsCount: number
 );
 
 export const CategoryList = ({categories}: {categories: SanityDocument[]}) => (
-	<ul className="grid grid-cols-[var(--grid-template-columns)] gap-8">
+	<ul className="grid grid-cols-(--grid-template-columns) gap-8">
 		{categories.map((category: SanityDocument) => (
 			<li key={category.title}>
 				<BrandCard

@@ -103,7 +103,7 @@ const QuantityControls: React.FC<QuantityControlsProps> = ({itemCount, onDecreas
 	);
 };
 
-const ViewBasketButton: React.FC = () => <div className="flex flex-col flex-grow basis-40">{getCTAButton('view-basket', 'secondary', 'В корзине', '/cart', 'lg')}</div>;
+const ViewBasketButton: React.FC = () => <div className="flex flex-col grow basis-40">{getCTAButton('view-basket', 'secondary', 'В корзине', '/cart', 'lg')}</div>;
 
 const AddToBasketButton: React.FC<AddToBasketButtonProps> = ({product}) => {
 	const {addItem, removeItem, getItemCount} = useBasketStore();
@@ -234,7 +234,7 @@ const AddToBasketButton: React.FC<AddToBasketButtonProps> = ({product}) => {
 					<ViewBasketButton />
 				</>
 			) : (
-				<Button className="bg-brand-gradient font-semibold flex-grow basis-40 uppercase text-primary-foreground group" radius="sm" size="lg" onPress={handleAddItem}>
+				<Button className="bg-brand-gradient font-semibold grow basis-40 uppercase text-primary-foreground group" radius="sm" size="lg" onPress={handleAddItem}>
 					<ShoppingCartIcon size={20} className="group-hover:scale-110 transition-transform duration-300" />
 					<span>В корзину</span>
 				</Button>

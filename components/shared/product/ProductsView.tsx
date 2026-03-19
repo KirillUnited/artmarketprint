@@ -146,7 +146,7 @@ export default function ProductsView({ products, categories, totalItemsView = IT
                                         radius='sm'
                                         size='sm'
                                         classNames={{
-                                            base: 'cursor-pointer border-1',
+                                            base: 'cursor-pointer border',
                                             content: 'flex items-center gap-2'
                                         }}
                                         onClick={() => handleFilterChange(sortOrder, '')}

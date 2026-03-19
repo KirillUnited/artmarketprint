@@ -84,7 +84,7 @@ export const ProductDetails: ({items, sizes, colors, color, size}: {
                                                     name={'color'}
                                                     title={color.color}
                                                     classNames={{
-                                                        base: "data-[disabled=true]:cursor-not-allowed data-[selected=true]:border-primary border-2 list-none pointer-events-auto -m-0 rounded-small p-1",
+                                                        base: "data-[disabled=true]:cursor-not-allowed data-[selected=true]:border-primary border-2 list-none pointer-events-auto m-0 rounded-small p-1",
                                                         control: clsx("hidden"),
                                                         hiddenInput: "disabled:cursor-not-allowed",
                                                         wrapper: "hidden",
@@ -131,7 +131,7 @@ export const ProductDetails: ({items, sizes, colors, color, size}: {
                                     aria-label={size}
                                     classNames={{
                                         base: clsx(
-                                            'data-[selected=true]:border-primary data-[selected=true]:ring-2 ring-offset-2 ring-primary data-[selected=true]:bg-primary data-[selected=true]:text-white border-gray-300 border-1 data-[disabled=true]:cursor-not-allowed pointer-events-auto',
+                                            'data-[selected=true]:border-primary data-[selected=true]:ring-2 ring-offset-2 ring-primary data-[selected=true]:bg-primary data-[selected=true]:text-white border-gray-300 border data-[disabled=true]:cursor-not-allowed pointer-events-auto',
                                             "inline-flex m-0 items-center justify-center",
                                             "max-w-[300px] cursor-pointer rounded-small gap-4 p-3",
                                             'uppercase text-sm',
@@ -152,7 +152,7 @@ export const ProductDetails: ({items, sizes, colors, color, size}: {
                                 </Radio>
                             ))}
                             </RadioGroup>
-                            <Button variant='bordered' className='mt-4 border-1' size='sm' radius='sm' onPress={onOpen}>Размерная таблица</Button>
+                            <Button variant='bordered' className='mt-4 border' size='sm' radius='sm' onPress={onOpen}>Размерная таблица</Button>
                         </div>
                         <Modal className='bg-background max-w-fit' isOpen={isOpen} placement="top-center" onOpenChange={onOpenChange} title='Size Table' radius='sm'>
                             <ModalContent>

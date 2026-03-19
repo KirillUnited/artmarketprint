@@ -123,7 +123,7 @@ export default function ProductGrid({products}: ProductGridProps): JSX.Element {
 			{/*    rowCount={rowCount}*/}
 			{/*    rowHeight={rowHeight}*/}
 			{/*    width={width}*/}
-			{/*    className="!overflow-visible"*/}
+			{/*    className="overflow-visible!"*/}
 			{/*>*/}
 			{/*    {Cell}*/}
 			{/*</FixedSizeGrid>*/}
