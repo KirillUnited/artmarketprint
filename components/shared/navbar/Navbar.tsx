@@ -14,7 +14,8 @@ import { SalesBanner } from '../banner';
 
 import useBasketStore from '@/store/store';
 import { NavbarDropdownMenu } from '@/components/ui/dropdown';
-import {Socials} from '@/components/shared/socials';
+import { Socials } from '@/components/shared/socials';
+import Search from "@/components/search";
 
 export const CartLinkButton = (itemsCount: number) => {
 	return (
@@ -74,6 +75,19 @@ export default function Navbar({ navigation, sales, siteSettings }: any) {
 						})}
 					</NavbarContent>
 					<div className="flex flex-row gap-8 items-center shrink-0">
+						{/* Algolia Search */}
+						<Search
+							applicationId="LDFF5Y7UIB"
+							apiKey="e245eeaba8b172f641e07336293bfab1"
+							indexName="artmarketprint_by_ldff5y7uib_pages"
+							attributes={{
+								primaryText: "headers", // the attribute to display in the hits list
+								secondaryText: "headers.0", // the secondary attribute to display in the hits list
+								tertiaryText: undefined, // the tertiary attribute to display in the hits list
+								url: "", // the URL of the hit
+								image: "image" // the image URL of the hit
+							}}
+						/>
 						{/*Calculator page link*/}
 						<Tooltip content="Калькулятор стоимости пакетов" placement="bottom">
 							<Button
