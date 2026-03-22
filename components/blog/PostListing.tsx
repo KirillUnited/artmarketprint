@@ -2,12 +2,13 @@ import {clsx} from 'clsx';
 import Link from 'next/link';
 import {ArrowRightIcon} from 'lucide-react';
 
+import {Post} from '@/components/blog/lib/types';
+import {PostCard} from '@/components/blog/ui';
+
 import styles from './styles.module.css';
 import {POST_CARD_VARIANTS} from './ui/PostCard';
 import PostMetadata from './ui/PostMetadata';
 
-import {Post} from '@/components/blog/lib/types';
-import {PostCard} from '@/components/blog/ui';
 
 interface PostListingProps {
 	posts: Post[];

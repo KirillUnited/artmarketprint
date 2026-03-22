@@ -9,30 +9,30 @@ interface ServiceJsonLdProps {
 
 export const BreadcrumbListJsonLd: React.FC<{ name: string }> = ({ name }) => {
     const jsonLd = {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        'itemListElement': [
             {
-                "@type": "ListItem",
-                "position": 1,
-                "item": {
-                    "@id": "https://artmarketprint.by/",
-                    "name": "Главная"
+                '@type': 'ListItem',
+                'position': 1,
+                'item': {
+                    '@id': 'https://artmarketprint.by/',
+                    'name': 'Главная'
                 }
             },
             {
-                "@type": "ListItem",
-                "position": 2,
-                "item": {
-                    "@id": "https://artmarketprint.by/services",
-                    "name": "Услуги"
+                '@type': 'ListItem',
+                'position': 2,
+                'item': {
+                    '@id': 'https://artmarketprint.by/services',
+                    'name': 'Услуги'
                 }
             },
             {
-                "@type": "ListItem",
-                "position": 3,
-                "item": {
-                    "name": name,
+                '@type': 'ListItem',
+                'position': 3,
+                'item': {
+                    'name': name,
                 }
             }
         ]
@@ -40,8 +40,8 @@ export const BreadcrumbListJsonLd: React.FC<{ name: string }> = ({ name }) => {
 
     return (
         <script
-            type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            type="application/ld+json"
         />
     );
 };
@@ -54,33 +54,33 @@ const ServiceJsonLd: React.FC<ServiceJsonLdProps> = ({
 }) => {
     const reviewCount = Math.floor(Math.random() * (100 - 30 + 1)) + 30;
     const jsonLd = {
-        "@context": "https://schema.org",
-        "@type": "Product",
-        image: imageUrl ? imageUrl : "https://artmarketprint.by/apple-touch-icon.png",
+        '@context': 'https://schema.org',
+        '@type': 'Product',
+        image: imageUrl ? imageUrl : 'https://artmarketprint.by/apple-touch-icon.png',
         url,
-        brand: "Артмаркетпринт",
+        brand: 'Артмаркетпринт',
         model: name,
         name,
         description,
         offers: {
-            "@type": "Offer",
-            availability: "https://schema.org/PreOrder",
-            price: "0",
-            priceCurrency: "BYN",
+            '@type': 'Offer',
+            availability: 'https://schema.org/PreOrder',
+            price: '0',
+            priceCurrency: 'BYN',
             url,
         },
         aggregateRating: {
-            "@type": "AggregateRating",
+            '@type': 'AggregateRating',
             itemReviewed: name,
-            ratingValue: "4.9",
+            ratingValue: '4.9',
             reviewCount: reviewCount.toString(),
         },
     };
 
     return (
         <script
-            type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            type="application/ld+json"
         />
     );
 };

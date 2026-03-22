@@ -1,4 +1,5 @@
 import React from 'react';
+
 import Navbar from '@/components/shared/navbar/Navbar';
 import { client } from '@/sanity/client';
 import { NAVIGATION_QUERY } from '@/sanity/lib/queries';

@@ -3,10 +3,10 @@ import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@heroui/d
 import { NavbarItem } from '@heroui/navbar';
 import { ChevronDownIcon, SettingsIcon, TagsIcon } from 'lucide-react';
 import Image from 'next/image';
+import {usePathname} from 'next/navigation';
+import {clsx} from 'clsx';
 
 import { urlFor } from '@/sanity/lib/image';
-import {usePathname} from "next/navigation";
-import {clsx} from "clsx";
 
 type HeaderDropdownMenuProps = {
     triggerLabel: string;
@@ -19,6 +19,7 @@ type HeaderDropdownMenuProps = {
 
 export const NavbarDropdownMenu = ({ triggerLabel, triggerUrl, items }: HeaderDropdownMenuProps) => {
     const pathname = usePathname();
+
     if (!items) return null;
 
     return (

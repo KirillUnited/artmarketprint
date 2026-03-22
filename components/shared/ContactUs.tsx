@@ -3,13 +3,13 @@ import clsx from 'clsx';
 import { Card } from '@heroui/card';
 
 import {Socials} from '@/components/shared/socials';
-import ContactsList from './ContactsList';
-
 import { SectionProps } from '@/types';
 import Section, { SectionDescription, SectionHeading, SectionSubtitle, SectionTitle } from '@/components/layout/Section';
 import { OrderForm } from '@/components/ui/form';
 import { getSanityDocuments } from '@/sanity/lib/fetch-sanity-data';
 import { SITE_SETTINGS_QUERY } from '@/sanity/lib/queries/site.query';
+
+import ContactsList from './ContactsList';
 
 interface ContactUsProps extends SectionProps { }
 
@@ -30,7 +30,7 @@ const ContactUs: React.FC<ContactUsProps> = async ({ className, ...props }) => {
 						/>
 						<div className="flex flex-wrap gap-10 justify-between">
 							<div className="flex flex-col gap-6">
-								<ContactsList items={contacts} className="" />
+								<ContactsList className="" items={contacts} />
 								<Socials items={socials} />
 								<p>Ждем вас в любое удобное время!</p>
 							</div>
@@ -69,5 +69,5 @@ export const ContactUsHeading = ({ title, subtitle, description }: { title?: str
 );
 
 export const MapFrame = ({ widget = '' }: { widget: string }) => (
-	<section className="w-full" dangerouslySetInnerHTML={{ __html: widget }} />
+	<section dangerouslySetInnerHTML={{ __html: widget }} className="w-full" />
 );

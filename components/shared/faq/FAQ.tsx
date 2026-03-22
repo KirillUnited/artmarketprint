@@ -1,9 +1,11 @@
 import {Button} from '@heroui/button';
 import Link from 'next/link';
 import clsx from 'clsx';
-import {FAQItem, FAQList} from './faqList';
-import Section, {SectionDescription, SectionHeading, SectionSubtitle, SectionTitle} from '@/components/layout/Section';
 import {JSX} from 'react';
+
+import Section, {SectionDescription, SectionHeading, SectionSubtitle, SectionTitle} from '@/components/layout/Section';
+
+import {FAQItem, FAQList} from './faqList';
 
 /**
  * A function that renders a FAQ section with a heading, list of FAQs, and a call-to-action button.
@@ -31,6 +33,7 @@ export const FAQSection = ({
 	if (!Array.isArray(faqs) || faqs.length === 0) {
 		return null;
 	}
+
 	return (
 		<Section className={clsx(className)}>
 			<SectionHeading className="max-w-[760px] self-center text-center">
@@ -41,7 +44,7 @@ export const FAQSection = ({
 			<div className="self-center w-full max-w-3xl">
 				<FAQList items={faqs} />
 			</div>
-			{faqsFooter && <FAQsFooter title={faqsFooter.title} description={faqsFooter.description} />}
+			{faqsFooter && <FAQsFooter description={faqsFooter.description} title={faqsFooter.title} />}
 		</Section>
 	);
 };

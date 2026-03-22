@@ -1,7 +1,8 @@
 import { notFound } from 'next/navigation'
+import { Metadata } from 'next'
+
 import { getPostBySlug } from '@/lib/posts'
 import Section from '@/components/layout/Section'
-import { Metadata } from 'next'
 import { ArticleBody } from '@/components/blog'
 
 interface ArticlePageProps {

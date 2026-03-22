@@ -1,4 +1,5 @@
 import { Product } from '../components/shared/product/product.types';
+
 import { client } from './client';
 
 const CHUNK_SIZE = 50; // Process 50 products at a time
@@ -73,7 +74,7 @@ export function getUniqueCategories(products: Product[]) {
 		const categoryTitle = product?.category;
 		const subcategoryTitle = product?.subcategory;
 
-		if (categoryId && categoryTitle && typeof categoryTitle === "string") {
+		if (categoryId && categoryTitle && typeof categoryTitle === 'string') {
 			if (!categoriesMap.has(categoryTitle)) {
 				categoriesMap.set(categoryTitle, { id: categoryId, subcategories: new Set() });
 			}

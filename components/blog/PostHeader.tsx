@@ -5,12 +5,13 @@
 import NextImage from 'next/image';
 import {Image} from '@heroui/image';
 
-import PostCatsFilter from './ui/PostCats';
 
 import {Post} from '@/components/blog/lib/types';
 import {urlFor} from '@/sanity/lib/image';
 import {PostAvatar, PostMetadata} from '@/components/blog/ui';
 import CopyButton from '@/components/ui/button/CopyButton';
+
+import PostCatsFilter from './ui/PostCats';
 
 export default function PostHeader({post}: {post: Post}) {
 	return (

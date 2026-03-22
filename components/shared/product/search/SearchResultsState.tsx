@@ -24,7 +24,7 @@ export function SearchResultsState({query, products, totalFound, currentPage, to
 					<ProductThumb key={product._id} item={product} />
 				))}
 			</div>
-			{totalPages > 1 && <ClientPagination totalPages={totalPages} pageNumber={currentPage} basePath="/search" />}
+			{totalPages > 1 && <ClientPagination basePath="/search" pageNumber={currentPage} totalPages={totalPages} />}
 		</>
 	);
 }

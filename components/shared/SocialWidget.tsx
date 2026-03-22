@@ -1,9 +1,10 @@
 import Link from 'next/link'
 import React from 'react'
 
+import { siteConfig } from '@/config/site'
+
 import SocialCard from '../ui/SocialCard'
 
-import { siteConfig } from '@/config/site'
 
 export default function SocialWidget() {
     return (

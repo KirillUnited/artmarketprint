@@ -1,6 +1,5 @@
 import {Fragment} from 'react';
 
-import {FeaturedCategories} from './shared/category';
 
 import {FeaturedProducts} from '@/components/shared/product/FeaturedProducts';
 import {Hero} from '@/components/shared/hero/Hero';
@@ -12,6 +11,8 @@ import {InstagramFeedSection} from '@/components/shared/socials/InstagramFeed';
 import {FAQSection} from '@/components/shared/faq';
 import ContactUs from '@/components/shared/ContactUs';
 import {BlogSection} from '@/components/blog';
+
+import {FeaturedCategories} from './shared/category';
 
 interface PageBuilderProps {
 	content?: any;

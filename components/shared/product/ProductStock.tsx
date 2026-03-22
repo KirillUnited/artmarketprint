@@ -1,8 +1,9 @@
 'use client';
 
-import {useMemo} from "react";
-import {useProductStore} from "@/store/product";
-import {getStockForSelectedColor} from "@/components/shared/product/lib";
+import {useMemo} from 'react';
+
+import {useProductStore} from '@/store/product';
+import {getStockForSelectedColor} from '@/components/shared/product/lib';
 
 export const ProductStock = ({ items }: { items: any[] }) => {
 	const { selectedColor } = useProductStore();

@@ -1,16 +1,17 @@
+import NextImage from 'next/image';
+import React from 'react';
+
 import BaseBreadcrumb from '@/components/ui/Breadcrumb';
 import { siteConfig } from '@/config/site';
 import { getSanityDocuments } from '@/sanity/lib/fetch-sanity-data';
 import { CATEGORIES_QUERY } from '@/sanity/lib/queries/category.query';
 import { NAVIGATION_QUERY } from '@/sanity/lib/queries';
-import NextImage from 'next/image';
-import React from 'react';
 import Section from '@/components/layout/Section';
 import { FeaturedCategoryList } from '@/components/shared/category/ui';
 
 export async function generateMetadata() {
 
-    const url = `https://artmarketprint.by/categories`;
+    const url = 'https://artmarketprint.by/categories';
 
     return {
         alternates: {

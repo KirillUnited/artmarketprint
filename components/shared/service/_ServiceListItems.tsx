@@ -19,16 +19,16 @@ export default function ServiceListItems({ services }: any) {
 							{service?.category_tags?.length > 0 && <ProjectTagList color="secondary" tags={service.category_tags} />}
 						</div>
 						<Image
-							as={NextImage}
 							removeWrapper
 							alt={service.title}
+							as={NextImage}
 							className="z-0 w-full h-full object-cover aspect-square"
+							height={0}
+							quality={10}
 							radius="sm"
+							sizes="100vw"
 							src={service.imageUrl ? service.imageUrl : urlFor(service.image).width(320).height(320).url()}
 							width={0}
-							height={0}
-							sizes="100vw"
-							quality={10}
 						/>
 						<CardFooter className={clsx('absolute bg-white/75 bottom-0 w-full z-10 p-0 backdrop-blur-lg')}>
 							<div className="flex flex-col gap-2 p-3 w-full">

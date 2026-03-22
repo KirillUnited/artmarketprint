@@ -4,16 +4,18 @@ import { Button } from '@heroui/button';
 import { Form } from '@heroui/form';
 import { CalendarIcon } from 'lucide-react';
 
-import BrandButton from './BrandButton';
 
 import 'react-international-phone/style.css';
-import { UsernameInput, UserPhoneInput } from './form';
 
-import useForm from '@/hooks/useForm';
 import 'react-international-phone/style.css';
 import React from 'react';
 import { Checkbox } from '@heroui/checkbox';
 import Link from 'next/link';
+
+import useForm from '@/hooks/useForm';
+
+import { UsernameInput, UserPhoneInput } from './form';
+import BrandButton from './BrandButton';
 
 export const ModalOfferForm = ({ id, onClose }: { id: string, onClose?: () => void }) => {
 	const {
@@ -37,14 +39,14 @@ export const ModalOfferForm = ({ id, onClose }: { id: string, onClose?: () => vo
 		>
 
 			<ModalBody className="w-full">
-				<input type="hidden" name="form_id" value={id} />
+				<input name="form_id" type="hidden" value={id} />
 
 				<UsernameInput />
 
 				<UserPhoneInput countries={countries} country={country} handlePhoneValueChange={handlePhoneValueChange} inputRef={inputRef} inputValue={inputValue} setCountry={setCountry} validPhone={setPhoneValid} />
 
-				<Checkbox className="w-full" classNames={{ label: 'text-sm' }} radius='sm' name="layout_image_terms" id="layout_image_terms" isRequired >
-					Ознакомлен с <Link href={'/posts/layout-image-terms'} target='_blank' className='relative z-10 underline text-primary'>Требованиями к макетам</Link> и <Link href={'/posts/privacy'} target='_blank' className='relative z-10 underline text-primary'>Политикой конфиденциальности</Link>
+				<Checkbox isRequired className="w-full" classNames={{ label: 'text-sm' }} id="layout_image_terms" name="layout_image_terms" radius='sm' >
+					Ознакомлен с <Link className='relative z-10 underline text-primary' href={'/posts/layout-image-terms'} target='_blank'>Требованиями к макетам</Link> и <Link className='relative z-10 underline text-primary' href={'/posts/privacy'} target='_blank'>Политикой конфиденциальности</Link>
 				</Checkbox>
 			</ModalBody>
 			<ModalFooter className="w-full">

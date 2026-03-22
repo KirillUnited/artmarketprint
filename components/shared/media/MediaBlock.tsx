@@ -1,6 +1,8 @@
 import React from 'react';
 import Image from 'next/image';
+
 import { getEmbedUrl, getSanityFileUrl, getSanityImageUrl } from '@/sanity/lib/utils';
+
 import { MediaBlockProps } from './media.props';
 import { VideoPlayer } from './VideoPlayer';
 
@@ -32,9 +34,9 @@ export const MediaBlock: React.FC<MediaBlockProps> = async ({
                     /> */}
                     {/* Main video player */}
                     <VideoPlayer
-                        url={url}
-                        posterUrl={posterUrl}
                         className="w-full h-full aspect-video absolute inset-0 object-contain"
+                        posterUrl={posterUrl}
+                        url={url}
                     />
                 </div>
             ) : (
@@ -48,13 +50,13 @@ export const MediaBlock: React.FC<MediaBlockProps> = async ({
             return (
                 <div className="aspect-video w-full rounded-xl overflow-hidden shadow-lg">
                     <iframe
+                        allowFullScreen
+                        allow="autoplay; fullscreen"
+                        className="w-full h-full"
+                        frameBorder="0"
+                        loading="lazy"
                         src={getEmbedUrl(videoUrl)}
                         title="Embedded video"
-                        frameBorder="0"
-                        allow="autoplay; fullscreen"
-                        allowFullScreen
-                        className="w-full h-full"
-                        loading="lazy"
                     />
                 </div>
             );
@@ -64,14 +66,15 @@ export const MediaBlock: React.FC<MediaBlockProps> = async ({
             if (!image?.asset?._ref) return null;
             
             const imageUrl = await getSanityImageUrl(image.asset._ref);
+
             return imageUrl ? (
                 <Image
-                    src={imageUrl}
-                    alt={image.alt || 'Uploaded image'}
-                    width={1280}
-                    height={720}
-                    className="w-full h-full aspect-video object-cover absolute inset-0"
                     priority
+                    alt={image.alt || 'Uploaded image'}
+                    className="w-full h-full aspect-video object-cover absolute inset-0"
+                    height={720}
+                    src={imageUrl}
+                    width={1280}
                 />
             ) : (
                 <p className="text-red-500">Image not found</p>

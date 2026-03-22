@@ -1,6 +1,8 @@
 import { parseStringPromise } from 'xml2js';
-import { Companies } from './companies';
+
 import { groupProductsByCleanName } from '@/lib/products/catalog-utils';
+
+import { Companies } from './companies';
 
 export interface XmlCategory {
 	_: string;

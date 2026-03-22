@@ -1,6 +1,5 @@
 import {SanityDocument} from 'next-sanity';
 
-import {BrandCard} from '../ui/card';
 
 import {siteConfig} from '@/config/site';
 import {getSanityDocuments} from '@/sanity/lib/fetch-sanity-data';
@@ -8,6 +7,8 @@ import Section, {SectionDescription, SectionHeading, SectionSubtitle, SectionTit
 import {getUrlFor} from '@/lib/utils';
 import {CATEGORIES_QUERY} from '@/sanity/lib/queries/category.query';
 import {SectionButton} from '@/components/layout/SectionButton';
+
+import {BrandCard} from '../ui/card';
 
 export const CatalogHeading = ({categoryItemsCount}: {categoryItemsCount: number}) => (
 	<div className="flex flex-wrap items-end justify-between gap-4">

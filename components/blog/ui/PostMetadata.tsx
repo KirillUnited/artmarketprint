@@ -2,9 +2,10 @@ import {JSX} from 'react';
 import {Calendar1Icon, Clock1Icon} from 'lucide-react';
 import {clsx} from 'clsx';
 
+import {Post} from '@/components/blog/lib/types';
+
 import styles from './styles.module.css';
 
-import {Post} from '@/components/blog/lib/types';
 
 /**
  * A function that renders post metadata.

@@ -1,5 +1,5 @@
-import PushToDataLayer from "@/components/shared/gtm/PushToDataLayer";
-import ViewCartEvent from "@/components/shared/gtm/ViewCartEvent";
+import PushToDataLayer from '@/components/shared/gtm/PushToDataLayer';
+import ViewCartEvent from '@/components/shared/gtm/ViewCartEvent';
 
 export {
     PushToDataLayer,

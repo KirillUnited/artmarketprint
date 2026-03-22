@@ -3,26 +3,28 @@
 import React from 'react'
 import NextImage from 'next/image'
 import { Image as HeroImage } from '@heroui/image'
-import { ColorItemProps } from './product.types';
-import { filterItemsByColor } from './lib';
-import Loader from '@/components/ui/Loader';
 import { Button } from '@heroui/button';
 import { ChevronDownIcon } from 'lucide-react';
+
+import Loader from '@/components/ui/Loader';
+
+import { ColorItemProps } from './product.types';
+import { filterItemsByColor } from './lib';
 
 const ColorListItem = ({ item }: { item: ColorItemProps }) => (
     <li key={item.id}>
         <HeroImage
+            alt={item.color || 'color'}
             as={NextImage}
-            alt={item.color || "color"}
-            src={item.cover || "/images/product-no-image.jpg"}
-            width={36}
-            height={36}
             className="object-contain aspect-square"
             classNames={{ wrapper: 'bg-cover' }}
-            quality={10}
-            title={item.color}
-            radius='sm'
             fallbackSrc="/images/product-no-image.jpg"
+            height={36}
+            quality={10}
+            radius='sm'
+            src={item.cover || '/images/product-no-image.jpg'}
+            title={item.color}
+            width={36}
         />
     </li>
 );
@@ -30,8 +32,8 @@ const ColorListItem = ({ item }: { item: ColorItemProps }) => (
 export const MoreButton = ({ onClick }: { onClick: () => void }) => (
     <li className='text-center'>
         <Button
-            size='sm'
             isIconOnly
+            size='sm'
             variant='light'
             onPress={onClick}
         >

@@ -13,7 +13,7 @@ export function SearchErrorState({
 		<div className="text-center py-10">
 			<h2 className="text-2xl font-bold mb-4">{title}</h2>
 			<p className="text-slate-500 mb-6">{description}</p>
-			<Link href="/" className="bg-brand-gradient uppercase font-semibold">
+			<Link className="bg-brand-gradient uppercase font-semibold" href="/">
 				На главную
 			</Link>
 		</div>

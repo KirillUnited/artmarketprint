@@ -1,5 +1,5 @@
-import { Select, SelectItem } from "@heroui/select";
-import {JSX} from "react";
+import { Select, SelectItem } from '@heroui/select';
+import {JSX} from 'react';
 
 /**
  * Component for sorting products by price.
@@ -16,9 +16,9 @@ export const SortFilter: ({sortOrder, selectedCategory, onFilterChange}: {
     onFilterChange: any
 }) => JSX.Element = ({ sortOrder, selectedCategory, onFilterChange }) => {
     return (
-        <Select size="sm" radius="sm" label="Цены" placeholder="Цены" defaultSelectedKeys={[sortOrder]} onChange={(e) => onFilterChange(e.target.value, selectedCategory)}>
-            <SelectItem textValue="По убыванию" key={"desc"}>По убыванию</SelectItem>
-            <SelectItem textValue="По возрастанию" key={"asc"}>По возрастанию</SelectItem>
+        <Select defaultSelectedKeys={[sortOrder]} label="Цены" placeholder="Цены" radius="sm" size="sm" onChange={(e) => onFilterChange(e.target.value, selectedCategory)}>
+            <SelectItem key={'desc'} textValue="По убыванию">По убыванию</SelectItem>
+            <SelectItem key={'asc'} textValue="По возрастанию">По возрастанию</SelectItem>
         </Select>
     );
 };

@@ -1,5 +1,5 @@
-import { Select, SelectItem } from "@heroui/select";
-import { JSX } from "react";
+import { Select, SelectItem } from '@heroui/select';
+import { JSX } from 'react';
 
 /**
  * Component for filtering products by material.
@@ -26,20 +26,20 @@ export const MaterialFilter: ({
 }) => JSX.Element = ({ selectedMaterial, selectedCategory, sortOrder, materials, onFilterChange }) => {
   return (
     <Select
-      size="sm"
-      radius="sm"
       label="Материал"
       placeholder="Выберите материал"
+      radius="sm"
       selectedKeys={selectedMaterial ? [selectedMaterial] : []}
+      size="sm"
       onChange={(e) => onFilterChange(sortOrder, selectedCategory, e.target.value)}
     >
-      <SelectItem textValue="Все материалы" key="">
+      <SelectItem key="" textValue="Все материалы">
         Все материалы
       </SelectItem>
       {materials?.map((item: { material: string; count: number }) => (
         <SelectItem
-          className="capitalize"
           key={item.material}
+          className="capitalize"
           textValue={item.material}
           // description={`${item.count} шт.`}
         >

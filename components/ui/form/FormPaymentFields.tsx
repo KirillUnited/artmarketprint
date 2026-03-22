@@ -1,5 +1,5 @@
-import FormInput from "./FormInput";
-import FileUploadInput from "./FileUploadInput";
+import FormInput from './FormInput';
+import FileUploadInput from './FileUploadInput';
 
 const FormPaymentFields = ({ handleFileChange, fileUploaded, fileUploadedName }: { handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void ,
     fileUploaded: boolean,
@@ -12,34 +12,34 @@ const FormPaymentFields = ({ handleFileChange, fileUploaded, fileUploadedName }:
                 <FormInput
                     isRequired
                     errorMessage="Пожалуйста, напишите название компании или реквизиты"
-                    label='Реквизиты'
                     id="requisites"
+                    label='Реквизиты'
                     name="requisites"
-                    type="text"
                     placeholder='Напишите название компании или реквизиты'
+                    type="text"
                 />
             </div>
             <div className="sm:col-span-2">
-                <FileUploadInput handleFileChange={handleFileChange} fileUploaded={fileUploaded} fileUploadedName={fileUploadedName} />
+                <FileUploadInput fileUploaded={fileUploaded} fileUploadedName={fileUploadedName} handleFileChange={handleFileChange} />
             </div>
             <div className="sm:col-span-2">
                 <FormInput
-                    label='Почта'
-                    id="email"
-                    name="email"
-                    type="email"
                     isRequired
                     errorMessage="Пожалуйста, введите Вашу почту"
+                    id="email"
+                    label='Почта'
+                    name="email"
                     placeholder='Напишите Вашу почту'
+                    type="email"
                 />
             </div>
             <div className="sm:col-span-2">
                 <FormInput
-                    placeholder='Напишите комментарий к заказу'
                     id="comment"
-                    name="comment"
-                    rows={5}
                     label="Комментарий"
+                    name="comment"
+                    placeholder='Напишите комментарий к заказу'
+                    rows={5}
                 />
             </div>
 

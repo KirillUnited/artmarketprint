@@ -5,9 +5,10 @@ import 'swiper/css/pagination';
 import 'swiper/css/autoplay';
 import {Autoplay, Pagination} from 'swiper/modules';
 
+import {heroSwiperParams} from '@/config/swiper';
+
 import HeroSection from './HeroSection';
 
-import {heroSwiperParams} from '@/config/swiper';
 
 interface HeroCarouselProps {
 	items?: any;

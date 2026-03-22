@@ -6,7 +6,7 @@
   "dev": "next dev --turbopack",
   "build": "next build",
   "start": "next start",
-  "lint": "eslint . --ext .ts,.tsx -c .eslintrc.json --fix",
+  "lint": "eslint . --ext .ts,.tsx --fix",
   "update-products": "node update-products.js"
  },
  "dependencies": {
@@ -106,7 +106,8 @@
   "eslint-plugin-react-hooks": "^7.0.1",
   "eslint-plugin-unused-imports": "4.4.1",
   "postcss": "8.5.8",
-  "prettier": "3.8.1",
+ "prettier": "3.8.1",
+ "prettier-plugin-tailwindcss": "^0.6.14",
   "tailwind-variants": "^3.2.2",
   "tailwindcss": "^4.2.1",
   "ts-node": "^10.9.2",

@@ -12,11 +12,12 @@ export const getProductsQuery = (
 	const start = (page - 1) * limit;
 	const categoryFilter = category ? `&& category == "${category.title}"` : '';
 	const subcategoryFilter = subcategory ? `&& subcategory == "${subcategory.title}"` : '';
-	const materialFilter = material ? `&& "${material}" in materials` : ""
+	const materialFilter = material ? `&& "${material}" in materials` : ''
 
-	let order = "order(_createdAt desc)"
-	if (sort === "price-asc") order = "order(price asc)"
-	if (sort === "price-desc") order = "order(price desc)"
+	let order = 'order(_createdAt desc)'
+
+	if (sort === 'price-asc') order = 'order(price asc)'
+	if (sort === 'price-desc') order = 'order(price desc)'
 
 	return `
     *[_type == "product" ${categoryFilter} ${subcategoryFilter} ${materialFilter}] | ${order} [${start}...${start + limit}] {
@@ -75,7 +76,7 @@ export const getAllProductMaterials = `
 export const getTotalProductsQuery = (category: any | null, subcategory: any | null, material: string | null) => {
 	const categoryFilter = category ? `&& category == "${category.title}"` : '';
 	const subcategoryFilter = subcategory ? `&& subcategory == "${subcategory.title}"` : '';
-	const materialFilter = material ? `&& "${material}" in materials` : ""
+	const materialFilter = material ? `&& "${material}" in materials` : ''
 
 	return `count(*[_type == "product" ${categoryFilter} ${subcategoryFilter} ${materialFilter}])`;
 };

@@ -1,4 +1,5 @@
 import {importDataToSanity} from '../../sanity/import';
+
 import {fetchAllProductsData} from './data';
 
 export async function updateProducts() {

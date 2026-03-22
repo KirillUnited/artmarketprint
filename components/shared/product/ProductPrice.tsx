@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+
 import {getPrice} from '@/lib/getPrice';
 import useBasketStore from '@/store/store';
 import {CURRENCIES_SYMBOLS} from '@/lib/products/companies';

@@ -1,21 +1,21 @@
-"use client"
+'use client'
 
-import { useRouter, useSearchParams } from "next/navigation"
-import {Select, SelectItem} from "@heroui/select";
+import { useRouter, useSearchParams } from 'next/navigation'
+import {Select, SelectItem} from '@heroui/select';
 
 export default function MaterialFilter({ materials }: { materials: string[] }) {
     const router = useRouter()
     const searchParams = useSearchParams()
-    const activeMaterial = searchParams.get("material") || ""
+    const activeMaterial = searchParams.get('material') || ''
 
     const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const params = new URLSearchParams(searchParams.toString())
         const value = e.target.value
 
         if (value) {
-            params.set("material", value)
+            params.set('material', value)
         } else {
-            params.delete("material")
+            params.delete('material')
         }
 
         router.push(`?${params.toString()}`)
@@ -23,20 +23,20 @@ export default function MaterialFilter({ materials }: { materials: string[] }) {
 
     return (
         <Select
-            size="sm"
-            radius="sm"
             label="Материал"
             placeholder="Выберите материал"
+            radius="sm"
             selectedKeys={[activeMaterial]}
+            size="sm"
             onChange={handleChange}
         >
-            <SelectItem textValue="Все материалы" key="">
+            <SelectItem key="" textValue="Все материалы">
                 Все материалы
             </SelectItem>
             {(materials as any)?.map((item: string) => (
                 <SelectItem
-                    className="capitalize"
                     key={item}
+                    className="capitalize"
                     textValue={item}
                     title={item}
                 >

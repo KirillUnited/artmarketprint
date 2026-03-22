@@ -1,18 +1,20 @@
 'use client';
 import React, { useMemo, useState, useEffect } from 'react';
-import ProductsFilter, { FilterButton, FilterDrawer } from './ProductsFilter';
-import Pagination from '@/components/ui/Pagination';
 import clsx from 'clsx';
 import { useDisclosure } from '@heroui/modal';
-import ProductGrid from './ProductGrid';
 import { Chip } from '@heroui/chip';
 import { XIcon } from 'lucide-react';
+
+import Pagination from '@/components/ui/Pagination';
 import { SortFilter } from '@/components/ui/filter/SortFilter';
 import { useProductsFilter } from '@/hooks/useProductsFilter';
-import { ProductsNotFound } from './ProductsNotFound';
 import { countProductsByCategory, enrichCategoriesWithCounts } from '@/lib/products/categoryCounts';
 import { collectMaterials } from '@/lib/products/collectCategories';
 import { MaterialFilter } from '@/components/ui/filter/MaterialFilter';
+
+import ProductGrid from './ProductGrid';
+import { ProductsNotFound } from './ProductsNotFound';
+import ProductsFilter, { FilterButton, FilterDrawer } from './ProductsFilter';
 import { Product } from './product.types';
 import { ProductCardSkeleton } from './ProductGrid';
 
@@ -127,28 +129,28 @@ export default function ProductsView({ products, categories, totalItemsView = IT
                                     <div className='flex md:hidden flex-wrap flex-col md:flex-row gap-4 w-full mb-4'>
                                         <FilterButton onOpen={onOpen} />
                                         <FilterDrawer
-                                            isOpen={isOpen}
-                                            onOpenChange={onOpenChange}
-                                            onFilterChange={handleFilterChange}
                                             categories={enrichedCategories}
+                                            isOpen={isOpen}
                                             materials={materials}
-                                            sortOrder={sortOrder}
                                             selectedCategory={selectedCategory}
                                             selectedMaterial={selectedMaterial}
+                                            sortOrder={sortOrder}
+                                            onFilterChange={handleFilterChange}
+                                            onOpenChange={onOpenChange}
                                         />
                                     </div>
                                 }
                                 {
                                     selectedCategory &&
                                     <Chip
-                                        color='default'
-                                        variant='bordered'
-                                        radius='sm'
-                                        size='sm'
                                         classNames={{
                                             base: 'cursor-pointer border',
                                             content: 'flex items-center gap-2'
                                         }}
+                                        color='default'
+                                        radius='sm'
+                                        size='sm'
+                                        variant='bordered'
                                         onClick={() => handleFilterChange(sortOrder, '')}
                                     >
                                         {selectedCategory}

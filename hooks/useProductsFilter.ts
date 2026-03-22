@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+
 import { scrollTo } from '@/lib/scrollTo';
 
 interface UseProductsFilterProps {

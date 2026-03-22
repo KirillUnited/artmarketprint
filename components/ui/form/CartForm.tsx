@@ -7,8 +7,6 @@ import {Form} from '@heroui/form';
 import {Image} from '@heroui/image';
 import {useEffect, useState} from 'react';
 
-import FormContactFields from './FormContactFields';
-import FormPaymentFields from './FormPaymentFields';
 
 import useBasketStore from '@/store/store';
 import {useCartForm} from '@/hooks/useCartForm';
@@ -16,6 +14,9 @@ import {QuantityControls} from '@/components/ui/AddToBasketButton';
 import Loader from '@/components/ui/Loader';
 import {ProductsNotFoundMenu} from '@/components/shared/product/ProductsNotFound';
 import {CURRENCIES_SYMBOLS} from '@/lib/products/companies';
+
+import FormPaymentFields from './FormPaymentFields';
+import FormContactFields from './FormContactFields';
 
 const deliveryMethods = [
 	{id: 1, name: 'Самовывоз', title: 'Самовывоз', turnaround: 'Бесплатно', price: 0},
