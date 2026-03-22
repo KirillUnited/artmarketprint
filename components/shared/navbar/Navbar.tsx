@@ -74,7 +74,7 @@ export default function Navbar({ navigation, sales, siteSettings }: any) {
 							);
 						})}
 					</NavbarContent>
-					<div className="flex flex-row gap-8 items-center shrink-0">
+					<div className="flex justify-center flex-wrap gap-6 items-center shrink-0">
 						{/* Algolia Search */}
 						<Search
 							applicationId="LDFF5Y7UIB"

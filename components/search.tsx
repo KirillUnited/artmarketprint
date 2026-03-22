@@ -127,7 +127,7 @@ export const SearchButton: React.FC<SearchButtonProps> = ({
   }, []);
 
   const baseClassName =
-    "md:min-w-[200px] justify-between hover:shadow-md transition-transform duration-400 translate-y-0 py-3 h-auto cursor-pointer hover:bg-transparent hover:translate-y-[-2px] border shadow-none";
+    "2xl:min-w-[200px] justify-between hover:shadow-md transition-transform duration-400 translate-y-0 py-3 h-auto cursor-pointer hover:bg-transparent border shadow-none";
 
   return (
     <Button
@@ -139,9 +139,9 @@ export const SearchButton: React.FC<SearchButtonProps> = ({
     >
       <span className="flex items-center gap-2 text-muted-foreground opacity-80">
         <SearchIcon size={24} color="currentColor" />
-        <span className="hidden sm:inline">Search</span>
+        <span className="hidden 2xl:inline">Поиск</span>
       </span>
-      <div className="hidden md:flex gap-0.5">
+      {/* <div className="hidden md:flex gap-0.5">
         <kbd
           className={`h-5 min-w-5 rounded grid place-items-center bg-muted text-xs text-muted-foreground transition-all duration-200 ${
             isModifierPressed
@@ -160,7 +160,7 @@ export const SearchButton: React.FC<SearchButtonProps> = ({
         >
           K
         </kbd>
-      </div>
+      </div> */}
     </Button>
   );
 };
@@ -254,7 +254,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
 
   return createPortal(
     <div
-      className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-start justify-center md:pt-[10vh] dark:bg-black/60"
+      className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-start justify-center md:pt-[10vh]"
       onClick={onClose}
     >
       <div
@@ -324,7 +324,7 @@ const HitsList = memo(function HitsList({
             href={url ?? "#"}
             target={openResultsInNewTab && url ? "_blank" : undefined}
             rel={openResultsInNewTab && url ? "noopener noreferrer" : undefined}
-            className="flex flex-row items-center gap-4 cursor-pointer text-decoration-none text-foreground bg-background rounded-sm p-4 aria-selected:bg-blue-50 dark:aria-selected:bg-slate-900 animate-in fade-in-0 zoom-in-95"
+            className="flex flex-row items-center gap-4 cursor-pointer text-decoration-none text-foreground bg-background rounded-sm p-4 aria-selected:bg-blue-50 animate-in fade-in-0 zoom-in-95"
             role="option"
             aria-selected={isSel}
             onClick={() => {
@@ -364,7 +364,7 @@ const HitsList = memo(function HitsList({
               </div>
             ) : null}
             <div>
-              <p className="font-medium [&_mark]:bg-transparent [&_mark]:text-secondary-foreground [&_mark]:underline [&_mark]:underline-offset-4">
+              <p className="font-medium [&_mark]:bg-transparent [&_mark]:text-primary [&_mark]:underline [&_mark]:underline-offset-4">
                 <Highlight
                   attribute={toAttributePath(mapping.primaryText) as any}
                   hit={hit}
@@ -433,7 +433,7 @@ const SearchInput = memo(function SearchInput(props: SearchInputProps) {
         tabIndex={-1}
         className="p-2 rounded-full flex items-center justify-center transition-colors text-muted-foreground peer-focus:text-[#003dff]"
         aria-label="Search"
-        title="Search"
+        title="Поиск"
       >
         <SearchIcon color="currentColor" strokeWidth={1.5} />
       </div>
@@ -689,7 +689,7 @@ export function SearchModal({ onClose, config }: SearchModalProps) {
       <div className="flex flex-col">
         <SearchBox
           query={query}
-          placeholder={config.placeholder || "What are you looking for?"}
+          placeholder={config.placeholder || "Что вы ищите?"}
           className="flex flex-row items-center bg-background border-b border-muted rounded-t-sm p-2 placeholder:text-muted-foreground"
           refine={refine}
           onClose={onClose}
@@ -722,7 +722,7 @@ export function SearchModal({ onClose, config }: SearchModalProps) {
           />
         )}
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 }
