@@ -5,6 +5,7 @@ export async function sendOrder(formData: FormData): Promise<any> {
 	try {
 		const telegramBotToken = process.env.TELEGRAM_BOT_TOKEN;
 		const chatId = process.env.TELEGRAM_CHAT_ID;
+
 		if (!telegramBotToken || !chatId) {
 			throw new Error('Telegram bot configuration is missing');
 		}

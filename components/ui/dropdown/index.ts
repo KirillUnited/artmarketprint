@@ -1,4 +1,4 @@
-import { NavbarDropdownMenu } from "./NavbarDropdownMenu";
+import { NavbarDropdownMenu } from './NavbarDropdownMenu';
 
 export {
     NavbarDropdownMenu

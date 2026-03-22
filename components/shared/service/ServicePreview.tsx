@@ -2,37 +2,38 @@
 
 import {Card, CardFooter} from '@heroui/card';
 import {Link} from '@heroui/link';
-import {ProjectTagList} from '@/components/shared/project';
 import {Image} from '@heroui/image';
 import NextImage from 'next/image';
-import {urlFor} from '@/sanity/lib/image';
 import clsx from 'clsx';
 import {JSX} from 'react';
 import {SanityDocument} from 'next-sanity';
 
+import {urlFor} from '@/sanity/lib/image';
+import {ProjectTagList} from '@/components/shared/project';
+
 export function ServicePreview({service}: {service: SanityDocument}): JSX.Element {
 	return (
-		<Card shadow="none" isFooterBlurred as={Link} className="h-full group relative mx-2 w-full" href={`/services/${service.currentSlug || service.slug?.current}`} radius="sm">
+		<Card isFooterBlurred as={Link} className="h-full group relative mx-2 w-full" href={`/services/${service.currentSlug || service.slug?.current}`} radius="sm" shadow="none">
 			<div className="absolute top-3 left-3 z-10 flex flex-wrap gap-2">
 				{service?.service_tags?.length > 0 && <ProjectTagList color="primary" tags={service.service_tags} />}
 				{service?.category_tags?.length > 0 && <ProjectTagList color="secondary" tags={service.category_tags} />}
 			</div>
 			{service.imageUrl || service.image ? (
 				<Image
-					as={NextImage}
 					removeWrapper
 					alt={service.title}
+					as={NextImage}
 					className="z-0 w-full h-full object-cover aspect-square"
+					fallbackSrc="/images/product-no-image.jpg"
+					height={0}
+					quality={50}
 					radius="sm"
+					sizes="100vw"
 					src={urlFor(service.image).width(320).height(320).url()}
 					width={0}
-					height={0}
-					sizes="100vw"
-					quality={50}
-					fallbackSrc="/images/product-no-image.jpg"
 				/>
 			) : (
-				<Image as={NextImage} removeWrapper alt="No image" className="z-0 w-full h-full object-cover aspect-square" radius="sm" src="/images/product-no-image.jpg" width={220} height={220} />
+				<Image removeWrapper alt="No image" as={NextImage} className="z-0 w-full h-full object-cover aspect-square" height={220} radius="sm" src="/images/product-no-image.jpg" width={220} />
 			)}
 			<CardFooter className={clsx('absolute bg-white/75 bottom-0 w-full z-10 p-0 backdrop-blur-lg')}>
 				<div className="flex flex-col gap-2 p-3 w-full">

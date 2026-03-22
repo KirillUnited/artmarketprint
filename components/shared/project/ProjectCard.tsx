@@ -9,9 +9,10 @@ import {Button} from '@heroui/button';
 import clsx from 'clsx';
 import {ArrowUpRightIcon} from 'lucide-react';
 
+import {getUrlFor} from '@/lib/utils';
+
 import {ProjectTagList} from './ProjectTagList';
 
-import {getUrlFor} from '@/lib/utils';
 
 export const ProjectCard = ({project}: {project: SanityDocument}) => (
 	<Card isFooterBlurred as={Link} className="h-full group relative min-h-56" href={`/projects/${project.currentSlug}`} radius="sm">
@@ -21,14 +22,14 @@ export const ProjectCard = ({project}: {project: SanityDocument}) => (
 		</div>
 		{(project.imageUrl || project.image) && (
 			<Image
-				as={NextImage}
+				fill
 				removeWrapper
 				alt={project.title}
+				as={NextImage}
 				className="z-0 object-cover aspect-square w-full h-full"
 				radius="sm"
-				src={project.imageUrl ? project.imageUrl : getUrlFor(project.image)}
-				fill
 				sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+				src={project.imageUrl ? project.imageUrl : getUrlFor(project.image)}
 			/>
 		)}
 		<CardFooter className={clsx('absolute bg-black/40 bottom-0 w-full z-10 p-0')}>

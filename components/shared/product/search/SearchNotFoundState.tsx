@@ -15,7 +15,7 @@ export function SearchNotFoundState({query}: SearchNotFoundStateProps) {
 			<Card className="lg:flex-row gap-8 self-stretch items-center p-4 w-fit mx-auto">
 				<div>
 					<CardHeader>
-						<p className="text-3xl font-bold">{`Товар не найден`}</p>
+						<p className="text-3xl font-bold">{'Товар не найден'}</p>
 					</CardHeader>
 					<CardBody className="prose text-balance text-slate-500 block">
 						<p>
@@ -27,7 +27,7 @@ export function SearchNotFoundState({query}: SearchNotFoundStateProps) {
 							<li>Попробуйте использовать другие ключевые слова</li>
 							<li>
 								Проверьте наличие товара в{' '}
-								<Link href="/products/categories/all" className="text-primary">
+								<Link className="text-primary" href="/products/categories/all">
 									каталоге
 								</Link>
 							</li>
@@ -35,13 +35,13 @@ export function SearchNotFoundState({query}: SearchNotFoundStateProps) {
 					</CardBody>
 					<CardFooter className="gap-4 lg:flex-row flex-col items-stretch">
 						<Link href="/products/categories/all">
-							<Button className="uppercase font-semibold" color="primary" variant="ghost" radius="sm">
+							<Button className="uppercase font-semibold" color="primary" radius="sm" variant="ghost">
 								<SearchXIcon className="w-6 h-6" />
 								<span>Очистить поиск</span>
 							</Button>
 						</Link>
 						<Link href="/">
-							<Button color="primary" radius="sm" className="bg-brand-gradient uppercase font-semibold">
+							<Button className="bg-brand-gradient uppercase font-semibold" color="primary" radius="sm">
 								<PanelRightOpenIcon className="w-6 h-6" />
 								На главную
 							</Button>
@@ -49,7 +49,7 @@ export function SearchNotFoundState({query}: SearchNotFoundStateProps) {
 					</CardFooter>
 				</div>
 
-				<ShoppingCart size={320} className="hidden lg:block m-4" />
+				<ShoppingCart className="hidden lg:block m-4" size={320} />
 			</Card>
 			<div className="mt-10">
 				<FeaturedProducts />

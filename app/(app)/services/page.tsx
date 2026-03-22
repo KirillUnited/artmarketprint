@@ -11,7 +11,7 @@ import { ServiceListItems } from '@/components/shared/service';
 
 export async function generateMetadata() {
 
-    const url = `https://artmarketprint.by/services`;
+    const url = 'https://artmarketprint.by/services';
 
     return {
         alternates: {

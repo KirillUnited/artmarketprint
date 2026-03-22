@@ -1,6 +1,6 @@
-import {getPrice, priceTransform} from '../getPrice';
-import {Companies} from './companies';
 import {buildCategoryMap, getFullCategoryPath} from '@/lib/products/data';
+
+
 
 // Типы товара
 export interface RawProduct {
@@ -186,6 +186,7 @@ export function extractParamsToHtmlList(params: any[]): string {
 		if (param.name && param._) {
 			return `<li><strong>${param.name}:</strong> ${param._}</li>`;
 		}
+
 		return '';
 	}).join('');
 

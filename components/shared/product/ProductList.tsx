@@ -1,6 +1,7 @@
 import {BrandCard} from '@/components/ui/card';
-import {ProductData} from './product.types';
 import {CURRENCIES_SYMBOLS} from '@/lib/products/companies';
+
+import {ProductData} from './product.types';
 
 export default function ProductList({items}: {items: ProductData[]}) {
 	return (

@@ -13,13 +13,13 @@ export default function NotFound() {
 						<p className="text-gray-500 mb-8">Возможно, она была удалена, переименована или не существует.</p>
 						<div className="space-x-4">
 							<Link href="/">
-								<Button color="primary" radius="sm" className="min-w-64 bg-brand-gradient uppercase font-semibold">
+								<Button className="min-w-64 bg-brand-gradient uppercase font-semibold" color="primary" radius="sm">
 									На главную
 								</Button>
 							</Link>
 						</div>
 					</div>
-					<Image src="/images/404.gif" alt="404" width={600} height={600} className="w-full h-full object-contain rounded-small" />
+					<Image alt="404" className="w-full h-full object-contain rounded-small" height={600} src="/images/404.gif" width={600} />
 				</div>
 			</div>
 		</div>

@@ -19,6 +19,7 @@ export function countProductsByCategory(products: any[]): CategoryCounts {
 
   products.forEach((product) => {
     const category = product.category?.trim();
+
     if (!category) return;
 
     // Initialize category if it doesn't exist
@@ -34,6 +35,7 @@ export function countProductsByCategory(products: any[]): CategoryCounts {
 
     // Handle subcategories if they exist
     const subcategory = product.subcategory?.trim();
+
     if (subcategory) {
       // Initialize subcategory if it doesn't exist
       if (!counts[category].subcategories[subcategory]) {
@@ -61,7 +63,8 @@ export function enrichCategoriesWithCounts(
     category,
     count: counts[category]?.count || 0,
     subcategories: subcategories.map((subcategory) => {
-      const name = typeof subcategory === "string" ? subcategory : subcategory.name;
+      const name = typeof subcategory === 'string' ? subcategory : subcategory.name;
+
       return {
         name,
         count: counts[category]?.subcategories[name] || 0,

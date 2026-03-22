@@ -1,7 +1,8 @@
 'use client'
 import { Tabs, Tab } from '@heroui/tabs';
+import {JSX} from 'react';
+
 import { formattedOptions } from './lib';
-import {JSX} from "react";
 
 export const ProductTabs: ({description, options}: { description: any; options: any }) => (null | JSX.Element) = ({ description, options }) => {
     if (!description && !options) return null;

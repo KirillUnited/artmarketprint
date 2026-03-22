@@ -1,4 +1,4 @@
-import { defineQuery } from "next-sanity";
+import { defineQuery } from 'next-sanity';
 
 export const SERVICES_QUERY = `*[
     _type == "service"

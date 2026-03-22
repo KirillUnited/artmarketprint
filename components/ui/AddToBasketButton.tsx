@@ -1,15 +1,17 @@
 'use client';
 
-import useBasketStore from '@/store/store';
-import {Product} from '@/components/shared/product/product.types';
 import {Button} from '@heroui/button';
 import {Input} from '@heroui/input';
 import {MinusIcon, PlusIcon, ShoppingCartIcon} from 'lucide-react';
 import React, {useEffect} from 'react';
-import {getCTAButton} from './BrandButton';
 import {toast} from 'sonner';
-import Loader from './Loader';
+
+import {Product} from '@/components/shared/product/product.types';
+import useBasketStore from '@/store/store';
 import {useProductStore} from '@/store/product';
+
+import {getCTAButton} from './BrandButton';
+import Loader from './Loader';
 
 // Types
 interface QuantityControlsProps {
@@ -32,24 +34,29 @@ const QuantityControls: React.FC<QuantityControlsProps> = ({itemCount, onDecreas
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const value = e.target.value;
+
 		setInputValue(value);
 	};
 
 	const handleInputBlur = () => {
 		const newCount = parseInt(inputValue);
+
 		if (isNaN(newCount) || newCount < 1) {
 			setInputValue(itemCount.toString());
+
 			return;
 		}
 
 		if (newCount > itemCount) {
 			const diff = newCount - itemCount;
+
 			for (let i = 0; i < diff; i++) {
 				onIncrease();
 			}
 			toast.success('Количество товара обновлено');
 		} else if (newCount < itemCount) {
 			const diff = itemCount - newCount;
+
 			for (let i = 0; i < diff; i++) {
 				onDecrease();
 			}
@@ -69,18 +76,18 @@ const QuantityControls: React.FC<QuantityControlsProps> = ({itemCount, onDecreas
 					toast.info('Количество товара обновлено');
 				}}
 			>
-				<MinusIcon size={20} className="text-secondary" />
+				<MinusIcon className="text-secondary" size={20} />
 			</Button>
 			<Input
-				type="number"
-				value={inputValue}
 				classNames={{
 					input: 'text-center min-w-12',
 				}}
 				min={1}
 				size="lg"
-				onChange={handleInputChange}
+				type="number"
+				value={inputValue}
 				onBlur={handleInputBlur}
+				onChange={handleInputChange}
 				onKeyDown={(e) => {
 					if (e.key === 'Enter') {
 						handleInputBlur();
@@ -97,7 +104,7 @@ const QuantityControls: React.FC<QuantityControlsProps> = ({itemCount, onDecreas
 					toast.success('Количество товара обновлено');
 				}}
 			>
-				<PlusIcon size={20} className="text-secondary" />
+				<PlusIcon className="text-secondary" size={20} />
 			</Button>
 		</div>
 	);
@@ -116,12 +123,13 @@ const AddToBasketButton: React.FC<AddToBasketButtonProps> = ({product}) => {
 		setIsClient(true);
 	}, []);
 
-	if (!isClient) return <Loader size='md' variant='spinner' className='static text-primary flex mx-auto' />;
+	if (!isClient) return <Loader className='static text-primary flex mx-auto' size='md' variant='spinner' />;
 
 	// Helper to get image for selected color
 	const getImageForSelectedColor = () => {
 		if (product.items && selectedColor) {
 			const variant = product.items.find((item: any) => item.color === selectedColor);
+
 			if (variant) {
 				// Prefer cover, fallback to first image in images_urls
 				if (variant.cover) return variant.cover;
@@ -141,6 +149,7 @@ const AddToBasketButton: React.FC<AddToBasketButtonProps> = ({product}) => {
 				return product.images_urls[0];
 			}
 		}
+
 		return '';
 	};
 
@@ -151,6 +160,7 @@ const AddToBasketButton: React.FC<AddToBasketButtonProps> = ({product}) => {
 			selectedSize: selectedSize,
 			image: getImageForSelectedColor(),
 		};
+
 		addItem(productWithColorAndSize as any);
 
 		if (itemCount === 0) {
@@ -235,7 +245,7 @@ const AddToBasketButton: React.FC<AddToBasketButtonProps> = ({product}) => {
 				</>
 			) : (
 				<Button className="bg-brand-gradient font-semibold grow basis-40 uppercase text-primary-foreground group" radius="sm" size="lg" onPress={handleAddItem}>
-					<ShoppingCartIcon size={20} className="group-hover:scale-110 transition-transform duration-300" />
+					<ShoppingCartIcon className="group-hover:scale-110 transition-transform duration-300" size={20} />
 					<span>В корзину</span>
 				</Button>
 			)}

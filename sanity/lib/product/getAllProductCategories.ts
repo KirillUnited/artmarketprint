@@ -1,5 +1,6 @@
-import { CATEGORIES_QUERY } from "../queries/category.query";
-import { sanityFetch } from "@/sanity/lib/sanityFetch";
+import { sanityFetch } from '@/sanity/lib/sanityFetch';
+
+import { CATEGORIES_QUERY } from '../queries/category.query';
 
 /**
  * Retrieves a list of unique product categories from the available products.
@@ -16,6 +17,7 @@ export async function getAllProductCategories(): Promise<string[]> {
     } catch (error) {
         // Log any errors that occur while fetching the categories to the console
         console.error('Error fetching categories:', error);
+
         // Return an empty array if there was an error
         return [];
     }

@@ -1,9 +1,10 @@
 import React from 'react'
 
-import RelatedProductsCarousel from './RelatedProductsCarousel';
 
 import Section from '@/components/layout/Section';
 import getRelatedProductsByCategory from '@/sanity/lib/product/getRelatedProductsByCategory';
+
+import RelatedProductsCarousel from './RelatedProductsCarousel';
 
 export default async function RelatedProducts({ product }: any) {
     const relatedProducts = await getRelatedProductsByCategory(product?.category, product?.id);

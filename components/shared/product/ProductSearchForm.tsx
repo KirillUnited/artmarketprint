@@ -25,8 +25,8 @@ export default function ProductSearchForm({ className }: { className?: string })
 				type="search"
 				variant="bordered"
 			/>
-			<Button color="primary" type="submit" radius="sm" className="self-stretch min-w-max">
-				<SearchIcon size={16} className="" aria-label="Найти" />
+			<Button className="self-stretch min-w-max" color="primary" radius="sm" type="submit">
+				<SearchIcon aria-label="Найти" className="" size={16} />
 				{/*<span className="hidden md:block">Найти</span>*/}
 			</Button>
 		</Form>

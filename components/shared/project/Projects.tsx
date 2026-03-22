@@ -1,12 +1,12 @@
 import {Suspense} from 'react';
-
-import {ProjectList} from './ProjectList';
+import clsx from 'clsx';
 
 import Section, {SectionDescription, SectionHeading, SectionSubtitle, SectionTitle} from '@/components/layout/Section';
 import {getSanityDocuments} from '@/sanity/lib/fetch-sanity-data';
 import {PROJECTS_QUERY} from '@/sanity/lib/queries';
-import clsx from 'clsx';
 import {SectionButton} from '@/components/layout/SectionButton';
+
+import {ProjectList} from './ProjectList';
 
 interface ProjectsProps {
 	isActive?: boolean;

@@ -4,6 +4,7 @@ import {Button} from '@heroui/button';
 import {ArrowUpRightIcon} from 'lucide-react';
 import Link from 'next/link';
 import clsx from 'clsx';
+
 import {SectionProps} from '@/types';
 
 export const SectionButton = ({label, href, className}: SectionProps) => (

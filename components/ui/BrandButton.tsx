@@ -7,6 +7,7 @@ import Link from 'next/link';
 import {ArrowUpRightIcon} from 'lucide-react';
 
 import {BrandButtonProps} from '@/types';
+
 import BrandModalOffer from './BrandModalOffer';
 
 export default function BrandButton({state, className, onPress, children, ...props}: BrandButtonProps) {
@@ -28,14 +29,14 @@ export default function BrandButton({state, className, onPress, children, ...pro
 export const getCTAButton = (_key: string, buttonType: 'cta' | 'secondary' | 'ctaModal', text: string, link: string, size: 'lg' | 'md' = 'lg', serviceId = '') => {
 	const CTAButtons = {
 		cta: (text: string, link: string) => (
-			<Link href={link} key={_key}>
+			<Link key={_key} href={link}>
 				<BrandButton className="uppercase" state="primary">
 					{text}
 				</BrandButton>
 			</Link>
 		),
 		secondary: (text: string, link: string) => (
-			<Link href={link || ''} key={_key}>
+			<Link key={_key} href={link || ''}>
 				<Button className={clsx('bg-brand-gradient text-fill-transparent', 'font-semibold uppercase', 'group')} color="secondary" radius="sm" size={size} variant="bordered">
 					<span className="leading-none">{text}</span>
 					<ArrowUpRightIcon className="text-secondary group-hover:translate-x-1 transition-transform" size={18} />

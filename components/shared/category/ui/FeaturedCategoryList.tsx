@@ -1,4 +1,4 @@
-import { FeaturedCategoryThumb } from "@/components/shared/category/ui";
+import { FeaturedCategoryThumb } from '@/components/shared/category/ui';
 
 interface FeaturedCategoryListProps {
     items?: any[];

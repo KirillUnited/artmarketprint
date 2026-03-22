@@ -6,12 +6,13 @@ import NextImage from 'next/image';
 import clsx from 'clsx';
 import { Image } from '@heroui/image';
 
-import { ProductColors } from '../ProductColors';
-import { ProductSizes } from '../ProductSizes';
 
 import { ProductData } from '@/components/shared/product/product.types';
 import { getTotalStock } from '@/components/shared/product/lib';
 import { CURRENCIES_SYMBOLS } from '@/lib/products/companies';
+
+import { ProductSizes } from '../ProductSizes';
+import { ProductColors } from '../ProductColors';
 
 interface ProductThumbProps extends React.HTMLAttributes<HTMLDivElement> {
 	item: ProductData;
@@ -41,13 +42,13 @@ const ProductThumb: FC<ProductThumbProps> = ({ item, ...props }): JSX.Element =>
 						classNames={{
 							wrapper: clsx('relative w-full bg-contain bg-center bg-no-repeat mx-auto'),
 						}}
-						loading="lazy"
-						width={220}
-						height={220}
-						sizes='100vw'
-						quality={50}
-						src={image}
 						fallbackSrc="/images/product-no-image.jpg"
+						height={220}
+						loading="lazy"
+						quality={50}
+						sizes='100vw'
+						src={image}
+						width={220}
 					/>
 					{Number(totalStock()) === 0 && (
 						<div className="absolute inset-0 bg-black/50 flex items-center justify-center">

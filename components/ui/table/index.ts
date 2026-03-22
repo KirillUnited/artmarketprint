@@ -1,4 +1,4 @@
-import PriceTable from "./PriceTable";
+import PriceTable from './PriceTable';
 
 export {
     PriceTable

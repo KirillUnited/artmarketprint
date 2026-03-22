@@ -1,52 +1,111 @@
 @import 'tailwindcss';
-@config "../tailwind.config.js";
-@plugin '../hero.ts';
+@config '../tailwind.config.js';
+@source '../app/**/*.{js,ts,jsx,tsx}';
+@source '../components/**/*.{js,ts,jsx,tsx}';
+@source '../hooks/**/*.{js,ts,jsx,tsx}';
+@source '../lib/**/*.{js,ts,jsx,tsx}';
+@source '../store/**/*.{js,ts,jsx,tsx}';
+@source '../config/**/*.{js,ts,jsx,tsx}';
+@source '../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}';
 
-/* Note: You may need to change the path to fit your project structure */
-/* @source '../../node_modules/@heroui/theme/dist*.{js,ts,jsx,tsx}'; */
-/* @custom-variant dark (&:is(.dark *)); */
 
+/* =========================
+   BASE
+========================= */
 @layer base {
-    :root {
-        --background: #fff;
-        --background-primary: linear-gradient(
-            97deg,
-            hsl(var(--heroui-primary)) 0%,
-            hsl(var(--heroui-secondary)) 100%
-        );
-        --foreground: #2B2A28;
-        --grid-template-columns: repeat(auto-fill, minmax(min(var(--col-width, 288px), 100%), 1fr));
-        --product-gradient: linear-gradient(
-            180deg,
-            rgba(255, 255, 255, 0) 0%,
-            rgba(255, 255, 255, 0.75) 20.000000298023224%,
-            rgba(255, 255, 255, 1) 50%
-        );
-    }
+  :root {
+    --background: #fff;
 
-    html {
-        scroll-behavior: smooth;
-    }
+    --background-primary: linear-gradient(
+      97deg,
+      hsl(var(--heroui-primary)) 0%,
+      hsl(var(--heroui-secondary)) 100%
+    );
+
+    --foreground: #2B2A28;
+
+    --grid-template-columns: repeat(
+      auto-fill,
+      minmax(min(var(--col-width, 288px), 100%), 1fr)
+    );
+
+    --product-gradient: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.75) 20%,
+      rgba(255, 255, 255, 1) 50%
+    );
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
-@layer components {
-    .bento-grid-template {
-        grid-template-columns: repeat(2, 1fr);
-        grid-auto-rows: minmax(100px, var(--row-height, 300px));
 
-        & > :nth-child(4n + 1) {
-            grid-row: span 2;
-        }
-    }
+/* =========================
+   COMPONENTS
+========================= */
+@layer components {
+  .bento-grid-template {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: minmax(100px, var(--row-height, 300px));
+  }
+
+  .bento-grid-template > :nth-child(4n + 1) {
+    grid-row: span 2;
+  }
+}
+
+
+/* =========================
+   UTILITIES
+========================= */
+@utility container {
+  padding-inline: 1rem;
+  margin-inline: auto;
 }
 
 @layer utilities {
-    .bg-brand-gradient {
-        background-image: var(--background-primary);
-    }
 
-    .text-fill-transparent {
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
+  /* Gradient */
+  .bg-brand-gradient {
+    background-image: var(--background-primary);
+  }
+
+  .bg-product-gradient {
+    background-image: var(--product-gradient);
+  }
+
+  /* Text */
+  .text-fill-transparent {
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Colors */
+  .bg-background {
+    background: var(--background);
+  }
+
+  .text-foreground {
+    color: var(--foreground);
+  }
+
+  /* Layout helpers */
+  .grid-auto-fill {
+    grid-template-columns: var(--grid-template-columns);
+  }
+}
+
+
+/* =========================
+   FIXES
+========================= */
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+  -webkit-appearance: none;
 }

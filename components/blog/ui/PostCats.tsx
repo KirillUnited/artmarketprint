@@ -7,7 +7,7 @@ import { Category } from '../lib/types';
 export default function PostCatsFilter({ categories, currentSlug }: { categories: Category[]; currentSlug?: string }) {
 	return (
 		<div className={'flex flex-wrap gap-2'}>
-			<Chip as={Link} className="border" href={`/blog`} size="sm" variant={currentSlug === '' ? 'solid' : 'bordered'}>
+			<Chip as={Link} className="border" href={'/blog'} size="sm" variant={currentSlug === '' ? 'solid' : 'bordered'}>
 				Все категории
 			</Chip>
 			{categories?.map((category: Category) => (

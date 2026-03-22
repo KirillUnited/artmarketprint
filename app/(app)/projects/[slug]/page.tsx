@@ -1,11 +1,8 @@
 import Image from 'next/image';
-import Link from 'next/link';
 import {PortableText, SanityDocument} from 'next-sanity';
-import {ArrowDownCircle} from 'lucide-react';
 import clsx from 'clsx';
 
 import {ServiceBreadcrumb} from '@/components/ui/Breadcrumb';
-import BrandButton from '@/components/ui/BrandButton';
 import {ServiceDetails} from '@/components/shared/service';
 import {getSanityDocuments} from '@/sanity/lib/fetch-sanity-data';
 import {PROJECT_QUERY, PROJECT_SLUGS_QUERY} from '@/sanity/lib/queries';
@@ -94,7 +91,7 @@ export default async function ProjectPage({params}: {params: Promise<Props>}) {
 			<section>
 				<div className="container">
 					<div className="mt-10 mb-6">
-						<ServiceBreadcrumb title={project.title} service="Проекты" serviceSlug="projects" />
+						<ServiceBreadcrumb service="Проекты" serviceSlug="projects" title={project.title} />
 					</div>
 				</div>
 			</section>

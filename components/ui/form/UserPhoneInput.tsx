@@ -28,13 +28,13 @@ export const UserPhoneInput = ({ ...props }) => {
                 lazy={false}
                 mask={'+375 (00) 000-00-00'}
                 name='user_phone'
+                pattern='^\+375\s\(\d{2}\)\s\d{3}-\d{2}-\d{2}$'
                 placeholder='+375 (__) ___-__-__'
+                // value={props.inputValue}
+                onAccept={handlePhoneChange}
                 radix="."           
                 // className="w-full border-2 border-gray-200 rounded-small py-2 px-3 text-sm leading-tight text-gray-900 focus:border-primary focus-ring-primary focus-visible:border-primary"
                 unmask={true}
-                // value={props.inputValue}
-                onAccept={handlePhoneChange}
-                pattern='^\+375\s\(\d{2}\)\s\d{3}-\d{2}-\d{2}$'
             />
             {errorMessage && <span className="text-red-500 text-xs">{errorMessage}</span>}
         </div>
