@@ -10,16 +10,13 @@ import { usePathname } from 'next/navigation';
 
 import useBasketStore from '@/store/store';
 import { NavbarDropdownMenu } from '@/components/ui/dropdown';
-import {Socials} from '@/components/shared/socials';
+import { Socials } from '@/components/shared/socials';
 
 import BrandLogo from '../../ui/BrandLogo';
 import { HeroModalOffer } from '../../ui/BrandModalOffer';
 import Drawer from '../../ui/Drawer';
 import { SalesBanner } from '../banner';
 
-import useBasketStore from '@/store/store';
-import { NavbarDropdownMenu } from '@/components/ui/dropdown';
-import { Socials } from '@/components/shared/socials';
 import Search from "@/components/search";
 
 export const CartLinkButton = (itemsCount: number) => {
