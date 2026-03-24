@@ -1,5 +1,5 @@
 @import 'tailwindcss';
-@config '../tailwind.config.js';
+@config '../tailwind.config.cjs';
 @source '../app/**/*.{js,ts,jsx,tsx}';
 @source '../components/**/*.{js,ts,jsx,tsx}';
 @source '../hooks/**/*.{js,ts,jsx,tsx}';
