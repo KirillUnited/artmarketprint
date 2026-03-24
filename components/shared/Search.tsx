@@ -17,7 +17,7 @@ function SearchResults() {
     }
 
     return (
-        <div className="text-left bg-background p-3 rounded-2xl">
+        <div className="text-left bg-background p-3 rounded-lg">
             <h2 className="text-2xl font-semibold mb-4">Результаты для: {query}</h2>
             <Hits
                 hitComponent={({ hit }) => (
