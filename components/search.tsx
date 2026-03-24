@@ -27,8 +27,8 @@ export interface SearchConfig {
   placeholder?: string;
   /** Number of hits per page (optional, defaults to 8) */
   hitsPerPage?: number;
-  /** Custom search button text (optional) */
-  buttonText?: string;
+  /** Custom search button content (optional) */
+  buttonText?: React.ReactNode;
   /** Custom search button props (optional) */
   buttonProps?: React.ComponentProps<typeof SearchButton>;
   /** Map which hit attributes to render (supports dotted paths) */

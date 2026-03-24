@@ -1,6 +1,7 @@
 "use client";
 
 import { Highlight } from "react-instantsearch";
+import type { Hit } from "instantsearch.js";
 import { ServiceSearchHit } from "@/types/service-search";
 import { SEARCH_CONFIG } from "@/lib/search-config";
 import { Card } from "@heroui/card";
@@ -8,7 +9,7 @@ import { Image } from "@heroui/image";
 import Link from "next/link";
 
 interface SearchHitProps {
-  hit: ServiceSearchHit;
+  hit: Hit<ServiceSearchHit>;
 }
 
 export function SearchHit({ hit }: SearchHitProps) {

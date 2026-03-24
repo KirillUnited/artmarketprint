@@ -6,7 +6,7 @@ import BaseBreadcrumb from '@/components/ui/Breadcrumb';
 import { getSanityDocuments } from '@/sanity/lib/fetch-sanity-data';
 import { NAVIGATION_QUERY } from '@/sanity/lib/queries';
 import ProductSearchForm from '@/components/shared/product/ProductSearchForm';
-import {ProductsViewSection} from '@/components/shared/product';
+// import {ProductsViewSection} from '@/components/shared/product';
 import Loader from '@/components/ui/Loader';
 
 export async function generateMetadata() {
@@ -70,7 +70,7 @@ export default async function ProductsPage(
             </section>
             {/* The section below is where the products will be displayed */}
             <Suspense fallback={<Loader className='static text-primary flex mx-auto py-6' size='md'  variant='spinner' />}>
-                <ProductsViewSection/>
+                {/* <ProductsViewSection/> */}
             </Suspense>
         </>
     );

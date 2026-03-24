@@ -12,7 +12,7 @@ import { countProductsByCategory, enrichCategoriesWithCounts } from '@/lib/produ
 import { collectMaterials } from '@/lib/products/collectCategories';
 import { MaterialFilter } from '@/components/ui/filter/MaterialFilter';
 
-import ProductGrid from './ProductGrid';
+// import ProductGrid from './ProductGrid';
 import { ProductsNotFound } from './ProductsNotFound';
 import ProductsFilter, { FilterButton, FilterDrawer } from './ProductsFilter';
 import { Product } from './product.types';
@@ -163,7 +163,8 @@ export default function ProductsView({ products, categories, totalItemsView = IT
                         {isLoading ? (
                             renderSkeletons()
                         ) : paginatedItems.length ? (
-                            <ProductGrid products={paginatedItems} />
+                            // <ProductGrid products={paginatedItems} />
+                            null
                         ) : (
                             <ProductsNotFound />
                         )}
