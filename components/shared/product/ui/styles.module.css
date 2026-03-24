@@ -29,7 +29,7 @@
     @apply grid gap-2 md:gap-4;
     grid-template-columns: repeat(1, 1fr);
 
-    @media (min-width: 768px) {
-        grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+    @media (min-width: 1024px) {
+        grid-template-columns: repeat(4, minmax(12rem, 1fr));
     }
 }

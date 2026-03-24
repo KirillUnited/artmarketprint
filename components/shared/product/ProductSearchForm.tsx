@@ -20,15 +20,14 @@ export default function ProductSearchForm({ className }: { className?: string })
 				name="query"
 				placeholder="Поиск товара..."
 				radius="sm"
-				size='md'
+				size='lg'
 				startContent={<SearchIcon size={16} />}
 				type="search"
 				variant="bordered"
 			/>
-			<Button className="self-stretch min-w-max" color="primary" radius="sm" type="submit">
+			{/* <Button className="self-stretch min-w-max" color="primary" radius="sm" type="submit" size='lg'>
 				<SearchIcon aria-label="Найти" className="" size={16} />
-				{/*<span className="hidden md:block">Найти</span>*/}
-			</Button>
+			</Button> */}
 		</Form>
 	);
 }
