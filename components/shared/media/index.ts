@@ -1,5 +1,5 @@
-import { MediaBlock } from "./MediaBlock";
-import { VideoPlayer } from "./VideoPlayer";
+import { MediaBlock } from './MediaBlock';
+import { VideoPlayer } from './VideoPlayer';
 
 export {
     MediaBlock,

@@ -7,9 +7,10 @@ import {Image} from '@heroui/image';
 import NextImage from 'next/image';
 import {Card, CardBody, CardFooter, CardHeader} from '@heroui/card';
 
+import {urlFor} from '@/sanity/lib/image';
+
 import {Post} from '../lib/types';
 
-import {urlFor} from '@/sanity/lib/image';
 
 type PostCardVariant = 'default' | 'compact';
 
@@ -36,11 +37,11 @@ export default function PostCard({post, variant = POST_CARD_VARIANTS.default, fo
 						as={NextImage}
 						className="w-full h-48 object-cover"
 						fallbackSrc="https://via.placeholder.com/300x200"
-						width={0}
 						height={0}
-						sizes="100vw"
 						quality={10}
+						sizes="100vw"
 						src={urlFor(post.featuredImage).url()}
+						width={0}
 					/>
 				</Link>
 			)}
@@ -56,7 +57,7 @@ export default function PostCard({post, variant = POST_CARD_VARIANTS.default, fo
 					<p className="text-neutral-600 dark:text-neutral-300 line-clamp-4">{post.excerpt}</p>
 				</CardBody>
 			)}
-			{footerSlot && <CardFooter className="mt-auto max-xl:items-stretch gap-2 justify-between text-sm text-neutral-500 flex-wrap border-t-1">{footerSlot}</CardFooter>}
+			{footerSlot && <CardFooter className="mt-auto max-xl:items-stretch gap-2 justify-between text-sm text-neutral-500 flex-wrap border-t">{footerSlot}</CardFooter>}
 		</Card>
 	);
 }

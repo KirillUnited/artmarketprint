@@ -1,3 +1,9 @@
+import {Button} from '@heroui/button';
+import {ArrowUpRightIcon, ShoppingCartIcon} from 'lucide-react';
+import {PortableText, SanityDocument} from 'next-sanity';
+import Image from 'next/image';
+import Link from 'next/link';
+
 import Section, {SectionTitle} from '@/components/layout/Section';
 import {getCTAButton} from '@/components/ui/BrandButton';
 import BaseBreadcrumb from '@/components/ui/Breadcrumb';
@@ -6,11 +12,6 @@ import {getUrlFor} from '@/lib/utils';
 import {client} from '@/sanity/client';
 import {CATEGORY_QUERY} from '@/sanity/lib/queries/category.query';
 import {NAVIGATION_QUERY} from '@/sanity/lib/queries';
-import {Button} from '@heroui/button';
-import {ArrowUpRightIcon, ShoppingCartIcon} from 'lucide-react';
-import {PortableText, SanityDocument} from 'next-sanity';
-import Image from 'next/image';
-import Link from 'next/link';
 import {ProductsNotFound} from '@/components/shared/product';
 import {sanityFetch} from '@/sanity/lib/sanityFetch';
 import RelatedProductsCarousel from '@/components/shared/product/RelatedProductsCarousel';
@@ -81,7 +82,7 @@ export default async function CategoryPage({params}: {params: Promise<Props>}) {
 						<footer className="flex flex-col md:flex-row gap-4">
 							{getCTAButton(ctaButtonList[0]._key, ctaButtonList[0].buttonType as 'cta' | 'secondary' | 'ctaModal', ctaButtonList[0].text, '', 'md', category.title)}
 							<Link href={ctaButtonList[1]?.link || '/'}>
-								<Button className="uppercase" color="default" size="md" radius="sm" target="_blank">
+								<Button className="uppercase" color="default" radius="sm" size="md" target="_blank">
 									{ctaButtonList[1].text}
 									<ArrowUpRightIcon className="text-secondary group-hover:translate-x-1 transition-transform" size={18} />
 								</Button>
@@ -117,7 +118,7 @@ export default async function CategoryPage({params}: {params: Promise<Props>}) {
 						<RelatedProductsCarousel relatedProducts={relatedProducts} />
 						<div className="flex flex-col gap-2 w-full">
 							<Link href={`/products/categories/${category.slug.current}`}>
-								<Button className="border-1 md:self-start" radius="sm" variant="bordered">
+								<Button className="border md:self-start" radius="sm" variant="bordered">
 									<ShoppingCartIcon size="18" />
 									<span>Все товары</span>
 								</Button>

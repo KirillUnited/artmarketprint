@@ -1,4 +1,4 @@
-import { FeaturedCategoryThumb } from "@/components/shared/category/ui";
+import { FeaturedCategoryThumb } from '@/components/shared/category/ui';
 
 interface FeaturedCategoryListProps {
     items?: any[];
@@ -6,7 +6,7 @@ interface FeaturedCategoryListProps {
 
 export const FeaturedCategoryList = ({items}: FeaturedCategoryListProps) => {
     return (
-        <ul className="grid grid-cols-[var(--grid-template-columns)] gap-8">
+        <ul className="grid grid-cols-(--grid-template-columns) gap-8">
             {items?.map((item: any) => (
                 <li key={item.title}>
                     <FeaturedCategoryThumb item={item} />

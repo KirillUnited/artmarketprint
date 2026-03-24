@@ -1,5 +1,6 @@
-import {SectionDescription, SectionHeading, SectionSubtitle, SectionTitle} from "@/components/layout/Section";
-import React from "react";
+import React from 'react';
+
+import {SectionDescription, SectionHeading, SectionSubtitle, SectionTitle} from '@/components/layout/Section';
 
 export const FeaturedCategoriesHeading = ({title, subtitle, description}: {title?: string; subtitle?: string; description?: string}) => {
     return (

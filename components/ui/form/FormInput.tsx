@@ -4,13 +4,13 @@ import React from 'react'
 export default function FormInput(props: React.ComponentProps<typeof Input>) {
     return (
         <Input
+            classNames={{
+                inputWrapper: 'border bg-background',
+            }}
             color="primary"
             labelPlacement='outside'
             radius='sm'
             variant="bordered"
-            classNames={{
-                inputWrapper: 'border-1 bg-background',
-            }}
             {...props}
         />
     )

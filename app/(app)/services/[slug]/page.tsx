@@ -1,6 +1,7 @@
 import {defineQuery, PortableText} from 'next-sanity';
 import {Card} from '@heroui/card';
 import {clsx} from 'clsx';
+import {JSX} from 'react';
 
 import {ServiceBreadcrumb} from '@/components/ui/Breadcrumb';
 import {ServiceDetails, ServiceHero} from '@/components/shared/service';
@@ -16,7 +17,6 @@ import ServiceJsonLd, {BreadcrumbListJsonLd} from '@/components/ServiceJsonLd';
 import {SERVICE_QUERY} from '@/sanity/lib/queries/service.query';
 import {urlFor} from '@/sanity/lib/image';
 import {PackageCalculator} from '@/components/shared/сalculator';
-import {JSX} from 'react';
 import {SectionButton} from '@/components/layout/SectionButton';
 
 type Props = {
@@ -163,7 +163,7 @@ export default async function ServicePage({params}: {params: Promise<Props>}): P
 			</Section>
 
 			{/* Structured data for service */}
-			<ServiceJsonLd description={service.description} name={service.title} url={`https://artmarketprint.by/services/${slug}`} imageUrl={service.seo?.ogImage} />
+			<ServiceJsonLd description={service.description} imageUrl={service.seo?.ogImage} name={service.title} url={`https://artmarketprint.by/services/${slug}`} />
 		</>
 	);
 }

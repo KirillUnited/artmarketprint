@@ -1,6 +1,5 @@
 import {SanityDocument} from 'next-sanity';
 
-import {BrandCard} from '../ui/card';
 
 import {siteConfig} from '@/config/site';
 import {getSanityDocuments} from '@/sanity/lib/fetch-sanity-data';
@@ -8,6 +7,8 @@ import Section, {SectionDescription, SectionHeading, SectionSubtitle, SectionTit
 import {getUrlFor} from '@/lib/utils';
 import {CATEGORIES_QUERY} from '@/sanity/lib/queries/category.query';
 import {SectionButton} from '@/components/layout/SectionButton';
+
+import {BrandCard} from '../ui/card';
 
 export const CatalogHeading = ({categoryItemsCount}: {categoryItemsCount: number}) => (
 	<div className="flex flex-wrap items-end justify-between gap-4">
@@ -20,7 +21,7 @@ export const CatalogHeading = ({categoryItemsCount}: {categoryItemsCount: number
 );
 
 export const CategoryList = ({categories}: {categories: SanityDocument[]}) => (
-	<ul className="grid grid-cols-[var(--grid-template-columns)] gap-8">
+	<ul className="grid grid-cols-(--grid-template-columns) gap-8">
 		{categories.map((category: SanityDocument) => (
 			<li key={category.title}>
 				<BrandCard

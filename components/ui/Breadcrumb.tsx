@@ -4,17 +4,19 @@ import { BreadcrumbItem, Breadcrumbs } from '@heroui/breadcrumbs';
 import { usePathname } from 'next/navigation';
 import {ChevronRightIcon, HomeIcon} from 'lucide-react';
 import clsx from 'clsx';
-import { BreadcrumbListJsonLd } from '../ServiceJsonLd';
+import Link from 'next/link';
+
 import { fetchNavigation, getCategorySlugFromNavMap } from '@/lib/fetchNavigation';
-import Link from "next/link";
+
+import { BreadcrumbListJsonLd } from '../ServiceJsonLd';
 
 export const BreadcrumbWrapper = ({ children }: { children: React.ReactNode }) => {
 	return (
-		<Breadcrumbs variant='bordered' classNames={{
-			list: 'border-1'
-		}}>
-			<BreadcrumbItem className="font-semibold text-primary" href="/" title={`Главная`}>
-				<HomeIcon size={18} aria-label='Home' />
+		<Breadcrumbs classNames={{
+			list: 'border'
+		}} variant='bordered'>
+			<BreadcrumbItem className="font-semibold text-primary" href="/" title={'Главная'}>
+				<HomeIcon aria-label='Home' size={18} />
 			</BreadcrumbItem>
 			{children}
 		</Breadcrumbs>
@@ -37,7 +39,7 @@ export default function BaseBreadcrumb({ items, section, withJsonLd }: { items: 
 			{withJsonLd && <BreadcrumbListJsonLd name={navigation[`${pathSegments[pathSegments.length - 1]}`]} />}
 			<Breadcrumbs variant='bordered'>
 				<BreadcrumbItem className="font-semibold text-primary" href="/">
-					<HomeIcon size={18} aria-label='Home' />
+					<HomeIcon aria-label='Home' size={18} />
 				</BreadcrumbItem>
 				{
 					pathSegments.length > 0 && pathSegments.map((segment: any, index: number) => {
@@ -94,8 +96,8 @@ export const ProductBreadcrumb: React.FC<ProductBreadcrumbProps> = (
 				separator: 'text-primary',
 				item: 'inline truncate',
 			}}
-				href={`/products/categories/all`}
-				title={`Каталог`}>
+				href={'/products/categories/all'}
+				title={'Каталог'}>
 				Каталог
 			</BreadcrumbItem>
 			<BreadcrumbItem className={clsx(
@@ -117,8 +119,8 @@ export const ProductBreadcrumb: React.FC<ProductBreadcrumbProps> = (
 				item: 'inline truncate',
 			}}
 				href={`/products/${slug}`}
-				title={`${title}`}
 				isDisabled={true}
+				title={`${title}`}
 			>
 				{title}
 			</BreadcrumbItem>
@@ -159,8 +161,8 @@ export const ServiceBreadcrumb: React.FC<ServiceBreadcrumbProps> = (
 				item: 'inline truncate',
 			}}
 				href={`/services/${serviceSlug}`}
-				title={`${title}`}
 				isDisabled={true}
+				title={`${title}`}
 			>
 				{title}
 			</BreadcrumbItem>
@@ -181,7 +183,7 @@ export function LightBreadcrumb({
 		<nav aria-label="Breadcrumb">
 			<ol className="flex flex-wrap gap-2 text-sm text-gray-600">
 				<li>
-					<Link href="/" className="hover:underline flex items-center gap-1">
+					<Link className="hover:underline flex items-center gap-1" href="/">
 						<HomeIcon className="w-4 h-4 text-gray-400" />
 						Главная
 					</Link>
@@ -192,8 +194,8 @@ export function LightBreadcrumb({
 					<>
 						<li>
 							<Link
-								href={`${baseUrl}/${category.currentSlug}`}
 								className="hover:underline"
+								href={`${baseUrl}/${category.currentSlug}`}
 							>
 								{category.title}
 							</Link>

@@ -46,7 +46,7 @@ export default function HeroContent({title, description, subtitle, ctaButtonList
 					</motion.span>
 				)}
 				<motion.div
-					className="text-4xl md:text-5xl lg:text-6xl leading-none font-medium break-words text-balance"
+					className="text-4xl md:text-5xl lg:text-6xl leading-none font-medium wrap-break-word text-balance"
 					initial={{
 						opacity: 0,
 						translate: '100% 0',

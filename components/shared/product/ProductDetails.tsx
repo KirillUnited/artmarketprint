@@ -1,15 +1,17 @@
 'use client';
 
-import Loader from '@/components/ui/Loader';
 import { Radio, RadioGroup } from '@heroui/radio';
 import clsx from 'clsx';
-import {useEffect, useState, useMemo, JSX} from 'react';
-import {ColorItemProps, ColorListItem, computedItems, MoreButton} from './ProductColors';
+import {useEffect, useState, JSX} from 'react';
 import { Tooltip } from '@heroui/tooltip';
-import { useProductStore } from '@/store/product';
-import ProductSizeTable from './ProductSizeTable';
 import { Modal, ModalBody, ModalContent, ModalHeader, useDisclosure } from '@heroui/modal';
 import { Button } from '@heroui/button';
+
+import { useProductStore } from '@/store/product';
+import Loader from '@/components/ui/Loader';
+
+import ProductSizeTable from './ProductSizeTable';
+import {ColorItemProps, ColorListItem, computedItems, MoreButton} from './ProductColors';
 
 /**
  * A component to display a product thumbnail.
@@ -52,7 +54,7 @@ export const ProductDetails: ({items, sizes, colors, color, size}: {
         if (sizes[0]) setSelectedSize(sizes[0]);
     }, []);
 
-    if (!isClient) return <Loader size='md' variant='spinner' className='static text-primary flex mx-auto' />;
+    if (!isClient) return <Loader className='static text-primary flex mx-auto' size='md' variant='spinner' />;
 
     return (
         <div className='flex flex-col gap-4'>
@@ -61,13 +63,13 @@ export const ProductDetails: ({items, sizes, colors, color, size}: {
                 Array.isArray(items) && items.length > 0 && (
                     <fieldset aria-label="Choose a color">
                         <RadioGroup
+                            classNames={{
+                                label: 'text-foreground font-semibold text-sm',
+                                base: 'list-none'
+                            }}
+                            defaultValue={items[0].color}
                             label="Варианты"
                             orientation="horizontal"
-                            defaultValue={items[0].color}
-                            classNames={{
-                                label: "text-foreground font-semibold text-sm",
-                                base: "list-none"
-                            }}
                             value={selectedColor}
                             onChange={(value) => {
                                 setSelectedColor(value.target.value)
@@ -77,19 +79,19 @@ export const ProductDetails: ({items, sizes, colors, color, size}: {
                                 (Array.isArray(items) && items.length > 0) && (
                                     <>
                                         {computedItemsByColor.slice(0, showAllColors ? items.length : 6).map((color) => (
-                                            <Tooltip content={color.color} key={color.id} radius='sm'>
+                                            <Tooltip key={color.id} content={color.color} radius='sm'>
                                                 <Radio
-                                                    value={color.color}
                                                     aria-label={color.color}
+                                                    classNames={{
+                                                        base: 'data-[disabled=true]:cursor-not-allowed data-[selected=true]:border-primary border-2 list-none pointer-events-auto m-0 rounded-small p-1',
+                                                        control: clsx('hidden'),
+                                                        hiddenInput: 'disabled:cursor-not-allowed',
+                                                        wrapper: 'hidden',
+                                                        labelWrapper: 'ms-0'
+                                                    }}
                                                     name={'color'}
                                                     title={color.color}
-                                                    classNames={{
-                                                        base: "data-[disabled=true]:cursor-not-allowed data-[selected=true]:border-primary border-2 list-none pointer-events-auto -m-0 rounded-small p-1",
-                                                        control: clsx("hidden"),
-                                                        hiddenInput: "disabled:cursor-not-allowed",
-                                                        wrapper: "hidden",
-                                                        labelWrapper: "ms-0"
-                                                    }}
+                                                    value={color.color}
                                                 >
                                                     <ColorListItem item={color} />
                                                 </Radio>
@@ -111,11 +113,11 @@ export const ProductDetails: ({items, sizes, colors, color, size}: {
                     <fieldset aria-label="Choose a size">
                         <div className="flex flex-col gap-2">
                             <RadioGroup
-                                orientation='horizontal'
-                                defaultValue={sizes[0]}
                                 classNames={{
                                     wrapper: 'grid grid-cols-3 gap-3 sm:grid-cols-6',
                                 }}
+                                defaultValue={sizes[0]}
+                                orientation='horizontal'
                                 value={selectedSize}
                                 onChange={(value) => {
                                     setSelectedSize(value.target.value)
@@ -124,16 +126,12 @@ export const ProductDetails: ({items, sizes, colors, color, size}: {
                             {sizes.sort((a: any, b: any) => a.localeCompare(b)).map((size) => (
                                 <Radio
                                     key={size}
-                                    value={size}
-                                    isDisabled={!size}
-                                    size='lg'
-                                    name={'size'}
                                     aria-label={size}
                                     classNames={{
                                         base: clsx(
-                                            'data-[selected=true]:border-primary data-[selected=true]:ring-2 ring-offset-2 ring-primary data-[selected=true]:bg-primary data-[selected=true]:text-white border-gray-300 border-1 data-[disabled=true]:cursor-not-allowed pointer-events-auto',
-                                            "inline-flex m-0 items-center justify-center",
-                                            "max-w-[300px] cursor-pointer rounded-small gap-4 p-3",
+                                            'data-[selected=true]:border-primary data-[selected=true]:ring-2 ring-offset-2 ring-primary data-[selected=true]:bg-primary data-[selected=true]:text-white border-gray-300 border data-[disabled=true]:cursor-not-allowed pointer-events-auto',
+                                            'inline-flex m-0 items-center justify-center',
+                                            'max-w-[300px] cursor-pointer rounded-small gap-4 p-3',
                                             'uppercase text-sm',
                                         ),
                                         hiddenInput: 'disabled:cursor-not-allowed',
@@ -147,14 +145,18 @@ export const ProductDetails: ({items, sizes, colors, color, size}: {
                                             'ms-0'
                                         )
                                     }}
+                                    isDisabled={!size}
+                                    name={'size'}
+                                    size='lg'
+                                    value={size}
                                 >
                                     {size}
                                 </Radio>
                             ))}
                             </RadioGroup>
-                            <Button variant='bordered' className='mt-4 border-1' size='sm' radius='sm' onPress={onOpen}>Размерная таблица</Button>
+                            <Button className='mt-4 border' radius='sm' size='sm' variant='bordered' onPress={onOpen}>Размерная таблица</Button>
                         </div>
-                        <Modal className='bg-background max-w-fit' isOpen={isOpen} placement="top-center" onOpenChange={onOpenChange} title='Size Table' radius='sm'>
+                        <Modal className='bg-background max-w-fit' isOpen={isOpen} placement="top-center" radius='sm' title='Size Table' onOpenChange={onOpenChange}>
                             <ModalContent>
                                 <ModalHeader className="flex flex-col gap-1 text-2xl">Размерная таблица</ModalHeader>
                                 <ModalBody className='min-w-fit'>

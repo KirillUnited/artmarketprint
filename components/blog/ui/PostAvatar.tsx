@@ -1,9 +1,10 @@
 import React, {JSX} from 'react';
 import Image from 'next/image';
 
+import {urlFor} from '@/sanity/lib/image';
+
 import {Post} from '../lib/types';
 
-import {urlFor} from '@/sanity/lib/image';
 
 /**
  * A function that renders a post avatar component.

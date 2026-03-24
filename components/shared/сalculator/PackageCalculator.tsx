@@ -7,11 +7,12 @@ import Image from 'next/image';
 import {Select, SelectItem} from '@heroui/select';
 import {Form} from '@heroui/form';
 
-import {sendCalculatorDetails} from './lib/messenger';
 
 import {colors, materials, MIN_QUANTITY, printOptions, quantityDiscounts, sizes} from '@/components/shared/сalculator/mock-data';
 import {calculatePVDPrice, getAvailableColors, getAvailableSizes} from '@/components/shared/сalculator/lib/utils';
 import {UsernameInput, UserPhoneInput} from '@/components/ui/form';
+
+import {sendCalculatorDetails} from './lib/messenger';
 
 const PackageCalculator = ({matrix = []}: {matrix?: any}) => {
 	const [step, setStep] = useState(1);
@@ -278,7 +279,7 @@ const PackageCalculator = ({matrix = []}: {matrix?: any}) => {
 							<Select
 								aria-label="Количество пакетов"
 								classNames={{
-									trigger: 'border-1 bg-background',
+									trigger: 'border bg-background',
 								}}
 								defaultSelectedKeys={[`${MIN_QUANTITY}`]}
 								radius="sm"

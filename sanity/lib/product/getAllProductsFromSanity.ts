@@ -1,6 +1,6 @@
 import { defineQuery } from 'next-sanity';
 
-import { sanityFetch } from "@/sanity/lib/sanityFetch";
+import { sanityFetch } from '@/sanity/lib/sanityFetch';
 
 /**
  * Fetches all products from Sanity.

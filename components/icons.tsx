@@ -242,13 +242,13 @@ export const TelegramIcon = ({ fill = 'currentColor', size = 24, height, width, 
 
 export const InstagramIcon = ({ fill = 'currentColor', size = 24, height, width, ...props }: IconSvgProps) => (
   <svg
+    aria-hidden="true"
     fill="none"
     height={size}
+    role="img"
     viewBox="0 0 16 16"
     width={size}
     xmlns="http://www.w3.org/2000/svg"
-    aria-hidden="true"
-    role="img"
     {...props}
   >
     <g clipPath="url(#clip0_1294_394)">
@@ -300,14 +300,14 @@ export const InstagramIcon = ({ fill = 'currentColor', size = 24, height, width,
 
 export const WhatsAppIcon = ({ fill = 'currentColor', size = 24, height, width, ...props }: IconSvgProps) => (
   <svg
+    aria-hidden="true"
     fill="#000000"
     height={size}
-    width={size}
+    role="img"
     viewBox="-2.73 0 1225.016 1225.016"
+    width={size}
     xmlns="http://www.w3.org/2000/svg"
     xmlnsXlink="http://www.w3.org/1999/xlink"
-    aria-hidden="true"
-    role="img"
     {...props}
   >
     <g id="SVGRepo_bgCarrier" strokeWidth="0" />

@@ -4,12 +4,13 @@ import {Button} from '@heroui/button';
 import {ArrowUpRightIcon} from 'lucide-react';
 import Link from 'next/link';
 import clsx from 'clsx';
+
 import {SectionProps} from '@/types';
 
 export const SectionButton = ({label, href, className}: SectionProps) => (
 	<Button
 		as={Link}
-		className={clsx('bg-brand-gradient text-fill-transparent', 'font-semibold border-1', 'group', className)}
+		className={clsx('bg-brand-gradient text-fill-transparent', 'font-semibold border', 'group', className)}
 		color="secondary"
 		href={href}
 		radius="sm"

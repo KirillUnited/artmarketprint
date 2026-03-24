@@ -7,11 +7,10 @@ import Link from 'next/link';
 import clsx from 'clsx';
 import {ShoppingCartIcon} from 'lucide-react';
 
-import BrandModalOffer from '../BrandModalOffer';
 
 import {BrandCardProps} from '@/types';
 import {ProjectTagList} from '@/components/shared/project';
-import BrandButton from '../BrandButton';
+
 
 export const BrandCardLink = ({href}: {href: string}) => (
 	<Button as={Link} className={clsx('self-center', 'group', 'border-small rounded-small')} color="primary" href={href} variant="bordered">
@@ -29,10 +28,10 @@ export const BrandCardFooter = ({variant, href, buttonLabel}: {variant: string; 
 			</div>
 		)} */}
 		{variant === 'product' && (
-			<div className="flex flex-wrap gap-3 items-center justify-center border-t-1 border-foreground/20 pt-6 overflow-hidden">
+			<div className="flex flex-wrap gap-3 items-center justify-center border-t border-foreground/20 pt-6 overflow-hidden">
 				{/* <BrandCardLink href={href} /> */}
 				{/* <BrandModalOffer buttonLabel={buttonLabel || ''} icon={<ShoppingCartIcon size={18} />} /> */}
-				<Button className="bg-brand-gradient font-semibold grow min-w-fit uppercase" size="md" as={Link} href={href} color="primary" radius="sm">
+				<Button as={Link} className="bg-brand-gradient font-semibold grow min-w-fit uppercase" color="primary" href={href} radius="sm" size="md">
 					<ShoppingCartIcon size={18} />
 					<span>{buttonLabel || 'ЗАКАЗАТЬ'}</span>
 				</Button>
@@ -63,9 +62,9 @@ export default function BrandCard({title, variant, price, description, image, ta
 								'aspect-square max-h-60': variant === 'product',
 							})}
 							height={320}
+							quality={50}
 							src={`${image}`}
 							width={270}
-							quality={50}
 						/>
 					</picture>
 				)}

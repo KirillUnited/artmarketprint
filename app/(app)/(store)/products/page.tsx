@@ -1,17 +1,17 @@
 import Image from 'next/image';
+import {JSX, Suspense} from 'react';
 
 import { siteConfig } from '@/config/site';
 import BaseBreadcrumb from '@/components/ui/Breadcrumb';
 import { getSanityDocuments } from '@/sanity/lib/fetch-sanity-data';
 import { NAVIGATION_QUERY } from '@/sanity/lib/queries';
 import ProductSearchForm from '@/components/shared/product/ProductSearchForm';
-import {ProductsViewSection} from "@/components/shared/product";
-import {JSX, Suspense} from "react";
+// import {ProductsViewSection} from '@/components/shared/product';
 import Loader from '@/components/ui/Loader';
 
 export async function generateMetadata() {
 
-    const url = `https://artmarketprint.by/products`;
+    const url = 'https://artmarketprint.by/products';
 
     return {
         alternates: {
@@ -37,15 +37,15 @@ export default async function ProductsPage(
 
     return (
         <>
-            <section className="py-12 md:py-24 relative after:absolute after:inset-0 after:bg-gradient-to-t after:from-black after:to-transparent">
+            <section className="py-12 md:py-24 relative after:absolute after:inset-0 after:bg-linear-to-t after:from-black after:to-transparent">
                 <Image
                     priority
                     alt={siteConfig.catalogSection.title}
                     className="absolute inset-0 object-cover w-full h-full"
                     height={1080}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     src="/images/catalog-3.jpg"
                     width={1920}
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
                 <div className="container flex flex-col gap-8 max-w-2xl relative z-10">
                     <div className="text-center">
@@ -69,8 +69,8 @@ export default async function ProductsPage(
                 </div>
             </section>
             {/* The section below is where the products will be displayed */}
-            <Suspense fallback={<Loader size='md' variant='spinner'  className='static text-primary flex mx-auto py-6' />}>
-                <ProductsViewSection/>
+            <Suspense fallback={<Loader className='static text-primary flex mx-auto py-6' size='md'  variant='spinner' />}>
+                {/* <ProductsViewSection/> */}
             </Suspense>
         </>
     );

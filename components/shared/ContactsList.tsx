@@ -30,7 +30,7 @@ export default function ContactsList({ items, className }: ContactsListProps) {
 		<div className={clsx('flex flex-col gap-6', className)}>
 			<div className="flex flex-col gap-1">
 				<p className="font-light">Адрес:</p>
-				<p className="break-words flex items-center gap-2">
+				<p className="wrap-break-word flex items-center gap-2">
 					<MapIcon className="text-primary" size={20} />
 					<Link className="font-medium hover:text-primary transition" href={`${address[0]?.link}`} target="_blank">{address[0]?.location}</Link>
 				</p>
@@ -40,7 +40,7 @@ export default function ContactsList({ items, className }: ContactsListProps) {
 				<ul className="flex flex-col">
 					{phones?.map((item) => (
 						<li key={item._key} className="self-start">
-							<Link className="font-medium break-words text-left flex items-center gap-2 hover:text-primary transition" href={`tel:${item.link}` || '#'}>
+							<Link className="font-medium wrap-break-word text-left flex items-center gap-2 hover:text-primary transition" href={`tel:${item.link}` || '#'}>
 								<PhoneIcon className="text-primary" size={20} />
 								{item.number}
 							</Link>
@@ -49,7 +49,7 @@ export default function ContactsList({ items, className }: ContactsListProps) {
 
 					{emails?.map((item) => (
 						<li key={item._key} className="self-start">
-							<Link className="font-medium break-words text-left flex items-center gap-2 hover:text-primary transition" href={`mailto:${item.link}` || '#'}>
+							<Link className="font-medium wrap-break-word text-left flex items-center gap-2 hover:text-primary transition" href={`mailto:${item.link}` || '#'}>
 								<MailIcon className="text-primary" size={20} />
 								{item.email}
 							</Link>
@@ -60,7 +60,7 @@ export default function ContactsList({ items, className }: ContactsListProps) {
 
 			<div className="flex flex-col gap-1">
 				<p className="font-light">Время работы:</p>
-				<p className="font-medium break-words flex items-center gap-2">
+				<p className="font-medium wrap-break-word flex items-center gap-2">
 					<TimerIcon className="text-primary" size={20} />
 					{workingHours}
 				</p>

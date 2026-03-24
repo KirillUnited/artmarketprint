@@ -1,6 +1,7 @@
-import { Select, SelectItem } from "@heroui/select";
-import FormInput from "./FormInput";
-import { UserPhoneInput } from "./UserPhoneInput";
+import { Select, SelectItem } from '@heroui/select';
+
+import FormInput from './FormInput';
+import { UserPhoneInput } from './UserPhoneInput';
 
 const countryOptions = [
     { key: 'by', value: 'Республика Беларусь' },
@@ -16,9 +17,9 @@ const FormContactFields = ({ setPhoneValid }: { setPhoneValid: (valid: boolean) 
                     isRequired
                     errorMessage="Пожалуйста, введите Ваше имя"
                     id='first-name'
+                    label="Имя"
                     name='first-name'
                     placeholder="Напишите Ваше имя"
-                    label="Имя"
                 />
                 <FormInput
                     id='last-name'
@@ -29,28 +30,28 @@ const FormContactFields = ({ setPhoneValid }: { setPhoneValid: (valid: boolean) 
                 <div>
                     <FormInput
                         isRequired
-                        label='Город'
                         id="city"
+                        label='Город'
                         name="city"
-                        type="text"
                         placeholder='Напишите город'
+                        type="text"
                     />
                 </div>
 
                 <div>
                     <Select
-                        color="primary"
-                        labelPlacement='outside'
-                        radius='sm'
-                        variant="bordered"
                         classNames={{
-                            trigger: 'border-1 bg-background',
+                            trigger: 'border bg-background',
                         }}
-                        label="Страна"
+                        color="primary"
+                        defaultSelectedKeys={['by']}
                         id="country"
+                        label="Страна"
+                        labelPlacement='outside'
                         name="country"
                         placeholder='Выберите страну'
-                        defaultSelectedKeys={['by']}
+                        radius='sm'
+                        variant="bordered"
                     >
                         {
                             countryOptions.map((option) => (

@@ -5,12 +5,13 @@
 import NextImage from 'next/image';
 import {Image} from '@heroui/image';
 
-import PostCatsFilter from './ui/PostCats';
 
 import {Post} from '@/components/blog/lib/types';
 import {urlFor} from '@/sanity/lib/image';
 import {PostAvatar, PostMetadata} from '@/components/blog/ui';
 import CopyButton from '@/components/ui/button/CopyButton';
+
+import PostCatsFilter from './ui/PostCats';
 
 export default function PostHeader({post}: {post: Post}) {
 	return (
@@ -20,7 +21,7 @@ export default function PostHeader({post}: {post: Post}) {
 				<PostCatsFilter categories={post?.categories || []} />
 			</div>
 			<div className={'space-y-4'}>
-				<h1 className="text-3xl font-bold pb-4 border-b-1">
+				<h1 className="text-3xl font-bold pb-4 border-b">
 					{post.title}
 					<CopyButton className="ml-2" textToCopy={`artmarketprint.by/blog/${post.slug?.current}` || ''} />
 				</h1>

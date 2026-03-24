@@ -1,8 +1,11 @@
 import Image from 'next/image';
-import Section, { SectionDescription, SectionHeading, SectionSubtitle, SectionTitle } from '@/components/layout/Section';
 import { PortableText, PortableTextComponents } from 'next-sanity';
+import {JSX} from 'react';
+
+import Section, { SectionDescription, SectionHeading, SectionSubtitle, SectionTitle } from '@/components/layout/Section';
+
 import { ContentCTA } from './ContentCTA';
-import {JSX} from "react";
+
 
 const components: PortableTextComponents = {
 	marks: {
@@ -51,7 +54,7 @@ export default function About(props: AboutProps): JSX.Element | null {
 						{props.subtitle && <SectionSubtitle>{props.subtitle}</SectionSubtitle>}
 						{
 							props.title && <SectionTitle>
-								<PortableText value={props.title} components={components} />
+								<PortableText components={components} value={props.title} />
 							</SectionTitle>
 						}
 						{props.description && <SectionDescription>{props.description}</SectionDescription>}

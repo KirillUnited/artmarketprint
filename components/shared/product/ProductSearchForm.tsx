@@ -15,20 +15,19 @@ export default function ProductSearchForm({ className }: { className?: string })
 		<Form action={'/search'} className={clsx('flex-row flex-1', className)}>
 			<Input
 				className="flex-1"
-				classNames={{inputWrapper: 'border-1 bg-white'}}
+				classNames={{inputWrapper: 'border bg-white'}}
 				labelPlacement="outside"
 				name="query"
 				placeholder="Поиск товара..."
 				radius="sm"
-				size='md'
+				size='lg'
 				startContent={<SearchIcon size={16} />}
 				type="search"
 				variant="bordered"
 			/>
-			<Button color="primary" type="submit" radius="sm" className="self-stretch min-w-max">
-				<SearchIcon size={16} className="" aria-label="Найти" />
-				{/*<span className="hidden md:block">Найти</span>*/}
-			</Button>
+			{/* <Button className="self-stretch min-w-max" color="primary" radius="sm" type="submit" size='lg'>
+				<SearchIcon aria-label="Найти" className="" size={16} />
+			</Button> */}
 		</Form>
 	);
 }

@@ -7,14 +7,17 @@ import { Tooltip } from '@heroui/tooltip';
 import { Button } from '@heroui/button';
 import { clsx } from 'clsx';
 import { usePathname } from 'next/navigation';
+
+import useBasketStore from '@/store/store';
+import { NavbarDropdownMenu } from '@/components/ui/dropdown';
+import { Socials } from '@/components/shared/socials';
+
 import BrandLogo from '../../ui/BrandLogo';
 import { HeroModalOffer } from '../../ui/BrandModalOffer';
 import Drawer from '../../ui/Drawer';
 import { SalesBanner } from '../banner';
 
-import useBasketStore from '@/store/store';
-import { NavbarDropdownMenu } from '@/components/ui/dropdown';
-import {Socials} from '@/components/shared/socials';
+import { ServiceSearch } from '@/components/ServiceSearch';
 
 export const CartLinkButton = (itemsCount: number) => {
 	return (
@@ -73,7 +76,10 @@ export default function Navbar({ navigation, sales, siteSettings }: any) {
 							);
 						})}
 					</NavbarContent>
-					<div className="flex flex-row gap-8 items-center shrink-0">
+					<div className="flex justify-center flex-wrap gap-6 items-center shrink-0">
+						{/* Algolia Search */}
+						
+						<ServiceSearch />
 						{/*Calculator page link*/}
 						<Tooltip content="Калькулятор стоимости пакетов" placement="bottom">
 							<Button

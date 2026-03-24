@@ -1,5 +1,5 @@
 'use server';
-import axios from "axios";
+import axios from 'axios';
 
 const telegramBotToken = process.env.TELEGRAM_BOT_TOKEN;
 const chatId = process.env.TELEGRAM_PVD_CHAT_ID;
@@ -32,17 +32,17 @@ export async function sendCalculatorDetails(data: CalculatorFormData): Promise<a
         comment = 'Нет'
     } = data;
 
-    const message = `📦 *Новый расчет упаковки*\n\n` +
-        `*Детали заказа:*\n` +
+    const message = '📦 *Новый расчет упаковки*\n\n' +
+        '*Детали заказа:*\n' +
         `🛍️ Материал: ${material}\n` +
         `🎨 Цвет: ${color}\n` +
         `📏 Размер: ${size}\n` +
         `🎨 Цвет печати: ${printColor}\n` +
         `🔢 Количество: ${quantity} шт.\n\n` +
-        `*Стоимость:*\n` +
+        '*Стоимость:*\n' +
         `💰 Цена за штуку: ${pricePerBag.toFixed(2)} Br\n` +
         `💵 Итого: ${price.toFixed(2)} Br\n\n` +
-        `*Контактная информация:*\n` +
+        '*Контактная информация:*\n' +
         `👤 Имя: ${user_name}\n` +
         `📱 Телефон: ${user_phone}\n` +
         `💭 Комментарий: ${comment}`;
@@ -55,6 +55,7 @@ export async function sendCalculatorDetails(data: CalculatorFormData): Promise<a
         });
 
         console.log('Calculator details sent to Telegram:', response.data);
+
         return response.data;
     } catch (error) {
         console.error('Error sending calculator details to Telegram:', error);

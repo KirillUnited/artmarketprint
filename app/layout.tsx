@@ -3,7 +3,6 @@ import {Metadata, Viewport} from 'next';
 import clsx from 'clsx';
 import React from 'react';
 
-import {Providers} from './(app)/providers';
 
 declare global {
 	interface Window {
@@ -13,13 +12,16 @@ declare global {
 
 const GTM_ID = 'GTM-NR2HZ5DC';
 
+import Script from 'next/script';
+
 import {siteConfig} from '@/config/site';
 import {fontSans} from '@/config/fonts';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import {Toaster} from '@/components/ui/sonner';
-import Script from 'next/script';
 import {LocalBusinessJsonLd} from '@/config/ld-json';
+
+import {Providers} from './(app)/providers';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SERVER_URL || 'https://artmarketprint.by';
 const SITE_LOCALE = process.env.NEXT_PUBLIC_LOCALE || 'ru_BY';
@@ -92,8 +94,6 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
 
 				{/* Yandex.Metrika counter */}
 				<Script
-					id="yandex-metrika"
-					strategy="afterInteractive"
 					dangerouslySetInnerHTML={{
 						__html: `
                (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
@@ -110,26 +110,28 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
 
             `,
 					}}
+					id="yandex-metrika"
+					strategy="afterInteractive"
 				/>
 			</head>
 			<body className={clsx('min-h-screen bg-background text-foreground font-sans antialiased light', fontSans.variable)}>
 				{/* Google Tag Manager (noscript) */}
 				<noscript>
-					<iframe title="Google Tag Manager" src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`} height="0" width="0" style={{display: 'none', visibility: 'hidden'}} />
+					<iframe height="0" src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`} style={{display: 'none', visibility: 'hidden'}} title="Google Tag Manager" width="0" />
 				</noscript>
 				{/* End Google Tag Manager (noscript) */}
 				<Providers themeProps={{attribute: 'class', defaultTheme: 'light'}}>
 					<div className="min-h-screen flex flex-col">
 						<Header />
-						<main className="flex-grow">{children}</main>
+						<main className="grow">{children}</main>
 						<Footer />
 					</div>
 				</Providers>
 				<Toaster richColors position="top-center" />
 				<noscript>
-					<div>{typeof window !== 'undefined' && <img src="https://mc.yandex.ru/watch/101251200" style={{position: 'absolute', left: '-9999px'}} alt="" />}</div>
+					<div>{typeof window !== 'undefined' && <img alt="" src="https://mc.yandex.ru/watch/101251200" style={{position: 'absolute', left: '-9999px'}} />}</div>
 				</noscript>
-				<script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify(LocalBusinessJsonLd)}} />
+				<script dangerouslySetInnerHTML={{__html: JSON.stringify(LocalBusinessJsonLd)}} type="application/ld+json" />
 				{/* <!-- Google tag (gtag.js) --> */}
 				<Script src="https://www.googletagmanager.com/gtag/js?id=G-RB8S8ECQ97" strategy="afterInteractive" />
 				<Script id="google-analytics" strategy="afterInteractive">

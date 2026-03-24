@@ -1,4 +1,5 @@
 import {Card, CardBody, CardFooter} from '@heroui/card';
+import clsx from 'clsx';
 
 import Section from '@/components/layout/Section';
 import {ProductCarousel, ProductDetails, ProductStock} from '@/components/shared/product';
@@ -11,7 +12,6 @@ import {getSanityDocuments} from '@/sanity/lib/fetch-sanity-data';
 import {ProductTabs} from '@/components/shared/product/ProductTabs';
 import {ProductBreadcrumb} from '@/components/ui/Breadcrumb';
 import {OrderForm} from '@/components/ui/form';
-import clsx from 'clsx';
 import {getTotalStock} from '@/components/shared/product/lib';
 import {PushToDataLayer} from '@/components/shared/gtm';
 import {ProductsNotFoundMenu} from '@/components/shared/product/ProductsNotFound';
@@ -85,7 +85,7 @@ export default async function ProductPage({params}: {params: Promise<Props>}) {
 		<>
 			<Section>
 				<div className="flex flex-col gap-4">
-					<ProductBreadcrumb category={category} title={productTitle} slug={slug} items={breadcrumbs[0].links} />
+					<ProductBreadcrumb category={category} items={breadcrumbs[0].links} slug={slug} title={productTitle} />
 
 					<h1 className="text-2xl font-bold">
 						{productTitle}
@@ -107,6 +107,8 @@ export default async function ProductPage({params}: {params: Promise<Props>}) {
 							</CardBody>
 							<CardBody>
 								<ProductDetails
+									color={items?.[0]?.color || ''}
+									colors={colors || []}
 									items={
 										items?.map((item: any) => ({
 											id: item.id || item._id,
@@ -116,10 +118,8 @@ export default async function ProductPage({params}: {params: Promise<Props>}) {
 											stock: item.stock !== undefined ? Number(item.stock) : Number(stock),
 										})) || []
 									}
-									sizes={sizes || []}
-									colors={colors || []}
-									color={items?.[0]?.color || ''}
 									size={sizes?.[0] || ''}
+									sizes={sizes || []}
 								/>
 							</CardBody>
 							{Number(totalStock()) > 0 && (

@@ -1,9 +1,13 @@
 import Image from 'next/image';
-import {MediaBlock} from '../media';
-import BrandButton from '@/components/ui/BrandButton';
 import Link from 'next/link';
-import {ServiceHeroProps} from './service.props';
 import {JSX} from 'react';
+
+import BrandButton from '@/components/ui/BrandButton';
+
+import {MediaBlock} from '../media';
+
+import {ServiceHeroProps} from './service.props';
+
 
 /**
  * A strongly typed function that renders a hero section for a service.
@@ -18,11 +22,11 @@ import {JSX} from 'react';
 
 export const ServiceHero: React.FC<ServiceHeroProps> = ({title, description, mediaBlock, image, ...props}): JSX.Element => {
 	return (
-		<section className="py-12 md:py-24 relative after:absolute after:inset-0 after:bg-gradient-to-t after:from-black/90 after:to-black/20 overflow-hidden grid place-items-end">
+		<section className="py-12 md:py-24 relative after:absolute after:inset-0 after:bg-linear-to-t after:from-black/90 after:to-black/20 overflow-hidden grid place-items-end">
 			{/* Background service image */}
 			{mediaBlock?.mediaType ? (
 				<div className="absolute inset-0">
-					<Image alt={title} className="absolute inset-0 object-cover w-full h-full blur" height={1080} src={`${image}`} width={1920} quality={50} />
+					<Image alt={title} className="absolute inset-0 object-cover w-full h-full blur" height={1080} quality={50} src={`${image}`} width={1920} />
 					<MediaBlock {...mediaBlock} />
 				</div>
 			) : (
@@ -35,8 +39,8 @@ export const ServiceHero: React.FC<ServiceHeroProps> = ({title, description, med
 					<p className="mt-4 md:text-lg text-white text-pretty">{description}</p>
 				</div>
 
-				<Link href={'#serviceDetails'} className="flex flex-col gap-2 md:flex-row self-center">
-					<BrandButton state="primary" size="md">
+				<Link className="flex flex-col gap-2 md:flex-row self-center" href={'#serviceDetails'}>
+					<BrandButton size="md" state="primary">
 						Подробнее
 					</BrandButton>
 				</Link>

@@ -1,6 +1,7 @@
+import {sanityFetch} from '@/sanity/lib/sanityFetch';
+
 import {MATERIAL_MATRIX_BY_MATERIAL_ID} from './queries';
 
-import {sanityFetch} from '@/sanity/lib/sanityFetch';
 
 export async function getMaterialMatrixByMaterialId(materialId: string) {
 	try {

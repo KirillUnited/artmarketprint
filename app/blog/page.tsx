@@ -30,7 +30,7 @@ export default async function BlogPage({searchParams}: {searchParams: Promise<{p
 				<PostCatsFilter categories={categories} currentSlug="" />
 			</SectionHeading>
 			<PostListing posts={posts} />
-			{totalPages > 1 && <ClientPagination totalPages={totalPages} pageNumber={pageNumber} basePath="/blog" />}
+			{totalPages > 1 && <ClientPagination basePath="/blog" pageNumber={pageNumber} totalPages={totalPages} />}
 		</Section>
 	);
 }

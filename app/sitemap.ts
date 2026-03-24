@@ -1,5 +1,6 @@
-import {client} from '@/sanity/client';
 import type {MetadataRoute} from 'next';
+
+import {client} from '@/sanity/client';
 
 const BASE_URL = process.env.NEXT_PUBLIC_SERVER_URL;
 
@@ -44,10 +45,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 	];
 
 	const [services, categories, projects, blog] = await Promise.all([
-		client.fetch(`*[_type == "service" && defined(slug.current)]{ "slug": slug.current, _updatedAt }`),
-		client.fetch(`*[_type == "category" && defined(slug.current)]{ "slug": slug.current, _updatedAt }`),
-		client.fetch(`*[_type == "project" && defined(slug.current)]{ "slug": slug.current, _updatedAt }`),
-		client.fetch(`*[_type == "blog.post" && defined(slug.current)]{ "slug": slug.current, _updatedAt }`),
+		client.fetch('*[_type == "service" && defined(slug.current)]{ "slug": slug.current, _updatedAt }'),
+		client.fetch('*[_type == "category" && defined(slug.current)]{ "slug": slug.current, _updatedAt }'),
+		client.fetch('*[_type == "project" && defined(slug.current)]{ "slug": slug.current, _updatedAt }'),
+		client.fetch('*[_type == "blog.post" && defined(slug.current)]{ "slug": slug.current, _updatedAt }'),
 	]);
 
 	const servicePages: MetadataRoute.Sitemap = services.map((item: any) => ({

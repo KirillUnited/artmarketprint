@@ -100,9 +100,11 @@ export async function getCalculatorByType(type: string): Promise<CalculatorData 
 				type,
 			},
 		});
+
 		return calculator || null;
 	} catch (error) {
 		console.error('Error fetching calculator:', error);
+
 		return null;
 	}
 }
@@ -113,9 +115,11 @@ export async function getCalculatorByType(type: string): Promise<CalculatorData 
 export async function getAllCalculators(): Promise<CalculatorListItem[]> {
 	try {
 		const calculators = await sanityFetch({query: getAllCalculatorsQuery});
+
 		return calculators || [];
 	} catch (error) {
 		console.error('Error fetching calculators:', error);
+
 		return [];
 	}
 }

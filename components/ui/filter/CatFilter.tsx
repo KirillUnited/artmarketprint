@@ -1,8 +1,8 @@
 'use client';
-import { Accordion, AccordionItem } from "@heroui/accordion";
-import { Radio, RadioGroup } from "@heroui/radio";
-import { ScrollShadow } from "@heroui/scroll-shadow";
-import React, {FC} from "react";
+import { Accordion, AccordionItem } from '@heroui/accordion';
+import { Radio, RadioGroup } from '@heroui/radio';
+import { ScrollShadow } from '@heroui/scroll-shadow';
+import React, {FC} from 'react';
 
 export interface CategoryProps {
     category: string;
@@ -36,17 +36,17 @@ export const CatFilter: FC<CatFilterProps> = ({ sortOrder, onFilterChange, categ
 
     return (
         <div className='flex gap-4 w-full'>
-            <ScrollShadow className="w-full max-h-[calc(85vh-128px)] md:max-h-[calc(70vh-128px)]" size={50} hideScrollBar>
+            <ScrollShadow hideScrollBar className="w-full max-h-[calc(85vh-128px)] md:max-h-[calc(70vh-128px)]" size={50}>
                 <Accordion
-                    selectedKeys={selectedKeys}
-                    onSelectionChange={(keys) => setSelectedKeys(keys as Set<string>)}
                     className="px-0 shadow-small rounded-small bg-content1 overflow-x-hidden"
                     defaultExpandedKeys={categories.length === 1 ? ['0'] : []}
                     itemClasses={{
                         trigger: 'px-3 py-2 hover:bg-primary transition-colors group',
                         title: 'text-black group-hover:text-primary-foreground transition-colors',
                     }}
+                    selectedKeys={selectedKeys}
                     selectionMode="single"
+                    onSelectionChange={(keys) => setSelectedKeys(keys as Set<string>)}
                 >
                     {categories && categories.map(({ category, count, subcategories = [] }: CategoryProps, index: number) => (
                         <AccordionItem
@@ -65,12 +65,12 @@ export const CatFilter: FC<CatFilterProps> = ({ sortOrder, onFilterChange, categ
                         >
                             <RadioGroup classNames={{ base: 'pl-4', label: 'font-semibold text-foreground' }}>
                                 <Radio
-                                    value={category}
-                                    onChange={(e) => onFilterChange(sortOrder, e.target.value)}
                                     classNames={{
                                         wrapper: 'mr-1',
                                         label: 'flex items-center justify-between w-full pr-2 text-sm'
                                     }}
+                                    value={category}
+                                    onChange={(e) => onFilterChange(sortOrder, e.target.value)}
                                 >
                                     <span>Все товары</span>
                                 </Radio>
@@ -81,12 +81,12 @@ export const CatFilter: FC<CatFilterProps> = ({ sortOrder, onFilterChange, categ
                                     return (
                                         <Radio
                                             key={name}
-                                            value={name}
-                                            onChange={(e) => onFilterChange(sortOrder, e.target.value)}
                                             classNames={{
                                                 wrapper: 'mr-1',
                                                 label: 'w-full pr-2 text-sm'
                                             }}
+                                            value={name}
+                                            onChange={(e) => onFilterChange(sortOrder, e.target.value)}
                                         >
                                             <span>{name}</span>
                                             {subCount !== undefined && (

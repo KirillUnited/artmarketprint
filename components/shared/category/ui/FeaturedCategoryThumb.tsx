@@ -3,11 +3,12 @@ import {Card, CardFooter} from '@heroui/card';
 import Link from 'next/link';
 import {Image} from '@heroui/image';
 import NextImage from 'next/image';
-import {getUrlFor} from '@/lib/utils';
 import clsx from 'clsx';
 import {Button} from '@heroui/button';
 import {ArrowUpRightIcon} from 'lucide-react';
 import React from 'react';
+
+import {getUrlFor} from '@/lib/utils';
 
 interface FeaturedCategoryThumbProps {
 	item?: any;
@@ -17,18 +18,18 @@ export const FeaturedCategoryThumb = ({item}: FeaturedCategoryThumbProps) => {
 	return (
 		<Card isFooterBlurred as={Link} className="h-full group relative" href={`/categories/${item?.slug?.current || item.currentSlug}`} radius="sm">
 			<Image
-				as={NextImage}
 				isZoomed
 				removeWrapper
 				alt={item.title}
+				as={NextImage}
 				className="z-0 w-full h-full object-cover aspect-square"
+				fallbackSrc="/images/product-no-image.jpg"
+				height={0}
+				quality={50}
 				radius="sm"
+				sizes="100vw"
 				src={item.imageUrl ? item.imageUrl : item.image ? getUrlFor(item.image) : '/images/product-no-image.jpg'}
 				width={0}
-				height={0}
-				sizes="100vw"
-				fallbackSrc="/images/product-no-image.jpg"
-				quality={50}
 			/>
 			<CardFooter className={clsx('absolute bg-black/40 bottom-0 w-full z-10 p-0')}>
 				<div className="flex flex-col gap-2 p-3 w-full">

@@ -19,7 +19,7 @@ export const UserPhoneInput = ({ ...props }) => {
 
     return (
         <div className="flex flex-col gap-1">
-            <label className="origin-top-left flex-shrink-0 rtl:origin-top-right subpixel-antialiased block after:content-['*'] after:text-danger after:ms-0.5 will-change-auto !duration-200 !ease-out motion-reduce:transition-none transition-[transform,color,left,opacity] text-primary group-data-[filled-within=true]:pointer-events-auto pb-0 z-20 group-data-[filled-within=true]:start-0 start-3 end-auto text-small group-data-[filled-within=true]:-translate-y-[calc(100%_+_theme(fontSize.small)/2_+_20px)] pe-2 max-w-full text-ellipsis overflow-hidden" htmlFor="user_phone" id="react-aria-:Rmcuv6lt7H1:">Телефон</label>
+            <label className="origin-top-left shrink-0 rtl:origin-top-right subpixel-antialiased block after:content-['*'] after:text-danger after:ms-0.5 will-change-auto duration-200! ease-out! motion-reduce:transition-none transition-[transform,color,left,opacity] text-primary group-data-[filled-within=true]:pointer-events-auto pb-0 z-20 group-data-[filled-within=true]:inset-s-0 inset-s-3 end-auto text-small group-data-[filled-within=true]:-translate-y-[calc(100%_+_theme(fontSize.small)/2_+_20px)] pe-2 max-w-full text-ellipsis overflow-hidden" htmlFor="user_phone" id="react-aria-:Rmcuv6lt7H1:">Телефон</label>
             <IMaskInput
                 className={`w-full border-2 rounded-small py-2 px-3 text-sm leading-tight ${errorMessage ? 'border-red-500' : 'border-gray-200 focus:border-primary'}`}
                 id='user_phone'
@@ -28,13 +28,13 @@ export const UserPhoneInput = ({ ...props }) => {
                 lazy={false}
                 mask={'+375 (00) 000-00-00'}
                 name='user_phone'
+                pattern='^\+375\s\(\d{2}\)\s\d{3}-\d{2}-\d{2}$'
                 placeholder='+375 (__) ___-__-__'
+                // value={props.inputValue}
+                onAccept={handlePhoneChange}
                 radix="."           
                 // className="w-full border-2 border-gray-200 rounded-small py-2 px-3 text-sm leading-tight text-gray-900 focus:border-primary focus-ring-primary focus-visible:border-primary"
                 unmask={true}
-                // value={props.inputValue}
-                onAccept={handlePhoneChange}
-                pattern='^\+375\s\(\d{2}\)\s\d{3}-\d{2}-\d{2}$'
             />
             {errorMessage && <span className="text-red-500 text-xs">{errorMessage}</span>}
         </div>

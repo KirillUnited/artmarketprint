@@ -35,7 +35,7 @@ export default async function BlogCategoryPage({params, searchParams}: {params: 
 				<PostCatsFilter categories={categories || []} currentSlug={category} />
 			</SectionHeading>
 			<PostListing posts={posts} />
-			{totalPages > 1 && <ClientPagination totalPages={totalPages} pageNumber={pageNumber} basePath={`/blog/categories/${category}`} />}
+			{totalPages > 1 && <ClientPagination basePath={`/blog/categories/${category}`} pageNumber={pageNumber} totalPages={totalPages} />}
 		</Section>
 	);
 }

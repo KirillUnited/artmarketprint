@@ -14,10 +14,11 @@ import { Image } from '@heroui/image';
 import NextImage from 'next/image';
 import clsx from 'clsx';
 
-import styles from './service.module.css';
 
 import Loader from '@/components/ui/Loader';
-import {urlFor} from "@/sanity/lib/image";
+import {urlFor} from '@/sanity/lib/image';
+
+import styles from './service.module.css';
 
 interface CarouselProps {
     items?: any;
@@ -48,8 +49,8 @@ export const ServiceCarousel = ({ items, className }: CarouselProps) => {
                 {items.map((item: string, index: number) => (
                     <SwiperSlide key={index} className={styles['swiper-slide']}>
                         <picture className='h-full rounded-small'>
-                            <Image priority as={NextImage} quality={60} removeWrapper alt={'image'} className={'w-full aspect-square max-h-full'}
-                                classNames={{ wrapper: 'bg-cover' }} width={500} height={500} src={urlFor(item).width(500).height(500).url()} radius='sm' fallbackSrc={`/images/product-no-image.jpg`} />
+                            <Image priority removeWrapper alt={'image'} as={NextImage} className={'w-full aspect-square max-h-full'} classNames={{ wrapper: 'bg-cover' }}
+                                fallbackSrc={'/images/product-no-image.jpg'} height={500} quality={60} radius='sm' src={urlFor(item).width(500).height(500).url()} width={500} />
                         </picture>
                     </SwiperSlide>
                 ))}
@@ -66,8 +67,8 @@ export const ServiceCarousel = ({ items, className }: CarouselProps) => {
                 {items.map((item: string, index: number) => (
                     <SwiperSlide key={index} className={styles['swiper-slide']} >
                         <picture className='h-full border-slate-300 border p-3'>
-                            <Image as={NextImage} alt={'image'} className={'w-full aspect-square max-h-full object-contain'}
-                                classNames={{ wrapper: 'bg-cover' }} src={urlFor(item).width(104).height(104).url()} width={104} height={104} radius='sm' fallbackSrc={`/images/product-no-image.jpg`} quality={10} />
+                            <Image alt={'image'} as={NextImage} className={'w-full aspect-square max-h-full object-contain'}
+                                classNames={{ wrapper: 'bg-cover' }} fallbackSrc={'/images/product-no-image.jpg'} height={104} quality={10} radius='sm' src={urlFor(item).width(104).height(104).url()} width={104} />
                         </picture>
                     </SwiperSlide>
                 ))}
