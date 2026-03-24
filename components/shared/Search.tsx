@@ -5,7 +5,7 @@ import { InstantSearchNext } from 'react-instantsearch-nextjs';
 import Link from 'next/link';
 
 const algoliaAppId = process.env.NEXT_PUBLIC_ALGOLIA_APP_ID!;
-const algoliaApiKey = process.env.NEXT_PUBLIC_ALGOLIA_API_KEY!;
+const algoliaApiKey = process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_KEY!;
 
 const searchClient = algoliasearch(algoliaAppId, algoliaApiKey);
 
@@ -17,12 +17,12 @@ function SearchResults() {
     }
 
     return (
-        <div className="text-left">
-            <h2 className="text-2xl font-semibold mb-4">Results for: {query}</h2>
+        <div className="text-left bg-background p-3 rounded-2xl">
+            <h2 className="text-2xl font-semibold mb-4">Результаты для: {query}</h2>
             <Hits
                 hitComponent={({ hit }) => (
                     <div className="p-2 border-b">
-                        <Link href={`/posts/${hit.slug}`}
+                        <Link href={`/services/${hit.slug}`}
                             passHref
                             className="text-blue-600 hover:text-blue-700 hover:underline">
                             {hit.title}
@@ -38,7 +38,7 @@ function SearchResults() {
 export function Search() {
     return (
         <InstantSearchNext
-            indexName="posts"
+            indexName="services"
             searchClient={searchClient}
             ignoreMultipleHooksWarning={true}
             future={{ preserveSharedStateOnUnmount: true }}
@@ -48,22 +48,22 @@ export function Search() {
                     windowTitle(routeState) {
                         const indexState = routeState.indexName || {};
                         return indexState.query
-                            ? `MyWebsite - Results for: ${indexState.query}`
-                            : 'MyWebsite - Results page';
+                            ? `Результаты поиска: ${indexState.query}`
+                            : 'Результаты поиска';
                     },
                 }
             }}
         >
             {/* SearchBox for input */}
             <SearchBox
-                placeholder="Search for items..."
+                placeholder="Поиск услуги..."
                 classNames={{
                     input: `
                       border-2 border-gray-500 rounded-lg 
                       p-3 m-2 w-full max-w-2xl mx-auto
                       text-lg
                       focus:border-blue-500 focus:ring-2 focus:ring-blue-400
-                      shadow-sm
+                      shadow-sm bg-background
                     `,
                     submit: 'hidden',
                     reset: 'hidden',

@@ -8,21 +8,22 @@ import { getSanityDocuments } from '@/sanity/lib/fetch-sanity-data';
 import { NAVIGATION_QUERY, SERVICES_QUERY } from '@/sanity/lib/queries';
 import Section from '@/components/layout/Section';
 import { ServiceListItems } from '@/components/shared/service';
+import { Search } from '@/components/shared/Search';
 
 export async function generateMetadata() {
 
-    const url = 'https://artmarketprint.by/services';
+	const url = 'https://artmarketprint.by/services';
 
-    return {
-        alternates: {
-            canonical: url,
+	return {
+		alternates: {
+			canonical: url,
 			languages: {
 				'ru-BY': url,
 				'ru-RU': 'https://artmarketprint.ru/services/',
 				'x-default': url,
 			},
-        },
-    }
+		},
+	}
 }
 
 export default async function ServicesPage() {
@@ -38,6 +39,7 @@ export default async function ServicesPage() {
 						<h1 className="text-4xl font-extrabold text-background sm:text-5xl">{siteConfig.serviceSection.title}</h1>
 						<p className="mt-4 text-xl text-white">{siteConfig.serviceSection.description}</p>
 					</div>
+					<Search />
 				</div>
 			</section>
 			<section>
