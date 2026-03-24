@@ -5,14 +5,14 @@ export const VideoPlayer: React.FC<{
     className?: string;
 }> = ({ url, posterUrl, className }) => (
     <video
-        src={url}
-        controls={false}
-        preload="metadata"
-        className={className}
         autoPlay
         loop
         muted
         playsInline
+        className={className}
+        controls={false}
         poster={posterUrl}
+        preload="metadata"
+        src={url}
     />
 );

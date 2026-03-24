@@ -11,7 +11,7 @@ import { HOME_PAGE_PROJECTS_QUERY } from '@/sanity/lib/queries/project.query';
 
 export async function generateMetadata() {
 
-    const url = `https://artmarketprint.by/projects`;
+    const url = 'https://artmarketprint.by/projects';
 
     return {
         alternates: {

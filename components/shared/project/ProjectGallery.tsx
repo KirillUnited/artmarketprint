@@ -1,6 +1,5 @@
 'use client';
 import React from 'react';
-import { SlideshowLightbox } from 'lightbox.js-react'
 
 /**
  * @typedef {Object} ProjectGalleryItem
@@ -22,8 +21,8 @@ export interface ProjectGalleryProps {
 
 export default function ProjectGallery({ items }: ProjectGalleryProps): React.ReactElement {
     return (
-        <SlideshowLightbox className='grid grid-cols-1 md:grid-cols-3 gap-4' showThumbnails={true}>
+        <div className='grid grid-cols-1 md:grid-cols-3 gap-4' >
             {items.map(({ _key, imageUrl, altText }: ProjectGalleryItem) => <img key={_key} alt={altText} className='w-full rounded-small aspect-square object-cover' data-lightboxjs="lightbox1" decoding='async' height={320} loading='lazy' src={imageUrl} width={320} />)}
-        </SlideshowLightbox>
+        </div>
     )
 }

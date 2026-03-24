@@ -9,10 +9,11 @@ import {ChevronLeft, ChevronRight, LoaderIcon} from 'lucide-react';
 import {Button} from '@heroui/button';
 import {clsx} from 'clsx';
 
-import styles from './carousel.module.css';
 
 import {FeaturedCategoryThumb} from '@/components/shared/category/ui';
 import {ServicePreview} from '@/components/shared/service/ServicePreview';
+
+import styles from './carousel.module.css';
 
 // Import Swiper styles
 import 'swiper/css';

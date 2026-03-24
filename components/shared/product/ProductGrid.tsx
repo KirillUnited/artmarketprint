@@ -1,11 +1,12 @@
 import {AnimatePresence, motion} from 'framer-motion';
-import ProductThumb from './ui/ProductThumb';
-import {ProductData} from '@/components/shared/product/product.types';
 import {JSX, useEffect, useState, useRef} from 'react';
-import Loader from '@/components/ui/Loader';
 import {Card, CardBody} from '@heroui/card';
 // import { FixedSizeGrid } from 'react-window';
 import useResizeObserver from 'use-resize-observer';
+
+import {ProductData} from '@/components/shared/product/product.types';
+
+import ProductThumb from './ui/ProductThumb';
 
 /**
  * A React component that renders a grid of products which can be animated.
@@ -27,6 +28,7 @@ export default function ProductGrid({products}: ProductGridProps): JSX.Element {
 	const getColumnCount = () => {
 		if (width < 640) return 2; // Mobile: 2 columns
 		if (width < 1024) return 3; // Tablet: 3 columns
+
 		return 4; // Desktop: 4 columns
 	};
 
@@ -42,19 +44,21 @@ export default function ProductGrid({products}: ProductGridProps): JSX.Element {
 	// Cell renderer for virtualized grid
 	const Cell = ({columnIndex, rowIndex, style}: any) => {
 		const index = rowIndex * columnCount + columnIndex;
+
 		if (index >= products.length) return null;
 
 		const item = products[index];
+
 		return (
 			<div style={{...style, padding: '8px'}}>
 				<motion.div
 					key={`${item.id}`}
 					animate={{opacity: 1}}
+					className="h-full"
 					exit={{opacity: 0}}
 					initial={{opacity: 0}}
 					transition={{duration: 0.5, delay: 0.05 * (Number(item.id) % 10)}}
 					whileHover={{y: -5, transition: {duration: 0.2}}}
-					className="h-full"
 				>
 					<ProductThumb item={item} />
 				</motion.div>
@@ -83,11 +87,11 @@ export default function ProductGrid({products}: ProductGridProps): JSX.Element {
 							key={`${item.id}`}
 							layout
 							animate={{opacity: 1}}
+							className="h-full"
 							exit={{opacity: 0}}
 							initial={{opacity: 0}}
 							transition={{duration: 0.5, delay: 0.05 * (Number(item.id) % 10)}}
 							whileHover={{y: -5, transition: {duration: 0.2}}}
-							className="h-full"
 						>
 							<ProductThumb item={item} />
 						</motion.li>
@@ -106,11 +110,11 @@ export default function ProductGrid({products}: ProductGridProps): JSX.Element {
 						key={`${item.id}`}
 						layout
 						animate={{opacity: 1}}
+						className="h-full"
 						exit={{opacity: 0}}
 						initial={{opacity: 0}}
 						transition={{duration: 0.5, delay: 0.05 * (Number(item.id) % 10)}}
 						whileHover={{y: -5, transition: {duration: 0.2}}}
-						className="h-full"
 					>
 						<ProductThumb item={item} />
 					</motion.li>

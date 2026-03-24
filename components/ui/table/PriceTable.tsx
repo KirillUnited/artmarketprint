@@ -3,9 +3,10 @@
 import React from 'react';
 import { Table, TableHeader, TableBody, TableColumn, TableRow, TableCell, getKeyValue } from '@heroui/table';
 import { Spinner } from '@heroui/spinner';
+import { Alert } from '@heroui/alert';
+
 import { PriceTableProps, TableRowProps } from './table.props';
 import { createColumns, transformPriceData } from './lib';
-import { Alert } from '@heroui/alert';
 
 /**
  * PriceTable component displays pricing information in a tabular format
@@ -25,16 +26,16 @@ export default function PriceTable({ items }: { items: PriceTableProps }) {
 			<p className='font-bold text-gray-900'>Цена за единицу в белорусских рублях</p>
 
 			<Table
-				aria-label="Price table with dynamic content"
-				radius='sm'
 				isStriped
+				aria-label="Price table with dynamic content"
 				className='border border-gray-300 rounded-small'
+				radius='sm'
 			>
-				<TableHeader columns={columns} className='rounded-small'>
+				<TableHeader className='rounded-small' columns={columns}>
 					{(column) => (
 						<TableColumn
-							className='font-bold uppercase'
 							key={column.key}
+							className='font-bold uppercase'
 						>
 							{column.label}
 						</TableColumn>
@@ -62,7 +63,7 @@ export default function PriceTable({ items }: { items: PriceTableProps }) {
 
 			{/* Render additional notes if available */}
 			{(Array.isArray(items.additionalNotes) && items.additionalNotes?.length > 0) && (
-				<Alert color="primary" icon="warning" className='border border-primary-300 shadow-md text-pretty' radius='sm'>
+				<Alert className='border border-primary-300 shadow-md text-pretty' color="primary" icon="warning" radius='sm'>
 					<ul className='text-sm mt-0'>
 						{items.additionalNotes.map((note: string, index: number) => (
 							<li key={index}>

@@ -1,4 +1,4 @@
-import FeaturedCategories from "./FeaturedCategories";
+import FeaturedCategories from './FeaturedCategories';
 
 
 export {

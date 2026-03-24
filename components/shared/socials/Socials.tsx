@@ -1,5 +1,7 @@
 import type { ReactNode } from 'react';
+
 import Link from 'next/link';
+
 import { InstagramIcon, TelegramIcon, ViberIcon, WhatsAppIcon } from '../../icons';
 
 type SocialPlatform = 'instagram' | 'telegram' | 'viber' | 'whatsapp';
@@ -46,7 +48,7 @@ function SocialsItem({ platform, url }: SocialsItemProps) {
 
 	return (
 		<li>
-			<Link href={url} target="_blank" aria-label={ariaLabel}>
+			<Link aria-label={ariaLabel} href={url} target="_blank">
 				<Icon />
 			</Link>
 		</li>

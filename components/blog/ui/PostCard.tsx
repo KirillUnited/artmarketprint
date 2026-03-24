@@ -7,9 +7,10 @@ import {Image} from '@heroui/image';
 import NextImage from 'next/image';
 import {Card, CardBody, CardFooter, CardHeader} from '@heroui/card';
 
+import {urlFor} from '@/sanity/lib/image';
+
 import {Post} from '../lib/types';
 
-import {urlFor} from '@/sanity/lib/image';
 
 type PostCardVariant = 'default' | 'compact';
 
@@ -36,11 +37,11 @@ export default function PostCard({post, variant = POST_CARD_VARIANTS.default, fo
 						as={NextImage}
 						className="w-full h-48 object-cover"
 						fallbackSrc="https://via.placeholder.com/300x200"
-						width={0}
 						height={0}
-						sizes="100vw"
 						quality={10}
+						sizes="100vw"
 						src={urlFor(post.featuredImage).url()}
+						width={0}
 					/>
 				</Link>
 			)}

@@ -1,5 +1,6 @@
-import { QueryParams } from "next-sanity"
-import { client } from "../client"
+import { QueryParams } from 'next-sanity'
+
+import { client } from '../client'
 
 export const sanityFetch = ({
     query,

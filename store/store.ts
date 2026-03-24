@@ -99,10 +99,12 @@ const useBasketStore = create<BasketState>()(
             getGroupedItems: () =>
                 get().items.reduce((acc, item) => {
                     const key = item.id;
+
                     if (!acc[key]) {
                         acc[key] = [];
                     }
                     acc[key].push(item);
+
                     return acc;
                 }, {} as Record<string, BasketItem[]>),
         }),
@@ -119,8 +121,10 @@ const useBasketStore = create<BasketState>()(
                         removeItem: (_key: string) => { },
                         setItem: (_key: string, _value: string) => { },
                     };
+
                     return noopStorage;
                 }
+
                 return window.localStorage;
             }),
             // Clear basket if persisted data is older than one day.

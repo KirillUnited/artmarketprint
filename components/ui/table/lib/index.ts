@@ -1,4 +1,4 @@
-import { ColorPriceProps, PriceTableProps, TableRowProps } from "../table.props";
+import { ColorPriceProps, PriceTableProps, TableRowProps } from '../table.props';
 
 /**
  * Transforms raw price data into table row format
@@ -29,8 +29,8 @@ export const transformPriceData = (items: PriceTableProps): TableRowProps[] => {
 export const createColumns = (items: PriceTableProps) => {
     const baseColumns = [
         {
-            key: "quantity",
-            label: "Тираж"
+            key: 'quantity',
+            label: 'Тираж'
         }
     ];
 

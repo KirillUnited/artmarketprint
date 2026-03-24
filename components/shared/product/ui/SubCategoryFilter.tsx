@@ -1,8 +1,7 @@
 import Link from 'next/link';
-import {clsx} from "clsx";
-import styles from './styles.module.css';
-import {urlFor} from "@/sanity/lib/image";
-import Image from "next/image";
+import {clsx} from 'clsx';
+
+
 
 export default function SubCategoryFilter({category, categorySlug, activeSubcategory, baseUrl}: {category: any; categorySlug: string; activeSubcategory: any; baseUrl: string}) {
 	return (

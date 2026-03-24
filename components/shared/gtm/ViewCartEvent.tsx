@@ -1,7 +1,8 @@
 'use client';
 
 import {useEffect} from 'react';
-import useBasketStore from "@/store/store";
+
+import useBasketStore from '@/store/store';
 
 export default function ViewCartEvent() {
 	const cartItems = useBasketStore((state) => state.items);

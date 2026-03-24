@@ -1,15 +1,16 @@
 'use client';
 import {Alert} from '@heroui/alert';
-import {PriceTable} from '@/components/ui/table';
 import Link from 'next/link';
 import {Button} from '@heroui/button';
-import Image from 'next/image';
-import BrandModalOffer from '../../ui/BrandModalOffer';
-import {ServiceDetailsProps} from '@/types';
 import {memo} from 'react';
 import {FC} from 'react';
-import {ServiceCarousel} from '@/components/shared/service/ServiceCarousel';
 import clsx from 'clsx';
+
+import {ServiceCarousel} from '@/components/shared/service/ServiceCarousel';
+import {ServiceDetailsProps} from '@/types';
+import {PriceTable} from '@/components/ui/table';
+
+import BrandModalOffer from '../../ui/BrandModalOffer';
 
 const ServiceAdvantages: FC<{advantages: string[]}> = memo(({advantages}) => (
 	<div className="flex flex-col gap-4">
@@ -23,6 +24,7 @@ const ServiceAdvantages: FC<{advantages: string[]}> = memo(({advantages}) => (
 		</ul>
 	</div>
 ));
+
 ServiceAdvantages.displayName = 'ServiceAdvantages';
 
 const ServiceRequirements: FC<{layoutRequirements: string}> = memo(({layoutRequirements}) => (
@@ -33,6 +35,7 @@ const ServiceRequirements: FC<{layoutRequirements: string}> = memo(({layoutRequi
 		</Alert>
 	</div>
 ));
+
 ServiceRequirements.displayName = 'ServiceRequirements';
 
 const ServicePrice: FC<{price: string}> = memo(({price}) => (
@@ -41,6 +44,7 @@ const ServicePrice: FC<{price: string}> = memo(({price}) => (
 		<p className="font-semibold text-secondary text-4xl">{price}</p>
 	</div>
 ));
+
 ServicePrice.displayName = 'ServicePrice';
 
 export const ServiceDetails: FC<ServiceDetailsProps> = memo(({name, description, image, gallery, price, advantages, layoutRequirements, priceTable, paymentMethods, children}) => {
@@ -64,7 +68,7 @@ export const ServiceDetails: FC<ServiceDetailsProps> = memo(({name, description,
 
 						<div className="prose max-w-full">{children}</div>
 					</div>
-					{hasGallery && <ServiceCarousel items={gallery} className={`sticky top-20`} />}
+					{hasGallery && <ServiceCarousel className={'sticky top-20'} items={gallery} />}
 				</div>
 
 				{layoutRequirements && <ServiceRequirements layoutRequirements={layoutRequirements} />}
@@ -74,12 +78,12 @@ export const ServiceDetails: FC<ServiceDetailsProps> = memo(({name, description,
 				{priceTable && <PriceTable items={priceTable} />}
 				{paymentMethods && (
 					<Alert
-						color="warning"
-						icon="warning"
-						title={`${paymentMethods.title}`}
-						description={`${paymentMethods.description}`}
 						className="border border-warning-300 shadow-md text-pretty"
+						color="warning"
+						description={`${paymentMethods.description}`}
+						icon="warning"
 						radius="sm"
+						title={`${paymentMethods.title}`}
 					/>
 				)}
 			</div>

@@ -1,4 +1,5 @@
 import { defineQuery } from 'next-sanity';
+
 import { sanityFetch } from '@/sanity/lib/sanityFetch';
 
 const POST_BY_SLUG_QUERY = defineQuery(`*[_type == "post" && slug.current == $slug][0]{

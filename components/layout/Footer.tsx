@@ -1,12 +1,13 @@
 import Link from 'next/link';
 
-import BrandLogo from '../ui/BrandLogo';
 
 import {Socials} from '@/components/shared/socials';
 import ContactsList from '@/components/shared/ContactsList';
 import {getSanityDocuments} from '@/sanity/lib/fetch-sanity-data';
 import {NAVIGATION_QUERY, SITE_SETTINGS_QUERY} from '@/sanity/lib/queries/site.query';
 import {client} from '@/sanity/client';
+
+import BrandLogo from '../ui/BrandLogo';
 
 export default async function Footer() {
 	const siteSettings: any = await getSanityDocuments(SITE_SETTINGS_QUERY);

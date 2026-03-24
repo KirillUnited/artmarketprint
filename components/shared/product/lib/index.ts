@@ -1,12 +1,14 @@
-import { ColorItemProps } from "../product.types";
+import { ColorItemProps } from '../product.types';
 
 export const filterItemsByColor = (items: ColorItemProps[]): ColorItemProps[] => {
     const uniqueColors = new Set<string>();
+
     return items.filter(item => {
         if (uniqueColors.has(item.color)) {
             return false;
         } else {
             uniqueColors.add(item.color);
+
             return true;
         }
     });
@@ -42,5 +44,6 @@ export const getStockForSelectedColor = (selectedColor: string, items: any) => {
 // Calculate total stock
 export const getTotalStock = (items: any[]) => () => {
     if (!items) return 0;
+
     return items.reduce((total, item) => total + Number(item.stock), 0);
 };

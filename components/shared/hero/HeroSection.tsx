@@ -48,10 +48,10 @@ export default function HeroSection(props: any) {
 							}
 						)}
 						height={750}
+						priority={true}
 						quality={85}
 						src={imageUrl}
 						width={930}
-						priority={true}
 					/>}
 				</div>
 			</div>

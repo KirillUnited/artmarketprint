@@ -1,9 +1,11 @@
 import React, {JSX} from 'react';
-import Section from '../../layout/Section';
 import {SanityDocument} from 'next-sanity';
+
 import {FeaturedCategoriesHeading} from '@/components/shared/category/ui';
 import {Carousel} from '@/components/shared/carousel';
 import {SectionButton} from '@/components/layout/SectionButton';
+
+import Section from '../../layout/Section';
 
 /**
  * A function that fetches featured categories from Sanity and renders them.
@@ -35,13 +37,13 @@ export default async function FeaturedCategories(props: FeaturedCategoriesProps)
 	return (
 		<Section className="relative" id="categories">
 			{/* Render the heading with title, subtitle, and description */}
-			<FeaturedCategoriesHeading title={title} subtitle={subtitle} description={description} />
+			<FeaturedCategoriesHeading description={description} subtitle={subtitle} title={title} />
 
 			{/* Render the list of featured categories */}
 			<Carousel items={props.services} type="category" />
 
 			{/* If there are more than 4 categories, render a button to view all categories */}
-			{categoryItemsCount > 1 && <SectionButton href={`/categories`} label="Все категории" className="self-start" />}
+			{categoryItemsCount > 1 && <SectionButton className="self-start" href={'/categories'} label="Все категории" />}
 		</Section>
 	);
 }

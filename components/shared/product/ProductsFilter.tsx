@@ -4,8 +4,8 @@ import { Drawer, DrawerBody, DrawerContent, DrawerFooter, DrawerHeader } from '@
 import { FilterIcon } from 'lucide-react';
 import React from 'react';
 import { Form } from '@heroui/form';
-
 import { FC } from 'react';
+
 import { CategoryProps, CatFilter } from '@/components/ui/filter/CatFilter';
 import { SortFilter } from '@/components/ui/filter/SortFilter';
 import { MaterialFilter } from '@/components/ui/filter/MaterialFilter';
@@ -31,16 +31,16 @@ export const FilterGroup: FC<FilterGroupProps> = ({ sortOrder, selectedCategory,
 			<div className="flex flex-col gap-4 w-full">
 				<div className="pb-4 border-b border-gray-100">
 					<h3 className="text-md font-medium mb-3">Сортировать</h3>
-					<SortFilter sortOrder={sortOrder} selectedCategory={selectedCategory} onFilterChange={(sort: string, cat: string) => onFilterChange(sort, cat)} />
+					<SortFilter selectedCategory={selectedCategory} sortOrder={sortOrder} onFilterChange={(sort: string, cat: string) => onFilterChange(sort, cat)} />
 				</div>
 
 				{materials && materials.length > 0 && (
 					<div className="pb-4 border-b border-gray-100">
 						<MaterialFilter
-							sortOrder={sortOrder}
-							selectedMaterial={selectedMaterial}
-							selectedCategory={selectedCategory}
 							materials={materials}
+							selectedCategory={selectedCategory}
+							selectedMaterial={selectedMaterial}
+							sortOrder={sortOrder}
 							onFilterChange={(sort, cat, material) => onFilterChange(sort, cat, material)}
 						/>
 					</div>
@@ -50,10 +50,10 @@ export const FilterGroup: FC<FilterGroupProps> = ({ sortOrder, selectedCategory,
 					<div className="pb-4">
 						<h3 className="text-md font-medium mb-3">Категории</h3>
 						<CatFilter
-							sortOrder={sortOrder}
-							onFilterChange={(sort, cat) => onFilterChange(sort, cat)}
 							categories={categories}
 							selectedCategory={selectedCategory}
+							sortOrder={sortOrder}
+							onFilterChange={(sort, cat) => onFilterChange(sort, cat)}
 						/>
 					</div>
 				)}
@@ -61,11 +61,11 @@ export const FilterGroup: FC<FilterGroupProps> = ({ sortOrder, selectedCategory,
 
 			{(selectedCategory || selectedMaterial) && (
 				<Button
+					className="w-full mt-2 sticky bottom-4 z-30"
 					color="primary"
 					radius="sm"
-					type="reset"
 					size='sm'
-					className="w-full mt-2 sticky bottom-4 z-30"
+					type="reset"
 					onPress={() => onFilterChange('asc', '', '')}
 				>
 					Сбросить фильтры
@@ -87,7 +87,7 @@ interface FilterButtonProps {
  */
 export const FilterButton: FC<FilterButtonProps> = ({ onOpen }) => {
 	return (
-		<Button className="grow min-w-max border sticky top-20" radius="sm" color="primary" variant="bordered" onPress={onOpen}>
+		<Button className="grow min-w-max border sticky top-20" color="primary" radius="sm" variant="bordered" onPress={onOpen}>
 			<FilterIcon size={16} />
 			<span className="text-sm">Фильтр по категориям</span>
 		</Button>
@@ -114,25 +114,25 @@ interface FilterDrawerProps {
 export const FilterDrawer: FC<FilterDrawerProps> = ({ isOpen, onOpenChange, onFilterChange, categories, materials, sortOrder, selectedCategory, selectedMaterial }) => {
 	const categoriesSet = categories ? (
 		<CatFilter
-			sortOrder={sortOrder}
-			onFilterChange={(sort, cat) => onFilterChange(sort, cat)}
 			categories={categories}
 			selectedCategory={selectedCategory}
+			sortOrder={sortOrder}
+			onFilterChange={(sort, cat) => onFilterChange(sort, cat)}
 		/>
 	) : null;
 
 	const materialsSet = materials && materials.length > 0 ? (
 		<MaterialFilter
-			sortOrder={sortOrder}
-			selectedMaterial={selectedMaterial}
-			selectedCategory={selectedCategory}
 			materials={materials}
+			selectedCategory={selectedCategory}
+			selectedMaterial={selectedMaterial}
+			sortOrder={sortOrder}
 			onFilterChange={(sort, cat, material) => onFilterChange(sort, cat, material)}
 		/>
 	) : null;
 
 	return (
-		<Drawer isOpen={isOpen} onOpenChange={onOpenChange} radius="none">
+		<Drawer isOpen={isOpen} radius="none" onOpenChange={onOpenChange}>
 			<DrawerContent>
 				{(onClose) => (
 					<>
@@ -142,7 +142,7 @@ export const FilterDrawer: FC<FilterDrawerProps> = ({ isOpen, onOpenChange, onFi
 							{selectedCategory && (
 								<DrawerFooter className="absolute left-0 right-0 bottom-0 w-full bg-background border-t">
 									{/* Reset button to clear filters */}
-									<Button color="default" radius="sm" variant="solid" type="reset" onPress={() => onFilterChange('asc', '', '')}>
+									<Button color="default" radius="sm" type="reset" variant="solid" onPress={() => onFilterChange('asc', '', '')}>
 										Сбросить
 									</Button>
 									{/* Apply button to close the drawer */}
@@ -177,7 +177,7 @@ interface ProductsFilterProps {
 const ProductsFilter: FC<ProductsFilterProps> = ({ sortOrder, selectedCategory, onFilterChange, categories, materials = [], selectedMaterial }) => {
 	return (
 		<div className="hidden md:flex flex-col gap-4 sticky top-20 z-30 bg-background">
-			<FilterGroup categories={categories} selectedCategory={selectedCategory} sortOrder={sortOrder} onFilterChange={onFilterChange} materials={materials} selectedMaterial={selectedMaterial} />
+			<FilterGroup categories={categories} materials={materials} selectedCategory={selectedCategory} selectedMaterial={selectedMaterial} sortOrder={sortOrder} onFilterChange={onFilterChange} />
 
 		</div>
 	);

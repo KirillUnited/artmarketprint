@@ -1,4 +1,4 @@
-import { defineQuery } from "next-sanity";
+import { defineQuery } from 'next-sanity';
 
 export const salesQuery = defineQuery(`*[_type == "salesType" && isActive][0] {
     _id,

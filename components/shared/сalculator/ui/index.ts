@@ -1,4 +1,4 @@
-import {CalculatorButton} from "@/components/shared/сalculator/ui/CalculatorButton";
+import {CalculatorButton} from '@/components/shared/сalculator/ui/CalculatorButton';
 
 export {
     CalculatorButton,

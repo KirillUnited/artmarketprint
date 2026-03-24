@@ -1,6 +1,7 @@
-import Section, {SectionDescription, SectionHeading, SectionSubtitle, SectionTitle} from '@/components/layout/Section';
 import {SanityDocument} from 'next-sanity';
 import {JSX} from 'react';
+
+import Section, {SectionDescription, SectionHeading, SectionSubtitle, SectionTitle} from '@/components/layout/Section';
 import {Carousel} from '@/components/shared/carousel';
 import {SectionButton} from '@/components/layout/SectionButton';
 

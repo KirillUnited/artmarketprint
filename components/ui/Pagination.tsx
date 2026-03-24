@@ -86,12 +86,12 @@ export default function Pagination({className, total, onChange, ...props}: Pagin
                 className
             )}
             initialPage={1}
+            page={props.page}
             radius="full"
             renderItem={renderItem}
             total={total}
             variant="light"
             onChange={onChange}
-            page={props.page}
         />
     );
 }

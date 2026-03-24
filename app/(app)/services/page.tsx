@@ -12,7 +12,7 @@ import { ServiceSearch } from '@/components/ServiceSearch';
 
 export async function generateMetadata() {
 
-    const url = `https://artmarketprint.by/services`;
+    const url = 'https://artmarketprint.by/services';
 
     return {
         alternates: {

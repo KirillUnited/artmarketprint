@@ -7,6 +7,11 @@ import { Tooltip } from '@heroui/tooltip';
 import { Button } from '@heroui/button';
 import { clsx } from 'clsx';
 import { usePathname } from 'next/navigation';
+
+import useBasketStore from '@/store/store';
+import { NavbarDropdownMenu } from '@/components/ui/dropdown';
+import {Socials} from '@/components/shared/socials';
+
 import BrandLogo from '../../ui/BrandLogo';
 import { HeroModalOffer } from '../../ui/BrandModalOffer';
 import Drawer from '../../ui/Drawer';

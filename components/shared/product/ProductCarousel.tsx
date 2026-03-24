@@ -13,9 +13,10 @@ import {Image} from '@heroui/image';
 import NextImage from 'next/image';
 import clsx from 'clsx';
 
-import styles from './product.module.css';
 import {useProductStore} from '@/store/product';
 import Loader from '@/components/ui/Loader';
+
+import styles from './product.module.css';
 import {getVariantImages} from './lib';
 
 interface ProductCarouselProps {
@@ -33,7 +34,7 @@ export const ProductCarousel = ({items, className}: ProductCarouselProps) => {
 		setIsClient(true);
 	}, []);
 
-	if (!isClient) return <Loader size='md' variant='spinner'  className='static text-primary flex mx-auto' />;
+	if (!isClient) return <Loader className='static text-primary flex mx-auto' size='md'  variant='spinner' />;
 
 	if (!Array.isArray(filteredImages) || filteredImages.length === 0) return null;
 
@@ -45,17 +46,17 @@ export const ProductCarousel = ({items, className}: ProductCarouselProps) => {
 						<SwiperSlide key={index} className={styles['swiper-slide']}>
 							<picture className="h-full rounded-small">
 								<Image
-									as={NextImage}
-									quality={60}
 									removeWrapper
 									alt={'image'}
+									as={NextImage}
 									className={'w-full aspect-square max-h-full'}
 									classNames={{wrapper: 'bg-cover'}}
-									width={500}
+									fallbackSrc={'/images/product-no-image.jpg'}
 									height={500}
-									src={item ? item : '/images/product-no-image.jpg'}
+									quality={60}
 									radius="sm"
-									fallbackSrc={`/images/product-no-image.jpg`}
+									src={item ? item : '/images/product-no-image.jpg'}
+									width={500}
 								/>
 							</picture>
 						</SwiperSlide>
@@ -63,13 +64,6 @@ export const ProductCarousel = ({items, className}: ProductCarouselProps) => {
 				})}
 			</Swiper>
 			<Swiper
-				className={styles['mySwiper']}
-				freeMode={true}
-				modules={[FreeMode, Navigation, Thumbs]}
-				slidesPerView={4}
-				spaceBetween={10}
-				watchSlidesProgress={true}
-				onSwiper={(swiper) => setThumbsSwiper(swiper)}
 				breakpoints={{
 					320: {
 						slidesPerView: 2,
@@ -80,21 +74,28 @@ export const ProductCarousel = ({items, className}: ProductCarouselProps) => {
 						spaceBetween: 10,
 					},
 				}}
+				className={styles['mySwiper']}
+				freeMode={true}
+				modules={[FreeMode, Navigation, Thumbs]}
+				slidesPerView={4}
+				spaceBetween={10}
+				watchSlidesProgress={true}
+				onSwiper={(swiper) => setThumbsSwiper(swiper)}
 			>
 				{filteredImages.map((item: string, index: number) => {
 					return (
 						<SwiperSlide key={index} className={styles['swiper-slide']}>
 							<picture className="h-full border-slate-300 border p-3">
 								<Image
-									as={NextImage}
 									alt={'image'}
+									as={NextImage}
 									className={'w-full aspect-square max-h-full object-contain'}
 									classNames={{wrapper: 'bg-cover'}}
-									src={item ? item : '/images/product-no-image.jpg'}
-									width={104}
+									fallbackSrc={'/images/product-no-image.jpg'}
 									height={104}
 									radius="sm"
-									fallbackSrc={`/images/product-no-image.jpg`}
+									src={item ? item : '/images/product-no-image.jpg'}
+									width={104}
 								/>
 							</picture>
 						</SwiperSlide>

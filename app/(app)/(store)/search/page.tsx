@@ -1,8 +1,9 @@
+import {JSX} from 'react';
+
 import Section from '@/components/layout/Section';
 import {ProductData} from '@/components/shared/product/product.types';
 import {SearchEmptyQueryState, SearchErrorState, SearchNotFoundState, SearchResultsState} from '@/components/shared/product/search';
 import {searchProductsByName} from '@/sanity/lib/product/searchProductsByName';
-import {JSX} from 'react';
 
 const PRODUCTS_PER_PAGE = 20;
 
@@ -10,7 +11,7 @@ export async function generateMetadata() {
 	const url = `${process.env.NEXT_PUBLIC_SERVER_URL}/search`;
 
 	return {
-		title: `Поиск`,
+		title: 'Поиск',
 
 		alternates: {
 			canonical: url,
@@ -41,6 +42,7 @@ export default async function SearchPage({
 		}
 
 		const products = await searchProductsByName(query);
+
 		if (Array.isArray(products) && products.length > 0) {
 			const totalFound = products.length;
 			const totalPages = Math.max(1, Math.ceil(totalFound / PRODUCTS_PER_PAGE));
@@ -51,10 +53,10 @@ export default async function SearchPage({
 			return (
 				<Section>
 					<SearchResultsState
-						query={query}
-						products={paginatedProducts as ProductData[]}
-						totalFound={totalFound}
 						currentPage={page}
+						products={paginatedProducts as ProductData[]}
+						query={query}
+						totalFound={totalFound}
 						totalPages={totalPages}
 					/>
 				</Section>

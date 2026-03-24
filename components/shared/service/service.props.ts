@@ -1,4 +1,4 @@
-import { MediaBlockProps } from "@/components/shared/media/media.props";
+import { MediaBlockProps } from '@/components/shared/media/media.props';
 
 export type ServiceHeroProps = {
     title: string;

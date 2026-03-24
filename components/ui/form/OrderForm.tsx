@@ -6,11 +6,12 @@ import clsx from 'clsx'
 import BrandButton from '@/components/ui/BrandButton';
 
 import 'react-international-phone/style.css';
+import useForm from '@/hooks/useForm';
+
 import { UsernameInput } from './UsernameInput';
 import { UserPhoneInput } from './UserPhoneInput';
 import { UserTextareaInput } from './UserTextareaInput';
 
-import useForm from '@/hooks/useForm';
 
 export default function OrderForm({ className, onClose }: { className?: string, onClose?: () => void }): JSX.Element {
     const {

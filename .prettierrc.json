@@ -7,5 +7,6 @@
 	"bracketSpacing": false,
 	"printWidth": 200,
 	"endOfLine": "auto",
-	"requireForBlockBody": false
+	"requireForBlockBody": false,
+	"plugins": ["prettier-plugin-tailwindcss"]
 }
