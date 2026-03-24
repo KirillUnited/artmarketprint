@@ -2,7 +2,6 @@
 
 import SearchExperience, { SearchConfig } from "@/components/search";
 import { SEARCH_CONFIG, SEARCH_ATTRIBUTES, SEARCH_PARAMETERS } from "@/lib/search-config";
-import { useMemo } from "react";
 
 // Main service search component
 export function ServiceSearch() {

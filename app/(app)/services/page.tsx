@@ -8,7 +8,6 @@ import { getSanityDocuments } from '@/sanity/lib/fetch-sanity-data';
 import { NAVIGATION_QUERY, SERVICES_QUERY } from '@/sanity/lib/queries';
 import Section from '@/components/layout/Section';
 import { ServiceListItems } from '@/components/shared/service';
-import { ServiceSearch } from '@/components/ServiceSearch';
 
 export async function generateMetadata() {
 
@@ -38,10 +37,6 @@ export default async function ServicesPage() {
 					<div className="text-center">
 						<h1 className="text-4xl font-extrabold text-background sm:text-5xl">{siteConfig.serviceSection.title}</h1>
 						<p className="mt-4 text-xl text-white">{siteConfig.serviceSection.description}</p>
-					</div>
-
-					<div className="flex justify-center mt-4">
-						<ServiceSearch />
 					</div>
 				</div>
 			</section>
