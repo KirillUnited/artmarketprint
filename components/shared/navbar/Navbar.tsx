@@ -18,6 +18,7 @@ import Drawer from '../../ui/Drawer';
 import { SalesBanner } from '../banner';
 
 import { ServiceSearch } from '@/components/ServiceSearch';
+import { PhoneListDropdown } from '@/components/ui/PhoneListDropdown';
 
 export const CartLinkButton = (itemsCount: number) => {
 	return (
@@ -78,7 +79,7 @@ export default function Navbar({ navigation, sales, siteSettings }: any) {
 					</NavbarContent>
 					<div className="flex justify-center flex-wrap gap-6 items-center shrink-0">
 						{/* Algolia Search */}
-						
+
 						<ServiceSearch />
 						{/*Calculator page link*/}
 						<Tooltip content="Калькулятор стоимости пакетов" placement="bottom">
@@ -97,13 +98,13 @@ export default function Navbar({ navigation, sales, siteSettings }: any) {
 						{/* <SearchIcon /> */}
 						<div className="hidden md:flex gap-3">
 							<Socials items={navSocials} />
-							<Link className="text-sm hover:text-primary" color={'primary'} href={`tel:${phones[0]?.link}`}>
+							{/* <Link className="text-sm hover:text-primary" color={'primary'} href={`tel:${phones[0]?.link}`}>
 								<PhoneOutgoing size={24} />
-							</Link>
+							</Link> */}
+							{
+								phones.length > 0 && <PhoneListDropdown items={phones} />
+							}
 						</div>
-						{/* {
-							phones.length > 0 && <PhoneListDropdown items={phones} />
-						} */}
 						{CartLinkButton(itemsCount)}
 
 						<div className="hidden lg:block">

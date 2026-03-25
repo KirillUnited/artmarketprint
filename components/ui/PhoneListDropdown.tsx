@@ -18,9 +18,9 @@ export const PhoneListDropdown = ({items}: {items: {link: string, number: string
             content: 'rounded-md',
         }}>
         <DropdownTrigger>
-            <Button className="min-w-fit p-0 bg-transparent data-[hover=true]:bg-transparent hidden lg:flex text-primary gap-1 hover:underline hover:text-primary transition" endContent={<ChevronDownIcon className="text-primary" size={20} />} radius='sm'
+            <Button className="min-w-fit gap-0 p-0 bg-transparent data-[hover=true]:bg-transparent hidden lg:flex text-primary hover:underline hover:text-primary transition" endContent={<ChevronDownIcon className="text-primary" size={20} />} radius='sm'
                     variant="light">
-                <PhoneIcon />
+                <PhoneIcon size={24} />
             </Button>
         </DropdownTrigger>
         <DropdownMenu aria-label="Link Actions"
