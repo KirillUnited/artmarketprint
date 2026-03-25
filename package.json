@@ -9,7 +9,8 @@
   "start": "next start",
   "lint": "eslint . --ext .ts,.tsx -c .eslintrc.json --fix",
   "update-products": "node update-products.js",
-  "sync-services-algolia": "ts-node -r tsconfig-paths/register --project scripts/tsconfig.json --transpile-only scripts/sync-services-algolia.ts"
+  "sync-services-algolia": "ts-node -r tsconfig-paths/register --project scripts/tsconfig.json --transpile-only scripts/sync-services-algolia.ts",
+  "sync-products-algolia": "ts-node -r tsconfig-paths/register --project scripts/tsconfig.json --transpile-only scripts/sync-products-algolia.ts"
  },
  "dependencies": {
   "@heroui/accordion": "^2.2.29",

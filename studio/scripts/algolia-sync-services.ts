@@ -31,6 +31,7 @@ const sanityClient = createClient({
 });
 
 const ALGOLIA_SERVICES_INDEX = 'services';
+const ALGOLIA_PRODUCTS_INDEX = 'products';
 
 // Algolia client configuration (algoliasearch v5)
 const algoliaClient = algoliasearch(
@@ -49,6 +50,25 @@ type ServiceAlgoliaRecord = {
   publishedAt?: string;
 };
 
+type ProductAlgoliaRecord = {
+  objectID: string;
+  id: string;
+  name: string;
+  description?: string;
+  category?: string;
+  subcategory?: string;
+  sku?: string;
+  brand?: string;
+  price?: number;
+  stock?: number;
+  materials?: string[];
+  colors?: string[];
+  sizes?: string[];
+  imageUrl?: string;
+  url: string;
+  updatedAt?: string;
+};
+
 // GROQ query to fetch services
 const SERVICES_QUERY = `*[_type == "service" && defined(slug.current) && !(_id in path("drafts.**"))]{
   _id,
@@ -58,6 +78,25 @@ const SERVICES_QUERY = `*[_type == "service" && defined(slug.current) && !(_id i
   price,
   image,
   publishedAt
+}`;
+
+const PRODUCTS_QUERY = `*[_type == "product" && defined(id) && !(_id in path("drafts.**"))]{
+  _id,
+  id,
+  name,
+  description,
+  category,
+  subcategory,
+  sku,
+  brand,
+  price,
+  stock,
+  materials,
+  colors,
+  sizes,
+  image,
+  images_urls,
+  _updatedAt
 }`;
 
 async function transformServiceForAlgolia(service: any): Promise<ServiceAlgoliaRecord> {
@@ -80,6 +119,65 @@ async function transformServiceForAlgolia(service: any): Promise<ServiceAlgoliaR
     price: service.price,
     imageUrl: imageUrl,
     publishedAt: service.publishedAt,
+  };
+}
+
+function pickProductImage(product: any): string | undefined {
+  if (typeof product.image === 'string' && product.image.trim() !== '') {
+    return product.image;
+  }
+
+  if (Array.isArray(product.images_urls)) {
+    const firstImage = product.images_urls.find((item: unknown) => typeof item === 'string' && item.trim() !== '');
+    if (typeof firstImage === 'string') {
+      return firstImage;
+    }
+  }
+
+  return generateImageUrlForAlgolia(product.image);
+}
+
+function normalizeStock(stock: unknown): number | undefined {
+  if (typeof stock === 'number' && Number.isFinite(stock)) {
+    return stock;
+  }
+
+  if (typeof stock === 'string' && stock.trim() !== '') {
+    const parsed = Number(stock);
+    return Number.isFinite(parsed) ? parsed : undefined;
+  }
+
+  return undefined;
+}
+
+async function transformProductForAlgolia(product: any): Promise<ProductAlgoliaRecord> {
+  let truncatedDescription: string | undefined;
+  if (typeof product.description === 'string' && product.description.trim() !== '') {
+    truncatedDescription = product.description.length > 200
+      ? product.description.substring(0, 200) + '...'
+      : product.description;
+  }
+
+  const id = String(product.id || product._id);
+  const imageUrl = pickProductImage(product);
+
+  return {
+    objectID: String(product._id),
+    id,
+    name: String(product.name || ''),
+    description: truncatedDescription,
+    category: typeof product.category === 'string' ? product.category : undefined,
+    subcategory: typeof product.subcategory === 'string' ? product.subcategory : undefined,
+    sku: typeof product.sku === 'string' ? product.sku : undefined,
+    brand: typeof product.brand === 'string' ? product.brand : undefined,
+    price: typeof product.price === 'number' ? product.price : Number(product.price) || undefined,
+    stock: normalizeStock(product.stock),
+    materials: Array.isArray(product.materials) ? product.materials : undefined,
+    colors: Array.isArray(product.colors) ? product.colors : undefined,
+    sizes: Array.isArray(product.sizes) ? product.sizes : undefined,
+    imageUrl,
+    url: `/products/${id}`,
+    updatedAt: product._updatedAt,
   };
 }
 
@@ -118,9 +216,39 @@ async function syncServicesToAlgolia() {
   }
 }
 
+async function syncProductsToAlgolia() {
+  try {
+    console.log('Fetching products from Sanity...');
+    const products = await sanityClient.fetch(PRODUCTS_QUERY);
+    console.log(`Found ${products.length} products to sync`);
+
+    const algoliaRecords: ProductAlgoliaRecord[] = [];
+    for (const product of products) {
+      const algoliaRecord = await transformProductForAlgolia(product);
+      algoliaRecords.push(algoliaRecord);
+    }
+
+    console.log('Clearing existing products in Algolia index...');
+    await algoliaClient.clearObjects({ indexName: ALGOLIA_PRODUCTS_INDEX });
+
+    console.log('Uploading products to Algolia...');
+    const batchResponses = await algoliaClient.saveObjects({
+      indexName: ALGOLIA_PRODUCTS_INDEX,
+      objects: algoliaRecords,
+      waitForTasks: true,
+    });
+    const objectIDs = batchResponses.flatMap((r) => r.objectIDs);
+
+    console.log(`Successfully synced ${objectIDs.length} products to Algolia`);
+  } catch (error) {
+    console.error('Error syncing products to Algolia:', error);
+    process.exit(1);
+  }
+}
+
 // Run the sync if this file is executed directly
 if (require.main === module) {
   syncServicesToAlgolia();
 }
 
-export { syncServicesToAlgolia, transformServiceForAlgolia };
+export { syncProductsToAlgolia, syncServicesToAlgolia, transformProductForAlgolia, transformServiceForAlgolia };
