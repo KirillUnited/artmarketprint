@@ -370,7 +370,7 @@ const HitsList = memo(function HitsList({
                   hit={hit}
                 />
               </p>
-              {mapping.secondaryText ? (
+              {/* {mapping.secondaryText ? (
                 <p className="text-sm mt-2 text-muted-foreground">
                   {getByPath<string | number>(hit, mapping.secondaryText)}
                 </p>
@@ -379,7 +379,7 @@ const HitsList = memo(function HitsList({
                 <p className="text-sm text-muted-foreground mt-2">
                   {getByPath<string | number>(hit, mapping.tertiaryText)}
                 </p>
-              ) : null}
+              ) : null} */}
             </div>
           </a>
         );
@@ -486,7 +486,7 @@ const SearchInput = memo(function SearchInput(props: SearchInputProps) {
             }
           }}
         >
-          Clear
+          Очистить запрос
         </Button>
         <Button
           type="button"
@@ -494,7 +494,7 @@ const SearchInput = memo(function SearchInput(props: SearchInputProps) {
           className="px-2 text-muted-foreground"
           onClick={props.onClose}
         >
-          esc
+          Отмена
         </Button>
       </div>
     </search>
@@ -542,13 +542,13 @@ const NoResults = memo(function NoResults({ query, onClear }: NoResultsProps) {
       <div className="flex items-center p-2 justify-center w-10 h-10 rounded-full border-muted-foreground border">
         <SearchIcon />
       </div>
-      <p className="text-lg font-medium">No results for &quot;{query}&quot;</p>
+      <p className="text-lg font-medium">Ничего не найдено для &quot;{query}&quot;</p>
       <p className="text-sm text-muted-foreground">
-        Try a different query or ask AI to help.
+        Попробуйте другой запрос или попросите AI помочь.
       </p>
       <div className="flex items-center gap-2">
         <Button variant="outline" onClick={onClear}>
-          Clear query
+          Очистить запрос
         </Button>
       </div>
     </div>
