@@ -7,12 +7,14 @@ export const getProductsQuery = (
 	page: number,
 	limit: number,
 	sort: string | null,
-	material: string | null
+	material: string | null,
+	color: string | null
 ) => {
 	const start = (page - 1) * limit;
 	const categoryFilter = category ? `&& category == "${category.title}"` : '';
 	const subcategoryFilter = subcategory ? `&& subcategory == "${subcategory.title}"` : '';
 	const materialFilter = material ? `&& "${material}" in materials` : ''
+	const colorFilter = color ? `&& ("${color}" in colors || "${color}" in items[].color)` : ''
 
 	let order = 'order(_createdAt desc)'
 
@@ -20,7 +22,7 @@ export const getProductsQuery = (
 	if (sort === 'price-desc') order = 'order(price desc)'
 
 	return `
-    *[_type == "product" ${categoryFilter} ${subcategoryFilter} ${materialFilter}] | ${order} [${start}...${start + limit}] {
+    *[_type == "product" ${categoryFilter} ${subcategoryFilter} ${materialFilter} ${colorFilter}] | ${order} [${start}...${start + limit}] {
       _id,
       id,
       name,
@@ -73,10 +75,15 @@ export const getAllProductMaterials = `
   array::unique(*[_type == "product"].materials[]) | order(@ asc)
 `;
 
-export const getTotalProductsQuery = (category: any | null, subcategory: any | null, material: string | null) => {
+export const getAllProductColors = `
+  array::unique(*[_type == "product"].colors[]) | order(@ asc)
+`;
+
+export const getTotalProductsQuery = (category: any | null, subcategory: any | null, material: string | null, color: string | null) => {
 	const categoryFilter = category ? `&& category == "${category.title}"` : '';
 	const subcategoryFilter = subcategory ? `&& subcategory == "${subcategory.title}"` : '';
 	const materialFilter = material ? `&& "${material}" in materials` : ''
+	const colorFilter = color ? `&& ("${color}" in colors || "${color}" in items[].color)` : ''
 
-	return `count(*[_type == "product" ${categoryFilter} ${subcategoryFilter} ${materialFilter}])`;
+	return `count(*[_type == "product" ${categoryFilter} ${subcategoryFilter} ${materialFilter} ${colorFilter}])`;
 };

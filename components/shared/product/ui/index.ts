@@ -6,5 +6,6 @@ import ProductList from './ProductList';
 import SubCategoryFilter from './SubCategoryFilter';
 import SortSelect from './SortSelect';
 import MaterialFilter from './MaterialFilter';
+import ColorFilter from './ColorFilter';
 
-export { ProductCard, ClientPagination, CategoryFilter, SubCategoryFilter, ProductThumb, ProductList, SortSelect, MaterialFilter };
+export { ProductCard, ClientPagination, CategoryFilter, SubCategoryFilter, ProductThumb, ProductList, SortSelect, MaterialFilter, ColorFilter };

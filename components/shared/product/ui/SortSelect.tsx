@@ -22,10 +22,10 @@ export default function SortSelect() {
     }
 
     return (
-        <Select label="Сортировать цены" radius="sm" selectedKeys={[currentSort]} size="sm" onChange={handleChange}>
+        <Select label="Сортировка" radius="sm" selectedKeys={[currentSort]} size="sm" onChange={handleChange}>
             <SelectItem key="" textValue="Не выбрано">Не выбрано</SelectItem>
-            <SelectItem key={'price-desc'} textValue="По убыванию" title='По убыванию'>По убыванию</SelectItem>
-            <SelectItem key={'price-asc'} textValue="По возрастанию" title='По возрастанию'>По возрастанию</SelectItem>
+            <SelectItem key={'price-desc'} textValue="Цена: по убыванию" title='Цена: по убыванию'>Цена: по убыванию</SelectItem>
+            <SelectItem key={'price-asc'} textValue="Цена: по возрастанию" title='Цена: по возрастанию'>Цена: по возрастанию</SelectItem>
         </Select>
     )
 }

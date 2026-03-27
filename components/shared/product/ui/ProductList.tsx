@@ -14,11 +14,12 @@ interface ProductListProps {
 	subcategorySlug: string | null;
 	sort: string | null;
 	material: string | null;
+	color: string | null;
 }
 
-export default async function ProductList({categorySlug, subcategorySlug, pageNumber, PRODUCTS_PER_PAGE, sort, material}: ProductListProps) {
+export default async function ProductList({categorySlug, subcategorySlug, pageNumber, PRODUCTS_PER_PAGE, sort, material, color}: ProductListProps) {
 	const products = await sanityFetch({
-		query: getProductsQuery(categorySlug, subcategorySlug, pageNumber, PRODUCTS_PER_PAGE, sort, material),
+		query: getProductsQuery(categorySlug, subcategorySlug, pageNumber, PRODUCTS_PER_PAGE, sort, material, color),
 		params: {},
 	});
 
