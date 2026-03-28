@@ -3,6 +3,7 @@ import type { SearchResponse } from '@algolia/client-search';
 import type { ProductData } from '@/components/shared/product/product.types';
 import { createAlgoliaSearchClient } from '@/lib/algolia-client';
 import { SEARCH_CONFIG } from '@/lib/search-config';
+import { searchProductsByName } from '@/sanity/lib/product/searchProductsByName';
 
 type AlgoliaProductHit = {
   objectID: string;
@@ -99,17 +100,27 @@ export async function searchProductsByAlgolia(
   page: number,
   hitsPerPage: number = SEARCH_CONFIG.HITS_PER_PAGE,
 ): Promise<AlgoliaSearchResult> {
+  const safePage = Number.isFinite(page) && page > 0 ? Math.floor(page) : 1;
+
   if (!hasAlgoliaSearchConfig()) {
-    console.warn('Algolia search is not configured. Falling back to empty results.');
+    console.warn('Algolia search is not configured. Falling back to Sanity search.');
+    const products = await searchProductsByName(searchParam);
+    const totalFound = Array.isArray(products) ? products.length : 0;
+    const totalPages = Math.max(1, Math.ceil(totalFound / hitsPerPage));
+    const pageToUse = Math.min(safePage, totalPages);
+    const start = (pageToUse - 1) * hitsPerPage;
+    const paginatedProducts = Array.isArray(products)
+      ? products.slice(start, start + hitsPerPage)
+      : [];
+
     return {
-      products: [],
-      totalFound: 0,
-      totalPages: 0,
-      currentPage: 1,
+      products: paginatedProducts as ProductData[],
+      totalFound,
+      totalPages,
+      currentPage: pageToUse,
     };
   }
 
-  const safePage = Number.isFinite(page) && page > 0 ? Math.floor(page) : 1;
   const response = await runAlgoliaSearch(searchParam, safePage, hitsPerPage);
   const totalFound = typeof response.nbHits === 'number' ? response.nbHits : 0;
   const totalPages = typeof response.nbPages === 'number' ? response.nbPages : 0;

@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useKeyboardNavigation } from "@/hooks/use-keyboard-navigation";
 import { CURRENCIES_SYMBOLS } from "@/lib/products/companies";
+import Link from "next/link";
 
 export interface SearchConfig {
   /** Algolia Application ID (required) */
@@ -691,6 +692,7 @@ export function SearchModal({ onClose, config }: SearchModalProps) {
   }, [activateSelection, selectedIndex, items, sendEvent]);
 
   const showResultsPanel = !noResults && !!query;
+  const fullResultsHref = query ? `/search?query=${encodeURIComponent(query)}` : "/search";
 
   return (
     <>
@@ -734,18 +736,25 @@ export function SearchModal({ onClose, config }: SearchModalProps) {
           />
         )}
       </div>
-      <Footer />
+      <Footer query={query} onClose={onClose} />
     </>
   );
 }
 
-const Footer = memo(function Footer() {
+const Footer = memo(function Footer({
+  query,
+  onClose,
+}: {
+  query: string;
+  onClose?: () => void;
+}) {
   const basePoweredByUrl =
     "https://www.algolia.com/developers?utm_medium=referral&utm_content=powered_by&utm_campaign=sitesearch";
   const poweredByHref =
     typeof window !== "undefined"
       ? `${basePoweredByUrl}&utm_source=${encodeURIComponent(window.location.hostname)}`
       : basePoweredByUrl;
+  const fullResultsHref = query ? `/search?query=${encodeURIComponent(query)}` : "/search";
   return (
     <div className="flex items-center justify-between bg-background rounded-b-sm p-4">
       <div className="inline-flex items-center gap-4 text-sm">
@@ -767,6 +776,13 @@ const Footer = memo(function Footer() {
         </div>
       </div>
       <div className="flex items-center gap-2">
+        {query ? (
+          <Button asChild size="sm">
+            <Link href={fullResultsHref} onClick={onClose}>
+              Все результаты
+            </Link>
+          </Button>
+        ) : null}
         {/* 🚧 DO NOT REMOVE the logo if you are on a Free plan
          * https://support.algolia.com/hc/en-us/articles/17226079853073-Is-displaying-the-Algolia-logo-required
          */}
