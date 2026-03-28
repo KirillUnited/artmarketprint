@@ -756,7 +756,7 @@ const Footer = memo(function Footer({
       : basePoweredByUrl;
   const fullResultsHref = query ? `/search?query=${encodeURIComponent(query)}` : "/search";
   return (
-    <div className="flex items-center justify-between bg-background rounded-b-sm p-4">
+    <div className="flex items-center justify-between bg-background rounded-b-sm p-4 border-t">
       <div className="inline-flex items-center gap-4 text-sm">
         <div className="flex items-center gap-2">
           <kbd className="bg-muted rounded-sm h-6 flex items-center justify-center p-1 text-muted-foreground">
@@ -775,9 +775,9 @@ const Footer = memo(function Footer({
           <span className="text-muted-foreground">Навигация</span>
         </div>
       </div>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-4">
         {query ? (
-          <Button asChild size="sm">
+          <Button asChild>
             <Link href={fullResultsHref} onClick={onClose}>
               Все результаты
             </Link>
