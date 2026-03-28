@@ -3,7 +3,7 @@ import {JSX} from 'react';
 import Section from '@/components/layout/Section';
 import {ProductData} from '@/components/shared/product/product.types';
 import {SearchEmptyQueryState, SearchErrorState, SearchNotFoundState, SearchResultsState} from '@/components/shared/product/search';
-import {searchProductsByName} from '@/sanity/lib/product/searchProductsByName';
+import {searchProductsByAlgolia} from '@/sanity/lib/product/searchProductsByAlgolia';
 
 const PRODUCTS_PER_PAGE = 20;
 
@@ -41,23 +41,19 @@ export default async function SearchPage({
 			);
 		}
 
-		const products = await searchProductsByName(query);
+		const {products, totalFound, totalPages, currentPage: resolvedPage} = await searchProductsByAlgolia(query, currentPage, PRODUCTS_PER_PAGE);
 
 		if (Array.isArray(products) && products.length > 0) {
-			const totalFound = products.length;
-			const totalPages = Math.max(1, Math.ceil(totalFound / PRODUCTS_PER_PAGE));
-			const page = Math.min(currentPage, totalPages);
-			const start = (page - 1) * PRODUCTS_PER_PAGE;
-			const paginatedProducts = products.slice(start, start + PRODUCTS_PER_PAGE);
+			const page = totalPages > 0 ? Math.min(resolvedPage, totalPages) : resolvedPage;
 
 			return (
 				<Section>
 					<SearchResultsState
 						currentPage={page}
-						products={paginatedProducts as ProductData[]}
+						products={products as ProductData[]}
 						query={query}
 						totalFound={totalFound}
-						totalPages={totalPages}
+						totalPages={Math.max(1, totalPages)}
 					/>
 				</Section>
 			);

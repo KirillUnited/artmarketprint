@@ -58,7 +58,7 @@ export function PageBuilder({content}: PageBuilderProps) {
 						return (
 							<Fragment key={block._key}>
 								<ContactUs className="bg-background" id="contacts" />
-								<InstagramFeedSection id="instagram" />
+								{/* <InstagramFeedSection id="instagram" /> */}
 							</Fragment>
 						);
 					default:

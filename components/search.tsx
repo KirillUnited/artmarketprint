@@ -1,6 +1,6 @@
 import { liteClient as algoliasearch } from "algoliasearch/lite";
 import type { BaseHit, Hit } from "instantsearch.js";
-import { ArrowDown, ArrowUp, CornerDownLeft, SearchIcon } from "lucide-react";
+import { ArrowDown, ArrowUp, CornerDownLeft, SearchIcon, X } from "lucide-react";
 import type React from "react";
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
@@ -15,6 +15,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useKeyboardNavigation } from "@/hooks/use-keyboard-navigation";
+import { CURRENCIES_SYMBOLS } from "@/lib/products/companies";
+import Link from "next/link";
 
 export interface SearchConfig {
   /** Algolia Application ID (required) */
@@ -51,6 +53,7 @@ type HitsAttributesMapping = {
   primaryText: string;
   secondaryText?: string;
   tertiaryText?: string;
+  price?: string;
   url?: string;
   image?: string;
 };
@@ -75,7 +78,7 @@ function getByPath<T = unknown>(obj: unknown, path?: string): T | undefined {
 // Internal Components
 // ============================================================================
 
-interface SearchButtonProps extends React.ComponentProps<typeof Button> {}
+interface SearchButtonProps extends React.ComponentProps<typeof Button> { }
 
 export const SearchButton: React.FC<SearchButtonProps> = ({
   className,
@@ -127,7 +130,7 @@ export const SearchButton: React.FC<SearchButtonProps> = ({
   }, []);
 
   const baseClassName =
-    "2xl:min-w-[200px] justify-between hover:shadow-md transition-transform duration-400 translate-y-0 py-3 h-auto cursor-pointer hover:bg-transparent border shadow-none";
+    "2xl:min-w-[200px] flex-1 justify-between hover:shadow-md transition-transform duration-400 translate-y-0 py-3 h-auto cursor-pointer hover:bg-transparent border shadow-none";
 
   return (
     <Button
@@ -139,7 +142,7 @@ export const SearchButton: React.FC<SearchButtonProps> = ({
     >
       <span className="flex items-center gap-2 text-muted-foreground opacity-80">
         <SearchIcon size={24} color="currentColor" />
-        <span className="hidden 2xl:inline">Поиск</span>
+        <span className="hidden lg:inline">Поиск</span>
       </span>
       {/* <div className="hidden md:flex gap-0.5">
         <kbd
@@ -299,6 +302,7 @@ const HitsList = memo(function HitsList({
       primaryText: attributes.primaryText,
       secondaryText: attributes.secondaryText,
       tertiaryText: attributes.tertiaryText,
+      price: attributes.price,
       url: attributes.url,
       image: attributes.image,
     }),
@@ -370,16 +374,25 @@ const HitsList = memo(function HitsList({
                   hit={hit}
                 />
               </p>
-              {/* {mapping.secondaryText ? (
+              {mapping.secondaryText ? (
                 <p className="text-sm mt-2 text-muted-foreground">
-                  {getByPath<string | number>(hit, mapping.secondaryText)}
+                  Артикул: {getByPath<string | number>(hit, mapping.secondaryText)}
                 </p>
               ) : null}
               {mapping.tertiaryText ? (
                 <p className="text-sm text-muted-foreground mt-2">
-                  {getByPath<string | number>(hit, mapping.tertiaryText)}
+                  Цвета:&nbsp;
+                  <Highlight
+                    attribute={toAttributePath(mapping.tertiaryText) as any}
+                    hit={hit}
+                  />
                 </p>
-              ) : null} */}
+              ) : null}
+              {mapping.price ? (
+                <p className="font-semibold mt-2">
+                  {getByPath<string | number>(hit, mapping.price)} {CURRENCIES_SYMBOLS['BYN']}
+                </p>
+              ) : null}
             </div>
           </a>
         );
@@ -486,7 +499,7 @@ const SearchInput = memo(function SearchInput(props: SearchInputProps) {
             }
           }}
         >
-          Очистить запрос
+          <X size={24} />
         </Button>
         <Button
           type="button"
@@ -523,7 +536,7 @@ const SearchBox = memo(function SearchBox(props: SearchBoxProps) {
       className={props.className}
       placeholder={props.placeholder}
       inputRef={props.inputRef}
-      onClose={props.onClose || (() => {})}
+      onClose={props.onClose || (() => { })}
       onEnter={props.onEnter}
       onArrowDown={props.onArrowDown}
       onArrowUp={props.onArrowUp}
@@ -679,6 +692,7 @@ export function SearchModal({ onClose, config }: SearchModalProps) {
   }, [activateSelection, selectedIndex, items, sendEvent]);
 
   const showResultsPanel = !noResults && !!query;
+  const fullResultsHref = query ? `/search?query=${encodeURIComponent(query)}` : "/search";
 
   return (
     <>
@@ -722,26 +736,33 @@ export function SearchModal({ onClose, config }: SearchModalProps) {
           />
         )}
       </div>
-      {/* <Footer /> */}
+      <Footer query={query} onClose={onClose} />
     </>
   );
 }
 
-const Footer = memo(function Footer() {
+const Footer = memo(function Footer({
+  query,
+  onClose,
+}: {
+  query: string;
+  onClose?: () => void;
+}) {
   const basePoweredByUrl =
     "https://www.algolia.com/developers?utm_medium=referral&utm_content=powered_by&utm_campaign=sitesearch";
   const poweredByHref =
     typeof window !== "undefined"
       ? `${basePoweredByUrl}&utm_source=${encodeURIComponent(window.location.hostname)}`
       : basePoweredByUrl;
+  const fullResultsHref = query ? `/search?query=${encodeURIComponent(query)}` : "/search";
   return (
-    <div className="flex items-center justify-between bg-background rounded-b-sm p-4">
+    <div className="flex items-center justify-between bg-background rounded-b-sm p-4 border-t">
       <div className="inline-flex items-center gap-4 text-sm">
         <div className="flex items-center gap-2">
           <kbd className="bg-muted rounded-sm h-6 flex items-center justify-center p-1 text-muted-foreground">
             <CornerDownLeft size={20} color="currentColor" />
           </kbd>
-          <span className="text-muted-foreground">Open</span>
+          <span className="text-muted-foreground">Открыть</span>
         </div>
 
         <div className="flex items-center gap-2">
@@ -751,10 +772,17 @@ const Footer = memo(function Footer() {
           <kbd className="bg-muted rounded-sm h-6 flex items-center justify-center p-1 text-muted-foreground">
             <ArrowDown size={20} color="currentColor" />
           </kbd>
-          <span className="text-muted-foreground">Navigate</span>
+          <span className="text-muted-foreground">Навигация</span>
         </div>
       </div>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-4">
+        {query ? (
+          <Button asChild>
+            <Link href={fullResultsHref} onClick={onClose}>
+              Все результаты
+            </Link>
+          </Button>
+        ) : null}
         {/* 🚧 DO NOT REMOVE the logo if you are on a Free plan
          * https://support.algolia.com/hc/en-us/articles/17226079853073-Is-displaying-the-Algolia-logo-required
          */}
