@@ -130,7 +130,7 @@ export const SearchButton: React.FC<SearchButtonProps> = ({
   }, []);
 
   const baseClassName =
-    "2xl:min-w-[200px] justify-between hover:shadow-md transition-transform duration-400 translate-y-0 py-3 h-auto cursor-pointer hover:bg-transparent border shadow-none";
+    "2xl:min-w-[200px] flex-1 justify-between hover:shadow-md transition-transform duration-400 translate-y-0 py-3 h-auto cursor-pointer hover:bg-transparent border shadow-none";
 
   return (
     <Button
@@ -142,7 +142,7 @@ export const SearchButton: React.FC<SearchButtonProps> = ({
     >
       <span className="flex items-center gap-2 text-muted-foreground opacity-80">
         <SearchIcon size={24} color="currentColor" />
-        <span className="hidden 2xl:inline">Поиск</span>
+        <span className="hidden lg:inline">Поиск</span>
       </span>
       {/* <div className="hidden md:flex gap-0.5">
         <kbd
