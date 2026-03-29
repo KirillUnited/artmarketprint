@@ -15,18 +15,7 @@
    BASE
 ========================= */
 @layer base {
-  .light {
-    --background: #fff;
-
-    --background-primary: linear-gradient(
-      97deg,
-      hsl(var(--heroui-primary)) 0%,
-      hsl(var(--heroui-secondary)) 100%
-    );
-
-    --foreground: #2B2A28;
-
-    --grid-template-columns: repeat(
+  :root {  --grid-template-columns: repeat(
       auto-fill,
       minmax(min(var(--col-width, 288px), 100%), 1fr)
     );
@@ -37,6 +26,18 @@
       rgba(255, 255, 255, 0.75) 20%,
       rgba(255, 255, 255, 1) 50%
     );
+  }
+  
+  .light {
+    --background: #fff;
+
+    --background-primary: linear-gradient(
+      97deg,
+      hsl(var(--heroui-primary)) 0%,
+      hsl(var(--heroui-secondary)) 100%
+    );
+
+    --foreground: #2B2A28;
   }
 
   html {
