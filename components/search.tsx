@@ -142,7 +142,7 @@ export const SearchButton: React.FC<SearchButtonProps> = ({
     >
       <span className="flex items-center gap-2 text-muted-foreground opacity-80">
         <SearchIcon size={24} color="currentColor" />
-        <span className="hidden lg:inline">Поиск</span>
+        <span className="hidden lg:inline">Поиск товаров</span>
       </span>
       {/* <div className="hidden md:flex gap-0.5">
         <kbd
@@ -756,8 +756,8 @@ const Footer = memo(function Footer({
       : basePoweredByUrl;
   const fullResultsHref = query ? `/search?query=${encodeURIComponent(query)}` : "/search";
   return (
-    <div className="flex items-center justify-between bg-background rounded-b-sm p-4 border-t">
-      <div className="inline-flex items-center gap-4 text-sm">
+    <div className="sticky bottom-0 left-0 right-0 flex items-center justify-between bg-background rounded-b-sm p-4 border-t">
+      {/* <div className="inline-flex items-center gap-4 text-sm">
         <div className="flex items-center gap-2">
           <kbd className="bg-muted rounded-sm h-6 flex items-center justify-center p-1 text-muted-foreground">
             <CornerDownLeft size={20} color="currentColor" />
@@ -774,19 +774,19 @@ const Footer = memo(function Footer({
           </kbd>
           <span className="text-muted-foreground">Навигация</span>
         </div>
-      </div>
-      <div className="flex items-center gap-4">
+      </div> */}
+      <div className="flex items-center gap-4 flex-1">
         {query ? (
-          <Button asChild>
+          <Button asChild className="flex-1">
             <Link href={fullResultsHref} onClick={onClose}>
-              Все результаты
+              Все результаты ({query})
             </Link>
           </Button>
         ) : null}
         {/* 🚧 DO NOT REMOVE the logo if you are on a Free plan
          * https://support.algolia.com/hc/en-us/articles/17226079853073-Is-displaying-the-Algolia-logo-required
          */}
-        <a
+        {/* <a
           className="flex items-center gap-2 text-muted-foreground text-sm no-underline transition-colors hover:text-primary"
           href={poweredByHref}
           target="_blank"
@@ -794,7 +794,7 @@ const Footer = memo(function Footer({
         >
           <span className="md:block hidden">Powered by</span>
           <AlgoliaLogo />
-        </a>
+        </a> */}
       </div>
     </div>
   );
