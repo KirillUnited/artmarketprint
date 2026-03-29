@@ -779,7 +779,7 @@ const Footer = memo(function Footer({
         {query ? (
           <Button asChild className="flex-1">
             <Link href={fullResultsHref} onClick={onClose}>
-              Все результаты ({query})
+              Все результаты для ({query})
             </Link>
           </Button>
         ) : null}
