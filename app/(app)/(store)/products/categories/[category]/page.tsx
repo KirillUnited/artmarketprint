@@ -1,7 +1,7 @@
 import { JSX, Suspense } from 'react';
 import { clsx } from 'clsx';
 
-import { getTotalProductsQuery, getCategoriesQuery, CATEGORY_QUERY, getAllProductMaterials, getAllProductColors } from '@/components/shared/product/lib/queries';
+import { getTotalProductsQuery, getCategoriesQuery, CATEGORY_QUERY, getAllProductMaterials, getAllProductColorsQuery } from '@/components/shared/product/lib/queries';
 import { CategoryFilter, ClientPagination, ColorFilter, MaterialFilter, ProductList } from '@/components/shared/product/ui/';
 import Section from '@/components/layout/Section';
 import { sanityFetch } from '@/sanity/lib/sanityFetch';
@@ -61,7 +61,7 @@ export default async function ProductsCategoryPage({
 		sanityFetch({ query: getTotalProductsQuery(categorySlug, activeSubcategory || null, material || null, color || null) }),
 		sanityFetch({ query: getCategoriesQuery }),
 		sanityFetch({ query: getAllProductMaterials }),
-		sanityFetch({ query: getAllProductColors }),
+		sanityFetch({ query: getAllProductColorsQuery(categorySlug, activeSubcategory || null) }),
 	]);
 	const pageNumber = parseInt(page || '1');
 	const totalPages = Math.ceil(total / PRODUCTS_PER_PAGE);

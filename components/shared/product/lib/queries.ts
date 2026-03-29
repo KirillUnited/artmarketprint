@@ -75,9 +75,15 @@ export const getAllProductMaterials = `
   array::unique(*[_type == "product"].materials[]) | order(@ asc)
 `;
 
-export const getAllProductColors = `
-  array::unique(*[_type == "product"].colors[]) | order(@ asc)
-`;
+export const getAllProductColorsQuery = (
+	category: any | null,
+	subcategory: any | null
+) => {
+	const categoryFilter = category ? `&& category == "${category.title}"` : '';
+	const subcategoryFilter = subcategory ? `&& subcategory == "${subcategory.title}"` : '';
+
+	return `array::unique(*[_type == "product" ${categoryFilter} ${subcategoryFilter}].colors[]) | order(@ asc)`;
+};
 
 export const getTotalProductsQuery = (category: any | null, subcategory: any | null, material: string | null, color: string | null) => {
 	const categoryFilter = category ? `&& category == "${category.title}"` : '';

@@ -28,6 +28,7 @@ export default function ColorFilter({ colors }: { colors: string[] }) {
     const router = useRouter()
     const searchParams = useSearchParams()
     const activeColor = searchParams.get('color') || ''
+    const activeSubcategory = searchParams.get('sub') || ''
 
     const colorsRef = useRef(colors)
     colorsRef.current = colors
@@ -75,6 +76,17 @@ export default function ColorFilter({ colors }: { colors: string[] }) {
         }
         reloadRef.current()
     }, [colorsKey])
+
+    useEffect(() => {
+        if (activeColor === '' || colorsRef.current.includes(activeColor)) {
+            return
+        }
+
+        const params = new URLSearchParams(searchParams.toString())
+        params.delete('color')
+        list.setFilterText('')
+        router.push(`?${params.toString()}`)
+    }, [activeColor, activeSubcategory, list, router, searchParams])
 
     const selectedValue: Key | null =
         activeColor === '' ? ALL_COLORS_KEY : activeColor
