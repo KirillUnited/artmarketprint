@@ -86,7 +86,7 @@ export default async function ProductsCategoryPage({
 				{activeCategory && <SubCategoryFilter activeSubcategory={activeSubcategory} baseUrl={BASE_URL} category={categorySlug} categorySlug={category} />}
 				<div className="flex flex-col gap-4">
 					<div className={clsx(styles.ProductFilter)}>
-						<ProductSearchForm />
+						{/* <ProductSearchForm /> */}
 						<SortSelect />
 						<MaterialFilter materials={allProductMaterials} />
 						<ColorFilter colors={allProductColors} />

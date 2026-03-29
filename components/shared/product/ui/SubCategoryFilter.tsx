@@ -6,7 +6,7 @@ import {clsx} from 'clsx';
 export default function SubCategoryFilter({category, categorySlug, activeSubcategory, baseUrl}: {category: any; categorySlug: string; activeSubcategory: any; baseUrl: string}) {
 	return (
 		<div className="flex flex-col gap-2 md:sticky top-20 z-30">
-			<p className="font-semibold text-lg">Категории</p>
+			<p className="font-semibold text-lg">Подкатегории</p>
 			<ul>
 				{
 					category?.subcategories?.map((sub: any) => (
