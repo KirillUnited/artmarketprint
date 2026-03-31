@@ -2,7 +2,7 @@ import { JSX, Suspense } from 'react';
 import { clsx } from 'clsx';
 
 import { getTotalProductsQuery, getCategoriesQuery, CATEGORY_QUERY, getAllProductMaterials, getAllProductColorsQuery } from '@/components/shared/product/lib/queries';
-import { CategoryFilter, ClientPagination, ColorFilter, MaterialFilter, ProductList } from '@/components/shared/product/ui/';
+import { CategoryFilter, ClientPagination, ColorFilter, MaterialFilter, ProductListContainer } from '@/components/shared/product/ui/';
 import Section from '@/components/layout/Section';
 import { sanityFetch } from '@/sanity/lib/sanityFetch';
 import Loader from '@/components/ui/Loader';
@@ -92,7 +92,7 @@ export default async function ProductsCategoryPage({
 						<ColorFilter colors={allProductColors} />
 					</div>
 					<Suspense fallback={<Loader className="static" label="Загрузка товаров..." size="lg" variant="spinner" />}>
-						<ProductList
+						<ProductListContainer
 							PRODUCTS_PER_PAGE={PRODUCTS_PER_PAGE}
 							categorySlug={categorySlug}
 							color={color || null}
