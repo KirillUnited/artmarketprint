@@ -31,6 +31,12 @@ type AlgoliaSearchResult = {
   currentPage: number;
 };
 
+type SearchProductsOptions = {
+  sort?: string | null;
+  material?: string | null;
+  color?: string | null;
+};
+
 const DEFAULT_IMAGE = '/images/product-no-image.jpg';
 
 const getAlgoliaIndexName = () =>
@@ -68,6 +74,7 @@ const mapAlgoliaHitToProduct = (hit: AlgoliaProductHit): ProductData => {
     category: hit.category ?? '',
     subcategory: hit.subcategory ?? '',
     colors: Array.isArray(hit.colors) ? hit.colors : [],
+    materials: Array.isArray(hit.materials) ? hit.materials : [],
     sizes: Array.isArray(hit.sizes) ? hit.sizes : [],
     quantity: 0,
     items: [],
@@ -75,6 +82,29 @@ const mapAlgoliaHitToProduct = (hit: AlgoliaProductHit): ProductData => {
     sku: hit.sku ?? '',
     brand: hit.brand ?? '',
   };
+};
+
+const normalizeToken = (value?: string | null) =>
+  typeof value === 'string' ? value.trim().toLowerCase() : '';
+
+const includesToken = (arr: string[] | undefined, value: string) =>
+  Array.isArray(arr) && arr.some((item) => item.toLowerCase() === value);
+
+const applyProductFilters = (products: ProductData[], options: SearchProductsOptions) => {
+  const material = normalizeToken(options.material);
+  const color = normalizeToken(options.color);
+
+  return products.filter((product) => {
+    const materialPass = material === '' || includesToken(product.materials, material);
+    const colorPass = color === '' || includesToken(product.colors, color);
+    return materialPass && colorPass;
+  });
+};
+
+const applyProductSort = (products: ProductData[], sort?: string | null) => {
+  if (sort === 'price-asc') return [...products].sort((a, b) => a.price - b.price);
+  if (sort === 'price-desc') return [...products].sort((a, b) => b.price - a.price);
+  return products;
 };
 
 const runAlgoliaSearch = async (
@@ -99,46 +129,74 @@ export async function searchProductsByAlgolia(
   searchParam: string,
   page: number,
   hitsPerPage: number = SEARCH_CONFIG.HITS_PER_PAGE,
+  options: SearchProductsOptions = {},
 ): Promise<AlgoliaSearchResult> {
   const safePage = Number.isFinite(page) && page > 0 ? Math.floor(page) : 1;
+  const hasDynamicFilters = Boolean(normalizeToken(options.material) || normalizeToken(options.color) || options.sort);
 
   if (!hasAlgoliaSearchConfig()) {
     console.warn('Algolia search is not configured. Falling back to Sanity search.');
     const products = await searchProductsByName(searchParam);
-    const totalFound = Array.isArray(products) ? products.length : 0;
+    const filtered = applyProductSort(
+      applyProductFilters((Array.isArray(products) ? products : []) as ProductData[], options),
+      options.sort
+    );
+    const totalFound = filtered.length;
     const totalPages = Math.max(1, Math.ceil(totalFound / hitsPerPage));
     const pageToUse = Math.min(safePage, totalPages);
     const start = (pageToUse - 1) * hitsPerPage;
-    const paginatedProducts = Array.isArray(products)
-      ? products.slice(start, start + hitsPerPage)
-      : [];
 
     return {
-      products: paginatedProducts as ProductData[],
+      products: filtered.slice(start, start + hitsPerPage),
       totalFound,
       totalPages,
       currentPage: pageToUse,
     };
   }
 
-  const response = await runAlgoliaSearch(searchParam, safePage, hitsPerPage);
-  const totalFound = typeof response.nbHits === 'number' ? response.nbHits : 0;
-  const totalPages = typeof response.nbPages === 'number' ? response.nbPages : 0;
+  if (!hasDynamicFilters) {
+    const response = await runAlgoliaSearch(searchParam, safePage, hitsPerPage);
+    const totalFound = typeof response.nbHits === 'number' ? response.nbHits : 0;
+    const totalPages = typeof response.nbPages === 'number' ? response.nbPages : 0;
 
-  if (totalPages > 0 && safePage > totalPages) {
-    const fallbackResponse = await runAlgoliaSearch(searchParam, totalPages, hitsPerPage);
+    if (totalPages > 0 && safePage > totalPages) {
+      const fallbackResponse = await runAlgoliaSearch(searchParam, totalPages, hitsPerPage);
+      return {
+        products: fallbackResponse.hits.map(mapAlgoliaHitToProduct),
+        totalFound,
+        totalPages,
+        currentPage: totalPages,
+      };
+    }
+
     return {
-      products: fallbackResponse.hits.map(mapAlgoliaHitToProduct),
+      products: response.hits.map(mapAlgoliaHitToProduct),
       totalFound,
       totalPages,
-      currentPage: totalPages,
+      currentPage: safePage,
     };
   }
 
+  const firstPage = await runAlgoliaSearch(searchParam, 1, 1000);
+  const allHits = [...firstPage.hits];
+  const totalAlgoliaPages = typeof firstPage.nbPages === 'number' ? firstPage.nbPages : 0;
+
+  for (let p = 2; p <= totalAlgoliaPages; p += 1) {
+    const pageResponse = await runAlgoliaSearch(searchParam, p, 1000);
+    allHits.push(...pageResponse.hits);
+  }
+
+  const allProducts = allHits.map(mapAlgoliaHitToProduct);
+  const filtered = applyProductSort(applyProductFilters(allProducts, options), options.sort);
+  const totalFound = filtered.length;
+  const totalPages = Math.max(1, Math.ceil(totalFound / hitsPerPage));
+  const pageToUse = Math.min(safePage, totalPages);
+  const start = (pageToUse - 1) * hitsPerPage;
+
   return {
-    products: response.hits.map(mapAlgoliaHitToProduct),
+    products: filtered.slice(start, start + hitsPerPage),
     totalFound,
     totalPages,
-    currentPage: safePage,
+    currentPage: pageToUse,
   };
 }

@@ -1,24 +1,20 @@
-import {Button} from '@heroui/button';
-import {ShoppingCartIcon} from 'lucide-react';
-import Link from 'next/link';
 import clsx from 'clsx';
-
-import ProductSearchForm from '@/components/shared/product/ProductSearchForm';
+import { sanityFetch } from '@/sanity/lib/sanityFetch';
+import { getAllProductColorsQuery, getAllProductMaterials } from '../lib/queries';
+import { ProductFilter } from '@/components/shared/product';
 
 export type SearchTopActionsProps = {
 	className?: string;
 };
 
-export function SearchTopActions({className}: SearchTopActionsProps) {
+export async function SearchTopActions({ className }: SearchTopActionsProps) {
+	const [allProductMaterials, allProductColors] = await Promise.all([
+		sanityFetch({ query: getAllProductMaterials }),
+		sanityFetch({ query: getAllProductColorsQuery(null, null) }),
+	]);
 	return (
-		<div className={clsx('flex flex-col md:flex-row gap-2 w-full', className)}>
-			<ProductSearchForm />
-			<Link href="/products/categories/all">
-				<Button className="border" radius="sm" variant="bordered">
-					<ShoppingCartIcon size="18" />
-					<span>Все товары</span>
-				</Button>
-			</Link>
+		<div className={clsx('flex flex-col gap-5 w-full items-start', className)}>
+			<ProductFilter allProductMaterials={allProductMaterials} allProductColors={allProductColors} className='w-full' />
 		</div>
 	);
 }
