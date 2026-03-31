@@ -1,19 +1,20 @@
 'use client'
 
 import { useRouter, useSearchParams } from 'next/navigation'
-import {Select, SelectItem} from '@heroui/select';
+import type { Key } from 'react'
+import { Label, ListBox, Select } from '@heroui/react'
 
 export default function SortSelect() {
     const router = useRouter()
     const searchParams = useSearchParams()
     const currentSort = searchParams.get('sort') || ''
 
-    const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const handleChange = (value: Key | Key[] | null) => {
         const params = new URLSearchParams(searchParams.toString())
-        const value = e.target.value
+        const selected = Array.isArray(value) ? value[0] : value
 
-        if (value) {
-            params.set('sort', value)
+        if (selected) {
+            params.set('sort', String(selected))
         } else {
             params.delete('sort')
         }
@@ -22,10 +23,25 @@ export default function SortSelect() {
     }
 
     return (
-        <Select label="Сортировать цены" radius="sm" selectedKeys={[currentSort]} size="sm" onChange={handleChange}>
-            <SelectItem key="" textValue="Не выбрано">Не выбрано</SelectItem>
-            <SelectItem key={'price-desc'} textValue="По убыванию" title='По убыванию'>По убыванию</SelectItem>
-            <SelectItem key={'price-asc'} textValue="По возрастанию" title='По возрастанию'>По возрастанию</SelectItem>
+        <Select value={currentSort || null} placeholder="Не выбрано" onChange={handleChange}>
+            <Label>Сортировка</Label>
+            <Select.Trigger>
+                <Select.Value />
+                <Select.Indicator />
+            </Select.Trigger>
+            <Select.Popover>
+                <ListBox>
+                    <ListBox.Item id="" textValue="Не выбрано">
+                        Не выбрано
+                    </ListBox.Item>
+                    <ListBox.Item id="price-desc" textValue="Цена: по убыванию">
+                        Цена: по убыванию
+                    </ListBox.Item>
+                    <ListBox.Item id="price-asc" textValue="Цена: по возрастанию">
+                        Цена: по возрастанию
+                    </ListBox.Item>
+                </ListBox>
+            </Select.Popover>
         </Select>
     )
 }

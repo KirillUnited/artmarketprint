@@ -19,10 +19,10 @@ export default function Section({className, containerFluid, innerClassname: inne
 
 export const SectionHeading = ({className, children}: SectionProps) => <div className={clsx('flex flex-col gap-4 max-w-[652px]', className)}>{children}</div>;
 
-export const SectionTitle = ({children}: SectionProps) => <h2 className="text-3xl md:text-4xl lg:text-5xl leading-[120%] font-bold">{children}</h2>;
+export const SectionTitle = ({className, children}: SectionProps) => <h2 className={clsx('text-3xl md:text-4xl lg:text-5xl leading-[120%] font-bold', className)}>{children}</h2>;
 
-export const SectionSubtitle = ({children}: SectionProps) => <p className="text-base uppercase font-bold text-primary-700">- {children} -</p>;
+export const SectionSubtitle = ({className, children}: SectionProps) => <p className={clsx('text-base uppercase font-bold text-primary-700', className)}>- {children} -</p>;
 
-export const SectionDescription = ({children}: SectionProps) => <p className="text-sm md:text-base leading-normal font-normal text-foreground/70 text-balance">{children}</p>;
+export const SectionDescription = ({className, children}: SectionProps) => <p className={clsx('text-sm md:text-base leading-normal font-normal text-foreground/70 text-balance', className)}>{children}</p>;
 
 export const SectionInner = ({className, children}: SectionProps) => <div className={clsx('py-10 md:py-20 flex flex-col gap-10', className)}>{children}</div>;

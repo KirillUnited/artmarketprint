@@ -1,15 +1,15 @@
 import { JSX, Suspense } from 'react';
 import { clsx } from 'clsx';
 
-import { getTotalProductsQuery, getCategoriesQuery, CATEGORY_QUERY, getAllProductMaterials } from '@/components/shared/product/lib/queries';
-import { CategoryFilter, ClientPagination, MaterialFilter, ProductList } from '@/components/shared/product/ui/';
+import { getTotalProductsQuery, getCategoriesQuery, CATEGORY_QUERY, getAllProductMaterials, getAllProductColorsQuery } from '@/components/shared/product/lib/queries';
+import { CategoryFilter, ClientPagination, ColorFilter, MaterialFilter, ProductListContainer } from '@/components/shared/product/ui/';
 import Section from '@/components/layout/Section';
 import { sanityFetch } from '@/sanity/lib/sanityFetch';
 import Loader from '@/components/ui/Loader';
 import { LightBreadcrumb } from '@/components/ui/Breadcrumb';
 import { SortSelect, SubCategoryFilter } from '@/components/shared/product/ui';
-import ProductSearchForm from '@/components/shared/product/ProductSearchForm';
 import styles from '@/components/shared/product/ui/styles.module.css';
+import { ProductFilter } from '@/components/shared/product';
 
 const PRODUCTS_PER_PAGE = 20;
 const BASE_URL = '/products/categories';
@@ -43,10 +43,10 @@ export default async function ProductsCategoryPage({
 	searchParams,
 }: {
 	params: Promise<Props>;
-	searchParams: Promise<{ page?: string; sub?: string; sort?: string; material?: string }>;
+	searchParams: Promise<{ page?: string; sub?: string; sort?: string; material?: string; color?: string }>;
 }): Promise<JSX.Element> {
 	const { category } = await params;
-	const { page, sub, sort, material } = await searchParams;
+	const { page, sub, sort, material, color } = await searchParams;
 	const categorySlug =
 		category === 'all'
 			? null
@@ -57,10 +57,11 @@ export default async function ProductsCategoryPage({
 				},
 			});
 	const activeSubcategory = categorySlug?.subcategories?.find((s: any) => s.slug === sub);
-	const [total, categories, allProductMaterials] = await Promise.all([
-		sanityFetch({ query: getTotalProductsQuery(categorySlug, activeSubcategory || null, material || null) }),
+	const [total, categories, allProductMaterials, allProductColors] = await Promise.all([
+		sanityFetch({ query: getTotalProductsQuery(categorySlug, activeSubcategory || null, material || null, color || null) }),
 		sanityFetch({ query: getCategoriesQuery }),
 		sanityFetch({ query: getAllProductMaterials }),
+		sanityFetch({ query: getAllProductColorsQuery(categorySlug, activeSubcategory || null) }),
 	]);
 	const pageNumber = parseInt(page || '1');
 	const totalPages = Math.ceil(total / PRODUCTS_PER_PAGE);
@@ -84,15 +85,12 @@ export default async function ProductsCategoryPage({
 			<div className={clsx('grid gap-4', activeCategory && 'md:grid-cols-[270px_1fr]')}>
 				{activeCategory && <SubCategoryFilter activeSubcategory={activeSubcategory} baseUrl={BASE_URL} category={categorySlug} categorySlug={category} />}
 				<div className="flex flex-col gap-4">
-					<div className={clsx(styles.ProductFilter)}>
-						<ProductSearchForm className="lg:col-span-2" />
-						<SortSelect />
-						<MaterialFilter materials={allProductMaterials} />
-					</div>
+					<ProductFilter allProductColors={allProductColors} allProductMaterials={allProductMaterials}/>
 					<Suspense fallback={<Loader className="static" label="Загрузка товаров..." size="lg" variant="spinner" />}>
-						<ProductList
+						<ProductListContainer
 							PRODUCTS_PER_PAGE={PRODUCTS_PER_PAGE}
 							categorySlug={categorySlug}
+							color={color || null}
 							material={material || null}
 							pageNumber={pageNumber}
 							sort={sort || null}

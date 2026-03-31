@@ -19,13 +19,19 @@ export async function searchProductsByName(searchParam: string): Promise<any[]> 
             description match $searchParam + "*" ||
             category match $searchParam + "*" ||
             subcategory match $searchParam + "*" ||
-            sku match $searchParam + "*"
+            sku match $searchParam + "*" ||
+            colors[] match $searchParam + "*" ||
+            items[].color match $searchParam + "*" ||
+            variation_description match $searchParam + "*"
         )] | score(
             name match $searchParam + "*",
             description match $searchParam + "*",
             category match $searchParam + "*",
             subcategory match $searchParam + "*",
-            sku match $searchParam + "*"
+            sku match $searchParam + "*",
+            colors[] match $searchParam + "*",
+            items[].color match $searchParam + "*",
+            variation_description match $searchParam + "*"
         ) | order(_score desc) {
             ...,
             _score

@@ -15,32 +15,33 @@ import { useAsyncList } from '@react-stately/data'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useCallback, useEffect, useMemo, useRef } from 'react'
 
-/** Sentinel key when URL has no `material` param. */
-const ALL_MATERIALS_KEY = '__all__'
+/** Sentinel key for "all colors" (URL has no `color` param). */
+const ALL_COLORS_KEY = '__all__'
 
 const PAGE_SIZE = 40
 
-interface MaterialItem {
+interface ColorItem {
     name: string
 }
 
-export default function MaterialFilter({ materials }: { materials: string[] }) {
+export default function ColorFilter({ colors }: { colors: string[] }) {
     const router = useRouter()
     const searchParams = useSearchParams()
-    const activeMaterial = searchParams.get('material') || ''
+    const activeColor = searchParams.get('color') || ''
+    const activeSubcategory = searchParams.get('sub') || ''
 
-    const materialsRef = useRef(materials)
-    materialsRef.current = materials
+    const colorsRef = useRef(colors)
+    colorsRef.current = colors
 
-    const materialsKey = useMemo(() => materials.join('\0'), [materials])
+    const colorsKey = useMemo(() => colors.join('\0'), [colors])
 
-    const list = useAsyncList<MaterialItem, number>({
+    const list = useAsyncList<ColorItem, number>({
         getKey: (item) => item.name,
         async load({ cursor, filterText, signal }) {
-            const all = materialsRef.current
+            const all = colorsRef.current
             const q = (filterText ?? '').trim().toLowerCase()
             const filtered = q
-                ? all.filter((m) => m.toLowerCase().includes(q))
+                ? all.filter((c) => c.toLowerCase().includes(q))
                 : [...all]
 
             await new Promise<void>((resolve) => {
@@ -67,26 +68,37 @@ export default function MaterialFilter({ materials }: { materials: string[] }) {
     const reloadRef = useRef(list.reload)
     reloadRef.current = list.reload
 
-    const isFirstMaterialsEffect = useRef(true)
+    const isFirstColorsEffect = useRef(true)
     useEffect(() => {
-        if (isFirstMaterialsEffect.current) {
-            isFirstMaterialsEffect.current = false
+        if (isFirstColorsEffect.current) {
+            isFirstColorsEffect.current = false
             return
         }
         reloadRef.current()
-    }, [materialsKey])
+    }, [colorsKey])
+
+    useEffect(() => {
+        if (activeColor === '' || colorsRef.current.includes(activeColor)) {
+            return
+        }
+
+        const params = new URLSearchParams(searchParams.toString())
+        params.delete('color')
+        list.setFilterText('')
+        router.push(`?${params.toString()}`)
+    }, [activeColor, activeSubcategory, list, router, searchParams])
 
     const selectedValue: Key | null =
-        activeMaterial === '' ? ALL_MATERIALS_KEY : activeMaterial
+        activeColor === '' ? ALL_COLORS_KEY : activeColor
 
     const handleChange = useCallback(
         (value: Key | null) => {
             const params = new URLSearchParams(searchParams.toString())
-            if (!value || value === ALL_MATERIALS_KEY) {
-                params.delete('material')
+            if (!value || value === ALL_COLORS_KEY) {
+                params.delete('color')
                 list.setFilterText('')
             } else {
-                params.set('material', String(value))
+                params.set('color', String(value))
                 list.setFilterText(String(value))
             }
             router.push(`?${params.toString()}`)
@@ -104,9 +116,9 @@ export default function MaterialFilter({ materials }: { materials: string[] }) {
             onChange={handleChange}
             onInputChange={list.setFilterText}
         >
-            <Label>Материал</Label>
+            <Label>Цвет</Label>
             <ComboBox.InputGroup>
-                <Input placeholder="Выберите материал" />
+                <Input placeholder="Выберите цвет" />
                 <ComboBox.Trigger />
             </ComboBox.InputGroup>
             <ComboBox.Popover>
@@ -123,8 +135,8 @@ export default function MaterialFilter({ materials }: { materials: string[] }) {
                         )
                     }
                 >
-                    <ListBox.Item id={ALL_MATERIALS_KEY} textValue="Все материалы">
-                        Все материалы
+                    <ListBox.Item id={ALL_COLORS_KEY} textValue="Все цвета">
+                        Все цвета
                         <ListBox.ItemIndicator />
                     </ListBox.Item>
                     <Collection items={list.items}>
