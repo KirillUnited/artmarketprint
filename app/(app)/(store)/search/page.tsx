@@ -25,12 +25,24 @@ export default async function SearchPage({
 	searchParams: Promise<{
 		query?: string;
 		page?: string;
+		sort?: string;
+		material?: string;
+		color?: string;
 	}>;
 }): Promise<JSX.Element> {
-	const {query: rawQuery, page: rawPage} = await searchParams;
+	const {
+		query: rawQuery,
+		page: rawPage,
+		sort: rawSort,
+		material: rawMaterial,
+		color: rawColor,
+	} = await searchParams;
 	const query = (rawQuery ?? '').trim();
 	const pageParam = Number.parseInt(rawPage ?? '1', 10);
 	const currentPage = Number.isNaN(pageParam) || pageParam < 1 ? 1 : pageParam;
+	const sort = (rawSort ?? '').trim() || null;
+	const material = (rawMaterial ?? '').trim() || null;
+	const color = (rawColor ?? '').trim() || null;
 
 	try {
 		if (query === '') {
@@ -41,7 +53,16 @@ export default async function SearchPage({
 			);
 		}
 
-		const {products, totalFound, totalPages, currentPage: resolvedPage} = await searchProductsByAlgolia(query, currentPage, PRODUCTS_PER_PAGE);
+		const {products, totalFound, totalPages, currentPage: resolvedPage} = await searchProductsByAlgolia(
+			query,
+			currentPage,
+			PRODUCTS_PER_PAGE,
+			{
+				sort,
+				material,
+				color,
+			}
+		);
 
 		if (Array.isArray(products) && products.length > 0) {
 			const page = totalPages > 0 ? Math.min(resolvedPage, totalPages) : resolvedPage;

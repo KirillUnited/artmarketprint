@@ -1,10 +1,12 @@
 import {SectionTitle} from '@/components/layout/Section';
 import {ProductData} from '@/components/shared/product/product.types';
 import {ClientPagination} from '@/components/shared/product/ui/Pagination';
-import ProductThumb from '@/components/shared/product/ui/ProductThumb';
-import styles from '@/components/shared/product/ui/styles.module.css';
+import { Button } from '@heroui/button';
+import { ArrowLeftIcon } from 'lucide-react';
+import Link from 'next/link';
 
 import {SearchTopActions} from './SearchTopActions';
+import {ProductList} from '@/components/shared/product/ui';
 
 export type SearchResultsStateProps = {
 	query: string;
@@ -17,13 +19,15 @@ export type SearchResultsStateProps = {
 export function SearchResultsState({query, products, totalFound, currentPage, totalPages}: SearchResultsStateProps) {
 	return (
 		<>
-			<SectionTitle>{`Результаты поиска для "${query}" (${totalFound} найдено)`}</SectionTitle>
+			<Link href="/products/categories/all">
+				<Button className="border" radius="sm" size='sm'>
+					<ArrowLeftIcon size="18" />
+					<span>Каталог</span>
+				</Button>
+			</Link>
+			<SectionTitle className='TEST'>{`Результаты поиска для "${query}" (${totalFound} найдено)`}</SectionTitle>
 			<SearchTopActions />
-			<div className={styles.ProductList}>
-				{products.map((product) => (
-					<ProductThumb key={product._id} item={product} />
-				))}
-			</div>
+			<ProductList products={products}/>
 			{totalPages > 1 && <ClientPagination basePath="/search" pageNumber={currentPage} totalPages={totalPages} />}
 		</>
 	);

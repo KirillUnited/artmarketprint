@@ -2,14 +2,14 @@ import { JSX, Suspense } from 'react';
 import { clsx } from 'clsx';
 
 import { getTotalProductsQuery, getCategoriesQuery, CATEGORY_QUERY, getAllProductMaterials, getAllProductColorsQuery } from '@/components/shared/product/lib/queries';
-import { CategoryFilter, ClientPagination, ColorFilter, MaterialFilter, ProductList } from '@/components/shared/product/ui/';
+import { CategoryFilter, ClientPagination, ColorFilter, MaterialFilter, ProductListContainer } from '@/components/shared/product/ui/';
 import Section from '@/components/layout/Section';
 import { sanityFetch } from '@/sanity/lib/sanityFetch';
 import Loader from '@/components/ui/Loader';
 import { LightBreadcrumb } from '@/components/ui/Breadcrumb';
 import { SortSelect, SubCategoryFilter } from '@/components/shared/product/ui';
-import ProductSearchForm from '@/components/shared/product/ProductSearchForm';
 import styles from '@/components/shared/product/ui/styles.module.css';
+import { ProductFilter } from '@/components/shared/product';
 
 const PRODUCTS_PER_PAGE = 20;
 const BASE_URL = '/products/categories';
@@ -85,14 +85,9 @@ export default async function ProductsCategoryPage({
 			<div className={clsx('grid gap-4', activeCategory && 'md:grid-cols-[270px_1fr]')}>
 				{activeCategory && <SubCategoryFilter activeSubcategory={activeSubcategory} baseUrl={BASE_URL} category={categorySlug} categorySlug={category} />}
 				<div className="flex flex-col gap-4">
-					<div className={clsx(styles.ProductFilter)}>
-						{/* <ProductSearchForm /> */}
-						<SortSelect />
-						<MaterialFilter materials={allProductMaterials} />
-						<ColorFilter colors={allProductColors} />
-					</div>
+					<ProductFilter allProductColors={allProductColors} allProductMaterials={allProductMaterials}/>
 					<Suspense fallback={<Loader className="static" label="Загрузка товаров..." size="lg" variant="spinner" />}>
-						<ProductList
+						<ProductListContainer
 							PRODUCTS_PER_PAGE={PRODUCTS_PER_PAGE}
 							categorySlug={categorySlug}
 							color={color || null}

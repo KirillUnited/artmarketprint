@@ -3,7 +3,7 @@ import Section, {SectionDescription, SectionHeading, SectionSubtitle, SectionTit
 import {getSanityDocuments} from '@/sanity/lib/fetch-sanity-data';
 import {SectionButton} from '@/components/layout/SectionButton';
 
-import ProductList from './ProductList';
+import ProductListContainer from './ProductList';
 
 const FEATURED_PRODUCTS_QUERY = '*[_type == \'product\'] | order(_createdAt asc) [0...4]';
 
@@ -30,7 +30,7 @@ export const FeaturedProducts = async () => {
 		<Section className="relative" id="products" innerClassname="md:pt-0">
 			<ProductSectionHeading description={'Ознакомьтесь с хитами продаж и новинками, которые выбирают наши покупатели.'} subtitle={'Каталог'} title={'Популярные товары'} />
 
-			<ProductList items={data as any} />
+			<ProductListContainer items={data as any} />
 
 			<SectionButton className="self-start" href={'/products/categories/all'} label="Все товары" />
 		</Section>

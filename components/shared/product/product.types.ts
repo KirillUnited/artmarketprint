@@ -11,6 +11,7 @@ export interface ProductData {
     category: string;
     subcategory: string;
     colors: string[];
+    materials?: string[];
     sizes: string[];
     quantity: number;
     items: any;
