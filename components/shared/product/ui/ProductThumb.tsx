@@ -50,11 +50,6 @@ const ProductThumb: FC<ProductThumbProps> = ({ item, ...props }): JSX.Element =>
 						src={image}
 						width={220}
 					/>
-					{Number(totalStock()) === 0 && (
-						<div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-							<span className="text-white font-medium px-3 py-1 bg-red-500 rounded-full text-sm">Нет в наличии</span>
-						</div>
-					)}
 				</div>
 				<div className="flex flex-col gap-2">
 					<span className="text-xl font-semibold self-start text-foreground">{`${price} ${CURRENCIES_SYMBOLS['BYN'] || 'р'}`}</span>
@@ -65,7 +60,7 @@ const ProductThumb: FC<ProductThumbProps> = ({ item, ...props }): JSX.Element =>
 						</p>
 					)}
 					<span className="text-gray-500 font-light text-xs truncate w-full">
-						{Number(totalStock()) > 0 ? `В наличии (${totalStock()})` : <span className="text-red-500">Нет в наличии</span>}
+						{Number(totalStock()) > 0 ? `В наличии (${totalStock()})` : null}
 					</span>
 				</div>
 			</CardBody>
