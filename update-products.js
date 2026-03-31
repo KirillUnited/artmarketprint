@@ -10,7 +10,6 @@
 // Load environment variables from .env.local when running via Node
 const fs = require('fs');
 const path = require('path');
-const { execSync } = require('child_process');
 
 function loadEnvLocal() {
   try {
@@ -64,10 +63,6 @@ async function runUpdate() {
     console.log('📥 Fetching and importing new products...');
     await updateProducts();
     console.log('✅ New products imported successfully!');
-
-    console.log('🔎 Syncing products to Algolia...');
-    execSync('npm run sync-products-algolia', { stdio: 'inherit' });
-    console.log('✅ Product sync to Algolia completed successfully!');
 
     console.log('🎉 Product update process completed successfully!');
   } catch (error) {
