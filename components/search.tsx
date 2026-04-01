@@ -707,7 +707,6 @@ export function SearchModal({ onClose, config }: SearchModalProps) {
         alternativesAsExact={['ignorePlurals', 'singleWordSynonym', 'multiWordsSynonym']}
         minWordSizefor1Typo={3}
         minWordSizefor2Typos={6}
-        removeDuplicates={true}
       />
       <div className="flex flex-col">
         <SearchBox
