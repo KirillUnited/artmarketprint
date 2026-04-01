@@ -699,6 +699,15 @@ export function SearchModal({ onClose, config }: SearchModalProps) {
       <Configure
         hitsPerPage={config.hitsPerPage || 8}
         {...config.searchParameters}
+        // Russian language optimizations
+        advancedSyntax={true}
+        typoTolerance={true}
+        ignorePlurals={true}
+        removeStopWords={['ru']}
+        alternativesAsExact={['ignorePlurals', 'singleWordSynonym', 'multiWordsSynonym']}
+        minWordSizefor1Typo={3}
+        minWordSizefor2Typos={6}
+        removeDuplicates={true}
       />
       <div className="flex flex-col">
         <SearchBox

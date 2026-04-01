@@ -2,7 +2,7 @@ import type { SearchResponse } from '@algolia/client-search';
 
 import type { ProductData } from '@/components/shared/product/product.types';
 import { createAlgoliaSearchClient } from '@/lib/algolia-client';
-import { SEARCH_CONFIG } from '@/lib/search-config';
+import { SEARCH_CONFIG, SEARCH_PARAMETERS, RUSSIAN_SEARCH_CONFIG } from '@/lib/search-config';
 import { searchProductsByName } from '@/sanity/lib/product/searchProductsByName';
 
 type AlgoliaProductHit = {
@@ -121,6 +121,17 @@ const runAlgoliaSearch = async (
       query,
       page: Math.max(0, page - 1),
       hitsPerPage,
+      // Apply Russian language optimizations
+      ...SEARCH_PARAMETERS,
+      ...RUSSIAN_SEARCH_CONFIG.queryParameters,
+      // Boost exact matches and word forms
+      optionalWords: query,
+      // Handle different word forms
+      alternativesAsExact: ['ignorePlurals', 'singleWordSynonym', 'multiWordsSynonym'],
+      // Improve typo tolerance for Russian
+      typoTolerance: 'min',
+      // Remove stop words for better Russian search
+      removeStopWords: ['ru'],
     },
   });
 };
