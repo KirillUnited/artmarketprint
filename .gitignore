@@ -45,3 +45,7 @@ next-env.d.ts
 .vscode
 # heroui-agents-md
 .heroui-docs/
+
+# Sanity backups
+/backups/*
+!/backups/.gitkeep

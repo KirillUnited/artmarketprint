@@ -9,6 +9,7 @@
   "start": "next start",
   "lint": "eslint . --ext .ts,.tsx -c .eslintrc.json --fix",
   "update-products": "node update-products.js",
+  "backup-sanity": "ts-node -r tsconfig-paths/register --project scripts/tsconfig.json --transpile-only scripts/backup-sanity-dataset.ts",
   "sync-services-algolia": "ts-node -r tsconfig-paths/register --project scripts/tsconfig.json --transpile-only scripts/sync-services-algolia.ts",
   "sync-products-algolia": "ts-node -r tsconfig-paths/register --project scripts/tsconfig.json --transpile-only scripts/sync-products-algolia.ts"
  },
