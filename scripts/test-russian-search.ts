@@ -31,6 +31,12 @@ async function testRussianSearch() {
       'зеленый',     // green (masculine)
       'зеленая',     // green (feminine)
       'зеленые',     // green (plural)
+      'серый',       // gray (masculine)
+      'серая',       // gray (feminine)
+      'серые',       // gray (plural)
+      'розовый',     // pink (masculine)
+      'розовая',     // pink (feminine)
+      'розовые',     // pink (plural)
     ];
 
     console.log('Testing search queries for Russian word forms:');
@@ -54,7 +60,6 @@ async function testRussianSearch() {
             alternativesAsExact: ['ignorePlurals', 'singleWordSynonym', 'multiWordsSynonym'],
             minWordSizefor1Typo: 3,
             minWordSizefor2Typos: 6,
-            removeDuplicates: true,
           },
         });
 
@@ -78,6 +83,8 @@ async function testRussianSearch() {
     const synonymTests = [
       { query: 'красный', expectedSynonyms: ['красная', 'красное', 'красные'] },
       { query: 'синий', expectedSynonyms: ['синяя', 'синее', 'синие'] },
+      { query: 'серый', expectedSynonyms: ['серая', 'серое', 'серые'] },
+      { query: 'розовый', expectedSynonyms: ['розовая', 'розовое', 'розовые'] },
     ];
 
     for (const test of synonymTests) {

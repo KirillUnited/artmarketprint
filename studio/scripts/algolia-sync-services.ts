@@ -273,6 +273,8 @@ async function syncProductsToAlgolia() {
         { objectID: 'synonym-4', type: 'synonym', synonyms: ['желтый', 'желтая', 'желтое', 'желтые'] },
         { objectID: 'synonym-5', type: 'synonym', synonyms: ['белый', 'белая', 'белое', 'белые'] },
         { objectID: 'synonym-6', type: 'synonym', synonyms: ['черный', 'черная', 'черное', 'черные'] },
+        { objectID: 'synonym-7', type: 'synonym', synonyms: ['серый', 'серая', 'серое', 'серые'] },
+        { objectID: 'synonym-8', type: 'synonym', synonyms: ['розовый', 'розовая', 'розовое', 'розовые'] },
         // Add more synonyms as needed for your product catalog
       ],
     });
