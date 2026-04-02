@@ -7,6 +7,7 @@ import BrandButton from '@/components/ui/BrandButton';
 import {MediaBlock} from '../media';
 
 import {ServiceHeroProps} from './service.props';
+import { CalculatorIcon } from 'lucide-react';
 
 
 /**
@@ -39,9 +40,10 @@ export const ServiceHero: React.FC<ServiceHeroProps> = ({title, description, med
 					<p className="mt-4 md:text-lg text-white text-pretty">{description}</p>
 				</div>
 
-				<Link className="flex flex-col gap-2 md:flex-row self-center" href={'#serviceDetails'}>
+				<Link className="flex flex-col gap-2 md:flex-row self-center" href={'/calculator'}>
 					<BrandButton size="md" state="primary">
-						Подробнее
+						<CalculatorIcon size={18} />
+						Рассчитать стоимость
 					</BrandButton>
 				</Link>
 			</div>
