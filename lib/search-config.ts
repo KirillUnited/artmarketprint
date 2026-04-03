@@ -25,8 +25,6 @@ export const SEARCH_PARAMETERS = {
   // Configure minimum word length for Russian
   minWordSizefor1Typo: 3,
   minWordSizefor2Typos: 6,
-  // Remove duplicates in results
-  removeDuplicates: true,
   // Enable analytics for search improvements
   analytics: true,
   // Enable personalization if available
