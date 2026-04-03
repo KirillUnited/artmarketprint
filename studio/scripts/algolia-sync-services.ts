@@ -231,6 +231,61 @@ async function syncProductsToAlgolia() {
     console.log('Clearing existing products in Algolia index...');
     await algoliaClient.clearObjects({ indexName: ALGOLIA_PRODUCTS_INDEX });
 
+    // Configure index settings for Russian language support
+    console.log('Configuring Algolia index settings for Russian language...');
+    await algoliaClient.setSettings({
+      indexName: ALGOLIA_PRODUCTS_INDEX,
+      indexSettings: {
+        // Enable proper Russian language processing
+        indexLanguages: ['ru'],
+        queryLanguages: ['ru'],
+        // Configure search behavior for Russian
+        searchableAttributes: [
+          'unordered(name)',
+          'unordered(description)',
+          'unordered(colors)',
+          'unordered(materials)',
+          'unordered(category)',
+          'unordered(subcategory)',
+          'sku'
+        ],
+        // Configure ranking criteria
+        ranking: [
+          'words',
+          'typo',
+          'proximity',
+          'attribute',
+          'exact',
+          'custom'
+        ],
+      }
+    });
+
+    // Add synonyms for common Russian word variations
+    await algoliaClient.saveSynonyms({
+      indexName: ALGOLIA_PRODUCTS_INDEX,
+      replaceExistingSynonyms: true,
+      synonymHit: [
+        // Color variations
+        { objectID: 'synonym-1', type: 'synonym', synonyms: ['красный', 'красная', 'красное', 'красные'] },
+        { objectID: 'synonym-2', type: 'synonym', synonyms: ['синий', 'синяя', 'синее', 'синие'] },
+        { objectID: 'synonym-3', type: 'synonym', synonyms: ['зеленый', 'зеленая', 'зеленое', 'зеленые'] },
+        { objectID: 'synonym-4', type: 'synonym', synonyms: ['желтый', 'желтая', 'желтое', 'желтые'] },
+        { objectID: 'synonym-5', type: 'synonym', synonyms: ['белый', 'белая', 'белое', 'белые'] },
+        { objectID: 'synonym-6', type: 'synonym', synonyms: ['черный', 'черная', 'черное', 'черные'] },
+        { objectID: 'synonym-7', type: 'synonym', synonyms: ['серый', 'серая', 'серое', 'серые'] },
+        { objectID: 'synonym-8', type: 'synonym', synonyms: ['розовый', 'розовая', 'розовое', 'розовые'] },
+        // Add more synonyms as needed for your product catalog
+      ],
+    });
+
+    // Clear existing query rules (rules with automatic facet filters need placeholders in pattern)
+    await algoliaClient.saveRules({
+      indexName: ALGOLIA_PRODUCTS_INDEX,
+      clearExistingRules: true,
+      rules: [],
+    });
+
     console.log('Uploading products to Algolia...');
     const batchResponses = await algoliaClient.saveObjects({
       indexName: ALGOLIA_PRODUCTS_INDEX,
