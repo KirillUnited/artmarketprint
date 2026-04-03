@@ -9,14 +9,17 @@ import { FC } from 'react';
 import { CategoryProps, CatFilter } from '@/components/ui/filter/CatFilter';
 import { SortFilter } from '@/components/ui/filter/SortFilter';
 import { MaterialFilter } from '@/components/ui/filter/MaterialFilter';
+import LocalImageColorFilter from './ui/LocalImageColorFilter';
 
 interface FilterGroupProps {
 	sortOrder: string;
 	selectedCategory: string;
 	selectedMaterial: string;
+	selectedImageColor: string;
 	categories: CategoryProps[];
 	materials: Array<{ material: string; count: number }>;
-	onFilterChange: (sortOrder: string, category: string, material?: string) => void;
+	products: any[];
+	onFilterChange: (sortOrder: string, category: string, material?: string, imageColor?: string) => void;
 }
 
 /**
@@ -25,13 +28,21 @@ interface FilterGroupProps {
  * @param {FilterGroupProps} props - The properties for the FilterGroup component.
  * @returns {JSX.Element} The rendered FilterGroup component.
  */
-export const FilterGroup: FC<FilterGroupProps> = ({ sortOrder, selectedCategory, selectedMaterial, categories, materials, onFilterChange }) => {
+export const FilterGroup: FC<FilterGroupProps> = ({ sortOrder, selectedCategory, selectedMaterial, selectedImageColor, categories, materials, products, onFilterChange }) => {
 	return (
 		<Form className="flex flex-col">
 			<div className="flex flex-col gap-4 w-full">
 				<div className="pb-4 border-b border-gray-100">
 					<h3 className="text-md font-medium mb-3">Сортировать</h3>
-					<SortFilter selectedCategory={selectedCategory} sortOrder={sortOrder} onFilterChange={(sort: string, cat: string) => onFilterChange(sort, cat)} />
+					<SortFilter selectedCategory={selectedCategory} sortOrder={sortOrder} onFilterChange={(sort: string, cat: string) => onFilterChange(sort, cat, selectedMaterial, selectedImageColor)} />
+				</div>
+
+				<div className="pb-4 border-b border-gray-100">
+					<LocalImageColorFilter 
+						products={products}
+						selectedColor={selectedImageColor}
+						onColorSelect={(color) => onFilterChange(sortOrder, selectedCategory, selectedMaterial, color)}
+					/>
 				</div>
 
 				{materials && materials.length > 0 && (
@@ -41,7 +52,7 @@ export const FilterGroup: FC<FilterGroupProps> = ({ sortOrder, selectedCategory,
 							selectedCategory={selectedCategory}
 							selectedMaterial={selectedMaterial}
 							sortOrder={sortOrder}
-							onFilterChange={(sort, cat, material) => onFilterChange(sort, cat, material)}
+							onFilterChange={(sort, cat, material) => onFilterChange(sort, cat, material, selectedImageColor)}
 						/>
 					</div>
 				)}
@@ -53,20 +64,20 @@ export const FilterGroup: FC<FilterGroupProps> = ({ sortOrder, selectedCategory,
 							categories={categories}
 							selectedCategory={selectedCategory}
 							sortOrder={sortOrder}
-							onFilterChange={(sort, cat) => onFilterChange(sort, cat)}
+							onFilterChange={(sort, cat) => onFilterChange(sort, cat, selectedMaterial, selectedImageColor)}
 						/>
 					</div>
 				)}
 			</div>
 
-			{(selectedCategory || selectedMaterial) && (
+			{(selectedCategory || selectedMaterial || selectedImageColor) && (
 				<Button
 					className="w-full mt-2 sticky bottom-4 z-30"
 					color="primary"
 					radius="sm"
 					size='sm'
 					type="reset"
-					onPress={() => onFilterChange('asc', '', '')}
+					onPress={() => onFilterChange('asc', '', '', '')}
 				>
 					Сбросить фильтры
 				</Button>
@@ -97,61 +108,49 @@ export const FilterButton: FC<FilterButtonProps> = ({ onOpen }) => {
 interface FilterDrawerProps {
 	isOpen: boolean;
 	onOpenChange: (isOpen: boolean) => void;
-	onFilterChange: (sortOrder: string, category: string, material?: string) => void;
-	categories: CategoryProps[];
-	materials?: Array<{ material: string; count: number }>;
+	onFilterChange: (sortOrder: string, category: string, material?: string, imageColor?: string) => void;
 	sortOrder: string;
 	selectedCategory: string;
 	selectedMaterial: string;
+	selectedImageColor: string;
+	categories: CategoryProps[];
+	materials: Array<{ material: string; count: number }>;
+	products: any[];
 }
 
 /**
- * Drawer component for displaying filters.
+ * Drawer component to display filters on mobile devices.
  *
  * @param {FilterDrawerProps} props - The properties for the FilterDrawer component.
  * @returns {JSX.Element} The rendered FilterDrawer component.
  */
-export const FilterDrawer: FC<FilterDrawerProps> = ({ isOpen, onOpenChange, onFilterChange, categories, materials, sortOrder, selectedCategory, selectedMaterial }) => {
-	const categoriesSet = categories ? (
-		<CatFilter
-			categories={categories}
-			selectedCategory={selectedCategory}
-			sortOrder={sortOrder}
-			onFilterChange={(sort, cat) => onFilterChange(sort, cat)}
-		/>
-	) : null;
-
-	const materialsSet = materials && materials.length > 0 ? (
-		<MaterialFilter
-			materials={materials}
-			selectedCategory={selectedCategory}
-			selectedMaterial={selectedMaterial}
-			sortOrder={sortOrder}
-			onFilterChange={(sort, cat, material) => onFilterChange(sort, cat, material)}
-		/>
-	) : null;
-
+export const FilterDrawer: FC<FilterDrawerProps> = ({ isOpen, onOpenChange, onFilterChange, sortOrder, selectedCategory, selectedMaterial, selectedImageColor, categories, materials, products }) => {
 	return (
-		<Drawer isOpen={isOpen} radius="none" onOpenChange={onOpenChange}>
+		<Drawer isOpen={isOpen} placement="right" size="full" onOpenChange={onOpenChange}>
 			<DrawerContent>
 				{(onClose) => (
 					<>
-						<DrawerHeader className="flex flex-col gap-1">Фильтры по товарам</DrawerHeader>
-						<Form className="left-0w-full items-stretch">
-							<DrawerBody className="pb-20">{categoriesSet}</DrawerBody>
-							{selectedCategory && (
-								<DrawerFooter className="absolute left-0 right-0 bottom-0 w-full bg-background border-t">
-									{/* Reset button to clear filters */}
-									<Button color="default" radius="sm" type="reset" variant="solid" onPress={() => onFilterChange('asc', '', '')}>
-										Сбросить
-									</Button>
-									{/* Apply button to close the drawer */}
-									<Button color="primary" radius="sm" variant="solid" onPress={onClose}>
-										Применить
-									</Button>
-								</DrawerFooter>
-							)}
-						</Form>
+						<DrawerHeader className="flex flex-col gap-1">Фильтры</DrawerHeader>
+						<DrawerBody>
+							<FilterGroup
+								categories={categories}
+								materials={materials}
+								products={products}
+								selectedCategory={selectedCategory}
+								selectedImageColor={selectedImageColor}
+								selectedMaterial={selectedMaterial}
+								sortOrder={sortOrder}
+								onFilterChange={(sort, cat, material, imageColor) => {
+									onFilterChange(sort, cat, material, imageColor);
+									onClose();
+								}}
+							/>
+						</DrawerBody>
+						<DrawerFooter>
+							<Button color="danger" variant="light" onPress={onClose}>
+								Закрыть
+							</Button>
+						</DrawerFooter>
 					</>
 				)}
 			</DrawerContent>
@@ -160,27 +159,36 @@ export const FilterDrawer: FC<FilterDrawerProps> = ({ isOpen, onOpenChange, onFi
 };
 
 interface ProductsFilterProps {
+	categories: CategoryProps[];
+	materials: Array<{ material: string; count: number }>;
+	products: any[];
 	sortOrder: string;
 	selectedCategory: string;
-	onFilterChange: (sortOrder: string, category: string) => void;
-	categories: CategoryProps[];
-	materials?: Array<{ material: string; count: number }>;
 	selectedMaterial: string;
+	selectedImageColor: string;
+	onFilterChange: (sortOrder: string, category: string, material?: string, imageColor?: string) => void;
 }
 
 /**
- * Main component for filtering products.
+ * Main component for rendering product filters.
  *
  * @param {ProductsFilterProps} props - The properties for the ProductsFilter component.
  * @returns {JSX.Element} The rendered ProductsFilter component.
  */
-const ProductsFilter: FC<ProductsFilterProps> = ({ sortOrder, selectedCategory, onFilterChange, categories, materials = [], selectedMaterial }) => {
+const ProductsFilter: FC<ProductsFilterProps> = ({ categories, materials, products, sortOrder, selectedCategory, selectedMaterial, selectedImageColor, onFilterChange }) => {
 	return (
-		<div className="hidden md:flex flex-col gap-4 sticky top-20 z-30 bg-background">
-			<FilterGroup categories={categories} materials={materials} selectedCategory={selectedCategory} selectedMaterial={selectedMaterial} sortOrder={sortOrder} onFilterChange={onFilterChange} />
-
-		</div>
+		<aside className="hidden md:block sticky top-24 self-start max-h-[calc(100vh-120px)] overflow-y-auto pr-4 scrollbar-hide">
+			<FilterGroup
+				categories={categories}
+				materials={materials}
+				products={products}
+				selectedCategory={selectedCategory}
+				selectedImageColor={selectedImageColor}
+				selectedMaterial={selectedMaterial}
+				sortOrder={sortOrder}
+				onFilterChange={onFilterChange}
+			/>
+		</aside>
 	);
-};
 
 export default ProductsFilter;

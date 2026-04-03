@@ -24,6 +24,7 @@ export async function getAllProductsFromSanity(): Promise<any[]> {
         name,
         price,
         image,
+        "imagePalette": image.asset->metadata.palette,
         items
         }`);
 

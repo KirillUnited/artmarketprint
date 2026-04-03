@@ -17,6 +17,7 @@ import { cn } from "@/lib/utils";
 import { useKeyboardNavigation } from "@/hooks/use-keyboard-navigation";
 import { CURRENCIES_SYMBOLS } from "@/lib/products/companies";
 import Link from "next/link";
+import ImageColorFilter from "./shared/product/ui/ImageColorFilter";
 
 export interface SearchConfig {
   /** Algolia Application ID (required) */
@@ -637,6 +638,7 @@ const ResultsPanel = memo(function ResultsPanel({
         className="flex flex-col h-[91vh] md:h-[50vh] bg-muted gap-4 p-2 overflow-y-auto"
         role="listbox"
       >
+        <ImageColorFilter className="px-4 py-2 bg-background/50 rounded-md" />
         <HitsList
           hits={items}
           query={query}
