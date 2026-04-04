@@ -1,8 +1,8 @@
 'use client';
-import React, {JSX, useEffect, useState} from 'react'
+import React, { JSX, useEffect, useState } from 'react'
 import { BreadcrumbItem, Breadcrumbs } from '@heroui/breadcrumbs';
 import { usePathname } from 'next/navigation';
-import {ChevronRightIcon, HomeIcon} from 'lucide-react';
+import { ChevronRightIcon, HomeIcon } from 'lucide-react';
 import clsx from 'clsx';
 import Link from 'next/link';
 
@@ -171,10 +171,10 @@ export const ServiceBreadcrumb: React.FC<ServiceBreadcrumbProps> = (
 }
 
 export function LightBreadcrumb({
-									   category,
-									   subcategory,
-										baseUrl
-								   }: {
+	category,
+	subcategory,
+	baseUrl
+}: {
 	category?: { title: string; currentSlug: string }
 	subcategory?: { title: string; slug: string }
 	baseUrl?: string
@@ -189,12 +189,18 @@ export function LightBreadcrumb({
 					</Link>
 				</li>
 				<ChevronRightIcon className="w-4 h-4 text-gray-400" />
+				<li>
+					<Link href={`${baseUrl}/all`}>Каталог</Link>
+				</li>
 
 				{category && (
 					<>
+						<ChevronRightIcon className="w-4 h-4 text-gray-400" />
 						<li>
 							<Link
-								className="hover:underline"
+								className={clsx("hover:underline", {
+									"text-gray-900 font-medium": !subcategory
+								})}
 								href={`${baseUrl}/${category.currentSlug}`}
 							>
 								{category.title}

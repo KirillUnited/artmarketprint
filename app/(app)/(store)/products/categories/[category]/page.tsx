@@ -3,7 +3,7 @@ import { clsx } from 'clsx';
 
 import { getTotalProductsQuery, getCategoriesQuery, CATEGORY_QUERY, getAllProductMaterials, getAllProductColorsQuery } from '@/components/shared/product/lib/queries';
 import { CategoryFilter, ClientPagination, ColorFilter, MaterialFilter, ProductListContainer } from '@/components/shared/product/ui/';
-import Section from '@/components/layout/Section';
+import Section, { SectionTitle } from '@/components/layout/Section';
 import { sanityFetch } from '@/sanity/lib/sanityFetch';
 import Loader from '@/components/ui/Loader';
 import { LightBreadcrumb } from '@/components/ui/Breadcrumb';
@@ -43,7 +43,7 @@ export default async function ProductsCategoryPage({
 	searchParams,
 }: {
 	params: Promise<Props>;
-	searchParams: Promise<{ page?: string; sub?: string; sort?: string; material?: string; color?: string }>;
+	searchParams: Promise<{ page?: string; sub?: string | string[]; sort?: string; material?: string; color?: string }>;
 }): Promise<JSX.Element> {
 	const { category } = await params;
 	const { page, sub, sort, material, color } = await searchParams;
@@ -56,34 +56,41 @@ export default async function ProductsCategoryPage({
 					slug: category,
 				},
 			});
-	const activeSubcategory = categorySlug?.subcategories?.find((s: any) => s.slug === sub);
+	const subValue = Array.isArray(sub) ? sub.join(',') : (sub || '');
+	const activeSubcategorySlugs = subValue
+		.split(',')
+		.map((value) => value.trim())
+		.filter(Boolean);
+	const activeSubcategories = categorySlug?.subcategories?.filter((s: any) => activeSubcategorySlugs.includes(s.slug)) || [];
+	const singleActiveSubcategory = activeSubcategories.length === 1 ? activeSubcategories[0] : null;
 	const [total, categories, allProductMaterials, allProductColors] = await Promise.all([
-		sanityFetch({ query: getTotalProductsQuery(categorySlug, activeSubcategory || null, material || null, color || null) }),
+		sanityFetch({ query: getTotalProductsQuery(categorySlug, activeSubcategories, material || null, color || null) }),
 		sanityFetch({ query: getCategoriesQuery }),
 		sanityFetch({ query: getAllProductMaterials }),
-		sanityFetch({ query: getAllProductColorsQuery(categorySlug, activeSubcategory || null) }),
+		sanityFetch({ query: getAllProductColorsQuery(categorySlug, activeSubcategories) }),
 	]);
 	const pageNumber = parseInt(page || '1');
 	const totalPages = Math.ceil(total / PRODUCTS_PER_PAGE);
-	const activeCategory = activeSubcategory?.title || categorySlug?.title;
+	const activeCategory = singleActiveSubcategory?.title || categorySlug?.title;
 
 	return (
 		<Section className="space-y-6">
-			<LightBreadcrumb baseUrl={BASE_URL} category={categorySlug} subcategory={activeSubcategory} />
-
+			<SectionTitle>Каталог товаров</SectionTitle>
 			<div className="space-y-4">
 				<div className="flex items-center justify-between gap-4">
-					<p className="font-semibold text-lg">Каталог</p>
+					<p className="font-semibold text-lg">Категории</p>
 				</div>
 
 				<CategoryFilter active={category} baseUrl={BASE_URL} categories={categories} />
 			</div>
 
+			<LightBreadcrumb baseUrl={BASE_URL} category={categorySlug} subcategory={singleActiveSubcategory || undefined} />
+
 			<h1 className="text-3xl font-semibold">
 				{activeCategory || 'Все категории'} <span className="text-sm font-light text-gray-600 truncate">{`${total} шт.`}</span>
 			</h1>
 			<div className={clsx('grid gap-4', activeCategory && 'md:grid-cols-[270px_1fr]')}>
-				{activeCategory && <SubCategoryFilter activeSubcategory={activeSubcategory} baseUrl={BASE_URL} category={categorySlug} categorySlug={category} />}
+				{activeCategory && <SubCategoryFilter activeSubcategory={activeSubcategories} baseUrl={BASE_URL} category={categorySlug} categorySlug={category} />}
 				<div className="flex flex-col gap-4">
 					<ProductFilter allProductColors={allProductColors} allProductMaterials={allProductMaterials}/>
 					<Suspense fallback={<Loader className="static" label="Загрузка товаров..." size="lg" variant="spinner" />}>
@@ -94,7 +101,7 @@ export default async function ProductsCategoryPage({
 							material={material || null}
 							pageNumber={pageNumber}
 							sort={sort || null}
-							subcategorySlug={activeSubcategory}
+							subcategorySlug={activeSubcategories}
 						/>
 					</Suspense>
 				</div>

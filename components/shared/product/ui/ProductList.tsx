@@ -11,7 +11,7 @@ interface ProductListProps {
 	categorySlug: string;
 	pageNumber: number;
 	PRODUCTS_PER_PAGE: number;
-	subcategorySlug: string | null;
+	subcategorySlug: any[] | null;
 	sort: string | null;
 	material: string | null;
 	color: string | null;
