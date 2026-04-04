@@ -7,13 +7,13 @@ export default function SubCategoryFilter({category, categorySlug, activeSubcate
 	return (
 		<div className="flex flex-col gap-2 md:sticky top-20 z-30">
 			<p className="font-semibold text-lg">Подкатегории</p>
-			<ul>
+			<ul role="list" className="px-2 py-3 text-gray-900">
 				{
 					category?.subcategories?.map((sub: any) => (
 						<li key={sub.slug}>
 							<Link
 								className={clsx(
-									'hover:underline hover:text-primary text-sm',
+									'hover:underline hover:text-primary',
 									{'font-bold text-primary': activeSubcategory?.slug === sub.slug}
 								)}
 								href={`${baseUrl}/${categorySlug}?sub=${sub.slug}`}>{sub.title}</Link>

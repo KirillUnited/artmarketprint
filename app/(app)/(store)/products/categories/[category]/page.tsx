@@ -3,7 +3,7 @@ import { clsx } from 'clsx';
 
 import { getTotalProductsQuery, getCategoriesQuery, CATEGORY_QUERY, getAllProductMaterials, getAllProductColorsQuery } from '@/components/shared/product/lib/queries';
 import { CategoryFilter, ClientPagination, ColorFilter, MaterialFilter, ProductListContainer } from '@/components/shared/product/ui/';
-import Section from '@/components/layout/Section';
+import Section, { SectionTitle } from '@/components/layout/Section';
 import { sanityFetch } from '@/sanity/lib/sanityFetch';
 import Loader from '@/components/ui/Loader';
 import { LightBreadcrumb } from '@/components/ui/Breadcrumb';
@@ -69,15 +69,16 @@ export default async function ProductsCategoryPage({
 
 	return (
 		<Section className="space-y-6">
-			<LightBreadcrumb baseUrl={BASE_URL} category={categorySlug} subcategory={activeSubcategory} />
-
+			<SectionTitle>Каталог товаров</SectionTitle>
 			<div className="space-y-4">
 				<div className="flex items-center justify-between gap-4">
-					<p className="font-semibold text-lg">Каталог</p>
+					<p className="font-semibold text-lg">Категории</p>
 				</div>
 
 				<CategoryFilter active={category} baseUrl={BASE_URL} categories={categories} />
 			</div>
+
+			<LightBreadcrumb baseUrl={BASE_URL} category={categorySlug} subcategory={activeSubcategory} />
 
 			<h1 className="text-3xl font-semibold">
 				{activeCategory || 'Все категории'} <span className="text-sm font-light text-gray-600 truncate">{`${total} шт.`}</span>
