@@ -3,7 +3,7 @@ import {defineQuery} from 'next-sanity';
 
 export const getProductsQuery = (
 	category: any | null,
-	subcategory: any | null,
+	subcategories: any[] | null,
 	page: number,
 	limit: number,
 	sort: string | null,
@@ -12,7 +12,9 @@ export const getProductsQuery = (
 ) => {
 	const start = (page - 1) * limit;
 	const categoryFilter = category ? `&& category == "${category.title}"` : '';
-	const subcategoryFilter = subcategory ? `&& subcategory == "${subcategory.title}"` : '';
+	const subcategoryFilter = subcategories && subcategories.length > 0
+		? `&& subcategory in [${subcategories.map((subcategory: any) => `"${subcategory.title}"`).join(', ')}]`
+		: '';
 	const materialFilter = material ? `&& "${material}" in materials` : ''
 	const colorFilter = color ? `&& ("${color}" in colors || "${color}" in items[].color)` : ''
 
@@ -77,17 +79,21 @@ export const getAllProductMaterials = `
 
 export const getAllProductColorsQuery = (
 	category: any | null,
-	subcategory: any | null
+	subcategories: any[] | null
 ) => {
 	const categoryFilter = category ? `&& category == "${category.title}"` : '';
-	const subcategoryFilter = subcategory ? `&& subcategory == "${subcategory.title}"` : '';
+	const subcategoryFilter = subcategories && subcategories.length > 0
+		? `&& subcategory in [${subcategories.map((subcategory: any) => `"${subcategory.title}"`).join(', ')}]`
+		: '';
 
 	return `array::unique(*[_type == "product" ${categoryFilter} ${subcategoryFilter}].colors[]) | order(@ asc)`;
 };
 
-export const getTotalProductsQuery = (category: any | null, subcategory: any | null, material: string | null, color: string | null) => {
+export const getTotalProductsQuery = (category: any | null, subcategories: any[] | null, material: string | null, color: string | null) => {
 	const categoryFilter = category ? `&& category == "${category.title}"` : '';
-	const subcategoryFilter = subcategory ? `&& subcategory == "${subcategory.title}"` : '';
+	const subcategoryFilter = subcategories && subcategories.length > 0
+		? `&& subcategory in [${subcategories.map((subcategory: any) => `"${subcategory.title}"`).join(', ')}]`
+		: '';
 	const materialFilter = material ? `&& "${material}" in materials` : ''
 	const colorFilter = color ? `&& ("${color}" in colors || "${color}" in items[].color)` : ''
 
