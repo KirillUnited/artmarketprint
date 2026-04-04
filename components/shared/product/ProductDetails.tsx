@@ -58,6 +58,8 @@ export const ProductDetails: ({items, sizes, colors, color, size}: {
 
     return (
         <div className='flex flex-col gap-4'>
+            {selectedColor && <p className='text-foreground text-sm'>Цвет: <span className='font-semibold'>{selectedColor}</span></p>}
+            {/* {selectedSize && <p className='text-foreground font-semibold text-sm'>Выбранный размер: {selectedSize}</p>} */}
             {/* Color picker */}
             {
                 Array.isArray(items) && items.length > 0 && (
@@ -170,8 +172,6 @@ export const ProductDetails: ({items, sizes, colors, color, size}: {
                     </fieldset>
                 )
             }
-            {/* {selectedColor && <p className='text-foreground font-semibold text-sm'>Выбранный вариант: {selectedColor}</p>}
-            {selectedSize && <p className='text-foreground font-semibold text-sm'>Выбранный размер: {selectedSize}</p>} */}
         </div>
     )
 }
