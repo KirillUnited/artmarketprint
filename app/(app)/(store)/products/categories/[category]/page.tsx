@@ -74,7 +74,7 @@ export default async function ProductsCategoryPage({
 	const activeCategory = singleActiveSubcategory?.title || categorySlug?.title;
 
 	return (
-		<Section className="space-y-6">
+		<Section className="space-y-6 bg-neutral-50">
 			<SectionTitle>Каталог товаров</SectionTitle>
 			<div className="space-y-4">
 				<div className="flex items-center justify-between gap-4">
