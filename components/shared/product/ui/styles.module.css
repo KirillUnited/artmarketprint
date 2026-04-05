@@ -15,7 +15,7 @@
 
 .CategoryFilterItem {
     @apply transition-colors;
-    @apply grid gap-2 rounded-xs p-2;
+    @apply grid gap-2 p-2;
     grid-template-columns: 2.5rem 1fr;
     flex-basis: calc(160/16*1rem);
     flex-shrink: 0;

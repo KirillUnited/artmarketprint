@@ -51,7 +51,7 @@ export default function SubCategoryFilter({
 	)
 
 	return (
-		<div className="sticky top-20 z-30 flex flex-col gap-2 md:self-start">
+		<div className="md:sticky top-20 z-30 flex flex-col gap-2 md:self-start">
 			<CheckboxGroup
 				className="text-gray-900"
 				name="subcategories"
