@@ -16,15 +16,15 @@ export default function CategoryFilter({categories, active, baseUrl}: {categorie
 			{categories.map((cat) => (
 				<Link
 					key={cat._id}
-					className={clsx(active === cat.currentSlug ? 'font-bold bg-brand-gradient text-fill-transparent active' : '',
-						'hover:bg-brand-gradient hover:text-fill-transparent',
+					className={clsx(active === cat.currentSlug ? 'font-bold' : '',
+						'hover:bg-brand-gradient hover:text-fill-transparent bg-background rounded-small',
 						styles.CategoryFilterItem
 					)}
 					href={`${baseUrl}/${cat.currentSlug}`}
 					title={cat.title}>
-					<Image alt={cat.title} className="object-cover aspect-square rounded-small w-10 h-10" height={40}
+					<Image alt={cat.title} className="object-cover aspect-square rounded-sm w-10 h-10" height={40}
 						   quality={10} src={urlFor(cat.image?.asset).width(64).height(64).url()} width={40}/>
-					<span className='flex-1 text-sm line-clamp-2'>{cat.title}</span>
+					<span className={clsx(active === cat.currentSlug ? 'bg-brand-gradient text-fill-transparent active' : '', 'flex-1 text-sm line-clamp-2')}>{cat.title}</span>
 				</Link>
 			))}
 		</div>

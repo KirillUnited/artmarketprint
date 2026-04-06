@@ -345,7 +345,7 @@ const HitsList = memo(function HitsList({
             }}
           >
             {hasImage ? (
-              <div className="w-[100px] h-[100px] self-start flex-[0_0_100px] items-center justify-center overflow-hidden rounded-sm bg-muted">
+              <div className="w-25 h-25 self-start flex-[0_0_100px] items-center justify-center overflow-hidden rounded-sm">
                 {!isImageFailed ? (
                   <img
                     src={imageUrl as string}
@@ -552,7 +552,7 @@ interface NoResultsProps {
 
 const NoResults = memo(function NoResults({ query, onClear }: NoResultsProps) {
   return (
-    <div className="flex flex-col items-center justify-center gap-2 bg-muted p-4 h-[91vh] md:h-[50vh] text-foreground">
+    <div className="flex flex-col items-center justify-center gap-2 p-4 h-[91vh] md:h-[50vh] text-foreground">
       <div className="flex items-center p-2 justify-center w-10 h-10 rounded-full border-muted-foreground border">
         <SearchIcon />
       </div>
@@ -635,7 +635,7 @@ const ResultsPanel = memo(function ResultsPanel({
     <>
       <div
         ref={containerRef}
-        className="flex flex-col h-[91vh] md:h-[50vh] bg-muted gap-4 p-2 overflow-y-auto"
+        className="flex flex-col h-[91vh] md:h-[50vh] gap-4 p-2 overflow-y-auto"
         role="listbox"
       >
         <ImageColorFilter className="px-4 py-2 bg-background/50 rounded-md" />
@@ -796,7 +796,7 @@ const Footer = memo(function Footer({
         {/* 🚧 DO NOT REMOVE the logo if you are on a Free plan
          * https://support.algolia.com/hc/en-us/articles/17226079853073-Is-displaying-the-Algolia-logo-required
          */}
-        {/* <a
+        <a
           className="flex items-center gap-2 text-muted-foreground text-sm no-underline transition-colors hover:text-primary"
           href={poweredByHref}
           target="_blank"
@@ -804,7 +804,7 @@ const Footer = memo(function Footer({
         >
           <span className="md:block hidden">Powered by</span>
           <AlgoliaLogo />
-        </a> */}
+        </a>
       </div>
     </div>
   );
