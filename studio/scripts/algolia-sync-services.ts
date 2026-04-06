@@ -63,6 +63,7 @@ type ProductAlgoliaRecord = {
   stock?: number;
   materials?: string[];
   colors?: string[];
+  dominantColors?: string[];
   sizes?: string[];
   imageUrl?: string;
   url: string;
@@ -95,6 +96,7 @@ const PRODUCTS_QUERY = `*[_type == "product" && defined(id) && !(_id in path("dr
   colors,
   sizes,
   image,
+  "imagePalette": image.asset->metadata.palette,
   images_urls,
   _updatedAt
 }`;
@@ -161,6 +163,19 @@ async function transformProductForAlgolia(product: any): Promise<ProductAlgoliaR
   const id = String(product.id || product._id);
   const imageUrl = pickProductImage(product);
 
+  // Extract dominant colors from Sanity image palette
+  const dominantColors: string[] = [];
+  if (product.imagePalette) {
+    const palette = product.imagePalette;
+    const colorTypes = ['vibrant', 'darkVibrant', 'lightVibrant', 'muted', 'darkMuted', 'lightMuted', 'dominant'];
+    
+    for (const type of colorTypes) {
+      if (palette[type] && palette[type].background) {
+        dominantColors.push(palette[type].background.toUpperCase());
+      }
+    }
+  }
+
   return {
     objectID: String(product._id),
     id,
@@ -174,6 +189,7 @@ async function transformProductForAlgolia(product: any): Promise<ProductAlgoliaR
     stock: normalizeStock(product.stock),
     materials: Array.isArray(product.materials) ? product.materials : undefined,
     colors: Array.isArray(product.colors) ? product.colors : undefined,
+    dominantColors: dominantColors.length > 0 ? Array.from(new Set(dominantColors)) : undefined,
     sizes: Array.isArray(product.sizes) ? product.sizes : undefined,
     imageUrl,
     url: `/products/${id}`,
@@ -244,10 +260,19 @@ async function syncProductsToAlgolia() {
           'unordered(name)',
           'unordered(description)',
           'unordered(colors)',
+          'unordered(dominantColors)',
           'unordered(materials)',
           'unordered(category)',
           'unordered(subcategory)',
           'sku'
+        ],
+        attributesForFaceting: [
+          'filterOnly(category)',
+          'filterOnly(subcategory)',
+          'filterOnly(materials)',
+          'filterOnly(colors)',
+          'filterOnly(dominantColors)',
+          'searchable(brand)'
         ],
         // Configure ranking criteria
         ranking: [
