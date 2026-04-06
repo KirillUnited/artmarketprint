@@ -796,7 +796,7 @@ const Footer = memo(function Footer({
         {/* 🚧 DO NOT REMOVE the logo if you are on a Free plan
          * https://support.algolia.com/hc/en-us/articles/17226079853073-Is-displaying-the-Algolia-logo-required
          */}
-        <a
+        {/* <a
           className="flex items-center gap-2 text-muted-foreground text-sm no-underline transition-colors hover:text-primary"
           href={poweredByHref}
           target="_blank"
@@ -804,7 +804,7 @@ const Footer = memo(function Footer({
         >
           <span className="md:block hidden">Powered by</span>
           <AlgoliaLogo />
-        </a>
+        </a> */}
       </div>
     </div>
   );
