@@ -638,7 +638,7 @@ const ResultsPanel = memo(function ResultsPanel({
         className="flex flex-col h-[91vh] md:h-[50vh] gap-4 p-2 overflow-y-auto"
         role="listbox"
       >
-        <ImageColorFilter className="px-4 py-2 bg-background/50 rounded-md" />
+        <ImageColorFilter className="px-4 py-2 bg-background/50 rounded-md" attribute={''} />
         <HitsList
           hits={items}
           query={query}
