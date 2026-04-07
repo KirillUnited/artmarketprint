@@ -1,7 +1,7 @@
 import { createClient } from '@sanity/client';
+import { createImageUrlBuilder } from '@sanity/image-url';
 import { algoliasearch } from 'algoliasearch';
 import dotenv from 'dotenv';
-import { generateImageUrlForAlgolia } from '../../lib/image-utils';
 
 // Load env the same way as local Next.js: `.env` then `.env.local` (local overrides).
 // `dotenv.config()` alone only reads `.env`, so values only in `.env.local` were missing.
@@ -32,12 +32,34 @@ const sanityClient = createClient({
 
 const ALGOLIA_SERVICES_INDEX = 'services';
 const ALGOLIA_PRODUCTS_INDEX = 'products';
+const imageBuilder = createImageUrlBuilder({
+  projectId: sanityProjectId,
+  dataset: sanityDataset,
+});
 
 // Algolia client configuration (algoliasearch v5)
 const algoliaClient = algoliasearch(
   process.env.NEXT_PUBLIC_ALGOLIA_APP_ID || '',
   process.env.ALGOLIA_ADMIN_KEY || ''
 );
+
+function generateImageUrlForAlgolia(image: any): string | undefined {
+  if (!image) return undefined;
+
+  try {
+    return imageBuilder
+      .image(image)
+      .format('webp')
+      .fit('crop')
+      .width(400)
+      .height(400)
+      .quality(80)
+      .url();
+  } catch (error) {
+    console.warn('Failed to generate image URL for Algolia:', error);
+    return undefined;
+  }
+}
 
 // Define the service type for Algolia
 type ServiceAlgoliaRecord = {
@@ -439,7 +461,8 @@ async function syncProductsToAlgolia() {
 }
 
 // Run the sync if this file is executed directly
-if (require.main === module) {
+const isDirectRun = process.argv[1]?.includes('algolia-sync-services.ts');
+if (isDirectRun) {
   syncServicesToAlgolia();
 }
 
