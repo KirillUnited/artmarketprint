@@ -4,7 +4,7 @@ import { useRefinementList, UseRefinementListProps } from 'react-instantsearch'
 import { Tooltip } from '@heroui/tooltip'
 import { cn } from '@/lib/utils'
 
-export interface ImageColorFilterProps extends UseRefinementListProps {
+export interface ImageColorFilterProps extends Omit<UseRefinementListProps, 'attribute'> {
     className?: string
 }
 

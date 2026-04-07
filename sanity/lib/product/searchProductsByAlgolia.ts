@@ -2,6 +2,7 @@ import type { SearchResponse } from '@algolia/client-search';
 
 import type { ProductData } from '@/components/shared/product/product.types';
 import { createAlgoliaSearchClient } from '@/lib/algolia-client';
+import { pickRelevantImageForQuery } from '@/lib/search/relevant-image';
 import { SEARCH_CONFIG, SEARCH_PARAMETERS, RUSSIAN_SEARCH_CONFIG } from '@/lib/search-config';
 import { searchProductsByName } from '@/sanity/lib/product/searchProductsByName';
 
@@ -18,6 +19,8 @@ type AlgoliaProductHit = {
   stock?: number | string;
   materials?: string[];
   colors?: string[];
+  galleryImages?: string[];
+  variantImagesByColor?: Record<string, string>;
   sizes?: string[];
   imageUrl?: string;
   url?: string;
@@ -45,8 +48,9 @@ const getAlgoliaIndexName = () =>
 const hasAlgoliaSearchConfig = () =>
   Boolean(process.env.NEXT_PUBLIC_ALGOLIA_APP_ID && process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_KEY);
 
-const mapAlgoliaHitToProduct = (hit: AlgoliaProductHit): ProductData => {
-  const image = typeof hit.imageUrl === 'string' && hit.imageUrl.trim() !== '' ? hit.imageUrl : DEFAULT_IMAGE;
+const mapAlgoliaHitToProduct = (hit: AlgoliaProductHit, searchQuery: string): ProductData => {
+  const relevantImage = pickRelevantImageForQuery(hit, searchQuery);
+  const image = typeof relevantImage === 'string' && relevantImage.trim() !== '' ? relevantImage : DEFAULT_IMAGE;
   const id = String(hit.id ?? hit.objectID ?? '');
   const price =
     typeof hit.price === 'number'
@@ -173,7 +177,7 @@ export async function searchProductsByAlgolia(
     if (totalPages > 0 && safePage > totalPages) {
       const fallbackResponse = await runAlgoliaSearch(searchParam, totalPages, hitsPerPage);
       return {
-        products: fallbackResponse.hits.map(mapAlgoliaHitToProduct),
+        products: fallbackResponse.hits.map((hit) => mapAlgoliaHitToProduct(hit, searchParam)),
         totalFound,
         totalPages,
         currentPage: totalPages,
@@ -181,7 +185,7 @@ export async function searchProductsByAlgolia(
     }
 
     return {
-      products: response.hits.map(mapAlgoliaHitToProduct),
+      products: response.hits.map((hit) => mapAlgoliaHitToProduct(hit, searchParam)),
       totalFound,
       totalPages,
       currentPage: safePage,
@@ -197,7 +201,7 @@ export async function searchProductsByAlgolia(
     allHits.push(...pageResponse.hits);
   }
 
-  const allProducts = allHits.map(mapAlgoliaHitToProduct);
+  const allProducts = allHits.map((hit) => mapAlgoliaHitToProduct(hit, searchParam));
   const filtered = applyProductSort(applyProductFilters(allProducts, options), options.sort);
   const totalFound = filtered.length;
   const totalPages = Math.max(1, Math.ceil(totalFound / hitsPerPage));
