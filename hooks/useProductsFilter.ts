@@ -11,11 +11,12 @@ interface UseProductsFilterReturn {
     sortOrder: string;
     selectedCategory: string;
     selectedMaterial: string;
+    selectedImageColor: string;
     currentPage: number;
     filteredProducts: any[];
     paginatedItems: any[];
     totalPages: number;
-    handleFilterChange: (newSortOrder: string, newCategory: string, newMaterial?: string) => void;
+    handleFilterChange: (newSortOrder: string, newCategory: string, newMaterial?: string, newImageColor?: string) => void;
     handlePageChange: (newPage: number) => void;
 }
 
@@ -23,6 +24,7 @@ export function useProductsFilter({ products, totalItemsView = 20 }: UseProducts
     const [sortOrder, setSortOrder] = useState('asc');
     const [selectedCategory, setSelectedCategory] = useState('');
     const [selectedMaterial, setSelectedMaterial] = useState('');
+    const [selectedImageColor, setSelectedImageColor] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
 
     // Memoized filtered and sorted products
@@ -35,8 +37,17 @@ export function useProductsFilter({ products, totalItemsView = 20 }: UseProducts
             const materialMatch = !selectedMaterial || 
                 (product?.materials && 
                 product.materials.includes(selectedMaterial));
+
+            const imageColorMatch = !selectedImageColor || (() => {
+                if (!product.imagePalette) return false;
+                const palette = product.imagePalette;
+                const colors = Object.values(palette)
+                    .filter((c: any) => c && c.background)
+                    .map((c: any) => c.background.toUpperCase());
+                return colors.includes(selectedImageColor.toUpperCase());
+            })();
             
-            return categoryMatch && materialMatch;
+            return categoryMatch && materialMatch && imageColorMatch;
         }) || [];
 
         return sortOrder === 'asc'
@@ -52,7 +63,7 @@ export function useProductsFilter({ products, totalItemsView = 20 }: UseProducts
     );
 
     // Handler for filter changes
-    const handleFilterChange = (newSortOrder: string, newCategory: string, newMaterial?: string) => {
+    const handleFilterChange = (newSortOrder: string, newCategory: string, newMaterial?: string, newImageColor?: string) => {
         setSortOrder(newSortOrder);
         
         if (newCategory !== undefined) {
@@ -61,6 +72,10 @@ export function useProductsFilter({ products, totalItemsView = 20 }: UseProducts
         
         if (newMaterial !== undefined) {
             setSelectedMaterial(newMaterial);
+        }
+
+        if (newImageColor !== undefined) {
+            setSelectedImageColor(newImageColor);
         }
         
         setCurrentPage(1);
@@ -77,6 +92,7 @@ export function useProductsFilter({ products, totalItemsView = 20 }: UseProducts
         sortOrder,
         selectedCategory,
         selectedMaterial,
+        selectedImageColor,
         currentPage,
         filteredProducts,
         paginatedItems,

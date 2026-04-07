@@ -12,9 +12,8 @@ import { countProductsByCategory, enrichCategoriesWithCounts } from '@/lib/produ
 import { collectMaterials } from '@/lib/products/collectCategories';
 import { MaterialFilter } from '@/components/ui/filter/MaterialFilter';
 
-// import ProductGrid from './ProductGrid';
-import { ProductsNotFound } from './ProductsNotFound';
-import ProductsFilter, { FilterButton, FilterDrawer } from './ProductsFilter';
+import { ProductsNotFound, ProductList } from './ui';
+import {ProductsFilter, FilterButton, FilterDrawer } from './ProductsFilter';
 import { Product } from './product.types';
 import { ProductCardSkeleton } from './ProductGrid';
 
@@ -42,6 +41,7 @@ export default function ProductsView({ products, categories, totalItemsView = IT
         sortOrder,
         selectedCategory,
         selectedMaterial,
+        selectedImageColor,
         currentPage,
         filteredProducts,
         paginatedItems,
@@ -96,88 +96,61 @@ export default function ProductsView({ products, categories, totalItemsView = IT
                         <ProductsFilter
                             categories={enrichedCategories}
                             materials={materials}
+                            products={products}
                             selectedCategory={selectedCategory}
+                            selectedImageColor={selectedImageColor}
                             selectedMaterial={selectedMaterial}
                             sortOrder={sortOrder}
                             onFilterChange={handleFilterChange}
                         />
                     }
-                    <div className='flex flex-col gap-4 md:gap-8 relative h-full'>
-                        {!isLoading && (
-                            <>
-                                <div className='md:hidden'>
-                                    {SortFilter({
-                                        sortOrder,
-                                        selectedCategory,
-                                        onFilterChange: (sort: string, cat: string) => handleFilterChange(sort, cat)
-                                    })}
+
+                    <div className='flex flex-col gap-8'>
+                        <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+                            <div className="flex gap-2 w-full">
+                                {
+                                    showFilter && !isLoading &&
+                                    <FilterButton onOpen={onOpen} />
+                                }
+                                <div className="grow md:hidden">
+                                    <SortFilter selectedCategory={selectedCategory} sortOrder={sortOrder} onFilterChange={handleFilterChange} />
                                 </div>
-                                {materials && materials.length > 0 && (
-                                    <div className='md:hidden'>
-                                        {MaterialFilter({
-                                            selectedMaterial,
-                                            selectedCategory,
-                                            sortOrder,
-                                            materials,
-                                            onFilterChange: (sort, cat, mat) => handleFilterChange(sort, cat, mat)
-                                        })}
-                                    </div>
+                            </div>
+                        </div>
+
+                        {isLoading ? renderSkeletons() : (
+                            <>
+                                {paginatedItems.length > 0 ? (
+                                    <ProductList products={paginatedItems} />
+                                ) : (
+                                    <ProductsNotFound />
                                 )}
 
-                                {
-                                    showFilter &&
-                                    <div className='flex md:hidden flex-wrap flex-col md:flex-row gap-4 w-full mb-4'>
-                                        <FilterButton onOpen={onOpen} />
-                                        <FilterDrawer
-                                            categories={enrichedCategories}
-                                            isOpen={isOpen}
-                                            materials={materials}
-                                            selectedCategory={selectedCategory}
-                                            selectedMaterial={selectedMaterial}
-                                            sortOrder={sortOrder}
-                                            onFilterChange={handleFilterChange}
-                                            onOpenChange={onOpenChange}
+                                {totalPages > 1 && (
+                                    <div className="mt-8 flex justify-center">
+                                        <Pagination
+                                            currentPage={currentPage}
+                                            totalPages={totalPages}
+                                            onPageChange={handlePageChange}
                                         />
                                     </div>
-                                }
-                                {
-                                    selectedCategory &&
-                                    <Chip
-                                        classNames={{
-                                            base: 'cursor-pointer border',
-                                            content: 'flex items-center gap-2'
-                                        }}
-                                        color='default'
-                                        radius='sm'
-                                        size='sm'
-                                        variant='bordered'
-                                        onClick={() => handleFilterChange(sortOrder, '')}
-                                    >
-                                        {selectedCategory}
-                                        <XIcon size={14} />
-                                    </Chip>
-                                }
+                                )}
                             </>
                         )}
-
-                        {isLoading ? (
-                            renderSkeletons()
-                        ) : paginatedItems.length ? (
-                            // <ProductGrid products={paginatedItems} />
-                            null
-                        ) : (
-                            <ProductsNotFound />
-                        )}
-
-                        {!isLoading && filteredProducts.length > totalItemsView && (
-                            <Pagination
-                                className='self-center'
-                                page={currentPage}
-                                total={totalPages}
-                                onChange={handlePageChange}
-                            />
-                        )}
                     </div>
+
+                    <FilterDrawer
+                        categories={enrichedCategories}
+                        isOpen={isOpen}
+                        materials={materials}
+                        products={products}
+                        selectedCategory={selectedCategory}
+                        selectedImageColor={selectedImageColor}
+                        selectedMaterial={selectedMaterial}
+                        sortOrder={sortOrder}
+                        onFilterChange={handleFilterChange}
+                        onOpenChange={onOpenChange}
+                    />
                 </div>
             </div>
         </>
