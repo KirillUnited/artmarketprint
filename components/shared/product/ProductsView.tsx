@@ -2,18 +2,15 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import clsx from 'clsx';
 import { useDisclosure } from '@heroui/modal';
-import { Chip } from '@heroui/chip';
-import { XIcon } from 'lucide-react';
 
 import Pagination from '@/components/ui/Pagination';
 import { SortFilter } from '@/components/ui/filter/SortFilter';
 import { useProductsFilter } from '@/hooks/useProductsFilter';
 import { countProductsByCategory, enrichCategoriesWithCounts } from '@/lib/products/categoryCounts';
 import { collectMaterials } from '@/lib/products/collectCategories';
-import { MaterialFilter } from '@/components/ui/filter/MaterialFilter';
 
-import { ProductsNotFound, ProductList } from './ui';
-import {ProductsFilter, FilterButton, FilterDrawer } from './ProductsFilter';
+import { ProductList } from './ui';
+import ProductsFilter, {FilterButton, FilterDrawer } from './ProductsFilter';
 import { Product } from './product.types';
 import { ProductCardSkeleton } from './ProductGrid';
 
@@ -43,7 +40,6 @@ export default function ProductsView({ products, categories, totalItemsView = IT
         selectedMaterial,
         selectedImageColor,
         currentPage,
-        filteredProducts,
         paginatedItems,
         totalPages,
         handleFilterChange,
@@ -123,15 +119,15 @@ export default function ProductsView({ products, categories, totalItemsView = IT
                                 {paginatedItems.length > 0 ? (
                                     <ProductList products={paginatedItems} />
                                 ) : (
-                                    <ProductsNotFound />
+                                    null
                                 )}
 
                                 {totalPages > 1 && (
                                     <div className="mt-8 flex justify-center">
                                         <Pagination
-                                            currentPage={currentPage}
-                                            totalPages={totalPages}
-                                            onPageChange={handlePageChange}
+                                            page={currentPage}
+                                            total={totalPages}
+                                            onChange={handlePageChange}
                                         />
                                     </div>
                                 )}

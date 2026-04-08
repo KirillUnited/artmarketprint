@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useKeyboardNavigation } from "@/hooks/use-keyboard-navigation";
 import { CURRENCIES_SYMBOLS } from "@/lib/products/companies";
+import { pickRelevantImageForQuery } from "@/lib/search/relevant-image";
 import Link from "next/link";
 import ImageColorFilter from "./shared/product/ui/ImageColorFilter";
 
@@ -290,6 +291,7 @@ interface HitsListProps {
 
 const HitsList = memo(function HitsList({
   hits,
+  query,
   selectedIndex,
   attributes,
   onHoverIndex,
@@ -318,7 +320,14 @@ const HitsList = memo(function HitsList({
     <>
       {hits.map((hit: any, idx: number) => {
         const isSel = selectedIndex === idx;
-        const imageUrl = getByPath<string>(hit, mapping.image);
+        const mappedImageUrl = getByPath<string>(hit, mapping.image);
+        const imageUrl = pickRelevantImageForQuery(
+          {
+            ...hit,
+            imageUrl: mappedImageUrl ?? hit.imageUrl,
+          },
+          query,
+        );
         const url = getByPath<string>(hit, mapping.url);
         const hasImage = Boolean(imageUrl);
         const isImageFailed = failedImages[hit.objectID] || !hasImage;
@@ -638,7 +647,7 @@ const ResultsPanel = memo(function ResultsPanel({
         className="flex flex-col h-[91vh] md:h-[50vh] gap-4 p-2 overflow-y-auto"
         role="listbox"
       >
-        <ImageColorFilter className="px-4 py-2 bg-background/50 rounded-md" attribute={''} />
+        <ImageColorFilter className="px-4 py-2 bg-background/50 rounded-md" />
         <HitsList
           hits={items}
           query={query}

@@ -1,6 +1,6 @@
 'use client'
 
-import { Tooltip } from '@heroui/react'
+import { Tooltip } from '@heroui/tooltip'
 import { cn } from '@/lib/utils'
 import { useMemo } from 'react'
 

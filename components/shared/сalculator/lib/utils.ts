@@ -41,7 +41,7 @@ const calculatePVDPrice = (priceTable: any, selectedSize: Size, selectedPrint: a
 		}
 	}
 
-	return selectedColor?.id === 'white' ? pricePerBagValue : pricePerBagValue + COLOR_EXTRA_PRICE.colored;
+	return selectedColor?.id === 'white' ? (pricePerBagValue + COLOR_EXTRA_PRICE.DEFAULT) : (pricePerBagValue + COLOR_EXTRA_PRICE.colored);
 };
 
 export {getAvailableColors, getAvailableSizes, calculatePVDPrice};

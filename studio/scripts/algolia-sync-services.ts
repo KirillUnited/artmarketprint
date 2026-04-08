@@ -1,7 +1,7 @@
 import { createClient } from '@sanity/client';
+import { createImageUrlBuilder } from '@sanity/image-url';
 import { algoliasearch } from 'algoliasearch';
 import dotenv from 'dotenv';
-import { generateImageUrlForAlgolia } from '../../lib/image-utils';
 
 // Load env the same way as local Next.js: `.env` then `.env.local` (local overrides).
 // `dotenv.config()` alone only reads `.env`, so values only in `.env.local` were missing.
@@ -32,12 +32,34 @@ const sanityClient = createClient({
 
 const ALGOLIA_SERVICES_INDEX = 'services';
 const ALGOLIA_PRODUCTS_INDEX = 'products';
+const imageBuilder = createImageUrlBuilder({
+  projectId: sanityProjectId,
+  dataset: sanityDataset,
+});
 
 // Algolia client configuration (algoliasearch v5)
 const algoliaClient = algoliasearch(
   process.env.NEXT_PUBLIC_ALGOLIA_APP_ID || '',
   process.env.ALGOLIA_ADMIN_KEY || ''
 );
+
+function generateImageUrlForAlgolia(image: any): string | undefined {
+  if (!image) return undefined;
+
+  try {
+    return imageBuilder
+      .image(image)
+      .format('webp')
+      .fit('crop')
+      .width(400)
+      .height(400)
+      .quality(80)
+      .url();
+  } catch (error) {
+    console.warn('Failed to generate image URL for Algolia:', error);
+    return undefined;
+  }
+}
 
 // Define the service type for Algolia
 type ServiceAlgoliaRecord = {
@@ -64,6 +86,9 @@ type ProductAlgoliaRecord = {
   materials?: string[];
   colors?: string[];
   dominantColors?: string[];
+  galleryImages?: string[];
+  variantImagesByColor?: Record<string, string>;
+  searchImageHints?: string[];
   sizes?: string[];
   imageUrl?: string;
   url: string;
@@ -97,6 +122,11 @@ const PRODUCTS_QUERY = `*[_type == "product" && defined(id) && !(_id in path("dr
   sizes,
   image,
   "imagePalette": image.asset->metadata.palette,
+  items[]{
+    color,
+    images_urls,
+    cover
+  },
   images_urls,
   _updatedAt
 }`;
@@ -152,6 +182,95 @@ function normalizeStock(stock: unknown): number | undefined {
   return undefined;
 }
 
+function normalizeColorKey(value: string): string {
+  return value.trim().toLowerCase().replaceAll('ё', 'е');
+}
+
+function toImageArray(value: unknown): string[] {
+  if (typeof value === 'string') {
+    return value
+      .split(',')
+      .map((item) => item.trim())
+      .filter((item) => item !== '');
+  }
+
+  if (!Array.isArray(value)) {
+    return [];
+  }
+
+  return value.flatMap((item) => {
+    if (typeof item === 'string') {
+      return item
+        .split(',')
+        .map((img) => img.trim())
+        .filter((img) => img !== '');
+    }
+    return [];
+  });
+}
+
+function pickVariantImage(item: any): string | undefined {
+  if (typeof item?.cover === 'string' && item.cover.trim() !== '') {
+    return item.cover.trim();
+  }
+
+  const variantImages = toImageArray(item?.images_urls);
+  return variantImages[0];
+}
+
+function getVariantImagesByColor(product: any): Record<string, string> {
+  if (!Array.isArray(product?.items)) {
+    return {};
+  }
+
+  const mapping: Record<string, string> = {};
+
+  for (const item of product.items) {
+    if (typeof item?.color !== 'string') {
+      continue;
+    }
+
+    const key = normalizeColorKey(item.color);
+    if (!key || mapping[key]) {
+      continue;
+    }
+
+    const variantImage = pickVariantImage(item);
+    if (variantImage) {
+      mapping[key] = variantImage;
+    }
+  }
+
+  return mapping;
+}
+
+function getGalleryImages(product: any, imageUrl?: string): string[] {
+  const allImages = new Set<string>();
+
+  if (imageUrl) {
+    allImages.add(imageUrl);
+  }
+
+  if (typeof product?.image === 'string' && product.image.trim() !== '') {
+    allImages.add(product.image.trim());
+  }
+
+  for (const image of toImageArray(product?.images_urls)) {
+    allImages.add(image);
+  }
+
+  if (Array.isArray(product?.items)) {
+    for (const item of product.items) {
+      const variantImage = pickVariantImage(item);
+      if (variantImage) {
+        allImages.add(variantImage);
+      }
+    }
+  }
+
+  return Array.from(allImages);
+}
+
 async function transformProductForAlgolia(product: any): Promise<ProductAlgoliaRecord> {
   let truncatedDescription: string | undefined;
   if (typeof product.description === 'string' && product.description.trim() !== '') {
@@ -162,6 +281,18 @@ async function transformProductForAlgolia(product: any): Promise<ProductAlgoliaR
 
   const id = String(product.id || product._id);
   const imageUrl = pickProductImage(product);
+  const variantImagesByColor = getVariantImagesByColor(product);
+  const galleryImages = getGalleryImages(product, imageUrl);
+  const searchImageHints = Array.from(
+    new Set([
+      ...Object.keys(variantImagesByColor),
+      ...(Array.isArray(product.colors)
+        ? product.colors
+            .filter((color: unknown) => typeof color === 'string')
+            .map((color: string) => normalizeColorKey(color))
+        : []),
+    ])
+  );
 
   // Extract dominant colors from Sanity image palette
   const dominantColors: string[] = [];
@@ -190,6 +321,9 @@ async function transformProductForAlgolia(product: any): Promise<ProductAlgoliaR
     materials: Array.isArray(product.materials) ? product.materials : undefined,
     colors: Array.isArray(product.colors) ? product.colors : undefined,
     dominantColors: dominantColors.length > 0 ? Array.from(new Set(dominantColors)) : undefined,
+    galleryImages: galleryImages.length > 0 ? galleryImages : undefined,
+    variantImagesByColor: Object.keys(variantImagesByColor).length > 0 ? variantImagesByColor : undefined,
+    searchImageHints: searchImageHints.length > 0 ? searchImageHints : undefined,
     sizes: Array.isArray(product.sizes) ? product.sizes : undefined,
     imageUrl,
     url: `/products/${id}`,
@@ -327,7 +461,8 @@ async function syncProductsToAlgolia() {
 }
 
 // Run the sync if this file is executed directly
-if (require.main === module) {
+const isDirectRun = process.argv[1]?.includes('algolia-sync-services.ts');
+if (isDirectRun) {
   syncServicesToAlgolia();
 }
 

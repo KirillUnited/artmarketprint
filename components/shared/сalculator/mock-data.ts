@@ -47,8 +47,8 @@ export const colors: Color[] = [
 ];
 
 export const COLOR_EXTRA_PRICE = {
-	DEFAULT: 0,
-	colored: 0.08,
+	DEFAULT: 0.05,
+	colored: 0.13,
 };
 
 export const sizes: Size[] = [

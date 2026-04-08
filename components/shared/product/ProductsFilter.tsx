@@ -190,5 +190,6 @@ const ProductsFilter: FC<ProductsFilterProps> = ({ categories, materials, produc
 			/>
 		</aside>
 	);
+};
 
 export default ProductsFilter;
