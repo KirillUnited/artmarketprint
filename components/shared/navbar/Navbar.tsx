@@ -2,7 +2,7 @@
 import React from 'react';
 import { Navbar as BaseNavbar, NavbarBrand, NavbarContent, NavbarItem } from '@heroui/navbar';
 import { Link } from '@heroui/link';
-import { Calculator, PhoneOutgoing, ShoppingBagIcon } from 'lucide-react';
+import { Calculator, ShoppingBagIcon } from 'lucide-react';
 import { Tooltip } from '@heroui/tooltip';
 import { Button } from '@heroui/button';
 import { clsx } from 'clsx';
@@ -11,6 +11,7 @@ import { usePathname } from 'next/navigation';
 import useBasketStore from '@/store/store';
 import { NavbarDropdownMenu } from '@/components/ui/dropdown';
 import { Socials } from '@/components/shared/socials';
+import { FavoritesLink } from '@/components/shared/favorites/FavoritesLink';
 
 import BrandLogo from '../../ui/BrandLogo';
 import { HeroModalOffer } from '../../ui/BrandModalOffer';
@@ -100,6 +101,7 @@ export default function Navbar({ navigation, sales, siteSettings }: any) {
 									phones.length > 0 && <PhoneListDropdown items={phones} />
 								}
 							</div>
+							<FavoritesLink />
 							{CartLinkButton(itemsCount)}
 							<Drawer className="xl:hidden h-6 w-auto min-w-min" navigation={navigation} siteSettings={siteSettings} />
 						</div>
