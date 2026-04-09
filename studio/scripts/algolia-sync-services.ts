@@ -241,7 +241,8 @@ function getVariantImagesByColor(product: any): Record<string, string> {
     }
   }
 
-  return mapping;
+  const MAX_VARIANT_IMAGES = 20;
+  return Object.fromEntries(Object.entries(mapping).slice(0, MAX_VARIANT_IMAGES));
 }
 
 function getGalleryImages(product: any, imageUrl?: string): string[] {
@@ -268,7 +269,8 @@ function getGalleryImages(product: any, imageUrl?: string): string[] {
     }
   }
 
-  return Array.from(allImages);
+  const MAX_GALLERY_IMAGES = 12;
+  return Array.from(allImages).slice(0, MAX_GALLERY_IMAGES);
 }
 
 async function transformProductForAlgolia(product: any): Promise<ProductAlgoliaRecord> {
@@ -292,7 +294,7 @@ async function transformProductForAlgolia(product: any): Promise<ProductAlgoliaR
             .map((color: string) => normalizeColorKey(color))
         : []),
     ])
-  );
+  ).slice(0, 50);
 
   // Extract dominant colors from Sanity image palette
   const dominantColors: string[] = [];
