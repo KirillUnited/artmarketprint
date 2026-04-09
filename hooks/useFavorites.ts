@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { toast } from 'sonner';
 import { FavoriteItem } from '@/types/favorites';
 
 interface UseFavoritesReturn {
@@ -80,12 +81,14 @@ export function useFavorites(): UseFavoritesReturn {
 
   const addToFavorites = async (product: FavoriteItem['product']) => {
     const newFavorite: FavoriteItem = { productId: product.id, product };
+    let isNewFavorite = false;
 
     // Optimistic local update so all UI stays in sync.
     setFavorites((prev) => {
       if (prev.some((fav) => fav.productId === product.id)) {
         return prev;
       }
+      isNewFavorite = true;
       const updated = [...prev, newFavorite];
       persistFavorites(updated);
       return updated;
@@ -102,27 +105,22 @@ export function useFavorites(): UseFavoritesReturn {
     } catch (error) {
       console.error('Error adding to favorites:', error);
       // local state is already updated; we keep it as source of truth
+      toast.error('Не удалось синхронизировать избранное с сервером');
     }
 
-    // Send GA4 event
-    if (typeof window !== 'undefined' && window.gtag) {
-      window.gtag('event', 'add_to_wishlist', {
-        items: [{
-          item_id: product.id,
-          item_name: product.name,
-          price: product.price,
-          category: product.category || ''
-        }]
-      });
+    if (isNewFavorite) {
+      toast.success('Товар добавлен в избранное');
     }
   };
 
   const removeFromFavorites = async (productId: string) => {
     const favoriteItem = favorites.find((fav) => fav.productId === productId);
+    let removed = false;
 
     // Optimistic local update so all UI stays in sync.
     setFavorites((prev) => {
       const updated = prev.filter((fav) => fav.productId !== productId);
+      removed = updated.length !== prev.length;
       persistFavorites(updated);
       return updated;
     });
@@ -134,17 +132,11 @@ export function useFavorites(): UseFavoritesReturn {
     } catch (error) {
       console.error('Error removing from favorites:', error);
       // local state is already updated; we keep it as source of truth
+      toast.error('Не удалось синхронизировать избранное с сервером');
     }
 
-    if (favoriteItem && typeof window !== 'undefined' && window.gtag) {
-      window.gtag('event', 'remove_from_wishlist', {
-        items: [{
-          item_id: favoriteItem.product.id,
-          item_name: favoriteItem.product.name,
-          price: favoriteItem.product.price,
-          category: favoriteItem.product.category || ''
-        }]
-      });
+    if (removed) {
+      toast.info('Товар удален из избранного');
     }
   };
 
