@@ -30,11 +30,21 @@ const ProductThumb: FC<ProductThumbProps> = ({ item, ...props }): JSX.Element =>
 	const image = item?.image || '/images/product-no-image.jpg';
 	const totalStock = getTotalStock(item.items);
 	const brand = item.brand || '';
-	const category = item.category?.name || '';
+	const category = item.category || '';
 
 	return (
-		<Card as={Link} className={clsx('h-full group relative max-w-full shadow-small hover:shadow-large transition-all duration-300', props.className)} href={`/products/${id}`} radius="sm">
-			<CardBody className="items-stretch gap-4 p-2 sm:p-4">
+		<Card  className={clsx('h-full group relative max-w-full shadow-small hover:shadow-large transition-all duration-300', props.className)}  radius="sm">
+			<div className="absolute top-2 right-2 z-10">
+				<FavoriteButton
+					productCategory={category}
+					productImage={image}
+					productId={id}
+					productName={name}
+					productPrice={price}
+					size="sm"
+				/>
+			</div>
+			<CardBody as={Link} className="items-stretch gap-4 p-2 sm:p-4" href={`/products/${id}`}>
 				<div className="relative overflow-hidden rounded-lg group">
 					<Image
 						alt={name}
@@ -51,16 +61,6 @@ const ProductThumb: FC<ProductThumbProps> = ({ item, ...props }): JSX.Element =>
 						src={image}
 						width={220}
 					/>
-					<div className="absolute top-2 right-2 z-10">
-						<FavoriteButton
-							productCategory={category}
-							productImage={image}
-							productId={id}
-							productName={name}
-							productPrice={price}
-							size="sm"
-						/>
-					</div>
 				</div>
 				<div className="flex flex-col gap-2">
 					<span className="text-xl font-semibold self-start text-foreground">{`${price} ${CURRENCIES_SYMBOLS['BYN'] || 'р'}`}</span>

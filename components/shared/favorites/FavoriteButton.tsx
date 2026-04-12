@@ -66,9 +66,9 @@ export function FavoriteButton({
   };
 
   const iconSize = {
-    sm: 'sm',
-    md: 'md',
-    lg: 'lg'
+    sm: 16,
+    md: 24,
+    lg: 32
   };
 
   return (
