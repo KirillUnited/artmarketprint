@@ -79,41 +79,6 @@ export const viewport: Viewport = {
 export default function RootLayout({children}: {children: React.ReactNode}) {
 	return (
 		<html suppressHydrationWarning lang="ru">
-			<head>
-				{/* Google Tag Manager */}
-				<Script id="google-tag-manager" strategy="afterInteractive">
-					{`
-            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-            })(window,document,'script','dataLayer','${GTM_ID}');
-          `}
-				</Script>
-				{/* End Google Tag Manager */}
-
-				{/* Yandex.Metrika counter */}
-				<Script
-					dangerouslySetInnerHTML={{
-						__html: `
-               (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-                m[i].l=1*new Date();
-                for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-                k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-                (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
-
-                ym(101251200, "init", {
-                      clickmap:true,
-                      trackLinks:true,
-                      accurateTrackBounce:true
-                });
-
-            `,
-					}}
-					id="yandex-metrika"
-					strategy="afterInteractive"
-				/>
-			</head>
 			<body className={clsx('min-h-screen bg-background text-foreground font-sans antialiased light', fontSans.variable)}>
 				{/* Google Tag Manager (noscript) */}
 				<noscript>
@@ -128,9 +93,6 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
 					</div>
 				</Providers>
 				<Toaster richColors position="top-center" />
-				<noscript>
-					<div>{typeof window !== 'undefined' && <img alt="" src="https://mc.yandex.ru/watch/101251200" style={{position: 'absolute', left: '-9999px'}} />}</div>
-				</noscript>
 				<script dangerouslySetInnerHTML={{__html: JSON.stringify(LocalBusinessJsonLd)}} type="application/ld+json" />
 				{/* <!-- Google tag (gtag.js) --> */}
 				<Script src="https://www.googletagmanager.com/gtag/js?id=G-RB8S8ECQ97" strategy="afterInteractive" />
