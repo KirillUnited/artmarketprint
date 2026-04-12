@@ -2,8 +2,7 @@ import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import { Favorite } from '@/types/favorites';
 
-// In-memory storage for guest users (in a real app, this would be a database)
-let guestFavorites: Record<string, Favorite[]> = {};
+import { guestFavorites } from './guest-store';
 
 // Helper function to get user ID (this is simplified - in a real app you'd use proper auth)
 async function getUserId(): Promise<string | null> {
@@ -94,29 +93,5 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error('Error adding favorite:', error);
     return NextResponse.json({ error: 'Failed to add favorite' }, { status: 500 });
-  }
-}
-
-// DELETE /api/favorites/:id - Remove a product from favorites
-export async function DELETE(request: Request, { params }: { params: { id: string } }) {
-  try {
-    const userId = await getUserId();
-    const guestId = await getGuestId();
-
-    if (userId) {
-      // Delete from database for logged-in user
-      // This is a placeholder - in a real app you'd delete from your database
-      console.log('Deleting favorite from database for user:', userId);
-    } else if (guestId && guestFavorites[guestId]) {
-      // Delete from localStorage for guest user
-      guestFavorites[guestId] = guestFavorites[guestId].filter(
-        (fav) => fav.productId !== params.id
-      );
-    }
-
-    return NextResponse.json({ success: true });
-  } catch (error) {
-    console.error('Error removing favorite:', error);
-    return NextResponse.json({ error: 'Failed to remove favorite' }, { status: 500 });
   }
 }
