@@ -6,10 +6,10 @@ import NextImage from 'next/image';
 import clsx from 'clsx';
 import { Image } from '@heroui/image';
 
-
 import { ProductData } from '@/components/shared/product/product.types';
 import { getTotalStock } from '@/components/shared/product/lib';
 import { CURRENCIES_SYMBOLS } from '@/lib/products/companies';
+import { FavoriteButton } from '@/components/shared/favorites/FavoriteButton';
 
 import { ProductSizes } from '../ProductSizes';
 import { ProductColors } from '../ProductColors';
@@ -30,10 +30,21 @@ const ProductThumb: FC<ProductThumbProps> = ({ item, ...props }): JSX.Element =>
 	const image = item?.image || '/images/product-no-image.jpg';
 	const totalStock = getTotalStock(item.items);
 	const brand = item.brand || '';
+	const category = item.category || '';
 
 	return (
-		<Card as={Link} className={clsx('h-full group relative max-w-full shadow-small hover:shadow-large transition-all duration-300', props.className)} href={`/products/${id}`} radius="sm">
-			<CardBody className="items-stretch gap-4 p-2 sm:p-4">
+		<Card  className={clsx('h-full group relative max-w-full shadow-small hover:shadow-large transition-all duration-300', props.className)}  radius="sm">
+			<div className="absolute top-2 right-2 z-10">
+				<FavoriteButton
+					productCategory={category}
+					productImage={image}
+					productId={id}
+					productName={name}
+					productPrice={price}
+					size="sm"
+				/>
+			</div>
+			<CardBody as={Link} className="items-stretch gap-4 p-2 sm:p-4" href={`/products/${id}`}>
 				<div className="relative overflow-hidden rounded-lg group">
 					<Image
 						alt={name}

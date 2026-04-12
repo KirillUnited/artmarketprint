@@ -15,6 +15,7 @@ import {OrderForm} from '@/components/ui/form';
 import {getTotalStock} from '@/components/shared/product/lib';
 import {PushToDataLayer} from '@/components/shared/gtm';
 import {ProductsNotFoundMenu} from '@/components/shared/product/ProductsNotFound';
+import { FavoriteButton } from '@/components/shared/favorites/FavoriteButton';
 
 export interface Props {
 	slug: string;
@@ -87,10 +88,19 @@ export default async function ProductPage({params}: {params: Promise<Props>}) {
 				<div className="flex flex-col gap-4">
 					<ProductBreadcrumb category={category} items={breadcrumbs[0].links} slug={slug} title={productTitle} />
 
-					<h1 className="text-2xl font-bold">
-						{productTitle}
-						{sku && <span className="text-sm text-gray-600 ml-2 font-light truncate">арт. {sku}</span>}
-					</h1>
+					<div className="flex justify-between items-start">
+						<h1 className="text-2xl font-bold">
+							{productTitle}
+							{sku && <span className="text-sm text-gray-600 ml-2 font-light truncate">арт. {sku}</span>}
+						</h1>
+						<FavoriteButton
+							productCategory={category?.name || ''}
+							productImage={product.image || ''}
+							productId={id}
+							productName={productTitle}
+							productPrice={price || 0}
+						/>
+					</div>
 				</div>
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 					<ProductCarousel className="md:sticky top-16" items={product} />
