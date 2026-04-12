@@ -18,8 +18,10 @@ export function useFavorites(): UseFavoritesReturn {
 
   const persistFavorites = (items: FavoriteItem[]) => {
     localStorage.setItem('favorites', JSON.stringify(items));
-    // Notify other hook instances in the same tab
-    window.dispatchEvent(new Event('favorites:changed'));
+    // Defer so we never call setState in other components while React is inside a setState updater.
+    queueMicrotask(() => {
+      window.dispatchEvent(new Event('favorites:changed'));
+    });
   };
 
   const readLocalFavorites = (): FavoriteItem[] => {
