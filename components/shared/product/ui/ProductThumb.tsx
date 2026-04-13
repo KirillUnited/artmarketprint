@@ -34,22 +34,12 @@ const ProductThumb: FC<ProductThumbProps> = ({ item, ...props }): JSX.Element =>
 
 	return (
 		<Card  className={clsx('h-full group relative max-w-full shadow-small hover:shadow-large transition-all duration-300', props.className)}  radius="sm">
-			<div className="absolute top-2 right-2 z-10">
-				<FavoriteButton
-					productCategory={category}
-					productImage={image}
-					productId={id}
-					productName={name}
-					productPrice={price}
-					size="sm"
-				/>
-			</div>
 			<CardBody as={Link} className="items-stretch gap-4 p-2 sm:p-4" href={`/products/${id}`}>
 				<div className="relative overflow-hidden rounded-lg group">
 					<Image
 						alt={name}
 						as={NextImage}
-						className={clsx('object-contain mx-auto max-w-56 max-h-80 group-hover:scale-105 transition-transform duration-300')}
+						className={clsx('object-contain mx-auto max-h-80 group-hover:scale-105 transition-transform duration-300')}
 						classNames={{
 							wrapper: clsx('relative w-full bg-contain bg-center bg-no-repeat mx-auto'),
 						}}
@@ -81,6 +71,16 @@ const ProductThumb: FC<ProductThumbProps> = ({ item, ...props }): JSX.Element =>
 					{item.sizes?.length > 0 && <ProductSizes list={item.sizes} />}
 				</CardFooter>
 			)}
+			<div className="absolute top-2 right-2 z-10">
+				<FavoriteButton
+					productCategory={category}
+					productImage={image}
+					productId={id}
+					productName={name}
+					productPrice={price}
+					size="sm"
+				/>
+			</div>
 		</Card>
 	);
 };
