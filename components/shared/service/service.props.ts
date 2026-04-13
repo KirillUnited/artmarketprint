@@ -5,4 +5,5 @@ export type ServiceHeroProps = {
     description: string;
     mediaBlock?: MediaBlockProps;
     image?: string;
+    calculator?: string;
 };
