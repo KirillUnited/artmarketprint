@@ -79,6 +79,7 @@ export const viewport: Viewport = {
 export default function RootLayout({children}: {children: React.ReactNode}) {
 	return (
 		<html suppressHydrationWarning lang="ru">
+			<GoogleTagManager />
 			<body className={clsx('min-h-screen bg-background text-foreground font-sans antialiased light', fontSans.variable)}>
 				{/* Google Tag Manager (noscript) */}
 				<noscript>
