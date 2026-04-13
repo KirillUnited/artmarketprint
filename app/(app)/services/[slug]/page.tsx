@@ -87,7 +87,7 @@ export default async function ServicePage({params}: {params: Promise<Props>}): P
 	return (
 		<>
 			{/* Hero section with background image and gradient overlay */}
-			<ServiceHero description={service.description} image={serviceImageUrl || ''} mediaBlock={service.mediaBlock} title={service.title} />
+			<ServiceHero description={service.description} image={serviceImageUrl || ''} mediaBlock={service.mediaBlock} title={service.title} calculator={service.calculator} />
 
 			{/* Main content wrapper */}
 			<div className="">
