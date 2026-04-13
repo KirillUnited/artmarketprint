@@ -49,3 +49,7 @@ next-env.d.ts
 # Sanity backups
 /backups/*
 !/backups/.gitkeep
+
+# Reports
+/docs/reports/*
+!/docs/reports/.gitkeep
