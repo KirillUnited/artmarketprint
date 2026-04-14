@@ -15,6 +15,8 @@ import { useAsyncList } from '@react-stately/data'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useCallback, useEffect, useMemo, useRef } from 'react'
 
+import { processColorNames } from '@/lib/utils'
+
 /** Sentinel key for "all colors" (URL has no `color` param). */
 const ALL_COLORS_KEY = '__all__'
 
@@ -30,8 +32,11 @@ export default function ColorFilter({ colors }: { colors: string[] }) {
     const activeColor = searchParams.get('color') || ''
     const activeSubcategory = searchParams.get('sub') || ''
 
-    const colorsRef = useRef(colors)
-    colorsRef.current = colors
+    // Process colors to remove technical specs and group invalid names
+    const processedColors = useMemo(() => processColorNames(colors), [colors])
+
+    const colorsRef = useRef(processedColors)
+    colorsRef.current = processedColors
 
     const colorsKey = useMemo(() => colors.join('\0'), [colors])
 

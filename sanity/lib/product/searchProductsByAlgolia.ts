@@ -71,7 +71,7 @@ const mapAlgoliaHitToProduct = (hit: AlgoliaProductHit, searchQuery: string): Pr
     name: hit.name ?? '',
     price,
     image,
-    images: [],
+    images: hit.galleryImages ?? [],
     images_urls: image,
     description: hit.description ?? '',
     variation_description: '',
