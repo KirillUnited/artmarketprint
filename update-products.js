@@ -3,9 +3,9 @@
  * Script to update products in Sanity CMS
  *
  * This script performs three operations:
- * 1. Creates a backup of the Sanity dataset (excluding products)
- * 2. Deletes all existing products from Sanity
- * 3. Fetches new product data and imports it to Sanity
+ * 1. Deletes all existing products from Sanity
+ * 2. Fetches new product data and imports it to Sanity
+ * 3. Creates a backup of the Sanity dataset (excluding products)
  */
 
 // Load environment variables from .env.local when running via Node
@@ -49,16 +49,11 @@ async function runUpdate() {
   try {
     console.log('🔄 Starting product update process...');
 
-    // Step 1: Create backup of Sanity dataset
-    console.log('💾 Creating backup of Sanity dataset...');
-    execSync('npm run backup-sanity', { stdio: 'inherit' });
-    console.log('✅ Backup completed successfully!');
-
     // Dynamically import the required modules
     const { deleteAllOfType } = await import('./sanity/delete.mjs');
     const { updateProducts } = await import('./lib/products/update.mjs');
 
-    // Step 2: Delete all existing products from Sanity
+    // Step 1: Delete all existing products from Sanity
     console.log('🗑️ Deleting all existing products from Sanity...');
     await deleteAllOfType('product');
     console.log('✅ All products deleted successfully!');
@@ -66,7 +61,7 @@ async function runUpdate() {
     // Optional: Add a small delay to ensure deletion is complete
     await new Promise((resolve) => setTimeout(resolve, 2000));
 
-    // Step 3: Update with new products
+    // Step 2: Update with new products
     console.log('📥 Fetching and importing new products...');
     await updateProducts();
     console.log('✅ New products imported successfully!');
@@ -75,6 +70,10 @@ async function runUpdate() {
     execSync('npm run sync-products-algolia', { stdio: 'inherit' });
     console.log('✅ Product sync to Algolia completed successfully!');
 
+    // Step 3: Create backup of Sanity dataset
+    console.log('💾 Creating backup of Sanity dataset...');
+    execSync('npm run backup-sanity', { stdio: 'inherit' });
+    console.log('✅ Backup completed successfully!');
 
     console.log('🎉 Product update process completed successfully!');
   } catch (error) {
