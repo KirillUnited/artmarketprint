@@ -60,7 +60,7 @@ export default async function Footer() {
 			<div className="container">
 				<div className="flex flex-col gap-8">
 					<div className="bg-[#eeeeee] border-solid border-[#eeeeee] border self-stretch shrink-0 h-px relative" />
-					<p className="text-[#eeeeee] text-center">© {new Date().getFullYear()}. Все права защищены. УНП 193816889. Инспекция МНС по Фрунзенскому району г. Минска № 2</p>
+					{contacts?.footnote && <p className="text-[#eeeeee] text-center">© {new Date().getFullYear()}. {contacts.footnote}</p>}
 				</div>
 				А
 			</div>
