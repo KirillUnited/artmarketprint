@@ -54,7 +54,7 @@ export default async function ContactPage() {
 						<p className="font-light">Социальные сети</p>
 						<Socials items={socials} />
 					</div>
-					<p className='text-balance'>Все права защищены. УНП 193816889. Инспекция МНС по Фрунзенскому району г. Минска № 2</p>
+					{contacts?.footnote && <p className='text-balance'>{contacts.footnote}</p>}
 				</div>
 
 				{/* Contact Form Section */}
