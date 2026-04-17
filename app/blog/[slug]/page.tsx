@@ -63,8 +63,17 @@ export default async function PostDetailPage({params}: {params: Promise<Props>})
 
 	if (!post) return notFound();
 
+	const jsonLd = post?.faq || [];
+
 	return (
 		<Section>
+			{/* JSON-LD script */}
+			<script
+				type="application/ld+json"
+				dangerouslySetInnerHTML={{
+					__html: JSON.stringify(jsonLd),
+				}}
+			/>
 			<div className={'max-w-screen-lg mx-auto'}>
 				<PostHeader post={post} />
 				<div className="mb-4">
