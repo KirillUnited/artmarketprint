@@ -51,9 +51,9 @@ function generateImageUrlForAlgolia(image: any): string | undefined {
       .image(image)
       .format('webp')
       .fit('crop')
-      .width(400)
-      .height(400)
-      .quality(80)
+      .width(220)
+      .height(220)
+      .quality(60)
       .url();
   } catch (error) {
     console.warn('Failed to generate image URL for Algolia:', error);
