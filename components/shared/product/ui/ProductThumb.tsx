@@ -53,7 +53,7 @@ const ProductThumb: FC<ProductThumbProps> = ({ item, ...props }): JSX.Element =>
 					/>
 				</div>
 				<div className="flex flex-col gap-2">
-					<span className="text-xl font-semibold self-start text-foreground">{`${price} ${CURRENCIES_SYMBOLS['BYN'] || 'р'}`}</span>
+					{price > 0 && <span className="text-xl font-semibold self-start text-foreground">{`${price} ${CURRENCIES_SYMBOLS['BYN'] || 'р'}`}</span>}
 					{name && (
 						<p className="flex flex-col text-foreground/90 text-xs sm:text-sm" title={name}>
 							{brand && <span className="text-xs text-gray-500 font-light">{brand}</span>}
@@ -65,9 +65,9 @@ const ProductThumb: FC<ProductThumbProps> = ({ item, ...props }): JSX.Element =>
 					</span>
 				</div>
 			</CardBody>
-			{(item.colors?.length > 0 || item.sizes?.length > 0) && (
+			{((item.colors?.length > 0 && item.items?.length > 0) || item.sizes?.length > 0) && (
 				<CardFooter className="text-tiny flex-col items-start gap-2 border-t p-4 pt-2">
-					{item.colors?.length > 0 && <ProductColors list={item.items} />}
+					{(item.colors?.length > 0 && item.items?.length > 0) && <ProductColors list={item.items} />}
 					{item.sizes?.length > 0 && <ProductSizes list={item.sizes} />}
 				</CardFooter>
 			)}

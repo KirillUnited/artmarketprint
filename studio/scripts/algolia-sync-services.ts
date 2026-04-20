@@ -51,9 +51,9 @@ function generateImageUrlForAlgolia(image: any): string | undefined {
       .image(image)
       .format('webp')
       .fit('crop')
-      .width(400)
-      .height(400)
-      .quality(80)
+      .width(220)
+      .height(220)
+      .quality(60)
       .url();
   } catch (error) {
     console.warn('Failed to generate image URL for Algolia:', error);
@@ -393,21 +393,23 @@ async function syncProductsToAlgolia() {
         queryLanguages: ['ru'],
         // Configure search behavior for Russian
         searchableAttributes: [
-          'unordered(name)',
-          'unordered(description)',
-          'unordered(colors)',
-          'unordered(dominantColors)',
+          'colors',
+          'name',
+          'sku',
+          'searchImageHints',
+          'description',
+          // 'unordered(dominantColors)',
           'unordered(materials)',
           'unordered(category)',
           'unordered(subcategory)',
-          'sku'
+          'unordered(galleryImages)',
         ],
         attributesForFaceting: [
           'filterOnly(category)',
           'filterOnly(subcategory)',
           'filterOnly(materials)',
-          'filterOnly(colors)',
-          'filterOnly(dominantColors)',
+          // 'filterOnly(colors)',
+          // 'filterOnly(dominantColors)',
           'searchable(brand)'
         ],
         // Configure ranking criteria
