@@ -71,7 +71,7 @@ export default async function PostDetailPage({params}: {params: Promise<Props>})
 			<script
 				type="application/ld+json"
 				dangerouslySetInnerHTML={{
-					__html: JSON.stringify(jsonLd),
+					__html: jsonLd,
 				}}
 			/>
 			<div className={'max-w-screen-lg mx-auto'}>
