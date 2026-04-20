@@ -393,21 +393,23 @@ async function syncProductsToAlgolia() {
         queryLanguages: ['ru'],
         // Configure search behavior for Russian
         searchableAttributes: [
-          'unordered(name)',
-          'unordered(description)',
-          'unordered(colors)',
-          'unordered(dominantColors)',
+          'colors',
+          'name',
+          'sku',
+          'searchImageHints',
+          'description',
+          // 'unordered(dominantColors)',
           'unordered(materials)',
           'unordered(category)',
           'unordered(subcategory)',
-          'sku'
+          'unordered(galleryImages)',
         ],
         attributesForFaceting: [
           'filterOnly(category)',
           'filterOnly(subcategory)',
           'filterOnly(materials)',
-          'filterOnly(colors)',
-          'filterOnly(dominantColors)',
+          // 'filterOnly(colors)',
+          // 'filterOnly(dominantColors)',
           'searchable(brand)'
         ],
         // Configure ranking criteria
