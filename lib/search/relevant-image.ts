@@ -55,5 +55,30 @@ export function pickRelevantImageForQuery(hit: ImageAwareHit, query: string): st
     }
   }
 
+  // Additional fuzzy matching for cases like "серая" <-> "серый"
+  for (const token of tokens) {
+    const fuzzy = variants.find((entry) => {
+      // Check if token and color share a common root
+      const minLength = Math.min(entry.color.length, token.length);
+      const checkLength = Math.max(Math.floor(minLength * 0.7), minLength - 2);
+
+      // Compare beginnings of words
+      if (entry.color.substring(0, checkLength) === token.substring(0, checkLength)) {
+        return true;
+      }
+
+      // For short words, check if one contains the other
+      if (minLength <= 5) {
+        return entry.color.includes(token) || token.includes(entry.color);
+      }
+
+      return false;
+    });
+
+    if (fuzzy) {
+      return fuzzy.image;
+    }
+  }
+
   return fallback;
 }
