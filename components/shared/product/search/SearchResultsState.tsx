@@ -17,7 +17,6 @@ export type SearchResultsStateProps = {
 };
 
 export function SearchResultsState({query, products, totalFound, currentPage, totalPages}: SearchResultsStateProps) {
-	console.log('products', products);
 	return (
 		<>
 			<Link href="/products/categories/all">
