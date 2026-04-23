@@ -4,6 +4,12 @@ export type ImageAwareHit = {
   variantImagesByColor?: Record<string, string>;
 };
 
+export type ImageMatchResult = {
+  image?: string;
+  color?: string;
+  matchType?: 'exact' | 'partial' | 'fuzzy' | 'fallback';
+};
+
 function normalizeToken(value: string): string {
   return value.trim().toLowerCase().replaceAll('ё', 'е');
 }
@@ -11,74 +17,97 @@ function normalizeToken(value: string): string {
 function tokenizeQuery(query: string): string[] {
   return query
     .split(/[\s,.;:!?/\\|()[\]{}"'+_-]+/)
-    .map((token) => normalizeToken(token))
+    .map(normalizeToken)
     .filter((token) => token.length > 1);
 }
 
-export function pickRelevantImageForQuery(hit: ImageAwareHit, query: string): string | undefined {
-  const fallback =
+function getFallback(hit: ImageAwareHit): ImageMatchResult {
+  const image =
     hit.imageUrl ||
-    (Array.isArray(hit.galleryImages) && hit.galleryImages.length > 0
-      ? hit.galleryImages[0]
-      : undefined);
+    (hit.galleryImages?.length ? hit.galleryImages[0] : undefined);
 
-  if (!query || typeof query !== 'string' || !hit.variantImagesByColor) {
-    return fallback;
+  return {
+    image,
+    matchType: 'fallback',
+  };
+}
+
+export function pickRelevantImageForQuery(
+  hit: ImageAwareHit,
+  query: string
+): ImageMatchResult {
+  if (!query || !hit.variantImagesByColor) {
+    return getFallback(hit);
   }
 
   const tokens = tokenizeQuery(query);
-  if (tokens.length === 0) {
-    return fallback;
+  if (!tokens.length) {
+    return getFallback(hit);
   }
 
   const variants = Object.entries(hit.variantImagesByColor)
-    .map(([rawColor, image]) => ({ color: normalizeToken(rawColor), image }))
-    .filter((entry) => entry.color !== '' && typeof entry.image === 'string' && entry.image.trim() !== '');
+    .map(([rawColor, image]) => ({
+      raw: rawColor,
+      color: normalizeToken(rawColor),
+      image,
+    }))
+    .filter((v) => v.color && v.image);
 
-  if (variants.length === 0) {
-    return fallback;
+  if (!variants.length) {
+    return getFallback(hit);
   }
 
-  for (const token of tokens) {
-    const exact = variants.find((entry) => entry.color === token);
-    if (exact) {
-      return exact.image;
+  // unified matcher
+  const findMatch = (
+    predicate: (token: string, color: string) => boolean
+  ): { token: string; variant: typeof variants[number] } | undefined => {
+    for (const token of tokens) {
+      const variant = variants.find((v) => predicate(token, v.color));
+      if (variant) return { token, variant };
     }
+  };
+
+  // 1. exact
+  const exact = findMatch((t, c) => c === t);
+  if (exact) {
+    return {
+      image: exact.variant.image,
+      color: exact.variant.raw,
+      matchType: 'exact',
+    };
   }
 
-  for (const token of tokens) {
-    const partial = variants.find(
-      (entry) => entry.color.includes(token) || token.includes(entry.color)
-    );
-    if (partial) {
-      return partial.image;
+  // 2. partial
+  const partial = findMatch((t, c) => c.includes(t) || t.includes(c));
+  if (partial) {
+    return {
+      image: partial.variant.image,
+      color: partial.variant.raw,
+      matchType: 'partial',
+    };
+  }
+
+  // 3. fuzzy (RU-friendly light stem)
+  const fuzzy = findMatch((t, c) => {
+    const minLen = Math.min(t.length, c.length);
+    const checkLen = Math.max(Math.floor(minLen * 0.7), minLen - 2);
+
+    if (c.slice(0, checkLen) === t.slice(0, checkLen)) return true;
+
+    if (minLen <= 5) {
+      return c.includes(t) || t.includes(c);
     }
+
+    return false;
+  });
+
+  if (fuzzy) {
+    return {
+      image: fuzzy.variant.image,
+      color: fuzzy.variant.raw,
+      matchType: 'fuzzy',
+    };
   }
 
-  // Additional fuzzy matching for cases like "серая" <-> "серый"
-  for (const token of tokens) {
-    const fuzzy = variants.find((entry) => {
-      // Check if token and color share a common root
-      const minLength = Math.min(entry.color.length, token.length);
-      const checkLength = Math.max(Math.floor(minLength * 0.7), minLength - 2);
-
-      // Compare beginnings of words
-      if (entry.color.substring(0, checkLength) === token.substring(0, checkLength)) {
-        return true;
-      }
-
-      // For short words, check if one contains the other
-      if (minLength <= 5) {
-        return entry.color.includes(token) || token.includes(entry.color);
-      }
-
-      return false;
-    });
-
-    if (fuzzy) {
-      return fuzzy.image;
-    }
-  }
-
-  return fallback;
+  return getFallback(hit);
 }

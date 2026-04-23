@@ -49,8 +49,9 @@ const hasAlgoliaSearchConfig = () =>
   Boolean(process.env.NEXT_PUBLIC_ALGOLIA_APP_ID && process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_KEY);
 
 const mapAlgoliaHitToProduct = (hit: AlgoliaProductHit, searchQuery: string): ProductData => {
-  const relevantImage = pickRelevantImageForQuery(hit, searchQuery);
-  const image = typeof relevantImage === 'string' && relevantImage.trim() !== '' ? relevantImage : DEFAULT_IMAGE;
+  const relevant = pickRelevantImageForQuery(hit, searchQuery);
+  const image = typeof relevant.image === 'string' && relevant.image.trim() !== '' ? relevant.image : DEFAULT_IMAGE;
+  const color = typeof relevant.color === 'string' && relevant.color.trim() !== '' ? relevant.color : '';
   const id = String(hit.id ?? hit.objectID ?? '');
   const price =
     typeof hit.price === 'number'
@@ -71,6 +72,7 @@ const mapAlgoliaHitToProduct = (hit: AlgoliaProductHit, searchQuery: string): Pr
     name: hit.name ?? '',
     price,
     image,
+    activeColor: color,
     images: hit.galleryImages ?? [],
     images_urls: image,
     description: hit.description ?? '',
