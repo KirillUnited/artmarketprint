@@ -64,8 +64,11 @@ export const generateMetadata = async ({params}: {params: Promise<Props>}) => {
 	};
 };
 
-export default async function ProductPage({params}: {params: Promise<Props>}) {
+export default async function ProductPage({params, searchParams}: {params: Promise<Props>, searchParams?: Promise<{color?: string}>}) {
 	const {slug} = await params;
+	const resolvedSearchParams = searchParams ? await searchParams : {};
+	const {color: selectedColorFromUrl} = resolvedSearchParams;
+
 	const [breadcrumbs, product] = await Promise.all([getSanityDocuments(NAVIGATION_QUERY), getProductBySlug(slug)]);
 
 	if (!product || product.length === 0)
@@ -117,7 +120,7 @@ export default async function ProductPage({params}: {params: Promise<Props>}) {
 							</CardBody>
 							<CardBody>
 								<ProductDetails
-									color={items?.[0]?.color || ''}
+									color={selectedColorFromUrl || items?.[0]?.color || ''}
 									colors={colors || []}
 									items={
 										items?.map((item: any) => ({
