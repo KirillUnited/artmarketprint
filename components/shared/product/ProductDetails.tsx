@@ -12,6 +12,7 @@ import Loader from '@/components/ui/Loader';
 
 import ProductSizeTable from './ProductSizeTable';
 import {ColorItemProps, ColorListItem, computedItems, MoreButton} from './ProductColors';
+import { setSelectedColorURL } from './lib';
 
 /**
  * A component to display a product thumbnail.
@@ -50,9 +51,14 @@ export const ProductDetails: ({items, sizes, colors, color, size}: {
 
     useEffect(() => {
         setIsClient(true);
-        if (colors[0]) setSelectedColor(colors[0]);
+        // Use the color prop if provided (from URL), otherwise use the first color
+        if (color) {
+            setSelectedColor(color);
+        } else if (colors[0]) {
+            setSelectedColor(colors[0]);
+        }
         if (sizes[0]) setSelectedSize(sizes[0]);
-    }, []);
+    }, [color, colors, sizes]);
 
     if (!isClient) return <Loader className='static text-primary flex mx-auto' size='md' variant='spinner' />;
 
@@ -75,6 +81,7 @@ export const ProductDetails: ({items, sizes, colors, color, size}: {
                             value={selectedColor}
                             onChange={(value) => {
                                 setSelectedColor(value.target.value)
+                                setSelectedColorURL(value.target.value);
                             }}
                         >
                             {

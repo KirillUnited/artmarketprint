@@ -47,3 +47,9 @@ export const getTotalStock = (items: any[]) => () => {
 
     return items.reduce((total, item) => total + Number(item.stock), 0);
 };
+
+export const setSelectedColorURL = (color: string) => {
+    const urlParams = new URLSearchParams(window.location.search);
+    urlParams.set('color', color);
+    window.history.pushState({}, '', `?${urlParams.toString()}`);
+};

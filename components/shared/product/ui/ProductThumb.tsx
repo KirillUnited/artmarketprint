@@ -31,10 +31,11 @@ const ProductThumb: FC<ProductThumbProps> = ({ item, ...props }): JSX.Element =>
 	const totalStock = getTotalStock(item.items);
 	const brand = item.brand || '';
 	const category = item.category || '';
+	const activeColor = item.activeColor || '';
 
 	return (
 		<Card  className={clsx('h-full group relative max-w-full shadow-small hover:shadow-large transition-all duration-300', props.className)}  radius="sm">
-			<CardBody as={Link} className="items-stretch gap-4 p-2 sm:p-4" href={`/products/${id}`}>
+			<CardBody as={Link} className="items-stretch gap-4 p-2 sm:p-4" href={`/products/${id}?color=${activeColor}`}>
 				<div className="relative overflow-hidden rounded-lg group">
 					<Image
 						alt={name}
