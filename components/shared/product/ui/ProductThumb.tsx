@@ -7,7 +7,7 @@ import clsx from 'clsx';
 import { Image } from '@heroui/image';
 
 import { ProductData } from '@/components/shared/product/product.types';
-import { getTotalStock } from '@/components/shared/product/lib';
+import { getTotalStock, getProductImageByColor } from '@/components/shared/product/lib';
 import { CURRENCIES_SYMBOLS } from '@/lib/products/companies';
 import { FavoriteButton } from '@/components/shared/favorites/FavoriteButton';
 
@@ -27,7 +27,7 @@ const ProductThumb: FC<ProductThumbProps> = ({ item, ...props }): JSX.Element =>
 	const id = item.id || item._id || '';
 	const price = item.price || 0;
 	const name = item.name || '';
-	const image = item?.image || '/images/product-no-image.jpg';
+	const image = getProductImageByColor(item, item.activeColor);
 	const totalStock = getTotalStock(item.items);
 	const brand = item.brand || '';
 	const category = item.category || '';
