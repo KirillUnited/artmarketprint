@@ -32,7 +32,7 @@ export default async function ProductListContainer({ categorySlug, subcategorySl
 		query: getProductsQuery(categorySlug, subcategorySlug, pageNumber, PRODUCTS_PER_PAGE, sort, material, color),
 		params: {},
 	});
-	const productsData = products.map((product: any) => ({...product, activeColor: color})) || [];
+	const productsData = products.map((product: any) => ({...product, activeColor: color || ''})) || [];
 
 	if (!Array.isArray(productsData) || productsData.length === 0) {
 		return <ProductsNotFound />;

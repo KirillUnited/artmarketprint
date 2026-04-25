@@ -13,8 +13,10 @@ export const filterItemsByColor = (items: ColorItemProps[]): ColorItemProps[] =>
         }
     });
 };
+
 export const formattedOptions = (options: string) => options?.replace(/<\/?p>/g, '').replace(/<li><strong>Бренд:<\/strong>.*?<\/li>/g, '').replace(/<li><strong>Поставщик:<\/strong>.*?<\/li>/g, '').replace(/<li><strong>Картинки:<\/strong>.*?<\/li>/g, '').replace(/<li><strong>Макет товара:<\/strong>.*?<\/li>/g, '').replace(/<li><strong>Цвет:<\/strong>.*?<\/li>/g, '');
-export const getVariantImages = (items: any, selectedColor: string) => {    
+
+export const getVariantImages = (items: any, selectedColor: string) => {
     const productImages = (items as any)?.images_urls?.split(',') || [];
 
     if (!items?.items || !selectedColor) return productImages;
@@ -34,6 +36,50 @@ export const getVariantImages = (items: any, selectedColor: string) => {
     return variantImages.length > 0 ? variantImages : productImages;
 };
 
+// Get the primary image for a product based on selected color
+export const getProductImageByColor = (product: any, selectedColor: string) => {
+    // If no color is selected, return the default product image
+    if (!selectedColor) {
+        return product?.image || '/images/product-no-image.jpg';
+    }
+
+    // If product has items (variants) and selected color, find the matching variant
+    if (product?.items?.length > 0) {
+        const selectedVariant = product.items.find((item: any) =>
+            item.color === selectedColor
+        );
+
+        // If we found a variant with the selected color, return its image
+        if (selectedVariant) {
+            // Try to get image from cover property first
+            if (selectedVariant.cover) {
+                return selectedVariant.cover;
+            }
+
+            // Try to get image from images_urls
+            if (selectedVariant.images_urls) {
+                const images = Array.isArray(selectedVariant.images_urls)
+                    ? selectedVariant.images_urls[0]?.split(',').filter(Boolean)
+                    : typeof selectedVariant.images_urls === 'string'
+                    ? selectedVariant.images_urls.split(',').filter(Boolean)
+                    : null;
+
+                if (images && images.length > 0) {
+                    return images[0];
+                }
+            }
+
+            // Try to get image from image property
+            if (selectedVariant.image) {
+                return selectedVariant.image;
+            }
+        }
+    }
+
+    // Fallback to default product image
+    return product?.image || '/images/product-no-image.jpg';
+};
+
 // Calculate stock for the selected color
 export const getStockForSelectedColor = (selectedColor: string, items: any) => {
     if (!selectedColor) return null;
@@ -41,6 +87,7 @@ export const getStockForSelectedColor = (selectedColor: string, items: any) => {
 
     return selectedItem?.stock ?? null;
 };
+
 // Calculate total stock
 export const getTotalStock = (items: any[]) => () => {
     if (!items) return 0;
