@@ -321,14 +321,16 @@ const HitsList = memo(function HitsList({
       {hits.map((hit: any, idx: number) => {
         const isSel = selectedIndex === idx;
         const mappedImageUrl = getByPath<string>(hit, mapping.image);
-        const imageUrl = pickRelevantImageForQuery(
+        const relevant = pickRelevantImageForQuery(
           {
             ...hit,
             imageUrl: mappedImageUrl ?? hit.imageUrl,
           },
           query,
         );
-        const url = getByPath<string>(hit, mapping.url);
+        const imageUrl = relevant.image;
+        const color = relevant.color || '';
+        const url = `${getByPath<string>(hit, mapping.url)}?color=${color}`;
         const hasImage = Boolean(imageUrl);
         const isImageFailed = failedImages[hit.objectID] || !hasImage;
         const primaryVal = getByPath<string>(hit, mapping.primaryText);

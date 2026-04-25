@@ -4,6 +4,7 @@ export interface ProductData {
     name: string;
     price: number;
     image: string;
+    activeColor: string;
     images: string[];
     images_urls: string;
     description: string;
