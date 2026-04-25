@@ -57,10 +57,15 @@ export function useProductsFilter({ products, totalItemsView = 20 }: UseProducts
 
     // Calculate pagination
     const totalPages = Math.ceil(filteredProducts.length / totalItemsView);
-    const paginatedItems = filteredProducts.slice(
-        (currentPage - 1) * totalItemsView,
-        currentPage * totalItemsView
-    );
+    const paginatedItems = useMemo(() => {
+        return filteredProducts.slice(
+            (currentPage - 1) * totalItemsView,
+            currentPage * totalItemsView
+        ).map(product => ({
+            ...product,
+            activeColor: selectedImageColor
+        }));
+    }, [filteredProducts, currentPage, totalItemsView, selectedImageColor]);
 
     // Handler for filter changes
     const handleFilterChange = (newSortOrder: string, newCategory: string, newMaterial?: string, newImageColor?: string) => {
