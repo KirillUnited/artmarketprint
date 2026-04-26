@@ -52,6 +52,11 @@ const mapAlgoliaHitToProduct = (hit: AlgoliaProductHit, searchQuery: string): Pr
   const relevant = pickRelevantImageForQuery(hit, searchQuery);
   const image = typeof relevant.image === 'string' && relevant.image.trim() !== '' ? relevant.image : DEFAULT_IMAGE;
   const color = typeof relevant.color === 'string' && relevant.color.trim() !== '' ? relevant.color : '';
+  const variantItems = Object.entries(hit.variantImagesByColor ?? {}).map(([variantColor, variantImage], index) => ({
+    id: `${hit.objectID ?? hit.id ?? 'variant'}-${index}`,
+    color: variantColor,
+    cover: variantImage,
+  }));
   const id = String(hit.id ?? hit.objectID ?? '');
   const price =
     typeof hit.price === 'number'
@@ -83,7 +88,7 @@ const mapAlgoliaHitToProduct = (hit: AlgoliaProductHit, searchQuery: string): Pr
     materials: Array.isArray(hit.materials) ? hit.materials : [],
     sizes: Array.isArray(hit.sizes) ? hit.sizes : [],
     quantity: 0,
-    items: [],
+    items: variantItems,
     stock,
     sku: hit.sku ?? '',
     brand: hit.brand ?? '',

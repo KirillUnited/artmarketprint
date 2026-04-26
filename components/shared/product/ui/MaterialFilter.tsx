@@ -76,6 +76,19 @@ export default function MaterialFilter({ materials }: { materials: string[] }) {
         reloadRef.current()
     }, [materialsKey])
 
+    useEffect(() => {
+            if (activeMaterial === '') {
+                if (list.filterText !== '') {
+                    list.setFilterText('')
+                }
+                return
+            }
+    
+            if (list.filterText !== activeMaterial) {
+                list.setFilterText(activeMaterial)
+            }
+        }, [activeMaterial, list])
+
     const selectedValue: Key | null =
         activeMaterial === '' ? ALL_MATERIALS_KEY : activeMaterial
 

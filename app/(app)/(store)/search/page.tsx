@@ -71,6 +71,7 @@ export default async function SearchPage({
 				<Section>
 					<SearchResultsState
 						currentPage={page}
+						selectedColor={color}
 						products={products as ProductData[]}
 						query={query}
 						totalFound={totalFound}
