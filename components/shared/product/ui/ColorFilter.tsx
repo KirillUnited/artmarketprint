@@ -93,6 +93,19 @@ export default function ColorFilter({ colors }: { colors: string[] }) {
         router.push(`?${params.toString()}`)
     }, [activeColor, activeSubcategory, list, router, searchParams])
 
+    useEffect(() => {
+        if (activeColor === '') {
+            if (list.filterText !== '') {
+                list.setFilterText('')
+            }
+            return
+        }
+
+        if (list.filterText !== activeColor) {
+            list.setFilterText(activeColor)
+        }
+    }, [activeColor, list])
+
     const selectedValue: Key | null =
         activeColor === '' ? ALL_COLORS_KEY : activeColor
 
