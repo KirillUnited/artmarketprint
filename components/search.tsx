@@ -18,6 +18,7 @@ import { useKeyboardNavigation } from "@/hooks/use-keyboard-navigation";
 import { CURRENCIES_SYMBOLS } from "@/lib/products/companies";
 import { pickRelevantImageForQuery } from "@/lib/search/relevant-image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import ImageColorFilter from "./shared/product/ui/ImageColorFilter";
 
 export interface SearchConfig {
@@ -671,6 +672,7 @@ interface SearchModalProps {
 }
 
 export function SearchModal({ onClose, config }: SearchModalProps) {
+  const router = useRouter();
   const { query, refine } = useSearchBox();
   const inputRef = useRef<HTMLInputElement | null>(null);
 
@@ -706,6 +708,10 @@ export function SearchModal({ onClose, config }: SearchModalProps) {
 
   const showResultsPanel = !noResults && !!query;
   const fullResultsHref = query ? `/search?query=${encodeURIComponent(query)}` : "/search";
+  const handleEnterKey = useCallback(() => {
+    router.push(fullResultsHref);
+    onClose?.();
+  }, [fullResultsHref, handleActivateSelection, onClose, router]);
 
   return (
     <>
@@ -728,10 +734,10 @@ export function SearchModal({ onClose, config }: SearchModalProps) {
           className="flex flex-row items-center bg-background border-b border-muted rounded-t-sm p-2 placeholder:text-muted-foreground"
           refine={refine}
           onClose={onClose}
-          onArrowDown={moveDown}
-          onArrowUp={moveUp}
+          // onArrowDown={moveDown}
+          // onArrowUp={moveUp}
           inputRef={inputRef}
-          onEnter={handleActivateSelection}
+          onEnter={handleEnterKey}
         />
         {showResultsPanel && (
           <ResultsPanel
@@ -800,7 +806,7 @@ const Footer = memo(function Footer({
         {query ? (
           <Button asChild className="flex-1">
             <Link href={fullResultsHref} onClick={onClose}>
-              Все результаты для ({query})
+              Все результаты для <span className="font-bold">"{query}"</span>
             </Link>
           </Button>
         ) : null}
