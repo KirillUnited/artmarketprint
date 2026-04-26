@@ -14,9 +14,15 @@ export type SearchResultsStateProps = {
 	totalFound: number;
 	currentPage: number;
 	totalPages: number;
+	selectedColor?: string | null;
 };
 
-export function SearchResultsState({query, products, totalFound, currentPage, totalPages}: SearchResultsStateProps) {
+export function SearchResultsState({query, products, totalFound, currentPage, totalPages, selectedColor}: SearchResultsStateProps) {
+	const productsWithSelectedColor = products.map((product) => ({
+		...product,
+		activeColor: selectedColor || product.activeColor || '',
+	}));
+
 	return (
 		<>
 			<Link href="/products/categories/all">
@@ -27,7 +33,7 @@ export function SearchResultsState({query, products, totalFound, currentPage, to
 			</Link>
 			<SectionTitle className='TEST'>{`Результаты поиска для "${query}" (${totalFound} найдено)`}</SectionTitle>
 			<SearchTopActions />
-			<ProductList products={products}/>
+			<ProductList products={productsWithSelectedColor}/>
 			{totalPages > 1 && <ClientPagination basePath="/search" pageNumber={currentPage} totalPages={totalPages} />}
 		</>
 	);

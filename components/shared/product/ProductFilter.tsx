@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import { ColorFilter, SortSelect, MaterialFilter } from "./ui";
 import styles from '@/components/shared/product/ui/styles.module.css';
+import ActiveFilterTags from './ui/ActiveFilterTags';
 
 export interface ProductFilter {
     allProductMaterials: string[];
@@ -17,11 +18,14 @@ export interface ProductFilter {
  * @param {string} [props.className] - An optional CSS class name.
  * @return {JSX.Element} The rendered ProductFilter component.
  */
-export const ProductFilter: React.FC<ProductFilter> = ({ allProductMaterials, allProductColors, className }: ProductFilter): JSX.Element => (
-    <div className={clsx(styles.ProductFilter, className)}>
-        {/* <ProductSearchForm /> */}
-        <SortSelect />
-        <MaterialFilter materials={allProductMaterials} />
-        <ColorFilter colors={allProductColors} />
+export const ProductFilter = ({ allProductMaterials, allProductColors, className }: ProductFilter): JSX.Element => (
+    <div className="flex flex-col gap-4">
+        <div className={clsx(styles.ProductFilter, className)}>
+            {/* <ProductSearchForm /> */}
+            <SortSelect />
+            <MaterialFilter materials={allProductMaterials} />
+            <ColorFilter colors={allProductColors} />
+        </div>
+        <ActiveFilterTags />
     </div>
 );
