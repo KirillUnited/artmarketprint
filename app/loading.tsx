@@ -1,7 +1,5 @@
 import FullPageLoader from '@/components/ui/FullPageLoader';
 
-function Loading() {
+export default function Loading() {
 	return <FullPageLoader />;
 }
-
-export default Loading;
