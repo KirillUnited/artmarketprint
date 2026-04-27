@@ -45,6 +45,40 @@ const DEFAULT_IMAGE = '/images/product-no-image.jpg';
 const getAlgoliaIndexName = () =>
   process.env.NEXT_PUBLIC_ALGOLIA_PRODUCTS_INDEX || SEARCH_CONFIG.INDEX_NAME;
 
+const PRODUCT_RELEVANT_SEARCH_ATTRIBUTES = [
+  'colors',
+  'searchImageHints',
+  'name',
+  'sku',
+  'materials',
+  'category',
+  'subcategory',
+  'brand',
+] as const;
+
+const COLOR_BOOST_GROUPS = [
+  ['белый', 'белая', 'белое', 'белые', 'white'],
+  ['черный', 'черная', 'черное', 'черные', 'чёрный', 'чёрная', 'чёрное', 'чёрные', 'black'],
+  ['серый', 'серая', 'серое', 'серые', 'grey', 'gray'],
+  ['красный', 'красная', 'красное', 'красные', 'red'],
+  ['синий', 'синяя', 'синее', 'синие', 'blue'],
+  ['голубой', 'голубая', 'голубое', 'голубые', 'cyan'],
+  ['зеленый', 'зеленая', 'зеленое', 'зеленые', 'зелёный', 'зелёная', 'зелёное', 'зелёные', 'green'],
+  ['желтый', 'желтая', 'желтое', 'желтые', 'жёлтый', 'жёлтая', 'жёлтое', 'жёлтые', 'yellow'],
+  ['оранжевый', 'оранжевая', 'оранжевое', 'оранжевые', 'orange'],
+  ['розовый', 'розовая', 'розовое', 'розовые', 'pink'],
+  ['фиолетовый', 'фиолетовая', 'фиолетовое', 'фиолетовые', 'purple', 'violet'],
+  ['коричневый', 'коричневая', 'коричневое', 'коричневые', 'brown'],
+  ['бежевый', 'бежевая', 'бежевое', 'бежевые', 'beige'],
+] as const;
+
+type ColorSearchIntent = {
+  normalizedQuery: string;
+  boostTokens: string[];
+  filters: string;
+  primaryToken: string;
+};
+
 const hasAlgoliaSearchConfig = () =>
   Boolean(process.env.NEXT_PUBLIC_ALGOLIA_APP_ID && process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_KEY);
 
@@ -96,7 +130,151 @@ const mapAlgoliaHitToProduct = (hit: AlgoliaProductHit, searchQuery: string): Pr
 };
 
 const normalizeToken = (value?: string | null) =>
-  typeof value === 'string' ? value.trim().toLowerCase() : '';
+  typeof value === 'string' ? value.trim().toLowerCase().replaceAll('ё', 'е') : '';
+
+const QUERY_SPLIT_REGEX = /[\s,.;:!?/\\|()[\]{}"'+_-]+/;
+
+const tokenizeQuery = (value: string): string[] =>
+  value
+    .split(QUERY_SPLIT_REGEX)
+    .map((token) => normalizeToken(token))
+    .filter((token) => token.length > 1);
+
+const COLOR_TOKEN_TO_GROUP_INDEX = COLOR_BOOST_GROUPS.reduce<Map<string, number>>((acc, group, index) => {
+  for (const token of group) {
+    acc.set(normalizeToken(token), index);
+  }
+  return acc;
+}, new Map<string, number>());
+
+const getColorBoostTokens = (query: string): string[] => {
+  const matchedGroups = new Set<number>();
+  const tokens = tokenizeQuery(query);
+
+  for (const token of tokens) {
+    const groupIndex = COLOR_TOKEN_TO_GROUP_INDEX.get(token);
+    if (groupIndex !== undefined) {
+      matchedGroups.add(groupIndex);
+    }
+  }
+
+  if (matchedGroups.size === 0) {
+    return [];
+  }
+
+  const boostTokens = new Set<string>();
+  for (const index of Array.from(matchedGroups)) {
+    for (const token of COLOR_BOOST_GROUPS[index]) {
+      boostTokens.add(normalizeToken(token));
+    }
+  }
+
+  return Array.from(boostTokens);
+};
+
+const escapeFilterValue = (value: string): string => value.replaceAll('"', '\\"');
+
+const getColorSearchIntent = (query: string): ColorSearchIntent | null => {
+  const rawTokens = tokenizeQuery(query);
+  const matchedGroups = new Set<number>();
+  let firstMatchedGroupIndex: number | null = null;
+
+  for (const token of rawTokens) {
+    const groupIndex = COLOR_TOKEN_TO_GROUP_INDEX.get(token);
+    if (groupIndex !== undefined) {
+      matchedGroups.add(groupIndex);
+      if (firstMatchedGroupIndex === null) {
+        firstMatchedGroupIndex = groupIndex;
+      }
+    }
+  }
+
+  if (matchedGroups.size === 0) {
+    return null;
+  }
+
+  const boostTokens = new Set<string>();
+  for (const index of Array.from(matchedGroups)) {
+    for (const token of COLOR_BOOST_GROUPS[index]) {
+      boostTokens.add(normalizeToken(token));
+    }
+  }
+
+  const nonColorTokens = rawTokens.filter((token) => COLOR_TOKEN_TO_GROUP_INDEX.get(token) === undefined);
+  const normalizedQuery = nonColorTokens.join(' ').trim();
+
+  const tokenFilters = Array.from(boostTokens).flatMap((token) => {
+    const escapedToken = escapeFilterValue(token);
+    return [`colors:"${escapedToken}"`, `searchImageHints:"${escapedToken}"`];
+  });
+
+  if (tokenFilters.length === 0) {
+    return null;
+  }
+
+  return {
+    normalizedQuery,
+    boostTokens: Array.from(boostTokens),
+    filters: `(${tokenFilters.join(' OR ')})`,
+    primaryToken:
+      firstMatchedGroupIndex === null
+        ? normalizeToken(COLOR_BOOST_GROUPS[0][0])
+        : normalizeToken(COLOR_BOOST_GROUPS[firstMatchedGroupIndex][0]),
+  };
+};
+
+const includesColorToken = (value: string, token: string): boolean => {
+  const normalizedValue = normalizeToken(value);
+  if (normalizedValue === token) {
+    return true;
+  }
+
+  const parts = normalizedValue
+    .split(/[\/,;|]+/)
+    .map((part) => part.trim())
+    .filter((part) => part !== '');
+
+  return parts.some((part) => part === token);
+};
+
+const applyColorPriority = (
+  products: ProductData[],
+  colorIntent?: ColorSearchIntent | null
+): ProductData[] => {
+  if (!colorIntent) {
+    return products;
+  }
+
+  const token = colorIntent.primaryToken;
+  return [...products].sort((a, b) => {
+    const scoreA = getProductColorPriorityScore(a, token);
+    const scoreB = getProductColorPriorityScore(b, token);
+    return scoreB - scoreA;
+  });
+};
+
+const getProductColorPriorityScore = (product: ProductData, token: string): number => {
+  const normalizedName = normalizeToken(product.name);
+  const colors = Array.isArray(product.colors) ? product.colors : [];
+  const exactSingleColor = colors.length === 1 && includesColorToken(colors[0], token);
+  const containsTokenInColors = colors.some((color) => includesColorToken(color, token));
+  const tokenInName = normalizedName.includes(token);
+
+  if (exactSingleColor) {
+    return 300;
+  }
+  if (containsTokenInColors && tokenInName) {
+    return 200;
+  }
+  if (containsTokenInColors) {
+    return 100;
+  }
+  if (tokenInName) {
+    return 10;
+  }
+
+  return 0;
+};
 
 const includesToken = (arr: string[] | undefined, value: string) =>
   Array.isArray(arr) && arr.some((item) => item.toLowerCase() === value);
@@ -122,25 +300,40 @@ const runAlgoliaSearch = async (
   query: string,
   page: number,
   hitsPerPage: number,
+  colorIntent?: ColorSearchIntent | null,
 ): Promise<SearchResponse<AlgoliaProductHit>> => {
   const client = createAlgoliaSearchClient();
   const indexName = getAlgoliaIndexName();
+  const colorBoostTokens = colorIntent?.boostTokens ?? getColorBoostTokens(query);
+  const colorOptionalFilters =
+    colorBoostTokens.length > 0
+      ? [
+          colorBoostTokens.flatMap((token) => [
+            `colors:${token}<score=24>`,
+            `searchImageHints:${token}<score=16>`,
+          ]),
+        ]
+      : undefined;
 
   return client.searchSingleIndex<AlgoliaProductHit>({
     indexName,
     searchParams: {
-      query,
+      query: colorIntent?.normalizedQuery || query,
       page: Math.max(0, page - 1),
       hitsPerPage,
       // Apply Russian language optimizations
       ...SEARCH_PARAMETERS,
       ...RUSSIAN_SEARCH_CONFIG.queryParameters,
-      // Boost exact matches and word forms
-      optionalWords: query,
+      // Keep results strict to avoid noisy partial matches.
+      removeWordsIfNoResults: 'none',
+      restrictSearchableAttributes: [...PRODUCT_RELEVANT_SEARCH_ATTRIBUTES],
+      filters: colorIntent?.filters,
+      optionalFilters: colorOptionalFilters,
+      sumOrFiltersScores: colorOptionalFilters ? true : undefined,
       // Handle different word forms
       alternativesAsExact: ['ignorePlurals', 'singleWordSynonym', 'multiWordsSynonym'],
-      // Improve typo tolerance for Russian
-      typoTolerance: 'min',
+      // Keep typo matching strict so multi-word queries stay relevant.
+      typoTolerance: 'strict',
       // Remove stop words for better Russian search
       removeStopWords: ['ru'],
     },
@@ -155,6 +348,7 @@ export async function searchProductsByAlgolia(
 ): Promise<AlgoliaSearchResult> {
   const safePage = Number.isFinite(page) && page > 0 ? Math.floor(page) : 1;
   const hasDynamicFilters = Boolean(normalizeToken(options.material) || normalizeToken(options.color) || options.sort);
+  const colorIntent = getColorSearchIntent(searchParam);
 
   if (!hasAlgoliaSearchConfig()) {
     console.warn('Algolia search is not configured. Falling back to Sanity search.');
@@ -177,14 +371,17 @@ export async function searchProductsByAlgolia(
   }
 
   if (!hasDynamicFilters) {
-    const response = await runAlgoliaSearch(searchParam, safePage, hitsPerPage);
+    const response = await runAlgoliaSearch(searchParam, safePage, hitsPerPage, colorIntent);
     const totalFound = typeof response.nbHits === 'number' ? response.nbHits : 0;
     const totalPages = typeof response.nbPages === 'number' ? response.nbPages : 0;
 
     if (totalPages > 0 && safePage > totalPages) {
-      const fallbackResponse = await runAlgoliaSearch(searchParam, totalPages, hitsPerPage);
+      const fallbackResponse = await runAlgoliaSearch(searchParam, totalPages, hitsPerPage, colorIntent);
       return {
-        products: fallbackResponse.hits.map((hit) => mapAlgoliaHitToProduct(hit, searchParam)),
+        products: applyColorPriority(
+          fallbackResponse.hits.map((hit) => mapAlgoliaHitToProduct(hit, searchParam)),
+          colorIntent
+        ),
         totalFound,
         totalPages,
         currentPage: totalPages,
@@ -192,24 +389,30 @@ export async function searchProductsByAlgolia(
     }
 
     return {
-      products: response.hits.map((hit) => mapAlgoliaHitToProduct(hit, searchParam)),
+      products: applyColorPriority(
+        response.hits.map((hit) => mapAlgoliaHitToProduct(hit, searchParam)),
+        colorIntent
+      ),
       totalFound,
       totalPages,
       currentPage: safePage,
     };
   }
 
-  const firstPage = await runAlgoliaSearch(searchParam, 1, 1000);
+  const firstPage = await runAlgoliaSearch(searchParam, 1, 1000, colorIntent);
   const allHits = [...firstPage.hits];
   const totalAlgoliaPages = typeof firstPage.nbPages === 'number' ? firstPage.nbPages : 0;
 
   for (let p = 2; p <= totalAlgoliaPages; p += 1) {
-    const pageResponse = await runAlgoliaSearch(searchParam, p, 1000);
+    const pageResponse = await runAlgoliaSearch(searchParam, p, 1000, colorIntent);
     allHits.push(...pageResponse.hits);
   }
 
   const allProducts = allHits.map((hit) => mapAlgoliaHitToProduct(hit, searchParam));
-  const filtered = applyProductSort(applyProductFilters(allProducts, options), options.sort);
+  const filtered = applyProductSort(
+    applyColorPriority(applyProductFilters(allProducts, options), colorIntent),
+    options.sort
+  );
   const totalFound = filtered.length;
   const totalPages = Math.max(1, Math.ceil(totalFound / hitsPerPage));
   const pageToUse = Math.min(safePage, totalPages);
