@@ -10,6 +10,7 @@ import { ProductData } from '@/components/shared/product/product.types';
 import { getTotalStock, getProductImageByColor } from '@/components/shared/product/lib';
 import { CURRENCIES_SYMBOLS } from '@/lib/products/companies';
 import { FavoriteButton } from '@/components/shared/favorites/FavoriteButton';
+import { shouldBypassNextImageOptimization } from '@/lib/image-utils';
 
 import { ProductSizes } from '../ProductSizes';
 import { ProductColors } from '../ProductColors';
@@ -50,6 +51,7 @@ const ProductThumb: FC<ProductThumbProps> = ({ item, ...props }): JSX.Element =>
 						quality={50}
 						sizes='100vw'
 						src={image}
+						unoptimized={shouldBypassNextImageOptimization(image)}
 						width={220}
 					/>
 				</div>

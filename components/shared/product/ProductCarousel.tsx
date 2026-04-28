@@ -15,6 +15,7 @@ import clsx from 'clsx';
 
 import {useProductStore} from '@/store/product';
 import Loader from '@/components/ui/Loader';
+import { shouldBypassNextImageOptimization } from '@/lib/image-utils';
 
 import styles from './product.module.css';
 import {getVariantImages} from './lib';
@@ -56,6 +57,7 @@ export const ProductCarousel = ({items, className}: ProductCarouselProps) => {
 									quality={60}
 									radius="sm"
 									src={item ? item : '/images/product-no-image.jpg'}
+									unoptimized={shouldBypassNextImageOptimization(item)}
 									width={500}
 								/>
 							</picture>
@@ -95,6 +97,7 @@ export const ProductCarousel = ({items, className}: ProductCarouselProps) => {
 									height={104}
 									radius="sm"
 									src={item ? item : '/images/product-no-image.jpg'}
+									unoptimized={shouldBypassNextImageOptimization(item)}
 									width={104}
 								/>
 							</picture>
