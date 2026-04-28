@@ -7,6 +7,7 @@ import { Button } from '@heroui/button';
 import { ChevronDownIcon } from 'lucide-react';
 
 import Loader from '@/components/ui/Loader';
+import { shouldBypassNextImageOptimization } from '@/lib/image-utils';
 
 import { ColorItemProps } from './product.types';
 import { filterItemsByColor } from './lib';
@@ -24,6 +25,7 @@ const ColorListItem = ({ item }: { item: ColorItemProps }) => (
             radius='sm'
             src={item.cover || '/images/product-no-image.jpg'}
             title={item.color}
+            unoptimized={shouldBypassNextImageOptimization(item.cover)}
             width={36}
         />
     </li>
