@@ -10,14 +10,14 @@ type Subcategory = {
 }
 
 type SubCategoryFilterProps = {
-	category: { subcategories?: Subcategory[] } | null
+	subcategories?: Subcategory[]
 	categorySlug: string
 	activeSubcategory: Subcategory[] | Subcategory | null
 	baseUrl: string
 }
 
 export default function SubCategoryFilter({
-	category,
+	subcategories = [],
 	categorySlug,
 	activeSubcategory,
 	baseUrl,
@@ -59,7 +59,7 @@ export default function SubCategoryFilter({
 				onChange={onChange}
 			>
 				<Label className="text-lg font-semibold">Подкатегории</Label>
-				{category?.subcategories?.map((sub) => (
+				{subcategories.map((sub) => (
 					<Checkbox key={sub.slug} value={sub.slug} id={sub.slug}>
 						<Checkbox.Control>
 							<Checkbox.Indicator />

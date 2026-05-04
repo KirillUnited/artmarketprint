@@ -91,6 +91,15 @@ export const CATEGORY_QUERY = defineQuery(`*[_type == "category" && slug.current
   }
 `);
 
+export const getAvailableProductSubcategoriesByCategoryQuery = defineQuery(`
+  array::unique(*[
+    _type == "product"
+    && ($categoryTitle == null || category == $categoryTitle)
+    && defined(subcategory)
+    && subcategory != ""
+  ].subcategory)
+`);
+
 // Category with only subcategories that are used by at least one product in this category.
 export const CATEGORY_WITH_AVAILABLE_SUBCATEGORIES_QUERY = defineQuery(`
   *[_type == "category" && slug.current == $slug][0] {

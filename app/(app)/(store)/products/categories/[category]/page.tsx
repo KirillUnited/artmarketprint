@@ -2,9 +2,10 @@ import {JSX, Suspense} from 'react';
 import {clsx} from 'clsx';
 
 import {
-	CATEGORY_WITH_AVAILABLE_SUBCATEGORIES_QUERY,
+	CATEGORY_QUERY,
 	getAllProductColorsQuery,
 	getAllProductMaterials,
+	getAvailableProductSubcategoriesByCategoryQuery,
 	getCategoriesWithProductsQuery,
 	getTotalProductsQuery,
 } from '@/components/shared/product/lib/queries';
@@ -23,13 +24,18 @@ type Props = {
 	category: string;
 };
 
+type Subcategory = {
+	title: string;
+	slug: string;
+};
+
 export async function generateMetadata({params}: {params: Promise<Props>}) {
 	const {category} = await params;
 	const categorySlug =
 		category === 'all'
 			? null
 			: await sanityFetch({
-					query: CATEGORY_WITH_AVAILABLE_SUBCATEGORIES_QUERY,
+					query: CATEGORY_QUERY,
 					params: {
 						slug: category,
 					},
@@ -56,17 +62,39 @@ export default async function ProductsCategoryPage({
 		category === 'all'
 			? null
 			: await sanityFetch({
-					query: CATEGORY_WITH_AVAILABLE_SUBCATEGORIES_QUERY,
+					query: CATEGORY_QUERY,
 					params: {
 						slug: category,
 					},
 				});
+
+	const availableSubcategoryValues: string[] =
+		categorySlug?.title
+			? await sanityFetch({
+					query: getAvailableProductSubcategoriesByCategoryQuery,
+					params: {
+						categoryTitle: categorySlug.title,
+					},
+				})
+			: [];
+
+	const availableSubcategoryValueSet = new Set(
+		(availableSubcategoryValues || []).map((value) => value?.toString().trim()).filter(Boolean)
+	);
+	const visibleSubcategories: Subcategory[] =
+		(categorySlug?.subcategories || []).filter(
+			(subcategory: Subcategory) =>
+				availableSubcategoryValueSet.has(subcategory.title) || availableSubcategoryValueSet.has(subcategory.slug)
+		);
+
 	const subValue = Array.isArray(sub) ? sub.join(',') : sub || '';
-	const activeSubcategorySlugs = subValue
+	const requestedSubcategorySlugs = subValue
 		.split(',')
 		.map((value) => value.trim())
 		.filter(Boolean);
-	const activeSubcategories = categorySlug?.subcategories?.filter((s: any) => activeSubcategorySlugs.includes(s.slug)) || [];
+	const visibleSubcategorySlugSet = new Set(visibleSubcategories.map((subcategory) => subcategory.slug));
+	const activeSubcategorySlugs = requestedSubcategorySlugs.filter((slug) => visibleSubcategorySlugSet.has(slug));
+	const activeSubcategories = visibleSubcategories.filter((subcategory) => activeSubcategorySlugs.includes(subcategory.slug));
 	const singleActiveSubcategory = activeSubcategories.length === 1 ? activeSubcategories[0] : null;
 	const [total, categories, allProductMaterials, allProductColors] = await Promise.all([
 		sanityFetch({
@@ -82,13 +110,12 @@ export default async function ProductsCategoryPage({
 		sanityFetch({query: getAllProductMaterials}),
 		sanityFetch({query: getAllProductColorsQuery(categorySlug, activeSubcategories)}),
 	]);
+	const visibleCategories = categories || [];
 	const pageNumber = parseInt(page || '1');
 	const totalPages = Math.ceil(total / PRODUCTS_PER_PAGE);
 	const activeCategory = singleActiveSubcategory?.title || categorySlug?.title;
 	const hasActiveFilters = Boolean(sort || material || color || activeSubcategorySlugs.length > 0);
 	const productsListKey = [category, pageNumber, sort || '', material || '', color || '', activeSubcategorySlugs.join(',')].join('|');
-
-	console.log(categorySlug)
 
 	return (
 		<Section className="space-y-6 bg-gray-50">
@@ -98,7 +125,7 @@ export default async function ProductsCategoryPage({
 					<p className="text-lg font-semibold">Категории</p>
 				</div>
 
-				<CategoryFilter active={category} baseUrl={BASE_URL} categories={categories} />
+				<CategoryFilter active={category} baseUrl={BASE_URL} categories={visibleCategories} />
 			</div>
 
 			<LightBreadcrumb baseUrl={BASE_URL} category={categorySlug} subcategory={singleActiveSubcategory || undefined} />
@@ -107,7 +134,14 @@ export default async function ProductsCategoryPage({
 				{activeCategory || 'Все категории'} <span className="truncate text-sm font-light text-gray-600">{`${total} шт.`}</span>
 			</h1>
 			<div className={clsx('grid gap-8', activeCategory && 'md:grid-cols-[270px_1fr]')}>
-				{activeCategory && <SubCategoryFilter activeSubcategory={activeSubcategories} baseUrl={BASE_URL} category={categorySlug} categorySlug={category} />}
+				{activeCategory && (
+					<SubCategoryFilter
+						activeSubcategory={activeSubcategories}
+						baseUrl={BASE_URL}
+						categorySlug={category}
+						subcategories={visibleSubcategories}
+					/>
+				)}
 				<div className="flex flex-col gap-8">
 					<ProductFilter allProductColors={allProductColors} allProductMaterials={allProductMaterials} />
 					<Suspense
