@@ -50,12 +50,62 @@ export const getCategoriesQuery = `
 `
 ;
 
+// Categories that are actually used by at least one product.
+export const getCategoriesWithProductsQuery = `
+  *[
+    _type == "category"
+    && title in array::unique(*[
+      _type == "product"
+      && defined(category)
+      && category != ""
+    ].category)
+  ] | order(title asc) {
+    _id,
+    id,
+    title,
+    featured,
+    description,
+    image,
+    price,
+    "currentSlug": slug.current,
+    subcategories[]{
+      _key,
+      id,
+      title,
+      "slug": slug.current
+    }
+  }
+`;
+
 export const CATEGORY_QUERY = defineQuery(`*[_type == "category" && slug.current == $slug][0] {
 	  _id,
 	  id,
 	  title,
 	  "currentSlug": slug.current,
     subcategories[] {
+      _key,
+      id,
+      title,
+      "slug": slug.current
+    }
+  }
+`);
+
+// Category with only subcategories that are used by at least one product in this category.
+export const CATEGORY_WITH_AVAILABLE_SUBCATEGORIES_QUERY = defineQuery(`
+  *[_type == "category" && slug.current == $slug][0] {
+    _id,
+    id,
+    title,
+    "currentSlug": slug.current,
+    subcategories[
+      title in array::unique(*[
+        _type == "product"
+        && category == ^.title
+        && defined(subcategory)
+        && subcategory != ""
+      ].subcategory)
+    ] {
       _key,
       id,
       title,

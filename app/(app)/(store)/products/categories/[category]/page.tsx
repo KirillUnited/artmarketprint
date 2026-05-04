@@ -1,7 +1,13 @@
 import {JSX, Suspense} from 'react';
 import {clsx} from 'clsx';
 
-import {getTotalProductsQuery, getCategoriesQuery, getSubcategoryProductCountsQuery, CATEGORY_QUERY, getAllProductMaterials, getAllProductColorsQuery} from '@/components/shared/product/lib/queries';
+import {
+	CATEGORY_WITH_AVAILABLE_SUBCATEGORIES_QUERY,
+	getAllProductColorsQuery,
+	getAllProductMaterials,
+	getCategoriesWithProductsQuery,
+	getTotalProductsQuery,
+} from '@/components/shared/product/lib/queries';
 import {CategoryFilter, ClientPagination, ProductListContainer} from '@/components/shared/product/ui/';
 import Section, {SectionTitle} from '@/components/layout/Section';
 import {sanityFetch} from '@/sanity/lib/sanityFetch';
@@ -23,7 +29,7 @@ export async function generateMetadata({params}: {params: Promise<Props>}) {
 		category === 'all'
 			? null
 			: await sanityFetch({
-					query: CATEGORY_QUERY,
+					query: CATEGORY_WITH_AVAILABLE_SUBCATEGORIES_QUERY,
 					params: {
 						slug: category,
 					},
@@ -50,7 +56,7 @@ export default async function ProductsCategoryPage({
 		category === 'all'
 			? null
 			: await sanityFetch({
-					query: CATEGORY_QUERY,
+					query: CATEGORY_WITH_AVAILABLE_SUBCATEGORIES_QUERY,
 					params: {
 						slug: category,
 					},
@@ -62,7 +68,7 @@ export default async function ProductsCategoryPage({
 		.filter(Boolean);
 	const activeSubcategories = categorySlug?.subcategories?.filter((s: any) => activeSubcategorySlugs.includes(s.slug)) || [];
 	const singleActiveSubcategory = activeSubcategories.length === 1 ? activeSubcategories[0] : null;
-	const [total, categories, subcategoryProductCounts, allProductMaterials, allProductColors] = await Promise.all([
+	const [total, categories, allProductMaterials, allProductColors] = await Promise.all([
 		sanityFetch({
 			query: getTotalProductsQuery,
 			params: {
@@ -72,10 +78,7 @@ export default async function ProductsCategoryPage({
 				color: color || null,
 			},
 		}),
-		sanityFetch({query: getCategoriesQuery}),
-		sanityFetch({
-			query: getSubcategoryProductCountsQuery(categorySlug, activeSubcategories),
-		}),
+		sanityFetch({query: getCategoriesWithProductsQuery}),
 		sanityFetch({query: getAllProductMaterials}),
 		sanityFetch({query: getAllProductColorsQuery(categorySlug, activeSubcategories)}),
 	]);
@@ -85,7 +88,7 @@ export default async function ProductsCategoryPage({
 	const hasActiveFilters = Boolean(sort || material || color || activeSubcategorySlugs.length > 0);
 	const productsListKey = [category, pageNumber, sort || '', material || '', color || '', activeSubcategorySlugs.join(',')].join('|');
 
-	console.log(subcategoryProductCounts.length);
+	console.log(categorySlug)
 
 	return (
 		<Section className="space-y-6 bg-gray-50">
