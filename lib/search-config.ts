@@ -2,7 +2,7 @@
 export const SEARCH_CONFIG = {
   INDEX_NAME: 'products',
   HITS_PER_PAGE: 10,
-  PLACEHOLDER: 'Название товара...',
+  PLACEHOLDER: 'Поиск по сайту...',
   EMPTY_STATE_MESSAGE: 'Товары не найдены'
 } as const;
 

@@ -4,6 +4,7 @@ import Section from '@/components/layout/Section';
 import {ProductData} from '@/components/shared/product/product.types';
 import {SearchEmptyQueryState, SearchErrorState, SearchNotFoundState, SearchResultsState} from '@/components/shared/product/search';
 import {searchProductsByAlgolia} from '@/sanity/lib/product/searchProductsByAlgolia';
+import {searchServicesByAlgolia} from '@/sanity/lib/service/searchServicesByAlgolia';
 
 const PRODUCTS_PER_PAGE = 20;
 
@@ -28,6 +29,7 @@ export default async function SearchPage({
 		sort?: string;
 		material?: string;
 		color?: string;
+		type?: string;
 	}>;
 }): Promise<JSX.Element> {
 	const {
@@ -36,6 +38,7 @@ export default async function SearchPage({
 		sort: rawSort,
 		material: rawMaterial,
 		color: rawColor,
+		type: rawType,
 	} = await searchParams;
 	const query = (rawQuery ?? '').trim();
 	const pageParam = Number.parseInt(rawPage ?? '1', 10);
@@ -43,6 +46,7 @@ export default async function SearchPage({
 	const sort = (rawSort ?? '').trim() || null;
 	const material = (rawMaterial ?? '').trim() || null;
 	const color = (rawColor ?? '').trim() || null;
+	const selectedSearchType = rawType === 'products' || rawType === 'services' ? rawType : null;
 
 	try {
 		if (query === '') {
@@ -53,28 +57,39 @@ export default async function SearchPage({
 			);
 		}
 
-		const {products, totalFound, totalPages, currentPage: resolvedPage} = await searchProductsByAlgolia(
-			query,
-			currentPage,
-			PRODUCTS_PER_PAGE,
-			{
-				sort,
-				material,
-				color,
-			}
-		);
+		const [productsSearch, servicesSearch] = await Promise.all([
+			searchProductsByAlgolia(
+				query,
+				currentPage,
+				PRODUCTS_PER_PAGE,
+				{
+					sort,
+					material,
+					color,
+				}
+			),
+			searchServicesByAlgolia(query),
+		]);
 
-		if (Array.isArray(products) && products.length > 0) {
+		const {products, totalFound, totalPages, currentPage: resolvedPage} = productsSearch;
+		const hasProducts = Array.isArray(products) && products.length > 0;
+		const hasServices = Array.isArray(servicesSearch.services) && servicesSearch.services.length > 0;
+
+		if (hasProducts || hasServices) {
 			const page = totalPages > 0 ? Math.min(resolvedPage, totalPages) : resolvedPage;
 
 			return (
 				<Section>
 					<SearchResultsState
 						currentPage={page}
+						services={servicesSearch.services}
+						servicesTotalFound={servicesSearch.totalFound}
 						selectedColor={color}
+						selectedSearchType={selectedSearchType}
 						products={products as ProductData[]}
 						query={query}
-						totalFound={totalFound}
+						totalFound={totalFound + servicesSearch.totalFound}
+						productsTotalFound={totalFound}
 						totalPages={Math.max(1, totalPages)}
 					/>
 				</Section>

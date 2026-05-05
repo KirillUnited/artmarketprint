@@ -15,11 +15,11 @@ export function SearchNotFoundState({query}: SearchNotFoundStateProps) {
 			<Card className="lg:flex-row gap-8 self-stretch items-center p-4 w-fit mx-auto">
 				<div>
 					<CardHeader>
-						<p className="text-3xl font-bold">{'Товар не найден'}</p>
+						<p className="text-3xl font-bold">{'Ничего не найдено'}</p>
 					</CardHeader>
 					<CardBody className="prose text-balance text-slate-500 block">
 						<p>
-							К сожалению, мы не нашли товаров по запросу <span className="font-bold">&quot;{query}&quot;</span>
+							К сожалению, мы не нашли товары или услуги по запросу <span className="font-bold">&quot;{query}&quot;</span>
 						</p>
 						<p>Рекомендуем:</p>
 						<ul>
