@@ -145,7 +145,7 @@ export const SearchButton: React.FC<SearchButtonProps> = ({
     >
       <span className="flex items-center gap-2 text-muted-foreground opacity-80">
         <SearchIcon size={24} color="currentColor" />
-        <span className="hidden lg:inline">Поиск товаров</span>
+        <span className="hidden lg:inline">Поиск по сайту</span>
       </span>
       {/* <div className="hidden md:flex gap-0.5">
         <kbd

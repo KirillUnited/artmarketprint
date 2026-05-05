@@ -4,6 +4,7 @@ import Section from '@/components/layout/Section';
 import {ProductData} from '@/components/shared/product/product.types';
 import {SearchEmptyQueryState, SearchErrorState, SearchNotFoundState, SearchResultsState} from '@/components/shared/product/search';
 import {searchProductsByAlgolia} from '@/sanity/lib/product/searchProductsByAlgolia';
+import {searchServicesByAlgolia} from '@/sanity/lib/service/searchServicesByAlgolia';
 
 const PRODUCTS_PER_PAGE = 20;
 
@@ -53,28 +54,38 @@ export default async function SearchPage({
 			);
 		}
 
-		const {products, totalFound, totalPages, currentPage: resolvedPage} = await searchProductsByAlgolia(
-			query,
-			currentPage,
-			PRODUCTS_PER_PAGE,
-			{
-				sort,
-				material,
-				color,
-			}
-		);
+		const [productsSearch, servicesSearch] = await Promise.all([
+			searchProductsByAlgolia(
+				query,
+				currentPage,
+				PRODUCTS_PER_PAGE,
+				{
+					sort,
+					material,
+					color,
+				}
+			),
+			searchServicesByAlgolia(query),
+		]);
 
-		if (Array.isArray(products) && products.length > 0) {
+		const {products, totalFound, totalPages, currentPage: resolvedPage} = productsSearch;
+		const hasProducts = Array.isArray(products) && products.length > 0;
+		const hasServices = Array.isArray(servicesSearch.services) && servicesSearch.services.length > 0;
+
+		if (hasProducts || hasServices) {
 			const page = totalPages > 0 ? Math.min(resolvedPage, totalPages) : resolvedPage;
 
 			return (
 				<Section>
 					<SearchResultsState
 						currentPage={page}
+						services={servicesSearch.services}
+						servicesTotalFound={servicesSearch.totalFound}
 						selectedColor={color}
 						products={products as ProductData[]}
 						query={query}
-						totalFound={totalFound}
+						totalFound={totalFound + servicesSearch.totalFound}
+						productsTotalFound={totalFound}
 						totalPages={Math.max(1, totalPages)}
 					/>
 				</Section>

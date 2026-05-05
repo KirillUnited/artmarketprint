@@ -14,7 +14,7 @@ export function ServiceSearch() {
     hitsPerPage: SEARCH_CONFIG.HITS_PER_PAGE,
     attributes: SEARCH_ATTRIBUTES,
     searchParameters: SEARCH_PARAMETERS,
-    buttonText: "Поиск товаров"
+    buttonText: "Поиск по сайту"
   };
 
   const buttonProps = {
@@ -31,7 +31,7 @@ export function ServiceSearch() {
             <circle cx="11" cy="11" r="8"></circle>
             <path d="m21 21-4.3-4.3"></path>
           </svg>
-          <span>Поиск товаров</span>
+          <span>Поиск по сайту</span>
         </>
       }
     />
