@@ -29,6 +29,7 @@ export default async function SearchPage({
 		sort?: string;
 		material?: string;
 		color?: string;
+		type?: string;
 	}>;
 }): Promise<JSX.Element> {
 	const {
@@ -37,6 +38,7 @@ export default async function SearchPage({
 		sort: rawSort,
 		material: rawMaterial,
 		color: rawColor,
+		type: rawType,
 	} = await searchParams;
 	const query = (rawQuery ?? '').trim();
 	const pageParam = Number.parseInt(rawPage ?? '1', 10);
@@ -44,6 +46,7 @@ export default async function SearchPage({
 	const sort = (rawSort ?? '').trim() || null;
 	const material = (rawMaterial ?? '').trim() || null;
 	const color = (rawColor ?? '').trim() || null;
+	const selectedSearchType = rawType === 'products' || rawType === 'services' ? rawType : null;
 
 	try {
 		if (query === '') {
@@ -82,6 +85,7 @@ export default async function SearchPage({
 						services={servicesSearch.services}
 						servicesTotalFound={servicesSearch.totalFound}
 						selectedColor={color}
+						selectedSearchType={selectedSearchType}
 						products={products as ProductData[]}
 						query={query}
 						totalFound={totalFound + servicesSearch.totalFound}

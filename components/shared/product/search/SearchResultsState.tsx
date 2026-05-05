@@ -3,6 +3,7 @@ import {ProductData} from '@/components/shared/product/product.types';
 import {ClientPagination} from '@/components/shared/product/ui/Pagination';
 import { Button } from '@heroui/button';
 import { Card, CardBody } from '@heroui/card';
+import { Tabs } from '@heroui/react';
 import { ArrowLeftIcon } from 'lucide-react';
 import Link from 'next/link';
 
@@ -20,6 +21,7 @@ export type SearchResultsStateProps = {
 	currentPage: number;
 	totalPages: number;
 	selectedColor?: string | null;
+	selectedSearchType?: 'products' | 'services' | null;
 };
 
 export function SearchResultsState({
@@ -32,11 +34,25 @@ export function SearchResultsState({
 	currentPage,
 	totalPages,
 	selectedColor,
+	selectedSearchType = null,
 }: SearchResultsStateProps) {
 	const productsWithSelectedColor = products.map((product) => ({
 		...product,
 		activeColor: selectedColor || product.activeColor || '',
 	}));
+	const hasProducts = products.length > 0;
+	const hasServices = services.length > 0;
+	const shouldShowProducts = hasProducts;
+	const shouldShowServices = hasServices;
+	const defaultSelectedKey =
+		selectedSearchType === 'services' && hasServices
+			? 'services'
+			: selectedSearchType === 'products' && hasProducts
+				? 'products'
+				: hasProducts
+					? 'products'
+					: 'services';
+	const tabsOrder = selectedSearchType === 'services' ? ['services', 'products'] : ['products', 'services'];
 
 	return (
 		<>
@@ -47,30 +63,56 @@ export function SearchResultsState({
 				</Button>
 			</Link>
 			<SectionTitle className='TEST'>{`Результаты поиска для "${query}" (${totalFound} найдено)`}</SectionTitle>
-			<p className="text-sm text-foreground/70 mb-2">
-				{`Товары: ${productsTotalFound} • Услуги: ${servicesTotalFound}`}
-			</p>
-			{services.length > 0 && (
-				<div className="grid gap-3 mb-6">
-					{services.filter((service) => Boolean(service.slug)).map((service) => (
-						<Link key={service.objectID} href={`/services/${service.slug}`}>
-							<Card className="hover:bg-foreground/5 transition-colors">
-								<CardBody className="gap-1">
-									<p className="font-semibold">{service.title || 'Услуга'}</p>
-									{service.description && <p className="text-sm text-foreground/70 line-clamp-2">{service.description}</p>}
-								</CardBody>
-							</Card>
-						</Link>
-					))}
-				</div>
+			{(shouldShowServices || shouldShowProducts) && (
+				<Tabs className="w-full mb-2" defaultSelectedKey={defaultSelectedKey}>
+					<Tabs.ListContainer>
+						<Tabs.List aria-label="Search results">
+							{tabsOrder.map((tabKey) => {
+								if (tabKey === 'products' && shouldShowProducts) {
+									return (
+										<Tabs.Tab key="products" id="products">
+											{`Товары (${productsTotalFound})`}
+											<Tabs.Indicator />
+										</Tabs.Tab>
+									);
+								}
+								if (tabKey === 'services' && shouldShowServices) {
+									return (
+										<Tabs.Tab key="services" id="services">
+											{`Услуги (${servicesTotalFound})`}
+											<Tabs.Indicator />
+										</Tabs.Tab>
+									);
+								}
+								return null;
+							})}
+						</Tabs.List>
+					</Tabs.ListContainer>
+					{shouldShowProducts && (
+						<Tabs.Panel className="pt-4" id="products">
+							<SearchTopActions />
+							<ProductList products={productsWithSelectedColor} />
+							{totalPages > 1 && <ClientPagination basePath="/search" pageNumber={currentPage} totalPages={totalPages} />}
+						</Tabs.Panel>
+					)}
+					{shouldShowServices && (
+						<Tabs.Panel className="pt-4" id="services">
+							<div className="grid gap-3 mb-6">
+								{services.filter((service) => Boolean(service.slug)).map((service) => (
+									<Link key={service.objectID} href={`/services/${service.slug}`}>
+										<Card className="hover:bg-foreground/5 transition-colors">
+											<CardBody className="gap-1">
+												<p className="font-semibold">{service.title || 'Услуга'}</p>
+												{service.description && <p className="text-sm text-foreground/70 line-clamp-2">{service.description}</p>}
+											</CardBody>
+										</Card>
+									</Link>
+								))}
+							</div>
+						</Tabs.Panel>
+					)}
+				</Tabs>
 			)}
-			{products.length > 0 && (
-				<>
-					<SearchTopActions />
-					<ProductList products={productsWithSelectedColor}/>
-				</>
-			)}
-			{totalPages > 1 && <ClientPagination basePath="/search" pageNumber={currentPage} totalPages={totalPages} />}
 		</>
 	);
 }

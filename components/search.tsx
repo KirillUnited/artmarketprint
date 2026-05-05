@@ -752,7 +752,9 @@ export function SearchModal({ onClose, config, scope, onScopeChange }: SearchMod
   }, [activateSelection, selectedIndex, items, sendEvent]);
 
   const showResultsPanel = !noResults && !!query;
-  const defaultResultsHref = query ? `/search?query=${encodeURIComponent(query)}` : "/search";
+  const defaultResultsHref = query
+    ? `/search?query=${encodeURIComponent(query)}&type=${encodeURIComponent(scope.key)}`
+    : `/search?type=${encodeURIComponent(scope.key)}`;
   const fullResultsHref = scope.fullResultsHref ? scope.fullResultsHref(query) : defaultResultsHref;
   const handleEnterKey = useCallback(() => {
     router.push(fullResultsHref);
@@ -828,16 +830,18 @@ export function SearchModal({ onClose, config, scope, onScopeChange }: SearchMod
           />
         )}
       </div>
-      {query && <Footer query={query} onClose={onClose} />}
+      {query && <Footer query={query} scopeKey={scope.key} onClose={onClose} />}
     </>
   );
 }
 
 const Footer = memo(function Footer({
   query,
+  scopeKey,
   onClose,
 }: {
   query: string;
+  scopeKey: string;
   onClose?: () => void;
 }) {
   const basePoweredByUrl =
@@ -846,7 +850,9 @@ const Footer = memo(function Footer({
     typeof window !== "undefined"
       ? `${basePoweredByUrl}&utm_source=${encodeURIComponent(window.location.hostname)}`
       : basePoweredByUrl;
-  const fullResultsHref = query ? `/search?query=${encodeURIComponent(query)}` : "/search";
+  const fullResultsHref = query
+    ? `/search?query=${encodeURIComponent(query)}&type=${encodeURIComponent(scopeKey)}`
+    : `/search?type=${encodeURIComponent(scopeKey)}`;
   return (
     <div className="sticky bottom-0 left-0 right-0 flex items-center justify-between bg-background rounded-b-sm p-4 border-t">
       {/* <div className="inline-flex items-center gap-4 text-sm">
