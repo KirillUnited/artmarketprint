@@ -4,14 +4,16 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a Next.js 14 application using the App Router architecture with HeroUI v2 components. The site appears to be an e-commerce platform for art market prints, integrated with Sanity CMS for content management.
+This is a Next.js 16 application using the App Router architecture with HeroUI v3 components. The site is an e-commerce platform for art market prints, integrated with Sanity CMS for content management and Algolia for search.
 
 Key technologies:
-- Next.js 14 (App Directory)
-- HeroUI v2 component library
-- Tailwind CSS for styling
-- TypeScript for type safety
+- Next.js 16 (App Router)
+- React 19 and React DOM 19
+- HeroUI v3 component library
+- Tailwind CSS v4 for styling
+- TypeScript v6 for type safety
 - Sanity CMS for content management
+- Algolia search integration
 - React Server Components and Server Actions
 
 ## Common Development Commands
@@ -52,10 +54,10 @@ Starts the production server.
 - `styles/` - Global styles and Tailwind configuration
 
 ### Key Patterns
-1. **App Router Structure**: Uses Next.js 14 App Router with route groups like `(app)` and `(store)`
+1. **App Router Structure**: Uses Next.js 16 App Router with route groups like `(app)` and `(store)`
 2. **Server Components**: Heavy use of React Server Components for data fetching
 3. **Sanity Integration**: Content managed through Sanity CMS with typed schemas
-4. **HeroUI Components**: UI built with HeroUI v2 component library
+4. **HeroUI Components**: UI built with HeroUI v3 component library
 5. **TypeScript**: Strict typing throughout with path aliases (`@/*`)
 
 ### Data Flow
@@ -68,7 +70,7 @@ Starts the production server.
 ## Development Guidelines
 
 ### Component Organization
-- Use HeroUI v2 components as the primary UI library
+- Use HeroUI v3 components as the primary UI library
 - Separate shared components in `components/shared/`
 - UI-specific components in `components/ui/`
 - Layout components in `components/layout/`
