@@ -13,6 +13,7 @@ import {
   useSearchBox,
 } from "react-instantsearch";
 import { Button } from "@/components/ui/button";
+import { Button as TabButton } from "@heroui/react";
 import { cn } from "@/lib/utils";
 import { useKeyboardNavigation } from "@/hooks/use-keyboard-navigation";
 import { CURRENCIES_SYMBOLS } from "@/lib/products/companies";
@@ -46,6 +47,25 @@ export interface SearchConfig {
   openResultsInNewTab?: boolean;
   /** Transform items before rendering (optional) - useful for proxying images or modifying hit data */
   transformItems?: (items: Hit<BaseHit>[]) => Hit<BaseHit>[];
+  /** Optional multiple search scopes (e.g. products/services). If omitted, uses single config scope. */
+  scopes?: SearchScopeConfig[];
+  /** Optional default scope key when scopes are configured (defaults to first scope). */
+  defaultScopeKey?: string;
+}
+
+export interface SearchScopeConfig {
+  key: string;
+  label: string;
+  indexName: string;
+  placeholder?: string;
+  attributes: HitsAttributesMapping;
+  searchParameters?: Record<string, unknown>;
+  transformItems?: (items: Hit<BaseHit>[]) => Hit<BaseHit>[];
+  showImageColorFilter?: boolean;
+  buildHitUrl?: (hit: Hit<BaseHit>) => string;
+  fullResultsHref?: (query: string) => string;
+  secondaryTextPrefix?: string;
+  tertiaryTextPrefix?: string;
 }
 
 // =========================================================================
@@ -145,7 +165,7 @@ export const SearchButton: React.FC<SearchButtonProps> = ({
     >
       <span className="flex items-center gap-2 text-muted-foreground opacity-80">
         <SearchIcon size={24} color="currentColor" />
-        <span className="hidden lg:inline">Поиск товаров</span>
+        <span className="hidden lg:inline">Поиск по сайту</span>
       </span>
       {/* <div className="hidden md:flex gap-0.5">
         <kbd
@@ -288,6 +308,9 @@ interface HitsListProps {
     eventName: string,
   ) => void;
   openResultsInNewTab?: boolean;
+  buildHitUrl?: (hit: Hit<BaseHit>) => string;
+  secondaryTextPrefix?: string;
+  tertiaryTextPrefix?: string;
 }
 
 const HitsList = memo(function HitsList({
@@ -299,6 +322,9 @@ const HitsList = memo(function HitsList({
   hoverEnabled,
   sendEvent,
   openResultsInNewTab = true,
+  buildHitUrl,
+  secondaryTextPrefix = "Артикул: ",
+  tertiaryTextPrefix = "Цвета: ",
 }: HitsListProps) {
   const [failedImages, setFailedImages] = useState<Record<string, boolean>>({});
   const mapping = useMemo(
@@ -331,7 +357,8 @@ const HitsList = memo(function HitsList({
         );
         const imageUrl = relevant.image;
         const color = relevant.color || '';
-        const url = `${getByPath<string>(hit, mapping.url)}?color=${color}`;
+        const defaultUrl = `${getByPath<string>(hit, mapping.url)}?color=${color}`;
+        const url = buildHitUrl ? buildHitUrl(hit) : defaultUrl;
         const hasImage = Boolean(imageUrl);
         const isImageFailed = failedImages[hit.objectID] || !hasImage;
         const primaryVal = getByPath<string>(hit, mapping.primaryText);
@@ -389,12 +416,13 @@ const HitsList = memo(function HitsList({
               </p>
               {mapping.secondaryText ? (
                 <p className="text-sm mt-2 text-muted-foreground">
-                  Артикул: {getByPath<string | number>(hit, mapping.secondaryText)}
+                  {secondaryTextPrefix}
+                  {getByPath<string | number>(hit, mapping.secondaryText)}
                 </p>
               ) : null}
               {mapping.tertiaryText ? (
                 <p className="text-sm text-muted-foreground mt-2">
-                  Цвета:&nbsp;
+                  {tertiaryTextPrefix}
                   <Highlight
                     attribute={toAttributePath(mapping.tertiaryText) as any}
                     hit={hit}
@@ -594,6 +622,10 @@ interface ResultsPanelProps {
     hit: Hit<BaseHit>,
     eventName: string,
   ) => void;
+  showImageColorFilter?: boolean;
+  buildHitUrl?: (hit: Hit<BaseHit>) => string;
+  secondaryTextPrefix?: string;
+  tertiaryTextPrefix?: string;
 }
 
 const ResultsPanel = memo(function ResultsPanel({
@@ -603,6 +635,10 @@ const ResultsPanel = memo(function ResultsPanel({
   onHoverIndex,
   scrollOnSelectionChange = true,
   sendEvent,
+  showImageColorFilter = true,
+  buildHitUrl,
+  secondaryTextPrefix,
+  tertiaryTextPrefix,
 }: ResultsPanelProps) {
   const { items } = useHits(
     config.transformItems ? { transformItems: config.transformItems } : {},
@@ -650,7 +686,9 @@ const ResultsPanel = memo(function ResultsPanel({
         className="flex flex-col h-[91vh] md:h-[50vh] gap-4 p-2 overflow-y-auto"
         role="listbox"
       >
-        <ImageColorFilter className="px-4 py-2 bg-background/50 rounded-md" />
+        {showImageColorFilter ? (
+          <ImageColorFilter className="px-4 py-2 bg-background/50 rounded-md" />
+        ) : null}
         <HitsList
           hits={items}
           query={query}
@@ -660,6 +698,9 @@ const ResultsPanel = memo(function ResultsPanel({
           hoverEnabled={hoverEnabled}
           sendEvent={sendEvent}
           openResultsInNewTab={config.openResultsInNewTab}
+          buildHitUrl={buildHitUrl}
+          secondaryTextPrefix={secondaryTextPrefix}
+          tertiaryTextPrefix={tertiaryTextPrefix}
         />
       </div>
     </>
@@ -669,16 +710,20 @@ const ResultsPanel = memo(function ResultsPanel({
 interface SearchModalProps {
   onClose?: () => void;
   config: SearchConfig;
+  scope: SearchScopeConfig;
+  onScopeChange?: (scopeKey: string) => void;
 }
 
-export function SearchModal({ onClose, config }: SearchModalProps) {
+export function SearchModal({ onClose, config, scope, onScopeChange }: SearchModalProps) {
   const router = useRouter();
   const { query, refine } = useSearchBox();
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   const results = useInstantSearch();
   const { items, sendEvent } = useHits(
-    config.transformItems ? { transformItems: config.transformItems } : {},
+    scope.transformItems || config.transformItems
+      ? { transformItems: scope.transformItems || config.transformItems }
+      : {},
   );
 
   const noResults = results.results?.nbHits === 0;
@@ -707,7 +752,10 @@ export function SearchModal({ onClose, config }: SearchModalProps) {
   }, [activateSelection, selectedIndex, items, sendEvent]);
 
   const showResultsPanel = !noResults && !!query;
-  const fullResultsHref = query ? `/search?query=${encodeURIComponent(query)}` : "/search";
+  const defaultResultsHref = query
+    ? `/search?query=${encodeURIComponent(query)}&type=${encodeURIComponent(scope.key)}`
+    : `/search?type=${encodeURIComponent(scope.key)}`;
+  const fullResultsHref = scope.fullResultsHref ? scope.fullResultsHref(query) : defaultResultsHref;
   const handleEnterKey = useCallback(() => {
     router.push(fullResultsHref);
     onClose?.();
@@ -728,9 +776,24 @@ export function SearchModal({ onClose, config }: SearchModalProps) {
         minWordSizefor2Typos={6}
       />
       <div className="flex flex-col">
+        {config.scopes && config.scopes.length > 1 && onScopeChange ? (
+          <div className="flex gap-2 p-4 border-b border-muted">
+            {config.scopes.map((searchScope) => (
+              <TabButton
+                key={searchScope.key}
+                type="button"
+                size="sm"
+                variant={searchScope.key === scope.key ? "primary" : "outline"}
+                onClick={() => onScopeChange(searchScope.key)}
+              >
+                {searchScope.label}
+              </TabButton>
+            ))}
+          </div>
+        ) : null}
         <SearchBox
           query={query}
-          placeholder={config.placeholder || "Что вы ищите?"}
+          placeholder={scope.placeholder || config.placeholder || "Что вы ищите?"}
           className="flex flex-row items-center bg-background border-b border-muted rounded-t-sm p-2 placeholder:text-muted-foreground"
           refine={refine}
           onClose={onClose}
@@ -749,6 +812,10 @@ export function SearchModal({ onClose, config }: SearchModalProps) {
             onHoverIndex={hoverIndex}
             scrollOnSelectionChange={selectionOrigin !== "pointer"}
             sendEvent={sendEvent}
+            showImageColorFilter={scope.showImageColorFilter ?? true}
+            buildHitUrl={scope.buildHitUrl}
+            secondaryTextPrefix={scope.secondaryTextPrefix}
+            tertiaryTextPrefix={scope.tertiaryTextPrefix}
           />
         )}
         {noResults && query && (
@@ -763,16 +830,18 @@ export function SearchModal({ onClose, config }: SearchModalProps) {
           />
         )}
       </div>
-      <Footer query={query} onClose={onClose} />
+      {query && <Footer query={query} scopeKey={scope.key} onClose={onClose} />}
     </>
   );
 }
 
 const Footer = memo(function Footer({
   query,
+  scopeKey,
   onClose,
 }: {
   query: string;
+  scopeKey: string;
   onClose?: () => void;
 }) {
   const basePoweredByUrl =
@@ -781,7 +850,9 @@ const Footer = memo(function Footer({
     typeof window !== "undefined"
       ? `${basePoweredByUrl}&utm_source=${encodeURIComponent(window.location.hostname)}`
       : basePoweredByUrl;
-  const fullResultsHref = query ? `/search?query=${encodeURIComponent(query)}` : "/search";
+  const fullResultsHref = query
+    ? `/search?query=${encodeURIComponent(query)}&type=${encodeURIComponent(scopeKey)}`
+    : `/search?type=${encodeURIComponent(scopeKey)}`;
   return (
     <div className="sticky bottom-0 left-0 right-0 flex items-center justify-between bg-background rounded-b-sm p-4 border-t">
       {/* <div className="inline-flex items-center gap-4 text-sm">
@@ -830,8 +901,30 @@ const Footer = memo(function Footer({
 export default function SearchExperience(config: SearchConfig) {
   const searchClient = algoliasearch(config.applicationId, config.apiKey);
   searchClient.addAlgoliaAgent("algolia-sitesearch");
+  const scopes = useMemo<SearchScopeConfig[]>(() => {
+    if (config.scopes && config.scopes.length > 0) {
+      return config.scopes;
+    }
+    return [
+      {
+        key: "default",
+        label: "Поиск",
+        indexName: config.indexName,
+        placeholder: config.placeholder,
+        attributes: config.attributes,
+        searchParameters: config.searchParameters,
+        transformItems: config.transformItems,
+        showImageColorFilter: true,
+      },
+    ];
+  }, [config]);
+  const initialScope =
+    scopes.find((scope) => scope.key === config.defaultScopeKey) || scopes[0];
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [activeScopeKey, setActiveScopeKey] = useState(initialScope.key);
+  const activeScope =
+    scopes.find((scope) => scope.key === activeScopeKey) || initialScope;
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
@@ -860,12 +953,22 @@ export default function SearchExperience(config: SearchConfig) {
       <SearchButton {...buttonProps}>{config.buttonText}</SearchButton>
       <Modal isOpen={isModalOpen} onClose={closeModal}>
         <InstantSearch
+          key={activeScope.key}
           searchClient={searchClient}
-          indexName={config.indexName}
+          indexName={activeScope.indexName}
           future={{ preserveSharedStateOnUnmount: true }}
           insights={config.insights ?? true}
         >
-          <SearchModal onClose={closeModal} config={config} />
+          <SearchModal
+            onClose={closeModal}
+            config={{
+              ...config,
+              attributes: activeScope.attributes,
+              searchParameters: activeScope.searchParameters ?? config.searchParameters,
+            }}
+            scope={activeScope}
+            onScopeChange={setActiveScopeKey}
+          />
         </InstantSearch>
       </Modal>
     </>
