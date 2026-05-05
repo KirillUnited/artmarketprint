@@ -36,6 +36,8 @@ export function ServiceSearch() {
           tertiaryText: "description",
           image: "imageUrl",
         },
+        secondaryTextPrefix: "",
+        tertiaryTextPrefix: "",
         showImageColorFilter: false,
         buildHitUrl: (hit) => `/services/${String((hit as { slug?: string }).slug || "")}`,
       },

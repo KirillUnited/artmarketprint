@@ -64,6 +64,8 @@ export interface SearchScopeConfig {
   showImageColorFilter?: boolean;
   buildHitUrl?: (hit: Hit<BaseHit>) => string;
   fullResultsHref?: (query: string) => string;
+  secondaryTextPrefix?: string;
+  tertiaryTextPrefix?: string;
 }
 
 // =========================================================================
@@ -307,6 +309,8 @@ interface HitsListProps {
   ) => void;
   openResultsInNewTab?: boolean;
   buildHitUrl?: (hit: Hit<BaseHit>) => string;
+  secondaryTextPrefix?: string;
+  tertiaryTextPrefix?: string;
 }
 
 const HitsList = memo(function HitsList({
@@ -319,6 +323,8 @@ const HitsList = memo(function HitsList({
   sendEvent,
   openResultsInNewTab = true,
   buildHitUrl,
+  secondaryTextPrefix = "Артикул: ",
+  tertiaryTextPrefix = "Цвета: ",
 }: HitsListProps) {
   const [failedImages, setFailedImages] = useState<Record<string, boolean>>({});
   const mapping = useMemo(
@@ -410,12 +416,13 @@ const HitsList = memo(function HitsList({
               </p>
               {mapping.secondaryText ? (
                 <p className="text-sm mt-2 text-muted-foreground">
-                  Артикул: {getByPath<string | number>(hit, mapping.secondaryText)}
+                  {secondaryTextPrefix}
+                  {getByPath<string | number>(hit, mapping.secondaryText)}
                 </p>
               ) : null}
               {mapping.tertiaryText ? (
                 <p className="text-sm text-muted-foreground mt-2">
-                  Цвета:&nbsp;
+                  {tertiaryTextPrefix}
                   <Highlight
                     attribute={toAttributePath(mapping.tertiaryText) as any}
                     hit={hit}
@@ -617,6 +624,8 @@ interface ResultsPanelProps {
   ) => void;
   showImageColorFilter?: boolean;
   buildHitUrl?: (hit: Hit<BaseHit>) => string;
+  secondaryTextPrefix?: string;
+  tertiaryTextPrefix?: string;
 }
 
 const ResultsPanel = memo(function ResultsPanel({
@@ -628,6 +637,8 @@ const ResultsPanel = memo(function ResultsPanel({
   sendEvent,
   showImageColorFilter = true,
   buildHitUrl,
+  secondaryTextPrefix,
+  tertiaryTextPrefix,
 }: ResultsPanelProps) {
   const { items } = useHits(
     config.transformItems ? { transformItems: config.transformItems } : {},
@@ -688,6 +699,8 @@ const ResultsPanel = memo(function ResultsPanel({
           sendEvent={sendEvent}
           openResultsInNewTab={config.openResultsInNewTab}
           buildHitUrl={buildHitUrl}
+          secondaryTextPrefix={secondaryTextPrefix}
+          tertiaryTextPrefix={tertiaryTextPrefix}
         />
       </div>
     </>
@@ -799,6 +812,8 @@ export function SearchModal({ onClose, config, scope, onScopeChange }: SearchMod
             sendEvent={sendEvent}
             showImageColorFilter={scope.showImageColorFilter ?? true}
             buildHitUrl={scope.buildHitUrl}
+            secondaryTextPrefix={scope.secondaryTextPrefix}
+            tertiaryTextPrefix={scope.tertiaryTextPrefix}
           />
         )}
         {noResults && query && (
