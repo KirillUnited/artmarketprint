@@ -39,7 +39,6 @@ export default async function ServicesPage() {
 						<h1 className="text-4xl font-extrabold text-background sm:text-5xl">{siteConfig.serviceSection.title}</h1>
 						<p className="mt-4 text-xl text-white">{siteConfig.serviceSection.description}</p>
 					</div>
-					<Search />
 				</div>
 			</section>
 			<section>
