@@ -1,53 +1,57 @@
-# Next.js & HeroUI Template
+# Art Market Print App
 
-This is a template for creating applications using Next.js 14 (app directory) and HeroUI (v2).
+Production web app for an art-market e-commerce/catalog experience, built with Next.js App Router and integrated with Sanity CMS.
 
-[Try it on CodeSandbox](https://githubbox.com/heroui-inc/heroui/next-app-template)
+## Tech Stack
 
-## Technologies Used
+- [Next.js 16.2.4](https://nextjs.org/)
+- [React 19.2.5](https://react.dev/) and [React DOM 19.2.5](https://react.dev/)
+- [HeroUI 3.0.2](https://www.heroui.com/) (`@heroui/react`, `@heroui/styles`)
+- [Tailwind CSS 4.2.2](https://tailwindcss.com/)
+- [TypeScript 6.0.2](https://www.typescriptlang.org/)
+- [Sanity](https://www.sanity.io/) via `next-sanity`
+- [Algolia](https://www.algolia.com/) (`algoliasearch`, `react-instantsearch`)
+- [Framer Motion 12.38.0](https://www.framer.com/motion/)
+- [next-themes 0.4.6](https://github.com/pacocoursey/next-themes)
 
-- [Next.js 14](https://nextjs.org/docs/getting-started)
-- [HeroUI v2](https://heroui.com/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [Tailwind Variants](https://tailwind-variants.org)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Framer Motion](https://www.framer.com/motion/)
-- [next-themes](https://github.com/pacocoursey/next-themes)
+## Getting Started
 
-## How to Use
-
-### Use the template with create-next-app
-
-To create a new project based on this template using `create-next-app`, run the following command:
-
-```bash
-npx create-next-app -e https://github.com/heroui-inc/next-app-template
-```
-
-### Install dependencies
-
-You can use one of them `npm`, `yarn`, `pnpm`, `bun`, Example using `npm`:
+### 1) Install dependencies
 
 ```bash
 npm install
 ```
 
-### Run the development server
+### 2) Configure environment variables
+
+Create a `.env.local` file and set:
+
+```bash
+NEXT_PUBLIC_SANITY_PROJECT_ID=
+NEXT_PUBLIC_SANITY_DATASET=
+NEXT_PUBLIC_SANITY_TOKEN=
+```
+
+### 3) Run development server
 
 ```bash
 npm run dev
 ```
 
-### Setup pnpm (optional)
+Open [http://localhost:3000](http://localhost:3000).
 
-If you are using `pnpm`, you need to add the following code to your `.npmrc` file:
+## Scripts
 
-```bash
-public-hoist-pattern[]=*@heroui/*
-```
-
-After modifying the `.npmrc` file, you need to run `pnpm install` again to ensure that the dependencies are installed correctly.
+- `npm run dev` - start development server with Turbopack
+- `npm run dev:webpack` - start development server with Webpack
+- `npm run build` - build for production
+- `npm run start` - run production server
+- `npm run lint` - run ESLint with auto-fix
+- `npm run update-products` - run product update script
+- `npm run backup-sanity` - back up Sanity dataset
+- `npm run sync-services-algolia` - sync services index to Algolia
+- `npm run sync-products-algolia` - sync products index to Algolia
 
 ## License
 
-Licensed under the [MIT license](https://github.com/heroui-inc/next-app-template/blob/main/LICENSE).
+Licensed under the [MIT license](./LICENSE).
