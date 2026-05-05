@@ -1,15 +1,16 @@
-import {SectionTitle} from '@/components/layout/Section';
-import {ProductData} from '@/components/shared/product/product.types';
-import {ClientPagination} from '@/components/shared/product/ui/Pagination';
+import { SectionTitle } from '@/components/layout/Section';
+import { ProductData } from '@/components/shared/product/product.types';
+import { ClientPagination } from '@/components/shared/product/ui/Pagination';
 import { Button } from '@heroui/button';
 import { Card, CardBody } from '@heroui/card';
 import { Tabs } from '@heroui/react';
 import { ArrowLeftIcon } from 'lucide-react';
 import Link from 'next/link';
 
-import {SearchTopActions} from './SearchTopActions';
-import {ProductList} from '@/components/shared/product/ui';
+import { SearchTopActions } from './SearchTopActions';
+import { ProductList } from '@/components/shared/product/ui';
 import type { ServiceSearchItem } from '@/sanity/lib/service/searchServicesByAlgolia';
+import Image from 'next/image';
 
 export type SearchResultsStateProps = {
 	query: string;
@@ -100,7 +101,8 @@ export function SearchResultsState({
 							<div className="grid gap-3 mb-6">
 								{services.filter((service) => Boolean(service.slug)).map((service) => (
 									<Link key={service.objectID} href={`/services/${service.slug}`}>
-										<Card className="hover:bg-foreground/5 transition-colors">
+										<Card className="hover:bg-foreground/5 transition-colors flex-row">
+											<Image src={service.imageUrl || ''} alt={service.title || 'Услуга'} width={120} height={80} />
 											<CardBody className="gap-1">
 												<p className="font-semibold">{service.title || 'Услуга'}</p>
 												{service.description && <p className="text-sm text-foreground/70 line-clamp-2">{service.description}</p>}
