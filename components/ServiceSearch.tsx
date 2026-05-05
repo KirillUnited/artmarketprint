@@ -14,7 +14,33 @@ export function ServiceSearch() {
     hitsPerPage: SEARCH_CONFIG.HITS_PER_PAGE,
     attributes: SEARCH_ATTRIBUTES,
     searchParameters: SEARCH_PARAMETERS,
-    buttonText: "Поиск по сайту"
+    buttonText: "Поиск по сайту",
+    scopes: [
+      {
+        key: "products",
+        label: "Товары",
+        indexName: "products",
+        placeholder: "Поиск товаров...",
+        attributes: SEARCH_ATTRIBUTES,
+        searchParameters: SEARCH_PARAMETERS,
+        showImageColorFilter: true,
+      },
+      {
+        key: "services",
+        label: "Услуги",
+        indexName: "services",
+        placeholder: "Поиск услуг...",
+        attributes: {
+          primaryText: "title",
+          secondaryText: "slug",
+          tertiaryText: "description",
+          image: "imageUrl",
+        },
+        showImageColorFilter: false,
+        buildHitUrl: (hit) => `/services/${String((hit as { slug?: string }).slug || "")}`,
+      },
+    ],
+    defaultScopeKey: "products",
   };
 
   const buttonProps = {
