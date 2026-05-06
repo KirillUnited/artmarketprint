@@ -63,7 +63,7 @@ export function SearchResultsState({
 					<span>Каталог</span>
 				</Button>
 			</Link>
-			<SectionTitle className='TEST'>{`Результаты поиска для "${query}" (${totalFound} найдено)`}</SectionTitle>
+			<SectionTitle>{`Результаты поиска для "${query}" (${totalFound} найдено)`}</SectionTitle>
 			{(shouldShowServices || shouldShowProducts) && (
 				<Tabs className="w-full mb-2" defaultSelectedKey={defaultSelectedKey}>
 					<Tabs.ListContainer>
