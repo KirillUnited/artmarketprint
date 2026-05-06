@@ -1,11 +1,20 @@
 import fs from 'fs';
 import path from 'path';
 import { execSync } from 'child_process';
-import dotenv from 'dotenv';
 
-// Load environment variables from .env files
-dotenv.config({ path: '.env' });
-dotenv.config({ path: '.env.local' });
+// Load environment variables from .env files when dotenv is available.
+// This keeps CI type-checking from failing if dotenv is not installed.
+type DotenvLike = { config: (options: { path: string }) => void };
+let dotenv: DotenvLike | null = null;
+
+try {
+  dotenv = require('dotenv') as DotenvLike;
+} catch {
+  dotenv = null;
+}
+
+dotenv?.config({ path: '.env' });
+dotenv?.config({ path: '.env.local' });
 
 async function backupSanityDataset() {
   try {
