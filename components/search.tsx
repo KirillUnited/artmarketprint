@@ -343,6 +343,8 @@ const HitsList = memo(function HitsList({
     throw new Error("At least a primaryText is required to display results");
   }
 
+  console.log(hits)
+
   return (
     <>
       {hits.map((hit: any, idx: number) => {
