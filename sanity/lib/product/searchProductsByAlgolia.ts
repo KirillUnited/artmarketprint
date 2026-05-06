@@ -75,7 +75,6 @@ const COLOR_BOOST_GROUPS = [
 type ColorSearchIntent = {
   normalizedQuery: string;
   boostTokens: string[];
-  filters: string;
   primaryToken: string;
 };
 
@@ -172,8 +171,6 @@ const getColorBoostTokens = (query: string): string[] => {
   return Array.from(boostTokens);
 };
 
-const escapeFilterValue = (value: string): string => value.replaceAll('"', '\\"');
-
 const getColorSearchIntent = (query: string): ColorSearchIntent | null => {
   const rawTokens = tokenizeQuery(query);
   const matchedGroups = new Set<number>();
@@ -203,19 +200,13 @@ const getColorSearchIntent = (query: string): ColorSearchIntent | null => {
   const nonColorTokens = rawTokens.filter((token) => COLOR_TOKEN_TO_GROUP_INDEX.get(token) === undefined);
   const normalizedQuery = nonColorTokens.join(' ').trim();
 
-  const tokenFilters = Array.from(boostTokens).flatMap((token) => {
-    const escapedToken = escapeFilterValue(token);
-    return [`colors:"${escapedToken}"`, `searchImageHints:"${escapedToken}"`];
-  });
-
-  if (tokenFilters.length === 0) {
+  if (boostTokens.size === 0) {
     return null;
   }
 
   return {
     normalizedQuery,
     boostTokens: Array.from(boostTokens),
-    filters: `(${tokenFilters.join(' OR ')})`,
     primaryToken:
       firstMatchedGroupIndex === null
         ? normalizeToken(COLOR_BOOST_GROUPS[0][0])
@@ -327,7 +318,6 @@ const runAlgoliaSearch = async (
       // Keep results strict to avoid noisy partial matches.
       removeWordsIfNoResults: 'none',
       restrictSearchableAttributes: [...PRODUCT_RELEVANT_SEARCH_ATTRIBUTES],
-      filters: colorIntent?.filters,
       optionalFilters: colorOptionalFilters,
       sumOrFiltersScores: colorOptionalFilters ? true : undefined,
       // Handle different word forms
