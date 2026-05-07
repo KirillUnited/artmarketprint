@@ -98,7 +98,7 @@ export function SearchResultsState({
 					)}
 					{shouldShowServices && (
 						<Tabs.Panel className="pt-4" id="services">
-							<div className="grid gap-3 mb-6">
+							<div className="grid md:grid-cols-2 gap-3 mb-6">
 								{services.filter((service) => Boolean(service.slug)).map((service) => (
 									<Link key={service.objectID} href={`/services/${service.slug}`}>
 										<Card className="hover:bg-foreground/5 transition-colors flex-row">
