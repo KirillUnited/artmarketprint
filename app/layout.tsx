@@ -16,6 +16,8 @@ import { Providers } from './(app)/providers';
 const SITE_URL = process.env.NEXT_PUBLIC_SERVER_URL || 'https://artmarketprint.by';
 const SITE_LOCALE = process.env.NEXT_PUBLIC_LOCALE || 'ru_BY';
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || '';
+const APP_ENV = process.env.NEXT_PUBLIC_APP_ENV || 'production';
+const IS_STAGING = APP_ENV === 'staging';
 
 export const metadata: Metadata = {
 	metadataBase: new URL(SITE_URL),
@@ -58,6 +60,20 @@ export const metadata: Metadata = {
 			'algolia-site-verification': '04FE8CF3E01395C5',
 		},
 	},
+	robots: IS_STAGING
+		? {
+				index: false,
+				follow: false,
+				googleBot: {
+					index: false,
+					follow: false,
+					noimageindex: true,
+				},
+			}
+		: {
+				index: true,
+				follow: true,
+			},
 };
 
 export const viewport: Viewport = {

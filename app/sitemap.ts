@@ -5,6 +5,13 @@ import {client} from '@/sanity/client';
 const BASE_URL = process.env.NEXT_PUBLIC_SERVER_URL;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+	const APP_ENV = process.env.NEXT_PUBLIC_APP_ENV || 'production';
+	const IS_STAGING = APP_ENV === 'staging';
+
+	if (IS_STAGING) {
+		return [];
+	}
+
 	const staticPages: MetadataRoute.Sitemap = [
 		{
 			url: `${BASE_URL}/`,
