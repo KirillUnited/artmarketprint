@@ -78,6 +78,19 @@ type ColorSearchIntent = {
   primaryToken: string;
 };
 
+type ProductTextRelevance = {
+  nameMatches: number;
+  otherMatches: number;
+  total: number;
+};
+
+type CoreTokenRelevance = {
+  inNameWord: boolean;
+  inNameSubstring: boolean;
+  inCategoryOrSubcategory: boolean;
+  inBrandOrSku: boolean;
+};
+
 const hasAlgoliaSearchConfig = () =>
   Boolean(process.env.NEXT_PUBLIC_ALGOLIA_APP_ID && process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_KEY);
 
@@ -228,16 +241,141 @@ const includesColorToken = (value: string, token: string): boolean => {
   return parts.some((part) => part === token);
 };
 
+const getNonColorQueryTokens = (query: string): string[] =>
+  tokenizeQuery(query).filter((token) => COLOR_TOKEN_TO_GROUP_INDEX.get(token) === undefined);
+
+const includesWord = (value: string, token: string): boolean => {
+  const parts = normalizeToken(value)
+    .split(QUERY_SPLIT_REGEX)
+    .map((part) => part.trim())
+    .filter(Boolean);
+  return parts.some((part) => part === token);
+};
+
+const getProductTextRelevance = (product: ProductData, queryTokens: string[]): ProductTextRelevance => {
+  if (!queryTokens.length) {
+    return { nameMatches: 0, otherMatches: 0, total: 0 };
+  }
+
+  const name = normalizeToken(product.name);
+  const category = normalizeToken(product.category);
+  const subcategory = normalizeToken(product.subcategory);
+  const brand = normalizeToken(product.brand);
+  const sku = normalizeToken(product.sku);
+  const materials = (product.materials ?? []).map((item) => normalizeToken(item));
+
+  let nameMatches = 0;
+  let otherMatches = 0;
+
+  for (const token of queryTokens) {
+    if (name.includes(token) || includesWord(name, token)) {
+      nameMatches += 1;
+      continue;
+    }
+
+    const matchedInOtherFields =
+      category.includes(token) ||
+      subcategory.includes(token) ||
+      brand.includes(token) ||
+      sku.includes(token) ||
+      materials.some((material) => material.includes(token));
+
+    if (matchedInOtherFields) {
+      otherMatches += 1;
+    }
+  }
+
+  return {
+    nameMatches,
+    otherMatches,
+    total: nameMatches + otherMatches,
+  };
+};
+
+const getCoreQueryToken = (query: string): string => {
+  const nonColorTokens = getNonColorQueryTokens(query);
+  return nonColorTokens.length > 0 ? nonColorTokens[0] : '';
+};
+
+const getCoreTokenRelevance = (product: ProductData, coreToken: string): CoreTokenRelevance => {
+  if (!coreToken) {
+    return {
+      inNameWord: false,
+      inNameSubstring: false,
+      inCategoryOrSubcategory: false,
+      inBrandOrSku: false,
+    };
+  }
+
+  const name = normalizeToken(product.name);
+  const category = normalizeToken(product.category);
+  const subcategory = normalizeToken(product.subcategory);
+  const brand = normalizeToken(product.brand);
+  const sku = normalizeToken(product.sku);
+
+  const inNameWord = includesWord(name, coreToken);
+  const inNameSubstring = name.includes(coreToken);
+  const inCategoryOrSubcategory = category.includes(coreToken) || subcategory.includes(coreToken);
+  const inBrandOrSku = brand.includes(coreToken) || sku.includes(coreToken);
+
+  return {
+    inNameWord,
+    inNameSubstring,
+    inCategoryOrSubcategory,
+    inBrandOrSku,
+  };
+};
+
 const applyColorPriority = (
   products: ProductData[],
+  query: string,
   colorIntent?: ColorSearchIntent | null
 ): ProductData[] => {
   if (!colorIntent) {
     return products;
   }
 
+  const queryTokens = getNonColorQueryTokens(query);
+  const coreToken = getCoreQueryToken(query);
   const token = colorIntent.primaryToken;
+
   return [...products].sort((a, b) => {
+    const textA = getProductTextRelevance(a, queryTokens);
+    const textB = getProductTextRelevance(b, queryTokens);
+    const coreA = getCoreTokenRelevance(a, coreToken);
+    const coreB = getCoreTokenRelevance(b, coreToken);
+
+    // Color can boost only after baseline text relevance exists.
+    const colorScoreA = textA.total > 0 ? getProductColorPriorityScore(a, token) : 0;
+    const colorScoreB = textB.total > 0 ? getProductColorPriorityScore(b, token) : 0;
+
+    const coreScore = (core: CoreTokenRelevance): number => {
+      if (core.inNameWord) return 5000;
+      if (core.inNameSubstring) return 3500;
+      if (core.inCategoryOrSubcategory) return 2000;
+      if (core.inBrandOrSku) return 800;
+      return 0;
+    };
+
+    const nameWeight = 1000;
+    const otherWeight = 400;
+    const coreScoreA = coreScore(coreA);
+    const coreScoreB = coreScore(coreB);
+    const textScoreA = textA.nameMatches * nameWeight + textA.otherMatches * otherWeight;
+    const textScoreB = textB.nameMatches * nameWeight + textB.otherMatches * otherWeight;
+
+    if (coreScoreB !== coreScoreA) {
+      return coreScoreB - coreScoreA;
+    }
+
+    if (textScoreB !== textScoreA) {
+      return textScoreB - textScoreA;
+    }
+
+    if (colorScoreB !== colorScoreA) {
+      return colorScoreB - colorScoreA;
+    }
+
     const scoreA = getProductColorPriorityScore(a, token);
     const scoreB = getProductColorPriorityScore(b, token);
     return scoreB - scoreA;
@@ -300,8 +438,8 @@ const runAlgoliaSearch = async (
     colorBoostTokens.length > 0
       ? [
           colorBoostTokens.flatMap((token) => [
-            `colors:${token}<score=24>`,
-            `searchImageHints:${token}<score=16>`,
+            `colors:${token}<score=8>`,
+            `searchImageHints:${token}<score=4>`,
           ]),
         ]
       : undefined;
@@ -370,6 +508,7 @@ export async function searchProductsByAlgolia(
       return {
         products: applyColorPriority(
           fallbackResponse.hits.map((hit) => mapAlgoliaHitToProduct(hit, searchParam)),
+          searchParam,
           colorIntent
         ),
         totalFound,
@@ -381,6 +520,7 @@ export async function searchProductsByAlgolia(
     return {
       products: applyColorPriority(
         response.hits.map((hit) => mapAlgoliaHitToProduct(hit, searchParam)),
+        searchParam,
         colorIntent
       ),
       totalFound,
@@ -400,7 +540,7 @@ export async function searchProductsByAlgolia(
 
   const allProducts = allHits.map((hit) => mapAlgoliaHitToProduct(hit, searchParam));
   const filtered = applyProductSort(
-    applyColorPriority(applyProductFilters(allProducts, options), colorIntent),
+    applyColorPriority(applyProductFilters(allProducts, options), searchParam, colorIntent),
     options.sort
   );
   const totalFound = filtered.length;
