@@ -45,15 +45,24 @@ const DEFAULT_IMAGE = '/images/product-no-image.jpg';
 const getAlgoliaIndexName = () =>
   process.env.NEXT_PUBLIC_ALGOLIA_PRODUCTS_INDEX || SEARCH_CONFIG.INDEX_NAME;
 
-const PRODUCT_RELEVANT_SEARCH_ATTRIBUTES = [
-  'colors',
-  'searchImageHints',
+const PRODUCT_RELEVANT_SEARCH_ATTRIBUTES_TEXT_FIRST = [
   'name',
-  'sku',
-  'materials',
   'category',
   'subcategory',
   'brand',
+  'sku',
+  'materials',
+] as const;
+
+const PRODUCT_RELEVANT_SEARCH_ATTRIBUTES_COLOR_ONLY = [
+  'colors',
+  'searchImageHints',
+  'name',
+  'category',
+  'subcategory',
+  'brand',
+  'sku',
+  'materials',
 ] as const;
 
 const COLOR_BOOST_GROUPS = [
@@ -240,6 +249,8 @@ const includesColorToken = (value: string, token: string): boolean => {
 
   return parts.some((part) => part === token);
 };
+
+const hasNonColorQueryTokens = (query: string): boolean => getNonColorQueryTokens(query).length > 0;
 
 const getNonColorQueryTokens = (query: string): string[] =>
   tokenizeQuery(query).filter((token) => COLOR_TOKEN_TO_GROUP_INDEX.get(token) === undefined);
@@ -433,16 +444,20 @@ const runAlgoliaSearch = async (
 ): Promise<SearchResponse<AlgoliaProductHit>> => {
   const client = createAlgoliaSearchClient();
   const indexName = getAlgoliaIndexName();
+  const hasPrimaryTextTokens = hasNonColorQueryTokens(query);
   const colorBoostTokens = colorIntent?.boostTokens ?? getColorBoostTokens(query);
   const colorOptionalFilters =
-    colorBoostTokens.length > 0
+    hasPrimaryTextTokens && colorBoostTokens.length > 0
       ? [
           colorBoostTokens.flatMap((token) => [
-            `colors:${token}<score=8>`,
-            `searchImageHints:${token}<score=4>`,
+            `colors:${token}<score=3>`,
+            `searchImageHints:${token}<score=1>`,
           ]),
         ]
       : undefined;
+  const restrictSearchableAttributes = hasPrimaryTextTokens
+    ? [...PRODUCT_RELEVANT_SEARCH_ATTRIBUTES_TEXT_FIRST]
+    : [...PRODUCT_RELEVANT_SEARCH_ATTRIBUTES_COLOR_ONLY];
 
   return client.searchSingleIndex<AlgoliaProductHit>({
     indexName,
@@ -455,9 +470,10 @@ const runAlgoliaSearch = async (
       ...RUSSIAN_SEARCH_CONFIG.queryParameters,
       // Keep results strict to avoid noisy partial matches.
       removeWordsIfNoResults: 'none',
-      restrictSearchableAttributes: [...PRODUCT_RELEVANT_SEARCH_ATTRIBUTES],
+      restrictSearchableAttributes,
       optionalFilters: colorOptionalFilters,
       sumOrFiltersScores: colorOptionalFilters ? true : undefined,
+      getRankingInfo: true,
       // Handle different word forms
       alternativesAsExact: ['ignorePlurals', 'singleWordSynonym', 'multiWordsSynonym'],
       // Keep typo matching strict so multi-word queries stay relevant.
