@@ -119,6 +119,7 @@ export default async function ProductsCategoryPage({
 
 	return (
 		<Section className="space-y-6 bg-gray-50">
+			<LightBreadcrumb baseUrl={BASE_URL} category={categorySlug} subcategory={singleActiveSubcategory || undefined} />
 			<SectionTitle>Каталог товаров</SectionTitle>
 			<div className="space-y-4">
 				<div className="flex items-center justify-between gap-4">
@@ -128,7 +129,6 @@ export default async function ProductsCategoryPage({
 				<CategoryFilter active={category} baseUrl={BASE_URL} categories={visibleCategories} />
 			</div>
 
-			<LightBreadcrumb baseUrl={BASE_URL} category={categorySlug} subcategory={singleActiveSubcategory || undefined} />
 
 			<h1 className="text-3xl font-semibold">
 				{activeCategory || 'Все категории'} <span className="truncate text-sm font-light text-gray-600">{`${total} шт.`}</span>
