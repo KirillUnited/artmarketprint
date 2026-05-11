@@ -161,6 +161,42 @@ const tokenizeQuery = (value: string): string[] =>
     .map((token) => normalizeToken(token))
     .filter((token) => token.length > 1);
 
+const normalizeRussianAdjectiveStem = (value: string): string => {
+  const normalized = normalizeToken(value);
+  const endings = [
+    'ыми',
+    'ими',
+    'ого',
+    'ему',
+    'ому',
+    'ый',
+    'ий',
+    'ой',
+    'ая',
+    'яя',
+    'ое',
+    'ее',
+    'ые',
+    'ие',
+    'ую',
+    'юю',
+    'ым',
+    'им',
+    'ом',
+    'ем',
+    'ых',
+    'их',
+  ];
+
+  for (const ending of endings) {
+    if (normalized.length > ending.length + 1 && normalized.endsWith(ending)) {
+      return normalized.slice(0, -ending.length);
+    }
+  }
+
+  return normalized;
+};
+
 const COLOR_TOKEN_TO_GROUP_INDEX = COLOR_BOOST_GROUPS.reduce<Map<string, number>>((acc, group, index) => {
   for (const token of group) {
     acc.set(normalizeToken(token), index);
@@ -238,16 +274,30 @@ const getColorSearchIntent = (query: string): ColorSearchIntent | null => {
 
 const includesColorToken = (value: string, token: string): boolean => {
   const normalizedValue = normalizeToken(value);
-  if (normalizedValue === token) {
+  const normalizedToken = normalizeToken(token);
+
+  if (normalizedValue === normalizedToken) {
     return true;
   }
 
-  const parts = normalizedValue
-    .split(/[\/,;|]+/)
-    .map((part) => part.trim())
-    .filter((part) => part !== '');
+  if (normalizedValue.includes(normalizedToken)) {
+    return true;
+  }
 
-  return parts.some((part) => part === token);
+  const tokenStem = normalizeRussianAdjectiveStem(normalizedToken);
+  const valueTokens = tokenizeQuery(normalizedValue);
+
+  return valueTokens.some((valueToken) => {
+    if (valueToken === normalizedToken) {
+      return true;
+    }
+
+    if (valueToken.includes(normalizedToken) || normalizedToken.includes(valueToken)) {
+      return true;
+    }
+
+    return normalizeRussianAdjectiveStem(valueToken) === tokenStem;
+  });
 };
 
 const hasNonColorQueryTokens = (query: string): boolean => getNonColorQueryTokens(query).length > 0;
@@ -348,68 +398,87 @@ const applyColorPriority = (
 
   const queryTokens = getNonColorQueryTokens(query);
   const coreToken = getCoreQueryToken(query);
-  const token = colorIntent.primaryToken;
+  const colorTokens = colorIntent.boostTokens.length > 0 ? colorIntent.boostTokens : [colorIntent.primaryToken];
+  const coreScore = (core: CoreTokenRelevance): number => {
+    if (core.inNameWord) return 5000;
+    if (core.inNameSubstring) return 3500;
+    if (core.inCategoryOrSubcategory) return 2000;
+    if (core.inBrandOrSku) return 800;
+    return 0;
+  };
 
-  return [...products].sort((a, b) => {
-    const textA = getProductTextRelevance(a, queryTokens);
-    const textB = getProductTextRelevance(b, queryTokens);
-    const coreA = getCoreTokenRelevance(a, coreToken);
-    const coreB = getCoreTokenRelevance(b, coreToken);
+  const nameWeight = 1000;
+  const otherWeight = 400;
 
-    // Color can boost only after baseline text relevance exists.
-    const colorScoreA = textA.total > 0 ? getProductColorPriorityScore(a, token) : 0;
-    const colorScoreB = textB.total > 0 ? getProductColorPriorityScore(b, token) : 0;
+  return products
+    .map((product, index) => {
+      const text = getProductTextRelevance(product, queryTokens);
+      const core = getCoreTokenRelevance(product, coreToken);
+      const colorScore = text.total > 0 ? getProductColorPriorityScore(product, colorTokens) : 0;
+      const hasNameMatch = text.nameMatches > 0 || core.inNameWord || core.inNameSubstring;
+      const hasNameAndColorMatch = hasNameMatch && colorScore > 0;
 
-    const coreScore = (core: CoreTokenRelevance): number => {
-      if (core.inNameWord) return 5000;
-      if (core.inNameSubstring) return 3500;
-      if (core.inCategoryOrSubcategory) return 2000;
-      if (core.inBrandOrSku) return 800;
-      return 0;
-    };
+      // Priority buckets:
+      // 0 -> matched by name and color
+      // 1 -> matched by name only
+      // 2 -> all other matches
+      const bucket = hasNameAndColorMatch ? 0 : hasNameMatch ? 1 : 2;
 
-    const nameWeight = 1000;
-    const otherWeight = 400;
-    const coreScoreA = coreScore(coreA);
-    const coreScoreB = coreScore(coreB);
-    const textScoreA = textA.nameMatches * nameWeight + textA.otherMatches * otherWeight;
-    const textScoreB = textB.nameMatches * nameWeight + textB.otherMatches * otherWeight;
+      return {
+        product,
+        index,
+        bucket,
+        coreScore: coreScore(core),
+        textScore: text.nameMatches * nameWeight + text.otherMatches * otherWeight,
+        colorScore,
+        rawColorScore: getProductColorPriorityScore(product, colorTokens),
+      };
+    })
+    .sort((a, b) => {
+      if (a.bucket !== b.bucket) {
+        return a.bucket - b.bucket;
+      }
 
-    if (coreScoreB !== coreScoreA) {
-      return coreScoreB - coreScoreA;
-    }
+      if (b.coreScore !== a.coreScore) {
+        return b.coreScore - a.coreScore;
+      }
 
-    if (textScoreB !== textScoreA) {
-      return textScoreB - textScoreA;
-    }
+      if (b.textScore !== a.textScore) {
+        return b.textScore - a.textScore;
+      }
 
-    if (colorScoreB !== colorScoreA) {
-      return colorScoreB - colorScoreA;
-    }
+      if (b.colorScore !== a.colorScore) {
+        return b.colorScore - a.colorScore;
+      }
 
-    const scoreA = getProductColorPriorityScore(a, token);
-    const scoreB = getProductColorPriorityScore(b, token);
-    return scoreB - scoreA;
-  });
+      if (b.rawColorScore !== a.rawColorScore) {
+        return b.rawColorScore - a.rawColorScore;
+      }
+
+      return a.index - b.index;
+    })
+    .map((entry) => entry.product);
 };
 
-const getProductColorPriorityScore = (product: ProductData, token: string): number => {
+const getProductColorPriorityScore = (product: ProductData, tokens: string[]): number => {
   const normalizedName = normalizeToken(product.name);
+  const normalizedTokens = tokens.map((item) => normalizeToken(item)).filter(Boolean);
+  const hasToken = (value: string): boolean => normalizedTokens.some((token) => includesColorToken(value, token));
+  const hasTokenInName = normalizedTokens.some((token) => normalizedName.includes(token));
   const colors = Array.isArray(product.colors) ? product.colors : [];
-  const exactSingleColor = colors.length === 1 && includesColorToken(colors[0], token);
-  const containsTokenInColors = colors.some((color) => includesColorToken(color, token));
-  const tokenInName = normalizedName.includes(token);
+  const exactSingleColor = colors.length === 1 && hasToken(colors[0]);
+  const containsTokenInColors = colors.some((color) => hasToken(color));
 
   if (exactSingleColor) {
     return 300;
   }
-  if (containsTokenInColors && tokenInName) {
+  if (containsTokenInColors && hasTokenInName) {
     return 200;
   }
   if (containsTokenInColors) {
     return 100;
   }
-  if (tokenInName) {
+  if (hasTokenInName) {
     return 10;
   }
 
@@ -484,6 +553,22 @@ const runAlgoliaSearch = async (
   });
 };
 
+const fetchAllAlgoliaHits = async (
+  query: string,
+  colorIntent?: ColorSearchIntent | null,
+): Promise<AlgoliaProductHit[]> => {
+  const firstPage = await runAlgoliaSearch(query, 1, 1000, colorIntent);
+  const allHits = [...firstPage.hits];
+  const totalAlgoliaPages = typeof firstPage.nbPages === 'number' ? firstPage.nbPages : 0;
+
+  for (let p = 2; p <= totalAlgoliaPages; p += 1) {
+    const pageResponse = await runAlgoliaSearch(query, p, 1000, colorIntent);
+    allHits.push(...pageResponse.hits);
+  }
+
+  return allHits;
+};
+
 export async function searchProductsByAlgolia(
   searchParam: string,
   page: number,
@@ -515,6 +600,26 @@ export async function searchProductsByAlgolia(
   }
 
   if (!hasDynamicFilters) {
+    if (colorIntent) {
+      const allHits = await fetchAllAlgoliaHits(searchParam, colorIntent);
+      const orderedProducts = applyColorPriority(
+        allHits.map((hit) => mapAlgoliaHitToProduct(hit, searchParam)),
+        searchParam,
+        colorIntent
+      );
+      const totalFound = orderedProducts.length;
+      const totalPages = Math.max(1, Math.ceil(totalFound / hitsPerPage));
+      const pageToUse = Math.min(safePage, totalPages);
+      const start = (pageToUse - 1) * hitsPerPage;
+
+      return {
+        products: orderedProducts.slice(start, start + hitsPerPage),
+        totalFound,
+        totalPages,
+        currentPage: pageToUse,
+      };
+    }
+
     const response = await runAlgoliaSearch(searchParam, safePage, hitsPerPage, colorIntent);
     const totalFound = typeof response.nbHits === 'number' ? response.nbHits : 0;
     const totalPages = typeof response.nbPages === 'number' ? response.nbPages : 0;
@@ -545,15 +650,7 @@ export async function searchProductsByAlgolia(
     };
   }
 
-  const firstPage = await runAlgoliaSearch(searchParam, 1, 1000, colorIntent);
-  const allHits = [...firstPage.hits];
-  const totalAlgoliaPages = typeof firstPage.nbPages === 'number' ? firstPage.nbPages : 0;
-
-  for (let p = 2; p <= totalAlgoliaPages; p += 1) {
-    const pageResponse = await runAlgoliaSearch(searchParam, p, 1000, colorIntent);
-    allHits.push(...pageResponse.hits);
-  }
-
+  const allHits = await fetchAllAlgoliaHits(searchParam, colorIntent);
   const allProducts = allHits.map((hit) => mapAlgoliaHitToProduct(hit, searchParam));
   const filtered = applyProductSort(
     applyColorPriority(applyProductFilters(allProducts, options), searchParam, colorIntent),
