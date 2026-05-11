@@ -1,4 +1,4 @@
-import { liteClient as algoliasearch } from "algoliasearch/lite";
+﻿import { liteClient as algoliasearch } from "algoliasearch/lite";
 import type { BaseHit, Hit } from "instantsearch.js";
 import { ArrowDown, ArrowUp, CornerDownLeft, SearchIcon, X } from "lucide-react";
 import type React from "react";
@@ -343,7 +343,6 @@ const HitsList = memo(function HitsList({
     throw new Error("At least a primaryText is required to display results");
   }
 
-  console.log(hits)
 
   return (
     <>
