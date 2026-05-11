@@ -1,4 +1,4 @@
-import {JSX} from 'react';
+﻿import {JSX} from 'react';
 
 import Section from '@/components/layout/Section';
 import {ProductData} from '@/components/shared/product/product.types';
@@ -75,7 +75,6 @@ export default async function SearchPage({
 		const hasProducts = Array.isArray(products) && products.length > 0;
 		const hasServices = Array.isArray(servicesSearch.services) && servicesSearch.services.length > 0;
 
-		console.log(products)
 
 		if (hasProducts || hasServices) {
 			const page = totalPages > 0 ? Math.min(resolvedPage, totalPages) : resolvedPage;
