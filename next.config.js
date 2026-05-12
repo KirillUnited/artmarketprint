@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+	output: 'standalone',
 	images: {
 		remotePatterns: [
 			{
@@ -22,6 +23,7 @@ const nextConfig = {
 			bodySizeLimit: '5mb',
 			allowedOrigins: ['artmarketprint.by', 'localhost:3000', '178.159.44.23:2200', '127.0.0.1:3000'],
 		},
+		serverSourceMaps: true,
 	},
 };
 
