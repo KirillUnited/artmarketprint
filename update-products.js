@@ -5,7 +5,7 @@
  * This script performs three operations:
  * 1. Deletes all existing products from Sanity
  * 2. Fetches new product data and imports it to Sanity
- * 3. Creates a backup of the Sanity dataset (excluding products)
+ * 3. Syncs products to Algolia search engine
  */
 
 // Load environment variables from .env.local when running via Node
@@ -69,11 +69,6 @@ async function runUpdate() {
     console.log('🔎 Syncing products to Algolia...');
     execSync('npm run sync-products-algolia', { stdio: 'inherit' });
     console.log('✅ Product sync to Algolia completed successfully!');
-
-    // Step 3: Create backup of Sanity dataset
-    console.log('💾 Creating backup of Sanity dataset...');
-    execSync('npm run backup-sanity', { stdio: 'inherit' });
-    console.log('✅ Backup completed successfully!');
 
     console.log('🎉 Product update process completed successfully!');
   } catch (error) {
