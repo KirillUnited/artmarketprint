@@ -15,7 +15,7 @@ const { execSync } = require('child_process');
 
 function loadEnvLocal() {
   try {
-    const envPath = path.join(__dirname, '.env.local');
+    const envPath = path.join(__dirname, '.env');
 
     if (!fs.existsSync(envPath)) return;
 
@@ -38,7 +38,7 @@ function loadEnvLocal() {
       }
     }
   } catch (err) {
-    console.error('Failed to load .env.local:', err);
+    console.error('Failed to load .env:', err);
   }
 }
 
