@@ -5,17 +5,18 @@
  * This script performs three operations:
  * 1. Deletes all existing products from Sanity
  * 2. Fetches new product data and imports it to Sanity
- * 3. Creates a backup of the Sanity dataset (excluding products)
+ * 3. Syncs products to Algolia search engine
  */
 
 // Load environment variables from .env.local when running via Node
 const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
+const { sendTelegramMessage } = require('./scripts/telegram');
 
 function loadEnvLocal() {
   try {
-    const envPath = path.join(__dirname, '.env.local');
+    const envPath = path.join(__dirname, '.env');
 
     if (!fs.existsSync(envPath)) return;
 
@@ -38,7 +39,7 @@ function loadEnvLocal() {
       }
     }
   } catch (err) {
-    console.error('Failed to load .env.local:', err);
+    console.error('Failed to load .env:', err);
   }
 }
 
@@ -70,14 +71,12 @@ async function runUpdate() {
     execSync('npm run sync-products-algolia', { stdio: 'inherit' });
     console.log('✅ Product sync to Algolia completed successfully!');
 
-    // Step 3: Create backup of Sanity dataset
-    console.log('💾 Creating backup of Sanity dataset...');
-    execSync('npm run backup-sanity', { stdio: 'inherit' });
-    console.log('✅ Backup completed successfully!');
-
     console.log('🎉 Product update process completed successfully!');
+
+    await sendTelegramMessage('🎉 Product update process completed successfully!');
   } catch (error) {
     console.error('❌ Error during product update process:', error);
+    await sendTelegramMessage('❌ Error during product update process: ' + error.message);
     process.exit(1);
   }
 }
