@@ -12,6 +12,7 @@
 const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
+const { sendTelegramMessage } = require('./scripts/telegram');
 
 function loadEnvLocal() {
   try {
@@ -71,8 +72,11 @@ async function runUpdate() {
     console.log('✅ Product sync to Algolia completed successfully!');
 
     console.log('🎉 Product update process completed successfully!');
+
+    await sendTelegramMessage('🎉 Product update process completed successfully!');
   } catch (error) {
     console.error('❌ Error during product update process:', error);
+    await sendTelegramMessage('❌ Error during product update process: ' + error.message);
     process.exit(1);
   }
 }
