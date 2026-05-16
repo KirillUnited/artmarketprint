@@ -135,7 +135,7 @@ export default function ColorFilter({ colors }: { colors: string[] }) {
             onInputChange={list.setFilterText}
         >
             <Label>Цвет</Label>
-            <ComboBox.InputGroup>
+            <ComboBox.InputGroup className='border border-primary rounded-xl'>
                 <Input placeholder="Выберите цвет" />
                 <ComboBox.Trigger />
             </ComboBox.InputGroup>

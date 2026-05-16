@@ -118,7 +118,7 @@ export default function MaterialFilter({ materials }: { materials: string[] }) {
             onInputChange={list.setFilterText}
         >
             <Label>Материал</Label>
-            <ComboBox.InputGroup>
+            <ComboBox.InputGroup className='border border-primary rounded-xl'>
                 <Input placeholder="Выберите материал" />
                 <ComboBox.Trigger />
             </ComboBox.InputGroup>
