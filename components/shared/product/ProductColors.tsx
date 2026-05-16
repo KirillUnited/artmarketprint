@@ -4,7 +4,7 @@ import React from 'react'
 import NextImage from 'next/image'
 import { Image as HeroImage } from '@heroui/image'
 import { Button } from '@heroui/button';
-import { ChevronDownIcon } from 'lucide-react';
+import { ChevronDownIcon, PlusIcon } from 'lucide-react';
 
 import Loader from '@/components/ui/Loader';
 import { shouldBypassNextImageOptimization } from '@/lib/image-utils';
@@ -32,16 +32,16 @@ const ColorListItem = ({ item }: { item: ColorItemProps }) => (
 );
 
 export const MoreButton = ({ onClick }: { onClick: () => void }) => (
-    <li className='text-center'>
-        <Button
-            isIconOnly
-            size='sm'
-            variant='light'
-            onPress={onClick}
-        >
-            <ChevronDownIcon size={16} />
-        </Button>
-    </li>
+    <Button
+        isIconOnly
+        size='sm'
+        variant='bordered'
+        onPress={onClick}
+        className='!gap-2 w-full'
+    >
+        <span>Ещё</span>
+        <PlusIcon size={16} className='w-4 h-4' />
+    </Button>
 );
 
 const ColorList = ({
@@ -56,24 +56,27 @@ const ColorList = ({
     const otherItems = items?.slice(limit);
 
     return (
-        <ul
-            className='flex gap-2 flex-wrap hover:tailwind-effect'
-        >
-            {firstItems?.map((item) => (
-                <ColorListItem key={item.id} item={item} />
-            ))}
+        <>
+            <ul
+                className='flex gap-2 flex-wrap hover:tailwind-effect'
+            >
+                {firstItems?.map((item) => (
+                    <ColorListItem key={item.id} item={item} />
+                ))}
+                {showAll && otherItems?.map((item) => (
+                    <ColorListItem key={item.id} item={item} />
+                ))}
+            </ul>
+
             {(otherItems?.length > 0 && !showAll) && (
                 <MoreButton onClick={() => setShowAll(true)} />
             )}
-            {showAll && otherItems?.map((item) => (
-                <ColorListItem key={item.id} item={item} />
-            ))}
-        </ul>
+        </>
     )
 };
 
 const ProductColorsWrapper = ({ children }: { children: React.ReactNode }) => (
-    <div className='flex flex-col gap-1'>
+    <div className='flex flex-col gap-2'>
         {children}
     </div>
 );

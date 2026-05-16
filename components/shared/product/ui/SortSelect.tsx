@@ -25,7 +25,7 @@ export default function SortSelect() {
     return (
         <Select value={currentSort || null} placeholder="Не выбрано" onChange={handleChange}>
             <Label>Сортировка</Label>
-            <Select.Trigger>
+            <Select.Trigger aria-label="Выберите сортировку" className='border border-primary rounded-xl'>
                 <Select.Value />
                 <Select.Indicator />
             </Select.Trigger>
