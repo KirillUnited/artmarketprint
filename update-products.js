@@ -79,10 +79,10 @@ async function runUpdate() {
 
     console.log('Notify via Telegram...');
 
-    await sendTelegramMessage('🎉 Процесс обновления продуктов завершен');
+    await sendTelegramMessage('🎉 Каталог товаров обновлён');
   } catch (error) {
     console.error('❌ Error during product update process:', error);
-    await sendTelegramMessage('❌ Ошибка во время обновления продуктов в Sanity: ' + error.message);
+    await sendTelegramMessage('❌ Ошибка во время обновления каталога в Sanity: ' + error.message);
     process.exit(1);
   }
 }
