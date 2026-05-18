@@ -67,16 +67,22 @@ async function runUpdate() {
     await updateProducts();
     console.log('✅ New products imported successfully!');
 
+    // Step 3: Sync products to Algolia
+
     console.log('🔎 Syncing products to Algolia...');
     execSync('npm run sync-products-algolia', { stdio: 'inherit' });
     console.log('✅ Product sync to Algolia completed successfully!');
 
     console.log('🎉 Product update process completed successfully!');
 
-    await sendTelegramMessage('🎉 Product update process completed successfully!');
+    // Step 4: Notify via Telegram
+
+    console.log('Notify via Telegram...');
+
+    await sendTelegramMessage('🎉 Каталог товаров обновлён');
   } catch (error) {
     console.error('❌ Error during product update process:', error);
-    await sendTelegramMessage('❌ Error during product update process: ' + error.message);
+    await sendTelegramMessage('❌ Ошибка во время обновления каталога в Sanity: ' + error.message);
     process.exit(1);
   }
 }
