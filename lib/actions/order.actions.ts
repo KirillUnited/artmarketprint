@@ -3,8 +3,11 @@ import axios from 'axios';
 
 export async function sendOrder(formData: FormData): Promise<any> {
 	try {
-		const telegramBotToken = process.env.TELEGRAM_BOT_TOKEN;
-		const chatId = process.env.TELEGRAM_CHAT_ID;
+		const telegramBotToken =
+			process.env.TELEGRAM_BOT_TOKEN ||
+			process.env.NEXT_PUBLIC_TELEGRAM_BOT_TOKEN;
+		const chatId =
+			process.env.TELEGRAM_CHAT_ID || process.env.NEXT_PUBLIC_TELEGRAM_CHAT_ID;
 
 		if (!telegramBotToken || !chatId) {
 			throw new Error('Telegram bot configuration is missing');
@@ -19,16 +22,34 @@ export async function sendOrder(formData: FormData): Promise<any> {
 
 👤 Имя: ${name}
 📱 Телефон: ${phone}
-💬 Комментарий: ${comment}`;
+💬 Комментарий: ${comment || '—'}`;
 
 		const response = await axios.post(BASE_URL, {
 			chat_id: chatId,
 			text: message,
+		}, {
+			timeout: 10000,
 		});
 
 		return {ok: true, data: response.data};
 	} catch (error) {
-		console.error('❌ Ошибка в sendOrder:', error);
+		if (axios.isAxiosError(error)) {
+			console.error('❌ Ошибка в sendOrder (Telegram API):', {
+				code: error.code,
+				message: error.message,
+				status: error.response?.status,
+				statusText: error.response?.statusText,
+			});
+
+			if (error.code === 'ETIMEDOUT') {
+				return {
+					ok: false,
+					error: 'Сервис уведомлений недоступен по таймауту. Повторите попытку позже.',
+				};
+			}
+		} else {
+			console.error('❌ Ошибка в sendOrder:', error);
+		}
 
 		return {ok: false, error: 'Не удалось отправить сообщение'};
 	}
