@@ -5,9 +5,10 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { Chip, CloseIcon } from '@heroui/react'
 
 type FilterTag = {
-	key: 'sort' | 'material' | 'color'
+	key: 'sort' | 'material' | 'color' | 'sub'
 	label: string
 	value: string
+	paramValue?: string
 }
 
 const SORT_LABELS: Record<string, string> = {
@@ -19,7 +20,11 @@ function getSortLabel(value: string) {
 	return SORT_LABELS[value] || value
 }
 
-export default function ActiveFilterTags() {
+type ActiveFilterTagsProps = {
+	subcategoryLabels?: Record<string, string>
+}
+
+export default function ActiveFilterTags({ subcategoryLabels = {} }: ActiveFilterTagsProps) {
 	const router = useRouter()
 	const pathname = usePathname()
 	const searchParams = useSearchParams()
@@ -28,6 +33,10 @@ export default function ActiveFilterTags() {
 		const sort = (searchParams.get('sort') || '').trim()
 		const material = (searchParams.get('material') || '').trim()
 		const color = (searchParams.get('color') || '').trim()
+		const subcategories = (searchParams.get('sub') || '')
+			.split(',')
+			.map((item) => item.trim())
+			.filter(Boolean)
 		const nextTags: FilterTag[] = []
 
 		if (sort) {
@@ -54,8 +63,17 @@ export default function ActiveFilterTags() {
 			})
 		}
 
+		subcategories.forEach((subcategory) => {
+			nextTags.push({
+				key: 'sub',
+				label: 'Подкатегория',
+				value: subcategoryLabels[subcategory] || subcategory,
+				paramValue: subcategory,
+			})
+		})
+
 		return nextTags
-	}, [searchParams])
+	}, [searchParams, subcategoryLabels])
 
 	const updateParams = useCallback(
 		(mutator: (params: URLSearchParams) => void) => {
@@ -70,8 +88,23 @@ export default function ActiveFilterTags() {
 	)
 
 	const removeFilter = useCallback(
-		(key: FilterTag['key']) => {
+		(key: FilterTag['key'], paramValue?: string) => {
 			updateParams((params) => {
+				if (key === 'sub' && paramValue) {
+					const subcategories = (params.get('sub') || '')
+						.split(',')
+						.map((item) => item.trim())
+						.filter(Boolean)
+					const nextSubcategories = subcategories.filter((item) => item !== paramValue)
+
+					if (nextSubcategories.length === 0) {
+						params.delete('sub')
+					} else {
+						params.set('sub', nextSubcategories.join(','))
+					}
+					return
+				}
+
 				params.delete(key)
 			})
 		},
@@ -83,6 +116,7 @@ export default function ActiveFilterTags() {
 			params.delete('sort')
 			params.delete('material')
 			params.delete('color')
+			params.delete('sub')
 		})
 	}, [updateParams])
 
@@ -94,7 +128,7 @@ export default function ActiveFilterTags() {
 		<div className="flex flex-wrap gap-2">
 			{tags.map((tag) => (
 				<Chip
-					key={tag.key}
+					key={tag.paramValue ? `${tag.key}-${tag.paramValue}` : tag.key}
 					className='gap-2'
 					variant='primary'
 					color='accent'
@@ -106,7 +140,7 @@ export default function ActiveFilterTags() {
 					<CloseIcon
 						aria-label={`Удалить фильтр ${tag.label.toLowerCase()}`}
 						className="transition hover:cursor-pointer text-lg"
-						onClick={() => removeFilter(tag.key)}
+						onClick={() => removeFilter(tag.key, tag.paramValue)}
 						type="button"
 					>
 					</CloseIcon>

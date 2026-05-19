@@ -95,6 +95,9 @@ export default async function ProductsCategoryPage({
 	const visibleSubcategorySlugSet = new Set(visibleSubcategories.map((subcategory) => subcategory.slug));
 	const activeSubcategorySlugs = requestedSubcategorySlugs.filter((slug) => visibleSubcategorySlugSet.has(slug));
 	const activeSubcategories = visibleSubcategories.filter((subcategory) => activeSubcategorySlugs.includes(subcategory.slug));
+	const subcategoryLabels = Object.fromEntries(
+		visibleSubcategories.map((subcategory) => [subcategory.slug, subcategory.title])
+	);
 	const singleActiveSubcategory = activeSubcategories.length === 1 ? activeSubcategories[0] : null;
 	const [total, categories, allProductMaterials, allProductColors] = await Promise.all([
 		sanityFetch({
@@ -143,7 +146,7 @@ export default async function ProductsCategoryPage({
 					/>
 				)}
 				<div className="flex flex-col gap-8">
-					<ProductFilter allProductColors={allProductColors} allProductMaterials={allProductMaterials} />
+					<ProductFilter allProductColors={allProductColors} allProductMaterials={allProductMaterials} subcategoryLabels={subcategoryLabels} />
 					<Suspense
 						key={productsListKey}
 						fallback={
