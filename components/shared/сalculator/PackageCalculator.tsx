@@ -103,7 +103,7 @@ const PackageCalculator = ({matrix = []}: {matrix?: any}) => {
 			setFormMessage(null);
 
 			try {
-				await sendCalculatorDetails({
+				const result = await sendCalculatorDetails({
 					material: formData.material,
 					color: formData.color,
 					size: formData.size,
@@ -115,6 +115,14 @@ const PackageCalculator = ({matrix = []}: {matrix?: any}) => {
 					user_phone: _formData.get('user_phone') as string,
 					comment: _formData.get('user_comment')?.toString() || 'Нет',
 				});
+
+				if (!result?.ok) {
+					setFormMessage({
+						type: 'error',
+						message: result?.error || 'Произошла ошибка при отправке заявки. Пожалуйста, попробуйте еще раз.',
+					});
+					return;
+				}
 
 				setFormMessage({
 					type: 'success',
