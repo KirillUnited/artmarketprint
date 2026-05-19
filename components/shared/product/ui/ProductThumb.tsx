@@ -1,5 +1,5 @@
 'use client';
-import { FC, JSX } from 'react';
+import { FC, JSX, useEffect, useState } from 'react';
 import { Card, CardBody, CardFooter } from '@heroui/card';
 import { Link } from '@heroui/link';
 import NextImage from 'next/image';
@@ -33,6 +33,20 @@ const ProductThumb: FC<ProductThumbProps> = ({ item, ...props }): JSX.Element =>
 	const brand = item.brand || '';
 	const category = item.category || '';
 	const activeColor = item.activeColor || '';
+	const [previewImage, setPreviewImage] = useState(image);
+
+	useEffect(() => {
+		setPreviewImage(image);
+	}, [image]);
+
+	const handlePreviewChange = (nextImage: string) => {
+		if (!nextImage) return;
+		setPreviewImage(nextImage);
+	};
+
+	const handlePreviewReset = () => {
+		setPreviewImage(image);
+	};
 
 	return (
 		<Card  className={clsx('h-full group relative max-w-full shadow-small hover:shadow-large transition-all duration-300', props.className)}  radius="sm">
@@ -50,8 +64,8 @@ const ProductThumb: FC<ProductThumbProps> = ({ item, ...props }): JSX.Element =>
 						loading="lazy"
 						quality={50}
 						sizes='100vw'
-						src={image}
-						unoptimized={shouldBypassNextImageOptimization(image)}
+						src={previewImage || image}
+						unoptimized={shouldBypassNextImageOptimization(previewImage || image)}
 						width={220}
 					/>
 				</div>
@@ -70,7 +84,13 @@ const ProductThumb: FC<ProductThumbProps> = ({ item, ...props }): JSX.Element =>
 			</CardBody>
 			{((item.colors?.length > 0 && item.items?.length > 0) || item.sizes?.length > 0) && (
 				<CardFooter className="text-tiny flex-col items-start gap-2 border-t p-4 pt-2">
-					{(item.colors?.length > 0 && item.items?.length > 0) && <ProductColors list={item.items} />}
+					{(item.colors?.length > 0 && item.items?.length > 0) && (
+						<ProductColors
+							list={item.items}
+							onPreviewChange={handlePreviewChange}
+							onPreviewReset={handlePreviewReset}
+						/>
+					)}
 					{item.sizes?.length > 0 && <ProductSizes list={item.sizes} />}
 				</CardFooter>
 			)}
