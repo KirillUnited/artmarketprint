@@ -5,6 +5,7 @@ import {CountryData, CountryIso2, defaultCountries, parseCountry, ParsedCountry,
 import {toast} from 'sonner';
 
 import {sendOrder} from '@/lib/actions/order.actions';
+import { useRouter } from 'next/navigation';
 
 const phoneUtil = PhoneNumberUtil.getInstance();
 
@@ -41,6 +42,7 @@ const useForm = (
 	countries: CountryData[];
 	isPending: boolean;
 } => {
+	const router = useRouter();
 	const [isPending, setIsPending] = useState(false);
 	const [showAlert, setShowAlert] = useState(false);
 	const [phone, setPhone] = useState('');
@@ -78,7 +80,8 @@ const useForm = (
 				});
 				setTimeout(() => {
 					typeof onClose === 'function' && onClose();
-				}, 5000);
+				}, 1000);
+				router.push('/success');
 			}
 		} catch (error) {
 			console.error(error);
