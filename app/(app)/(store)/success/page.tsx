@@ -16,11 +16,6 @@ export default function SuccessPage() {
 				<h1 className="text-3xl font-bold text-gray-900 mb-4">Спасибо за ваш заказ!</h1>
 				<p className="text-gray-600 mb-8 text-balance">Мы получили ваш заказ и скоро начнем его обработку. Мы свяжемся с Вами в ближайшее время.</p>
 				<div className="flex flex-col gap-4">
-					<Link href={'/products/categories/all'}>
-						<Button color="primary" radius="sm" size="md">
-							Продолжить покупки
-						</Button>
-					</Link>
 					<Link href={'/'}>
 						<Button color="secondary" radius="sm" size="md" variant="bordered">
 							Вернуться на главную
