@@ -2,7 +2,7 @@
 import React from 'react';
 import { Navbar as BaseNavbar, NavbarBrand, NavbarContent, NavbarItem } from '@heroui/navbar';
 import { Link } from '@heroui/link';
-import { Calculator, PhoneOutgoing, ShoppingBagIcon } from 'lucide-react';
+import { Calculator, ShoppingBagIcon } from 'lucide-react';
 import { Tooltip } from '@heroui/tooltip';
 import { Button } from '@heroui/button';
 import { clsx } from 'clsx';
@@ -19,7 +19,6 @@ import Drawer from '../../ui/Drawer';
 import { SalesBanner } from '../banner';
 
 import { ServiceSearch } from '@/components/ServiceSearch';
-import { PhoneListDropdown } from '@/components/ui/PhoneListDropdown';
 
 export const CartLinkButton = (itemsCount: number) => {
 	return (
@@ -82,18 +81,12 @@ export default function Navbar({ navigation, sales, siteSettings }: any) {
 							{/* <SearchIcon /> */}
 							<div className="hidden md:flex gap-3">
 								<Socials items={navSocials} />
-								{/* <Link className="text-sm hover:text-primary" color={'primary'} href={`tel:${phones[0]?.link}`}>
-									<PhoneOutgoing size={24} />
-								</Link> */}
 								<div className="flex flex-col border-l border-primary pl-3">
-									{
-										// phones.length > 0 && <PhoneListDropdown items={phones} />
-										phones?.map((phone: any) => (
-											<Link key={phone._key} className="text-sm text-foreground font-semibold hover:text-primary"  href={`tel:${phone.link}`}>
-												{phone.number}
-											</Link>
-										))
-									}
+									{phones?.map((phone: any) => (
+										<Link key={phone._key} className="text-sm text-foreground font-semibold hover:text-primary"  href={`tel:${phone.link}`}>
+											{phone.number}
+										</Link>
+									))}
 								</div>
 							</div>
 
