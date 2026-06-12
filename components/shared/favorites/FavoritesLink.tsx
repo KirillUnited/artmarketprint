@@ -20,12 +20,12 @@ export function FavoritesLink() {
     <Tooltip content="Избранное" placement="bottom">
       <Link
         aria-label={`Избранное${favoritesCount > 0 ? `, ${favoritesCount} товаров` : ''}`}
-        className="relative"
+        className="relative rounded-full bg-background border-2 p-2"
         href="/favorites"
       >
-        <Heart className="text-primary" size={24} />
+        <Heart className="text-foreground" size={24} />
         {favoritesCount > 0 && (
-          <span className="bg-danger text-white rounded-full text-xs text-center px-1 py-1 truncate w-6 h-6 absolute -top-3 -right-3">
+          <span className="bg-secondary text-white rounded-full text-xs text-center px-1 py-1 truncate w-6 h-6 absolute -top-3 -right-3">
             {favoritesCount}
           </span>
         )}

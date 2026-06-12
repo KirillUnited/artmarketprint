@@ -46,7 +46,7 @@ export function ServiceSearch() {
   };
 
   const buttonProps = {
-    className: "flex items-center gap-2 px-4 py-2 text-sm border rounded-md hover:bg-muted transition-colors"
+    className: "flex items-center gap-2 px-4 py-2 text-sm border rounded-md hover:bg-muted transition-colors max-w-[440px]",
   };
 
   return (
