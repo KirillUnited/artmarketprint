@@ -2,7 +2,7 @@
 import React from 'react';
 import { Navbar as BaseNavbar, NavbarBrand, NavbarContent, NavbarItem } from '@heroui/navbar';
 import { Link } from '@heroui/link';
-import { Calculator, ShoppingBagIcon } from 'lucide-react';
+import { Calculator, LayoutGridIcon, ShoppingBagIcon } from 'lucide-react';
 import { Tooltip } from '@heroui/tooltip';
 import { Button } from '@heroui/button';
 import { clsx } from 'clsx';
@@ -22,8 +22,8 @@ import { ServiceSearch } from '@/components/ServiceSearch';
 
 export const CartLinkButton = (itemsCount: number) => {
 	return (
-		<Link aria-label={`Shopping cart${itemsCount > 0 ? `, ${itemsCount} items` : ''}`} className="relative rounded-full bg-background border-2 p-2" href="/cart">
-			<ShoppingBagIcon className="text-foreground" size={24} />
+		<Link aria-label={`Shopping cart${itemsCount > 0 ? `, ${itemsCount} items` : ''}`} className="relative rounded-full bg-background border-2 p-2 group" href="/cart">
+			<ShoppingBagIcon className="text-foreground group-hover:text-secondary transition-color duration-200" size={24} />
 			{itemsCount > 0 && <span className="bg-secondary text-white rounded-full text-xs text-center px-1 py-1 truncate w-6 h-6 absolute -top-3 -right-3">{itemsCount}</span>}
 		</Link>
 	);
@@ -52,7 +52,7 @@ export default function Navbar({ navigation, sales, siteSettings }: any) {
 			>
 				<div className="container flex flex-col gap-4 py-4" >
 					<div className='flex flex-row items-center gap-16 w-full'>
-						<NavbarContent className="hidden xl:flex gap-4 flex-1 justify-between! w-full">
+						<NavbarContent className="gap-4 flex-1 justify-between! w-full">
 							<NavbarBrand as={Link} className="grow-0 basis-auto" href={'/'}>
 								<BrandLogo alt={'ArtMarketPrint'} />
 							</NavbarBrand>
@@ -66,14 +66,14 @@ export default function Navbar({ navigation, sales, siteSettings }: any) {
 									variant="light"
 									aria-label="Calculator"
 									as={Link}
-									className="border-2 border-primary text-primary font-semibold shadow-large hover:scale-105 hover:bg-brand-gradient hover:text-primary-foreground transition-transform duration-200 bg-brand-gradient text-fill-transparent"
+									className="border-2 border-primary text-primary font-semibold shadow-large hover:scale-105  transition-transform duration-200 bg-brand-gradient text-fill-transparent hover:text-foreground min-w-auto px-2"
 									color="default"
 									href="/calculator"
 									size="md"
 									radius='sm'
 								>
 									<Calculator size={18} className='text-primary' />
-									Рассчитать стоимость
+									<span className="hidden xl:inline">Рассчитать стоимость</span>
 								</Button>
 							</Tooltip>
 						</NavbarContent>
@@ -114,7 +114,7 @@ export default function Navbar({ navigation, sales, siteSettings }: any) {
 											href={navItem.url}
 											size="sm"
 										>
-											{navItem.title === 'Каталог' && <ShoppingBagIcon size={16} />}
+											{navItem.title === 'Каталог' && <LayoutGridIcon size={16} />}
 											{navItem.title}
 										</Link>
 									</NavbarItem>
