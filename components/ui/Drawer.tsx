@@ -31,7 +31,7 @@ export default function Drawer({navigation, className, siteSettings, children}: 
 	return (
 		<>
 			<Button isIconOnly aria-label="Open menu" className={className} variant="light" onPress={onOpen}>
-				<MenuIcon aria-hidden="true" />
+				<MenuIcon aria-hidden="true" size={36} />
 			</Button>
 
 			<BaseDrawer

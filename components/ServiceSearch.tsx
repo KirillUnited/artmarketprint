@@ -4,7 +4,7 @@ import SearchExperience, { SearchConfig } from "@/components/search";
 import { SEARCH_CONFIG, SEARCH_ATTRIBUTES, SEARCH_PARAMETERS } from "@/lib/search-config";
 
 // Main service search component
-export function ServiceSearch() {
+export function ServiceSearch({ className }: { className?: string }) {
   // Configuration for Algolia search
   const searchConfig: SearchConfig = {
     applicationId: process.env.NEXT_PUBLIC_ALGOLIA_APP_ID || "",
@@ -46,13 +46,16 @@ export function ServiceSearch() {
   };
 
   const buttonProps = {
-    className: "flex items-center gap-2 px-4 py-2 text-sm border rounded-md hover:bg-muted transition-colors max-w-[440px]",
+    className: `flex items-center gap-2 px-4 py-2 text-sm border rounded-md hover:bg-muted transition-colors max-w-[440px]`,
   };
 
   return (
     <SearchExperience
       {...searchConfig}
-      buttonProps={buttonProps}
+      buttonProps={{
+        ...buttonProps,
+        className: `${buttonProps.className} ${className || ""}`,
+      }}
       buttonText={
         <>
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
