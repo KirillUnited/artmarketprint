@@ -1,5 +1,5 @@
 @reference "tailwindcss";
 
 .PostMetadata {
-    @apply flex flex-wrap items-center text-sm text-neutral-500 gap-2;
+    @apply flex flex-wrap items-center text-sm text-neutral-500 gap-2 gap-x-8;
 }

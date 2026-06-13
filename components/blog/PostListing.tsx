@@ -21,7 +21,6 @@ const PostListing = ({posts}: PostListingProps) => (
 				key={post.slug.current}
 				footerSlot={
 					<>
-						<PostMetadata post={post} />
 						<Link  className="inline-flex items-center gap-1 text-primary-500 hover:text-primary-600 font-medium" href={`/blog/${post?.slug?.current || ''}`}>
 							Читать далее <ArrowRightIcon size={16} />
 						</Link>
