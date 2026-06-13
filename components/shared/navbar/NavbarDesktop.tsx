@@ -37,9 +37,15 @@ function NavbarDesktopImpl({ navigation, siteSettings, itemsCount }: NavbarVaria
 			{/* Row 1: brand, search, calculator, socials, phones, callback */}
 			<div className="flex flex-row items-center gap-16 w-full">
 				<NavbarContent className="gap-4 flex-1 justify-between! w-full">
-					<NavbarBrand as={Link} className="grow-0 basis-auto" href="/">
-						<BrandLogo alt="ArtMarketPrint" />
-					</NavbarBrand>
+					{pathname === '/' ? (
+						<NavbarBrand aria-current="page" className="grow-0 basis-auto cursor-default">
+							<BrandLogo alt="ArtMarketPrint" />
+						</NavbarBrand>
+					) : (
+						<NavbarBrand as={Link} className="grow-0 basis-auto" href="/">
+							<BrandLogo alt="ArtMarketPrint" />
+						</NavbarBrand>
+					)}
 
 					<ServiceSearch />
 
@@ -82,25 +88,42 @@ function NavbarDesktopImpl({ navigation, siteSettings, itemsCount }: NavbarVaria
 								/>
 							) : (
 								<NavbarItem key={navItem.title}>
-									<Link
-										aria-current={navItem.url === pathname ? 'page' : undefined}
-										className={clsx(
-											'leading-normal font-semibold hover:underline hover:text-primary transition',
-											{
-												'font-bold text-primary': navItem.url === pathname,
-												'flex gap-2 items-center bg-brand-gradient px-3 py-0.5 rounded-small text-white hover:text-white h-10':
-													navItem.title === 'Каталог',
-											},
-										)}
-										color="foreground"
-										href={navItem.url ?? '#'}
-										size="sm"
-									>
-										{navItem.title === 'Каталог' ? (
-											<LayoutGridIcon size={16} />
-										) : null}
-										{navItem.title}
-									</Link>
+									{navItem.url === pathname ? (
+										<span
+											aria-current="page"
+											className={clsx(
+												'leading-normal font-semibold transition',
+												{
+													'font-bold text-primary': true,
+													'flex gap-2 items-center bg-brand-gradient px-3 py-0.5 rounded-small text-white h-10':
+														navItem.title === 'Каталог',
+												},
+											)}
+										>
+											{navItem.title === 'Каталог' ? (
+												<LayoutGridIcon size={16} />
+											) : null}
+											{navItem.title}
+										</span>
+									) : (
+										<Link
+											className={clsx(
+												'leading-normal font-semibold hover:underline hover:text-primary transition',
+												{
+													'flex gap-2 items-center bg-brand-gradient px-3 py-0.5 rounded-small text-white hover:text-white h-10':
+														navItem.title === 'Каталог',
+												},
+											)}
+											color="foreground"
+											href={navItem.url ?? '#'}
+											size="sm"
+										>
+											{navItem.title === 'Каталог' ? (
+												<LayoutGridIcon size={16} />
+											) : null}
+											{navItem.title}
+										</Link>
+									)}
 								</NavbarItem>
 							)}
 						</div>

@@ -1,7 +1,9 @@
 'use client';
 
+import { Link } from '@heroui/link';
 import { memo } from 'react';
 import type { SanityDocument } from 'next-sanity';
+import { usePathname } from 'next/navigation';
 
 import { ServiceSearch } from '@/components/ServiceSearch';
 import { FavoritesLink } from '@/components/shared/favorites/FavoritesLink';
@@ -23,12 +25,22 @@ function NavbarMobileImpl({
 	siteSettingsDoc,
 	itemsCount,
 }: NavbarMobileProps) {
+	const pathname = usePathname();
+
 	return (
 		<div className="flex xl:hidden flex-col gap-3 py-3 w-full">
 			{/* Row 1: brand + menu trigger */}
 			<div className="flex items-center justify-between">
 				<CalcLinkButton />
-				<BrandLogo alt="ArtMarketPrint" height={32} width={32} />
+				{pathname === '/' ? (
+					<span aria-current="page" className="cursor-default">
+						<BrandLogo alt="ArtMarketPrint" height={32} width={32} />
+					</span>
+				) : (
+					<Link href="/">
+						<BrandLogo alt="ArtMarketPrint" height={32} width={32} />
+					</Link>
+				)}
 				<Drawer
 					className="min-w-min"
 					navigation={navigation}
