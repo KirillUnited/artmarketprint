@@ -8,6 +8,7 @@ import { NAVIGATION_QUERY, SITE_SETTINGS_QUERY } from '@/sanity/lib/queries/site
 import { client } from '@/sanity/client';
 
 import BrandLogo from '../ui/BrandLogo';
+import { FooterNavList } from './FooterNavList';
 
 export default async function Footer() {
 	const siteSettings: any = await getSanityDocuments(SITE_SETTINGS_QUERY);
@@ -29,15 +30,7 @@ export default async function Footer() {
 						<div className="flex flex-col gap-4 md:gap-6">
 							<p className="font-bold text-white">Навигация</p>
 
-							<ul className="flex flex-col gap-4">
-								{navigation[0]?.links?.map((link: any, index: number) => (
-									<li key={index}>
-										<Link className="text-[#eeeeee] text-left font-medium self-stretch hover:text-primary transition" href={link.url}>
-											{link.title}
-										</Link>
-									</li>
-								))}
-							</ul>
+							<FooterNavList links={navigation[0]?.links ?? []} />
 						</div>
 					</div>
 					<div className="flex flex-col gap-4 md:gap-6">
