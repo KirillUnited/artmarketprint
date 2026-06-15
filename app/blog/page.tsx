@@ -11,8 +11,8 @@ import {ClientPagination} from '@/components/shared/product/ui/Pagination';
 const POSTS_PER_PAGE = 8;
 
 export const metadata: Metadata = {
-	title: 'Наш Блог',
-	description: 'Читайте наши последние статьи, новости и статьи от нашей команды',
+	title: 'Блог ArtMarketPrint: полезные статьи о технологиях печати',
+	description: 'Подробные статьи о шелкографии, DTF, УФ-печати и гравировке. Узнайте, как выбрать технологию, рассчитать стоимость и создать качественную продукцию. Полезные советы для бизнеса.',
 };
 
 export default async function BlogPage({searchParams}: {searchParams: Promise<{page?: string}>}) {

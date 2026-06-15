@@ -13,7 +13,7 @@ export const siteConfig = {
     {
       title: 'Телефон',
       name: 'phone',
-      text: 'Мы работаем по всей Беларуси',
+      text: 'Мы работаем по всей Беларуси',
       list: [
         {
           label: '+375 (29) 752-02-04',

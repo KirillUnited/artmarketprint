@@ -40,8 +40,8 @@ export async function generateMetadata({params}: {params: Promise<Props>}) {
 						slug: category,
 					},
 				});
-	const title = categorySlug?.title || 'Все категории';
-	const description = categorySlug?.description || 'Каталог всех категорий товаров';
+	const title = categorySlug?.title || 'Каталог сувенирной продукции и товаров с логотипом в Минске';
+	const description = categorySlug?.description || 'Широкий ассортимент сувениров, одежды и аксессуаров для брендирования в Минске. ✓ Выгодные цены. ✓ Доставка по РБ. Создайте свой фирменный стиль вместе с ArtMarketPrint.';
 
 	return {
 		title,
@@ -119,6 +119,8 @@ export default async function ProductsCategoryPage({
 	const activeCategory = singleActiveSubcategory?.title || categorySlug?.title;
 	const hasActiveFilters = Boolean(sort || material || color || activeSubcategorySlugs.length > 0);
 	const productsListKey = [category, pageNumber, sort || '', material || '', color || '', activeSubcategorySlugs.join(',')].join('|');
+
+	console.log('categorySlug', categorySlug);
 
 	return (
 		<Section className="space-y-6 bg-gray-50">

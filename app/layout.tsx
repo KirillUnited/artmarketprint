@@ -22,17 +22,17 @@ const IS_STAGING = APP_ENV === 'staging';
 export const metadata: Metadata = {
 	metadataBase: new URL(SITE_URL),
 	title: {
-		default: `${siteConfig.name} - ArtMarketPrint`,
-		template: `%s | ${siteConfig.name} - ArtMarketPrint`,
+		default: `${siteConfig.seo.title} - ArtMarketPrint`,
+		template: `%s - ArtMarketPrint`,
 	},
-	description: siteConfig.description,
+	description: siteConfig.seo.description,
 	keywords: siteConfig.seo.keywords,
 	icons: {
 		icon: '/favicon.ico',
 	},
 	openGraph: {
-		title: `${siteConfig.name || ''}`,
-		description: `${siteConfig.description}`,
+		title: `${siteConfig.seo.title || ''}`,
+		description: `${siteConfig.seo.description}`,
 		images: ['/apple-touch-icon.png'],
 		type: 'website',
 		locale: SITE_LOCALE,
@@ -41,8 +41,8 @@ export const metadata: Metadata = {
 	},
 	twitter: {
 		card: 'summary_large_image',
-		title: `${siteConfig.name || ''}`,
-		description: `${siteConfig.description}`,
+		title: `${siteConfig.seo.title || ''}`,
+		description: `${siteConfig.seo.description}`,
 		images: ['/apple-touch-icon.png'],
 	},
 	alternates: {

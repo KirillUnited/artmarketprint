@@ -40,11 +40,11 @@ export async function generateMetadata({params}: {params: Promise<Props>}) {
 
 	return {
 		title: `${title || ''}`,
-		description: `${description}`,
+		description: `${title}. Пример портфолио ArtMarketPrint.`,
 		keywords: `${keywords}`,
 		openGraph: {
 			title: `${title || ''}`,
-			description: `${description}`,
+			description: `${title}. Пример портфолио ArtMarketPrint.`,
 			images: '/apple-touch-icon.png',
 		},
 		alternates: {

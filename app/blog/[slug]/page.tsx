@@ -16,15 +16,17 @@ export async function generateMetadata({params}: {params: Promise<Props>}): Prom
 	const {slug} = await params;
 	const post = await getPostBySlug(slug);
 	const url = `${process.env.NEXT_PUBLIC_SERVER_URL}/blog/${slug}`;
+	const title = post.title;
+	const description = `${title}. Читайте в блоге ArtMarketPrint.`;
 
 	if (!post) return {};
 
 	return {
-		title: post.seo?.title || post.title,
-		description: post.seo?.description || post.excerpt,
+		title,
+		description,
 		openGraph: {
-			title: post.seo?.title || post.title,
-			description: post.seo?.description || post.excerpt,
+			title,
+			description,
 			images: [
 				{
 					url: post.seo?.ogImage || '',
@@ -40,8 +42,8 @@ export async function generateMetadata({params}: {params: Promise<Props>}): Prom
 		},
 		twitter: {
 			card: 'summary_large_image',
-			title: post.seo?.title || post.title,
-			description: post.seo?.description || post.excerpt,
+			title,
+			description,
 			images: [post.seo?.ogImage || ''],
 			creator: '@artmarketprint',
 			site: '@artmarketprint',
