@@ -47,7 +47,6 @@ export async function generateMetadata({params}: {params: Promise<Props>}) {
 	return {
 		title: `${title || ''}`,
 		description: `${description}`,
-		keywords: `${title.split(' ').join(', ')}, ${description.split(' ').join(', ')}`,
 		openGraph: {
 			title: `${title || ''}`,
 			description: `${description}`,

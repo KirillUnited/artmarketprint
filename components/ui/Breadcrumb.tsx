@@ -12,9 +12,7 @@ import { BreadcrumbListJsonLd } from '../ServiceJsonLd';
 
 export const BreadcrumbWrapper = ({ children }: { children: React.ReactNode }) => {
 	return (
-		<Breadcrumbs classNames={{
-			list: 'border'
-		}} variant='bordered'>
+		<Breadcrumbs variant='light'>
 			<BreadcrumbItem className="font-semibold text-primary" href="/" title={'Главная'}>
 				<HomeIcon aria-label='Home' size={18} />
 			</BreadcrumbItem>
@@ -37,7 +35,7 @@ export default function BaseBreadcrumb({ items, section, withJsonLd }: { items: 
 	return (
 		<>
 			{withJsonLd && <BreadcrumbListJsonLd name={navigation[`${pathSegments[pathSegments.length - 1]}`]} />}
-			<Breadcrumbs variant='bordered'>
+			<Breadcrumbs variant='light'>
 				<BreadcrumbItem className="font-semibold text-primary" href="/">
 					<HomeIcon aria-label='Home' size={18} />
 				</BreadcrumbItem>
@@ -52,11 +50,9 @@ export default function BaseBreadcrumb({ items, section, withJsonLd }: { items: 
 								'font-semibold',
 								'max-w-60'
 							)} classNames={{
-								separator: 'text-primary',
-								item: 'inline truncate',
+								item: `inline truncate ${isLast ? 'text-primary opacity-100' : ''}`,
 							}}
 								href={`${href}`}
-								isDisabled={isLast}
 								title={title}>
 								{title}
 							</BreadcrumbItem>
@@ -115,8 +111,7 @@ export const ProductBreadcrumb: React.FC<ProductBreadcrumbProps> = (
 				'font-semibold',
 				'max-w-60'
 			)} classNames={{
-				separator: 'text-primary',
-				item: 'inline truncate',
+				item: 'inline truncate text-primary opacity-100',
 			}}
 				href={`/products/${slug}`}
 				isDisabled={true}
@@ -157,8 +152,7 @@ export const ServiceBreadcrumb: React.FC<ServiceBreadcrumbProps> = (
 				'font-semibold',
 				'max-w-60'
 			)} classNames={{
-				separator: 'text-primary',
-				item: 'inline truncate',
+				item: 'inline truncate text-primary opacity-100',
 			}}
 				href={`/services/${serviceSlug}`}
 				isDisabled={true}
@@ -185,7 +179,6 @@ export function LightBreadcrumb({
 				<li>
 					<Link className="hover:underline flex items-center gap-1" href="/">
 						<HomeIcon className="w-4 h-4 text-gray-400" />
-						Главная
 					</Link>
 				</li>
 				<ChevronRightIcon className="w-4 h-4 text-gray-400" />
@@ -199,7 +192,7 @@ export function LightBreadcrumb({
 						<li>
 							<Link
 								className={clsx("hover:underline", {
-									"text-gray-900 font-medium": !subcategory
+									"font-semibold text-primary": !subcategory
 								})}
 								href={`${baseUrl}/${category.currentSlug}`}
 							>
@@ -209,7 +202,7 @@ export function LightBreadcrumb({
 						{subcategory && (
 							<>
 								<ChevronRightIcon className="w-4 h-4 text-gray-400" />
-								<li className="text-gray-900 font-medium">{subcategory.title}</li>
+								<li className="font-semibold text-primary">{subcategory.title}</li>
 							</>
 						)}
 					</>
