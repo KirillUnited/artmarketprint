@@ -18,6 +18,7 @@ import {SERVICE_QUERY} from '@/sanity/lib/queries/service.query';
 import {urlFor} from '@/sanity/lib/image';
 import {PackageCalculator} from '@/components/shared/сalculator';
 import {SectionButton} from '@/components/layout/SectionButton';
+import NotFound from '@/app/not-found';
 
 type Props = {
 	slug: string;
@@ -40,6 +41,8 @@ export async function generateMetadata({params}: {params: Promise<Props>}) {
 	const {title = '', description = '', ogImage = ''} = service?.seo || {};
 
 	const url = `${process.env.NEXT_PUBLIC_SERVER_URL}/services/${slug}`;
+
+	if (!service) return {};
 
 	return {
 		title: `${title || ''}`,
@@ -81,8 +84,10 @@ export default async function ServicePage({params}: {params: Promise<Props>}): P
 		sanityFetch({query: FAQ_QUERY}),
 		sanityFetch({query: PROJECTS_BY_SERVICE_QUERY, params: await params}),
 	]);
+	if (!service) return <NotFound />;
 	const serviceImageUrl = service.image ? urlFor(service.image)?.width(1200).height(400).url() : null;
 	const relatedProjectsArray = Array.isArray(relatedProjects) ? relatedProjects : [relatedProjects];
+
 
 	return (
 		<>
