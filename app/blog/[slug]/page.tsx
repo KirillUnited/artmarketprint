@@ -1,19 +1,19 @@
-import {Metadata} from 'next';
-import {notFound} from 'next/navigation';
+import { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 
-import {getPostBySlug} from '@/components/blog/lib/fetch-data';
+import { getPostBySlug } from '@/components/blog/lib/fetch-data';
 import ArticleBody from '@/components/blog/ArticleBody';
 import PostHeader from '@/components/blog/PostHeader';
-import {TOC, RelatedPosts} from '@/components/blog/ui';
-import {ServiceBreadcrumb} from '@/components/ui/Breadcrumb';
+import { TOC, RelatedPosts } from '@/components/blog/ui';
+import { ServiceBreadcrumb } from '@/components/ui/Breadcrumb';
 import Section from '@/components/layout/Section';
 
 type Props = {
 	slug: string;
 };
 
-export async function generateMetadata({params}: {params: Promise<Props>}): Promise<Metadata> {
-	const {slug} = await params;
+export async function generateMetadata({ params }: { params: Promise<Props> }): Promise<Metadata> {
+	const { slug } = await params;
 	const post = await getPostBySlug(slug);
 	const url = `${process.env.NEXT_PUBLIC_SERVER_URL}/blog/${slug}`;
 	const title = post.title;
@@ -59,8 +59,8 @@ export async function generateMetadata({params}: {params: Promise<Props>}): Prom
 	};
 }
 
-export default async function PostDetailPage({params}: {params: Promise<Props>}) {
-	const {slug} = await params;
+export default async function PostDetailPage({ params }: { params: Promise<Props> }) {
+	const { slug } = await params;
 	const post = await getPostBySlug(slug);
 
 	if (!post) return notFound();
@@ -76,11 +76,9 @@ export default async function PostDetailPage({params}: {params: Promise<Props>})
 					__html: jsonLd,
 				}}
 			/>
+			<ServiceBreadcrumb service="Блог" serviceSlug="blog" title={post.title} />
 			<div className={'max-w-screen-lg mx-auto'}>
 				<PostHeader post={post} />
-				<div className="mb-4">
-					<ServiceBreadcrumb service="Блог" serviceSlug="blog" title={post.title} />
-				</div>
 				<div className="flex flex-col gap-8">
 					{post?.body && (
 						<article className="flex-1">
