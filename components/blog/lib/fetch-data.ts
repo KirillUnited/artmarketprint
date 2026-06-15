@@ -2,6 +2,7 @@ import {sanityFetch} from '@/sanity/lib/sanityFetch';
 import {
 	ALL_POSTS_QUERY,
 	CATEGORIES_QUERY,
+	CATEGORY_BY_SLUG_QUERY,
 	PAGINATED_POSTS_QUERY,
 	PAGINATED_POSTS_BY_CATEGORY_QUERY,
 	POST_BY_SLUG_QUERY,
@@ -155,5 +156,17 @@ export const getAllBlogCategories = async () => {
 		console.error('Error fetching all categories:', error);
 
 		return [];
+	}
+};
+
+export const getCategoryBySlug = async (slug: string) => {
+	try {
+		const category = await sanityFetch({query: CATEGORY_BY_SLUG_QUERY, params: {slug}});
+
+		return category || null;
+	} catch (error) {
+		console.error('Error fetching category by slug:', error);
+
+		return null;
 	}
 };
