@@ -7,6 +7,7 @@ import clsx from 'clsx';
 
 import { ProjectTagList } from '@/components/shared/project';
 import { urlFor } from '@/sanity/lib/image';
+import { CURRENCIES_SYMBOLS } from '@/lib/products/companies';
 
 export default function ServiceListItems({ services }: any) {
 	return (
@@ -35,7 +36,7 @@ export default function ServiceListItems({ services }: any) {
 								<div className="flex flex-col">
 									<p className="flex flex-col font-semibold line-clamp-2 leading-normal" title={service.title}>
 										{service.title}
-										{service.price && <span className="text-primary font-bold line-clamp-1">{service.price}</span>}
+										{service.price && <span className="text-primary font-bold line-clamp-1">{service.price} {CURRENCIES_SYMBOLS['BYN']}</span>}
 									</p>
 									{service.description && <p className={clsx('text-xs', 'grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-all duration-500 overflow-hidden')} title={service.description}>
 										<span className="line-clamp-2 leading-normal">{service.description}</span>
