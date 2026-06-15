@@ -3,7 +3,7 @@ import { defineQuery } from 'next-sanity';
 export const SERVICES_QUERY = `*[
     _type == "service"
     && defined(slug.current)
-  ]|order(publishedAt desc)[0...12]{title,
+  ]|order(publishedAt desc){title,
       description,
       image, 
       price,

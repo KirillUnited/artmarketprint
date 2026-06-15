@@ -32,14 +32,14 @@ export default function ServiceListItems({ services }: any) {
 						/>
 						<CardFooter className={clsx('absolute bg-white/75 bottom-0 w-full z-10 p-0 backdrop-blur-lg')}>
 							<div className="flex flex-col gap-2 p-3 w-full">
-								<div className="flex flex-col gap-2">
-									<p className="flex flex-col gap-2 font-semibold line-clamp-2 leading-tight" title={service.title}>
+								<div className="flex flex-col">
+									<p className="flex flex-col font-semibold line-clamp-2 leading-normal" title={service.title}>
 										{service.title}
-										<span className="text-primary text-xl font-bold">{service.price}</span>
+										{service.price && <span className="text-primary font-bold line-clamp-1">{service.price}</span>}
 									</p>
-									<p className={clsx('text-xs', 'grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-all duration-500 overflow-hidden')} title={service.description}>
-										<span className="line-clamp-4">{service.description}</span>
-									</p>
+									{service.description && <p className={clsx('text-xs', 'grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-all duration-500 overflow-hidden')} title={service.description}>
+										<span className="line-clamp-2 leading-normal">{service.description}</span>
+									</p>}
 								</div>
 								{/* <Button as={'span'} className="group/button self-start" color="secondary" radius="sm" role="presentation" size="sm">
                                     <span>Подробнее</span>
