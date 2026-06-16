@@ -12,12 +12,16 @@ interface ArticlePageProps {
 export async function generateMetadata({ params }: {params: Promise<ArticlePageProps>}): Promise<Metadata> {
   const { slug } = await params;
   const post = await getPostBySlug(slug);
+  const title = post.seo?.title || '';
+  const description = post.seo?.description || post.excerpt || '';
 
   if (!post) return {};
 
   const url = `${process.env.NEXT_PUBLIC_SERVER_URL}/posts/${slug}`;
 
   return {
+    title,
+    description,
     alternates: {
       canonical: url,
       languages: {

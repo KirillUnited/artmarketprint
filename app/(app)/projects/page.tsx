@@ -10,10 +10,13 @@ import BaseBreadcrumb from '@/components/ui/Breadcrumb';
 import { HOME_PAGE_PROJECTS_QUERY } from '@/sanity/lib/queries/project.query';
 
 export async function generateMetadata() {
-
     const url = 'https://artmarketprint.by/projects';
+	const title = `Портфолио работ по печати и гравировке`;
+	const description = `Галерея работ ArtMarketPrint. Примеры брендирования сувениров, нанесения принтов на одежду и лазерной гравировки. Оперативная печать и доставка по Минску и РБ.`;
 
     return {
+		title,
+		description,
         alternates: {
             canonical: url,
 			languages: {

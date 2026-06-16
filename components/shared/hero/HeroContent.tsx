@@ -1,14 +1,13 @@
 'use client';
-import React from 'react';
-import {motion} from 'framer-motion';
-import {PortableText, PortableTextComponents} from 'next-sanity';
+import { motion } from 'framer-motion';
+import { PortableText, PortableTextComponents } from 'next-sanity';
 
-import {ContentCTA} from '@/components/shared/ContentCTA';
+import { ContentCTA } from '@/components/shared/ContentCTA';
 
 const components: PortableTextComponents = {
 	marks: {
-		em: ({children}) => <span className="font-extrabold bg-brand-gradient text-fill-transparent">{children}</span>,
-		strong: ({children}) => <span className="font-extrabold">{children}</span>,
+		em: ({ children }) => <span className="font-extrabold bg-brand-gradient text-fill-transparent">{children}</span>,
+		strong: ({ children }) => <span className="font-extrabold">{children}</span>,
 	},
 };
 
@@ -24,7 +23,7 @@ interface HeroContentProps {
 	}>;
 }
 
-export default function HeroContent({title, description, subtitle, ctaButtonList = []}: HeroContentProps) {
+export default function HeroContent({ title, description, subtitle, ctaButtonList = [] }: HeroContentProps) {
 	return (
 		<>
 			<article className="flex flex-col gap-4 md:gap-6">
@@ -35,8 +34,8 @@ export default function HeroContent({title, description, subtitle, ctaButtonList
 							opacity: 0,
 							translate: '0 -100%',
 						}}
-						transition={{duration: 2.5, ease: 'easeInOut'}}
-						viewport={{once: true, amount: 0}}
+						transition={{ duration: 2.5, ease: 'easeInOut' }}
+						viewport={{ once: true, amount: 0 }}
 						whileInView={{
 							opacity: 1,
 							translate: '0',
@@ -45,21 +44,10 @@ export default function HeroContent({title, description, subtitle, ctaButtonList
 						- <span>{subtitle}</span> -
 					</motion.span>
 				)}
-				<motion.div
-					className="text-4xl md:text-5xl lg:text-6xl leading-none font-medium wrap-break-word text-balance"
-					initial={{
-						opacity: 0,
-						translate: '100% 0',
-					}}
-					transition={{duration: 2.5, ease: 'easeInOut'}}
-					viewport={{once: true, amount: 0}}
-					whileInView={{
-						opacity: 1,
-						translate: '0',
-					}}
+				<div className="text-4xl md:text-5xl lg:text-6xl leading-none font-medium wrap-break-word text-balance"
 				>
 					<PortableText components={components} value={title} />
-				</motion.div>
+				</div>
 				{description && <p className="text-foreground/70 text-base md:text-lg leading-normal font-medium">{description}</p>}
 			</article>
 			{ctaButtonList && ctaButtonList.length > 0 && <ContentCTA buttonList={ctaButtonList} />}

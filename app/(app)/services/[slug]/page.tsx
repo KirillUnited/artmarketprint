@@ -1,23 +1,24 @@
-import {defineQuery, PortableText} from 'next-sanity';
-import {Card} from '@heroui/card';
-import {clsx} from 'clsx';
-import {JSX} from 'react';
+import { defineQuery, PortableText } from 'next-sanity';
+import { Card } from '@heroui/card';
+import { clsx } from 'clsx';
+import { JSX } from 'react';
 
-import {ServiceBreadcrumb} from '@/components/ui/Breadcrumb';
-import {ServiceDetails, ServiceHero} from '@/components/shared/service';
-import {sanityFetch} from '@/sanity/lib/sanityFetch';
-import {getUrlFor} from '@/lib/utils';
-import {ProjectList} from '@/components/shared/project';
-import {PROJECTS_BY_SERVICE_QUERY} from '@/sanity/lib/queries';
-import Section, {SectionDescription, SectionHeading, SectionSubtitle, SectionTitle} from '@/components/layout/Section';
-import {OrderForm} from '@/components/ui/form';
-import {FAQSection} from '@/components/shared/faq';
-import {SECTION_FIELDS} from '@/sanity/lib/queries/page.query';
-import ServiceJsonLd, {BreadcrumbListJsonLd} from '@/components/ServiceJsonLd';
-import {SERVICE_QUERY} from '@/sanity/lib/queries/service.query';
-import {urlFor} from '@/sanity/lib/image';
-import {PackageCalculator} from '@/components/shared/сalculator';
-import {SectionButton} from '@/components/layout/SectionButton';
+import { ServiceBreadcrumb } from '@/components/ui/Breadcrumb';
+import { ServiceDetails, ServiceHero } from '@/components/shared/service';
+import { sanityFetch } from '@/sanity/lib/sanityFetch';
+import { getUrlFor } from '@/lib/utils';
+import { ProjectList } from '@/components/shared/project';
+import { PROJECTS_BY_SERVICE_QUERY } from '@/sanity/lib/queries';
+import Section, { SectionDescription, SectionHeading, SectionSubtitle, SectionTitle } from '@/components/layout/Section';
+import { OrderForm } from '@/components/ui/form';
+import { FAQSection } from '@/components/shared/faq';
+import { SECTION_FIELDS } from '@/sanity/lib/queries/page.query';
+import ServiceJsonLd, { BreadcrumbListJsonLd } from '@/components/ServiceJsonLd';
+import { SERVICE_QUERY } from '@/sanity/lib/queries/service.query';
+import { urlFor } from '@/sanity/lib/image';
+import { PackageCalculator } from '@/components/shared/сalculator';
+import { SectionButton } from '@/components/layout/SectionButton';
+import NotFound from '@/app/not-found';
 
 type Props = {
 	slug: string;
@@ -34,17 +35,18 @@ const FAQ_QUERY = defineQuery(`*[_id == "siteSettings"][0]{
     }
   }`);
 
-export async function generateMetadata({params}: {params: Promise<Props>}) {
-	const {slug} = await params;
-	const service = await sanityFetch({query: SERVICE_QUERY, params: await params});
-	const {title = '', description = '', ogImage = ''} = service?.seo || {};
+export async function generateMetadata({ params }: { params: Promise<Props> }) {
+	const { slug } = await params;
+	const service = await sanityFetch({ query: SERVICE_QUERY, params: await params });
+	const { title = '', description = '', ogImage = '' } = service?.seo || {};
 
 	const url = `${process.env.NEXT_PUBLIC_SERVER_URL}/services/${slug}`;
+
+	if (!service) return {};
 
 	return {
 		title: `${title || ''}`,
 		description: `${description}`,
-		keywords: `${title.split(' ').join(', ')}, ${description.split(' ').join(', ')}`,
 		openGraph: {
 			title: `${title || ''}`,
 			description: `${description}`,
@@ -73,22 +75,20 @@ export async function generateMetadata({params}: {params: Promise<Props>}) {
 	};
 }
 
-export default async function ServicePage({params}: {params: Promise<Props>}): Promise<JSX.Element> {
-	const {slug} = await params;
+export default async function ServicePage({ params }: { params: Promise<Props> }): Promise<JSX.Element> {
+	const { slug } = await params;
 	// Fetch data in parallel for better performance
 	const [service, faq, relatedProjects] = await Promise.all([
-		sanityFetch({query: SERVICE_QUERY, params: await params}),
-		sanityFetch({query: FAQ_QUERY}),
-		sanityFetch({query: PROJECTS_BY_SERVICE_QUERY, params: await params}),
+		sanityFetch({ query: SERVICE_QUERY, params: await params }),
+		sanityFetch({ query: FAQ_QUERY }),
+		sanityFetch({ query: PROJECTS_BY_SERVICE_QUERY, params: await params }),
 	]);
-	const serviceImageUrl = service.image ? urlFor(service.image)?.width(1200).height(400).url() : null;
+	if (!service) return <NotFound />;
 	const relatedProjectsArray = Array.isArray(relatedProjects) ? relatedProjects : [relatedProjects];
+
 
 	return (
 		<>
-			{/* Hero section with background image and gradient overlay */}
-			<ServiceHero description={service.description} image={serviceImageUrl || ''} mediaBlock={service.mediaBlock} title={service.title} calculator={service.calculator} />
-
 			{/* Main content wrapper */}
 			<div className="">
 				{/* Breadcrumb navigation */}
@@ -98,8 +98,14 @@ export default async function ServicePage({params}: {params: Promise<Props>}): P
 							<BreadcrumbListJsonLd name={service.title} />
 							<ServiceBreadcrumb service="Услуги" serviceSlug="services" title={service.title} />
 						</div>
+
+						<SectionHeading>
+							<h1 className="text-4xl font-bold">{service.title}</h1>
+						</SectionHeading>
 					</div>
 				</section>
+
+
 
 				{/* Service details section */}
 				<Section id="serviceDetails" innerClassname="pt-6 md:pt-6">
@@ -112,6 +118,7 @@ export default async function ServicePage({params}: {params: Promise<Props>}): P
 						paymentMethods={service.paymentOptions}
 						price={service.price}
 						priceTable={service.priceTable}
+						hasCalc={service.calculator ? true : false}
 					>
 						{Array.isArray(service.body) && <PortableText value={service.body} onMissingComponent={false} />}
 					</ServiceDetails>

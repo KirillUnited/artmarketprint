@@ -7,9 +7,9 @@ import { SERVICES_QUERY } from '@/sanity/lib/queries';
 // revalidate: 0 means the data will be fetched on every request (no caching)
 const options = { next: { revalidate: 30 } };
 
-export async function getSanityDocuments(QUERY = SERVICES_QUERY, params={}) {
+export async function getSanityDocuments<T = SanityDocument>(QUERY: string = SERVICES_QUERY, params = {}) {
   try {
-    return await client.fetch<SanityDocument[]>(QUERY, params, options);
+    return await client.fetch<T[]>(QUERY, params, options);
   } catch (error) {
     console.error('Error fetching Sanity documents:', error);
 
