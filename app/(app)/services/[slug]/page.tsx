@@ -118,6 +118,7 @@ export default async function ServicePage({ params }: { params: Promise<Props> }
 						paymentMethods={service.paymentOptions}
 						price={service.price}
 						priceTable={service.priceTable}
+						hasCalc={service.calculator ? true : false}
 					>
 						{Array.isArray(service.body) && <PortableText value={service.body} onMissingComponent={false} />}
 					</ServiceDetails>

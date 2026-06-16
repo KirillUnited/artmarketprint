@@ -41,6 +41,7 @@ export interface ServiceDetailsProps {
 	layoutRequirements?: any;
 	paymentMethods?: any;
 	children?: React.ReactNode;
+	hasCalc?: boolean;
 }
 
 export interface CategoryDetailsProps {
