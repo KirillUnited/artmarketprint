@@ -16,11 +16,11 @@ export default async function Header() {
     const navigation = await client.fetch(NAVIGATION_QUERY);
 
     // Fetch active sales data from Sanity
-    const sales: any = await getSanityDocuments(salesQuery) || null;
+    const sales: any = (await getSanityDocuments(salesQuery))?.[0] || null;
 
     // Fetch site settings from Sanity
-    const SITE_SETTINGS = await getSanityDocuments(SITE_SETTINGS_QUERY);
+    const SITE_SETTINGS = (await getSanityDocuments(SITE_SETTINGS_QUERY))?.[0];
 
     // Return the Navbar component with fetched data
-    return <Navbar navigation={navigation[0].links} products={sales?.products} sales={sales} siteSettings={SITE_SETTINGS} />;
+    return <Navbar navigation={navigation[0].links} sales={sales} siteSettings={SITE_SETTINGS} />;
 }
