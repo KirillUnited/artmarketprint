@@ -3,13 +3,14 @@
  * @param post - Blog post object
  */
 import Link from 'next/link';
-import {Image} from '@heroui/image';
+import { Image } from '@heroui/image';
 import NextImage from 'next/image';
-import {Card, CardBody, CardFooter, CardHeader} from '@heroui/card';
+import { Card, CardBody, CardFooter, CardHeader } from '@heroui/card';
 
-import {urlFor} from '@/sanity/lib/image';
+import { urlFor } from '@/sanity/lib/image';
 
-import {Post} from '../lib/types';
+import { Post } from '../lib/types';
+import PostMetadata from './PostMetadata';
 
 
 type PostCardVariant = 'default' | 'compact';
@@ -25,7 +26,7 @@ export type PostCardProps = {
 	footerSlot?: React.ReactNode;
 };
 
-export default function PostCard({post, variant = POST_CARD_VARIANTS.default, footerSlot}: PostCardProps) {
+export default function PostCard({ post, variant = POST_CARD_VARIANTS.default, footerSlot }: PostCardProps) {
 	return (
 		<Card isHoverable as={'article'} className="hover:shadow-xl border hover:border-primary-300 transition-all">
 			{post?.featuredImage && (
@@ -45,7 +46,8 @@ export default function PostCard({post, variant = POST_CARD_VARIANTS.default, fo
 					/>
 				</Link>
 			)}
-			<CardHeader>
+			<CardHeader className="flex flex-col gap-4 items-start">
+				<PostMetadata post={post} />
 				<h2 className="text-lg font-semibold mb-2 leading-none line-clamp-3 text-gray-900 dark:text-gray-100">
 					<Link className="block" href={`/blog/${post?.slug?.current || ''}`}>
 						{post.title}
@@ -57,7 +59,7 @@ export default function PostCard({post, variant = POST_CARD_VARIANTS.default, fo
 					<p className="text-neutral-600 dark:text-neutral-300 line-clamp-4">{post.excerpt}</p>
 				</CardBody>
 			)}
-			{footerSlot && <CardFooter className="mt-auto max-xl:items-stretch gap-2 justify-between text-sm text-neutral-500 flex-wrap border-t">{footerSlot}</CardFooter>}
+			{footerSlot && <CardFooter className="mt-auto max-xl:items-stretch gap-2 justify-end text-sm text-neutral-500 flex-wrap border-t">{footerSlot}</CardFooter>}
 		</Card>
 	);
 }

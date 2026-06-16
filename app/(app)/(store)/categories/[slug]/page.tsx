@@ -16,6 +16,7 @@ import {ProductsNotFound} from '@/components/shared/product';
 import {sanityFetch} from '@/sanity/lib/sanityFetch';
 import RelatedProductsCarousel from '@/components/shared/product/RelatedProductsCarousel';
 import getRelatedProductsByCategory from '@/sanity/lib/product/getRelatedProductsByCategory';
+import NotFound from '@/app/not-found';
 
 export interface Props {
 	slug: string;
@@ -24,8 +25,10 @@ export async function generateMetadata({params}: {params: Promise<Props>}) {
 	const {slug} = await params;
 	const category = await sanityFetch({query: CATEGORY_QUERY, params: {slug}});
 	const {title = '', description = ''} = category?.seo || {};
-
+	const image = category?.image ? getUrlFor(category.image) : null;
 	const url = `${process.env.NEXT_PUBLIC_SERVER_URL}/categories/${slug}`;
+
+	if (!category) return {};
 
 	return {
 		title: `${title || ''}`,
@@ -33,7 +36,7 @@ export async function generateMetadata({params}: {params: Promise<Props>}) {
 		openGraph: {
 			title: `${title || ''}`,
 			description: `${description}`,
-			images: '/apple-touch-icon.png',
+			images: image,
 		},
 		alternates: {
 			canonical: url,
@@ -68,6 +71,10 @@ export default async function CategoryPage({params}: {params: Promise<Props>}) {
 
 	const breadcrumbs = (await client.fetch<SanityDocument>(NAVIGATION_QUERY))[0].links;
 	const categoryImageUrl = (await category?.image) ? getUrlFor(category.image) : null;
+
+	if (!category) {
+		return <NotFound />;
+	};
 
 	return (
 		<>

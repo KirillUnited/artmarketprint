@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 // eslint-disable-next-line import/order
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -27,7 +27,9 @@ interface CarouselProps {
 
 export const ServiceCarousel = ({ items, className }: CarouselProps) => {
     const [thumbsSwiper, setThumbsSwiper] = useState<any>(null);
-    const [isClient, setIsClient] = useState(false)
+    const [isClient, setIsClient] = useState(false);
+    const prevRef = useRef<HTMLButtonElement | null>(null);
+    const nextRef = useRef<HTMLButtonElement | null>(null);
 
     useEffect(() => {
         setIsClient(true);
@@ -39,17 +41,65 @@ export const ServiceCarousel = ({ items, className }: CarouselProps) => {
 
     return (
         <div className={clsx(styles['swiper-container'], className)}>
+            <button
+                ref={prevRef}
+                type="button"
+                aria-label="Previous slide"
+                className={clsx('text-primary', styles['nav-button'], styles['nav-prev'])}
+            >
+                <svg
+                    aria-hidden="true"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className={styles['nav-icon']}
+                >
+                    <polyline points="15 18 9 12 15 6" />
+                </svg>
+            </button>
+            <button
+                ref={nextRef}
+                type="button"
+                aria-label="Next slide"
+                className={clsx('text-primary', styles['nav-button'], styles['nav-next'])}
+            >
+                <svg
+                    aria-hidden="true"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className={styles['nav-icon']}
+                >
+                    <polyline points="9 18 15 12 9 6" />
+                </svg>
+            </button>
             <Swiper
                 className={clsx(styles['swiper'], styles['mySwiper2'])}
                 modules={[FreeMode, Navigation, Thumbs]}
-                navigation={true}
+                navigation={{
+                    prevEl: prevRef.current,
+                    nextEl: nextRef.current,
+                }}
+                onBeforeInit={(swiper) => {
+                    const navigation = swiper.params.navigation;
+                    if (navigation && typeof navigation !== 'boolean') {
+                        navigation.prevEl = prevRef.current;
+                        navigation.nextEl = nextRef.current;
+                    }
+                }}
                 spaceBetween={10}
                 thumbs={{ swiper: thumbsSwiper }}
             >
                 {items.map((item: string, index: number) => (
                     <SwiperSlide key={index} className={styles['swiper-slide']}>
-                        <picture className='h-full rounded-small'>
-                            <Image priority removeWrapper alt={'image'} as={NextImage} className={'w-full aspect-square max-h-full'} classNames={{ wrapper: 'bg-cover' }}
+                        <picture className='h-full rounded-small w-full'>
+                            <Image priority removeWrapper alt={'image'} as={NextImage} className={'w-full max-h-full'} classNames={{ wrapper: 'bg-cover' }}
                                 fallbackSrc={'/images/product-no-image.jpg'} height={500} quality={60} radius='sm' src={urlFor(item).width(500).height(500).url()} width={500} />
                         </picture>
                     </SwiperSlide>
@@ -66,9 +116,9 @@ export const ServiceCarousel = ({ items, className }: CarouselProps) => {
             >
                 {items.map((item: string, index: number) => (
                     <SwiperSlide key={index} className={styles['swiper-slide']} >
-                        <picture className='h-full border-slate-300 border p-3'>
-                            <Image alt={'image'} as={NextImage} className={'w-full aspect-square max-h-full object-contain'}
-                                classNames={{ wrapper: 'bg-cover' }} fallbackSrc={'/images/product-no-image.jpg'} height={104} quality={10} radius='sm' src={urlFor(item).width(104).height(104).url()} width={104} />
+                        <picture className='h-full w-full border-slate-300 border p-3'>
+                            <Image removeWrapper alt={'image'} as={NextImage} className={'w-full max-h-full object-cover'}
+                                classNames={{ wrapper: 'bg-cover w-full max-w-full' }} fallbackSrc={'/images/product-no-image.jpg'} height={104} quality={10} radius='sm' src={urlFor(item).width(104).height(104).url()} width={104} />
                         </picture>
                     </SwiperSlide>
                 ))}

@@ -12,10 +12,12 @@ import { OrderForm } from '@/components/ui/form';
 
 export async function generateMetadata(): Promise<Metadata> {
 	const url = 'https://artmarketprint.by/contact';
+	const title = 'Контакты компании ArtMarketPrint: адрес, телефон, email, социальные сети';
+	const description = 'Контактная информация ArtMarketPrint: адрес в Минске, телефоны, email и форма обратной связи. Работаем ежедневно, всегда на связи. Свяжитесь с нами любым удобным способом!';
 
 	return {
-		title: 'Контакты - ArtMarketPrint',
-		description: 'Свяжитесь с нами любым удобным способом. Адрес, телефон, email и социальные сети ArtMarketPrint.',
+		title,
+		description,
 		alternates: {
 			canonical: url,
 			languages: {
@@ -25,8 +27,8 @@ export async function generateMetadata(): Promise<Metadata> {
 			},
 		},
 		openGraph: {
-			title: 'Контакты - ArtMarketPrint',
-			description: 'Свяжитесь с нами любым удобным способом. Адрес, телефон, email и социальные сети ArtMarketPrint.',
+			title,
+			description,
 			url: url,
 		},
 	};

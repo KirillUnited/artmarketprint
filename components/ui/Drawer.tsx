@@ -6,6 +6,7 @@ import {BookOpenIcon, BriefcaseIcon, FolderIcon, HomeIcon, MenuIcon, NewspaperIc
 import React from 'react';
 import {NavbarItem} from '@heroui/navbar';
 import {Link} from '@heroui/link';
+import {usePathname} from 'next/navigation';
 import {SanityDocument} from 'next-sanity';
 
 import {Socials} from '@/components/shared/socials';
@@ -25,13 +26,14 @@ const menuIcons = {
 
 export default function Drawer({navigation, className, siteSettings, children}: {navigation: any; className?: string; siteSettings: SanityDocument; children?: React.ReactNode}) {
 	const {isOpen, onOpen, onOpenChange} = useDisclosure();
+	const pathname = usePathname();
 	const phones = siteSettings?.siteContactInfo?.phones ?? [];
 	const socials = siteSettings?.siteContactInfo?.socialLinks ?? [];
 
 	return (
 		<>
 			<Button isIconOnly aria-label="Open menu" className={className} variant="light" onPress={onOpen}>
-				<MenuIcon aria-hidden="true" />
+				<MenuIcon aria-hidden="true" size={36} />
 			</Button>
 
 			<BaseDrawer
@@ -63,17 +65,26 @@ export default function Drawer({navigation, className, siteSettings, children}: 
 								<ul className="flex flex-col gap-4">
 									{navigation?.map((navItem: any) => (
 										<NavbarItem key={navItem.title}>
-											<Link
-												aria-current="page"
-												className="leading-normal font-semibold hover:underline hover:text-primary transition gap-2"
-												color={'foreground'}
-												href={navItem.url}
-												size="sm"
-												onPress={onClose}
-											>
-												{menuIcons[navItem.title as keyof typeof menuIcons]}
-												{navItem.title}
-											</Link>
+											{navItem.url === pathname ? (
+												<span
+													aria-current="page"
+													className="leading-normal font-semibold gap-2 flex items-center text-primary"
+												>
+													{menuIcons[navItem.title as keyof typeof menuIcons]}
+													{navItem.title}
+												</span>
+											) : (
+												<Link
+													className="leading-normal font-semibold hover:underline hover:text-primary transition gap-2"
+													color={'foreground'}
+													href={navItem.url}
+													size="sm"
+													onPress={onClose}
+												>
+													{menuIcons[navItem.title as keyof typeof menuIcons]}
+													{navItem.title}
+												</Link>
+											)}
 										</NavbarItem>
 									))}
 								</ul>

@@ -58,33 +58,39 @@ export const NavbarDropdownMenu = ({ triggerLabel, triggerUrl, items }: HeaderDr
 					wrapper: 'max-w-[calc(100%-64px)]',
 				}}
 			>
-				{items[0]?.services?.map((item: any) => (
-					<DropdownItem
-						key={item.title}
-						description={item.description}
-						href={`${items[0].url}/${item.url}`}
-						startContent={
-							item?.image?.asset ? (
-								<Image
-									alt={item.title}
-									className="object-cover aspect-square rounded-small w-16 h-16"
-									height={64}
-									quality={10}
-									src={urlFor(item.image?.asset).width(64).height(64).url()}
-									width={64}
-								/>
-							) : null
-						}
-					>
-						{item.title}
-					</DropdownItem>
-				))}
+				{items[0]?.services?.map((item: any) => {
+					const itemHref = `${items[0].url}/${item.url}`;
+					const isCurrent = itemHref === pathname;
+					return (
+						<DropdownItem
+							key={item.title}
+							aria-current={isCurrent ? 'page' : undefined}
+							description={item.description}
+							href={isCurrent ? undefined : itemHref}
+							startContent={
+								item?.image?.asset ? (
+									<Image
+										alt={item.title}
+										className="object-cover aspect-square rounded-small w-16 h-16"
+										height={64}
+										quality={10}
+										src={urlFor(item.image?.asset).width(64).height(64).url()}
+										width={64}
+									/>
+								) : null
+							}
+						>
+							{item.title}
+						</DropdownItem>
+					);
+				})}
 				<DropdownItem
 					key={items[0].title}
+					aria-current={items[0].url === pathname ? 'page' : undefined}
 					classNames={{
 						title: 'font-light',
 					}}
-					href={items[0].url}
+					href={items[0].url === pathname ? undefined : items[0].url}
 					startContent={triggerLabel === 'Услуги' ? <SettingsIcon /> : <TagsIcon />}
 				>
 					{items[0].title}

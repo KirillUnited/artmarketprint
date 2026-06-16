@@ -1,13 +1,14 @@
 import Link from 'next/link';
 
 
-import {Socials} from '@/components/shared/socials';
+import { Socials } from '@/components/shared/socials';
 import ContactsList from '@/components/shared/ContactsList';
-import {getSanityDocuments} from '@/sanity/lib/fetch-sanity-data';
-import {NAVIGATION_QUERY, SITE_SETTINGS_QUERY} from '@/sanity/lib/queries/site.query';
-import {client} from '@/sanity/client';
+import { getSanityDocuments } from '@/sanity/lib/fetch-sanity-data';
+import { NAVIGATION_QUERY, SITE_SETTINGS_QUERY } from '@/sanity/lib/queries/site.query';
+import { client } from '@/sanity/client';
 
 import BrandLogo from '../ui/BrandLogo';
+import { FooterNavList } from './FooterNavList';
 
 export default async function Footer() {
 	const siteSettings: any = await getSanityDocuments(SITE_SETTINGS_QUERY);
@@ -19,50 +20,45 @@ export default async function Footer() {
 	return (
 		<footer className="bg-foreground">
 			<div className="container">
-				<div className="flex flex-row flex-wrap gap-16 items-start justify-between py-10 md:py-20">
+				<div className="flex md:flex-row flex-col flex-wrap gap-8 md:gap-16 items-start justify-between py-6 md:py-14">
 					<div className="flex flex-col gap-8">
 						<div className="self-start">
 							<BrandLogo alt="ArtMarketPrint" />
 						</div>
+					</div>
+					<div className="flex flex-col gap-4 md:gap-8">
+						<div className="flex flex-col gap-4 md:gap-6">
+							<p className="font-bold text-white">Навигация</p>
+
+							<FooterNavList links={navigation[0]?.links ?? []} />
+						</div>
+					</div>
+					<div className="flex flex-col gap-4 md:gap-6">
+
+						<p className="font-bold text-white">Контакты</p>
 						<ContactsList className="text-[#eeeeee]" items={contacts} />
 					</div>
-					<div className="flex flex-col gap-8">
-						<Socials items={socials} />
-
-						<div className="flex flex-col gap-2">
-							<p className="text-[#eeeeee] font-light">Карта сайта</p>
-
-							<ul className="flex flex-col gap-1">
-								{navigation[0]?.links?.map((link: any, index: number) => (
-									<li key={index}>
-										<Link className="text-[#eeeeee] text-left font-medium self-stretch hover:text-primary transition" href={link.url}>
-											{link.title}
-										</Link>
-									</li>
-								))}
-							</ul>
+					<div className="flex flex-col gap-4 md:gap-6">
+						<div className="flex flex-col gap-4">
+							<p className="font-bold text-white">Мы в мессенджерах</p>
+							<Socials items={socials.filter((item: any) => item?.platform !== 'instagram')} />
 						</div>
-						<div className="flex flex-col gap-2">
-							<p className="text-[#eeeeee] font-light">Информация</p>
-
-							<ul className="flex flex-col gap-1">
-								<li>
-									<Link className="text-[#eeeeee] text-left font-medium self-stretch hover:text-primary transition" href={'/posts/privacy'}>
-										Политика конфиденциальности
-									</Link>
-								</li>
-							</ul>
+						<div className="flex flex-col gap-4">
+							<p className="font-medium text-[#eeeeee]">Следите за нами в инстаграм</p>
+							<Socials items={socials.filter((item: any) => item?.platform === 'instagram')} />
 						</div>
 					</div>
 				</div>
 			</div>
 
-			<div className="container">
-				<div className="flex flex-col gap-8">
-					<div className="bg-[#eeeeee] border-solid border-[#eeeeee] border self-stretch shrink-0 h-px relative" />
-					{contacts?.footnote && <p className="text-[#eeeeee] text-center">© {new Date().getFullYear()}. {contacts.footnote}</p>}
+			<div className="container border-solid border-[#eeeeee] border-t py-8">
+				<div className="flex flex-wrap gap-8 flex-col md:flex-row md:justify-between items-center">
+					{contacts?.footnote && <p className="text-[#eeeeee] text-center order-2 md:order-1">© {new Date().getFullYear()}. {contacts.footnote}</p>}
+
+					<Link className="order-1 md:order-2 text-[#eeeeee] text-left font-medium hover:text-primary transition border-b w-auto" href={'/posts/privacy'}>
+						Политика конфиденциальности
+					</Link>
 				</div>
-				А
 			</div>
 		</footer>
 	);
