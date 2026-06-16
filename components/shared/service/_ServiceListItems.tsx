@@ -14,8 +14,13 @@ export default function ServiceListItems({ services }: any) {
 		<ul className="grid grid-cols-(--grid-template-columns) gap-8">
 			{services?.map((service: any) => (
 				<li key={service.title}>
-					<Card isFooterBlurred as={Link} className="h-full group relative" href={`/services/${service.currentSlug || service.slug?.current}`} radius="sm">
-						<div className="absolute top-3 left-3 z-10 flex flex-wrap gap-2">
+					<Card isFooterBlurred className="h-full group relative" radius="sm">
+						<Link
+							aria-label={service.title}
+							className="absolute inset-0 z-0"
+							href={`/services/${service.currentSlug || service.slug?.current}`}
+						/>
+						<div className="absolute top-3 left-3 z-10 flex flex-wrap gap-2 pointer-events-none">
 							{service?.service_tags?.length > 0 && <ProjectTagList color="primary" tags={service.service_tags} />}
 							{service?.category_tags?.length > 0 && <ProjectTagList color="secondary" tags={service.category_tags} />}
 						</div>
@@ -23,7 +28,7 @@ export default function ServiceListItems({ services }: any) {
 							removeWrapper
 							alt={service.title}
 							as={NextImage}
-							className="z-0 w-full h-full object-cover aspect-square"
+							className="z-0 w-full h-full object-cover aspect-square pointer-events-none"
 							height={0}
 							quality={10}
 							radius="sm"
@@ -42,7 +47,9 @@ export default function ServiceListItems({ services }: any) {
 										<span className="line-clamp-2 leading-normal">{service.description}</span>
 									</p>}
 								</div>
-								{service.calculator && <CalcLinkButton><span>Рассчитать стоимость</span></CalcLinkButton>}
+								{service.calculator && (
+										<CalcLinkButton><span>Рассчитать стоимость</span></CalcLinkButton>
+								)}
 							</div>
 						</CardFooter>
 					</Card>
