@@ -18,7 +18,7 @@ import BrandLogo from '../../ui/BrandLogo';
 import { HeroModalOffer } from '../../ui/BrandModalOffer';
 import { CartLinkButton } from './CartLinkButton';
 import type { NavbarVariantProps } from './types';
-import CalcLinkButton from './CalcLinkButton';
+import CalcLinkButton from '../сalculator/ui/CalcLinkButton';
 
 function NavbarDesktopImpl({ navigation, siteSettings, itemsCount }: NavbarVariantProps) {
 	const pathname = usePathname();

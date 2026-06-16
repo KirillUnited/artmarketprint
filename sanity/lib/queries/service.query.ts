@@ -1,21 +1,29 @@
-import { defineQuery } from 'next-sanity';
+import { defineQuery, groq } from 'next-sanity';
 
-export const SERVICES_QUERY = `*[
+const calculator = groq`
+      title,
+      description,
+      type
+`;
+
+export const SERVICES_QUERY = defineQuery(`*[
     _type == "service"
     && defined(slug.current)
   ]|order(publishedAt desc){title,
       description,
       image, 
       price,
-      "currentSlug": slug.current}`;
+      "currentSlug": slug.current,
+      calculator -> {
+        ${calculator}
+        }
+      }`);
 
 export const SERVICE_QUERY = defineQuery(`*[_type == "service" && slug.current == $slug][0]{
   ...,
   calculator -> {
-      title,
-      description,
-      type
-  }
+    ${calculator}
+    }
   ,
   seo {
     title,

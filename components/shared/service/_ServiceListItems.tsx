@@ -8,7 +8,7 @@ import clsx from 'clsx';
 import { ProjectTagList } from '@/components/shared/project';
 import { urlFor } from '@/sanity/lib/image';
 import { CURRENCIES_SYMBOLS } from '@/lib/products/companies';
-
+import CalcLinkButton from '@/components/shared/сalculator/ui/CalcLinkButton';
 export default function ServiceListItems({ services }: any) {
 	return (
 		<ul className="grid grid-cols-(--grid-template-columns) gap-8">
@@ -42,10 +42,7 @@ export default function ServiceListItems({ services }: any) {
 										<span className="line-clamp-2 leading-normal">{service.description}</span>
 									</p>}
 								</div>
-								{/* <Button as={'span'} className="group/button self-start" color="secondary" radius="sm" role="presentation" size="sm">
-                                    <span>Подробнее</span>
-                                    <ArrowUpRightIcon className="group-hover/button:translate-x-1 transition-transform" size={18} />
-                                </Button> */}
+								{service.calculator && <CalcLinkButton><span>Рассчитать стоимость</span></CalcLinkButton>}
 							</div>
 						</CardFooter>
 					</Card>

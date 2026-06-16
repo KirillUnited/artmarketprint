@@ -12,7 +12,7 @@ import Drawer from '@/components/ui/Drawer';
 import BrandLogo from '../../ui/BrandLogo';
 import { CartLinkButton } from './CartLinkButton';
 import type { NavbarVariantProps, SiteSettings } from './types';
-import CalcLinkButton from './CalcLinkButton';
+import CalcLinkButton from '../сalculator/ui/CalcLinkButton';
 
 interface NavbarMobileProps extends NavbarVariantProps {
 	// Drawer expects the full Sanity document shape; we type it loosely here
