@@ -2,10 +2,12 @@ import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
 import { getPostBySlug } from '@/components/blog/lib/fetch-data';
-import ArticleBody from '@/components/blog/ArticleBody';
+import ArticleBody, { type ArticleHeading } from '@/components/blog/ArticleBody';
 import PostHeader from '@/components/blog/PostHeader';
 import { TOC, RelatedPosts } from '@/components/blog/ui';
+import type { Heading } from '@/components/blog/ui/TOC';
 import { ServiceBreadcrumb } from '@/components/ui/Breadcrumb';
+import { dedupeSlugs, slugify } from '@/lib/slugify';
 
 type Props = {
 	slug: string;
@@ -66,6 +68,28 @@ export default async function PostDetailPage({ params }: { params: Promise<Props
 
 	const jsonLd = post?.faq || [];
 
+	// Готовим список H2-заголовков один раз с уникальными slug-ами —
+	// передаём в TOC (для ссылок) и в ArticleBody (для id на DOM-узлах),
+	// чтобы они гарантированно совпадали.
+	const headings: Heading[] = (post.body || [])
+		.filter(
+			(block) =>
+				block._type === 'block' &&
+				block.style === 'h2' &&
+				block.children &&
+				block.children.length > 0,
+		)
+		.map((block) => {
+			const text = (block.children as Array<{ text?: string }>)
+				.map((c) => c.text ?? '')
+				.join(' ');
+			return { key: block._key, style: block.style, text, slug: '' };
+		});
+	const uniqueSlugs = dedupeSlugs(headings.map((h) => slugify(h.text)));
+	headings.forEach((h, i) => {
+		h.slug = uniqueSlugs[i];
+	});
+
 	return (
 		<>
 			{/* JSON-LD script */}
@@ -77,13 +101,13 @@ export default async function PostDetailPage({ params }: { params: Promise<Props
 			/>
 			<ServiceBreadcrumb service="Блог" serviceSlug="blog" title={post.title} />
 			<div className={'grid xl:grid-cols-[480px_1fr] gap-8'}>
-				<TOC className='sticky top-32' body={post.body} />
+				<TOC className="sticky top-32" headings={headings} />
 				<div>
 					<PostHeader post={post} />
 					<div className="flex flex-col gap-8">
 						{post?.body && (
 							<article className="flex-1">
-								<ArticleBody body={post.body} />
+								<ArticleBody body={post.body} headings={headings} />
 							</article>
 						)}
 						<aside className="w-full">
