@@ -4,8 +4,8 @@ import { Metadata } from 'next';
 import { getAllBlogCategories, getPaginatedPosts, getTotalPostsCount } from '@/components/blog/lib/fetch-data';
 import { PostListing } from '@/components/blog';
 import NotFound from '@/app/blog/not-found';
-import Section, { SectionHeading } from '@/components/layout/Section';
-import PostCatsFilter from '@/components/blog/ui/PostCats';
+import Section from '@/components/layout/Section';
+import BlogPageHeader from '@/components/blog/BlogPageHeader';
 import { ClientPagination } from '@/components/shared/product/ui/Pagination';
 import BaseBreadcrumb from '@/components/ui/Breadcrumb';
 import { getSanityDocuments } from '@/sanity/lib/fetch-sanity-data';
@@ -32,14 +32,13 @@ export default async function BlogPage({ searchParams }: { searchParams: Promise
 	if (!Array.isArray(posts) || posts.length === 0) return <NotFound />;
 
 	return (
-		<Section>
-			<BaseBreadcrumb items={breadcrumbs[0].links} section="blog" />
-			<SectionHeading>
-				<h1 className="text-3xl font-bold">Наш Блог</h1>
-				<PostCatsFilter categories={categories} currentSlug="" />
-			</SectionHeading>
+		<>
+			<div className='flex flex-col gap-6'>
+				<BaseBreadcrumb items={breadcrumbs[0].links} section="blog" />
+				<BlogPageHeader title="Наш Блог" categories={categories} currentSlug="" />
+			</div>
 			<PostListing posts={posts} />
 			{totalPages > 1 && <ClientPagination basePath="/blog" pageNumber={pageNumber} totalPages={totalPages} />}
-		</Section>
+		</>
 	);
 }

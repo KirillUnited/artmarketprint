@@ -2,9 +2,9 @@ import React from 'react';
 import { Metadata } from 'next';
 
 import NotFound from '@/app/blog/not-found';
-import Section, { SectionHeading } from '@/components/layout/Section';
+import Section from '@/components/layout/Section';
 import { PostListing } from '@/components/blog';
-import PostCatsFilter from '@/components/blog/ui/PostCats';
+import BlogPageHeader from '@/components/blog/BlogPageHeader';
 import { ClientPagination } from '@/components/shared/product/ui/Pagination';
 import { getAllBlogCategories, getCategoryBySlug, getPaginatedPostsByCategory, getTotalPostsCountByCategory } from '@/components/blog/lib/fetch-data';
 import { ServiceBreadcrumb } from '@/components/ui/Breadcrumb';
@@ -71,14 +71,13 @@ export default async function BlogCategoryPage({ params, searchParams }: { param
 	if (!Array.isArray(posts) || posts.length === 0) return <NotFound />;
 
 	return (
-		<Section>
-			<ServiceBreadcrumb service="Блог" serviceSlug="blog" title={title} />
-			<SectionHeading>
-				<h1 className="text-3xl font-semibold">{title || 'Наш Блог'}</h1>
-				<PostCatsFilter categories={categories || []} currentSlug={category} />
-			</SectionHeading>
+		<>
+			<div className='flex flex-col gap-6'>
+				<ServiceBreadcrumb service="Блог" serviceSlug="blog" title={title} />
+				<BlogPageHeader title={title || 'Наш Блог'} categories={categories || []} currentSlug={category} />
+			</div>
 			<PostListing posts={posts} />
 			{totalPages > 1 && <ClientPagination basePath={`/blog/categories/${category}`} pageNumber={pageNumber} totalPages={totalPages} />}
-		</Section>
+		</>
 	);
 }

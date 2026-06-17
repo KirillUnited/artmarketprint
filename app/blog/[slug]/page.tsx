@@ -6,7 +6,6 @@ import ArticleBody from '@/components/blog/ArticleBody';
 import PostHeader from '@/components/blog/PostHeader';
 import { TOC, RelatedPosts } from '@/components/blog/ui';
 import { ServiceBreadcrumb } from '@/components/ui/Breadcrumb';
-import Section from '@/components/layout/Section';
 
 type Props = {
 	slug: string;
@@ -68,7 +67,7 @@ export default async function PostDetailPage({ params }: { params: Promise<Props
 	const jsonLd = post?.faq || [];
 
 	return (
-		<Section>
+		<>
 			{/* JSON-LD script */}
 			<script
 				type="application/ld+json"
@@ -91,6 +90,6 @@ export default async function PostDetailPage({ params }: { params: Promise<Props
 					</aside>
 				</div>
 			</div>
-		</Section>
+		</>
 	);
 }
