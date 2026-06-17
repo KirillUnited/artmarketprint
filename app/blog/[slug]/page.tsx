@@ -73,13 +73,13 @@ export default async function PostDetailPage({ params }: { params: Promise<Props
 	// чтобы они гарантированно совпадали.
 	const headings: Heading[] = (post.body || [])
 		.filter(
-			(block) =>
+			(block: any) =>
 				block._type === 'block' &&
 				block.style === 'h2' &&
 				block.children &&
 				block.children.length > 0,
 		)
-		.map((block) => {
+		.map((block: any) => {
 			const text = (block.children as Array<{ text?: string }>)
 				.map((c) => c.text ?? '')
 				.join(' ');
@@ -89,6 +89,12 @@ export default async function PostDetailPage({ params }: { params: Promise<Props
 	headings.forEach((h, i) => {
 		h.slug = uniqueSlugs[i];
 	});
+
+	const articleHeadings: ArticleHeading[] = headings.map((h) => ({
+		_key: h.key,
+		slug: h.slug,
+		text: h.text,
+	}));
 
 	return (
 		<>
@@ -107,7 +113,7 @@ export default async function PostDetailPage({ params }: { params: Promise<Props
 					<div className="flex flex-col gap-8">
 						{post?.body && (
 							<article className="flex-1">
-								<ArticleBody body={post.body} headings={headings} />
+								<ArticleBody body={post.body} headings={articleHeadings} />
 							</article>
 						)}
 						<aside className="w-full">

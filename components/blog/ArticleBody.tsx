@@ -21,7 +21,7 @@ export default function ArticleBody({ body, headings = [] }: { body: any; headin
 
 	const renderHeading = (Tag: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6') =>
 		// eslint-disable-next-line react/display-name
-		({ children, value }: { children: any; value: any }) => {
+		({ children, value }: { children?: any; value: any }) => {
 			const text = (value?.children as Array<{ text?: string }> | undefined)
 				?.map((c) => c?.text ?? '')
 				.join(' ')
