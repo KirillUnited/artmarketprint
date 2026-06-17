@@ -76,18 +76,20 @@ export default async function PostDetailPage({ params }: { params: Promise<Props
 				}}
 			/>
 			<ServiceBreadcrumb service="Блог" serviceSlug="blog" title={post.title} />
-			<div className={'max-w-screen-lg mx-auto'}>
-				<PostHeader post={post} />
-				<div className="flex flex-col gap-8">
-					{post?.body && (
-						<article className="flex-1">
-							<TOC body={post.body} />
-							<ArticleBody body={post.body} />
-						</article>
-					)}
-					<aside className="w-full">
-						<RelatedPosts currentPostId={post._id} />
-					</aside>
+			<div className={'grid xl:grid-cols-[480px_1fr] gap-8'}>
+				<TOC className='sticky top-32' body={post.body} />
+				<div>
+					<PostHeader post={post} />
+					<div className="flex flex-col gap-8">
+						{post?.body && (
+							<article className="flex-1">
+								<ArticleBody body={post.body} />
+							</article>
+						)}
+						<aside className="w-full">
+							<RelatedPosts currentPostId={post._id} />
+						</aside>
+					</div>
 				</div>
 			</div>
 		</>

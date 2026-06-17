@@ -120,8 +120,6 @@ export default async function ProductsCategoryPage({
 	const hasActiveFilters = Boolean(sort || material || color || activeSubcategorySlugs.length > 0);
 	const productsListKey = [category, pageNumber, sort || '', material || '', color || '', activeSubcategorySlugs.join(',')].join('|');
 
-	console.log('categorySlug', categorySlug);
-
 	return (
 		<Section className="space-y-6 bg-gray-50">
 			<LightBreadcrumb baseUrl={BASE_URL} category={categorySlug} subcategory={singleActiveSubcategory || undefined} />
