@@ -8,6 +8,9 @@ import { TOC, RelatedPosts } from '@/components/blog/ui';
 import type { Heading } from '@/components/blog/ui/TOC';
 import { ServiceBreadcrumb } from '@/components/ui/Breadcrumb';
 import { dedupeSlugs, slugify } from '@/lib/slugify';
+import { Image } from '@heroui/image';
+import NextImage from 'next/image';
+import { urlFor } from '@/sanity/lib/image';
 
 type Props = {
 	slug: string;
@@ -107,6 +110,18 @@ export default async function PostDetailPage({ params }: { params: Promise<Props
 			/>
 			<ServiceBreadcrumb service="Блог" serviceSlug="blog" title={post.title} />
 			<div className={'grid xl:grid-cols-[480px_1fr] gap-8'}>
+				{post.featuredImage && (
+					<Image
+						priority
+						removeWrapper
+						alt={post.title}
+						as={NextImage}
+						className="w-full h-72 object-cover rounded-large xl:hidden"
+						height={270}
+						src={urlFor(post.featuredImage).width(1200).format('webp').url()}
+						width={1200}
+					/>
+				)}
 				<TOC className="sticky top-32" headings={headings} />
 				<div>
 					<PostHeader post={post} />

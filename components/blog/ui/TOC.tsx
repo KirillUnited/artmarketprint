@@ -44,9 +44,9 @@ export default function TOC({ className, headings }: { className?: string; headi
 	}
 
 	return (
-		<nav className={cn('mb-6')}>
+		<nav>
 			<Accordion
-				className={cn('mt-2 text-sm text-neutral-600 dark:text-neutral-300', className)}
+				className={cn('text-sm text-neutral-600 dark:text-neutral-300 px-0', className)}
 				variant="splitted"
 				selectedKeys={selectedKeys}
 				onSelectionChange={(keys) => setSelectedKeys(keys as Set<string>)}
