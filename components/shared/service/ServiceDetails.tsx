@@ -71,7 +71,7 @@ export const ServiceDetails: FC<ServiceDetailsProps> = memo(({ name, description
 
 						<div className="prose max-w-full">{children}</div>
 					</div>
-					{hasGallery && <ServiceCarousel className={'lg:sticky top-20'} items={gallery} />}
+					{hasGallery && <ServiceCarousel className={'lg:sticky lg:top-20'} items={gallery} />}
 
 					<div className='flex flex-col gap-6'>
 						{layoutRequirements && <ServiceRequirements layoutRequirements={layoutRequirements} />}
