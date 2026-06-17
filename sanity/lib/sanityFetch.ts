@@ -13,10 +13,20 @@ export const sanityFetch = ({
     revalidate?: number | false
     tags?: string[]
 }) => {
-    return client.fetch(query, params, {
-        next: {
-            revalidate: tags.length ? false : revalidate, // for simple, time-based revalidation
-            tags, // for tag-based revalidation
-        },
-    })
+    try {
+        return client.fetch(query, params, {
+            next: {
+                revalidate: tags.length ? false : revalidate, // for simple, time-based revalidation
+                tags, // for tag-based revalidation
+            },
+        })
+    } catch (error) {
+        console.error('[sanityFetch] Failed to execute query', {
+            query,
+            params,
+            tags,
+            error,
+        })
+        throw error
+    }
 }
