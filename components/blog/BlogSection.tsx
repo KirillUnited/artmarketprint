@@ -41,7 +41,7 @@ export const BlogSection = async () => {
 		<Section className="relative" id="blog">
 			<BlogHeader description="Читайте актуальные новости и статьи о современной печати и тенденциях рынка." subtitle="Новости и статьи" title="Блог" />
 			<PostListingCarousel posts={posts} />
-			<SectionButton className="self-start" href={'/blog'} label="Все статьи" />
+			<SectionButton className="self-center" href={'/blog'} label="Все статьи" />
 		</Section>
 	);
 };
