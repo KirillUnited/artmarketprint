@@ -25,4 +25,4 @@ export const SectionSubtitle = ({className, children}: SectionProps) => <p class
 
 export const SectionDescription = ({className, children}: SectionProps) => <p className={clsx('text-sm md:text-base leading-normal font-normal text-foreground/70 text-balance', className)}>{children}</p>;
 
-export const SectionInner = ({className, children}: SectionProps) => <div className={clsx('py-10 md:py-20 flex flex-col gap-10', className)}>{children}</div>;
+export const SectionInner = ({className, children}: SectionProps) => <div className={clsx('py-10 md:py-20 flex flex-col gap-6 lg:gap-10', className)}>{children}</div>;
