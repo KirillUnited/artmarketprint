@@ -6,7 +6,7 @@ import { ChevronRightIcon, HomeIcon } from 'lucide-react';
 import clsx from 'clsx';
 import Link from 'next/link';
 
-import { fetchNavigation, getCategorySlugFromNavMap } from '@/lib/fetchNavigation';
+import { fetchNavigation } from '@/lib/fetchNavigation';
 
 import { BreadcrumbListJsonLd } from '../ServiceJsonLd';
 
@@ -66,10 +66,10 @@ export default function BaseBreadcrumb({ items, section, withJsonLd }: { items: 
 }
 
 export interface ProductBreadcrumbProps {
-	category: string;
+	category?: string | string[] | null;
 	title: string;
 	slug: string;
-	items: any;
+	items?: any;
 }
 
 export const ProductBreadcrumb: React.FC<ProductBreadcrumbProps> = (
@@ -77,11 +77,12 @@ export const ProductBreadcrumb: React.FC<ProductBreadcrumbProps> = (
 		category,
 		title,
 		slug,
-		items
 	}
 ) => {
-	const navMap = fetchNavigation(items);
-	const categorySlug = getCategorySlugFromNavMap(navMap, category);
+	const categoryTitle = Array.isArray(category) ? category[0] : category;
+	const categoryHref = categoryTitle
+		? `/products/categories/${encodeURIComponent(categoryTitle)}`
+		: '/products/categories/all';
 
 	return (
 		<BreadcrumbWrapper>
@@ -103,9 +104,9 @@ export const ProductBreadcrumb: React.FC<ProductBreadcrumbProps> = (
 				separator: 'text-primary',
 				item: 'inline truncate',
 			}}
-				href={`/products/categories/${categorySlug}`}
-				title={`${category}`}>
-				{category}
+				href={categoryHref}
+				title={categoryTitle || 'Все категории'}>
+				{categoryTitle || 'Все категории'}
 			</BreadcrumbItem>
 			<BreadcrumbItem className={clsx(
 				'font-semibold',
