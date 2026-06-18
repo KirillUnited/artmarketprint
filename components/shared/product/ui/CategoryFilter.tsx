@@ -10,11 +10,8 @@ import styles from './styles.module.css';
 export default function CategoryFilter({categories, active, baseUrl}: {categories: any[]; active: string; baseUrl: string}) {
 	return (
 		<div className={clsx(styles.CategoryFilter)}>
-			{/*<Link href="/products/categories/all" className={active === 'all' ? 'font-bold' : ''}>*/}
-			{/*	ВСЕ*/}
-			{/*</Link>*/}
 			{categories.map((cat) => {
-				const imageUrl = cat.image?.asset ? urlFor(cat.image.asset).width(64).height(64).url() : null;
+				const imageUrl = cat.image?.asset ? urlFor(cat.image.asset).width(64).height(64).url() : cat.image;
 
 				return (
 					<Link

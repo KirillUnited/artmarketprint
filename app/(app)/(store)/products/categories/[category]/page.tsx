@@ -36,6 +36,11 @@ type ProductCategory = {
 	image?: any;
 };
 
+type ProductCategorySource = {
+	title?: string | null;
+	image?: any;
+};
+
 const encodeUrlSegment = (value: string) => encodeURIComponent(value);
 
 const decodeUrlSegment = (value: string) => {
@@ -46,15 +51,30 @@ const decodeUrlSegment = (value: string) => {
 	}
 };
 
-const toProductCategory = (title: string): ProductCategory => ({
+const toProductCategory = (title: string, image?: any): ProductCategory => ({
 	title,
 	currentSlug: encodeUrlSegment(title),
+	image,
 });
 
 const toSubcategory = (title: string): Subcategory => ({
 	title,
 	slug: encodeUrlSegment(title),
 });
+
+const toUniqueProductCategories = (sourceCategories: ProductCategorySource[] = []): ProductCategory[] => {
+	const categories = new Map<string, ProductCategory>();
+
+	sourceCategories.forEach((category) => {
+		const title = category.title?.trim();
+
+		if (title && !categories.has(title)) {
+			categories.set(title, toProductCategory(title, category.image));
+		}
+	});
+
+	return Array.from(categories.values());
+};
 
 export async function generateMetadata({params}: {params: Promise<Props>}) {
 	const {category} = await params;
@@ -86,8 +106,8 @@ export default async function ProductsCategoryPage({
 }): Promise<JSX.Element> {
 	const {category} = await params;
 	const {page, sub, sort, material, color} = await searchParams;
-	const productCategoryTitles: string[] = await sanityFetch({query: getProductCategoriesQuery});
-	const categories = (productCategoryTitles || []).map(toProductCategory);
+	const productCategorySources: ProductCategorySource[] = await sanityFetch({query: getProductCategoriesQuery});
+	const categories = toUniqueProductCategories(productCategorySources);
 	const productCategoryTitleSet = new Set(categories.map((cat) => cat.title));
 	const decodedCategory = category === 'all' ? null : decodeUrlSegment(category);
 	const activeCategoryTitle =

@@ -79,11 +79,14 @@ export const getCategoriesWithProductsQuery = `
 `;
 
 export const getProductCategoriesQuery = defineQuery(`
-  array::unique(*[
+  *[
     _type == "product"
     && defined(category)
     && category != ""
-  ].category) | order(@ asc)
+  ] | order(category asc, _createdAt desc) {
+    "title": category,
+    image
+  }
 `);
 
 export const CATEGORY_QUERY = defineQuery(`*[_type == "category" && slug.current == $slug][0] {
