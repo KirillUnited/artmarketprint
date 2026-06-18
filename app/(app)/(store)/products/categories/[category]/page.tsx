@@ -17,6 +17,7 @@ import Loader from '@/components/ui/Loader';
 import {LightBreadcrumb} from '@/components/ui/Breadcrumb';
 import {SubCategoryFilter} from '@/components/shared/product/ui';
 import {ProductFilter} from '@/components/shared/product';
+import { PRODUCTS_CATEGORIES_SEO } from '@/config/products';
 
 const PRODUCTS_PER_PAGE = 20;
 const BASE_URL = '/products/categories';
@@ -79,17 +80,9 @@ const toUniqueProductCategories = (sourceCategories: ProductCategorySource[] = [
 export async function generateMetadata({params}: {params: Promise<Props>}) {
 	const {category} = await params;
 	const activeCategoryTitle = category === 'all' ? null : decodeUrlSegment(category);
-	const legacyCategory =
-		activeCategoryTitle === null
-			? null
-			: await sanityFetch({
-					query: CATEGORY_QUERY,
-					params: {
-						slug: category,
-					},
-				});
-	const title = activeCategoryTitle || legacyCategory?.title || 'Каталог сувенирной продукции и товаров с логотипом в Минске';
-	const description = legacyCategory?.description || 'Широкий ассортимент сувениров, одежды и аксессуаров для брендирования в Минске. ✓ Выгодные цены. ✓ Доставка по РБ. Создайте свой фирменный стиль вместе с ArtMarketPrint.';
+	const categorySEO = PRODUCTS_CATEGORIES_SEO.find((c) => c.H1 === activeCategoryTitle);
+	const title = categorySEO?.title || 'Каталог сувенирной продукции и товаров с логотипом в Минске';
+	const description = categorySEO?.description || 'Широкий ассортимент сувениров, одежды и аксессуаров для брендирования в Минске. ✓ Выгодные цены. ✓ Доставка по РБ. Создайте свой фирменный стиль вместе с ArtMarketPrint.';
 
 	return {
 		title,
