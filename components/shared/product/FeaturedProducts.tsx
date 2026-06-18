@@ -32,7 +32,7 @@ export const FeaturedProducts = async () => {
 
 			<ProductListContainer items={data as any} />
 
-			<SectionButton className="self-start" href={'/products/categories/all'} label="Все товары" />
+			<SectionButton className="self-center" href={'/products/categories/all'} label="Все товары" />
 		</Section>
 	);
 };

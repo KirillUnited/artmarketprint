@@ -100,10 +100,10 @@ export const Carousel = ({items, type, className, renderProps}: CarouselProps) =
 					</Swiper>
 					{shouldShowNavigation && (
 						<>
-							<Button isIconOnly className={clsx(styles.swiperNavigation, 'left-0')} size="sm" onPress={() => swiper?.slidePrev()}>
+							<Button isIconOnly className={clsx(styles.swiperNavigation, 'left-5')} size="sm" onPress={() => swiper?.slidePrev()}>
 								<ChevronLeft className="h-6 w-6" />
 							</Button>
-							<Button isIconOnly className={clsx(styles.swiperNavigation, 'right-0')} size="sm" onPress={() => swiper?.slideNext()}>
+							<Button isIconOnly className={clsx(styles.swiperNavigation, 'right-5')} size="sm" onPress={() => swiper?.slideNext()}>
 								<ChevronRight className="h-6 w-6" />
 							</Button>
 						</>

@@ -8,7 +8,7 @@ import { ProductData } from '../product.types';
 import styles from './styles.module.css';
 
 interface ProductListProps {
-	categorySlug: string;
+	categorySlug: string | null;
 	pageNumber: number;
 	PRODUCTS_PER_PAGE: number;
 	subcategorySlug: any[] | null;

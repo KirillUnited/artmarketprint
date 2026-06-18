@@ -43,7 +43,7 @@ export default async function FeaturedCategories(props: FeaturedCategoriesProps)
 			<Carousel items={props.services} type="category" />
 
 			{/* If there are more than 4 categories, render a button to view all categories */}
-			{categoryItemsCount > 1 && <SectionButton className="self-start" href={'/categories'} label="Все категории" />}
+			{categoryItemsCount > 1 && <SectionButton className="self-center" href={'/categories'} label="Все категории" />}
 		</Section>
 	);
 }

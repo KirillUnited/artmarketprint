@@ -48,7 +48,7 @@ export const Services = async (props: {
 			<Carousel items={services} type="service" />
 
 			{/* Render the button to view all services if present. */}
-			{props.link && <SectionButton className="self-start" href={`${props.link?.link}`} label={props.link?.text} />}
+			{props.link && <SectionButton className="self-center" href={`${props.link?.link}`} label={props.link?.text} />}
 		</Section>
 	);
 };
