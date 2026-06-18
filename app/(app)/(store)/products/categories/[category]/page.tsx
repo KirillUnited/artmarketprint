@@ -1,12 +1,13 @@
 import {JSX, Suspense} from 'react';
 import {clsx} from 'clsx';
+import {redirect} from 'next/navigation';
 
 import {
 	CATEGORY_QUERY,
 	getAllProductColorsQuery,
 	getAllProductMaterials,
 	getAvailableProductSubcategoriesByCategoryQuery,
-	getCategoriesWithProductsQuery,
+	getProductCategoriesQuery,
 	getTotalProductsQuery,
 } from '@/components/shared/product/lib/queries';
 import {CategoryFilter, ClientPagination, ProductListContainer} from '@/components/shared/product/ui/';
@@ -29,10 +30,37 @@ type Subcategory = {
 	slug: string;
 };
 
+type ProductCategory = {
+	title: string;
+	currentSlug: string;
+	image?: any;
+};
+
+const encodeUrlSegment = (value: string) => encodeURIComponent(value);
+
+const decodeUrlSegment = (value: string) => {
+	try {
+		return decodeURIComponent(value);
+	} catch {
+		return value;
+	}
+};
+
+const toProductCategory = (title: string): ProductCategory => ({
+	title,
+	currentSlug: encodeUrlSegment(title),
+});
+
+const toSubcategory = (title: string): Subcategory => ({
+	title,
+	slug: encodeUrlSegment(title),
+});
+
 export async function generateMetadata({params}: {params: Promise<Props>}) {
 	const {category} = await params;
-	const categorySlug =
-		category === 'all'
+	const activeCategoryTitle = category === 'all' ? null : decodeUrlSegment(category);
+	const legacyCategory =
+		activeCategoryTitle === null
 			? null
 			: await sanityFetch({
 					query: CATEGORY_QUERY,
@@ -40,8 +68,8 @@ export async function generateMetadata({params}: {params: Promise<Props>}) {
 						slug: category,
 					},
 				});
-	const title = categorySlug?.title || 'Каталог сувенирной продукции и товаров с логотипом в Минске';
-	const description = categorySlug?.description || 'Широкий ассортимент сувениров, одежды и аксессуаров для брендирования в Минске. ✓ Выгодные цены. ✓ Доставка по РБ. Создайте свой фирменный стиль вместе с ArtMarketPrint.';
+	const title = activeCategoryTitle || legacyCategory?.title || 'Каталог сувенирной продукции и товаров с логотипом в Минске';
+	const description = legacyCategory?.description || 'Широкий ассортимент сувениров, одежды и аксессуаров для брендирования в Минске. ✓ Выгодные цены. ✓ Доставка по РБ. Создайте свой фирменный стиль вместе с ArtMarketPrint.';
 
 	return {
 		title,
@@ -58,34 +86,40 @@ export default async function ProductsCategoryPage({
 }): Promise<JSX.Element> {
 	const {category} = await params;
 	const {page, sub, sort, material, color} = await searchParams;
-	const categorySlug =
-		category === 'all'
-			? null
-			: await sanityFetch({
-					query: CATEGORY_QUERY,
-					params: {
-						slug: category,
-					},
-				});
+	const productCategoryTitles: string[] = await sanityFetch({query: getProductCategoriesQuery});
+	const categories = (productCategoryTitles || []).map(toProductCategory);
+	const productCategoryTitleSet = new Set(categories.map((cat) => cat.title));
+	const decodedCategory = category === 'all' ? null : decodeUrlSegment(category);
+	const activeCategoryTitle =
+		decodedCategory && productCategoryTitleSet.has(decodedCategory) ? decodedCategory : null;
 
 	const availableSubcategoryValues: string[] =
-		categorySlug?.title
+		activeCategoryTitle
 			? await sanityFetch({
 					query: getAvailableProductSubcategoriesByCategoryQuery,
 					params: {
-						categoryTitle: categorySlug.title,
+						categoryTitle: activeCategoryTitle,
 					},
 				})
 			: [];
 
-	const availableSubcategoryValueSet = new Set(
-		(availableSubcategoryValues || []).map((value) => value?.toString().trim()).filter(Boolean)
-	);
-	const visibleSubcategories: Subcategory[] =
-		(categorySlug?.subcategories || []).filter(
-			(subcategory: Subcategory) =>
-				availableSubcategoryValueSet.has(subcategory.title) || availableSubcategoryValueSet.has(subcategory.slug)
-		);
+	if (category !== 'all' && decodedCategory && !productCategoryTitleSet.has(decodedCategory)) {
+		const legacyCategory = await sanityFetch({
+			query: CATEGORY_QUERY,
+			params: {
+				slug: category,
+			},
+		});
+
+		if (legacyCategory?.title) {
+			redirect(`${BASE_URL}/${encodeUrlSegment(legacyCategory.title)}`);
+		}
+	}
+
+	const visibleSubcategories: Subcategory[] = (availableSubcategoryValues || [])
+		.map((value) => value?.toString().trim())
+		.filter(Boolean)
+		.map(toSubcategory);
 
 	const subValue = Array.isArray(sub) ? sub.join(',') : sub || '';
 	const requestedSubcategorySlugs = subValue
@@ -99,37 +133,38 @@ export default async function ProductsCategoryPage({
 		visibleSubcategories.map((subcategory) => [subcategory.slug, subcategory.title])
 	);
 	const singleActiveSubcategory = activeSubcategories.length === 1 ? activeSubcategories[0] : null;
-	const [total, categories, allProductMaterials, allProductColors] = await Promise.all([
+	const [total, allProductMaterials, allProductColors] = await Promise.all([
 		sanityFetch({
 			query: getTotalProductsQuery,
 			params: {
-				categoryTitle: categorySlug?.title || null,
+				categoryTitle: activeCategoryTitle,
 				subcategoryTitles: activeSubcategories.length > 0 ? activeSubcategories.map((s: any) => s.title) : null,
 				material: material || null,
 				color: color || null,
 			},
 		}),
-		sanityFetch({query: getCategoriesWithProductsQuery}),
 		sanityFetch({query: getAllProductMaterials}),
-		sanityFetch({query: getAllProductColorsQuery(categorySlug, activeSubcategories)}),
+		sanityFetch({query: getAllProductColorsQuery(activeCategoryTitle, activeSubcategories)}),
 	]);
 	const visibleCategories = categories || [];
 	const pageNumber = parseInt(page || '1');
 	const totalPages = Math.ceil(total / PRODUCTS_PER_PAGE);
-	const activeCategory = singleActiveSubcategory?.title || categorySlug?.title;
+	const activeCategory = singleActiveSubcategory?.title || activeCategoryTitle;
+	const activeCategorySlug = activeCategoryTitle ? encodeUrlSegment(activeCategoryTitle) : 'all';
+	const breadcrumbCategory = activeCategoryTitle ? toProductCategory(activeCategoryTitle) : undefined;
 	const hasActiveFilters = Boolean(sort || material || color || activeSubcategorySlugs.length > 0);
-	const productsListKey = [category, pageNumber, sort || '', material || '', color || '', activeSubcategorySlugs.join(',')].join('|');
+	const productsListKey = [activeCategorySlug, pageNumber, sort || '', material || '', color || '', activeSubcategorySlugs.join(',')].join('|');
 
 	return (
 		<Section className="space-y-6 bg-gray-50">
-			<LightBreadcrumb baseUrl={BASE_URL} category={categorySlug} subcategory={singleActiveSubcategory || undefined} />
+			<LightBreadcrumb baseUrl={BASE_URL} category={breadcrumbCategory} subcategory={singleActiveSubcategory || undefined} />
 			<SectionTitle>Каталог товаров</SectionTitle>
 			<div className="space-y-4">
 				<div className="flex items-center justify-between gap-4">
 					<p className="text-lg font-semibold">Категории</p>
 				</div>
 
-				<CategoryFilter active={category} baseUrl={BASE_URL} categories={visibleCategories} />
+				<CategoryFilter active={activeCategorySlug} baseUrl={BASE_URL} categories={visibleCategories} />
 			</div>
 
 
@@ -141,7 +176,7 @@ export default async function ProductsCategoryPage({
 					<SubCategoryFilter
 						activeSubcategory={activeSubcategories}
 						baseUrl={BASE_URL}
-						categorySlug={category}
+						categorySlug={activeCategorySlug}
 						subcategories={visibleSubcategories}
 					/>
 				)}
@@ -157,7 +192,7 @@ export default async function ProductsCategoryPage({
 					>
 						<ProductListContainer
 							PRODUCTS_PER_PAGE={PRODUCTS_PER_PAGE}
-							categorySlug={categorySlug}
+							categorySlug={activeCategoryTitle}
 							color={color || null}
 							material={material || null}
 							pageNumber={pageNumber}
@@ -167,7 +202,7 @@ export default async function ProductsCategoryPage({
 					</Suspense>
 				</div>
 			</div>
-			{totalPages > 1 && <ClientPagination basePath={`${BASE_URL}/${category}`} pageNumber={pageNumber} totalPages={totalPages} />}
+			{totalPages > 1 && <ClientPagination basePath={`${BASE_URL}/${activeCategorySlug}`} pageNumber={pageNumber} totalPages={totalPages} />}
 		</Section>
 	);
 }

@@ -1,12 +1,13 @@
 // lib/queries.ts
 import { defineQuery } from 'next-sanity';
 
-export const getProductsQuery = (category: any | null, subcategories: any[] | null, page: number, limit: number, sort: string | null, material: string | null, color: string | null) => {
+export const getProductsQuery = (categoryTitle: string | null, subcategories: any[] | null, page: number, limit: number, sort: string | null, material: string | null, color: string | null) => {
   const start = (page - 1) * limit;
-  const categoryFilter = category ? `&& category == "${category.title}"` : '';
-  const subcategoryFilter = subcategories && subcategories.length > 0 ? `&& subcategory in [${subcategories.map((subcategory: any) => `"${subcategory.title}"`).join(', ')}]` : '';
-  const materialFilter = material ? `&& "${material}" in materials` : '';
-  const colorFilter = color ? `&& ("${color}" in colors || "${color}" in items[].color)` : '';
+  const categoryFilter = categoryTitle ? `&& category == ${JSON.stringify(categoryTitle)}` : '';
+  const subcategoryTitles = subcategories?.map((subcategory: any) => subcategory.title).filter(Boolean) || [];
+  const subcategoryFilter = subcategoryTitles.length > 0 ? `&& subcategory in ${JSON.stringify(subcategoryTitles)}` : '';
+  const materialFilter = material ? `&& ${JSON.stringify(material)} in materials` : '';
+  const colorFilter = color ? `&& (${JSON.stringify(color)} in colors || ${JSON.stringify(color)} in items[].color)` : '';
 
   let order = 'order(_createdAt desc)';
 
@@ -77,10 +78,20 @@ export const getCategoriesWithProductsQuery = `
   }
 `;
 
+export const getProductCategoriesQuery = defineQuery(`
+  array::unique(*[
+    _type == "product"
+    && defined(category)
+    && category != ""
+  ].category) | order(@ asc)
+`);
+
 export const CATEGORY_QUERY = defineQuery(`*[_type == "category" && slug.current == $slug][0] {
 	  _id,
 	  id,
 	  title,
+    description,
+    image,
 	  "currentSlug": slug.current,
     subcategories[] {
       _key,
@@ -97,7 +108,7 @@ export const getAvailableProductSubcategoriesByCategoryQuery = defineQuery(`
     && ($categoryTitle == null || category == $categoryTitle)
     && defined(subcategory)
     && subcategory != ""
-  ].subcategory)
+  ].subcategory) | order(@ asc)
 `);
 
 // Category with only subcategories that are used by at least one product in this category.
@@ -127,9 +138,10 @@ export const getAllProductMaterials = `
   array::unique(*[_type == "product"].materials[]) | order(@ asc)
 `;
 
-export const getAllProductColorsQuery = (category: any | null, subcategories: any[] | null) => {
-  const categoryFilter = category ? `&& category == "${category.title}"` : '';
-  const subcategoryFilter = subcategories && subcategories.length > 0 ? `&& subcategory in [${subcategories.map((subcategory: any) => `"${subcategory.title}"`).join(', ')}]` : '';
+export const getAllProductColorsQuery = (categoryTitle: string | null, subcategories: any[] | null) => {
+  const categoryFilter = categoryTitle ? `&& category == ${JSON.stringify(categoryTitle)}` : '';
+  const subcategoryTitles = subcategories?.map((subcategory: any) => subcategory.title).filter(Boolean) || [];
+  const subcategoryFilter = subcategoryTitles.length > 0 ? `&& subcategory in ${JSON.stringify(subcategoryTitles)}` : '';
 
   return `array::unique(*[_type == "product" ${categoryFilter} ${subcategoryFilter}].colors[]) | order(@ asc)`;
 };
