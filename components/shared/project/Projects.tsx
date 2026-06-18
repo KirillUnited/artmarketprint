@@ -49,7 +49,7 @@ export const Projects = async (props: ProjectsProps) => {
 
 				{data && <ProjectList projectList={data} />}
 
-				{link?.text && <SectionButton className="self-start" href={link.link} label={link.text} />}
+				{link?.text && <SectionButton className="self-center" href={link.link} label={link.text} />}
 			</Section>
 		</Suspense>
 	);

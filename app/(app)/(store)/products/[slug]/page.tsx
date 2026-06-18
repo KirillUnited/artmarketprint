@@ -5,10 +5,8 @@ import Section from '@/components/layout/Section';
 import {ProductCarousel, ProductDetails, ProductStock} from '@/components/shared/product';
 import RelatedProducts from '@/components/shared/product/RelatedProducts';
 import getProductBySlug from '@/sanity/lib/product/getProductBySlug';
-import {NAVIGATION_QUERY} from '@/sanity/lib/queries';
 import AddToBasketButton from '@/components/ui/AddToBasketButton';
 import ProductPrice from '@/components/shared/product/ProductPrice';
-import {getSanityDocuments} from '@/sanity/lib/fetch-sanity-data';
 import {ProductTabs} from '@/components/shared/product/ProductTabs';
 import {ProductBreadcrumb} from '@/components/ui/Breadcrumb';
 import {OrderForm} from '@/components/ui/form';
@@ -69,7 +67,7 @@ export default async function ProductPage({params, searchParams}: {params: Promi
 	const resolvedSearchParams = searchParams ? await searchParams : {};
 	const {color: selectedColorFromUrl} = resolvedSearchParams;
 
-	const [breadcrumbs, product] = await Promise.all([getSanityDocuments(NAVIGATION_QUERY), getProductBySlug(slug)]);
+	const product = await getProductBySlug(slug);
 
 	if (!product || product.length === 0)
 		return (
@@ -89,7 +87,7 @@ export default async function ProductPage({params, searchParams}: {params: Promi
 		<>
 			<Section>
 				<div className="flex flex-col gap-4">
-					<ProductBreadcrumb category={category} items={breadcrumbs[0].links} slug={slug} title={productTitle} />
+					<ProductBreadcrumb category={category} slug={slug} title={productTitle} />
 
 					<div className="flex justify-between items-start">
 						<h1 className="text-2xl font-bold">
