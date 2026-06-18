@@ -189,21 +189,28 @@ export function LightBreadcrumb({
 
 				{category && (
 					<>
-						<ChevronRightIcon className="w-4 h-4 text-gray-400" />
-						<li>
-							<Link
-								className={clsx("hover:underline", {
-									"font-semibold text-primary": !subcategory
-								})}
-								href={`${baseUrl}/${category.currentSlug}`}
-							>
-								{category.title}
-							</Link>
-						</li>
-						{subcategory && (
+						{subcategory ? (
 							<>
 								<ChevronRightIcon className="w-4 h-4 text-gray-400" />
+								<li>
+									<Link
+										className={clsx("hover:underline", {
+											"font-semibold text-primary": !subcategory
+										})}
+										href={`${baseUrl}/${category.currentSlug}`}
+									>
+										{category.title}
+									</Link>
+								</li>
+								<ChevronRightIcon className="w-4 h-4 text-gray-400" />
 								<li className="font-semibold text-primary">{subcategory.title}</li>
+							</>
+						) : (
+							<>
+								<ChevronRightIcon className="w-4 h-4 text-gray-400" />
+								<li className="font-semibold text-primary">
+									{category.title}
+								</li>
 							</>
 						)}
 					</>
