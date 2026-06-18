@@ -1,19 +1,19 @@
-import {Button} from '@heroui/button';
-import {ArrowUpRightIcon, ShoppingCartIcon} from 'lucide-react';
-import {PortableText, SanityDocument} from 'next-sanity';
+import { Button } from '@heroui/button';
+import { ArrowUpRightIcon, ShoppingCartIcon } from 'lucide-react';
+import { PortableText, SanityDocument } from 'next-sanity';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import Section, {SectionTitle} from '@/components/layout/Section';
-import {getCTAButton} from '@/components/ui/BrandButton';
+import Section, { SectionTitle } from '@/components/layout/Section';
+import { getCTAButton } from '@/components/ui/BrandButton';
 import BaseBreadcrumb from '@/components/ui/Breadcrumb';
-import {getSanityDocuments} from '@/sanity/lib/fetch-sanity-data';
-import {getUrlFor} from '@/lib/utils';
-import {client} from '@/sanity/client';
-import {CATEGORY_QUERY} from '@/sanity/lib/queries/category.query';
-import {NAVIGATION_QUERY} from '@/sanity/lib/queries';
-import {ProductsNotFound} from '@/components/shared/product';
-import {sanityFetch} from '@/sanity/lib/sanityFetch';
+import { getSanityDocuments } from '@/sanity/lib/fetch-sanity-data';
+import { getUrlFor } from '@/lib/utils';
+import { client } from '@/sanity/client';
+import { CATEGORY_QUERY } from '@/sanity/lib/queries/category.query';
+import { NAVIGATION_QUERY } from '@/sanity/lib/queries';
+import { ProductsNotFound } from '@/components/shared/product';
+import { sanityFetch } from '@/sanity/lib/sanityFetch';
 import RelatedProductsCarousel from '@/components/shared/product/RelatedProductsCarousel';
 import getRelatedProductsByCategory from '@/sanity/lib/product/getRelatedProductsByCategory';
 import NotFound from '@/app/not-found';
@@ -21,10 +21,10 @@ import NotFound from '@/app/not-found';
 export interface Props {
 	slug: string;
 }
-export async function generateMetadata({params}: {params: Promise<Props>}) {
-	const {slug} = await params;
-	const category = await sanityFetch({query: CATEGORY_QUERY, params: {slug}});
-	const {title = '', description = ''} = category?.seo || {};
+export async function generateMetadata({ params }: { params: Promise<Props> }) {
+	const { slug } = await params;
+	const category = await sanityFetch({ query: CATEGORY_QUERY, params: { slug } });
+	const { title = '', description = '' } = category?.seo || {};
 	const image = category?.image ? getUrlFor(category.image) : null;
 	const url = `${process.env.NEXT_PUBLIC_SERVER_URL}/categories/${slug}`;
 
@@ -63,9 +63,9 @@ const ctaButtonList = [
 	},
 ];
 
-export default async function CategoryPage({params}: {params: Promise<Props>}) {
-	const {slug} = await params;
-	const category: any = await getSanityDocuments(CATEGORY_QUERY, {slug});
+export default async function CategoryPage({ params }: { params: Promise<Props> }) {
+	const { slug } = await params;
+	const category: any = await getSanityDocuments(CATEGORY_QUERY, { slug });
 	const categoryTitle = category?.title;
 	const relatedProducts = await getRelatedProductsByCategory(categoryTitle, '0');
 
@@ -112,55 +112,24 @@ export default async function CategoryPage({params}: {params: Promise<Props>}) {
 					</div>
 				</Section>
 			)}
-			<Section id="products" innerClassname="pt-0 md:pt-0">
-				<SectionTitle>
-					<span className="font-normal">Товары в категории</span>
-					<br />
-					{categoryTitle}
-				</SectionTitle>
-				{!Array.isArray(relatedProducts) || relatedProducts.length === 0 ? (
-					<ProductsNotFound />
-				) : (
-					<>
-						<RelatedProductsCarousel relatedProducts={relatedProducts} />
-						<div className="flex flex-col gap-2 w-full">
-							<Link href={`/products/categories/${category.slug.current}`}>
-								<Button className="border md:self-start" radius="sm" variant="bordered">
-									<ShoppingCartIcon size="18" />
-									<span>Все товары</span>
-								</Button>
-							</Link>
-						</div>
-					</>
-				)}
-			</Section>
-
-			{/*<PushToDataLayer*/}
-			{/*	data={{*/}
-			{/*		event: 'view_item_list',*/}
-			{/*		value: products.reduce((sum, p) => sum + (p.price?.[0]?.value || 0), 0),*/}
-			{/*		items: products.map((p) => ({*/}
-			{/*			id: p.id,*/}
-			{/*			google_business_vertical: 'retail',*/}
-			{/*		})),*/}
-			{/*		ecommerce: {*/}
-			{/*			currency: 'BYN',*/}
-			{/*			value: products.reduce((sum, p) => sum + (p.price?.[0]?.value || 0), 0),*/}
-			{/*			items: products.map((p) => ({*/}
-			{/*				item_id: p.id,*/}
-			{/*				item_name: p.name,*/}
-			{/*				item_brand: p.brand || 'Без бренда',*/}
-			{/*				item_category: p.category?.name || category?.title || 'Без категории',*/}
-			{/*				item_category2: p.category?.parent?.name || '',*/}
-			{/*				item_category3: '',*/}
-			{/*				item_category4: '',*/}
-			{/*				item_category5: '',*/}
-			{/*				price: p.price?.[0]?.value || 0,*/}
-			{/*				quantity: 1,*/}
-			{/*			})),*/}
-			{/*		},*/}
-			{/*	}}*/}
-			{/*/>*/}
+			{Array.isArray(relatedProducts) && relatedProducts.length > 0 && (
+				<Section id="products" innerClassname="pt-0 md:pt-0">
+					<SectionTitle>
+						<span className="font-normal">Товары в категории</span>
+						<br />
+						{categoryTitle}
+					</SectionTitle>
+					<RelatedProductsCarousel relatedProducts={relatedProducts} />
+					<div className="flex flex-col gap-2 w-full">
+						<Link href={`/products/categories/${category.slug.current}`}>
+							<Button className="border md:self-center" radius="sm" variant="bordered">
+								<ShoppingCartIcon size="18" />
+								<span>Все товары</span>
+							</Button>
+						</Link>
+					</div>
+				</Section>
+			)}
 		</>
 	);
 }
