@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { Heart, Trash2 } from 'lucide-react';
 import { useFavorites } from '@/hooks/useFavorites';
 import { CURRENCIES_SYMBOLS } from '@/lib/products/companies';
+import FullPageLoader from '@/components/ui/FullPageLoader';
 
 export default function FavoritesPage() {
   const { favorites, removeFromFavorites, loading } = useFavorites();
@@ -15,7 +16,7 @@ export default function FavoritesPage() {
     return (
       <div className="container py-12">
         <div className="flex justify-center items-center min-h-[400px]">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+          <FullPageLoader />
         </div>
       </div>
     );
