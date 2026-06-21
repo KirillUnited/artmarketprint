@@ -9,7 +9,6 @@ import {heroSwiperParams} from '@/config/swiper';
 
 import HeroSection from './HeroSection';
 
-
 interface HeroCarouselProps {
 	items?: any;
 }
@@ -19,11 +18,15 @@ export const HeroCarousel = ({items}: HeroCarouselProps) => {
 
 	return (
 		<Swiper modules={[Pagination, Autoplay]} {...heroSwiperParams}>
-			{items.map((item: any) => (
-				<SwiperSlide key={item._key}>
-					<HeroSection {...item} />
-				</SwiperSlide>
-			))}
+			{items.map((item: any) => {
+				if (!item.isActive) return null;
+
+				return (
+					<SwiperSlide key={item._key}>
+						<HeroSection {...item} />
+					</SwiperSlide>
+				);
+			})}
 		</Swiper>
 	);
 };
