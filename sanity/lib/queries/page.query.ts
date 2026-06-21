@@ -1,6 +1,6 @@
-import { defineQuery } from 'next-sanity';
+import {defineQuery} from 'next-sanity';
 
-import { PROJECT_FIELDS } from './project.query';
+import {PROJECT_FIELDS} from './project.query';
 
 export const HERO_QUERY = `*[_type == "page"][0] {
       content[_type == "hero"][0] {
@@ -11,6 +11,7 @@ export const HERO_QUERY = `*[_type == "page"][0] {
           subtitle,
           description,
           "imageUrl": image.asset->url,
+          isActive,
           ctaButtonList[] {
             _key,
             text,
