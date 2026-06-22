@@ -1,6 +1,27 @@
 // lib/queries.ts
 import { defineQuery } from 'next-sanity';
 
+const PRODUCT_IMAGE_FRAGMENT = `
+  select(
+    type(image) == "string" => image,
+    image {
+      ...,
+      asset-> {
+        _id,
+        url,
+        metadata {
+          lqip,
+          dimensions {
+            width,
+            height
+          }
+        }
+      },
+      alt
+    }
+  )
+`;
+
 export const getProductsQuery = (categoryTitle: string | null, subcategories: any[] | null, page: number, limit: number, sort: string | null, material: string | null, color: string | null) => {
   const start = (page - 1) * limit;
   const categoryFilter = categoryTitle ? `&& category == ${JSON.stringify(categoryTitle)}` : '';
