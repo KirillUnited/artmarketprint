@@ -136,7 +136,7 @@ export default async function PostDetailPage({ params }: { params: Promise<Props
 			</div>
 			<aside className="w-full">
 				<RelatedPosts currentPostId={post._id} />
-			</aside>F
+			</aside>
 		</>
 	);
 }
