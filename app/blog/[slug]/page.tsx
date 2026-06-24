@@ -131,12 +131,12 @@ export default async function PostDetailPage({ params }: { params: Promise<Props
 								<ArticleBody body={post.body} headings={articleHeadings} />
 							</article>
 						)}
-						<aside className="w-full">
-							<RelatedPosts currentPostId={post._id} />
-						</aside>
 					</div>
 				</div>
 			</div>
+			<aside className="w-full">
+				<RelatedPosts currentPostId={post._id} />
+			</aside>F
 		</>
 	);
 }
