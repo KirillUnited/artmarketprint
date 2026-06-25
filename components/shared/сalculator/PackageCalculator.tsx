@@ -1,19 +1,20 @@
 'use client';
 
-import {useState, useEffect} from 'react';
-import {motion, AnimatePresence} from 'framer-motion';
-import {Button} from '@heroui/button';
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Button } from '@heroui/button';
 import Image from 'next/image';
-import {Select, SelectItem} from '@heroui/select';
-import {Form} from '@heroui/form';
+import { Select, SelectItem } from '@heroui/select';
+import { Form } from '@heroui/form';
 
-import {colors, materials, MIN_QUANTITY, printOptions, quantityDiscounts, sizes} from '@/components/shared/сalculator/mock-data';
-import {calculatePVDPrice, getAvailableColors, getAvailableSizes} from '@/components/shared/сalculator/lib/utils';
-import {UsernameInput, UserPhoneInput} from '@/components/ui/form';
+import { colors, materials, MIN_QUANTITY, printOptions, quantityDiscounts, sizes } from '@/components/shared/сalculator/mock-data';
+import { calculatePVDPrice, getAvailableColors, getAvailableSizes } from '@/components/shared/сalculator/lib/utils';
+import { UsernameInput, UserPhoneInput } from '@/components/ui/form';
 
-import {sendCalculatorDetails} from './lib/messenger';
+import { sendCalculatorDetails } from './lib/messenger';
+import { SiteSocialLink } from '../navbar';
 
-const PackageCalculator = ({matrix = []}: {matrix?: any}) => {
+const PackageCalculator = ({ matrix = [], siteSettings }: { matrix?: any, siteSettings?: any }) => {
 	const [step, setStep] = useState(1);
 	const [formData, setFormData] = useState({
 		material: '',
@@ -27,7 +28,7 @@ const PackageCalculator = ({matrix = []}: {matrix?: any}) => {
 	const [price, setPrice] = useState(0);
 	const [pricePerBag, setPricePerBag] = useState(0);
 	const [isSubmitting, setIsSubmitting] = useState(false);
-	const [formMessage, setFormMessage] = useState<{type: 'success' | 'error'; message: string} | null>(null);
+	const [formMessage, setFormMessage] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
 
 	// Reset color and size when material changes
 	useEffect(() => {
@@ -177,6 +178,8 @@ const PackageCalculator = ({matrix = []}: {matrix?: any}) => {
 		});
 	};
 
+	console.log(availableSizes)
+
 	const renderStep = () => {
 		switch (step) {
 			case 1:
@@ -191,7 +194,12 @@ const PackageCalculator = ({matrix = []}: {matrix?: any}) => {
 									onClick={() => {
 										handleChange('material', material.name);
 										handleChange('materialId', material.id);
-										nextStep();
+
+										if (material.id === 'pvd') {
+											nextStep(); // → шаг 2 (цвет)
+										} else {
+											setStep(7); // → шаг "Связаться с менеджером"
+										}
 									}}
 								>
 									<div className="flex flex-col">
@@ -224,7 +232,7 @@ const PackageCalculator = ({matrix = []}: {matrix?: any}) => {
 											nextStep();
 										}}
 									>
-										<span className="block h-8 w-8 shrink-0 basis-8 rounded-full border" style={{backgroundColor: color.value}} />
+										<span className="block h-8 w-8 shrink-0 basis-8 rounded-full border" style={{ backgroundColor: color.value }} />
 										<span className="line-clamp-1 flex-1 truncate text-left text-sm">{color.name}</span>
 									</button>
 								))}
@@ -248,7 +256,11 @@ const PackageCalculator = ({matrix = []}: {matrix?: any}) => {
 										className="hover:bg-primary w-full rounded-lg border p-4 text-left transition-colors hover:text-white"
 										onClick={() => {
 											handleChange('size', size.name);
-											nextStep();
+											if (size.id !== '50x60' && size.id !== '60x50') {
+												nextStep();
+											} else {
+												setStep(7);
+											}
 										}}
 									>
 										{size.name}
@@ -296,7 +308,7 @@ const PackageCalculator = ({matrix = []}: {matrix?: any}) => {
 								value={formData.quantity}
 								onChange={(e) => handleChange('quantity', parseInt(e.target.value))}
 							>
-								{Array.from({length: 19}).map((_, i) => (
+								{Array.from({ length: 19 }).map((_, i) => (
 									<SelectItem key={i * 50 + MIN_QUANTITY} textValue={String(i * 50 + MIN_QUANTITY)}>
 										{i * 50 + MIN_QUANTITY} шт.
 									</SelectItem>
@@ -351,6 +363,60 @@ const PackageCalculator = ({matrix = []}: {matrix?: any}) => {
 						</Button>
 					</div>
 				);
+			case 7:
+				return (
+					<div className="space-y-6 py-8 text-center">
+						<div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-amber-100">
+							<span className="text-4xl">📞</span>
+						</div>
+						<h3 className="text-2xl font-semibold">Для расчёта стоимости свяжитесь с менеджером</h3>
+						<p className="mx-auto max-w-md text-gray-600">
+							Цена на материалы рассчитывается индивидуально с учётом всех параметров.
+						</p>
+
+						<div className="mt-8 flex flex-col gap-4 sm:flex-row sm:justify-center">
+							<Button
+								as="a"
+								href={`tel:${siteSettings?.siteContactInfo?.phones[0].link}`}
+								color="primary"
+								radius="sm"
+								size="lg"
+								className="flex items-center gap-3"
+							>
+								📞 Позвонить менеджеру
+							</Button>
+							<Button
+								as="a"
+								href={`https://wa.me/${siteSettings?.siteContactInfo?.phones[0].link}`}
+								color="success"
+								radius="sm"
+								size="lg"
+								className="flex items-center gap-3"
+							>
+								💬 WhatsApp
+							</Button>
+							<Button
+								as="a"
+								href={`${(siteSettings?.siteContactInfo?.socialLinks).find((link: SiteSocialLink) => link.platform === 'telegram')?.url}`}
+								color="primary"
+								variant="bordered"
+								radius="sm"
+								size="lg"
+							>
+								✉️ Telegram
+							</Button>
+						</div>
+
+						<Button
+							color="default"
+							variant="flat"
+							onPress={() => setStep(1)}
+							className="mt-6"
+						>
+							Выбрать другой материал
+						</Button>
+					</div>
+				);
 			default:
 				return null;
 		}
@@ -358,7 +424,7 @@ const PackageCalculator = ({matrix = []}: {matrix?: any}) => {
 
 	return (
 		<div className="mx-auto w-full max-w-4xl items-stretch rounded-xl bg-white p-6 shadow-md">
-			<h2 className="mb-8 text-center text-2xl font-bold">Калькулятор стоимости пакетов</h2>
+			{/* <h2 className="mb-8 text-center text-2xl font-bold">Калькулятор стоимости пакетов</h2> */}
 
 			{/* Progress bar */}
 			{step < 6 && (
@@ -374,7 +440,7 @@ const PackageCalculator = ({matrix = []}: {matrix?: any}) => {
 						))}
 					</div>
 					<div className="h-2.5 w-full rounded-full bg-gray-200">
-						<div className="h-2.5 rounded-full bg-blue-600 transition-all duration-300" style={{width: `${((step - 1) / 4) * 100}%`}} />
+						<div className="h-2.5 rounded-full bg-blue-600 transition-all duration-300" style={{ width: `${((step - 1) / 4) * 100}%` }} />
 					</div>
 				</div>
 			)}
@@ -382,7 +448,7 @@ const PackageCalculator = ({matrix = []}: {matrix?: any}) => {
 			{/* Form content */}
 			<div className="min-h-[400px]">
 				<AnimatePresence mode="wait">
-					<motion.div key={step} animate={{opacity: 1, x: 0}} exit={{opacity: 0, x: -20}} initial={{opacity: 0, x: 20}} transition={{duration: 0.3}}>
+					<motion.div key={step} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} initial={{ opacity: 0, x: 20 }} transition={{ duration: 0.3 }}>
 						{renderStep()}
 					</motion.div>
 				</AnimatePresence>
