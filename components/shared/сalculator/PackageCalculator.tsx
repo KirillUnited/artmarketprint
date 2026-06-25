@@ -178,6 +178,8 @@ const PackageCalculator = ({ matrix = [], siteSettings }: { matrix?: any, siteSe
 		});
 	};
 
+	console.log(availableSizes)
+
 	const renderStep = () => {
 		switch (step) {
 			case 1:
@@ -254,7 +256,11 @@ const PackageCalculator = ({ matrix = [], siteSettings }: { matrix?: any, siteSe
 										className="hover:bg-primary w-full rounded-lg border p-4 text-left transition-colors hover:text-white"
 										onClick={() => {
 											handleChange('size', size.name);
-											nextStep();
+											if (size.id !== '50x60' && size.id !== '60x50') {
+												nextStep();
+											} else {
+												setStep(7);
+											}
 										}}
 									>
 										{size.name}
@@ -365,7 +371,7 @@ const PackageCalculator = ({ matrix = [], siteSettings }: { matrix?: any, siteSe
 						</div>
 						<h3 className="text-2xl font-semibold">Для расчёта стоимости свяжитесь с менеджером</h3>
 						<p className="mx-auto max-w-md text-gray-600">
-							Цена на материалы, отличные от PVD, рассчитывается индивидуально с учётом всех параметров.
+							Цена на материалы рассчитывается индивидуально с учётом всех параметров.
 						</p>
 
 						<div className="mt-8 flex flex-col gap-4 sm:flex-row sm:justify-center">
