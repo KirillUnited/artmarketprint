@@ -2,6 +2,8 @@ import {Metadata} from 'next';
 
 import {PackageCalculator} from '@/components/shared/сalculator';
 import {getPriceTable} from '@/components/shared/сalculator/lib/googleSheets';
+import { sanityFetch } from '@/sanity/lib/sanityFetch';
+import { SITE_SETTINGS_QUERY } from '@/sanity/lib/queries/site.query';
 
 export const metadata: Metadata = {
 	title: 'Калькулятор стоимости пакетов | ArtMarketPrint',
@@ -10,6 +12,7 @@ export const metadata: Metadata = {
 
 export default async function CalculatorPage() {
 	const pvdPriceTable = await getPriceTable();
+	const siteSettings = await sanityFetch({query: SITE_SETTINGS_QUERY});
 
 	return (
 		<main className="min-h-screen py-12 bg-gray-50">
@@ -17,7 +20,7 @@ export default async function CalculatorPage() {
 				<h1 className="text-3xl font-bold text-center mb-2">{'Калькулятор стоимости пакетов ArtMarketPrint'}</h1>
 				{<p className="text-center text-gray-600 mb-8 max-w-2xl mx-auto">{'Заполните параметры и получите расчет стоимости вашего заказа. Минимальный тираж - 100 штук.'}</p>}
 
-				<PackageCalculator matrix={pvdPriceTable} />
+				<PackageCalculator matrix={pvdPriceTable} siteSettings={siteSettings} />
 
 				<div className="mt-12 max-w-3xl mx-auto bg-white p-6 rounded-lg shadow-sm">
 					<h2 className="text-xl font-semibold mb-4">Как работает калькулятор?</h2>
