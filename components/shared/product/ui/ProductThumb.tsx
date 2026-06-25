@@ -35,6 +35,8 @@ const ProductThumb: FC<ProductThumbProps> = ({ item, ...props }): JSX.Element =>
 	const activeColor = item.activeColor || '';
 	const [previewImage, setPreviewImage] = useState(image);
 
+	console.log(item);
+
 	useEffect(() => {
 		setPreviewImage(image);
 	}, [image]);
@@ -82,9 +84,9 @@ const ProductThumb: FC<ProductThumbProps> = ({ item, ...props }): JSX.Element =>
 					</span>
 				</div>
 			</CardBody>
-			{((item.colors?.length > 0 && item.items?.length > 0) || item.sizes?.length > 0) && (
+			{(item.items?.length > 0 || item.sizes?.length > 0) && (
 				<CardFooter className="text-tiny flex-col items-start gap-2 border-t p-4 pt-2">
-					{(item.colors?.length > 0 && item.items?.length > 0) && (
+					{(item.items?.length > 0) && (
 						<ProductColors
 							list={item.items}
 							onPreviewChange={handlePreviewChange}
