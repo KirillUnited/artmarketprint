@@ -21,7 +21,7 @@ export default function SalesBanner({isActive, title, description, discountPerce
 
 	if (!isVisible) return null;
 
-	if (isLoading) return <div className="container py-4"><Loader className='static text-primary flex mx-auto' size='md' variant='spinner' /></div>;
+	if (isLoading) return <div className="container py-4"><Loader className='static text-primary flex mx-auto' size='md' /></div>;
 
 	return (
 		<aside className={clsx(styles.banner)}>
