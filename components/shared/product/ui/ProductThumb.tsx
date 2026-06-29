@@ -67,7 +67,7 @@ const ProductThumb: FC<ProductThumbProps> = ({ item, ...props }): JSX.Element =>
 						quality={50}
 						sizes='100vw'
 						src={previewImage || image}
-						unoptimized={shouldBypassNextImageOptimization(previewImage || image)}
+						// unoptimized={shouldBypassNextImageOptimization(previewImage || image)}
 						width={220}
 					/>
 				</div>
