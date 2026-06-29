@@ -17,7 +17,7 @@ export default function Section({className, containerFluid, innerClassname: inne
 	);
 }
 
-export const SectionHeading = ({className, children}: SectionProps) => <div className={clsx('flex flex-col gap-4 max-w-[652px]', className)}>{children}</div>;
+export const SectionHeading = ({className, children}: SectionProps) => <div className={clsx('flex flex-col gap-4', className)}>{children}</div>;
 
 export const SectionTitle = ({className, children}: SectionProps) => <h2 className={clsx('text-3xl md:text-4xl lg:text-5xl leading-[120%] font-bold', className)}>{children}</h2>;
 
