@@ -1,8 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
 	output: 'standalone',
+	serverExternalPackages: ['sharp'],
 	images: {
-		unoptimized: true,
+		minimumCacheTTL: 86400,
+		deviceSizes: [640, 750, 828, 1080, 1200, 1920],
+		imageSizes: [16, 32, 48, 64, 96, 128, 256, 320, 384],
 		remotePatterns: [
 			{
 				protocol: 'https',

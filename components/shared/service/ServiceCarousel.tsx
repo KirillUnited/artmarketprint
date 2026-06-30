@@ -100,7 +100,7 @@ export const ServiceCarousel = ({ items, className }: CarouselProps) => {
                     <SwiperSlide key={index} className={styles['swiper-slide']}>
                         <picture className='h-full rounded-small w-full'>
                             <Image priority removeWrapper alt={'image'} as={NextImage} className={'w-full max-h-full'} classNames={{ wrapper: 'bg-cover' }}
-                                fallbackSrc={'/images/product-no-image.jpg'} height={500} quality={60} radius='sm' src={urlFor(item).width(500).height(500).url()} width={500} />
+                                fallbackSrc={'/images/product-no-image.jpg'} height={0} quality={60} radius='sm' src={urlFor(item).width(500).height(500).url()} width={500} />
                         </picture>
                     </SwiperSlide>
                 ))}
