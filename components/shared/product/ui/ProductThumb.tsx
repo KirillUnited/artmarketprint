@@ -10,10 +10,10 @@ import { ProductData } from '@/components/shared/product/product.types';
 import { getTotalStock, getProductImageByColor } from '@/components/shared/product/lib';
 import { CURRENCIES_SYMBOLS } from '@/lib/products/companies';
 import { FavoriteButton } from '@/components/shared/favorites/FavoriteButton';
-import { shouldBypassNextImageOptimization } from '@/lib/image-utils';
 
 import { ProductSizes } from '../ProductSizes';
 import { ProductColors } from '../ProductColors';
+import { BySymbol } from '@/components/ui/symbols/currencies';
 
 interface ProductThumbProps extends React.HTMLAttributes<HTMLDivElement> {
 	item: ProductData;
@@ -72,7 +72,7 @@ const ProductThumb: FC<ProductThumbProps> = ({ item, ...props }): JSX.Element =>
 					/>
 				</div>
 				<div className="flex flex-col gap-2">
-					{price > 0 && <span className="text-xl font-semibold self-start text-foreground">{`${price} ${CURRENCIES_SYMBOLS['BYN'] || 'р'}`}</span>}
+					{price > 0 && <span className="text-xl font-semibold self-start text-foreground">{price}&nbsp;{CURRENCIES_SYMBOLS['BYN'] && <BySymbol/>}</span>}
 					{name && (
 						<p className="flex flex-col text-foreground/90 text-xs sm:text-sm" title={name}>
 							{brand && <span className="text-xs text-gray-500 font-light">{brand}</span>}

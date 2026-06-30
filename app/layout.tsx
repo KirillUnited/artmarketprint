@@ -1,4 +1,5 @@
 import '@/styles/globals.css';
+import '@/styles/currency.css';
 import { Metadata, Viewport } from 'next';
 import clsx from 'clsx';
 import React from 'react';
