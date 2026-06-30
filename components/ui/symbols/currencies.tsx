@@ -1,0 +1,1 @@
+export const BySymbol = () => <i className="nbrb-icon nbrb-icon-byn text-2xl"></i>;
