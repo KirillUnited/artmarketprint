@@ -30,7 +30,7 @@ export default function ServiceListItems({ services }: any) {
 							as={NextImage}
 							className="z-0 w-full h-full object-cover aspect-square pointer-events-none"
 							height={0}
-							quality={10}
+							quality={75}
 							radius="sm"
 							sizes="100vw"
 							src={service.imageUrl ? service.imageUrl : urlFor(service.image).width(320).height(320).url()}
