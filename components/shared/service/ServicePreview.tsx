@@ -1,18 +1,19 @@
 'use client';
 
-import {Card, CardFooter} from '@heroui/card';
-import {Link} from '@heroui/link';
-import {Image} from '@heroui/image';
+import { Card, CardFooter } from '@heroui/card';
+import { Link } from '@heroui/link';
+import { Image } from '@heroui/image';
 import NextImage from 'next/image';
 import clsx from 'clsx';
-import {JSX} from 'react';
-import {SanityDocument} from 'next-sanity';
+import { JSX } from 'react';
+import { SanityDocument } from 'next-sanity';
 
-import {urlFor} from '@/sanity/lib/image';
-import {ProjectTagList} from '@/components/shared/project';
-import {CURRENCIES_SYMBOLS} from '@/lib/products/companies';
+import { urlFor } from '@/sanity/lib/image';
+import { ProjectTagList } from '@/components/shared/project';
+import { CURRENCIES_SYMBOLS } from '@/lib/products/companies';
+import { BySymbol } from '@/components/ui/symbols/currencies';
 
-export function ServicePreview({service}: {service: SanityDocument}): JSX.Element {
+export function ServicePreview({ service }: { service: SanityDocument }): JSX.Element {
 	return (
 		<Card isFooterBlurred as={Link} className="group relative mx-2 h-full w-full" href={`/services/${service.currentSlug || service.slug?.current}`} radius="sm" shadow="none">
 			<div className="absolute top-3 left-3 z-10 flex flex-wrap gap-2">
@@ -41,9 +42,11 @@ export function ServicePreview({service}: {service: SanityDocument}): JSX.Elemen
 					<div className="flex flex-col gap-2">
 						<p className="line-clamp-2 flex flex-col gap-2 leading-tight font-semibold" title={service.title}>
 							{service.title}
-							<span className="text-primary line-clamp-1 text-xl font-bold">
-								{service.price} {CURRENCIES_SYMBOLS['BYN']}
-							</span>
+							{service.price && (
+								<span className="text-primary line-clamp-1 text-xl font-bold">
+									{service.price}&nbsp;{CURRENCIES_SYMBOLS['BYN'] && <BySymbol />}
+								</span>
+							)}
 						</p>
 						<p className={clsx('line-clamp-2 text-xs', 'grid grid-rows-[0fr] overflow-hidden transition-all duration-500 group-hover:grid-rows-[1fr]')} title={service.description}>
 							<span className="line-clamp-4">{service.description}</span>

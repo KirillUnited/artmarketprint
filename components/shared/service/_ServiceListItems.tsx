@@ -9,6 +9,7 @@ import { ProjectTagList } from '@/components/shared/project';
 import { urlFor } from '@/sanity/lib/image';
 import { CURRENCIES_SYMBOLS } from '@/lib/products/companies';
 import CalcLinkButton from '@/components/shared/сalculator/ui/CalcLinkButton';
+import { BySymbol } from '@/components/ui/symbols/currencies';
 export default function ServiceListItems({ services }: any) {
 	return (
 		<ul className="grid grid-cols-(--grid-template-columns) gap-8">
@@ -41,7 +42,8 @@ export default function ServiceListItems({ services }: any) {
 								<div className="flex flex-col">
 									<p className="flex flex-col font-semibold line-clamp-2 leading-normal" title={service.title}>
 										{service.title}
-										{service.price && <span className="text-primary font-bold line-clamp-1">{service.price} {CURRENCIES_SYMBOLS['BYN']}</span>}
+										{service.price && <span className="text-primary font-bold line-clamp-1">
+											{service.price}&nbsp;{CURRENCIES_SYMBOLS['BYN'] && <BySymbol/>}</span>}
 									</p>
 									{service.description && <p className={clsx('text-xs', 'grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-all duration-500 overflow-hidden')} title={service.description}>
 										<span className="line-clamp-2 leading-normal">{service.description}</span>

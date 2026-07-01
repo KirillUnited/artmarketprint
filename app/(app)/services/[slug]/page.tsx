@@ -4,7 +4,7 @@ import { clsx } from 'clsx';
 import { JSX } from 'react';
 
 import { ServiceBreadcrumb } from '@/components/ui/Breadcrumb';
-import { ServiceDetails, ServiceHero } from '@/components/shared/service';
+import { ServiceDetails } from '@/components/shared/service';
 import { sanityFetch } from '@/sanity/lib/sanityFetch';
 import { getUrlFor } from '@/lib/utils';
 import { ProjectList } from '@/components/shared/project';
@@ -15,7 +15,6 @@ import { FAQSection } from '@/components/shared/faq';
 import { SECTION_FIELDS } from '@/sanity/lib/queries/page.query';
 import ServiceJsonLd, { BreadcrumbListJsonLd } from '@/components/ServiceJsonLd';
 import { SERVICE_QUERY } from '@/sanity/lib/queries/service.query';
-import { urlFor } from '@/sanity/lib/image';
 import { PackageCalculator } from '@/components/shared/сalculator';
 import { SectionButton } from '@/components/layout/SectionButton';
 import NotFound from '@/app/not-found';
