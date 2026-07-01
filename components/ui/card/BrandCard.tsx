@@ -10,6 +10,8 @@ import {ShoppingCartIcon} from 'lucide-react';
 
 import {BrandCardProps} from '@/types';
 import {ProjectTagList} from '@/components/shared/project';
+import { CURRENCIES_SYMBOLS } from '@/lib/products/companies';
+import { BySymbol } from '../symbols/currencies';
 
 
 export const BrandCardLink = ({href}: {href: string}) => (
@@ -82,8 +84,8 @@ export default function BrandCard({title, variant, price, description, image, ta
 					href={href || ''}
 					title={title}
 				>
-					<span className="text-xl md:text-2xl text-primary font-semibold">{price}</span>
-					<h3 className="leading-[120%] font-semibold line-clamp-2" title={`${title} - ${price}`}>
+					<span className="text-xl md:text-2xl text-primary font-semibold">{price}&nbsp;{CURRENCIES_SYMBOLS['BYN'] && <BySymbol />}</span>
+					<h3 className="leading-[120%] font-semibold line-clamp-2" title={`${title}`}>
 						{title}
 					</h3>
 					<p className="text-xs text-foreground/90 leading-normal font-medium line-clamp-2" title={description}>

@@ -16,7 +16,7 @@ export default function ProductList({items}: {items: ProductData[]}) {
 							href={`/products/${item.id}`}
 							image={item.image}
 							imageFit="contain"
-							price={`${item?.price} ${CURRENCIES_SYMBOLS['BYN'] || 'р'}`}
+							price={`${item?.price}`}
 							title={item.name}
 							variant="product"
 						/>

@@ -5,6 +5,7 @@ import React from 'react';
 import {getPrice} from '@/lib/getPrice';
 import useBasketStore from '@/store/store';
 import {CURRENCIES_SYMBOLS} from '@/lib/products/companies';
+import { BySymbol } from '@/components/ui/symbols/currencies';
 
 interface ProductPriceProps {
 	price: string;
@@ -32,7 +33,7 @@ const ProductPrice: React.FC<ProductPriceProps> = ({price, productId}) => {
 	// Calculate the price based on the quantity
 	const calculatedPrice = getPrice(price, quantity ? quantity : 1);
 
-	return <span className="text-3xl text-foreground font-bold">{` ${calculatedPrice} ${CURRENCIES_SYMBOLS['BYN'] || 'р'}`}</span>;
+	return <span className="text-3xl text-foreground font-bold">{calculatedPrice}&nbsp;{CURRENCIES_SYMBOLS['BYN'] && <BySymbol />}</span>;
 };
 
 export default ProductPrice;

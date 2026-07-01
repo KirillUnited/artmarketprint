@@ -1,1 +1,3 @@
-export const BySymbol = () => <i className="nbrb-icon nbrb-icon-byn text-2xl"></i>;
+import { cn } from "@/lib/utils";
+
+export const BySymbol = ({className=''}) => <i className={cn("nbrb-icon nbrb-icon-byn", className)}></i>;

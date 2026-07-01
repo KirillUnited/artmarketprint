@@ -13,6 +13,7 @@ import { PriceTable } from '@/components/ui/table';
 import BrandModalOffer from '../../ui/BrandModalOffer';
 import { CURRENCIES_SYMBOLS } from '@/lib/products/companies';
 import CalcLinkButton from '../сalculator/ui/CalcLinkButton';
+import { BySymbol } from '@/components/ui/symbols/currencies';
 
 const ServiceAdvantages: FC<{ advantages: string[] }> = memo(({ advantages }) => (
 	<div className="flex flex-col gap-4">
@@ -44,7 +45,7 @@ const ServicePrice: FC<{ price: string, hasCalc?: boolean }> = memo(({ price, ha
 	<div className="flex flex-col gap-4">
 		<h3 className="text-xl md:text-2xl font-bold text-gray-900">Цены</h3>
 		<div className='flex gap-4'>
-			<p className="font-semibold text-secondary text-4xl">{price}</p>
+			<p className="font-semibold text-secondary text-4xl">{price}&nbsp;{CURRENCIES_SYMBOLS['BYN'] && <BySymbol/>}</p>
 			{hasCalc && <CalcLinkButton />}
 		</div>
 	</div>
@@ -54,7 +55,6 @@ ServicePrice.displayName = 'ServicePrice';
 
 export const ServiceDetails: FC<ServiceDetailsProps> = memo(({ name, description, image, gallery, price, advantages, layoutRequirements, priceTable, paymentMethods, hasCalc, children }) => {
 	const hasGallery = Array.isArray(gallery) && gallery?.length > 0;
-	const priceWithSymbol = `${price} ${CURRENCIES_SYMBOLS['BYN']}`
 
 	return (
 		<article className="flex flex-col gap-8 md:gap-16">
@@ -76,7 +76,7 @@ export const ServiceDetails: FC<ServiceDetailsProps> = memo(({ name, description
 					<div className='flex flex-col gap-6'>
 						{layoutRequirements && <ServiceRequirements layoutRequirements={layoutRequirements} />}
 
-						{price && <ServicePrice price={priceWithSymbol} hasCalc={hasCalc} />}
+						{price && <ServicePrice price={price} hasCalc={hasCalc} />}
 
 						{priceTable && <PriceTable items={priceTable} />}
 						{paymentMethods && (
