@@ -29,7 +29,7 @@ Create a `.env.local` file and set:
 ```bash
 NEXT_PUBLIC_SANITY_PROJECT_ID=
 NEXT_PUBLIC_SANITY_DATASET=
-NEXT_PUBLIC_SANITY_TOKEN=
+SANITY_API_WRITE_TOKEN=
 ```
 
 ### 3) Run development server

@@ -6,10 +6,10 @@ import { LogoIconProps } from '@/types';
 import LogoIcon from '../../public/images/logo.png';
 
 
-export default function BrandLogo({ alt, width = 40, height = 40 }: LogoIconProps): JSX.Element {
+export default function BrandLogo({ alt, width = 0, height = 0 }: LogoIconProps): JSX.Element {
     return (
         <div className="flex flex-row gap-4 items-center justify-center">
-            <Image alt={alt} className="w-[35px] h-10" height={height} src={LogoIcon} width={width} />
+            <Image alt={alt} className="w-8.75 h-10" height={height} src={LogoIcon} width={width} />
             <span className="hidden lg:block text-base leading-normal font-black bg-brand-gradient text-fill-transparent">ArtMarketPrint</span>
         </div>
     )

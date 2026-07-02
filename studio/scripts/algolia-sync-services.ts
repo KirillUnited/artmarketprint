@@ -12,7 +12,7 @@ const sanityProjectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID?.trim();
 const sanityDataset = process.env.NEXT_PUBLIC_SANITY_DATASET?.trim() || 'production';
 const sanityToken =
   process.env.SANITY_API_TOKEN?.trim() ||
-  process.env.NEXT_PUBLIC_SANITY_TOKEN?.trim() ||
+  process.env.SANITY_API_WRITE_TOKEN?.trim() ||
   '';
 
 if (!sanityProjectId) {
