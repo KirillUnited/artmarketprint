@@ -101,7 +101,7 @@ Currently, there's no explicit testing setup mentioned in the configuration file
 The application uses Sanity CMS, so ensure these environment variables are set:
 - `NEXT_PUBLIC_SANITY_PROJECT_ID`
 - `NEXT_PUBLIC_SANITY_DATASET`
-- `NEXT_PUBLIC_SANITY_TOKEN`
+- `SANITY_API_WRITE_TOKEN`
 
 <!-- autoskills:start -->
 

@@ -35,8 +35,6 @@ const ProductThumb: FC<ProductThumbProps> = ({ item, ...props }): JSX.Element =>
 	const activeColor = item.activeColor || '';
 	const [previewImage, setPreviewImage] = useState(image);
 
-	console.log(item);
-
 	useEffect(() => {
 		setPreviewImage(image);
 	}, [image]);
