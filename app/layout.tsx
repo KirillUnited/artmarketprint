@@ -10,6 +10,7 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Toaster } from '@/components/ui/sonner';
 import { LocalBusinessJsonLd } from '@/config/ld-json';
+import ClarityInit from '@/components/shared/clarity/ClarityInit';
 import { GoogleTagManager } from '@next/third-parties/google';
 
 import { Providers } from './(app)/providers';
@@ -17,6 +18,7 @@ import { Providers } from './(app)/providers';
 const SITE_URL = process.env.NEXT_PUBLIC_SERVER_URL || 'https://artmarketprint.by';
 const SITE_LOCALE = process.env.NEXT_PUBLIC_LOCALE || 'ru_BY';
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || '';
+const CLARITY_PROJECT_ID = process.env.NEXT_PUBLIC_CLARITY_ID || process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID || '';
 const APP_ENV = process.env.NEXT_PUBLIC_APP_ENV || 'production';
 const IS_STAGING = APP_ENV === 'staging';
 
@@ -103,6 +105,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 					<iframe height="0" src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`} style={{ display: 'none', visibility: 'hidden' }} title="Google Tag Manager" width="0" />
 				</noscript>
 				{/* End Google Tag Manager (noscript) */}
+				<ClarityInit enabled={!IS_STAGING} projectId={CLARITY_PROJECT_ID} />
 				<Providers themeProps={{ attribute: 'class', defaultTheme: 'light' }}>
 					<div className="min-h-screen flex flex-col">
 						<Header />
