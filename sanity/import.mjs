@@ -28,6 +28,10 @@ export function transform(external) {
 
 export async function importDataToSanity(products) {
 	try {
+		if (!Array.isArray(products) || products.length === 0) {
+			throw new Error('No products provided for import');
+		}
+
 		const documents = products.map(transform);
 		let docCount = 0;
 
@@ -57,9 +61,11 @@ export async function importDataToSanity(products) {
 		}
 
 		console.log('✅ All products imported successfully!');
+		return { imported: Math.min(docCount, MAX_DOCUMENTS) };
 	} catch (error) {
 		console.error(error);
 		console.error('❌ Import failed:');
+		throw error;
 	}
 }
 
