@@ -8,8 +8,6 @@ import Link from 'next/link';
 
 import { fetchNavigation } from '@/lib/fetchNavigation';
 
-import { BreadcrumbListJsonLd } from '../ServiceJsonLd';
-
 export const BreadcrumbWrapper = ({ children }: { children: React.ReactNode }) => {
 	return (
 		<Breadcrumbs variant='light'>
@@ -34,7 +32,6 @@ export default function BaseBreadcrumb({ items, section, withJsonLd }: { items: 
 
 	return (
 		<>
-			{withJsonLd && <BreadcrumbListJsonLd name={navigation[`${pathSegments[pathSegments.length - 1]}`]} />}
 			<Breadcrumbs variant='light'>
 				<BreadcrumbItem className="font-semibold text-primary" href="/">
 					<HomeIcon aria-label='Home' size={18} />

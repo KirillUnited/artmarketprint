@@ -11,6 +11,8 @@ import { dedupeSlugs, slugify } from '@/lib/slugify';
 import { Image } from '@heroui/image';
 import NextImage from 'next/image';
 import { urlFor } from '@/sanity/lib/image';
+import { JsonLd } from '@/components/shared/seo/JsonLd';
+import { buildArticleJsonLd, buildBreadcrumbListJsonLd, toAbsoluteUrl, tryParseJsonLd } from '@/lib/seo/jsonld';
 
 type Props = {
 	slug: string;
@@ -69,7 +71,32 @@ export default async function PostDetailPage({ params }: { params: Promise<Props
 
 	if (!post) return notFound();
 
-	const jsonLd = post?.faq || [];
+	const siteUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'https://artmarketprint.by';
+	const canonicalUrl = toAbsoluteUrl(`/blog/${slug}`, siteUrl);
+
+	const imageUrl = post.seo?.ogImage
+		|| (post.featuredImage ? urlFor(post.featuredImage).width(1200).format('webp').url() : undefined)
+		|| toAbsoluteUrl('/apple-touch-icon.png', siteUrl);
+
+	const breadcrumbJsonLd = buildBreadcrumbListJsonLd([
+		{ name: 'Главная', url: toAbsoluteUrl('/', siteUrl) },
+		{ name: 'Блог', url: toAbsoluteUrl('/blog', siteUrl) },
+		{ name: post.title, url: canonicalUrl },
+	]);
+
+	const articleJsonLd = buildArticleJsonLd({
+		headline: post.title,
+		description: post.seo?.description || post.excerpt || '',
+		url: canonicalUrl,
+		imageUrl,
+		datePublished: post.publishDate || post._createdAt,
+		dateModified: post._updatedAt,
+		authorName: post.author?.name,
+		publisherName: 'ArtMarketPrint',
+		publisherLogoUrl: toAbsoluteUrl('/apple-touch-icon.png', siteUrl),
+	});
+
+	const faqJsonLd = tryParseJsonLd(post.faq);
 
 	// Готовим список H2-заголовков один раз с уникальными slug-ами —
 	// передаём в TOC (для ссылок) и в ArticleBody (для id на DOM-узлах),
@@ -101,13 +128,9 @@ export default async function PostDetailPage({ params }: { params: Promise<Props
 
 	return (
 		<>
-			{/* JSON-LD script */}
-			<script
-				type="application/ld+json"
-				dangerouslySetInnerHTML={{
-					__html: jsonLd,
-				}}
-			/>
+			<JsonLd id="blog-breadcrumbs-jsonld" data={breadcrumbJsonLd} />
+			<JsonLd id="blog-article-jsonld" data={articleJsonLd} />
+			{faqJsonLd && <JsonLd id="blog-faq-jsonld" data={faqJsonLd} />}
 			<ServiceBreadcrumb service="Блог" serviceSlug="blog" title={post.title} />
 			<div className={'grid xl:grid-cols-[480px_1fr] gap-8'}>
 				{post.featuredImage && (

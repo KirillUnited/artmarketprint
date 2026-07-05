@@ -13,7 +13,8 @@ import Section, { SectionDescription, SectionHeading, SectionSubtitle, SectionTi
 import { OrderForm } from '@/components/ui/form';
 import { FAQSection } from '@/components/shared/faq';
 import { SECTION_FIELDS } from '@/sanity/lib/queries/page.query';
-import ServiceJsonLd, { BreadcrumbListJsonLd } from '@/components/ServiceJsonLd';
+import { JsonLd } from '@/components/shared/seo/JsonLd';
+import { buildBreadcrumbListJsonLd, buildServiceJsonLd, toAbsoluteUrl } from '@/lib/seo/jsonld';
 import { SERVICE_QUERY } from '@/sanity/lib/queries/service.query';
 import { PackageCalculator } from '@/components/shared/сalculator';
 import { SectionButton } from '@/components/layout/SectionButton';
@@ -85,16 +86,35 @@ export default async function ServicePage({ params }: { params: Promise<Props> }
 	if (!service) return <NotFound />;
 	const relatedProjectsArray = Array.isArray(relatedProjects) ? relatedProjects : [relatedProjects];
 
+	const siteUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'https://artmarketprint.by';
+	const canonicalUrl = toAbsoluteUrl(`/services/${slug}`, siteUrl);
+	const imageUrl = service?.seo?.ogImage || (service.image ? getUrlFor(service.image) : undefined);
+
+	const breadcrumbJsonLd = buildBreadcrumbListJsonLd([
+		{ name: 'Главная', url: toAbsoluteUrl('/', siteUrl) },
+		{ name: 'Услуги', url: toAbsoluteUrl('/services', siteUrl) },
+		{ name: service.title, url: canonicalUrl },
+	]);
+
+	const serviceJsonLd = buildServiceJsonLd({
+		name: service.title,
+		description: service.description,
+		url: canonicalUrl,
+		imageUrl,
+		price: service.price,
+		priceCurrency: 'BYN',
+	});
 
 	return (
 		<>
+			<JsonLd id="service-breadcrumbs-jsonld" data={breadcrumbJsonLd} />
+			<JsonLd id="service-jsonld" data={serviceJsonLd} />
 			{/* Main content wrapper */}
 			<div className="">
 				{/* Breadcrumb navigation */}
 				<section>
 					<div className="container">
 						<div className="mt-10 mb-6">
-							<BreadcrumbListJsonLd name={service.title} />
 							<ServiceBreadcrumb service="Услуги" serviceSlug="services" title={service.title} />
 						</div>
 
@@ -168,8 +188,7 @@ export default async function ServicePage({ params }: { params: Promise<Props> }
 				</Card>
 			</Section>
 
-			{/* Structured data for service */}
-			<ServiceJsonLd description={service.description} imageUrl={service.seo?.ogImage} name={service.title} url={`https://artmarketprint.by/services/${slug}`} />
+
 		</>
 	);
 }

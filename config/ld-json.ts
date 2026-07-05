@@ -2,7 +2,7 @@ export const LocalBusinessJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'LocalBusiness',
   'name': 'Артмаркетпринт',
-  '@id': '',
+  '@id': 'https://artmarketprint.by/#localbusiness',
   'url': 'https://artmarketprint.by/',
   'telephone': '+375297520204',
   'priceRange': 'BYN',
@@ -30,5 +30,5 @@ export const LocalBusinessJsonLd = {
     'opens': '09:00',
     'closes': '18:00',
   },
-  'sameAs': 'https://www.instagram.com/artmarketprint_by/',
+  'sameAs': ['https://www.instagram.com/artmarketprint_by/'],
 }
