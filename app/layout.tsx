@@ -9,7 +9,7 @@ import { fontSans } from '@/config/fonts';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Toaster } from '@/components/ui/sonner';
-import { LocalBusinessJsonLd } from '@/config/ld-json';
+import { buildLocalBusinessJsonLd } from '@/config/ld-json';
 import { JsonLd } from '@/components/shared/seo/JsonLd';
 import { buildWebSiteJsonLd } from '@/lib/seo/jsonld';
 import ClarityInit from '@/components/shared/clarity/ClarityInit';
@@ -97,6 +97,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 		url: SITE_URL,
 		name: 'ArtMarketPrint',
 	});
+	const localBusinessJsonLd = buildLocalBusinessJsonLd({
+		url: SITE_URL,
+		contactInfo: siteSettings?.siteContactInfo,
+	});
 
 	return (
 		<html suppressHydrationWarning lang="ru">
@@ -110,7 +114,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 					})(window,document,'script','dataLayer','${GTM_ID}');`}}></script> */}
 				{structuredDataEnabled && (
 					<>
-						<JsonLd id="localbusiness-jsonld" data={LocalBusinessJsonLd} />
+						<JsonLd id="localbusiness-jsonld" data={localBusinessJsonLd} />
 						<JsonLd id="website-jsonld" data={webSiteJsonLd} />
 					</>
 				)}
