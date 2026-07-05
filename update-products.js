@@ -70,7 +70,7 @@ async function runUpdate() {
     await new Promise((resolve) => setTimeout(resolve, 2000));
 
     console.log('📦 Importing new products to Sanity...');
-    await importDataToSanity(products);
+    const importResult = await importDataToSanity(products);
     console.log('✅ New products imported successfully!');
 
     // Step 3: Sync products to Algolia
@@ -85,7 +85,8 @@ async function runUpdate() {
 
     console.log('Notify via Telegram...');
 
-    await sendTelegramMessage('🎉 Каталог товаров обновлён');
+    const importedCount = importResult?.imported ?? products.length;
+    await sendTelegramMessage(`🎉 Каталог товаров обновлён. Товаров: ${importedCount}`);
   } catch (error) {
     console.error('❌ Error during product update process:', error);
     await sendTelegramMessage('❌ Ошибка во время обновления каталога в Sanity: ' + error.message);
