@@ -10,6 +10,8 @@ import ProductPrice from '@/components/shared/product/ProductPrice';
 import {ProductTabs} from '@/components/shared/product/ProductTabs';
 import {ProductBreadcrumb} from '@/components/ui/Breadcrumb';
 import {OrderForm} from '@/components/ui/form';
+import { JsonLd } from '@/components/shared/seo/JsonLd';
+import { buildBreadcrumbListJsonLd, buildProductJsonLd, toAbsoluteUrl } from '@/lib/seo/jsonld';
 import {getTotalStock} from '@/components/shared/product/lib';
 import {PushToDataLayer} from '@/components/shared/gtm';
 import {ProductsNotFoundMenu} from '@/components/shared/product/ProductsNotFound';
@@ -83,8 +85,35 @@ export default async function ProductPage({params, searchParams}: {params: Promi
 	const {id, name: productTitle = '', description: general_description = '', variation_description = '', price, colors, sizes, category, items, stock, sku, brand} = (product as any) || {};
 	const totalStock = getTotalStock(items);
 
+	const siteUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'https://artmarketprint.by';
+	const canonicalUrl = toAbsoluteUrl(`/products/${slug}`, siteUrl);
+	const categoryTitle = Array.isArray(category) ? category[0] : category;
+	const categoryPath = categoryTitle ? `/products/categories/${encodeURIComponent(categoryTitle)}` : '/products/categories/all';
+	const categoryUrl = toAbsoluteUrl(categoryPath, siteUrl);
+
+	const breadcrumbJsonLd = buildBreadcrumbListJsonLd([
+		{ name: 'Главная', url: toAbsoluteUrl('/', siteUrl) },
+		{ name: 'Каталог', url: toAbsoluteUrl('/products/categories/all', siteUrl) },
+		{ name: categoryTitle || 'Все категории', url: categoryUrl },
+		{ name: productTitle, url: canonicalUrl },
+	]);
+
+	const productJsonLd = buildProductJsonLd({
+		name: productTitle,
+		description: general_description || variation_description || '',
+		url: canonicalUrl,
+		imageUrls: [product?.image].filter(Boolean),
+		brand,
+		sku,
+		price,
+		priceCurrency: 'BYN',
+		availability: Number(totalStock()) > 0 ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+	});
+
 	return (
 		<>
+			<JsonLd id="product-breadcrumbs-jsonld" data={breadcrumbJsonLd} />
+			<JsonLd id="product-jsonld" data={productJsonLd} />
 			<Section>
 				<div className="flex flex-col gap-4">
 					<ProductBreadcrumb category={category} slug={slug} title={productTitle} />

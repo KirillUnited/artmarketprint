@@ -29,5 +29,8 @@ export const NAVIGATION_QUERY = defineQuery(`*[_type == "navigation"] {
   }`);
 
 export const SITE_SETTINGS_QUERY = defineQuery(`*[_type == "siteSettings"][0] {
-    siteContactInfo
+    siteContactInfo,
+    seo {
+      structuredDataEnabled
+    }
   }`);
