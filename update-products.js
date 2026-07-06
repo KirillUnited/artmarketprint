@@ -50,21 +50,27 @@ async function runUpdate() {
   try {
     console.log('🔄 Starting product update process...');
 
-    // Dynamically import the required modules
     const { deleteAllOfType } = await import('./sanity/delete.mjs');
-    const { updateProducts } = await import('./lib/products/update.mjs');
+    const { importDataToSanity } = await import('./sanity/import.mjs');
+    const { fetchAllProductsData } = await import('./lib/products/data.mjs');
 
-    // Step 1: Delete all existing products from Sanity
+    console.log('📥 Fetching and preparing new products...');
+    const products = await fetchAllProductsData();
+
+    if (!Array.isArray(products) || products.length === 0) {
+      throw new Error('No products fetched. Aborting without deleting existing products in Sanity.');
+    }
+
+    console.log(`✅ Prepared ${products.length} products. Proceeding with Sanity update...`);
+
     console.log('🗑️ Deleting all existing products from Sanity...');
     await deleteAllOfType('product');
     console.log('✅ All products deleted successfully!');
 
-    // Optional: Add a small delay to ensure deletion is complete
     await new Promise((resolve) => setTimeout(resolve, 2000));
 
-    // Step 2: Update with new products
-    console.log('📥 Fetching and importing new products...');
-    await updateProducts();
+    console.log('📦 Importing new products to Sanity...');
+    const importResult = await importDataToSanity(products);
     console.log('✅ New products imported successfully!');
 
     // Step 3: Sync products to Algolia
@@ -79,7 +85,8 @@ async function runUpdate() {
 
     console.log('Notify via Telegram...');
 
-    await sendTelegramMessage('🎉 Каталог товаров обновлён');
+    const importedCount = importResult?.imported ?? products.length;
+    await sendTelegramMessage(`🎉 Каталог товаров обновлён. Товаров: ${importedCount}`);
   } catch (error) {
     console.error('❌ Error during product update process:', error);
     await sendTelegramMessage('❌ Ошибка во время обновления каталога в Sanity: ' + error.message);
