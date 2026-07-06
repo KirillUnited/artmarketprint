@@ -9,8 +9,12 @@ import { fontSans } from '@/config/fonts';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Toaster } from '@/components/ui/sonner';
-import { LocalBusinessJsonLd } from '@/config/ld-json';
+import { buildLocalBusinessJsonLd } from '@/config/ld-json';
+import { JsonLd } from '@/components/shared/seo/JsonLd';
+import { buildWebSiteJsonLd } from '@/lib/seo/jsonld';
 import ClarityInit from '@/components/shared/clarity/ClarityInit';
+import { SITE_SETTINGS_QUERY } from '@/sanity/lib/queries/site.query';
+import { sanityFetch } from '@/sanity/lib/sanityFetch';
 import { GoogleTagManager } from '@next/third-parties/google';
 
 import { Providers } from './(app)/providers';
@@ -86,7 +90,18 @@ export const viewport: Viewport = {
 	],
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+	const siteSettings: any = await sanityFetch({ query: SITE_SETTINGS_QUERY });
+	const structuredDataEnabled = siteSettings?.seo?.structuredDataEnabled !== false && !IS_STAGING;
+	const webSiteJsonLd = buildWebSiteJsonLd({
+		url: SITE_URL,
+		name: 'ArtMarketPrint',
+	});
+	const localBusinessJsonLd = buildLocalBusinessJsonLd({
+		url: SITE_URL,
+		contactInfo: siteSettings?.siteContactInfo,
+	});
+
 	return (
 		<html suppressHydrationWarning lang="ru">
 			{/* Google Tag Manager */}
@@ -97,7 +112,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 					j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 					'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 					})(window,document,'script','dataLayer','${GTM_ID}');`}}></script> */}
-				<script dangerouslySetInnerHTML={{ __html: JSON.stringify(LocalBusinessJsonLd) }} type="application/ld+json" />
+				{structuredDataEnabled && (
+					<>
+						<JsonLd id="localbusiness-jsonld" data={localBusinessJsonLd} />
+						<JsonLd id="website-jsonld" data={webSiteJsonLd} />
+					</>
+				)}
 			</head>
 			<body className={clsx('min-h-screen bg-background text-foreground font-sans antialiased light', fontSans.variable)}>
 				{/* Google Tag Manager (noscript) */}
