@@ -1,25 +1,31 @@
-import {defineQuery, PortableText} from 'next-sanity';
-import {Card} from '@heroui/card';
-import {clsx} from 'clsx';
-import {JSX} from 'react';
+import { defineQuery, PortableText } from 'next-sanity';
+import { clsx } from 'clsx';
+import { JSX } from 'react';
 
-import {ServiceBreadcrumb} from '@/components/ui/Breadcrumb';
-import {ServiceDetails} from '@/components/shared/service';
-import {sanityFetch} from '@/sanity/lib/sanityFetch';
-import {getUrlFor} from '@/lib/utils';
-import {ProjectList} from '@/components/shared/project';
-import {PROJECTS_BY_SERVICE_QUERY} from '@/sanity/lib/queries';
-import Section, {SectionDescription, SectionHeading, SectionSubtitle, SectionTitle} from '@/components/layout/Section';
-import {OrderForm} from '@/components/ui/form';
-import {FAQSection} from '@/components/shared/faq';
-import {SECTION_FIELDS} from '@/sanity/lib/queries/page.query';
-import {JsonLd} from '@/components/shared/seo/JsonLd';
-import {buildBreadcrumbListJsonLd, buildServiceJsonLd, toAbsoluteUrl} from '@/lib/seo/jsonld';
-import {SERVICE_QUERY} from '@/sanity/lib/queries/service.query';
-import {PackageCalculator} from '@/components/shared/сalculator';
-import {SectionButton} from '@/components/layout/SectionButton';
+import { ServiceBreadcrumb } from '@/components/ui/Breadcrumb';
+import { ServiceDetails } from '@/components/shared/service';
+import { sanityFetch } from '@/sanity/lib/sanityFetch';
+import { getUrlFor } from '@/lib/utils';
+import { ProjectList } from '@/components/shared/project';
+import { PROJECTS_BY_SERVICE_QUERY } from '@/sanity/lib/queries';
+import Section, { SectionDescription, SectionHeading, SectionSubtitle, SectionTitle } from '@/components/layout/Section';
+import { OrderForm } from '@/components/ui/form';
+import { FAQSection } from '@/components/shared/faq';
+import { SECTION_FIELDS } from '@/sanity/lib/queries/page.query';
+import { JsonLd } from '@/components/shared/seo/JsonLd';
+import { buildBreadcrumbListJsonLd, buildServiceJsonLd, toAbsoluteUrl } from '@/lib/seo/jsonld';
+import { SERVICE_QUERY } from '@/sanity/lib/queries/service.query';
+import { PackageCalculator } from '@/components/shared/сalculator';
+import { SectionButton } from '@/components/layout/SectionButton';
 import NotFound from '@/app/not-found';
 import '@/styles/themes/yellow.css';
+import {
+	ArrowRight, Check, ChevronDown, Clock, Factory, FileText,
+	MapPin, MessageCircle, PackageCheck, Phone, ShieldCheck,
+	Sparkles, Star, Truck, Award,
+} from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
+import { AdvantagesSection, ApplicationsSection, CalculatorSection, ContactsSection, CTASection, GallerySection, HeroSection, MaterialsSection, PricingSection, ProcessSection, ProductionSection, ProductsSection, TestimonialsSection } from '../components';
 
 type Props = {
 	slug: string;
@@ -65,7 +71,7 @@ type Props = {
 // 	};
 // }
 
-export default async function ServiceDetailsPage({params}: {params: Promise<Props>}): Promise<JSX.Element> {
+export default async function ServiceDetailsPage({ params }: { params: Promise<Props> }): Promise<JSX.Element> {
 	// const { slug } = await params;
 	// // Fetch data in parallel for better performance
 	// const [service, faq, relatedProjects] = await Promise.all([
@@ -100,6 +106,20 @@ export default async function ServiceDetailsPage({params}: {params: Promise<Prop
 			{/* <JsonLd id="service-breadcrumbs-jsonld" data={breadcrumbJsonLd} /> */}
 			{/* <JsonLd id="service-jsonld" data={serviceJsonLd} /> */}
 			{/* Main content wrapper */}
+			<HeroSection />
+			<AdvantagesSection />
+			<ApplicationsSection />
+			<ProductsSection />
+			<CalculatorSection />
+			<PricingSection />
+			<GallerySection />
+			<ProcessSection />
+			<MaterialsSection />
+			<ProductionSection />
+			<TestimonialsSection />
+			{/* <FAQSection /> */}
+			<CTASection />
+			<ContactsSection />
 		</>
 	);
 }
