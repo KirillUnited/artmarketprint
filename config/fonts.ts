@@ -1,11 +1,16 @@
-import { Fira_Code as FontMono, Montserrat as FontSans } from 'next/font/google';
+import {Fira_Code as FontMono, Montserrat as FontSans, Inter as FontInter} from 'next/font/google';
 
 export const fontSans = FontSans({
-  subsets: ['latin'],
-  variable: '--font-sans',
+	subsets: ['latin'],
+	variable: '--font-sans',
 });
 
 export const fontMono = FontMono({
-  subsets: ['latin'],
-  variable: '--font-mono',
+	subsets: ['latin'],
+	variable: '--font-mono',
+});
+
+export const fontInter = FontInter({
+	subsets: ['latin', 'cyrillic'],
+	variable: '--font-inter',
 });
