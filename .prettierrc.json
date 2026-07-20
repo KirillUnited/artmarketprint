@@ -1,12 +1,12 @@
 {
-	"singleQuote": true,
-	"parser": "babel-ts",
-	"trailingComma": "all",
-	"useTabs": true,
-	"tabWidth": 4,
-	"bracketSpacing": false,
-	"printWidth": 200,
-	"endOfLine": "auto",
-	"requireForBlockBody": false,
-	"plugins": ["prettier-plugin-tailwindcss"]
+  "singleQuote": true,
+  "semi": true,
+  "trailingComma": "all",
+  "printWidth": 100,
+  "tabWidth": 2,
+  "useTabs": false,
+  "arrowParens": "always",
+  "bracketSpacing": true,
+  "endOfLine": "lf",
+  "plugins": ["prettier-plugin-tailwindcss"]
 }
