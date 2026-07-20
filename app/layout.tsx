@@ -1,23 +1,23 @@
 import '@/styles/globals.css';
 import '@/styles/currency.css';
-import { Metadata, Viewport } from 'next';
+import {Metadata, Viewport} from 'next';
 import clsx from 'clsx';
 import React from 'react';
 
-import { siteConfig } from '@/config/site';
-import { fontSans } from '@/config/fonts';
+import {siteConfig} from '@/config/site';
+import {fontInter, fontSans} from '@/config/fonts';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
-import { Toaster } from '@/components/ui/sonner';
-import { buildLocalBusinessJsonLd } from '@/config/ld-json';
-import { JsonLd } from '@/components/shared/seo/JsonLd';
-import { buildWebSiteJsonLd } from '@/lib/seo/jsonld';
+import {Toaster} from '@/components/ui/sonner';
+import {buildLocalBusinessJsonLd} from '@/config/ld-json';
+import {JsonLd} from '@/components/shared/seo/JsonLd';
+import {buildWebSiteJsonLd} from '@/lib/seo/jsonld';
 import ClarityInit from '@/components/shared/clarity/ClarityInit';
-import { SITE_SETTINGS_QUERY } from '@/sanity/lib/queries/site.query';
-import { sanityFetch } from '@/sanity/lib/sanityFetch';
-import { GoogleTagManager } from '@next/third-parties/google';
+import {SITE_SETTINGS_QUERY} from '@/sanity/lib/queries/site.query';
+import {sanityFetch} from '@/sanity/lib/sanityFetch';
+import {GoogleTagManager} from '@next/third-parties/google';
 
-import { Providers } from './(app)/providers';
+import {Providers} from './(app)/providers';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SERVER_URL || 'https://artmarketprint.by';
 const SITE_LOCALE = process.env.NEXT_PUBLIC_LOCALE || 'ru_BY';
@@ -85,13 +85,13 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
 	themeColor: [
-		{ media: '(prefers-color-scheme: light)', color: 'white' },
-		{ media: '(prefers-color-scheme: dark)', color: 'black' },
+		{media: '(prefers-color-scheme: light)', color: 'white'},
+		{media: '(prefers-color-scheme: dark)', color: 'black'},
 	],
 };
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
-	const siteSettings: any = await sanityFetch({ query: SITE_SETTINGS_QUERY });
+export default async function RootLayout({children}: {children: React.ReactNode}) {
+	const siteSettings: any = await sanityFetch({query: SITE_SETTINGS_QUERY});
 	const structuredDataEnabled = siteSettings?.seo?.structuredDataEnabled !== false && !IS_STAGING;
 	const webSiteJsonLd = buildWebSiteJsonLd({
 		url: SITE_URL,
@@ -119,15 +119,15 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 					</>
 				)}
 			</head>
-			<body className={clsx('min-h-screen bg-background text-foreground font-sans antialiased light', fontSans.variable)}>
+			<body className={clsx('bg-background text-foreground light min-h-screen font-sans antialiased', fontSans.variable, fontInter.variable)}>
 				{/* Google Tag Manager (noscript) */}
 				<noscript>
-					<iframe height="0" src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`} style={{ display: 'none', visibility: 'hidden' }} title="Google Tag Manager" width="0" />
+					<iframe height="0" src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`} style={{display: 'none', visibility: 'hidden'}} title="Google Tag Manager" width="0" />
 				</noscript>
 				{/* End Google Tag Manager (noscript) */}
 				<ClarityInit enabled={!IS_STAGING} projectId={CLARITY_PROJECT_ID} />
-				<Providers themeProps={{ attribute: 'class', defaultTheme: 'light' }}>
-					<div className="min-h-screen flex flex-col">
+				<Providers themeProps={{attribute: 'class', defaultTheme: 'light'}}>
+					<div className="flex min-h-screen flex-col">
 						<Header />
 						<main className="grow">{children}</main>
 						<Footer />
