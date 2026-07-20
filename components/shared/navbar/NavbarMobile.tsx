@@ -28,35 +28,39 @@ function NavbarMobileImpl({
 	const pathname = usePathname();
 
 	return (
-		<div className="flex xl:hidden flex-col gap-3 py-3 w-full">
-			{/* Row 1: brand + menu trigger */}
-			<div className="flex items-center justify-between">
-				<CalcLinkButton />
-				{pathname === '/' ? (
-					<span aria-current="page" className="cursor-default">
-						<BrandLogo alt="ArtMarketPrint" height={32} width={32} />
-					</span>
-				) : (
-					<Link href="/">
-						<BrandLogo alt="ArtMarketPrint" height={32} width={32} />
-					</Link>
-				)}
-				<Drawer
-					className="min-w-min"
-					navigation={navigation}
-					siteSettings={siteSettingsDoc as never}
-				/>
+		<>
+			<div className="flex xl:hidden flex-col gap-2 py-2 w-full">
+				{/* Row 1: brand + menu trigger */}
+				<div className="flex items-center justify-between">
+					{pathname === '/' ? (
+						<span aria-current="page" className="cursor-default">
+							<BrandLogo alt="ArtMarketPrint" height={32} width={32} />
+						</span>
+					) : (
+						<Link href="/">
+							<BrandLogo alt="ArtMarketPrint" height={32} width={32} />
+						</Link>
+					)}
+					<div className='flex gap-2'>
+						<CalcLinkButton />
+						<Drawer
+							className="min-w-min"
+							navigation={navigation}
+							siteSettings={siteSettingsDoc as never}
+						/>
+					</div>
+				</div>
 			</div>
 
-			{/* Row 2: search + favorites + cart */}
-			<div className="flex gap-5">
+			{/* Row 2: search + favorites + cart
+			<div className="flex gap-5 fixed bottom-0">
 				<ServiceSearch className="flex-1 max-w-full" />
 				<div className="flex gap-2">
 					<FavoritesLink />
 					<CartLinkButton itemsCount={itemsCount} />
 				</div>
-			</div>
-		</div>
+			</div> */}
+		</>
 	);
 }
 
