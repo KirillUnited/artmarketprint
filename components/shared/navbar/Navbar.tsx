@@ -9,6 +9,9 @@ import useBasketStore from '@/store/store';
 import { NavbarDesktop } from './NavbarDesktop';
 import { NavbarMobile } from './NavbarMobile';
 import type { NavbarProps } from './types';
+import { ServiceSearch } from '@/components/ServiceSearch';
+import { FavoritesLink } from '../favorites/FavoritesLink';
+import { CartLinkButton } from './CartLinkButton';
 
 /**
  * Top-level Navbar: a thin orchestrator that selects the desktop or mobile
@@ -35,12 +38,12 @@ export default function Navbar({ navigation, sales, siteSettings }: NavbarProps)
 			<BaseNavbar
 				classNames={{
 					base: 'shadow-medium',
-					wrapper: 'max-w-full p-0 items-center h-auto',
+					wrapper: 'max-w-full p-0 items-center h-auto static',
 				}}
 				isMenuOpen={isMenuOpen}
 				onMenuOpenChange={setIsMenuOpen}
 				onScrollPositionChange={closeMenu}
-				shouldHideOnScroll
+				shouldHideOnScroll={false}
 			>
 				<div className="container">
 					<NavbarDesktop
@@ -56,6 +59,14 @@ export default function Navbar({ navigation, sales, siteSettings }: NavbarProps)
 					/>
 				</div>
 			</BaseNavbar>
+			{/* Row 2: search + favorites + cart */}
+			<div className="flex xl:hidden gap-5 fixed bottom-0 left-0 right-0 z-100 w-full container py-2 bg-background">
+				<ServiceSearch className="flex-1 max-w-full" />
+				<div className="flex gap-2">
+					<FavoritesLink />
+					<CartLinkButton itemsCount={itemsCount} />
+				</div>
+			</div>
 		</>
 	);
 }

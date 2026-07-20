@@ -16,7 +16,7 @@ export function CalculatorButton() {
 	if (!isMounted) return null;
 
 	return (
-		<div className="fixed right-6 bottom-6 z-50 animate-pulse">
+		<div className="hidden xl:block fixed right-6 bottom-6 z-50 animate-pulse">
 			<Link passHref href="/calculator">
 				<Tooltip content="Калькулятор стоимости пакетов" placement="left">
 					<Button isIconOnly aria-label="Calculator" className="h-16 w-16 bg-brand-gradient rounded-full shadow-large hover:scale-105 transition-transform duration-200" color='primary' size="lg">
