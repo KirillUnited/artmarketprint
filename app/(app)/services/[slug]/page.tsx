@@ -9,7 +9,12 @@ import { sanityFetch } from '@/sanity/lib/sanityFetch';
 import { getUrlFor } from '@/lib/utils';
 import { ProjectList } from '@/components/shared/project';
 import { PROJECTS_BY_SERVICE_QUERY } from '@/sanity/lib/queries';
-import Section, { SectionDescription, SectionHeading, SectionSubtitle, SectionTitle } from '@/components/layout/Section';
+import Section, {
+  SectionDescription,
+  SectionHeading,
+  SectionSubtitle,
+  SectionTitle,
+} from '@/components/layout/Section';
 import { OrderForm } from '@/components/ui/form';
 import { FAQSection } from '@/components/shared/faq';
 import { SECTION_FIELDS } from '@/sanity/lib/queries/page.query';
@@ -19,9 +24,25 @@ import { SERVICE_QUERY } from '@/sanity/lib/queries/service.query';
 import { PackageCalculator } from '@/components/shared/сalculator';
 import { SectionButton } from '@/components/layout/SectionButton';
 import NotFound from '@/app/not-found';
+import {
+  AdvantagesSection,
+  ApplicationsSection,
+  CalculatorSection,
+  ContactsSection,
+  CTASection,
+  GallerySection,
+  HeroSection,
+  MaterialsSection,
+  PricingSection,
+  ProcessSection,
+  ProductionSection,
+  ProductsSection,
+  TestimonialsSection,
+} from '../components';
+import '@/styles/themes/yellow.css';
 
 type Props = {
-	slug: string;
+  slug: string;
 };
 
 const FAQ_QUERY = defineQuery(`*[_id == "siteSettings"][0]{
@@ -36,159 +57,105 @@ const FAQ_QUERY = defineQuery(`*[_id == "siteSettings"][0]{
   }`);
 
 export async function generateMetadata({ params }: { params: Promise<Props> }) {
-	const { slug } = await params;
-	const service = await sanityFetch({ query: SERVICE_QUERY, params: await params });
-	const { title = '', description = '', ogImage = '' } = service?.seo || {};
+  const { slug } = await params;
+  const service = await sanityFetch({ query: SERVICE_QUERY, params: await params });
+  const { title = '', description = '', ogImage = '' } = service?.seo || {};
 
-	const url = `${process.env.NEXT_PUBLIC_SERVER_URL}/services/${slug}`;
+  const url = `${process.env.NEXT_PUBLIC_SERVER_URL}/services/${slug}`;
 
-	if (!service) return {};
+  if (!service) return {};
 
-	return {
-		title: `${title || ''}`,
-		description: `${description}`,
-		openGraph: {
-			title: `${title || ''}`,
-			description: `${description}`,
-			images: [
-				{
-					url: ogImage ? ogImage : '/apple-touch-icon.png',
-					width: 1200,
-					height: 630,
-					alt: `Изображение для сервиса ${title || ''}`,
-				},
-			],
-		},
-		twitter: {
-			title: `${title || ''}`,
-			description: `${description}`,
-			images: [ogImage ? ogImage : '/apple-touch-icon.png'],
-		},
-		alternates: {
-			canonical: url,
-			languages: {
-				'ru-BY': url,
-				'ru-RU': 'https://artmarketprint.ru/services/' + slug,
-				'x-default': url,
-			},
-		},
-	};
+  return {
+    title: `${title || ''}`,
+    description: `${description}`,
+    openGraph: {
+      title: `${title || ''}`,
+      description: `${description}`,
+      images: [
+        {
+          url: ogImage ? ogImage : '/apple-touch-icon.png',
+          width: 1200,
+          height: 630,
+          alt: `Изображение для сервиса ${title || ''}`,
+        },
+      ],
+    },
+    twitter: {
+      title: `${title || ''}`,
+      description: `${description}`,
+      images: [ogImage ? ogImage : '/apple-touch-icon.png'],
+    },
+    alternates: {
+      canonical: url,
+      languages: {
+        'ru-BY': url,
+        'ru-RU': 'https://artmarketprint.ru/services/' + slug,
+        'x-default': url,
+      },
+    },
+  };
 }
 
-export default async function ServicePage({ params }: { params: Promise<Props> }): Promise<JSX.Element> {
-	const { slug } = await params;
-	// Fetch data in parallel for better performance
-	const [service, faq, relatedProjects] = await Promise.all([
-		sanityFetch({ query: SERVICE_QUERY, params: await params }),
-		sanityFetch({ query: FAQ_QUERY }),
-		sanityFetch({ query: PROJECTS_BY_SERVICE_QUERY, params: await params }),
-	]);
-	if (!service) return <NotFound />;
-	const relatedProjectsArray = Array.isArray(relatedProjects) ? relatedProjects : [relatedProjects];
+export default async function ServicePage({
+  params,
+}: {
+  params: Promise<Props>;
+}): Promise<JSX.Element> {
+  const { slug } = await params;
+  // Fetch data in parallel for better performance
+  const [service, faq, relatedProjects] = await Promise.all([
+    sanityFetch({ query: SERVICE_QUERY, params: await params }),
+    sanityFetch({ query: FAQ_QUERY }),
+    sanityFetch({ query: PROJECTS_BY_SERVICE_QUERY, params: await params }),
+  ]);
+  if (!service) return <NotFound />;
+  const relatedProjectsArray = Array.isArray(relatedProjects) ? relatedProjects : [relatedProjects];
 
-	const siteUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'https://artmarketprint.by';
-	const canonicalUrl = toAbsoluteUrl(`/services/${slug}`, siteUrl);
-	const imageUrl = service?.seo?.ogImage || (service.image ? getUrlFor(service.image) : undefined);
+  const siteUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'https://artmarketprint.by';
+  const canonicalUrl = toAbsoluteUrl(`/services/${slug}`, siteUrl);
+  const imageUrl = service?.seo?.ogImage || (service.image ? getUrlFor(service.image) : undefined);
 
-	const breadcrumbJsonLd = buildBreadcrumbListJsonLd([
-		{ name: 'Главная', url: toAbsoluteUrl('/', siteUrl) },
-		{ name: 'Услуги', url: toAbsoluteUrl('/services', siteUrl) },
-		{ name: service.title, url: canonicalUrl },
-	]);
+  const breadcrumbJsonLd = buildBreadcrumbListJsonLd([
+    { name: 'Главная', url: toAbsoluteUrl('/', siteUrl) },
+    { name: 'Услуги', url: toAbsoluteUrl('/services', siteUrl) },
+    { name: service.title, url: canonicalUrl },
+  ]);
 
-	const serviceJsonLd = buildServiceJsonLd({
-		name: service.title,
-		description: service.description,
-		url: canonicalUrl,
-		imageUrl,
-		price: service.price,
-		priceCurrency: 'BYN',
-	});
+  const serviceJsonLd = buildServiceJsonLd({
+    name: service.title,
+    description: service.description,
+    url: canonicalUrl,
+    imageUrl,
+    price: service.price,
+    priceCurrency: 'BYN',
+  });
+  console.log('service', service);
 
-	return (
-		<>
-			<JsonLd id="service-breadcrumbs-jsonld" data={breadcrumbJsonLd} />
-			<JsonLd id="service-jsonld" data={serviceJsonLd} />
-			{/* Main content wrapper */}
-			<div className="">
-				{/* Breadcrumb navigation */}
-				<section>
-					<div className="container">
-						<div className="mt-10 mb-6">
-							<ServiceBreadcrumb service="Услуги" serviceSlug="services" title={service.title} />
-						</div>
-
-						<SectionHeading>
-							<h1 className="text-4xl font-bold">{service.title}</h1>
-						</SectionHeading>
-					</div>
-				</section>
-
-
-
-				{/* Service details section */}
-				<Section id="serviceDetails" innerClassname="pt-6 md:pt-6">
-					<ServiceDetails
-						advantages={service.advantages}
-						gallery={service.gallery}
-						image={getUrlFor(service.image)}
-						layoutRequirements={service.layoutRequirements && <PortableText value={service.layoutRequirements} onMissingComponent={false} />}
-						name={service.title}
-						paymentMethods={service.paymentOptions}
-						price={service.price}
-						priceTable={service.priceTable}
-						hasCalc={service.calculator ? true : false}
-					>
-						{Array.isArray(service.body) && <PortableText value={service.body} onMissingComponent={false} />}
-					</ServiceDetails>
-				</Section>
-			</div>
-			{/*Calculator section*/}
-			{service.calculator && (
-				<Section id="calculator" innerClassname="pt-6 md:pt-6">
-					<SectionHeading className="items-center text-center mx-auto">
-						<SectionSubtitle>Рассчитайте стоимость</SectionSubtitle>
-						{service.calculator.title && <SectionTitle>{service.calculator.title}</SectionTitle>}
-						{service.calculator.description && <SectionDescription>{service.calculator.description}</SectionDescription>}
-					</SectionHeading>
-					<PackageCalculator />
-				</Section>
-			)}
-
-			{/* Portfolio section */}
-			{relatedProjectsArray.length > 0 && (
-				<Section className="bg-[#F9F9F9]">
-					<div className="flex flex-col gap-6 px-4">
-						<SectionHeading className="items-center text-center mx-auto">
-							<SectionSubtitle>{'галерея'}</SectionSubtitle>
-							<SectionTitle>{'Примеры работ'}</SectionTitle>
-							<SectionDescription>{'Портфолио выполненных работ'}</SectionDescription>
-						</SectionHeading>
-
-						<ProjectList bentoGrid={false} projectList={relatedProjectsArray} />
-
-						{/* Mobile-only projects button */}
-						<SectionButton className="lg:hidden flex" href={'/projects'} label="Все проекты" />
-					</div>
-				</Section>
-			)}
-
-			{/* FAQ section */}
-			<FAQSection className="bg-[#F9F9F9]" {...faq.homePage.content[0]} faqs={service.faqs ? service.faqs : faq.homePage.content[0].faqs} />
-
-			{/* Contact form section */}
-			<Section className="max-w-3xl mx-auto" id="contacts">
-				<SectionHeading className="items-center text-center mx-auto">
-					<SectionSubtitle>{'обратная связь'}</SectionSubtitle>
-					<SectionTitle>{'Оставить заявку'}</SectionTitle>
-					<SectionDescription>{'Оставьте заявку и мы свяжемся с Вами в ближайшее время'}</SectionDescription>
-				</SectionHeading>
-				<Card className={clsx('flex flex-col gap-6', 'p-4 bg-background sticky top-16')} radius="sm" shadow="sm">
-					<OrderForm className="w-full" />
-				</Card>
-			</Section>
-
-
-		</>
-	);
+  return (
+    <>
+      <JsonLd id="service-breadcrumbs-jsonld" data={breadcrumbJsonLd} />
+      <JsonLd id="service-jsonld" data={serviceJsonLd} />
+      {/* Main content wrapper */}
+      <HeroSection service={service} />
+      <AdvantagesSection />
+      <ApplicationsSection />
+      <ProductsSection />
+      <CalculatorSection />
+      <PricingSection />
+      <GallerySection />
+      <ProcessSection />
+      <MaterialsSection />
+      <ProductionSection />
+      <TestimonialsSection />
+      <FAQSection
+        className="bg-surface"
+        faqs={service?.faqs}
+        isActive
+        title="Частые вопросы"
+        description="Ответы до первого звонка."
+      />
+      <CTASection />
+      <ContactsSection />
+    </>
+  );
 }
