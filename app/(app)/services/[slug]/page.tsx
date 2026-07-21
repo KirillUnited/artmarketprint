@@ -142,7 +142,7 @@ export default async function ServicePage({
       <ProductsSection />
       <CalculatorSection />
       <PricingSection />
-      <GallerySection />
+      <GallerySection items={service?.gallery || []} />
       <ProcessSection />
       <MaterialsSection />
       <ProductionSection />

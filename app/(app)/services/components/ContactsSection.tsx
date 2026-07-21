@@ -15,7 +15,7 @@ export default async function ContactsSection() {
     [MapPin, c?.siteContactInfo?.address?.[0].location || '', 'Производство и самовывоз'],
   ];
   if (!contacts) return null;
-  console.log('c', c);
+
   return (
     <section id="contacts" style={{ background: BG, padding: '88px 0' }}>
       <div className="mx-auto grid max-w-screen-xl gap-10 px-6 md:grid-cols-2">
