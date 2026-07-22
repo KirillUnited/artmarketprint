@@ -103,9 +103,8 @@ export default async function ServicePage({
 }): Promise<JSX.Element> {
   const { slug } = await params;
   // Fetch data in parallel for better performance
-  const [service, faq, relatedProjects] = await Promise.all([
+  const [service, relatedProjects] = await Promise.all([
     sanityFetch({ query: SERVICE_QUERY, params: await params }),
-    sanityFetch({ query: FAQ_QUERY }),
     sanityFetch({ query: PROJECTS_BY_SERVICE_QUERY, params: await params }),
   ]);
   if (!service) return <NotFound />;
@@ -144,7 +143,7 @@ export default async function ServicePage({
       <PricingSection />
       <GallerySection items={service?.gallery || []} />
       <ProcessSection />
-      <MaterialsSection />
+      {/* <MaterialsSection /> */}
       <ProductionSection />
       {/* <TestimonialsSection /> */}
       <FAQSection
