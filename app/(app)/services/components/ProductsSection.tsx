@@ -23,7 +23,7 @@ export default async function ProductsSection() {
         </Fade>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
           {products.map((p: any, i: number) => (
-            <Link href={`/products/${p.id}`}>
+            <Link href={`/products/${p.id}`} key={p.id}>
               <Fade key={p.title} delay={i * 0.04} className="h-full">
                 <Card className="h-full">
                   <Image

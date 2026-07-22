@@ -154,7 +154,7 @@ export default async function ServicePage({
         description="Ответы до первого звонка."
       />
       <CTASection />
-      <ContactsSection />
+      <ContactsSection serviceTitle={service.title} />
     </>
   );
 }
