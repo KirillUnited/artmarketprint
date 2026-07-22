@@ -91,52 +91,59 @@
 
 @layer base {
   body {
-    font-family: Inter, system-ui, sans-serif;
+    font-family: var(--font-sans);
+    color: #232323;
   }
 
   html {
     font-size: var(--font-size);
   }
 
-  h1 {
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: var(--font-weight-semibold);
+    text-wrap: balance;
+  }
+}
+
+@layer components {
+  .heading-1 {
+    font-size: var(--text-5xl);
+    line-height: calc(56/48*1em);
+  }
+  .heading-2 {
+    font-size: 2.5rem;
+    line-height: calc(48/40*1em);
+  }
+  .heading-3 {
+    font-size: 2rem;
+    line-height: calc(40/32*1em);
+  }
+  .heading-4 {
+    font-size: var(--text-3xl);
+    line-height: calc(32/28*1em);
+  }
+  .heading-5 {
     font-size: var(--text-2xl);
-    font-weight: 800;
-    line-height: 1.1;
+    line-height: calc(36/24*1em);
   }
-
-  h2 {
-    font-size: var(--text-xl);
-    font-weight: 700;
-    line-height: 1.2;
-  }
-
-  h3 {
+  .heading-6 {
     font-size: var(--text-lg);
-    font-weight: 600;
-    line-height: 1.4;
+    line-height: calc(28/18*1em);
   }
-
-  h4 {
-    font-size: var(--text-base);
-    font-weight: 600;
-    line-height: 1.5;
+  .subtitle-1 {
+    font-size: 2.5rem;
+    line-height: calc(48/40*1em);
   }
-
-  label {
-    font-size: var(--text-base);
-    font-weight: var(--font-weight-medium);
-    line-height: 1.5;
+  .subtitle-2 {
+    font-size: 2rem;
+    line-height: calc(40/32*1em);
   }
-
-  button {
-    font-size: var(--text-base);
-    font-weight: var(--font-weight-medium);
-    line-height: 1.5;
+  .subtitle-3 {
+    font-size: var(--text-3xl);
+    line-height: calc(32/28*1em);
   }
-
-  input {
-    font-size: var(--text-base);
-    font-weight: var(--font-weight-normal);
-    line-height: 1.5;
+  .subtitle-4 {
+    font-size: var(--text-2xl);
+    line-height: calc(36/24*1em);
   }
 }

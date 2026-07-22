@@ -146,7 +146,7 @@ export default async function ServicePage({
       <ProcessSection />
       <MaterialsSection />
       <ProductionSection />
-      <TestimonialsSection />
+      {/* <TestimonialsSection /> */}
       <FAQSection
         className="bg-surface"
         faqs={service?.faqs}
