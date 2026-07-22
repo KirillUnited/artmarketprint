@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { SUBTLE, BORDER, CARD, Y, B, MUTED } from '../mock/constants';
 import { Fade, SectionEyebrow } from './primitives';
 import { urlFor } from '@/sanity/lib/image';
-import { Image } from '@heroui/image';
+import Image from 'next/image';
 
 export default function GallerySection({ items }: any) {
   const [filter, setFilter] = useState('Все');
@@ -59,6 +59,8 @@ export default function GallerySection({ items }: any) {
               src={urlFor(item).width(500).height(500).url()}
               alt="Пример работы ArtMarketPrint"
               loading="lazy"
+              width={500}
+              height={500}
               className="w-full rounded-2xl object-cover"
             />
           ))}

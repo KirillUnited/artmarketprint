@@ -1,5 +1,5 @@
 import { MapPin, MessageCircle, Phone } from 'lucide-react';
-import { B, BG, BORDER, CARD, MUTED, SUBTLE, Y } from '../mock/constants';
+import { B, BORDER, CARD, MUTED, SUBTLE, Y } from '../mock/constants';
 import { Fade, SectionEyebrow } from './primitives';
 import ServiceOrderMessageForm from './ServiceOrderMessageForm';
 import { SITE_SETTINGS_QUERY } from '@/sanity/lib/queries/site.query';
@@ -18,21 +18,11 @@ export default async function ContactsSection({ serviceTitle }: { serviceTitle?:
   if (!contacts) return null;
 
   return (
-    <section id="contacts" style={{ background: BG, padding: '88px 0' }}>
-      <div className="container">
+    <section id="contacts" className="py-20">
+      <div className="container max-w-screen-xl">
         <SectionEyebrow n="16" label="контакты" />
-        <h2
-          style={{
-            fontSize: 'clamp(28px,4vw,42px)',
-            fontWeight: 800,
-            color: B,
-            marginBottom: 32,
-            letterSpacing: '-0.02em',
-          }}
-        >
-          Связаться с производством
-        </h2>
-        <div className="grid max-w-screen-xl gap-10 md:grid-cols-2">
+        <h2 className="heading-2 mb-12">Связаться с производством</h2>
+        <div className="grid gap-10 md:grid-cols-2">
           <Fade>
             <div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
