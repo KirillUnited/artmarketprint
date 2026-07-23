@@ -69,7 +69,7 @@ export default function CalculatorSection() {
 
   return (
     <section id="calculator" style={{ background: SUBTLE, padding: '88px 0' }}>
-      <div className="mx-auto max-w-screen-xl px-6">
+      <div className="container max-w-screen-xl">
         <Fade>
           <SectionEyebrow n="05" label="калькулятор" />
           <h2

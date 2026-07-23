@@ -31,3 +31,14 @@ export const SERVICE_QUERY = defineQuery(`*[_type == "service" && slug.current =
     "ogImage": image.asset->url
   }
 }`);
+
+export const RELATED_SERVICES_QUERY =
+  defineQuery(`*[_type == "service" && slug.current != $slug]|order(publishedAt desc){title,
+      description,
+      image, 
+      price,
+      "currentSlug": slug.current,
+      calculator -> {
+        ${calculator}
+        }
+      }`);

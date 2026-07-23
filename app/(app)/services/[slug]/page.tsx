@@ -1,28 +1,14 @@
-import { defineQuery, PortableText } from 'next-sanity';
-import { Card } from '@heroui/card';
-import { clsx } from 'clsx';
+import { defineQuery } from 'next-sanity';
 import { JSX } from 'react';
-
-import { ServiceBreadcrumb } from '@/components/ui/Breadcrumb';
-import { ServiceDetails } from '@/components/shared/service';
 import { sanityFetch } from '@/sanity/lib/sanityFetch';
 import { getUrlFor } from '@/lib/utils';
-import { ProjectList } from '@/components/shared/project';
 import { PROJECTS_BY_SERVICE_QUERY } from '@/sanity/lib/queries';
-import Section, {
-  SectionDescription,
-  SectionHeading,
-  SectionSubtitle,
-  SectionTitle,
-} from '@/components/layout/Section';
-import { OrderForm } from '@/components/ui/form';
 import { FAQSection } from '@/components/shared/faq';
 import { SECTION_FIELDS } from '@/sanity/lib/queries/page.query';
 import { JsonLd } from '@/components/shared/seo/JsonLd';
 import { buildBreadcrumbListJsonLd, buildServiceJsonLd, toAbsoluteUrl } from '@/lib/seo/jsonld';
-import { SERVICE_QUERY } from '@/sanity/lib/queries/service.query';
+import { RELATED_SERVICES_QUERY, SERVICE_QUERY } from '@/sanity/lib/queries/service.query';
 import { PackageCalculator } from '@/components/shared/сalculator';
-import { SectionButton } from '@/components/layout/SectionButton';
 import NotFound from '@/app/not-found';
 import {
   AdvantagesSection,
@@ -40,6 +26,7 @@ import {
   TestimonialsSection,
 } from '../components';
 import '@/styles/themes/yellow.css';
+import { Fade, SectionEyebrow } from '../components/primitives';
 
 type Props = {
   slug: string;
@@ -103,12 +90,13 @@ export default async function ServicePage({
 }): Promise<JSX.Element> {
   const { slug } = await params;
   // Fetch data in parallel for better performance
-  const [service, relatedProjects] = await Promise.all([
+  const [service, services] = await Promise.all([
     sanityFetch({ query: SERVICE_QUERY, params: await params }),
-    sanityFetch({ query: PROJECTS_BY_SERVICE_QUERY, params: await params }),
+    // sanityFetch({ query: PROJECTS_BY_SERVICE_QUERY, params: await params }),
+    sanityFetch({ query: RELATED_SERVICES_QUERY, params: await params }),
   ]);
   if (!service) return <NotFound />;
-  const relatedProjectsArray = Array.isArray(relatedProjects) ? relatedProjects : [relatedProjects];
+  // const relatedProjectsArray = Array.isArray(relatedProjects) ? relatedProjects : [relatedProjects];
 
   const siteUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'https://artmarketprint.by';
   const canonicalUrl = toAbsoluteUrl(`/services/${slug}`, siteUrl);
@@ -128,7 +116,6 @@ export default async function ServicePage({
     price: service.price,
     priceCurrency: 'BYN',
   });
-  console.log('service', service);
 
   return (
     <>
@@ -139,11 +126,26 @@ export default async function ServicePage({
       <AdvantagesSection />
       <ApplicationsSection />
       <ProductsSection />
-      <CalculatorSection />
+      {service.calculator ? (
+        <section id="calculator" className="py-20">
+          <div className="container">
+            <Fade>
+              <SectionEyebrow n="05" label="калькулятор" />
+              <h2 className="heading-2">Расчёт за 30 секунд</h2>
+              <p className="text-muted">
+                Параметры совпадают со структурой CMS — легко подключить справочники из Sanity.
+              </p>
+            </Fade>
+            <PackageCalculator />
+          </div>
+        </section>
+      ) : (
+        <CalculatorSection />
+      )}
       <PricingSection />
       <GallerySection items={service?.gallery || []} />
       <ProcessSection />
-      {/* <MaterialsSection /> */}
+      <MaterialsSection items={services || []} />
       <ProductionSection />
       {/* <TestimonialsSection /> */}
       <FAQSection

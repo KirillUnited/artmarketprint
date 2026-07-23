@@ -42,8 +42,8 @@ export const FAQSection = ({
 
   return (
     <Section className={clsx(className)}>
-      <SectionEyebrow n="14" label="faq" />
       <SectionHeading className="max-w-[760px] self-center text-center">
+        <SectionEyebrow n="14" label="faq" />
         {subtitle && <SectionSubtitle>{subtitle}</SectionSubtitle>}
         {title && <SectionTitle>{title}</SectionTitle>}
         {description && <SectionDescription>{description}</SectionDescription>}

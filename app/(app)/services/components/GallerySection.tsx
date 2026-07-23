@@ -52,7 +52,7 @@ export default function GallerySection({ items }: any) {
             ))}
           </div>
         </Fade>
-        <div className="gap-4 md:grid md:grid-cols-3">
+        <div className="grid gap-4 md:grid-cols-3">
           {items.map((item: any, i: number) => (
             <Image
               key={i}

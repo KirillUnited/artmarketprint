@@ -13,7 +13,7 @@ const FEATURED_PRODUCTS_QUERY = "*[_type == 'product'] | order(_createdAt asc) [
 export default async function ProductsSection() {
   const products = await sanityFetch({ query: FEATURED_PRODUCTS_QUERY });
   if (!products) return null;
-  console.log('products', products);
+
   return (
     <section style={{ background: BG, padding: '88px 0' }}>
       <div className="container flex max-w-screen-xl flex-col gap-12">

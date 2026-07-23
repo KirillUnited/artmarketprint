@@ -14,7 +14,7 @@ export default function HeroSection({ service }: any) {
       <div className="container max-w-screen-xl py-20">
         <div className="grid items-center gap-12 md:grid-cols-12">
           {/* Left — 7 cols */}
-          <div className="flex flex-col items-start gap-10 md:col-span-7">
+          <div className="flex flex-col items-start gap-10 overflow-hidden md:col-span-7">
             <ServiceBreadcrumb service="Услуги" serviceSlug="services" title={service.title} />
             <div className="flex flex-col items-start gap-6">
               <Chip className="bg-accent text-accent-foreground">
@@ -27,14 +27,14 @@ export default function HeroSection({ service }: any) {
               </h1>
               <p className="text-lg text-pretty">{service?.description || ''}</p>
             </div>
-            <div className="flex flex-wrap gap-4">
-              <Link href={'#calculator'}>
-                <Button variant="primary" size="lg">
+            <div className="flex flex-wrap gap-4 self-stretch">
+              <Link href={'#calculator'} className="flex-1">
+                <Button variant="primary" size="lg" className="w-full">
                   Получить расчёт <ArrowRight className="size-4" />
                 </Button>
               </Link>
-              <Link href={'#contacts'}>
-                <Button variant="tertiary" size="lg" className="bg-foreground text-surface">
+              <Link href={'#contacts'} className="flex-1">
+                <Button variant="tertiary" size="lg" className="bg-foreground text-surface w-full">
                   Заказать услугу
                 </Button>
               </Link>
