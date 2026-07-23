@@ -1,10 +1,8 @@
-import { defineQuery } from 'next-sanity';
 import { JSX } from 'react';
 import { sanityFetch } from '@/sanity/lib/sanityFetch';
 import { getUrlFor } from '@/lib/utils';
 import { PROJECTS_BY_SERVICE_QUERY } from '@/sanity/lib/queries';
 import { FAQSection } from '@/components/shared/faq';
-import { SECTION_FIELDS } from '@/sanity/lib/queries/page.query';
 import { JsonLd } from '@/components/shared/seo/JsonLd';
 import { buildBreadcrumbListJsonLd, buildServiceJsonLd, toAbsoluteUrl } from '@/lib/seo/jsonld';
 import { RELATED_SERVICES_QUERY, SERVICE_QUERY } from '@/sanity/lib/queries/service.query';
@@ -31,17 +29,6 @@ import { Fade, SectionEyebrow } from '../components/primitives';
 type Props = {
   slug: string;
 };
-
-const FAQ_QUERY = defineQuery(`*[_id == "siteSettings"][0]{
-    homePage->{
-      content[][_type == "faqs"] {
-          _key,
-          _type,
-          ${SECTION_FIELDS},
-          faqs[]->,
-      }
-    }
-  }`);
 
 export async function generateMetadata({ params }: { params: Promise<Props> }) {
   const { slug } = await params;

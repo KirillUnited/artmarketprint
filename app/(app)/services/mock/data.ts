@@ -4,6 +4,15 @@ import { Faq, Product } from '../types';
 export const img = (id: string, w = 1200, h = 900) =>
   `https://images.unsplash.com/photo-${id}?w=${w}&h=${h}&fit=crop&auto=format`;
 
+export const NAV: [string, string][] = [
+  ['Цены', '#цены'],
+  ['Калькулятор', '#calculator'],
+  ['Портфолио', '#портфолио'],
+  ['Материалы', '#материалы'],
+  ['FAQ', '#faq'],
+  ['Контакты', '#contacts'],
+];
+
 export const service = {
   name: 'УФ-печать на материалах',
   hero: {
