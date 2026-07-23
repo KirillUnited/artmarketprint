@@ -5,6 +5,8 @@ import { sanityFetch } from '@/sanity/lib/sanityFetch';
 
 import { B, BORDER, MUTED, Y } from '../mock/constants';
 import { NAV } from '../mock/data';
+import Link from 'next/link';
+import { Button } from '@heroui/react';
 
 type SitePhone = {
   _key?: string;
@@ -142,18 +144,9 @@ export default async function Header() {
   const primaryPhone = phones[0];
 
   return (
-    <header
-      style={{
-        position: 'sticky',
-        top: 0,
-        zIndex: 40,
-        background: 'rgba(250,250,250,.92)',
-        backdropFilter: 'blur(12px)',
-        borderBottom: `1px solid ${BORDER}`,
-      }}
-    >
+    <header className="bg-background sticky top-0 z-40 border-t border-b backdrop-blur-md xl:top-32">
       <div
-        className="mx-auto max-w-screen-xl px-6"
+        className="container max-w-7xl"
         style={{
           height: 64,
           display: 'flex',
@@ -162,7 +155,7 @@ export default async function Header() {
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: 28 }}>
-          <a
+          {/* <a
             href="#"
             style={{
               fontSize: 20,
@@ -174,7 +167,7 @@ export default async function Header() {
             }}
           >
             ArtMarket<span style={{ color: Y }}>Print</span>
-          </a>
+          </a> */}
           <nav style={{ gap: 28, fontSize: 14 }} className="hidden lg:flex">
             {NAV.map(([label, href]) => (
               <a
@@ -193,11 +186,11 @@ export default async function Header() {
           </nav>
         </div>
         <div className="hidden lg:flex" style={{ alignItems: 'center', gap: 18 }}>
-          <SearchForm />
-          <PhoneLinks phones={phones} />
+          {/* <SearchForm /> */}
+          {/* <PhoneLinks phones={phones} /> */}
           {primaryPhone ? (
             <a
-              href={`tel:${primaryPhone.link}`}
+              href={`#contacts`}
               style={{
                 padding: '9px 18px',
                 borderRadius: 12,
@@ -210,7 +203,7 @@ export default async function Header() {
                 whiteSpace: 'nowrap',
               }}
             >
-              Позвонить
+              Заказать услугу
             </a>
           ) : null}
         </div>
@@ -247,7 +240,7 @@ export default async function Header() {
               top: 52,
             }}
           >
-            <SearchForm compact />
+            {/* <SearchForm compact /> */}
             <nav style={{ display: 'grid', gap: 12, fontSize: 15 }}>
               {NAV.map(([label, href]) => (
                 <a
@@ -263,6 +256,15 @@ export default async function Header() {
                 </a>
               ))}
             </nav>
+            <div className="flex" style={{ alignItems: 'center', gap: 18 }}>
+              {/* <SearchForm /> */}
+              {/* <PhoneLinks phones={phones} /> */}
+              {primaryPhone ? (
+                <Link className="w-full" href={`#contacts`}>
+                  <Button fullWidth>Заказать услугу</Button>
+                </Link>
+              ) : null}
+            </div>
             <div
               style={{
                 borderTop: `1px solid ${BORDER}`,
