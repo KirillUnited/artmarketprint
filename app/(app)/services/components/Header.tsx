@@ -144,7 +144,7 @@ export default async function Header() {
   const primaryPhone = phones[0];
 
   return (
-    <header className="bg-background sticky top-0 z-40 border-t border-b backdrop-blur-md xl:top-32">
+    <header className="bg-background sticky top-0 z-40 border-t border-b backdrop-blur-md xl:top-18">
       <div
         className="container max-w-7xl"
         style={{
